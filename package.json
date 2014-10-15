@@ -2,9 +2,11 @@
   "name": "openfec-web-app",
   "version": "0.0.0",
   "description": "Web application for the OpenFEC data search tool.",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
-    "express": "~4.9.7"
+    "express": "~4.9.7",
+    "handlebars": "~2.0.0",
+    "express-handlebars": "~1.1.0"
   },
   "devDependencies": {},
   "scripts": {
