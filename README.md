@@ -11,7 +11,15 @@ $ npm install
 
 If you plan to do CSS development, you will want to install [Sass](http://sass-lang.com/). 
 
+### Development
 Compile Sass:
 ```
-sass --watch static/styles/sass/styles.scss:static/styles/styles.css
+$ sass --watch static/styles/sass/styles.scss:static/styles/styles.css
 ```
+
+### Run server
+```
+$ nodejs app.js
+```
+
+It will serve the site on http://0.0.0.0:8000
