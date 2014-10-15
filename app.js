@@ -8,6 +8,8 @@ var tmpls = handlebars.create();
 app.engine('handlebars', tmpls.engine);
 app.set('view engine', 'handlebars');
 
+app.use(express.static(__dirname + '/static'));
+
 app.get('/', function(req, res, next) {
     res.render('main');
 });

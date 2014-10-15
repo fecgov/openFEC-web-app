@@ -1,0 +1,21 @@
+$dark-blue: #03253e;
+$white: #fff;
+
+@mixin zero-space() {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+}
+
+.header-bar {
+    background-color: $dark-blue;
+    color: $white;
+    text-align: center;
+}
+
+.header-nav-bar {
+    @include zero-space();
+}
