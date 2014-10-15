@@ -1,0 +1,22 @@
+{
+  "name": "openfec-web-app",
+  "version": "0.0.0",
+  "description": "Web application for the OpenFEC data search tool.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "~4.9.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/theresaanna/openfec-web-app.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/theresaanna/openfec-web-app/issues"
+  }
+}
