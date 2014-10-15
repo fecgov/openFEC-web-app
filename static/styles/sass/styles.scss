@@ -1,5 +1,6 @@
 $dark-blue: #03253e;
 $white: #fff;
+$light-gray: #d8d8d8;
 
 @mixin zero-space() {
     margin: 0;
@@ -18,4 +19,18 @@ body {
 
 .header-nav-bar {
     @include zero-space();
+    list-style: none;
+    background-color: $light-gray;
+    text-align: center;
+
+    li {
+        display: inline-block;
+        padding: 1em;
+
+        &.active {
+            background-color: $dark-blue;
+            color: $white;
+            font-weight: bold;
+        }
+    }
 }

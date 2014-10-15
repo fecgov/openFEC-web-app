@@ -8,6 +8,16 @@ body {
 
 .header-nav-bar {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  list-style: none;
+  background-color: #d8d8d8;
+  text-align: center; }
+  .header-nav-bar li {
+    display: inline-block;
+    padding: 1em; }
+    .header-nav-bar li.active {
+      background-color: #03253e;
+      color: #fff;
+      font-weight: bold; }
 
 /*# sourceMappingURL=styles.css.map */
