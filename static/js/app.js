@@ -574,6 +574,13 @@
 }();
 
 },{}],2:[function(require,module,exports){
+var search = require('./modules/search.js');
+var api = require('./modules/api.js');
+
+api.init();
+search.init();
+
+},{"./modules/api.js":3,"./modules/search.js":5}],3:[function(require,module,exports){
 module.exports = {
     init: function() {
         var events = require('./events.js');
@@ -584,22 +591,13 @@ module.exports = {
     }
 };
 
-},{"./events.js":3}],3:[function(require,module,exports){
+},{"./events.js":4}],4:[function(require,module,exports){
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
 this.cache = this.cache || new EventEmitter2();
 
 module.exports = this.cache;
 
-},{"eventemitter2":1}],4:[function(require,module,exports){
-'use strict';
-
-var search = require('./search.js');
-var api = require('./api.js');
-
-api.init();
-search.init();
-
-},{"./api.js":2,"./search.js":5}],5:[function(require,module,exports){
+},{"eventemitter2":1}],5:[function(require,module,exports){
 module.exports = {
     init: function() {
         $('#search').on('submit', function(e) {
@@ -612,4 +610,4 @@ module.exports = {
     }
 };
 
-},{"./events.js":3}]},{},[4]);
+},{"./events.js":4}]},{},[2]);
