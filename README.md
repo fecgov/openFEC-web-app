@@ -11,6 +11,16 @@ $ npm install
 
 If you plan to do CSS development, you will want to install [Sass](http://sass-lang.com/). 
 
+If you plan to do client side developent, you will want to install [Browserify](http://browserify.org):
+```
+$ npm install -g browserify
+```
+
+To compile client side JS changes:
+```
+$ browserify static/js/init.js > static/js/app.js
+```
+
 ### Development
 Compile Sass:
 ```
