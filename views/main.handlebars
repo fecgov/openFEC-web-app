@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Open FEC Beta</title>
     <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -11,17 +12,17 @@
     <div class="header-bar">Open FEC Beta</div>
     <nav>
         <ul class="header-nav-bar">
-            <li class="active">Search</li>
-            <li>Candidates</li>
-            <li>Committees</li>
-            <li>Contributions</li>
-            <li>Expenditures</li>
+            <li class="active"><a href="/" name="search">Search</a></li>
+            <li><a href="#" name="candidates">Candidates</a></li>
+            <li><a href="#" name="committees">Committees</a></li>
+            <li><a href="#" name="contributions">Contributions</a></li>
+            <li><a href="#" name="expenditures">Expenditures</a></li>
         </ul>
     </nav>
 </header>
 
 <h1>Explore FEC Data</h1>
-<form>
+<form id="search">
     <label for="search">Search for candidates, committees and contributors</label>
     <input type="text" name="search"/>
     <input type="submit"/>
@@ -38,5 +39,6 @@
     </ul>    
 </nav>
 
+<script src="js/app.js"></script>
 </body>
 </html>

@@ -17,7 +17,11 @@ body {
     padding: 1em; }
     .header-nav-bar li.active {
       background-color: #03253e;
-      color: #fff;
       font-weight: bold; }
+      .header-nav-bar li.active a {
+        color: #fff; }
+    .header-nav-bar li a {
+      text-decoration: none;
+      color: #000; }
 
 /*# sourceMappingURL=styles.css.map */

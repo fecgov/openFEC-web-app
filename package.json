@@ -6,7 +6,9 @@
   "dependencies": {
     "express": "~4.9.7",
     "handlebars": "~2.0.0",
-    "express-handlebars": "~1.1.0"
+    "express-handlebars": "~1.1.0",
+    "browserify": "~6.1.0",
+    "eventemitter2": "~0.4.14"
   },
   "devDependencies": {},
   "scripts": {

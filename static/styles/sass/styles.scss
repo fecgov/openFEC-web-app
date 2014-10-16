@@ -1,6 +1,7 @@
 $dark-blue: #03253e;
 $white: #fff;
 $light-gray: #d8d8d8;
+$black: #000;
 
 @mixin zero-space() {
     margin: 0;
@@ -29,8 +30,16 @@ body {
 
         &.active {
             background-color: $dark-blue;
-            color: $white;
             font-weight: bold;
+
+            a {
+                color: $white;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: $black;
         }
     }
 }
