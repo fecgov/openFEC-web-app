@@ -16,6 +16,13 @@ If you plan to do client side JS developent, you will want to install [Browserif
 $ npm install -g browserify watchify
 ```
 
+### Run server
+```
+$ nodejs app.js
+```
+
+It will serve the site on http://0.0.0.0:8000
+### Development
 To compile client side JS changes once:
 ```
 $ npm run build
@@ -26,7 +33,6 @@ To compile whenever changes are made to the client side JS:
 $ npm run watch
 ```
 
-### Development
 Compile Sass once:
 ```
 $ npm run sass-build
@@ -36,10 +42,3 @@ Compile Sass as changes are made:
 ```
 $ npm run sass-watch
 ```
-
-### Run server
-```
-$ nodejs app.js
-```
-
-It will serve the site on http://0.0.0.0:8000
