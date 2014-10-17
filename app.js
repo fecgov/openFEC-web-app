@@ -17,4 +17,4 @@ app.get('/', function(req, res, next) {
     res.render('search', {thing: 'yup'});
 });
 
-app.listen(8000, "0.0.0.0");
+app.listen(3000);
