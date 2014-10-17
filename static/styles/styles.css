@@ -13,15 +13,14 @@ body {
   background-color: #d8d8d8;
   text-align: center; }
   .header-nav-bar li {
-    display: inline-block;
-    padding: 1em; }
-    .header-nav-bar li.active {
-      background-color: #03253e;
-      font-weight: bold; }
-      .header-nav-bar li.active a {
-        color: #fff; }
+    display: inline-block; }
     .header-nav-bar li a {
-      text-decoration: none;
-      color: #000; }
+      color: #000;
+      display: block;
+      padding: 1em;
+      text-decoration: none; }
+      .header-nav-bar li a.active {
+        background-color: #03253e;
+        color: #fff; }
 
 /*# sourceMappingURL=styles.css.map */

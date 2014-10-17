@@ -26,20 +26,17 @@ body {
 
     li {
         display: inline-block;
-        padding: 1em;
-
-        &.active {
-            background-color: $dark-blue;
-            font-weight: bold;
-
-            a {
-                color: $white;
-            }
-        }
 
         a {
-            text-decoration: none;
             color: $black;
+            display: block;
+            padding: 1em;
+            text-decoration: none;
+
+            &.active {
+                background-color: $dark-blue;
+                color: $white;
+            }
         }
     }
 }

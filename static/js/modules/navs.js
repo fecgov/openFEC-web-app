@@ -6,6 +6,13 @@ var navClickHandler = function(e) {
     events.emit('render:browse', {
         'category': e.target.name
     });
+
+    changeActiveNavLink(e.target.name);
+};
+
+var changeActiveNavLink = function(category) {
+    $('.header-nav-bar a').removeClass('active');
+    $('.header-nav-bar a[name=' + category + ']').addClass('active');
 };
 
 module.exports = {
