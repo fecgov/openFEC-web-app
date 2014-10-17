@@ -576,11 +576,15 @@
 },{}],2:[function(require,module,exports){
 var search = require('./modules/search.js');
 var api = require('./modules/api.js');
+var navs = require('./modules/navs.js');
+var tables = require('./modules/tables.js');
 
 api.init();
 search.init();
+navs.init();
+tables.init();
 
-},{"./modules/api.js":3,"./modules/search.js":5}],3:[function(require,module,exports){
+},{"./modules/api.js":3,"./modules/navs.js":5,"./modules/search.js":6,"./modules/tables.js":7}],3:[function(require,module,exports){
 module.exports = {
     init: function() {
         var events = require('./events.js');
@@ -598,6 +602,25 @@ this.cache = this.cache || new EventEmitter2();
 module.exports = this.cache;
 
 },{"eventemitter2":1}],5:[function(require,module,exports){
+var events = require('./events.js');
+
+var navClickHandler = function(e) {
+    e.preventDefault();
+
+    events.emit('render:browse', {
+        'category': e.target.name
+    });
+};
+
+module.exports = {
+    init: function() {
+        $('.header-nav-bar a').on('click', navClickHandler);
+        $('.browse-links a').on('click', navClickHandler);
+    }
+};
+
+
+},{"./events.js":4}],6:[function(require,module,exports){
 module.exports = {
     init: function() {
         $('#search').on('submit', function(e) {
@@ -607,6 +630,19 @@ module.exports = {
 
             events.emit('search:submitted', {'query': searchQuery});
         });
+    }
+};
+
+},{"./events.js":4}],7:[function(require,module,exports){
+var events = require('./events.js');
+
+var renderTable = function(e) {
+    console.log(e.category);
+};
+
+module.exports = {
+    init: function() {
+        events.on('render:browse', renderTable);
     }
 };
 
