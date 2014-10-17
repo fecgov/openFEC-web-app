@@ -14,7 +14,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/static'));
 
 app.get('/', function(req, res, next) {
-    res.render('search', {thing: 'yup'});
+    res.render('search');
 });
 
 app.listen(3000);
