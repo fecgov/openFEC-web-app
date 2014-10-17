@@ -3,7 +3,10 @@ var express = require('express'),
 
 var app = express();
 
-var tmpls = handlebars.create();
+var tmpls = handlebars.create({
+    defaultLayout: 'main',
+    partialsDir: ['views/partials']
+});
 
 app.engine('handlebars', tmpls.engine);
 app.set('view engine', 'handlebars');
@@ -11,7 +14,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/static'));
 
 app.get('/', function(req, res, next) {
-    res.render('main');
+    res.render('layouts/main');
 });
 
 app.listen(8000, "0.0.0.0");
