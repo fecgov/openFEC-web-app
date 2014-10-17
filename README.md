@@ -11,20 +11,30 @@ $ npm install
 
 If you plan to do CSS development, you will want to install [Sass](http://sass-lang.com/). 
 
-If you plan to do client side developent, you will want to install [Browserify](http://browserify.org):
+If you plan to do client side JS developent, you will want to install [Browserify](http://browserify.org):
 ```
-$ npm install -g browserify
+$ npm install -g browserify watchify
 ```
 
-To compile client side JS changes:
+To compile client side JS changes once:
 ```
-$ browserify static/js/init.js > static/js/app.js
+$ npm run build
+```
+
+To compile whenever changes are made to the client side JS:
+```
+$ npm run watch
 ```
 
 ### Development
-Compile Sass:
+Compile Sass once:
 ```
-$ sass --watch static/styles/sass/styles.scss:static/styles/styles.css
+$ npm run sass-build
+```
+
+Compile Sass as changes are made:
+```
+$ npm run sass-watch
 ```
 
 ### Run server

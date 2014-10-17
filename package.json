@@ -10,9 +10,15 @@
     "browserify": "~6.1.0",
     "eventemitter2": "~0.4.14"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "watchify": "~2.0.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "watchify static/js/init.js -o static/js/app.js --debug --verbose",
+    "build": "browserify static/js/init.js > static/js/app.js",
+    "sass-watch": "sass --watch static/styles/sass/styles.scss:static/styles/styles.css",
+    "sass-build": "sass static/styles/sass/styles.scss:static/styles/styles.css"
   },
   "repository": {
     "type": "git",
