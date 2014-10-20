@@ -21,7 +21,7 @@ $ npm install -g browserify watchify
 $ nodejs app.js
 ```
 
-It will serve the site on http://0.0.0.0:8000
+It will serve the site on http://127.0.0.1:3000
 ### Development
 To compile client side JS changes once:
 ```
