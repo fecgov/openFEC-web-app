@@ -15,7 +15,7 @@ If you plan to do CSS development, you will want to install [Sass](http://sass-l
 
 If you plan to do client side JS developent, you will want to install [Browserify](http://browserify.org):
 ```
-$ npm install -g browserify watchify
+$ npm install -g browserify watchify bower
 ```
 
 ### Run server
