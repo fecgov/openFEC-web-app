@@ -3,7 +3,7 @@ var Handlebars = require('handlebars');
 var templates = {};
 
 var renderBrowse = function(e) {
-   var tmplName = 'browse-' + e.category; 
+   var tmplName = e.category; 
 
     $.ajax({
         url: 'views/' + tmplName + '.handlebars',
