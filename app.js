@@ -18,4 +18,12 @@ app.get('/', function(req, res, next) {
     res.render('search');
 });
 
+app.get('/search', function(req, res, next) {
+    res.render('search');
+});
+
+app.get('/candidates', function(req, res, next) {
+    res.render('candidates');
+});
+
 app.listen(3000);
