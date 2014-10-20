@@ -11,6 +11,7 @@ var renderBrowse = function(e) {
         success: function(data) {
             templates[tmplName] = Handlebars.compile(data);
             $('#main').html(templates[tmplName].call());
+            events.emit('bind:browse');
         }
     });
 };
