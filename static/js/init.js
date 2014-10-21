@@ -4,6 +4,7 @@ var navs = require('./modules/navs.js');
 var tables = require('./modules/tables.js');
 var tmpls = require('./modules/tmpls.js');
 var filters = require('./modules/filters.js');
+var router = require('./modules/router.js');
 
 api.init();
 search.init();
@@ -11,3 +12,4 @@ navs.init();
 tables.init();
 tmpls.init();
 filters.init();
+router.init();
