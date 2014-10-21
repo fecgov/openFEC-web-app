@@ -23,7 +23,7 @@ app.get('/search', function(req, res, next) {
 });
 
 app.get('/candidates', function(req, res, next) {
-    res.render('candidates');
+    res.render('candidates', {section: 'candidates'});
 });
 
 app.listen(3000);
