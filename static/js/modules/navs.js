@@ -19,6 +19,7 @@ module.exports = {
     init: function() {
         $('.header-nav-bar a').on('click', navClickHandler);
         $('.browse-links a').on('click', navClickHandler);
+        events.on('update:nav', changeActiveNavLink);
     }
 };
 
