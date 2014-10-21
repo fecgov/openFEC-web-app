@@ -44,3 +44,8 @@ Compile Sass as changes are made:
 ```
 $ npm run sass-watch
 ```
+
+Or, if you want to get crazy, watch both Sass and JS changes: (hat tip [@ascott1](http://github.com/ascott1))
+```
+$ npm run watch-all
+```
