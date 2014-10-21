@@ -7,5 +7,8 @@ var renderFilters = function(e) {
 module.exports = {
     init: function() {
         events.on('bind:browse', renderFilters);
+
+        // if loaded on a page with filters, init chosen
+        $('#candidate-filters select').chosen();
     }
 };
