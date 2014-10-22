@@ -15,17 +15,28 @@ body {
     margin: 0;
 }
 
-.header-bar {
+#main {
+    @include span-columns(10);
+    @include shift(1);
+}
+
+.header {
     background-color: $dark-blue;
+}
+
+.header-bar {
     color: $white;
-    text-align: center;
+    padding-left: $column + $gutter;
+}
+
+.header-nav {
+    background-color: $light-gray;
 }
 
 .header-nav-bar {
     @include zero-space();
     list-style: none;
-    background-color: $light-gray;
-    text-align: center;
+    padding-left: $column + $gutter;
 
     li {
         display: inline-block;
@@ -41,5 +52,21 @@ body {
                 color: $white;
             }
         }
+    }
+}
+
+#search {
+    input {
+        height: 5em;
+    }
+
+    input[name=search] {
+        @include span-columns(8);
+        @include omega();
+    }
+
+    input[type=submit] {
+        @include span-columns(2);
+        @include omega();
     }
 }

@@ -6,17 +6,30 @@
 body {
   margin: 0; }
 
+#main {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 82.94039%;
+  margin-left: 8.5298%; }
+  #main:last-child {
+    margin-right: 0; }
+
+.header {
+  background-color: #03253e; }
+
 .header-bar {
-  background-color: #03253e;
   color: #fff;
-  text-align: center; }
+  padding-left: 5.8538em; }
+
+.header-nav {
+  background-color: #d8d8d8; }
 
 .header-nav-bar {
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: #d8d8d8;
-  text-align: center; }
+  padding-left: 5.8538em; }
   .header-nav-bar li {
     display: inline-block; }
     .header-nav-bar li a {
@@ -27,5 +40,24 @@ body {
       .header-nav-bar li a.active {
         background-color: #03253e;
         color: #fff; }
+
+#search input {
+  height: 5em; }
+#search input[name=search] {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 65.88078%;
+  margin-right: 0; }
+  #search input[name=search]:last-child {
+    margin-right: 0; }
+#search input[type=submit] {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 14.70196%;
+  margin-right: 0; }
+  #search input[type=submit]:last-child {
+    margin-right: 0; }
 
 /*# sourceMappingURL=styles.css.map */
