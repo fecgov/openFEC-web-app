@@ -1,8 +1,7 @@
 var events = require('./events.js');
-var router = require('page');
 
 var changeURL = function(context) {
-    router('/' + context.category);
+    window.history.pushState('', '', '/' + context.category);
 };
 
 module.exports = {
