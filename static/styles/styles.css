@@ -11,13 +11,14 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 #main {
-  float: left;
-  display: block;
-  margin-right: 2.35765%;
-  width: 82.94039%;
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto;
   margin-left: 8.5298%; }
-  #main:last-child {
-    margin-right: 0; }
+  #main:after {
+    content: "";
+    display: table;
+    clear: both; }
 
 .header {
   background-color: #03253e; }
@@ -58,7 +59,7 @@ body {
   float: left;
   display: block;
   margin-right: 2.35765%;
-  width: 82.94039%;
+  width: 65.88078%;
   margin-right: 0;
   font-size: 1.2em;
   border: 1px solid #969696;
@@ -95,5 +96,37 @@ body {
       .browse-links ul li a {
         font-weight: bold;
         color: #1067d5; }
+
+#filters {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 65.88078%;
+  border: 1px solid #1067d5; }
+  #filters:last-child {
+    margin-right: 0; }
+  #filters .filter-header-bar {
+    background-color: #1067d5;
+    font-size: 1em;
+    color: #fff;
+    padding: 2.35765%;
+    font-weight: bold; }
+  #filters .filter-field-container:after {
+    content: "";
+    display: table;
+    clear: both; }
+  #filters .filter-field-container .field {
+    padding: 2.35765%;
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 28.78967%; }
+    #filters .filter-field-container .field:last-child {
+      margin-right: 0; }
+    #filters .filter-field-container .field label {
+      display: block;
+      font-size: .8em; }
+    #filters .filter-field-container .field input[type=text] {
+      width: 100%; }
 
 /*# sourceMappingURL=styles.css.map */

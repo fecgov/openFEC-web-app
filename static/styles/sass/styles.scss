@@ -26,7 +26,7 @@ body {
 }
 
 #main {
-    @include span-columns(10);
+    @include outer-container();
     @include shift(1);
 }
 
@@ -78,7 +78,7 @@ body {
     }
 
     input[name=search] {
-        @include span-columns(10);
+        @include span-columns(8);
         @include omega();
         font-size: 1.2em;
         border: 1px solid $medium-gray;
@@ -110,6 +110,37 @@ body {
             a {
                 font-weight: bold;
                 color: $medium-blue;                
+            }
+        }
+    }
+}
+
+#filters {
+    @include span-columns(8);
+    border: 1px solid $medium-blue;
+
+    .filter-header-bar {
+        background-color: $medium-blue;
+        font-size: 1em;
+        color: $white;
+        @include pad();
+        font-weight: bold;
+    }
+
+    .filter-field-container {
+        @include clearfix();
+
+        .field {
+            @include pad();
+            @include span-columns(2.5 of 8);
+
+            label {
+                display: block;
+                font-size: .8em;
+            }
+
+            input[type=text] {
+                width: 100%;
             }
         }
     }
