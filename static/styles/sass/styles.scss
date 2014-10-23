@@ -5,14 +5,24 @@ $dark-blue: #03253e;
 $white: #fff;
 $light-gray: #d8d8d8;
 $black: #000;
+$medium-gray: #969696;
+$medium-blue: #1067d5;
+
+$open-sans: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$raleway: 'Raleway',  'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 @mixin zero-space() {
     margin: 0;
     padding: 0;
 }
 
+h1, h2, h3, h4, h5 {
+    font-family: $raleway;
+}
+
 body {
     margin: 0;
+    font-family: $open-sans;
 }
 
 #main {
@@ -56,17 +66,51 @@ body {
 }
 
 #search {
+    @include clearfix;
+
+    label {
+        margin: 1em 0;
+        display: block;
+    }
+
     input {
-        height: 5em;
+        height: 3em;
     }
 
     input[name=search] {
-        @include span-columns(8);
+        @include span-columns(10);
         @include omega();
+        font-size: 1.2em;
+        border: 1px solid $medium-gray;
+        padding: 0 1em;
     }
 
     input[type=submit] {
         @include span-columns(2);
         @include omega();
+        @include linear-gradient(to bottom, #5fb85f, #439e46);
+        border: 0;
+        font-size: 1.2em; /* to match em sizing on text field */
+        @include border-right-radius(4px);
+    }
+}
+
+.browse-links {
+    margin: 1em 0;
+
+    ul {
+        @include zero-space();
+        list-style: none;
+        display: inline;
+
+        li {
+            display: inline;
+            margin: 0 .5em;
+
+            a {
+                font-weight: bold;
+                color: $medium-blue;                
+            }
+        }
     }
 }
