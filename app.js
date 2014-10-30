@@ -1,5 +1,7 @@
 var express = require('express'),
-    handlebars = require('express-handlebars');
+    handlebars = require('express-handlebars'),
+    request = require('request'),
+    candidateHelpers = require('./shared/candidate-helpers.js');
 
 var app = express();
 
@@ -23,7 +25,20 @@ app.get('/search', function(req, res, next) {
 });
 
 app.get('/candidates', function(req, res, next) {
-    res.render('candidates', {section: 'candidates'});
+    // TODO: make relative urls work
+    request('http://localhost/rest/candidate', function(err, response, body) {
+        var data,
+            candidates;
+
+        if (!err && response.statusCode == 200) {
+            data = JSON.parse(body);            
+            candidates = candidateHelpers.buildCandidateContext(data[2].results);
+            res.render('candidates', {
+                section: 'candidates', 
+                candidates: candidates
+            });
+        }
+    });
 });
 
 app.listen(3000);
