@@ -21,18 +21,29 @@ app.get('/', function(req, res, next) {
 });
 
 app.get('/search', function(req, res, next) {
-    res.render('search');
+    if (Object.keys(req.query).length === 0) {
+        res.render('search');
+    }
+    else {
+        res.redirect('/candidates?name=' + req.query.search);
+    }
 });
 
 app.get('/candidates', function(req, res, next) {
     // TODO: make relative urls work
-    request('http://localhost/rest/candidate', function(err, response, body) {
-        var data,
-            candidates;
+    var URL = 'http://localhost/rest/candidate';
+    if (typeof req.query.name !== 'undefined') {
+        URL += '?name=' + req.query.name;
+    }
 
+    request(URL, function(err, response, body) {
         if (!err && response.statusCode == 200) {
+            var data,
+                candidates;
+
             data = JSON.parse(body);            
             candidates = candidateHelpers.buildCandidateContext(data[2].results);
+
             res.render('candidates', {
                 section: 'candidates', 
                 candidates: candidates
