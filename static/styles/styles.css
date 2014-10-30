@@ -58,8 +58,8 @@ body {
 #search input[name=search] {
   float: left;
   display: block;
-  margin-right: 2.35765%;
-  width: 65.88078%;
+  margin-right: 1.16509%;
+  width: 66.2783%;
   margin-right: 0;
   font-size: 1.2em;
   border: 1px solid #969696;
@@ -69,8 +69,8 @@ body {
 #search input[type=submit] {
   float: left;
   display: block;
-  margin-right: 2.35765%;
-  width: 14.70196%;
+  margin-right: 1.16509%;
+  width: 15.69576%;
   margin-right: 0;
   background-color: #5fb85f;
   background-image: -webkit-linear-gradient(top, #5fb85f, #439e46);
@@ -100,8 +100,8 @@ body {
 #filters {
   float: left;
   display: block;
-  margin-right: 2.35765%;
-  width: 65.88078%;
+  margin-right: 1.16509%;
+  width: 66.2783%;
   border: 1px solid #1067d5; }
   #filters:last-child {
     margin-right: 0; }
@@ -128,5 +128,33 @@ body {
       font-size: .8em; }
     #filters .filter-field-container .field input[type=text] {
       width: 100%; }
+
+#candidates {
+  float: left;
+  display: block;
+  margin-right: 1.16509%;
+  width: 100%;
+  clear: left;
+  border-top: 1px dashed #969696;
+  margin-top: 1.5em;
+  padding-top: 1em; }
+  #candidates:last-child {
+    margin-right: 0; }
+  #candidates table {
+    border-spacing: 0;
+    border-collapse: collapse; }
+    #candidates table th {
+      background-color: #d8d8d8;
+      color: #484b50;
+      border: 1px solid #969696;
+      border-right: 0;
+      text-align: left;
+      padding: .5em; }
+      #candidates table th:last-child {
+        border-right: 1px solid #969696; }
+    #candidates table tr {
+      border-bottom: 1px solid #969696; }
+      #candidates table tr td {
+        padding: .5em .25em; }
 
 /*# sourceMappingURL=styles.css.map */

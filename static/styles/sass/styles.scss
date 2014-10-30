@@ -1,12 +1,15 @@
 @import "../bourbon/bourbon";
 @import "../neat/neat";
 
+$grid-columns: 24;
+
 $dark-blue: #03253e;
 $white: #fff;
 $light-gray: #d8d8d8;
 $black: #000;
 $medium-gray: #969696;
 $medium-blue: #1067d5;
+$dark-gray: #484b50;
 
 $open-sans: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $raleway: 'Raleway',  'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -78,7 +81,7 @@ body {
     }
 
     input[name=search] {
-        @include span-columns(8);
+        @include span-columns(16);
         @include omega();
         font-size: 1.2em;
         border: 1px solid $medium-gray;
@@ -86,7 +89,7 @@ body {
     }
 
     input[type=submit] {
-        @include span-columns(2);
+        @include span-columns(4);
         @include omega();
         @include linear-gradient(to bottom, #5fb85f, #439e46);
         border: 0;
@@ -116,7 +119,7 @@ body {
 }
 
 #filters {
-    @include span-columns(8);
+    @include span-columns(16);
     border: 1px solid $medium-blue;
 
     .filter-header-bar {
@@ -141,6 +144,40 @@ body {
 
             input[type=text] {
                 width: 100%;
+            }
+        }
+    }
+}
+
+#candidates {
+    @include span-columns(24);
+    clear: left;
+    border-top: 1px dashed $medium-gray;
+    margin-top: 1.5em;
+    padding-top: 1em;
+
+    table {
+        border-spacing: 0;
+        border-collapse: collapse;
+
+        th {
+            background-color: $light-gray;
+            color: $dark-gray;
+            border: 1px solid $medium-gray;
+            border-right: 0;
+            text-align: left;
+            padding: .5em;
+
+            &:last-child {
+                border-right: 1px solid $medium-gray;
+            }
+        }
+
+        tr {
+            border-bottom: 1px solid $medium-gray;
+
+            td {
+                padding: .5em .25em;
             }
         }
     }
