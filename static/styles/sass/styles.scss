@@ -28,6 +28,10 @@ body {
     font-family: $open-sans;
 }
 
+.inactive, .header-nav-bar a.inactive {
+    color: $medium-gray;
+}
+
 #main {
     @include outer-container();
     @include shift(1);

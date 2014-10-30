@@ -10,6 +10,9 @@ body {
   margin: 0;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
+.inactive, .header-nav-bar a.inactive {
+  color: #969696; }
+
 #main {
   max-width: 68em;
   margin-left: auto;
