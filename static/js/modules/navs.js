@@ -18,7 +18,7 @@ var changeActiveNavLink = function(category) {
 module.exports = {
     init: function() {
         var section = $('#main').data('section');
-        $('.header-nav-bar a').on('click', navClickHandler);
+        $('.header-nav-bar a:not([name=search])').on('click', navClickHandler);
         $('.browse-links a').on('click', navClickHandler);
 
         if (typeof section !== 'undefined') {
