@@ -8,8 +8,10 @@ var renderBrowse = function(e) {
         promise = loadTemplate('views/' + tmplName + '.handlebars');
 
         promise.done(function(data) {
-            var context = {};
+            var context = {},
+            page = e.data[1].pagination.page;
             context.candidates = candidateHelpers.buildCandidateContext(e.data[2].results);
+            context.resultsCount = e.data[1].pagination.count;
             templates[tmplName] = Handlebars.compile(data);
             $('#main').html(templates[tmplName](context));
             events.emit('bind:browse');
