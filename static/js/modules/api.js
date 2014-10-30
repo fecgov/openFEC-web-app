@@ -16,7 +16,14 @@ module.exports = {
         var events = require('./events.js');
 
         events.on('search:submitted', function(e) {
-            console.log(e.query);
+            var promise = callAPI('rest/candidate?name=' + encodeURIComponent(e.query));
+
+            promise.done(function(data) {
+                e.data = data;
+                // to be removed when search disambiguation is implemented
+                e.category = 'candidates';
+                events.emit('render:browse', e);
+            });
         });
 
         events.on('load:browse', function(e) {
