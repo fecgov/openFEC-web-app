@@ -254,3 +254,29 @@
         </div>
     </div>
 </section>
+
+<section id="candidates">
+    <table id="results">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Office</th>
+                <th>Election</th>
+                <th>Party</th>
+                <th>State</th>
+                <th>District</th>
+            </tr>
+
+            {{#each candidates}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{office}}</td>
+                    <td>{{election}}</td>
+                    <td>{{party}}</td>
+                    <td>{{state}}</td>
+                    <td>{{district}}</td>
+                </tr>
+            {{/each}}
+        </thead>
+    </table>
+</section>

@@ -3,7 +3,7 @@ var events = require('./events.js');
 var navClickHandler = function(e) {
     e.preventDefault();
 
-    events.emit('render:browse', {
+    events.emit('load:browse', {
         'category': e.target.name
     });
 
