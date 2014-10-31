@@ -11,11 +11,14 @@ var changeURL = function(context) {
         }
     }
 
-    window.history.pushState('', '', URL);
+    if (URL !== window.location.pathname) {
+        window.history.pushState('', '', URL);
+    }
 };
 
 module.exports = {
     init: function() {
+        events.on('load:browse', changeURL);
         events.on('render:browse', changeURL);
     }
 };

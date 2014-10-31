@@ -1,13 +1,15 @@
 var events = require('./events.js');
 
-var renderFilters = function(e) {
+var bindFilters = function(e) {
     $('#candidate-filters select').chosen({width: "100%"});
 };
+
+var selectedFilters = {};
 
 module.exports = {
     init: function() {
         var $selects = $('#candidate-filters select');
-        events.on('bind:browse', renderFilters);
+        events.on('bind:filters', bindFilters);
         $('.filter-header-bar').on('click', function() {
             $('.filter-field-container').slideToggle();
         });
