@@ -34,5 +34,15 @@ module.exports = {
                 events.emit('render:browse', e);
             });
         });
+
+        events.on('selected:filter', function(e) {
+            var url = 'rest/' + singularize(e.category) + '?' + e.field + '=' + e.value,
+                promise = callAPI(url);
+
+            promise.done(function(data) {
+                e.data = data;
+                events.emit('render:browse', e);
+            });
+        });
     }
 };
