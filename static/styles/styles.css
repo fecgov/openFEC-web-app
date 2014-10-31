@@ -139,7 +139,8 @@ body {
     background-color: #1067d5;
     color: #fff;
     font-size: .75em;
-    padding: .5em; }
+    padding: .5em;
+    margin-right: 1em; }
     #selected-filters .selected-filter .close {
       margin-left: 2em; }
 
