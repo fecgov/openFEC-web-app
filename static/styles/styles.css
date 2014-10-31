@@ -100,37 +100,48 @@ body {
         font-weight: bold;
         color: #1067d5; }
 
-#filters {
+.filter-box {
   float: left;
   display: block;
   margin-right: 1.16509%;
   width: 66.2783%;
   border: 1px solid #1067d5; }
-  #filters:last-child {
+  .filter-box:last-child {
     margin-right: 0; }
-  #filters .filter-header-bar {
+  .filter-box .filter-header-bar {
     background-color: #1067d5;
     font-size: 1em;
     color: #fff;
     padding: 2.35765%;
     font-weight: bold; }
-  #filters .filter-field-container:after {
+  .filter-box .filter-field-container:after {
     content: "";
     display: table;
     clear: both; }
-  #filters .filter-field-container .field {
+  .filter-box .filter-field-container .field {
     padding: 2.35765%;
     float: left;
     display: block;
     margin-right: 3.57866%;
     width: 28.78967%; }
-    #filters .filter-field-container .field:last-child {
+    .filter-box .filter-field-container .field:last-child {
       margin-right: 0; }
-    #filters .filter-field-container .field label {
+    .filter-box .filter-field-container .field label {
       display: block;
       font-size: .8em; }
-    #filters .filter-field-container .field input[type=text] {
+    .filter-box .filter-field-container .field input[type=text] {
       width: 100%; }
+
+#selected-filters {
+  margin: 1.5em 0; }
+  #selected-filters .selected-filter {
+    display: inline;
+    background-color: #1067d5;
+    color: #fff;
+    font-size: .75em;
+    padding: .5em; }
+    #selected-filters .selected-filter .close {
+      margin-left: 2em; }
 
 #candidates {
   float: left;

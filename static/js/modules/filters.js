@@ -1,5 +1,10 @@
 var events = require('./events.js');
 
+// http://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript/196991#196991
+var toTitleCase = function(str) {
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 var bindFilters = function(e) {
     $('#candidate-filters select').chosen({width: "100%"});
 };
@@ -7,7 +12,7 @@ var bindFilters = function(e) {
 var selectedFilters = {};
 
 var addBox = function(e) {
-   $('#selected-filters').append('<div class="selected-filter" data-field="' + e.name + '">' + e.name + ': ' + e.value + '<a class="close" href="">x</a></div>'); 
+   $('#selected-filters').append('<div class="selected-filter" data-field="' + e.name + '">' + toTitleCase(e.name) + ': ' + e.value + '<a class="close" href="">x</a></div>'); 
 };
 
 module.exports = {

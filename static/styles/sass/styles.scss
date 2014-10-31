@@ -122,7 +122,7 @@ body {
     }
 }
 
-#filters {
+.filter-box {
     @include span-columns(16);
     border: 1px solid $medium-blue;
 
@@ -149,6 +149,22 @@ body {
             input[type=text] {
                 width: 100%;
             }
+        }
+    }
+}
+
+#selected-filters {
+    margin: 1.5em 0;
+
+    .selected-filter {
+        display: inline;
+        background-color: $medium-blue;
+        color: $white;
+        font-size: .75em;
+        padding: .5em;
+
+        .close {
+            margin-left: 2em;
         }
     }
 }
