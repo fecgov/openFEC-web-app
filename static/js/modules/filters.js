@@ -22,13 +22,14 @@ module.exports = {
         $selects.chosen({width: "100%"});
 
         $selects.chosen().change(function() {
+            selectedFilters[this.name] = this.value;
             events.emit('selected:filter', {
                 field: this.name,
                 value: this.value,
-                category: $('#main').data('section')
+                category: $('#main').data('section'),
+                filters: selectedFilters
             });
 
-            selectedFilters[this.name] = this.value;
             addBox(this);
         });
 
@@ -38,6 +39,11 @@ module.exports = {
             var $box = $(event.target).parent();
             delete selectedFilters[$box.data('field')];
             $box.remove();
+
+            events.emit('removed:filter', {
+                category: $('#main').data('section'),
+                filters: selectedFilters
+            });
         });
     }
 };
