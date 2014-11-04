@@ -30,7 +30,7 @@ var renderFilters = function(e) {
         templates[tmplName] = Handlebars.compile(tmpl1[0]);
         templates[partialName] = Handlebars.registerPartial(partialName, tmpl2[0]);
         $('#main').html(templates[tmplName]());
-        events.emit('bind:filters');
+        events.emit('bind:filters', e);
     });
 };
 

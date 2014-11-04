@@ -7,6 +7,23 @@ var toTitleCase = function(str) {
 
 var bindFilters = function(e) {
     $('#candidate-filters select').chosen({width: "100%"});
+
+    if (typeof e !== 'undefined' && typeof e.query !== 'undefined') {
+        $('#candidate-filters').find('input[name=name]').val(e.query).parent().addClass('active');
+    }
+
+    $('#candidate-filters select').chosen().change(function() {
+        selectedFilters[this.name] = this.value;
+        events.emit('selected:filter', {
+            field: this.name,
+            value: this.value,
+            category: $('#main').data('section'),
+            filters: selectedFilters
+        });
+
+        addBox(this);
+        addActiveStyle(this);
+    });
 };
 
 var selectedFilters = {};
@@ -21,27 +38,15 @@ var addActiveStyle = function(field) {
 
 module.exports = {
     init: function() {
-        var $selects = $('#candidate-filters select');
         events.on('bind:filters', bindFilters);
         $('.filter-header-bar').on('click', function() {
             $('.filter-field-container').slideToggle();
         });
 
         // if loaded on a page with filters, init chosen
-        $selects.chosen({width: "100%"});
+        $('#candidate-filters select').chosen({width: "100%"});
 
-        $selects.chosen().change(function() {
-            selectedFilters[this.name] = this.value;
-            events.emit('selected:filter', {
-                field: this.name,
-                value: this.value,
-                category: $('#main').data('section'),
-                filters: selectedFilters
-            });
-
-            addBox(this);
-            addActiveStyle(this);
-        });
+        bindFilters();
 
         $('#selected-filters').on('click', '.close', function(e) {
             e.preventDefault();

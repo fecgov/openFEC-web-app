@@ -5,6 +5,9 @@ module.exports = {
             var events = require('./events.js');
             var searchQuery = $(e.target).find('input[name=search]').val();
 
+            // update main with section
+            $('#main').data('section', 'candidates');
+
             events.emit('search:submitted', {'query': searchQuery});
         });
     }
