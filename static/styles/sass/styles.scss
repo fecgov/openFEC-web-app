@@ -13,6 +13,7 @@ $dark-gray: #484b50;
 
 $open-sans: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $raleway: 'Raleway',  'Helvetica Neue', Helvetica, Arial, sans-serif;
+$source-code-pro: 'Source Code Pro', monospace;
 
 @mixin zero-space() {
     margin: 0;
@@ -149,6 +150,16 @@ body {
             input[type=text] {
                 width: 100%;
             }
+
+            &.active {
+                label {
+                    color: $medium-blue;
+                }
+
+                input, select, .chosen-single{
+                    border: 1px solid $medium-blue;
+                }
+            }
         }
     }
 }
@@ -198,7 +209,9 @@ body {
             border-bottom: 1px solid $medium-gray;
 
             td {
-                padding: .5em .25em;
+                padding: .75em .25em;
+                font-family: $source-code-pro;
+                font-size: .7em;
             }
         }
     }

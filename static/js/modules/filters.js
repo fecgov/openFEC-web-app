@@ -15,6 +15,10 @@ var addBox = function(e) {
    $('#selected-filters').append('<div class="selected-filter" data-field="' + e.name + '">' + toTitleCase(e.name) + ': ' + e.value + '<a class="close" href="">x</a></div>'); 
 };
 
+var addActiveStyle = function(field) {
+    $(field).parent().addClass('active');
+};
+
 module.exports = {
     init: function() {
         var $selects = $('#candidate-filters select');
@@ -36,6 +40,7 @@ module.exports = {
             });
 
             addBox(this);
+            addActiveStyle(this);
         });
 
         $('#selected-filters').on('click', '.close', function(e) {

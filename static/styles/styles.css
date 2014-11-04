@@ -131,6 +131,10 @@ body {
       font-size: .8em; }
     .filter-box .filter-field-container .field input[type=text] {
       width: 100%; }
+    .filter-box .filter-field-container .field.active label {
+      color: #1067d5; }
+    .filter-box .filter-field-container .field.active input, .filter-box .filter-field-container .field.active select, .filter-box .filter-field-container .field.active .chosen-single {
+      border: 1px solid #1067d5; }
 
 #selected-filters {
   margin: 1.5em 0; }
@@ -170,6 +174,8 @@ body {
     #candidates table tr {
       border-bottom: 1px solid #969696; }
       #candidates table tr td {
-        padding: .5em .25em; }
+        padding: .75em .25em;
+        font-family: "Source Code Pro", monospace;
+        font-size: .7em; }
 
 /*# sourceMappingURL=styles.css.map */
