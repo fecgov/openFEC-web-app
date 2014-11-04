@@ -10,6 +10,8 @@ var bindFilters = function(e) {
 
     if (typeof e !== 'undefined' && typeof e.query !== 'undefined') {
         $('#candidate-filters').find('input[name=name]').val(e.query).parent().addClass('active');
+
+        selectedFilters['name'] = e.query;
     }
 
     $('#candidate-filters select').chosen().change(function() {
