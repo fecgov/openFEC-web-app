@@ -31,7 +31,6 @@ var renderFilters = function(e) {
         templates[partialName] = Handlebars.registerPartial(partialName, tmpl2[0]);
         $('#main').html(templates[tmplName]());
         events.emit('bind:filters');
-        events.emit('load:browse', e);
     });
 };
 

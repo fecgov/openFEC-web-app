@@ -43,6 +43,7 @@ module.exports = {
                 e.data = data;
                 // to be removed when search disambiguation is implemented
                 e.category = 'candidates';
+                events.emit('render:filters', e);
                 events.emit('render:browse', e);
             });
         });
