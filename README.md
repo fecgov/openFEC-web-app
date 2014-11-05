@@ -49,3 +49,11 @@ Or, if you want to get crazy, watch both Sass and JS changes: (hat tip [@ascott1
 ```
 $ npm run watch-all
 ```
+
+#### Running UI tests
+Create a [Sauce Labs](https://saucelabs.com) account and source ```SAUCE_USERNAME``` and ```SAUCE_ACCESS_KEY``` into your environment. I just put mine in ```.bash_profile```.
+
+```
+$ npm install -g mocha grunt grunt-init
+$ git clone https://github.com/saucelabs/grunt-init-sauce.git ~/.grunt-init/sauce
+```
