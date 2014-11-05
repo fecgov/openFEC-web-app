@@ -54,6 +54,6 @@ $ npm run watch-all
 Create a [Sauce Labs](https://saucelabs.com) account and source ```SAUCE_USERNAME``` and ```SAUCE_ACCESS_KEY``` into your environment. I just put mine in ```.bash_profile```.
 
 ```
-$ npm install -g mocha grunt
+$ npm install -g mocha grunt grunt-cli
 $ git clone https://github.com/saucelabs/grunt-init-sauce.git ~/.grunt-init/sauce
 ```
