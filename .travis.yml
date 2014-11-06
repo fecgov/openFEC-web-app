@@ -1,0 +1,5 @@
+install:
+    - sudo apt-get install nodejs
+    - npm install -g mocha
+script:
+    - npm run test
