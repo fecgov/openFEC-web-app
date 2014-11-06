@@ -1,13 +1,13 @@
 var events = require('./events.js');
 
-var changeURL = function(context) {
+var buildURL = function(context) {
     var URL = '/';
 
     if (typeof context.category !== 'undefined') {
         URL += context.category;
 
         if (typeof context.query !== 'undefined') {
-            URL += '?name=' + encodeURIComponent(context.query);
+            URL += '?q=' + encodeURIComponent(context.query);
         }
         else if (typeof context.filters !== 'undefined') {
             URL += '?';
@@ -18,6 +18,12 @@ var changeURL = function(context) {
             }
         }
     }
+
+    return URL;
+};
+
+var changeURL = function(context) {
+    var URL = buildURL(context);
 
     if (URL !== window.location.pathname) {
         window.history.pushState('', '', URL);
@@ -30,5 +36,8 @@ module.exports = {
         events.on('render:browse', changeURL);
         events.on('selected:filter', changeURL);
         events.on('removed:filter', changeURL);
-    }
+    },
+
+    // for unit tests
+    buildURL: buildURL
 };
