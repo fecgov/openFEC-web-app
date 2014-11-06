@@ -42,6 +42,7 @@ var bindFilters = function(e) {
         }
     });
 
+    // apply name filter
     $('#candidate-filters').on('click', '.add-filter', function() {
         activateFilter.call($(this).prev()[0]);
     });

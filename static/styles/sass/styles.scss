@@ -141,6 +141,7 @@ body {
         .field {
             @include pad();
             @include span-columns(2.5 of 8);
+            position: relative;
 
             label {
                 display: block;
@@ -149,6 +150,13 @@ body {
 
             input[type=text] {
                 width: 100%;
+            }
+
+            .add-filter {
+                position: absolute;
+                left: 100%;
+                top: 36px;
+                cursor: pointer;
             }
 
             &.active {

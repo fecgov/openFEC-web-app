@@ -123,7 +123,8 @@ body {
     float: left;
     display: block;
     margin-right: 3.57866%;
-    width: 28.78967%; }
+    width: 28.78967%;
+    position: relative; }
     .filter-box .filter-field-container .field:last-child {
       margin-right: 0; }
     .filter-box .filter-field-container .field label {
@@ -131,6 +132,11 @@ body {
       font-size: .8em; }
     .filter-box .filter-field-container .field input[type=text] {
       width: 100%; }
+    .filter-box .filter-field-container .field .add-filter {
+      position: absolute;
+      left: 100%;
+      top: 36px;
+      cursor: pointer; }
     .filter-box .filter-field-container .field.active label {
       color: #1067d5; }
     .filter-box .filter-field-container .field.active input, .filter-box .filter-field-container .field.active select, .filter-box .filter-field-container .field.active .chosen-single {
