@@ -15,6 +15,10 @@ var bindFilters = function(e) {
     }
 
     $('#candidate-filters select').chosen().change(function() {
+        if (typeof selectedFilters[this.name] !== 'undefined') {
+            $('.selected-filter[data-field=' + this.name + ']').remove();            
+        }
+
         selectedFilters[this.name] = this.value;
         events.emit('selected:filter', {
             field: this.name,
