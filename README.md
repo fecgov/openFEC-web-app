@@ -49,3 +49,15 @@ Or, if you want to get crazy, watch both Sass and JS changes: (hat tip [@ascott1
 ```
 $ npm run watch-all
 ```
+
+### Run Tests
+#### Unit Tests
+Install [Mocha](http://mochajs.org/):
+```
+$ npm install -g mocha
+```
+
+Run tests:
+```
+$ npm run test
+```

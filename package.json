@@ -16,7 +16,7 @@
     "watchify": "~2.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha tests/unit",
     "watch": "watchify static/js/init.js -o static/js/app.js --debug --verbose",
     "build": "browserify static/js/init.js > static/js/app.js",
     "sass-watch": "sass --watch static/styles/sass/styles.scss:static/styles/styles.css",

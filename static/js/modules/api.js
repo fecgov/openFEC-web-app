@@ -59,5 +59,9 @@ module.exports = {
 
         events.on('selected:filter', filterLoadHandler);
         events.on('removed:filter', filterLoadHandler);
-    }
+    },
+
+    // for unit tests
+    singularize: singularize,
+    buildURL: buildURL
 };
