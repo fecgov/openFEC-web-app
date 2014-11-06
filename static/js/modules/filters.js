@@ -5,6 +5,24 @@ var toTitleCase = function(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
+var activateFilter = function() {
+    if (typeof selectedFilters[this.name] !== 'undefined') {
+        $('.selected-filter[data-field=' + this.name + ']').remove();            
+    }
+
+    selectedFilters[this.name] = this.value;
+
+    events.emit('selected:filter', {
+        field: this.name,
+        value: this.value,
+        category: $('#main').data('section'),
+        filters: selectedFilters
+    });
+
+    addBox(this);
+    addActiveStyle(this);
+};
+
 var bindFilters = function(e) {
     $('#candidate-filters select').chosen({width: "100%"});
 
@@ -14,21 +32,18 @@ var bindFilters = function(e) {
         selectedFilters['name'] = e.query;
     }
 
-    $('#candidate-filters select').chosen().change(function() {
-        if (typeof selectedFilters[this.name] !== 'undefined') {
-            $('.selected-filter[data-field=' + this.name + ']').remove();            
+    // make select boxes work
+    $('#candidate-filters select').chosen().change(activateFilter);
+
+    // make name filter work
+    $('#candidate-filters input').on('input', function() {
+        if ($('.add-filter').length === 0) {
+            $(this).parent().append('<a class="add-filter">+</a>');
         }
+    });
 
-        selectedFilters[this.name] = this.value;
-        events.emit('selected:filter', {
-            field: this.name,
-            value: this.value,
-            category: $('#main').data('section'),
-            filters: selectedFilters
-        });
-
-        addBox(this);
-        addActiveStyle(this);
+    $('#candidate-filters').on('click', '.add-filter', function() {
+        activateFilter.call($(this).prev()[0]);
     });
 };
 
@@ -45,6 +60,8 @@ var addActiveStyle = function(field) {
 module.exports = {
     init: function() {
         events.on('bind:filters', bindFilters);
+
+        // toggle filter drawer open/shut
         $('.filter-header-bar').on('click', function() {
             $('.filter-field-container').slideToggle();
         });
@@ -54,6 +71,7 @@ module.exports = {
 
         bindFilters();
 
+        // close tag boxes
         $('#selected-filters').on('click', '.close', function(e) {
             e.preventDefault();
 
