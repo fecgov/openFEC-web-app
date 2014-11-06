@@ -1,7 +1,7 @@
 var events = require('./events.js');
 
-var singularize = function(category) {
-    return category.split('').slice(0, -1).join('');
+var entityMap = {
+    'candidates': 'candidate'
 };
 
 var callAPI = function(url) {
@@ -14,7 +14,7 @@ var callAPI = function(url) {
 };
 
 var buildURL = function(e) {
-    var URL = 'rest/' + singularize(e.category) + '?';
+    var URL = 'rest/' + entityMap[e.category] + '?';
     for (field in e.filters) {
         if (e.filters.hasOwnProperty(field)) {
             URL += field + '=' + e.filters[field] + '&'
@@ -37,7 +37,7 @@ var filterLoadHandler = function(e) {
 module.exports = {
     init: function() {
         events.on('search:submitted', function(e) {
-            var promise = callAPI('rest/candidate?name=' + encodeURIComponent(e.query));
+            var promise = callAPI('rest/candidate?q=' + encodeURIComponent(e.query));
 
             promise.done(function(data) {
                 e.data = data;
@@ -49,7 +49,7 @@ module.exports = {
         });
 
         events.on('load:browse', function(e) {
-            var promise = callAPI('rest/' + singularize(e.category));
+            var promise = callAPI('rest/' + entityMap[e.category]);
 
             promise.done(function(data) {
                 e.data = data;
@@ -62,6 +62,5 @@ module.exports = {
     },
 
     // for unit tests
-    singularize: singularize,
     buildURL: buildURL
 };

@@ -45,5 +45,6 @@ module.exports = {
     init: function() {
         events.on('render:browse', renderBrowse);
         events.on('load:browse', renderFilters);
+        events.on('render:filters', renderFilters);
     }
 };
