@@ -5,7 +5,6 @@ describe('API Module', function() {
     describe('singularlize()', function() {
         it('should return a string with the last char removed', function() {
             assert.equal('banana', api.singularize('bananas'));
-            assert.notEqual('bananas', api.singularize('bananas'));
         });
     });
 
