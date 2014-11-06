@@ -44,6 +44,6 @@ var loadTemplate = function(url) {
 module.exports = {
     init: function() {
         events.on('render:browse', renderBrowse);
-        events.on('render:filters', renderFilters);
+        events.on('load:browse', renderFilters);
     }
 };
