@@ -1,7 +1,12 @@
 <div id="results-count">Results: {{resultsCount}} records</div>
-<!--<div class="pagination-links">
-    <a href="{{prevURL}}"><< Prev</a>
-</div>-->
+<div class="pagination-links">
+    {{#if prevURL}}
+        <a href="{{prevURL}}">Previous {{perPage}}</a>
+    {{/if}}
+    {{#if nextURL}}
+        <a href="{{nextURL}}">Next {{perPage}}</a>
+    {{/if}}
+</div>
 <table id="results">
     <thead>
         <tr>
