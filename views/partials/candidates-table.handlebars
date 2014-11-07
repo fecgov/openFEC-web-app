@@ -2,10 +2,10 @@
 Viewing: {{currentResultsStart}} - {{currentResultsEnd}}
 <div class="pagination-links">
     {{#if prevURL}}
-        <a href="{{prevURL}}">Previous {{perPage}}</a>
+        <a href="{{prevURL}}" id="prev">Previous {{perPage}}</a>
     {{/if}}
     {{#if nextURL}}
-        <a href="{{nextURL}}">Next {{perPage}}</a>
+        <a href="{{nextURL}}" id="next">Next {{perPage}}</a>
     {{/if}}
 </div>
 <table id="results">
