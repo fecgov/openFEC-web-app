@@ -11,6 +11,7 @@ var renderBrowse = function(e) {
         promise.done(function(data) {
             var context = {},
                 totalPages;
+
             context.candidates = candidateHelpers.buildCandidateContext(e.data[2].results);
             context.resultsCount = e.data[1].pagination.count;
             context.page = e.data[1].pagination.page;
@@ -18,7 +19,7 @@ var renderBrowse = function(e) {
              if (typeof e.filters === 'undefined') {
                 e.filters = {};
             }
-           
+
             if (e.data[1].pagination.page < totalPages) {
                 e.filters.page = e.data[1].pagination.page + 1;
                 context.nextURL = urls.buildURL(e);
@@ -28,6 +29,8 @@ var renderBrowse = function(e) {
                 context.prevURL = urls.buildURL(e);
             }
             context.perPage = e.data[1].pagination.per_page;
+            context.currentResultsStart = context.perPage * (context.page - 1) + 1;
+            context.currentResultsEnd = context.perPage * context.page;
 
             templates[tmplName] = Handlebars.compile(data);
             $('#' + e.category).html(templates[tmplName](context));
