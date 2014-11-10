@@ -1,5 +1,6 @@
 openfec-web-app
 ===============
+[![Build Status](https://travis-ci.org/18F/openFEC-web-app.svg?branch=master)](https://travis-ci.org/18F/openFEC-web-app)
 
 See also http://github.com/18F/openFEC.
 
