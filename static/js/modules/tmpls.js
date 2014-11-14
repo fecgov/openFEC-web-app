@@ -1,7 +1,10 @@
+'use strict';
+
 var urls = require('./urls.js');
 var events = require('./events.js');
 var Handlebars = require('handlebars');
 var candidateHelpers = require('../../../shared/candidate-helpers.js');
+var categories = require('./api.js').entitiesArray;
 var templates = {};
 
 var renderBrowse = function(e) {
@@ -55,7 +58,32 @@ var renderFilters = function(e) {
 };
 
 var renderSearch = function(e) {
-debugger;
+    var promises = [],
+        i,
+        len = categories.length;
+
+    promises.push(loadTemplate('views/search-results.handlebars'));
+    promises.push(loadTemplate('views/partials/search-bar.handlebars'));
+
+    for (i = 0; i < len; i++) {
+        promises.push(loadTemplate('views/partials/' + categories[i] + 's-table.handlebars'));
+    }
+
+    $.when.apply($, promises).done(function() {
+        var i,
+            len = arguments.length,
+            tmplName;
+
+        templates['search-results'] = Handlebars.compile(arguments[0][0]);
+        templates['search-bar'] = Handlebars.registerPartial('search-bar', arguments[1][0]);
+        
+        for (i = 2; i < len; i++) {
+            tmplName = categories[i] + 's-table';
+            templates[tmplName] = Handlebars.registerPartial(tmplName, arguments[i][0]);
+        }        
+
+        $('#main').html(templates['search-results']());
+    });
 };
 
 var loadTemplate = function(url) {

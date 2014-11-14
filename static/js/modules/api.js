@@ -7,6 +7,8 @@ var entityMap = {
     'committees': 'committee'
 };
 
+var entitiesArray = ['candidate', 'committee'];
+
 var callAPI = function(url) {
     return $.ajax({
         url: url,
@@ -43,19 +45,10 @@ module.exports = {
             var entities = [],
                 promises = [],
                 i, 
-                len,
-                entity;
-
-            for (entity in entityMap) {
-                if (entityMap.hasOwnProperty(entity)) {
-                    entities.push(entityMap[entity]);
-                }
-            }
-
-            len = entities.length;
+                len = entitiesArray.length;
 
             for (i = 0; i < len; i++) {
-                promises.push(callAPI('rest/' + entities[i] + '?q=' + encodeURIComponent(e.query) + '&per_page=5'));
+                promises.push(callAPI('rest/' + entitiesArray[i] + '?q=' + encodeURIComponent(e.query) + '&per_page=5'));
             }
 
 
@@ -85,6 +78,8 @@ module.exports = {
         events.on('removed:filter', filterLoadHandler);
         events.on('nav:pagination', filterLoadHandler);
     },
+
+    entitiesArray: entitiesArray,
 
     // for unit tests
     buildURL: buildURL
