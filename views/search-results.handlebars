@@ -7,3 +7,9 @@
     <a href="candidates?q={{query}}" class="filter-records">Filter candidate results</a>
     {{> candidates-table}}
 {{/if}}
+
+{{#if committees}}
+    <strong>Committees Results: {{resultsCount}}</strong>
+    <a href="committees?q={{query}}" class="filter-records">Filter candidate results</a>
+    {{> committees-table}}
+{{/if}}
