@@ -28,7 +28,7 @@ var renderBrowse = function(e) {
                 context.nextURL = urls.buildURL(e);
             }
             if (context.page > 1) {
-                e.filters.page = e.data.pagination.page + 1;
+                e.filters.page = e.data.pagination.page - 1;
                 context.prevURL = urls.buildURL(e);
             }
             if (context.prevURL || context.nextURL) {
