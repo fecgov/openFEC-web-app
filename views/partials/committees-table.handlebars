@@ -2,11 +2,11 @@
     <div id="results-count">Results: {{resultsCount}} records</div>
 {{/if}}
 
-{{#if currentResultsStart && currentResultsEnd}}
+{{#if resultsRange}}
     Viewing: {{currentResultsStart}} - {{currentResultsEnd}}
 {{/if}}
 
-{{#if prevURL || nextURL}}
+{{#if paginationLinks}}
     <div class="pagination-links">
         {{#if prevURL}}
             <a href="{{prevURL}}" id="prev">Previous {{perPage}}</a>
@@ -21,21 +21,19 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Treasurer Name</th>
+            <th>Party</th>
             <th>Type</th>
             <th>Designation</th>
-            <th>State</th>
-            <th>Received</th>
-            <th>Spent</th>
         </tr>
 
         {{#each committees}}
             <tr>
                 <td>{{name}}</td>
+                <td>{{treasurer}}</td>
+                <td>{{party}}</td>
                 <td>{{type}}</td>
                 <td>{{designation}}</td>
-                <td>{{state}}</td>
-                <td>{{received}}</td>
-                <td>{{spent}}</td>
             </tr>
         {{/each}}
     </thead>

@@ -4,6 +4,7 @@ var urls = require('./urls.js');
 var events = require('./events.js');
 var Handlebars = require('handlebars');
 var candidateHelpers = require('../../../shared/candidate-helpers.js');
+var committeeHelpers = require('../../../shared/committee-helpers.js');
 var categories = require('./api.js').entitiesArray;
 var templates = {};
 
@@ -15,7 +16,7 @@ var renderBrowse = function(e) {
             var context = {},
                 totalPages;
 
-            context.candidates = candidateHelpers.buildCandidateContext(e.data.results);
+            context[e.category] = mapFields(e.category, e.data.results);
             context.resultsCount = e.data.pagination.count;
             context.page = e.data.pagination.page;
             totalPages = e.data.pagination.pages / e.data.pagination.per_page;
@@ -100,9 +101,14 @@ var renderSearch = function(e) {
 };
 
 var mapFields = function(category, results) {
-    if (category === 'candidates') {
-        return candidateHelpers.buildCandidateContext(results);
-    } 
+    switch (category) {
+        case "candidates":
+            return candidateHelpers.buildCandidateContext(results);
+            break;
+        case "committees":
+            return committeeHelpers.buildCommitteeContext(results);
+            break;
+    }
 };
 
 var loadTemplate = function(url) {
