@@ -42,7 +42,7 @@ app.get('/candidates', function(req, res, next) {
                 candidates;
 
             data = JSON.parse(body);            
-            candidates = candidateHelpers.buildCandidateContext(data[2].results);
+            candidates = candidateHelpers.buildCandidateContext(data.results);
 
             res.render('candidates', {
                 section: 'candidates', 
