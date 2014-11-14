@@ -15,23 +15,23 @@ var renderBrowse = function(e) {
             var context = {},
                 totalPages;
 
-            context.candidates = candidateHelpers.buildCandidateContext(e.data[2].results);
-            context.resultsCount = e.data[1].pagination.count;
-            context.page = e.data[1].pagination.page;
-            totalPages = e.data[1].pagination.pages / e.data[1].pagination.per_page;
+            context.candidates = candidateHelpers.buildCandidateContext(e.data.results);
+            context.resultsCount = e.data.pagination.count;
+            context.page = e.data.pagination.page;
+            totalPages = e.data.pagination.pages / e.data.pagination.per_page;
              if (typeof e.filters === 'undefined') {
                 e.filters = {};
             }
 
-            if (e.data[1].pagination.page < totalPages) {
-                e.filters.page = e.data[1].pagination.page + 1;
+            if (e.data.pagination.page < totalPages) {
+                e.filters.page = e.data.pagination.page + 1;
                 context.nextURL = urls.buildURL(e);
             }
             if (context.page > 1) {
-                e.filters.page = e.data[1].pagination.page + 1;
+                e.filters.page = e.data.pagination.page + 1;
                 context.prevURL = urls.buildURL(e);
             }
-            context.perPage = e.data[1].pagination.per_page;
+            context.perPage = e.data.pagination.per_page;
             context.currentResultsStart = context.perPage * (context.page - 1) + 1;
             context.currentResultsEnd = context.perPage * context.page;
 
