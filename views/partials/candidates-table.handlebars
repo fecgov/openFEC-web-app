@@ -2,11 +2,11 @@
     <div id="results-count">Results: {{resultsCount}} records</div>
 {{/if}}
 
-{{#if currentResultsStart && currentResultsEnd}}
+{{#if resultsRange}}
     Viewing: {{currentResultsStart}} - {{currentResultsEnd}}
 {{/if}}
 
-{{#if prevURL || nextURL}}
+{{#if paginationLinks}}
     <div class="pagination-links">
         {{#if prevURL}}
             <a href="{{prevURL}}" id="prev">Previous {{perPage}}</a>

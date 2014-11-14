@@ -2,23 +2,26 @@ module.exports = {
     buildCandidateContext: function(results) {
         var candidates = [],
             i = 0,
+            j = 0,
             len = results.length,
             elections,
             election,
-            year;
+            year,
+            jlen;
 
         for (i; i < len; i++) {
             elections = results[i].elections;
-            year = Object.keys(elections)[0];
-            election = elections[year];
+            jlen = elections.length;
 
-            candidates[i] = {
-                'name': results[i].name.full_name,
-                'office': election.office_sought,
-                'election': year,
-                'party': election.party_affiliation,
-                'state': election.state,
-                'district': election.district
+            for (j; j < jlen; j++) {
+                candidates[j] = {
+                    'name': results[i].name.full_name,
+                    'office': elections[j].office_sought,
+                    'election': elections[j].election_year,
+                    'party': elections[j].party_affiliation,
+                    'state': elections[j].state,
+                    'district': elections[j].district
+                }
             }
         }
 

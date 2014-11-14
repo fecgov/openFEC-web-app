@@ -58,7 +58,7 @@ module.exports = {
                 e.results = {};
 
                 for (i = 0; i < len; i++) {
-                    e.results[entities[i]] = arguments[i][0].results;   
+                    e.results[entitiesArray[i]] = arguments[i][0].results;   
                 }
 
                 events.emit('render:search', e);

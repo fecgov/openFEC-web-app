@@ -72,18 +72,28 @@ var renderSearch = function(e) {
     $.when.apply($, promises).done(function() {
         var i,
             len = arguments.length,
-            tmplName;
+            tmplName,
+            context = {},
+            category;
 
         templates['search-results'] = Handlebars.compile(arguments[0][0]);
         templates['search-bar'] = Handlebars.registerPartial('search-bar', arguments[1][0]);
-        
-        for (i = 2; i < len; i++) {
-            tmplName = categories[i] + 's-table';
-            templates[tmplName] = Handlebars.registerPartial(tmplName, arguments[i][0]);
-        }        
 
-        $('#main').html(templates['search-results']());
+        for (i = 2; i < len; i++) {
+            tmplName = categories[i - 2] + 's-table';
+            category = categories[i - 2] + 's';
+            templates[tmplName] = Handlebars.registerPartial(tmplName, arguments[i][0]);
+            context[category] = mapFields(category, e.results[categories[i - 2]]);
+        } 
+
+        $('#main').html(templates['search-results'](context));
     });
+};
+
+var mapFields = function(category, results) {
+    if (category === 'candidates') {
+        return candidateHelpers.buildCandidateContext(results);
+    } 
 };
 
 var loadTemplate = function(url) {
