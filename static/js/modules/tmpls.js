@@ -31,9 +31,17 @@ var renderBrowse = function(e) {
                 e.filters.page = e.data.pagination.page + 1;
                 context.prevURL = urls.buildURL(e);
             }
+            if (context.prevURL || context.nextURL) {
+                context.paginationLinks = true;
+            }
+
             context.perPage = e.data.pagination.per_page;
             context.currentResultsStart = context.perPage * (context.page - 1) + 1;
             context.currentResultsEnd = context.perPage * context.page;
+
+            if (context.currentResultsEnd && context.currentResultsStart) {
+                context.resultsRange = true;
+            }
 
             templates[tmplName] = Handlebars.compile(data);
             $('#' + e.category).html(templates[tmplName](context));
