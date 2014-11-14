@@ -1,12 +1,5 @@
 var events = require('./events.js');
 
-var categoryLinkHandler = function() {
-                e.category = 'candidates';
-                events.emit('render:filters', e);
-                events.emit('render:browse', e);
-
-};
-
 module.exports = {
     init: function() {
         $('#search').on('submit', function(e) {
@@ -17,6 +10,21 @@ module.exports = {
             $('#main').data('section', '');
 
             events.emit('search:submitted', {'query': searchQuery});
+        });
+
+        events.on('bind:search', function() {
+            $('.filter-records').on('click', function() {
+                event.preventDefault();
+
+                var context = {},
+                    $target = $(event.target);
+
+                context.category = $target.data('category');
+                context.query = $target.data('query');
+
+                events.emit('render:filters', context);
+                events.emit('load:browse', context);
+            });
         });
     }
 };

@@ -4,12 +4,12 @@
 
 {{#if candidates}}
     <strong>Candidate Results: {{resultsCount}}</strong>
-    <a href="candidates?q={{query}}" class="filter-records">Filter candidate results</a>
+    <a href="candidates?q={{query}}" class="filter-records" data-category="candidates" data-query="{{query}}">Filter candidate results</a>
     {{> candidates-table}}
 {{/if}}
 
 {{#if committees}}
     <strong>Committees Results: {{resultsCount}}</strong>
-    <a href="committees?q={{query}}" class="filter-records">Filter candidate results</a>
+    <a href="committees?q={{query}}" class="filter-records" data-category="committees" data-query="{{query}}">Filter committee results</a>
     {{> committees-table}}
 {{/if}}

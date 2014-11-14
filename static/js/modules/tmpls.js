@@ -95,8 +95,12 @@ var renderSearch = function(e) {
             context[category] = mapFields(category, e.results[categories[i - 2]]);
         } 
 
+        context.query = e.query;
+
         $('#main').html(templates['search-results'](context));
         $('input[name=search]')[0].value = e.query;
+
+        events.emit('bind:search');
     });
 };
 
