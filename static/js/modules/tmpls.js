@@ -54,6 +54,10 @@ var renderFilters = function(e) {
     });
 };
 
+var renderSearch = function(e) {
+debugger;
+};
+
 var loadTemplate = function(url) {
     return $.ajax({
         url: url,
@@ -66,5 +70,6 @@ module.exports = {
         events.on('render:browse', renderBrowse);
         events.on('load:browse', renderFilters);
         events.on('render:filters', renderFilters);
+        events.on('render:search', renderSearch);
     }
 };

@@ -1,13 +1,22 @@
-<div id="results-count">Results: {{resultsCount}} records</div>
-Viewing: {{currentResultsStart}} - {{currentResultsEnd}}
-<div class="pagination-links">
-    {{#if prevURL}}
-        <a href="{{prevURL}}" id="prev">Previous {{perPage}}</a>
-    {{/if}}
-    {{#if nextURL}}
-        <a href="{{nextURL}}" id="next">Next {{perPage}}</a>
-    {{/if}}
-</div>
+{{#if resultsCount}}
+    <div id="results-count">Results: {{resultsCount}} records</div>
+{{/if}}
+
+{{#if currentResultsStart && currentResultsEnd}}
+    Viewing: {{currentResultsStart}} - {{currentResultsEnd}}
+{{/if}}
+
+{{#if prevURL || nextURL}}
+    <div class="pagination-links">
+        {{#if prevURL}}
+            <a href="{{prevURL}}" id="prev">Previous {{perPage}}</a>
+        {{/if}}
+        {{#if nextURL}}
+            <a href="{{nextURL}}" id="next">Next {{perPage}}</a>
+        {{/if}}
+    </div>
+{{/if}}
+
 <table id="results">
     <thead>
         <tr>

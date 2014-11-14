@@ -1,7 +1,10 @@
+'use strict';
+
 var events = require('./events.js');
 
 var entityMap = {
-    'candidates': 'candidate'
+    'candidates': 'candidate',
+    'committees': 'committee'
 };
 
 var callAPI = function(url) {
@@ -37,14 +40,35 @@ var filterLoadHandler = function(e) {
 module.exports = {
     init: function() {
         events.on('search:submitted', function(e) {
-            var promise = callAPI('rest/candidate?q=' + encodeURIComponent(e.query));
+            var entities = [],
+                promises = [],
+                i, 
+                len,
+                entity;
 
-            promise.done(function(data) {
-                e.data = data;
-                // to be removed when search disambiguation is implemented
-                e.category = 'candidates';
-                events.emit('render:filters', e);
-                events.emit('render:browse', e);
+            for (entity in entityMap) {
+                if (entityMap.hasOwnProperty(entity)) {
+                    entities.push(entityMap[entity]);
+                }
+            }
+
+            len = entities.length;
+
+            for (i = 0; i < len; i++) {
+                promises.push(callAPI('rest/' + entities[i] + '?q=' + encodeURIComponent(e.query) + '&per_page=5'));
+            }
+
+
+            $.when.apply($, promises).done(function() {
+                var i,
+                    len = arguments.length;
+                e.results = {};
+
+                for (i = 0; i < len; i++) {
+                    e.results[entities[i]] = arguments[i][0].results;   
+                }
+
+                events.emit('render:search', e);
             });
         });
 

@@ -1,0 +1,9 @@
+{{> search-bar}}
+
+<h2>Search results</h2>
+
+{{#if candidates}}
+    <strong>Candidate Results: {{resultsCount}}</strong>
+    <a href="candidates?q={{query}}" class="filter-records">Filter candidate results</a>
+    {{> candidates-table}}
+{{/if}}
