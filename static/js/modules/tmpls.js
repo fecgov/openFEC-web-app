@@ -95,6 +95,7 @@ var renderSearch = function(e) {
         } 
 
         $('#main').html(templates['search-results'](context));
+        $('input[name=search]')[0].value = e.query;
     });
 };
 
