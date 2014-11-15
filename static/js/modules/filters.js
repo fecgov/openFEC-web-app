@@ -65,7 +65,7 @@ module.exports = {
         events.on('bind:filters', bindFilters);
 
         // toggle filter drawer open/shut
-        $('.filter-header-bar').on('click', function() {
+        $('#main').on('click', '.filter-header-bar', function() {
             $('.filter-field-container').slideToggle();
         });
 
