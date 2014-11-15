@@ -1,7 +1,8 @@
 var express = require('express'),
     handlebars = require('express-handlebars'),
     request = require('request'),
-    candidateHelpers = require('./shared/candidate-helpers.js');
+    candidateHelpers = require('./shared/candidate-helpers.js'),
+    committeeHelpers = require('./shared/committee-helpers.js');
 
 var app = express();
 
@@ -51,6 +52,30 @@ app.get('/candidates', function(req, res, next) {
             });
         }
     });
+});
+
+app.get('/committees', function(req, res, next) {
+     // TODO: make relative urls work
+    var URL = 'http://localhost/rest/committee';
+    if (typeof req.query.name !== 'undefined') {
+        URL += '?name=' + req.query.name;
+    }
+
+    request(URL, function(err, response, body) {
+        if (!err && response.statusCode == 200) {
+            var data,
+                committees;
+
+            data = JSON.parse(body);            
+            committees = committeeHelpers.buildCommitteeContext(data.results);
+
+            res.render('committees', {
+                section: 'committees', 
+                committees: committees
+            });
+        }
+    });
+   
 });
 
 app.listen(3000);
