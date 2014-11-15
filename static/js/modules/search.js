@@ -1,3 +1,5 @@
+'use strict';
+
 var events = require('./events.js');
 
 module.exports = {

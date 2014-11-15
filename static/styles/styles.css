@@ -154,7 +154,9 @@ body {
     #selected-filters .selected-filter .close {
       margin-left: 2em; }
 
-#candidates {
+#candidates,
+#committees,
+#results {
   float: left;
   display: block;
   margin-right: 1.16509%;
@@ -163,23 +165,35 @@ body {
   border-top: 1px dashed #969696;
   margin-top: 1.5em;
   padding-top: 1em; }
-  #candidates:last-child {
+  #candidates:last-child,
+  #committees:last-child,
+  #results:last-child {
     margin-right: 0; }
-  #candidates table {
+  #candidates table,
+  #committees table,
+  #results table {
     border-spacing: 0;
     border-collapse: collapse; }
-    #candidates table th {
+    #candidates table th,
+    #committees table th,
+    #results table th {
       background-color: #d8d8d8;
       color: #484b50;
       border: 1px solid #969696;
       border-right: 0;
       text-align: left;
       padding: .5em; }
-      #candidates table th:last-child {
+      #candidates table th:last-child,
+      #committees table th:last-child,
+      #results table th:last-child {
         border-right: 1px solid #969696; }
-    #candidates table tr {
+    #candidates table tr,
+    #committees table tr,
+    #results table tr {
       border-bottom: 1px solid #969696; }
-      #candidates table tr td {
+      #candidates table tr td,
+      #committees table tr td,
+      #results table tr td {
         padding: .75em .25em;
         font-family: "Source Code Pro", monospace;
         font-size: .7em; }

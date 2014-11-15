@@ -1,3 +1,5 @@
+'use strict';
+
 var events = require('./events.js');
 
 var navClickHandler = function(e) {

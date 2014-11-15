@@ -1,3 +1,5 @@
+'use strict';
+
 var search = require('./modules/search.js');
 var api = require('./modules/api.js');
 var navs = require('./modules/navs.js');

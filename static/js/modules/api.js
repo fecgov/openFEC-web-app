@@ -19,7 +19,9 @@ var callAPI = function(url) {
 };
 
 var buildURL = function(e) {
-    var URL = 'rest/' + entityMap[e.category] + '?';
+    var URL = 'rest/' + entityMap[e.category] + '?',
+        field;
+
     for (field in e.filters) {
         if (e.filters.hasOwnProperty(field)) {
             URL += field + '=' + e.filters[field] + '&'

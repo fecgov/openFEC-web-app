@@ -1,3 +1,5 @@
+'use strict';
+
 var events = require('./events.js');
 
 var bindPaginationLinks = function(e) {

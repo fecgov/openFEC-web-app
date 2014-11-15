@@ -1,7 +1,10 @@
+'use strict';
+
 var events = require('./events.js');
 
 var buildURL = function(context) {
-    var URL = '/';
+    var URL = '/',
+        field;
 
     if (typeof context.category !== 'undefined') {
         URL += context.category;

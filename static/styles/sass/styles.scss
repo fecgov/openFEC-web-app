@@ -189,7 +189,9 @@ body {
     }
 }
 
-#candidates {
+#candidates, 
+#committees,
+#results {
     @include span-columns(24);
     clear: left;
     border-top: 1px dashed $medium-gray;

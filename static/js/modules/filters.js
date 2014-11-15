@@ -1,3 +1,5 @@
+'use strict';
+
 var events = require('./events.js');
 
 // http://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript/196991#196991
