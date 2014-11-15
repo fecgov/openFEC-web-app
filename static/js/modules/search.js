@@ -6,9 +6,6 @@ module.exports = {
             e.preventDefault();
             var searchQuery = $(e.target).find('input[name=search]').val();
 
-            // update main with section
-            $('#main').data('section', '');
-
             events.emit('search:submitted', {'query': searchQuery});
         });
 
@@ -21,6 +18,8 @@ module.exports = {
 
                 context.category = $target.data('category');
                 context.query = $target.data('query');
+
+                $('#main').data('section', context.category);
 
                 events.emit('render:filters', context);
                 events.emit('load:browse', context);

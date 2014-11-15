@@ -13,6 +13,8 @@ var navClickHandler = function(e) {
 var changeActiveNavLink = function(category) {
     $('.header-nav-bar a').removeClass('active');
     $('.header-nav-bar a[name=' + category + ']').addClass('active');
+
+    $('#main').data('section', category);
 };
 
 var renderHandler = function(e) {
