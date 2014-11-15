@@ -15,6 +15,7 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static(__dirname + '/static'));
 app.use('/views', express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/node_modules'));
 
 app.get('/', function(req, res, next) {
     res.render('search');
