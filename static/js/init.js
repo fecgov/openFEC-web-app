@@ -8,6 +8,7 @@ var filters = require('./modules/filters.js');
 var urls = require('./modules/urls.js');
 var tables = require('./modules/tables.js');
 var progress = require('./modules/progress.js');
+var vex = require('vex-js');
 
 api.init();
 search.init();
@@ -17,3 +18,5 @@ filters.init();
 urls.init();
 tables.init();
 progress.init();
+
+vex.defaultOptions.className = 'vex-theme-default';

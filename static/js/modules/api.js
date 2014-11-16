@@ -64,6 +64,8 @@ module.exports = {
                 }
 
                 events.emit('render:search', e);
+            }).fail(function() {
+                events.emit('err:load:search');
             });
         });
 

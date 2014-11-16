@@ -14,6 +14,6 @@ module.exports = {
         events.on('render:browse', NProgress.done);
         events.on('render:filters', NProgress.done);
         events.on('render:search', NProgress.done);
-        
+        events.on('err:load:search', NProgress.done);       
     }
 };
