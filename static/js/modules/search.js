@@ -6,8 +6,13 @@ module.exports = {
     init: function() {
         $('#search').on('submit', function(e) {
             e.preventDefault();
-            var searchQuery = $(e.target).find('input[name=search]').val();
+            var $form = $(e.target),
+                $submitButton = $form.find('input[type=submit]'),
+                $searchBox = $form.find('input[name=search]'),
+                searchQuery = $searchBox.val();
 
+            $submitButton.attr('disabled', '');
+            $searchBox.attr('disabled', '');
             events.emit('search:submitted', {'query': searchQuery});
         });
 

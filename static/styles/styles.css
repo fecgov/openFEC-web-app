@@ -8,7 +8,8 @@ h1, h2, h3, h4, h5 {
 
 body {
   margin: 0;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-bottom: 4em; }
 
 .inactive, .header-nav-bar a.inactive {
   color: #969696; }
