@@ -14,7 +14,7 @@ var bindPaginationLinks = function(e) {
             i,
             len = queryStrArr.length;
 
-        context.category = pathArr[0].match(/[a-z]+/);
+        context.category = pathArr[0].match(/[a-z]+/)[0];
         context.filters = {};
 
         for (i = 0; i < len; i++) {
