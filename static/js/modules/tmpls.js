@@ -19,18 +19,29 @@ var renderBrowse = function(e) {
             context[e.category] = mapFields(e.category, e.data.results);
             context.resultsCount = e.data.pagination.count;
             context.page = e.data.pagination.page;
-            totalPages = e.data.pagination.pages / e.data.pagination.per_page;
+            totalPages = Math.ceil(e.data.pagination.pages / e.data.pagination.per_page);
              if (typeof e.filters === 'undefined') {
                 e.filters = {};
             }
 
+            // if we are not at the last page, build next page url
             if (e.data.pagination.page < totalPages) {
+                // bump up page to build next page's url
                 e.filters.page = e.data.pagination.page + 1;
                 context.nextURL = urls.buildURL(e);
+
+                // reset page filter
+                e.filters.page = e.data.pagination.page;
             }
+
+            // if this is not the first page, build prev page url
             if (context.page > 1) {
+                // drop page number down to build prev page url
                 e.filters.page = e.data.pagination.page - 1;
                 context.prevURL = urls.buildURL(e);
+
+                // reset page filter
+                e.filters.page = e.data.pagination.page;
             }
             if (context.prevURL || context.nextURL) {
                 context.paginationLinks = true;

@@ -22,6 +22,7 @@ module.exports = {
             committees.push({
                 name: committee.name,
                 treasurer: committee.treasurer.name_full,
+                state: committee.address.state,
                 party: '',
                 type: type,
                 designation: designation

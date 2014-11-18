@@ -79,7 +79,7 @@ module.exports = {
         });
 
         events.on('selected:filter', filterLoadHandler);
-        events.on('removed:filter', filterLoadHandler);
+        events.on('deselected:filter', filterLoadHandler);
         events.on('nav:pagination', filterLoadHandler);
     },
 
