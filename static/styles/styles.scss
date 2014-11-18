@@ -28,6 +28,44 @@ body {
   padding: em(20) 0;
 }
 
+// MODULE: Page nav
+.page-nav {
+  background-color: $licorice;
+}
+
+.page-nav {
+  @extend %flat-list;
+
+  .page-nav__item {
+    padding: 2rem;
+    border-right: 1px solid $light-gray;
+    color: #fff;
+  }
+
+  a {
+    display: block;
+    font-size: 1.125rem;
+    line-height: 2rem;
+
+    &:hover {
+      background-color: $licorice-2;
+    }
+  }
+}
+
+.page-nav__search {
+  @include span-columns(10);
+  padding-left: 0;
+  margin-right: 0;
+
+  .search-bar,
+  .search-submit {
+    height: 2rem;
+    margin-bottom: 0;
+  }
+}
+
+
 // MODULE: Hero Unit
 .hero {
   padding: rem(80) 0;
@@ -43,6 +81,11 @@ body {
 
 // MODULE: Search bar
 
+.search-bar {
+  margin: 0;
+  border: 0;
+}
+
 #large-search {
   label {
     margin-bottom: 2em;
@@ -56,8 +99,6 @@ body {
   .search-bar {
     padding: 1rem;
     font-size: 2rem;
-    border: 0;
-    margin: 0;
     height: 4rem;
 
     @include placeholder {
@@ -94,6 +135,11 @@ body {
   }
 }
 
+
+// MODULE: Data view
+.data {
+  padding: 3rem 0;
+}
 
 // @mixin zero-space() {
 //     margin: 0;
