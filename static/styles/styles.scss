@@ -21,7 +21,7 @@ body {
 // MODULE: Header
 
 .site-header {
-
+  border-bottom: 5px solid $red;
 }
 
 .site-header__inner {
@@ -30,33 +30,69 @@ body {
 
 // MODULE: Hero Unit
 .hero {
-  background-color: $licorice;
-  padding: rem(50) 0;
+  padding: rem(80) 0;
   color: #fff;
   text-align: center;
+  background-color: $licorice;
+  background-image: url('../img/mesh@2x.png');
+  background-size: contain;
+
 }
 
 
 
 // MODULE: Search bar
 
+#large-search {
+  label {
+    margin-bottom: 2em;
+  }
+}
+
 .search--large {
   @include span-columns(18);
   @include shift(3);
 
   .search-bar {
-    padding: em(20);
+    padding: 1rem;
+    font-size: 2rem;
+    border: 0;
+    margin: 0;
+    height: 4rem;
+
+    @include placeholder {
+      font-weight: 300;
+    }
   }
 
   input[type="submit"] {
-    padding: em(8);
-    font-size: rem(32);
+    padding: 1rem;
+    font-size: 2rem;
     line-height: 1;
     font-weight: 300;
   }
 }
 
 
+// MODULE: Browse links
+.sub-hero {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.browse-links {
+  @extend %flat-list;
+  @include span-columns(12);
+  @include shift(6);
+  padding: 1rem 0;
+
+  li {
+    @include span-columns(6 of 12);
+    .button {
+      display: block;
+    }
+  }
+}
 
 
 // @mixin zero-space() {

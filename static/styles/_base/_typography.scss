@@ -3,7 +3,7 @@ body {
   background-color: $base-background-color;
   color: $base-font-color;
   font-family: $base-font-family;
-  font-size: $base-font-size;
+  font-size: $base-font-size * .875;
   line-height: $unitless-line-height;
 }
 
@@ -15,19 +15,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: $base-font-size * 2.25; // 16 * 2.25 = 36px
+  font-size: $base-font-size * 3.125;
+  font-weight: 300;
 }
 
 h2 {
-  font-size: $base-font-size * 2; // 16 * 2 = 32px
+  font-size: $base-font-size * 2.5;
+  font-weight: 300;
 }
 
 h3 {
-  font-size: $base-font-size * 1.75; // 16 * 1.75 = 28px
+  font-size: $base-font-size * 2;
+  font-weight: 400;
 }
 
 h4 {
-  font-size: $base-font-size * 1.5; // 16 * 1.5 = 24px
+  font-size: $base-font-size * 1.25;
+  font-weight: 400;
 }
 
 h5 {
@@ -84,4 +88,10 @@ cite {
   &:before {
     content: '\2014 \00A0';
   }
+}
+
+// Universal text classes
+
+.lead-text {
+  font-size: $base-font-size * 1.125;
 }

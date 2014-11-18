@@ -1,10 +1,36 @@
-button,
-input[type="submit"] {
-  @extend %button;
+@mixin button($bgcolor, $textcolor, $hoverbg, $hovertext) {
   @include appearance(none);
+  @include transition(background-color .1s);
+  -webkit-font-smoothing: antialiased;
+  background-color: $bgcolor;
+  border-radius: $base-border-radius;
   border: none;
+  display: inline-block;
+  color: $textcolor;
+  font-size: $base-font-size;
+  font-weight: bold;
+  line-height: 1;
+  padding: .75em 1em;
+  text-decoration: none;
   cursor: pointer;
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
+
+  &:hover {
+    background-color: $hoverbg;
+    color: $hovertext;
+  }
+}
+
+.button {
+  @include button($light-gray, $dark-gray, $dark-gray, #fff);
+  border: 1px solid $medium-gray;
+
+}
+
+button,
+input[type="submit"],
+.button.primary {
+  @include button($blue, #fff, $blue-2, #fff);
 }

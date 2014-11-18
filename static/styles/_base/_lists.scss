@@ -16,6 +16,14 @@ ul, ol {
   }
 }
 
+%flat-list {
+  @include clearfix();
+
+  li {
+    float: left;
+  }
+}
+
 dl {
   margin-bottom: $base-line-height / 2;
 
