@@ -76,3 +76,19 @@ select {
   max-width: 100%;
   margin-bottom: $base-line-height;
 }
+
+
+// Custom form elements
+.input-button-combo {
+  #{$all-text-inputs} {
+    width: 80%;
+    float: left;
+    border-radius: $base-border-radius 0 0 $base-border-radius;
+  }
+
+  input[type="submit"] {
+    width: 20%;
+    float: left;
+    border-radius: 0 $base-border-radius $base-border-radius 0;
+  }
+}

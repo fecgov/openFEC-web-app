@@ -27,7 +27,7 @@ button,
 input[type="submit"] {
   -webkit-font-smoothing: antialiased;
   background-color: #2678BA;
-  border-radius: 0.1875em;
+  border-radius: 0.25em;
   color: white;
   display: inline-block;
   font-size: 1em;
@@ -141,7 +141,7 @@ select[multiple=multiple] {
   -moz-transition: border-color;
   transition: border-color;
   background-color: white;
-  border-radius: 0.1875em;
+  border-radius: 0.25em;
   border: 1px solid #DDD;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
   font-family: "Open Sans", helvetica, arial, sans-serif;
@@ -183,6 +183,15 @@ select {
   width: auto;
   max-width: 100%;
   margin-bottom: 1.5em; }
+
+.input-button-combo input[type="email"], .input-button-combo input[type="number"], .input-button-combo input[type="password"], .input-button-combo input[type="search"], .input-button-combo input[type="tel"], .input-button-combo input[type="text"], .input-button-combo input[type="url"], .input-button-combo input[type="color"], .input-button-combo input[type="date"], .input-button-combo input[type="datetime"], .input-button-combo input[type="datetime-local"], .input-button-combo input[type="month"], .input-button-combo input[type="time"], .input-button-combo input[type="week"] {
+  width: 80%;
+  float: left;
+  border-radius: 0.25em 0 0 0.25em; }
+.input-button-combo input[type="submit"] {
+  width: 20%;
+  float: left;
+  border-radius: 0 0.25em 0.25em 0; }
 
 table {
   border-collapse: collapse;
@@ -240,10 +249,40 @@ input[type="submit"] {
 .hidden {
   display: none; }
 
+body {
+  padding: 0;
+  margin: 0;
+  min-width: 68em; }
+
+.usa {
+  background-color: #e6e6e6;
+  text-align: center;
+  font-size: .75rem;
+  padding: .25rem; }
+
+.site-header__inner {
+  padding: 1.25em 0; }
+
 .hero {
   background-color: #3E4957;
-  padding: 3.75rem 0;
+  padding: 3.125rem 0;
   color: #fff;
   text-align: center; }
+
+.search--large {
+  float: left;
+  display: block;
+  margin-right: 1.16509%;
+  width: 74.70873%;
+  margin-left: 12.64564%; }
+  .search--large:last-child {
+    margin-right: 0; }
+  .search--large .search-bar {
+    padding: 1.25em; }
+  .search--large input[type="submit"] {
+    padding: 0.5em;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 300; }
 
 /*# sourceMappingURL=styles.css.map */
