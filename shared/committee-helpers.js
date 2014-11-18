@@ -28,7 +28,12 @@ module.exports = {
             }
 
             name = committee.name || '';
-            treasurer = committee.treasurer.name_full || '';
+            if (typeof committee.treasurer !== 'undefined') {
+                treasurer = committee.treasurer.name_full;
+            }
+            else {
+                treasurer = '';
+            }
             state = committee.address.state || '';
             party = '';
 
