@@ -78,7 +78,6 @@ var renderFilters = function(e) {
             context.heading = 'Browse ' + e.category;
         }
 
-
     // pre-load table partial so the template can be shared on client + server
     $.when(
         loadTemplate('views/' + tmplName + '.handlebars'),
@@ -127,6 +126,17 @@ var renderSearchResultsList = function(e) {
     });
 };
 
+var renderLandingView = function() {
+    $.when(
+        loadTemplate('views/search.handlebars'),
+        loadTemplate('views/partials/search-bar.handlebars')
+    ).done(function(tmpl1, tmpl2) {
+        templates['landing'] = Handlebars.compile(tmpl1[0]);
+        templates['search-bar'] = Handlebars.registerPartial('search-bar', tmpl2[0]);
+        $('#main').html(templates['landing']());
+    });
+};
+
 var mapFields = function(category, results) {
     switch (category) {
         case "candidates":
@@ -152,5 +162,6 @@ module.exports = {
         events.on('render:filters', renderFilters);
         events.on('render:searchResults', renderSearchResults);
         events.on('render:searchResultsList', renderSearchResultsList);
+        events.on('err:load:search', renderLandingView);
     }
 };
