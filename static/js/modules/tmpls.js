@@ -61,9 +61,24 @@ var renderBrowse = function(e) {
         }.bind(e));
 };
 
+var renderSearchResults = function(e) {
+    e.searchResults = true;
+    renderFilters(e);
+    renderBrowse(e);
+};
+
 var renderFilters = function(e) {
     var tmplName = e.category,
-        partialName = tmplName + '-table';
+        partialName = tmplName + '-table',
+        context = {};
+
+        if (e.searchResults && e.query) {
+            context.heading = 'Search Results: ' + e.query;
+        }
+        else {
+            context.heading = 'Browse ' + e.category;
+        }
+
 
     // pre-load table partial so the template can be shared on client + server
     $.when(
@@ -72,18 +87,17 @@ var renderFilters = function(e) {
     ).done(function(tmpl1, tmpl2) {
         templates[tmplName] = Handlebars.compile(tmpl1[0]);
         templates[partialName] = Handlebars.registerPartial(partialName, tmpl2[0]);
-        $('#main').html(templates[tmplName]());
+        $('#main').html(templates[tmplName](context));
         events.emit('bind:filters', e);
     });
 };
 
-var renderSearch = function(e) {
+var renderSearchResultsList = function(e) {
     var promises = [],
         i,
         len = categories.length;
 
     promises.push(loadTemplate('views/search-results.handlebars'));
-    promises.push(loadTemplate('views/partials/search-bar.handlebars'));
 
     for (i = 0; i < len; i++) {
         promises.push(loadTemplate('views/partials/' + categories[i] + 's-table.handlebars'));
@@ -97,13 +111,12 @@ var renderSearch = function(e) {
             category;
 
         templates['search-results'] = Handlebars.compile(arguments[0][0]);
-        templates['search-bar'] = Handlebars.registerPartial('search-bar', arguments[1][0]);
 
-        for (i = 2; i < len; i++) {
-            tmplName = categories[i - 2] + 's-table';
-            category = categories[i - 2] + 's';
+        for (i = 1; i < len; i++) {
+            tmplName = categories[i - 1] + 's-table';
+            category = categories[i - 1] + 's';
             templates[tmplName] = Handlebars.registerPartial(tmplName, arguments[i][0]);
-            context[category] = mapFields(category, e.results[categories[i - 2]]);
+            context[category] = mapFields(category, e.results[categories[i - 1]]);
         } 
 
         context.query = e.query;
@@ -138,6 +151,7 @@ module.exports = {
         events.on('render:browse', renderBrowse);
         events.on('load:browse', renderFilters);
         events.on('render:filters', renderFilters);
-        events.on('render:search', renderSearch);
+        events.on('render:searchResults', renderSearchResults);
+        events.on('render:searchResultsList', renderSearchResultsList);
     }
 };

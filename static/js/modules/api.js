@@ -63,7 +63,7 @@ module.exports = {
                     e.results[entitiesArray[i]] = arguments[i][0].results;   
                 }
 
-                events.emit('render:search', e);
+                events.emit('render:searchResultsList', e);
             }).fail(function() {
                 events.emit('err:load:search');
             });
@@ -75,6 +75,15 @@ module.exports = {
             promise.done(function(data) {
                 e.data = data;
                 events.emit('render:browse', e);
+            });
+        });
+
+        events.on('load:searchResults', function(e) {
+            var promise = callAPI('rest/' + entityMap[e.category]);
+
+            promise.done(function(data) {
+                e.data = data;
+                events.emit('render:searchResults', e);
             });
         });
 

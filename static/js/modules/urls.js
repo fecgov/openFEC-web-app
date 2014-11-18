@@ -39,6 +39,8 @@ module.exports = {
         events.on('render:browse', changeURL);
         events.on('selected:filter', changeURL);
         events.on('removed:filter', changeURL);
+        events.on('render:searchResultsList', changeURL);
+        events.on('render:searchResults', changeURL);
     },
 
     // for unit tests

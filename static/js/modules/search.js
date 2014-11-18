@@ -35,8 +35,7 @@ module.exports = {
 
                 $('#main').data('section', context.category);
 
-                events.emit('render:filters', context);
-                events.emit('load:browse', context);
+                events.emit('load:searchResults', context);
             });
         });
 

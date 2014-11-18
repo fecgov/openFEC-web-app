@@ -10,10 +10,12 @@ module.exports = {
         events.on('selected:filter', NProgress.start);
         events.on('deselected:filter', NProgress.start);
         events.on('nav:pagination', NProgress.start);
+        events.on('load:searchResults', NProgress.start);
 
         events.on('render:browse', NProgress.done);
         events.on('render:filters', NProgress.done);
-        events.on('render:search', NProgress.done);
+        events.on('render:searchResults', NProgress.done);
+        events.on('render:searchResultsList', NProgress.done);
         events.on('err:load:search', NProgress.done);       
     }
 };
