@@ -5,7 +5,11 @@ module.exports = {
             committee,
             committees = [],
             type,
-            designation;
+            designation,
+            name,
+            treasurer,
+            state,
+            party;
 
         if (typeof results !== 'undefined') {
             len = results.length;
@@ -23,11 +27,16 @@ module.exports = {
                 designation = '';
             }
 
+            name = committee.name || '';
+            treasurer = committee.treasurer.name_full || '';
+            state = committee.address.state || '';
+            party = '';
+
             committees.push({
-                name: committee.name,
-                treasurer: committee.treasurer.name_full,
-                state: committee.address.state,
-                party: '',
+                name: name,
+                treasurer: treasurer,
+                state: state,
+                party: party,
                 type: type,
                 designation: designation
             });
