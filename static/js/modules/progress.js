@@ -8,7 +8,7 @@ module.exports = {
         events.on('search:submitted', NProgress.start);
         events.on('load:browse', NProgress.start);
         events.on('selected:filter', NProgress.start);
-        events.on('removed:filter', NProgress.start);
+        events.on('deselected:filter', NProgress.start);
         events.on('nav:pagination', NProgress.start);
 
         events.on('render:browse', NProgress.done);

@@ -87,10 +87,6 @@ var toTitleCase = function(str) {
 }
 
 var activateFilter = function() {
-    if (typeof selectedFilters[this.name] !== 'undefined') {
-        $('.selected-filter[data-field=' + this.name + ']').remove();            
-    }
-
     selectedFilters[this.name] = this.value;
 
     events.emit('selected:filter', {
@@ -100,12 +96,26 @@ var activateFilter = function() {
         filters: selectedFilters
     });
 
-    addBox(this);
     addActiveStyle(this);
 };
 
+var deactivateFilter = function() {
+    delete selectedFilters[this.name];
+
+    events.emit('deselected:filter', {
+        category: $('#main').data('section'),
+        filters: selectedFilters
+    });
+
+    removeActiveStyle(this);
+};
+
 var bindFilters = function(e) {
-    $('#category-filters select').chosen({width: "100%"});
+    $('#category-filters select').chosen({
+        width: "100%",
+        allow_single_deselect: true
+    });
+
 
     if (typeof e !== 'undefined' && typeof e.query !== 'undefined') {
         $('#category-filters').find('input[name=name]').val(e.query).parent().addClass('active');
@@ -114,7 +124,15 @@ var bindFilters = function(e) {
     }
 
     // make select boxes work
-    $('#category-filters select').chosen().change(activateFilter);
+    $('#category-filters select').chosen().change(function(e, selected) {
+        // if there is no selected object, the user deselected the field
+        if (typeof selected === 'undefined') {
+            deactivateFilter.call(this);
+        }
+        else {
+            activateFilter.call(this);
+        }
+    });
 
     // make name filter work
     $('#category-filters input').on('input', function() {
@@ -131,18 +149,12 @@ var bindFilters = function(e) {
 
 var selectedFilters = {};
 
-var addBox = function(e) {
-    var value = e.value;
-
-    if ($.inArray(e.name, mappedCategories) > -1) {
-        value = filterMap[e.name][e.value];
-    }
-
-    $('#selected-filters').append('<div class="selected-filter" data-field="' + e.name + '">' + toTitleCase(e.name) + ': ' + value + '<a class="close" href="">x</a></div>'); 
-};
-
 var addActiveStyle = function(field) {
     $(field).parent().addClass('active');
+};
+
+var removeActiveStyle = function(field) {
+    $(field).parent().removeClass('active');
 };
 
 module.exports = {
@@ -155,22 +167,6 @@ module.exports = {
         });
 
         // if loaded on a page with filters, init chosen
-        $('#category-filters select').chosen({width: "100%"});
-
         bindFilters();
-
-        // close tag boxes
-        $('#selected-filters').on('click', '.close', function(e) {
-            e.preventDefault();
-
-            var $box = $(event.target).parent();
-            delete selectedFilters[$box.data('field')];
-            $box.remove();
-
-            events.emit('removed:filter', {
-                category: $('#main').data('section'),
-                filters: selectedFilters
-            });
-        });
     }
 };
