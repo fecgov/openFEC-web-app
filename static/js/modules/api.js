@@ -11,10 +11,7 @@ var entitiesArray = ['candidate', 'committee'];
 
 var callAPI = function(url) {
     return $.ajax({
-        url: url,
-        success: function(data) {
-            console.log(data);
-        }
+        url: url
     });
 };
 

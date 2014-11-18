@@ -9,8 +9,12 @@ var categories = require('./api.js').entitiesArray;
 var templates = {};
 
 var renderBrowse = function(e) {
-    var tmplName = e.category + '-table',
-        promise = loadTemplate('views/partials/' + tmplName + '.handlebars');
+    if (typeof e.data.results === 'undefined' || e.data.results.length === 0) {
+        $('#' + e.category).html('No results matched your query.');
+    }
+    else {
+        var tmplName = e.category + '-table',
+            promise = loadTemplate('views/partials/' + tmplName + '.handlebars');
 
         promise.done(function(data) {
             var context = {};
@@ -19,7 +23,7 @@ var renderBrowse = function(e) {
             context.resultsCount = e.data.pagination.count;
             context.page = e.data.pagination.page;
 
-             if (typeof e.filters === 'undefined') {
+            if (typeof e.filters === 'undefined') {
                 e.filters = {};
             }
 
@@ -58,6 +62,7 @@ var renderBrowse = function(e) {
             $('#' + e.category).html(templates[tmplName](context));
             events.emit('bind:browse');
         }.bind(e));
+    }
 };
 
 var renderSearchResults = function(e) {
