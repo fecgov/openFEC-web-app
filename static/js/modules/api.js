@@ -11,16 +11,17 @@ var entitiesArray = ['candidate', 'committee'];
 
 var callAPI = function(url) {
     return $.ajax({
-        url: url,
-        success: function(data) {
-            console.log(data);
-        }
+        url: url
     });
 };
 
 var buildURL = function(e) {
     var URL = 'rest/' + entityMap[e.category] + '?',
         field;
+
+    if (typeof e.query !== 'undefined') {
+        URL += 'q=' + e.query + '&';
+    }
 
     for (field in e.filters) {
         if (e.filters.hasOwnProperty(field)) {
@@ -63,7 +64,7 @@ module.exports = {
                     e.results[entitiesArray[i]] = arguments[i][0].results;   
                 }
 
-                events.emit('render:search', e);
+                events.emit('render:searchResultsList', e);
             }).fail(function() {
                 events.emit('err:load:search');
             });
@@ -75,6 +76,15 @@ module.exports = {
             promise.done(function(data) {
                 e.data = data;
                 events.emit('render:browse', e);
+            });
+        });
+
+        events.on('load:searchResults', function(e) {
+            var promise = callAPI(buildURL(e));
+
+            promise.done(function(data) {
+                e.data = data;
+                events.emit('render:searchResults', e);
             });
         });
 

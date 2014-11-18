@@ -4,6 +4,15 @@ var events = require('./events.js');
 var vex = require('vex-js');
 vex.dialog = require('vex-js/js/vex.dialog.js');
 
+var enableSearchForm = function() {
+    var $form = $('form#search'),
+        $submitButton = $form.find('input[type=submit]'),
+        $searchBox = $form.find('input[name=search]');
+
+    $submitButton.removeAttr('disabled');
+    $searchBox.removeAttr('disabled');
+};
+
 module.exports = {
     init: function() {
         $('#search, #large-search').on('submit', function(e) {
@@ -35,20 +44,17 @@ module.exports = {
 
                 $('#main').data('section', context.category);
 
-                events.emit('render:filters', context);
-                events.emit('load:browse', context);
+                events.emit('load:searchResults', context);
             });
         });
 
         events.on('err:load:search', function() {
-            var $form = $('form#search'),
-                $submitButton = $form.find('input[type=submit]'),
-                $searchBox = $form.find('input[name=search]');
+            enableSearchForm();
+            vex.dialog.alert("Sorry, we couldn't load your search results. Please try again.");
+        });
 
-                $submitButton.removeAttr('disabled');
-                $searchBox.removeAttr('disabled');
-
-                vex.dialog.alert("Sorry, we couldn't load your search results. Please try again.");
+        events.on('render:searchResultsList', function() {
+            enableSearchForm();
         });
     }
 };

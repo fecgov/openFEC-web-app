@@ -9,23 +9,26 @@ var categories = require('./api.js').entitiesArray;
 var templates = {};
 
 var renderBrowse = function(e) {
-    var tmplName = e.category + '-table',
-        promise = loadTemplate('views/partials/' + tmplName + '.handlebars');
+    if (typeof e.data.results === 'undefined' || e.data.results.length === 0) {
+        $('#' + e.category).html('No results matched your query.');
+    }
+    else {
+        var tmplName = e.category + '-table',
+            promise = loadTemplate('views/partials/' + tmplName + '.handlebars');
 
         promise.done(function(data) {
-            var context = {},
-                totalPages;
+            var context = {};
 
             context[e.category] = mapFields(e.category, e.data.results);
             context.resultsCount = e.data.pagination.count;
             context.page = e.data.pagination.page;
-            totalPages = Math.ceil(e.data.pagination.pages / e.data.pagination.per_page);
-             if (typeof e.filters === 'undefined') {
+
+            if (typeof e.filters === 'undefined') {
                 e.filters = {};
             }
 
             // if we are not at the last page, build next page url
-            if (e.data.pagination.page < totalPages) {
+            if (e.data.pagination.page < e.data.pagination.pages) {
                 // bump up page to build next page's url
                 e.filters.page = e.data.pagination.page + 1;
                 context.nextURL = urls.buildURL(e);
@@ -59,11 +62,26 @@ var renderBrowse = function(e) {
             $('#' + e.category).html(templates[tmplName](context));
             events.emit('bind:browse');
         }.bind(e));
+    }
+};
+
+var renderSearchResults = function(e) {
+    e.searchResults = true;
+    renderFilters(e);
+    renderBrowse(e);
 };
 
 var renderFilters = function(e) {
     var tmplName = e.category,
-        partialName = tmplName + '-table';
+        partialName = tmplName + '-table',
+        context = {};
+
+        if (e.searchResults && e.query) {
+            context.heading = 'Search Results: ' + e.query;
+        }
+        else {
+            context.heading = 'Browse ' + e.category;
+        }
 
     // pre-load table partial so the template can be shared on client + server
     $.when(
@@ -72,18 +90,17 @@ var renderFilters = function(e) {
     ).done(function(tmpl1, tmpl2) {
         templates[tmplName] = Handlebars.compile(tmpl1[0]);
         templates[partialName] = Handlebars.registerPartial(partialName, tmpl2[0]);
-        $('#main').html(templates[tmplName]());
+        $('#main').html(templates[tmplName](context));
         events.emit('bind:filters', e);
     });
 };
 
-var renderSearch = function(e) {
+var renderSearchResultsList = function(e) {
     var promises = [],
         i,
         len = categories.length;
 
     promises.push(loadTemplate('views/search-results.handlebars'));
-    promises.push(loadTemplate('views/partials/search-bar.handlebars'));
 
     for (i = 0; i < len; i++) {
         promises.push(loadTemplate('views/partials/' + categories[i] + 's-table.handlebars'));
@@ -97,13 +114,12 @@ var renderSearch = function(e) {
             category;
 
         templates['search-results'] = Handlebars.compile(arguments[0][0]);
-        templates['search-bar'] = Handlebars.registerPartial('search-bar', arguments[1][0]);
 
-        for (i = 2; i < len; i++) {
-            tmplName = categories[i - 2] + 's-table';
-            category = categories[i - 2] + 's';
+        for (i = 1; i < len; i++) {
+            tmplName = categories[i - 1] + 's-table';
+            category = categories[i - 1] + 's';
             templates[tmplName] = Handlebars.registerPartial(tmplName, arguments[i][0]);
-            context[category] = mapFields(category, e.results[categories[i - 2]]);
+            context[category] = mapFields(category, e.results[categories[i - 1]]);
         } 
 
         context.query = e.query;
@@ -112,6 +128,17 @@ var renderSearch = function(e) {
         $('input[name=search]')[0].value = e.query;
 
         events.emit('bind:search');
+    });
+};
+
+var renderLandingView = function() {
+    $.when(
+        loadTemplate('views/search.handlebars'),
+        loadTemplate('views/partials/search-bar.handlebars')
+    ).done(function(tmpl1, tmpl2) {
+        templates['landing'] = Handlebars.compile(tmpl1[0]);
+        templates['search-bar'] = Handlebars.registerPartial('search-bar', tmpl2[0]);
+        $('#main').html(templates['landing']());
     });
 };
 
@@ -138,6 +165,8 @@ module.exports = {
         events.on('render:browse', renderBrowse);
         events.on('load:browse', renderFilters);
         events.on('render:filters', renderFilters);
-        events.on('render:search', renderSearch);
+        events.on('render:searchResults', renderSearchResults);
+        events.on('render:searchResultsList', renderSearchResultsList);
+        events.on('err:load:search', renderLandingView);
     }
 };

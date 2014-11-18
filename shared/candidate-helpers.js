@@ -3,11 +3,15 @@ module.exports = {
         var candidates = [],
             i,
             j,
-            len = results.length,
+            len,
             elections,
             election,
             year,
             jlen;
+
+        if (typeof results !== 'undefined') {
+            len = results.length;
+        }
 
         for (i = 0; i < len; i++) {
             elections = results[i].elections;

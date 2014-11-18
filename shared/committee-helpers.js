@@ -1,11 +1,15 @@
 module.exports = {
     buildCommitteeContext: function(results) {
         var i,
-            len = results.length,
+            len,
             committee,
             committees = [],
             type,
             designation;
+
+        if (typeof results !== 'undefined') {
+            len = results.length;
+        }
 
         for (i = 0; i < len; i++) {
             committee = results[i][0];

@@ -7,13 +7,13 @@ var buildURL = function(context) {
         field;
 
     if (typeof context.category !== 'undefined') {
-        URL += context.category;
+        URL += context.category + '?';
 
         if (typeof context.query !== 'undefined') {
-            URL += '?q=' + encodeURIComponent(context.query);
+            URL += 'q=' + encodeURIComponent(context.query) + '&';
         }
-        else if (typeof context.filters !== 'undefined') {
-            URL += '?';
+
+        if (typeof context.filters !== 'undefined') {
             for (field in context.filters) {
                 if (context.filters.hasOwnProperty(field)) {
                     URL += field + '=' + context.filters[field] + '&'
@@ -39,6 +39,8 @@ module.exports = {
         events.on('render:browse', changeURL);
         events.on('selected:filter', changeURL);
         events.on('removed:filter', changeURL);
+        events.on('render:searchResultsList', changeURL);
+        events.on('render:searchResults', changeURL);
     },
 
     // for unit tests

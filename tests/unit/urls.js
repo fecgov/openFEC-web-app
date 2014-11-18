@@ -9,7 +9,7 @@ describe('URL Module', function() {
                 query: 'ladybug'  
             };
 
-            assert.equal(urls.buildURL(context), '/insects?q=ladybug');
+            assert.equal(urls.buildURL(context), '/insects?q=ladybug&');
         });
 
         it('should return a URL to match the given context when filtered', function() {
