@@ -15,9 +15,15 @@
 
 <header class="header">
     <div class="header-bar">Open FEC Beta</div>
-    <nav class="header-nav">
+    <nav class="header-nav hidden">
         <ul class="header-nav-bar">
-            <li><a href="search" name="search" class="active"><span class="ti-search"></span> Search</a></li>
+            <li>
+                <form id="search" action="/search">
+                    <label for="search">Search</label>
+                    <input type="text" name="search"/>
+                    <input type="submit"/>
+                </form>
+            </li>
             <li><a href="candidates" name="candidates">Candidates</a></li>
             <li><a href="committees" name="committees">Committees</a></li>
             <li><a name="contributions" class="inactive">Contributions</a></li>

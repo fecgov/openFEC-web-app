@@ -16,6 +16,8 @@ module.exports = {
             $submitButton.attr('disabled', '');
             $searchBox.attr('disabled', '');
             events.emit('search:submitted', {'query': searchQuery});
+
+            $('.header-nav').removeClass('hidden');
         });
 
         events.on('bind:search', function() {
