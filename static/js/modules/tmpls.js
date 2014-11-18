@@ -13,19 +13,18 @@ var renderBrowse = function(e) {
         promise = loadTemplate('views/partials/' + tmplName + '.handlebars');
 
         promise.done(function(data) {
-            var context = {},
-                totalPages;
+            var context = {};
 
             context[e.category] = mapFields(e.category, e.data.results);
             context.resultsCount = e.data.pagination.count;
             context.page = e.data.pagination.page;
-            totalPages = Math.ceil(e.data.pagination.pages / e.data.pagination.per_page);
+
              if (typeof e.filters === 'undefined') {
                 e.filters = {};
             }
 
             // if we are not at the last page, build next page url
-            if (e.data.pagination.page < totalPages) {
+            if (e.data.pagination.page < e.data.pagination.pages) {
                 // bump up page to build next page's url
                 e.filters.page = e.data.pagination.page + 1;
                 context.nextURL = urls.buildURL(e);
