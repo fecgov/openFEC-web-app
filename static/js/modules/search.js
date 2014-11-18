@@ -6,7 +6,7 @@ vex.dialog = require('vex-js/js/vex.dialog.js');
 
 module.exports = {
     init: function() {
-        $('#search').on('submit', function(e) {
+        $('#search, #large-search').on('submit', function(e) {
             e.preventDefault();
             var $form = $(e.target),
                 $submitButton = $form.find('input[type=submit]'),
@@ -16,8 +16,11 @@ module.exports = {
             $submitButton.attr('disabled', '');
             $searchBox.attr('disabled', '');
             events.emit('search:submitted', {'query': searchQuery});
+        });
 
-            $('.header-nav').removeClass('hidden');
+        $('#large-search').on('submit', function(e) {
+            $('.header-nav').removeClass('hidden'); 
+            $('#main').html('');
         });
 
         events.on('bind:search', function() {
