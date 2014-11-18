@@ -1,229 +1,238 @@
 @import "../bourbon/bourbon";
 @import "../neat/neat";
+@import "../base/base";
+@import "layout";
+@import "states";
 
-$grid-columns: 24;
-
-$dark-blue: #03253e;
-$white: #fff;
-$light-gray: #d8d8d8;
-$black: #000;
-$medium-gray: #969696;
-$medium-blue: #1067d5;
-$dark-gray: #484b50;
-
-$open-sans: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$raleway: 'Raleway',  'Helvetica Neue', Helvetica, Arial, sans-serif;
-$source-code-pro: 'Source Code Pro', monospace;
-
-@mixin zero-space() {
-    margin: 0;
-    padding: 0;
+// Hero Unit
+.hero {
+  background-color: $licorice;
+  padding: rem(60) 0;
+  color: #fff;
+  text-align: center;
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: $raleway;
-}
-
-body {
-    margin: 0;
-    font-family: $open-sans;
-    padding-bottom: 4em;
-}
-
-.inactive, .header-nav-bar a.inactive {
-    color: $medium-gray;
-}
-
-#main {
-    @include outer-container();
-    @include shift(1);
-}
-
-.header {
-    background-color: $dark-blue;
-}
-
-.header-bar {
-    color: $white;
-    padding-left: $column + $gutter;
-}
-
-.header-nav {
-    background-color: $light-gray;
-}
-
-.header-nav-bar {
-    @include zero-space();
-    list-style: none;
-    padding-left: $column + $gutter;
-
-    li {
-        display: inline-block;
-
-        a {
-            color: $black;
-            display: block;
-            padding: 1em;
-            text-decoration: none;
-
-            &.active {
-                background-color: $dark-blue;
-                color: $white;
-            }
-        }
-    }
-}
-
-#search {
-    @include clearfix;
-
-    label {
-        margin: 1em 0;
-        display: block;
-    }
-
-    input {
-        height: 3em;
-    }
-
-    input[name=search] {
-        @include span-columns(16);
-        @include omega();
-        font-size: 1.2em;
-        border: 1px solid $medium-gray;
-        padding: 0 1em;
-    }
-
-    input[type=submit] {
-        @include span-columns(4);
-        @include omega();
-        @include linear-gradient(to bottom, #5fb85f, #439e46);
-        border: 0;
-        font-size: 1.2em; /* to match em sizing on text field */
-        @include border-right-radius(4px);
-    }
-}
-
-.browse-links {
-    margin: 1em 0;
-
-    ul {
-        @include zero-space();
-        list-style: none;
-        display: inline;
-
-        li {
-            display: inline;
-            margin: 0 .5em;
-
-            a {
-                font-weight: bold;
-                color: $medium-blue;                
-            }
-        }
-    }
-}
-
-.filter-box {
-    @include span-columns(16);
-    border: 1px solid $medium-blue;
-
-    .filter-header-bar {
-        background-color: $medium-blue;
-        font-size: 1em;
-        color: $white;
-        @include pad();
-        font-weight: bold;
-    }
-
-    .filter-field-container {
-        @include clearfix();
-
-        .field {
-            @include pad();
-            @include span-columns(2.5 of 8);
-            position: relative;
-
-            label {
-                display: block;
-                font-size: .8em;
-            }
-
-            input[type=text] {
-                width: 100%;
-            }
-
-            .add-filter {
-                position: absolute;
-                left: 100%;
-                top: 36px;
-                cursor: pointer;
-            }
-
-            &.active {
-                label {
-                    color: $medium-blue;
-                }
-
-                input, select, .chosen-single {
-                    border: 1px solid $medium-blue;
-                }
-            }
-        }
-    }
-}
-
-#selected-filters {
-    margin: 1.5em 0;
-
-    .selected-filter {
-        display: inline;
-        background-color: $medium-blue;
-        color: $white;
-        font-size: .75em;
-        padding: .5em;
-        margin-right: 1em;
-
-        .close {
-            margin-left: 2em;
-        }
-    }
-}
-
-#candidates, 
-#committees,
-#results {
-    @include span-columns(24);
-    clear: left;
-    border-top: 1px dashed $medium-gray;
-    margin-top: 1.5em;
-    padding-top: 1em;
-
-    table {
-        border-spacing: 0;
-        border-collapse: collapse;
-
-        th {
-            background-color: $light-gray;
-            color: $dark-gray;
-            border: 1px solid $medium-gray;
-            border-right: 0;
-            text-align: left;
-            padding: .5em;
-
-            &:last-child {
-                border-right: 1px solid $medium-gray;
-            }
-        }
-
-        tr {
-            border-bottom: 1px solid $medium-gray;
-
-            td {
-                padding: .75em .25em;
-                font-family: $source-code-pro;
-                font-size: .7em;
-            }
-        }
-    }
-}
+// $dark-blue: #03253e;
+// $white: #fff;
+// $light-gray: #d8d8d8;
+// $black: #000;
+// $medium-gray: #969696;
+// $medium-blue: #1067d5;
+// $dark-gray: #484b50;
+//
+// $open-sans: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+// $raleway: 'Raleway',  'Helvetica Neue', Helvetica, Arial, sans-serif;
+// $source-code-pro: 'Source Code Pro', monospace;
+//
+// @mixin zero-space() {
+//     margin: 0;
+//     padding: 0;
+// }
+//
+// h1, h2, h3, h4, h5 {
+//     font-family: $raleway;
+// }
+//
+// body {
+//     margin: 0;
+//     font-family: $open-sans;
+//     padding-bottom: 4em;
+// }
+//
+// .inactive, .header-nav-bar a.inactive {
+//     color: $medium-gray;
+// }
+//
+// #main {
+//     @include outer-container();
+//     @include shift(1);
+// }
+//
+// .header {
+//     background-color: $dark-blue;
+// }
+//
+// .header-bar {
+//     color: $white;
+//     padding-left: $column + $gutter;
+// }
+//
+// .header-nav {
+//     background-color: $light-gray;
+// }
+//
+// .header-nav-bar {
+//     @include zero-space();
+//     list-style: none;
+//     padding-left: $column + $gutter;
+//
+//     li {
+//         display: inline-block;
+//
+//         a {
+//             color: $black;
+//             display: block;
+//             padding: 1em;
+//             text-decoration: none;
+//
+//             &.active {
+//                 background-color: $dark-blue;
+//                 color: $white;
+//             }
+//         }
+//     }
+// }
+//
+// #search {
+//     @include clearfix;
+//
+//     label {
+//         margin: 1em 0;
+//         display: block;
+//     }
+//
+//     input {
+//         height: 3em;
+//     }
+//
+//     input[name=search] {
+//         @include span-columns(16);
+//         @include omega();
+//         font-size: 1.2em;
+//         border: 1px solid $medium-gray;
+//         padding: 0 1em;
+//     }
+//
+//     input[type=submit] {
+//         @include span-columns(4);
+//         @include omega();
+//         @include linear-gradient(to bottom, #5fb85f, #439e46);
+//         border: 0;
+//         font-size: 1.2em; /* to match em sizing on text field */
+//         @include border-right-radius(4px);
+//     }
+// }
+//
+// .browse-links {
+//     margin: 1em 0;
+//
+//     ul {
+//         @include zero-space();
+//         list-style: none;
+//         display: inline;
+//
+//         li {
+//             display: inline;
+//             margin: 0 .5em;
+//
+//             a {
+//                 font-weight: bold;
+//                 color: $medium-blue;
+//             }
+//         }
+//     }
+// }
+//
+// .filter-box {
+//     @include span-columns(16);
+//     border: 1px solid $medium-blue;
+//
+//     .filter-header-bar {
+//         background-color: $medium-blue;
+//         font-size: 1em;
+//         color: $white;
+//         @include pad();
+//         font-weight: bold;
+//     }
+//
+//     .filter-field-container {
+//         @include clearfix();
+//
+//         .field {
+//             @include pad();
+//             @include span-columns(2.5 of 8);
+//             position: relative;
+//
+//             label {
+//                 display: block;
+//                 font-size: .8em;
+//             }
+//
+//             input[type=text] {
+//                 width: 100%;
+//             }
+//
+//             .add-filter {
+//                 position: absolute;
+//                 left: 100%;
+//                 top: 36px;
+//                 cursor: pointer;
+//             }
+//
+//             &.active {
+//                 label {
+//                     color: $medium-blue;
+//                 }
+//
+//                 input, select, .chosen-single {
+//                     border: 1px solid $medium-blue;
+//                 }
+//             }
+//         }
+//     }
+// }
+//
+// #selected-filters {
+//     margin: 1.5em 0;
+//
+//     .selected-filter {
+//         display: inline;
+//         background-color: $medium-blue;
+//         color: $white;
+//         font-size: .75em;
+//         padding: .5em;
+//         margin-right: 1em;
+//
+//         .close {
+//             margin-left: 2em;
+//         }
+//     }
+// }
+//
+// #candidates,
+// #committees,
+// #results {
+//     @include span-columns(24);
+//     clear: left;
+//     border-top: 1px dashed $medium-gray;
+//     margin-top: 1.5em;
+//     padding-top: 1em;
+//
+//     table {
+//         border-spacing: 0;
+//         border-collapse: collapse;
+//
+//         th {
+//             background-color: $light-gray;
+//             color: $dark-gray;
+//             border: 1px solid $medium-gray;
+//             border-right: 0;
+//             text-align: left;
+//             padding: .5em;
+//
+//             &:last-child {
+//                 border-right: 1px solid $medium-gray;
+//             }
+//         }
+//
+//         tr {
+//             border-bottom: 1px solid $medium-gray;
+//
+//             td {
+//                 padding: .75em .25em;
+//                 font-family: $source-code-pro;
+//                 font-size: .7em;
+//             }
+//         }
+//     }
+// }

@@ -1,0 +1,5 @@
+// Base styles for layout
+
+.container {
+  @include outer-container();
+}
