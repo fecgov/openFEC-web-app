@@ -23,8 +23,8 @@
     "test": "mocha tests/unit",
     "watch": "watchify static/js/init.js -o static/js/app.js --debug --verbose",
     "build": "browserify static/js/init.js > static/js/app.js",
-    "sass-watch": "sass --watch static/styles/sass/styles.scss:static/styles/styles.css",
-    "sass-build": "sass static/styles/sass/styles.scss:static/styles/styles.css",
+    "sass-watch": "sass --watch static/styles/:static/styles/",
+    "sass-build": "sass static/styles/sass/:static/styles/",
     "watch-all": "npm run watch & npm run sass-watch"
   },
   "repository": {
