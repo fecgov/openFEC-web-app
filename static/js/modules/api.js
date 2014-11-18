@@ -22,6 +22,10 @@ var buildURL = function(e) {
     var URL = 'rest/' + entityMap[e.category] + '?',
         field;
 
+    if (typeof e.query !== 'undefined') {
+        URL += 'q=' + e.query + '&';
+    }
+
     for (field in e.filters) {
         if (e.filters.hasOwnProperty(field)) {
             URL += field + '=' + e.filters[field] + '&'
@@ -79,7 +83,7 @@ module.exports = {
         });
 
         events.on('load:searchResults', function(e) {
-            var promise = callAPI('rest/' + entityMap[e.category]);
+            var promise = callAPI(buildURL(e));
 
             promise.done(function(data) {
                 e.data = data;
