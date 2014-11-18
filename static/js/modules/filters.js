@@ -105,26 +105,26 @@ var activateFilter = function() {
 };
 
 var bindFilters = function(e) {
-    $('#filters select').chosen({width: "100%"});
+    $('#category-filters select').chosen({width: "100%"});
 
     if (typeof e !== 'undefined' && typeof e.query !== 'undefined') {
-        $('#filters').find('input[name=name]').val(e.query).parent().addClass('active');
+        $('#category-filters').find('input[name=name]').val(e.query).parent().addClass('active');
 
         selectedFilters['name'] = e.query;
     }
 
     // make select boxes work
-    $('#filters select').chosen().change(activateFilter);
+    $('#category-filters select').chosen().change(activateFilter);
 
     // make name filter work
-    $('#filters input').on('input', function() {
+    $('#category-filters input').on('input', function() {
         if ($('.add-filter').length === 0) {
             $(this).parent().append('<a class="add-filter">+</a>');
         }
     });
 
     // apply name filter
-    $('#filters').on('click', '.add-filter', function() {
+    $('#category-filters').on('click', '.add-filter', function() {
         activateFilter.call($(this).prev()[0]);
     });
 };
@@ -155,7 +155,7 @@ module.exports = {
         });
 
         // if loaded on a page with filters, init chosen
-        $('#filters select').chosen({width: "100%"});
+        $('#category-filters select').chosen({width: "100%"});
 
         bindFilters();
 
