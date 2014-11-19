@@ -18,14 +18,8 @@ module.exports = {
         for (i = 0; i < len; i++) {
             committee = results[i][0];
 
-            if (typeof committee.candidates !== 'undefined') {
-                type = committee.candidates[0].type;
-                designation = committee.candidates[0].designation;
-            }
-            else {
-                type = committee.type;
-                designation = '';
-            }
+            type = committee.status[0].type;
+            designation = committee.status[0].designation;
 
             name = committee.name || '';
             if (typeof committee.treasurer !== 'undefined') {
