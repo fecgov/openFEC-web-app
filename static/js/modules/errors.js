@@ -5,7 +5,7 @@ var vex = require('vex-js');
 vex.dialog = require('vex-js/js/vex.dialog.js');
 
 var searchError = function() {
-    vex.dialog.alert("Sorry, we couldn't load your search results. Please try again.");
+    vex.dialog.alert("Sorry, we couldn't load your search results. <br>Please try again.");
 };
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
         events.on('err:load:filters', searchError);
 
         events.on('err:load:browse', function() {
-            vex.dialog.alert("Sorry, we are having trouble loading your data. Please try again.");
+            vex.dialog.alert("Sorry, we are having trouble loading your data. <br>Please try again.");
         });
     }
 };

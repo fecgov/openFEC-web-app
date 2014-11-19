@@ -213,7 +213,7 @@ dl {
   -moz-transition: background-color 0.1s;
   transition: background-color 0.1s;
   -webkit-font-smoothing: antialiased;
-  background-color: #F6F6F6;
+  background: #F6F6F6;
   border-radius: 0.25em;
   border: none;
   display: inline-block;
@@ -241,7 +241,8 @@ dl {
 
 button,
 input[type="submit"],
-.primary {
+.primary,
+.vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -251,7 +252,7 @@ input[type="submit"],
   -moz-transition: background-color 0.1s;
   transition: background-color 0.1s;
   -webkit-font-smoothing: antialiased;
-  background-color: #2678BA;
+  background: #2678BA;
   border-radius: 0.25em;
   border: none;
   display: inline-block;
@@ -267,14 +268,17 @@ input[type="submit"],
   white-space: nowrap; }
   button:hover,
   input[type="submit"]:hover,
-  .primary:hover {
+  .primary:hover,
+  .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary:hover {
     background-color: #1B5585;
     color: #fff; }
   button:active, button:focus,
   input[type="submit"]:active,
   input[type="submit"]:focus,
   .primary:active,
-  .primary:focus {
+  .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary:active,
+  .primary:focus,
+  .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary:focus {
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
@@ -283,7 +287,8 @@ input[type="submit"],
     outline: none; }
   button:active,
   input[type="submit"]:active,
-  .primary:active {
+  .primary:active,
+  .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary:active {
     background-color: #1B5585; }
 
 .container {
@@ -536,5 +541,36 @@ tr:nth-child(even) {
 
 .pagination__link:nth-child(2) {
   margin-left: 1rem; }
+
+.vex.vex-theme-default {
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0; }
+  .vex.vex-theme-default .vex-overlay {
+    max-width: 68em;
+    margin-left: auto;
+    margin-right: auto; }
+    .vex.vex-theme-default .vex-overlay:after {
+      content: "";
+      display: table;
+      clear: both; }
+  .vex.vex-theme-default .vex-content {
+    background-color: #323A45;
+    color: #fff;
+    border-left: 10px solid #DB4857;
+    border-radius: 0 0.25em 0.25em 0;
+    box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0.5);
+    font-size: 1.125rem;
+    font-family: "Open Sans", helvetica, arial, sans-serif; }
+  .vex.vex-theme-default .vex-dialog-buttons {
+    text-align: center; }
+  .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary {
+    font-family: "Open Sans", helvetica, arial, sans-serif;
+    width: 50%;
+    display: inline-block;
+    float: none; }
 
 /*# sourceMappingURL=styles.css.map */

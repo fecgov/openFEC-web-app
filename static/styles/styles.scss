@@ -271,3 +271,41 @@ tr:nth-child(even) {
     margin-left: 1rem;
   }
 }
+
+// MODULE: Alerts
+.vex.vex-theme-default {
+  background-color: rgba(#fff, .5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  .vex-overlay {
+    @include outer-container();
+  }
+
+  .vex-content {
+    background-color: $licorice-2;
+    color: #fff;
+    border-left: 10px solid $red;
+    border-radius: 0 $base-border-radius $base-border-radius 0;
+    box-shadow: 0 0 2px 0px rgba(0,0,0,.5);
+    font-size: 1.125rem;
+    font-family: $sans-serif;
+  }
+
+  .vex-dialog-buttons {
+    text-align: center;
+  }
+
+  .vex-dialog-button.vex-dialog-button-primary {
+    @extend .primary;
+    font-family: $sans-serif;
+    width: 50%;
+    display: inline-block;
+    float: none;
+  }
+
+
+}

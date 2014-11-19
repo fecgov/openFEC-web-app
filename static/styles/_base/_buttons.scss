@@ -2,7 +2,7 @@
   @include appearance(none);
   @include transition(background-color .1s);
   -webkit-font-smoothing: antialiased;
-  background-color: $bgcolor;
+  background: $bgcolor;
   border-radius: $base-border-radius;
   border: none;
   display: inline-block;
