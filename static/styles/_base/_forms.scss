@@ -25,6 +25,10 @@ label {
   }
 }
 
+#{$all-text-inputs} {
+  height: 2rem;
+}
+
 textarea,
 #{$all-text-inputs},
 select[multiple=multiple] {
@@ -36,8 +40,7 @@ select[multiple=multiple] {
   box-shadow: $form-box-shadow;
   font-family: $form-font-family;
   font-size: $form-font-size;
-  margin-bottom: $base-line-height / 2;
-  padding: ($base-line-height / 3) ($base-line-height / 3);
+  padding: .5rem 1rem;
   width: 100%;
 
   &:hover {
@@ -91,3 +94,33 @@ select {
     border-radius: 0 $base-border-radius $base-border-radius 0;
   }
 }
+
+// Overriding Chosen styles
+// .chosen-container-single .chosen-single {
+//   background: #fff;
+//   border-radius: $base-border-radius;
+//   padding: .5rem 1rem;
+//   height: 2rem;
+//   font-size: $form-font-size;
+//   line-height: 1;
+//   color: $base-font-color;
+//
+// }
+//
+// .chosen-container-active.chosen-with-drop .chosen-single {
+//   background: #fff;
+// }
+//
+// // Chosen select toggle
+// .chosen-container-single .chosen-single div {
+//   width: 32px;
+//   background-color: $dark-gray;
+//
+//   b {
+//     content: "\e62a";
+//     color: #fff;
+//     @include icon();
+//     background: none;
+//
+//   }
+// }
