@@ -3,14 +3,14 @@
 
     <div class="sub-section">
       {{#if candidates}}
-          <h3>Candidate Results: {{resultsCount}}</h3>
+          <h3>Candidate Results</h3>
           <a href="candidates?q={{query}}" class="filter-records" data-category="candidates" data-query="{{query}}">Filter candidate results</a>
           {{> candidates-table}}
       {{/if}}
     </div>
     <div class="sub-section">
       {{#if committees}}
-          <h3>Committees Results: {{resultsCount}}</h3>
+          <h3>Committees Results</h3>
           <a href="committees?q={{query}}" class="filter-records" data-category="committees" data-query="{{query}}">Filter committee results</a>
           {{> committees-table}}
       {{/if}}
