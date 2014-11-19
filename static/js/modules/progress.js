@@ -5,6 +5,10 @@ var NProgress = require('nprogress');
 
 module.exports = {
     init: function() {
+        NProgress.configure({
+            'parent': '#progress'
+        });
+
         events.on('search:submitted', NProgress.start);
         events.on('load:browse', NProgress.start);
         events.on('selected:filter', NProgress.start);
