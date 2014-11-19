@@ -46,7 +46,6 @@ module.exports = {
         });
 
         events.on('err:load:search', enableSearchForm);
-
         events.on('render:searchResultsList', enableSearchForm);
     }
 };

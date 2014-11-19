@@ -41,6 +41,7 @@ module.exports = {
         events.on('load:searchResults', unhideNav);
         events.on('load:browse', unhideNav);
         events.on('render:landingView', hideNav);
+        events.on('search:submitted', unhideNav);
 
         if (typeof section !== 'undefined') {
             changeActiveNavLink(section);
