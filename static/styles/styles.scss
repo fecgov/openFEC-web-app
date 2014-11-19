@@ -317,5 +317,11 @@ tr:nth-child(even) {
     float: none;
   }
 
+}
 
+// MODULE: Progress bar
+
+#progress {
+  height: 10px;
+  background: $light-gray;
 }

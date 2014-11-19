@@ -581,4 +581,8 @@ tr:nth-child(even) {
     display: inline-block;
     float: none; }
 
+#progress {
+  height: 10px;
+  background: #F6F6F6; }
+
 /*# sourceMappingURL=styles.css.map */
