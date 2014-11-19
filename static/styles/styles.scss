@@ -200,6 +200,19 @@ body {
 
 // MODULE: Table
 
+.results-header {
+  @include clearfix();
+  padding-bottom: 1rem;
+
+  h3 {
+    @include span-columns(18)
+  }
+
+  .button {
+    @include span-columns(6);
+  }
+}
+
 #results {
   @include span-columns(24);
 }

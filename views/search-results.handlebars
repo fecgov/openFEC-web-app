@@ -1,17 +1,21 @@
 <div class="data container">
     <h2>Search results{{#if query}}: {{query}}{{/if}}</h2>
-    
+
     <div class="sub-section">
       {{#if candidates}}
-          <h3>Candidate Results: {{resultsCount}}</h3>
-          <a href="candidates?q={{query}}" class="filter-records" data-category="candidates" data-query="{{query}}">Filter candidate results</a>
+          <div class="results-header">
+              <h3>Candidate Results: {{resultsCount}}</h3>
+              <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">Filter candidate results</a>
+          </div>
           {{> candidates-table}}
       {{/if}}
     </div>
     <div class="sub-section">
       {{#if committees}}
-          <h3>Committees Results: {{resultsCount}}</h3>
-          <a href="committees?q={{query}}" class="filter-records" data-category="committees" data-query="{{query}}">Filter committee results</a>
+          <div class="results-header">
+              <h3>Committees Results: {{resultsCount}}</h3>
+              <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">Filter committee results</a>
+          </div>
           {{> committees-table}}
       {{/if}}
     </div>

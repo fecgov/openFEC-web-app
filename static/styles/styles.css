@@ -470,6 +470,27 @@ body {
 .field.active .chosen-single {
   border: 2px solid #148552; }
 
+.results-header {
+  padding-bottom: 1rem; }
+  .results-header:after {
+    content: "";
+    display: table;
+    clear: both; }
+  .results-header h3 {
+    float: left;
+    display: block;
+    margin-right: 1.16509%;
+    width: 74.70873%; }
+    .results-header h3:last-child {
+      margin-right: 0; }
+  .results-header .button {
+    float: left;
+    display: block;
+    margin-right: 1.16509%;
+    width: 24.12618%; }
+    .results-header .button:last-child {
+      margin-right: 0; }
+
 #results {
   float: left;
   display: block;
