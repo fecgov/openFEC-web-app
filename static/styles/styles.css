@@ -220,6 +220,7 @@ dl {
   color: #515A61;
   font-size: 1rem;
   font-weight: bold;
+  text-align: center;
   line-height: 1;
   padding: .75em 1em;
   text-decoration: none;
@@ -259,6 +260,7 @@ input[type="submit"],
   color: #fff;
   font-size: 1rem;
   font-weight: bold;
+  text-align: center;
   line-height: 1;
   padding: .75em 1em;
   text-decoration: none;

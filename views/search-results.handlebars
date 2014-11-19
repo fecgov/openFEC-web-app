@@ -4,8 +4,8 @@
     <div class="sub-section">
       {{#if candidates}}
           <div class="results-header">
-              <h3>Candidate Results: {{resultsCount}}</h3>
-              <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">Filter candidate results</a>
+              <h3>Candidate Results</h3>
+              <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">View all</a>
           </div>
           {{> candidates-table}}
       {{/if}}
@@ -13,8 +13,8 @@
     <div class="sub-section">
       {{#if committees}}
           <div class="results-header">
-              <h3>Committees Results: {{resultsCount}}</h3>
-              <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">Filter committee results</a>
+              <h3>Committees Results</h3>
+              <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">View all</a>
           </div>
           {{> committees-table}}
       {{/if}}
