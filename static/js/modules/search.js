@@ -1,8 +1,6 @@
 'use strict';
 
 var events = require('./events.js');
-var vex = require('vex-js');
-vex.dialog = require('vex-js/js/vex.dialog.js');
 
 var enableSearchForm = function() {
     var $form = $('form#search'),
@@ -28,7 +26,6 @@ module.exports = {
         });
 
         $('#large-search').on('submit', function(e) {
-            $('.header-nav').removeClass('hidden'); 
             $('#main').html('');
         });
 
@@ -48,13 +45,8 @@ module.exports = {
             });
         });
 
-        events.on('err:load:search', function() {
-            enableSearchForm();
-            vex.dialog.alert("Sorry, we couldn't load your search results. Please try again.");
-        });
+        events.on('err:load:search', enableSearchForm);
 
-        events.on('render:searchResultsList', function() {
-            enableSearchForm();
-        });
+        events.on('render:searchResultsList', enableSearchForm);
     }
 };

@@ -39,7 +39,9 @@ var filterLoadHandler = function(e) {
     promise.done(function(data) {
         e.data = data;
         events.emit('render:browse', e);
-    });
+    }).fail(function() {
+        events.emit('err:load:filters');
+    });;
 };
 
 module.exports = {
@@ -66,7 +68,7 @@ module.exports = {
 
                 events.emit('render:searchResultsList', e);
             }).fail(function() {
-                events.emit('err:load:search');
+                events.emit('err:load:searchResultsList');
             });
         });
 
@@ -76,6 +78,8 @@ module.exports = {
             promise.done(function(data) {
                 e.data = data;
                 events.emit('render:browse', e);
+            }).fail(function() {
+                events.emit('err:load:browse');
             });
         });
 
@@ -85,7 +89,9 @@ module.exports = {
             promise.done(function(data) {
                 e.data = data;
                 events.emit('render:searchResults', e);
-            });
+            }).fail(function() {
+                events.emit('err:load:searchResults');
+            });;
         });
 
         events.on('selected:filter', filterLoadHandler);

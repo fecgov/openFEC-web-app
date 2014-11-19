@@ -140,6 +140,8 @@ var renderLandingView = function() {
         templates['search-bar'] = Handlebars.registerPartial('search-bar', tmpl2[0]);
         $('#main').html(templates['landing']());
     });
+
+    events.emit('render:landingView');
 };
 
 var mapFields = function(category, results) {
@@ -167,6 +169,7 @@ module.exports = {
         events.on('render:filters', renderFilters);
         events.on('render:searchResults', renderSearchResults);
         events.on('render:searchResultsList', renderSearchResultsList);
-        events.on('err:load:search', renderLandingView);
+        events.on('err:load:searchResults', renderLandingView);
+        events.on('err:load:searchResultsList', renderLandingView);
     }
 };

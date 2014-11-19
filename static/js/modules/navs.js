@@ -23,6 +23,14 @@ var renderHandler = function(e) {
     changeActiveNavLink(e.category);
 };
 
+var unhideNav = function() {
+    $('.header-nav').removeClass('hidden'); 
+};
+
+var hideNav = function() {
+    $('.header-nav').addClass('hidden');
+};
+
 module.exports = {
     init: function() {
         var section = $('#main').data('section');
@@ -30,6 +38,9 @@ module.exports = {
         $('.browse-links a').on('click', navClickHandler);
 
         events.on('render:browse', renderHandler);
+        events.on('load:searchResults', unhideNav);
+        events.on('load:browse', unhideNav);
+        events.on('render:landingView', hideNav);
 
         if (typeof section !== 'undefined') {
             changeActiveNavLink(section);
