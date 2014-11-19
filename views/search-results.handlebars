@@ -1,15 +1,18 @@
-<div class="search-results container">
+<div class="data container">
     <h2>Search results{{#if query}}: {{query}}{{/if}}</h2>
 
-    {{#if candidates}}
-        <strong>Candidate Results: {{resultsCount}}</strong>
-        <a href="candidates?q={{query}}" class="filter-records" data-category="candidates" data-query="{{query}}">Filter candidate results</a>
-        {{> candidates-table}}
-    {{/if}}
-
-    {{#if committees}}
-        <strong>Committees Results: {{resultsCount}}</strong>
-        <a href="committees?q={{query}}" class="filter-records" data-category="committees" data-query="{{query}}">Filter committee results</a>
-        {{> committees-table}}
-    {{/if}}
+    <div class="sub-section">
+      {{#if candidates}}
+          <h3>Candidate Results: {{resultsCount}}</h3>
+          <a href="candidates?q={{query}}" class="filter-records" data-category="candidates" data-query="{{query}}">Filter candidate results</a>
+          {{> candidates-table}}
+      {{/if}}
+    </div>
+    <div class="sub-section">
+      {{#if committees}}
+          <h3>Committees Results: {{resultsCount}}</h3>
+          <a href="committees?q={{query}}" class="filter-records" data-category="committees" data-query="{{query}}">Filter committee results</a>
+          {{> committees-table}}
+      {{/if}}
+    </div>
 </div>
