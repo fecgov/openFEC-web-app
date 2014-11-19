@@ -5,7 +5,12 @@ var NProgress = require('nprogress');
 
 module.exports = {
     init: function() {
-        events.on('search:submitted', NProgress.start);
+        NProgress.configure({ parent: '#progress' });
+
+        events.on('search:submitted', function() {
+            $('#progress').removeClass('hidden');
+            NProgress.start();
+        });
         events.on('load:browse', NProgress.start);
         events.on('selected:filter', NProgress.start);
         events.on('deselected:filter', NProgress.start);
