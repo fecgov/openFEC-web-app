@@ -1,0 +1,11 @@
+// Base styles for layout
+
+.container {
+  @include outer-container();
+}
+
+.sub-section {
+  @include clearfix();
+  padding: 2rem 0;
+  border-bottom: 1px dotted $base-border-color;
+}

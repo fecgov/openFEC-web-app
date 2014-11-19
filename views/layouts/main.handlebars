@@ -3,35 +3,42 @@
 <head>
     <meta charset="utf-8">
     <title>Open FEC Beta</title>
-    <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
     <link href="js/vendor/chosen/chosen.min.css" rel="stylesheet" type="text/css"/>
     <link href="nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="vex-js/css/vex-theme-default.css" />
     <link rel="stylesheet" href="/styles/themify-icons.css">
+    <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
     <link href='https://fonts.googleapis.com/css?family=Raleway:300,400,600,700|Open+Sans:300,400,600,700|Source+Code+Pro:400' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
 
-<header class="header">
-    <div class="logo">Logo here</div>
-    <nav class="header-nav hidden">
-        <ul class="header-nav-bar">
-            <li>
-                <form id="search" action="/search">
-                    <label for="search">Search</label>
-                    <input type="text" name="search"/>
-                    <input type="submit"/>
-                </form>
-            </li>
-            <li><a href="candidates" name="candidates">Candidates</a></li>
-            <li><a href="committees" name="committees">Committees</a></li>
-        </ul>
-    </nav>
+<header class="site-header">
+  <div class="usa">
+    An official website of the United States Government <img src="img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website">
+  </div>
+  <div class="container site-header__inner">
+    <div class="logo"><img src="img/brand.png" alt="OpenFEC Logo"></div>
+  </div><!-- .container -->
 </header>
 
+<nav class="header-nav page-nav hidden">
+    <div class="container">
+        <ul class="page-nav__list">
+            <li class="page-nav__item page-nav__search input-button-combo">
+                <form id="search" action="/search">
+                    <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search">
+                    <input class="search-submit" type="submit" value="Search">
+                </form>
+            </li>
+            <li><a class="page-nav__item" href="candidates" name="candidates">Candidates</a></li>
+            <li><a class="page-nav__item" href="committees" name="committees">Committees</a></li>
+        </ul>
+    </div>
+</nav>
+
 <section id="main"{{#if section}} data-section="{{section}}"{{/if}}>
-    {{{body}}}
+  {{{body}}}
 </section>
 
 <script src="js/vendor/chosen/chosen.jquery.min.js"></script>

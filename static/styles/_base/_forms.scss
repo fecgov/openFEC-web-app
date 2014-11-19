@@ -1,0 +1,126 @@
+fieldset {
+  background: lighten($base-border-color, 10);
+  border: 1px solid $base-border-color;
+  margin: 0 0 ($base-line-height / 2) 0;
+  padding: $base-line-height;
+}
+
+input,
+label,
+select {
+  display: block;
+  font-family: $form-font-family;
+  font-size: $form-font-size;
+}
+
+label {
+  margin-bottom: $base-line-height / 4;
+
+  &.required:after {
+    content: "*";
+  }
+
+  abbr {
+    display: none;
+  }
+}
+
+#{$all-text-inputs} {
+  height: 2rem;
+}
+
+textarea,
+#{$all-text-inputs},
+select[multiple=multiple] {
+  @include box-sizing(border-box);
+  @include transition(border-color);
+  background-color: white;
+  border-radius: $form-border-radius;
+  border: 1px solid $form-border-color;
+  box-shadow: $form-box-shadow;
+  font-family: $form-font-family;
+  font-size: $form-font-size;
+  padding: .5rem 1rem;
+  width: 100%;
+
+  &:hover {
+    border-color: $form-border-color-hover;
+  }
+
+  &:focus {
+    border-color: $form-border-color-focus;
+    box-shadow: $form-box-shadow-focus;
+    outline: none;
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="search"] {
+  @include appearance(none);
+}
+
+input[type="checkbox"], input[type="radio"] {
+  display: inline;
+  margin-right: $base-line-height / 4;
+}
+
+input[type="file"] {
+  margin-bottom: $base-line-height / 2;
+  padding-bottom: ($base-line-height / 3);
+  width: 100%;
+}
+
+select {
+  width: auto;
+  max-width: 100%;
+  margin-bottom: $base-line-height;
+}
+
+
+// Custom form elements
+.input-button-combo {
+  #{$all-text-inputs} {
+    width: 75%;
+    float: left;
+    border-radius: $base-border-radius 0 0 $base-border-radius;
+  }
+
+  input[type="submit"] {
+    width: 25%;
+    float: left;
+    border-radius: 0 $base-border-radius $base-border-radius 0;
+  }
+}
+
+// Overriding Chosen styles
+// .chosen-container-single .chosen-single {
+//   background: #fff;
+//   border-radius: $base-border-radius;
+//   padding: .5rem 1rem;
+//   height: 2rem;
+//   font-size: $form-font-size;
+//   line-height: 1;
+//   color: $base-font-color;
+//
+// }
+//
+// .chosen-container-active.chosen-with-drop .chosen-single {
+//   background: #fff;
+// }
+//
+// // Chosen select toggle
+// .chosen-container-single .chosen-single div {
+//   width: 32px;
+//   background-color: $dark-gray;
+//
+//   b {
+//     content: "\e62a";
+//     color: #fff;
+//     @include icon();
+//     background: none;
+//
+//   }
+// }

@@ -1,36 +1,39 @@
 {{#if resultsCount}}
-    <div id="results-count">Results: {{resultsCount}} records</div>
-{{/if}}
-
-{{#if resultsRange}}
-    Viewing: {{currentResultsStart}} - {{currentResultsEnd}}
-{{/if}}
-
-{{#if paginationLinks}}
-    <div class="pagination-links">
-        {{#if prevURL}}
-            <a href="{{prevURL}}" id="prev">Previous {{perPage}}</a>
+    <div class="meta-box">
+        <div id="results-count" class="results-count">
+          <p>Results: {{resultsCount}} records</p>
+            {{#if resultsRange}}
+                <p>Viewing: {{currentResultsStart}} - {{currentResultsEnd}}</p>
+            {{/if}}
+        </div>
+        {{#if paginationLinks}}
+            <div class="pagination">
+                {{#if prevURL}}
+                    <a href="{{prevURL}}" id="prev" class="pagination__link"><i class="ti-arrow-left"></i> Previous {{perPage}}</a>
+                {{/if}}
+                {{#if nextURL}}
+                    <a href="{{nextURL}}" id="next" class="pagination__link">Next {{perPage}} <i class="ti-arrow-right"></i></a>
+                {{/if}}
+            </div>
         {{/if}}
-        {{#if nextURL}}
-            <a href="{{nextURL}}" id="next">Next {{perPage}}</a>
-        {{/if}}
-    </div>
+    </div><!--- .meta-box -->
 {{/if}}
 
 <table id="results">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Office</th>
-            <th>Election</th>
-            <th>Party</th>
-            <th>State</th>
-            <th>District</th>
+            <th class="sortable-header">Name</th>
+            <th class="sortable-header">Office</th>
+            <th class="sortable-header">Election</th>
+            <th class="sortable-header">Party</th>
+            <th class="sortable-header">State</th>
+            <th class="sortable-header">District</th>
         </tr>
-
+    </thead>
+    <tbody>
         {{#each candidates}}
             <tr>
-                <td>{{name}}</td>
+                <td class="flex-cell">{{name}}</td>
                 <td>{{office}}</td>
                 <td>{{election}}</td>
                 <td>{{party}}</td>
@@ -38,5 +41,5 @@
                 <td>{{district}}</td>
             </tr>
         {{/each}}
-    </thead>
+    </tbody>
 </table>

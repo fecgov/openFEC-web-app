@@ -1,0 +1,273 @@
+@import "_bourbon/bourbon";
+@import "_neat/neat";
+@import "_base/base";
+@import "_custom/layout";
+@import "_custom/states";
+
+body {
+  padding: 0;
+  margin: 0;
+  min-width: em(1088);
+}
+
+// MODULE: USA Banner
+.usa {
+  background-color: #e6e6e6;
+  text-align: center;
+  font-size: .75rem;
+  padding: .25rem;
+}
+
+// MODULE: Header
+
+.site-header {
+  border-bottom: 5px solid $red;
+}
+
+.site-header__inner {
+  padding: em(20) 0;
+}
+
+// MODULE: Page nav
+.page-nav {
+  background-color: $licorice;
+}
+
+.page-nav {
+  @extend %flat-list;
+
+  .page-nav__item {
+    padding: 2rem;
+    border-right: 1px solid $light-gray;
+    color: #fff;
+  }
+
+  a {
+    display: block;
+    font-size: 1.125rem;
+    line-height: 2rem;
+
+    &:hover {
+      background-color: $licorice-2;
+    }
+  }
+}
+
+.page-nav__search {
+  @include span-columns(10);
+  padding-left: 0;
+  margin-right: 0;
+
+  .search-bar,
+  .search-submit {
+    height: 2rem;
+    margin-bottom: 0;
+  }
+}
+
+
+// MODULE: Hero Unit
+.hero {
+  padding: rem(80) 0;
+  color: #fff;
+  text-align: center;
+  background-color: $licorice;
+  background-image: url('../img/mesh@2x.png');
+  background-size: contain;
+
+}
+
+
+
+// MODULE: Search bar
+
+.search-bar {
+  margin: 0;
+  border: 0;
+}
+
+#large-search {
+  label {
+    margin-bottom: 2em;
+  }
+}
+
+.search--large {
+  @include span-columns(18);
+  @include shift(3);
+
+  .search-bar {
+    padding: 1rem;
+    font-size: 2rem;
+    height: 4rem;
+
+    @include placeholder {
+      font-weight: 300;
+    }
+  }
+
+  input[type="submit"] {
+    padding: 1rem;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 300;
+  }
+}
+
+
+// MODULE: Browse links
+.sub-hero {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.browse-links {
+  @extend %flat-list;
+  @include span-columns(12);
+  @include shift(6);
+  padding: 1rem 0;
+
+  li {
+    @include span-columns(6 of 12);
+    .button {
+      display: block;
+    }
+  }
+}
+
+
+// MODULE: Data view
+.data {
+  padding: 3rem 0;
+}
+
+// MODULE: Filter box
+.filter-box {
+  margin-bottom: 2rem;
+}
+
+.filter-header-bar {
+  position: relative;
+  background-color: $light-gray;
+  border: 1px solid $medium-gray;
+  padding: .5rem 1rem;
+
+  .disclosure-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 0;
+    width: 45px;
+    height: 100%;
+  }
+}
+
+.filter-field-container {
+  @include clearfix();
+  border: 1px solid $medium-gray;
+  padding: 1rem;
+
+  .field {
+    @include span-columns(12);
+    padding: 1rem 0;
+
+    &:nth-child(even) {
+      @include omega()
+    }
+  }
+}
+
+.field.active {
+  label {
+    color: $green;
+  }
+
+  .chosen-single {
+    border: 2px solid $green;
+  }
+}
+
+
+// MODULE: Table
+
+#results {
+  @include span-columns(24);
+}
+
+table {
+  margin: 0;
+  border: 1px solid $medium-gray;
+}
+
+tr {
+  border: none;
+  font-size: .875rem;
+}
+
+th {
+  padding: .5rem;
+  border-right: 1px solid $medium-gray;
+  border-bottom: 1px solid $medium-gray;
+  font-weight: normal;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+td {
+  padding: .5rem;
+}
+
+.flex-cell {
+  white-space: nowrap; // Prevents text-wrapping
+  width: 1%; // Setting this along with a fixed width on the table makes cells flexible
+}
+
+
+tr:nth-child(even) {
+  background-color: $light-gray;
+}
+
+.sortable-header {
+  @include transition(background-color .1s);
+  background-color: #fff;
+  color: $blue;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $blue;
+    border-color: $blue;
+    color: #fff;
+  }
+}
+
+
+// MODULE: Meta box
+// For things like pagination controls and chart controls
+
+.meta-box {
+  @include span-columns(24);
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: $meta-box-color;
+  border: 1px solid $medium-gray;
+}
+
+.results-count {
+  @include span-columns(12);
+  p {
+    margin: 0;
+  }
+}
+
+.pagination {
+  @include span-columns(12);
+  text-align: right;
+}
+
+.pagination__link {
+  &:nth-child(2) {
+    margin-left: 1rem;
+  }
+}

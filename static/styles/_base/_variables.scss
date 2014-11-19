@@ -1,0 +1,73 @@
+// Typography
+$sans-serif: 'Open Sans', helvetica, arial, sans-serif;
+$serif: $georgia;
+$base-font-family: $sans-serif;
+$header-font-family: $base-font-family;
+
+// Sizes
+$base-font-size: 1rem;
+$base-line-height: 1.5;
+$unitless-line-height: $base-line-height / ($base-line-height * 0 + 1); // Strip units from line-height: https://developer.mozilla.org/en-US/docs/Web/CSS/line-height#Prefer_unitless_numbers_for_line-height_values
+$header-line-height: 1.25;
+$base-border-radius: em(4);
+
+// Colors
+$dark-gray: #515A61;
+$medium-gray: #D7D7D7;
+$light-gray: #F6F6F6;
+$light-red: #FBE3E4;
+$light-yellow: #FFF6BF;
+$light-green: #E6EFC2;
+
+// FEC Colors
+$blue: #2678BA;
+$blue-2: #1B5585;
+$red: #DB4857;
+$red-2: #A13540;
+$green: #148552;
+$green-2: #0F5E3B;
+$licorice: #3E4957;
+$licorice-2: #323A45;
+
+// Data colors
+$data-support: #1B5585; // Blue
+$data-support-2: #103552; // Darker blue
+$data-oppose: #A9205C; // Purple
+$data-oppose-2: #6B143B; // Darker purple
+$data-receipt: #148552; // Green
+$data-disbursement: #DB4857; // Salmon
+
+// UI Colors
+$meta-box-color: #FBFBFD;
+
+// Background Color
+$base-background-color: white;
+
+// Font Colors
+$base-font-color: $dark-gray;
+$base-accent-color: $blue;
+
+// Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: darken($base-accent-color, 15);
+$base-button-color: $light-gray;
+$hover-button-color: $medium-gray;
+
+// Border color
+$base-border-color: $medium-gray;
+
+// Flash Colors
+$alert-color: $light-yellow;
+$error-color: $light-red;
+$notice-color: $light-yellow;
+$success-color: $light-green;
+
+// Forms
+$form-border-color: $dark-gray;
+$form-border-color-hover: darken($form-border-color, 10);
+$form-border-color-focus: $base-accent-color;
+$form-border-radius: $base-border-radius;
+$form-box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+$form-box-shadow-focus: $form-box-shadow, 0 0 0 rgba(darken($form-border-color-focus, 5), 0.7);
+$form-font-size: $base-font-size * .875;
+$form-font-family: $base-font-family;
