@@ -141,206 +141,133 @@ body {
   padding: 3rem 0;
 }
 
-// @mixin zero-space() {
-//     margin: 0;
-//     padding: 0;
-// }
-//
-//
-// .inactive, .header-nav-bar a.inactive {
-//     color: $medium-gray;
-// }
-//
-// #main {
-//     @include outer-container();
-//     @include shift(1);
-// }
-//
-// .header {
-//     background-color: $dark-blue;
-// }
-//
-// .header-bar {
-//     color: $white;
-//     padding-left: $column + $gutter;
-// }
-//
-// .header-nav {
-//     background-color: $light-gray;
-// }
-//
-// .header-nav-bar {
-//     @include zero-space();
-//     list-style: none;
-//     padding-left: $column + $gutter;
-//
-//     li {
-//         display: inline-block;
-//
-//         a {
-//             color: $black;
-//             display: block;
-//             padding: 1em;
-//             text-decoration: none;
-//
-//             &.active {
-//                 background-color: $dark-blue;
-//                 color: $white;
-//             }
-//         }
-//     }
-// }
-//
-// #search {
-//     @include clearfix;
-//
-//     label {
-//         margin: 1em 0;
-//         display: block;
-//     }
-//
-//     input {
-//         height: 3em;
-//     }
-//
-//     input[name=search] {
-//         @include span-columns(16);
-//         @include omega();
-//         font-size: 1.2em;
-//         border: 1px solid $medium-gray;
-//         padding: 0 1em;
-//     }
-//
-//     input[type=submit] {
-//         @include span-columns(4);
-//         @include omega();
-//         @include linear-gradient(to bottom, #5fb85f, #439e46);
-//         border: 0;
-//         font-size: 1.2em; /* to match em sizing on text field */
-//         @include border-right-radius(4px);
-//     }
-// }
-//
-// .browse-links {
-//     margin: 1em 0;
-//
-//     ul {
-//         @include zero-space();
-//         list-style: none;
-//         display: inline;
-//
-//         li {
-//             display: inline;
-//             margin: 0 .5em;
-//
-//             a {
-//                 font-weight: bold;
-//                 color: $medium-blue;
-//             }
-//         }
-//     }
-// }
-//
-// .filter-box {
-//     @include span-columns(16);
-//     border: 1px solid $medium-blue;
-//
-//     .filter-header-bar {
-//         background-color: $medium-blue;
-//         font-size: 1em;
-//         color: $white;
-//         @include pad();
-//         font-weight: bold;
-//     }
-//
-//     .filter-field-container {
-//         @include clearfix();
-//
-//         .field {
-//             @include pad();
-//             @include span-columns(2.5 of 8);
-//             position: relative;
-//
-//             label {
-//                 display: block;
-//                 font-size: .8em;
-//             }
-//
-//             input[type=text] {
-//                 width: 100%;
-//             }
-//
-//             .add-filter {
-//                 position: absolute;
-//                 left: 100%;
-//                 top: 36px;
-//                 cursor: pointer;
-//             }
-//
-//             &.active {
-//                 label {
-//                     color: $medium-blue;
-//                 }
-//
-//                 input, select, .chosen-single {
-//                     border: 1px solid $medium-blue;
-//                 }
-//             }
-//         }
-//     }
-// }
-//
-// #selected-filters {
-//     margin: 1.5em 0;
-//
-//     .selected-filter {
-//         display: inline;
-//         background-color: $medium-blue;
-//         color: $white;
-//         font-size: .75em;
-//         padding: .5em;
-//         margin-right: 1em;
-//
-//         .close {
-//             margin-left: 2em;
-//         }
-//     }
-// }
-//
-// #candidates,
-// #committees,
-// #results {
-//     @include span-columns(24);
-//     clear: left;
-//     border-top: 1px dashed $medium-gray;
-//     margin-top: 1.5em;
-//     padding-top: 1em;
-//
-//     table {
-//         border-spacing: 0;
-//         border-collapse: collapse;
-//
-//         th {
-//             background-color: $light-gray;
-//             color: $dark-gray;
-//             border: 1px solid $medium-gray;
-//             border-right: 0;
-//             text-align: left;
-//             padding: .5em;
-//
-//             &:last-child {
-//                 border-right: 1px solid $medium-gray;
-//             }
-//         }
-//
-//         tr {
-//             border-bottom: 1px solid $medium-gray;
-//
-//             td {
-//                 padding: .75em .25em;
-//                 font-family: $source-code-pro;
-//                 font-size: .7em;
-//             }
-//         }
-//     }
-// }
+// MODULE: Filter box
+.filter-box {
+  margin-bottom: 2rem;
+}
+
+.filter-header-bar {
+  position: relative;
+  background-color: $light-gray;
+  border: 1px solid $medium-gray;
+  padding: .5rem 1rem;
+
+  .disclosure-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 0;
+    width: 45px;
+    height: 100%;
+  }
+}
+
+.filter-field-container {
+  @include clearfix();
+  border: 1px solid $medium-gray;
+  padding: 1rem;
+
+  .field {
+    @include span-columns(12);
+    padding: 1rem 0;
+
+    &:nth-child(even) {
+      @include omega()
+    }
+  }
+}
+
+.field.active {
+  label {
+    color: $green;
+  }
+
+  .chosen-single {
+    border: 2px solid $green;
+  }
+}
+
+
+// MODULE: Table
+
+#results {
+  @include span-columns(24);
+}
+
+table {
+  margin: 0;
+  border: 1px solid $medium-gray;
+}
+
+tr {
+  border: none;
+  font-size: .875rem;
+}
+
+th {
+  padding: .5rem;
+  border-right: 1px solid $medium-gray;
+  border-bottom: 1px solid $medium-gray;
+  font-weight: normal;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+td {
+  padding: .5rem;
+}
+
+.flex-cell {
+  white-space: nowrap; // Prevents text-wrapping
+  width: 1%; // Setting this along with a fixed width on the table makes cells flexible
+}
+
+
+tr:nth-child(even) {
+  background-color: $light-gray;
+}
+
+.sortable-header {
+  @include transition(background-color .1s);
+  background-color: #fff;
+  color: $blue;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $blue;
+    border-color: $blue;
+    color: #fff;
+  }
+}
+
+
+// MODULE: Meta box
+// For things like pagination controls and chart controls
+
+.meta-box {
+  @include span-columns(24);
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: $meta-box-color;
+  border: 1px solid $medium-gray;
+}
+
+.results-count {
+  @include span-columns(12);
+  p {
+    margin: 0;
+  }
+}
+
+.pagination {
+  @include span-columns(12);
+  text-align: right;
+}
+
+.pagination__link {
+  &:nth-child(2) {
+    margin-left: 1rem;
+  }
+}
