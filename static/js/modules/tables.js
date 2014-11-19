@@ -3,7 +3,7 @@
 var events = require('./events.js');
 
 var bindPaginationLinks = function(e) {
-    $('.pagination-links a').on('click', function() {
+    $('.pagination a').on('click', function() {
         event.preventDefault();
 
         // gets the relative path vs. the full url like this.href
