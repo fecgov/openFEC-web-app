@@ -20,6 +20,11 @@ $ npm install -g browserify watchify
 ```
 
 ### Run server
+If you have not before, you will need to compile the client side JS:
+```
+$ npm run build
+```
+then:
 ```
 $ nodejs app.js
 ```
