@@ -490,14 +490,14 @@ a.page-nav__item {
     float: left;
     display: block;
     margin-right: 1.16509%;
-    width: 74.70873%; }
+    width: 83.13915%; }
     .results-header h3:last-child {
       margin-right: 0; }
   .results-header .button {
     float: left;
     display: block;
     margin-right: 1.16509%;
-    width: 24.12618%; }
+    width: 15.69576%; }
     .results-header .button:last-child {
       margin-right: 0; }
 
@@ -613,10 +613,16 @@ tr:nth-child(even) {
     display: inline-block;
     float: none; }
 
+#progress {
+  top: 2rem; }
+
 #nprogress {
-  background: #F6F6F6; }
+  background: #F6F6F6;
+  height: 10px; }
   #nprogress .bar {
     background: #148552;
     height: 10px; }
+  #nprogress .peg {
+    display: none; }
 
 /*# sourceMappingURL=styles.css.map */

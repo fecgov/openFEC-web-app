@@ -208,11 +208,11 @@ a.page-nav__item {
   padding-bottom: 1rem;
 
   h3 {
-    @include span-columns(18)
+    @include span-columns(20)
   }
 
   .button {
-    @include span-columns(6);
+    @include span-columns(4);
   }
 }
 
@@ -337,12 +337,21 @@ tr:nth-child(even) {
 }
 
 // MODULE: Progress bar
+//
+#progress {
+  top: 2rem;
+}
 
 #nprogress {
   background: $light-gray;
+  height: 10px;
 
   .bar {
     background: $green;
     height: 10px;
+  }
+
+  .peg {
+    display: none;
   }
 }
