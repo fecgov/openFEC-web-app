@@ -43,3 +43,24 @@
         {{/each}}
     </tbody>
 </table>
+
+{{#if resultsCount}}
+    <div class="meta-box meta-box--bottom">
+        <div id="results-count" class="results-count">
+          <p>Results: {{resultsCount}} records</p>
+            {{#if resultsRange}}
+                <p>Viewing: {{currentResultsStart}} - {{currentResultsEnd}}</p>
+            {{/if}}
+        </div>
+        {{#if paginationLinks}}
+            <div class="pagination">
+                {{#if prevURL}}
+                    <a href="{{prevURL}}" id="prev" class="pagination__link"><i class="ti-arrow-left"></i> Previous {{perPage}}</a>
+                {{/if}}
+                {{#if nextURL}}
+                    <a href="{{nextURL}}" id="next" class="pagination__link">Next {{perPage}} <i class="ti-arrow-right"></i></a>
+                {{/if}}
+            </div>
+        {{/if}}
+    </div><!--- .meta-box -->
+{{/if}}

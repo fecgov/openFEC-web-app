@@ -35,23 +35,26 @@ body {
 
 .page-nav {
   @extend %flat-list;
+}
 
-  .page-nav__item {
-    padding: 2rem;
-    border-right: 1px solid $light-gray;
+.page-nav__item {
+  padding: 2rem;
+  border-right: 1px solid $light-gray;
+  color: #fff;
+  display: block;
+  font-size: 1.125rem;
+  line-height: 2rem;
+}
+
+a.page-nav__item {
+  @include transition(background-color .1s);
+
+  &:hover {
+    background-color: $licorice-2;
     color: #fff;
   }
-
-  a {
-    display: block;
-    font-size: 1.125rem;
-    line-height: 2rem;
-
-    &:hover {
-      background-color: $licorice-2;
-    }
-  }
 }
+
 
 .page-nav__search {
   @include span-columns(10);
@@ -159,16 +162,32 @@ body {
   border-style: solid;
   border-width: 1px;
   padding: .5rem 1rem;
+  font-weight: 600;
+}
 
-  .disclosure-toggle {
-    position: absolute;
-    right: 0;
-    top: 0;
-    border-radius: 0;
-    width: 45px;
-    height: 100%;
+.disclosure-toggle {
+  background-color: $blue;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 0;
+  width: 45px;
+  height: 100%;
+
+  &:before {
+    @include icon();
+    content: "\e622"; // Minus icon
   }
 }
+
+.disclosure-toggle--closed {
+  background-color: $blue;
+  &:before {
+    @include icon();
+    content: "\e61a"; // Plus icon
+  }
+}
+
 
 .filter-field-container {
   @include clearfix();
@@ -205,17 +224,18 @@ body {
   padding-bottom: 1rem;
 
   h3 {
-    @include span-columns(18)
+    @include span-columns(20)
   }
 
   .button {
-    @include span-columns(6);
+    @include span-columns(4);
   }
 }
 
 #results {
   @include span-columns(24);
 }
+
 
 table {
   margin: 0;
@@ -240,6 +260,7 @@ th {
 
 td {
   padding: .5rem;
+  border: none;
 }
 
 .flex-cell {
@@ -275,6 +296,10 @@ tr:nth-child(even) {
   padding: 1rem;
   background-color: $meta-box-color;
   border: 1px solid $medium-gray;
+}
+
+.meta-box--bottom {
+  margin-top: 2rem;
 }
 
 .results-count {
@@ -333,8 +358,21 @@ tr:nth-child(even) {
 }
 
 // MODULE: Progress bar
-
+//
 #progress {
-  height: 10px;
+  top: 2rem;
+}
+
+#nprogress {
   background: $light-gray;
+  height: 10px;
+
+  .bar {
+    background: $green;
+    height: 10px;
+  }
+
+  .peg {
+    display: none;
+  }
 }

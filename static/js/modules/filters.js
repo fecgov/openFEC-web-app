@@ -98,8 +98,9 @@ module.exports = {
         events.on('render:searchResults', enableForm);
 
         // toggle filter drawer open/shut
-        $('#main').on('click', '.filter-header-bar', function() {
+        $('#main').on('click', '.disclosure-toggle', function() {
             $('.filter-field-container').slideToggle();
+            $(this).toggleClass('disclosure-toggle--closed')
         });
 
         // if loaded on a page with filters, init chosen
