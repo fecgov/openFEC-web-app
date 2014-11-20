@@ -273,8 +273,9 @@ tr:nth-child(even) {
   background-color: $light-gray;
 }
 
-.sortable-header {
+.sort-header {
   @include transition(background-color .1s);
+  position: relative;
   background-color: #fff;
   color: $blue;
   cursor: pointer;
@@ -283,6 +284,26 @@ tr:nth-child(even) {
     background-color: $blue;
     border-color: $blue;
     color: #fff;
+  }
+
+  &:after {
+    position: absolute;
+    right: .5rem;
+    bottom: .75rem;
+  }
+
+  &.sort-up {
+    &:after {
+      @include icon();
+      content: "\e62a";
+    }
+  }
+
+  &.sort-down {
+    &:after {
+      @include icon();
+      content: "\e627";
+    }
   }
 }
 

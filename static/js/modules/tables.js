@@ -1,6 +1,7 @@
 'use strict';
 
 var events = require('./events.js');
+var tablesort = require('tablesort');
 
 var bindPaginationLinks = function(e) {
     $('.pagination a').on('click', function() {
@@ -28,11 +29,19 @@ var bindPaginationLinks = function(e) {
     });
 };
 
+// Implementing tablesort
+var sortTable = function(e){
+  new tablesort(document.getElementById('results'));
+}
+
 module.exports = {
     init: function() {
-        events.on('bind:browse', bindPaginationLinks); 
+        events.on('bind:browse', bindPaginationLinks);
+        events.on('bind:browse', sortTable);
 
         // if loaded on a page with a results table
         bindPaginationLinks();
+
+
     }
 };
