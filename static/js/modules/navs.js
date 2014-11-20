@@ -34,7 +34,7 @@ var hideNav = function() {
 module.exports = {
     init: function() {
         var section = $('#main').data('section');
-        $('.page-nav__item').on('click', navClickHandler);
+        $('a.page-nav__item').on('click', navClickHandler);
         $('.browse-links a').on('click', navClickHandler);
 
         events.on('render:browse', renderHandler);
