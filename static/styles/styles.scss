@@ -189,6 +189,8 @@ a.page-nav__item {
 }
 
 
+// MODULE: Filter
+
 .filter-field-container {
   @include clearfix();
   border-color: $medium-gray;
@@ -216,6 +218,23 @@ a.page-nav__item {
   }
 }
 
+
+// HACK: Remove this after the demo
+.add-filter {
+  @extend .button;
+  height: 32px;
+  width: 32px;
+  margin-left: 2px;
+  padding: 0;
+  line-height: 32px;
+}
+
+.field {
+  input[type="text"] {
+    width: 418px;
+    float: left;
+  }
+}
 
 // MODULE: Table
 
