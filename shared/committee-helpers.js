@@ -47,7 +47,7 @@ module.exports = {
                 party: party,
                 type: type,
                 designation: designation,
-                organzation: organization
+                organization: organization
             });
         }
 
