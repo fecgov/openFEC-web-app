@@ -28,6 +28,16 @@
     @include appearance(none);
     outline: none;
   }
+
+  &.disabled {
+    color: #D3D3D3;
+    cursor: default;
+
+    &:hover {
+      color: #D3D3D3;
+      background-color: $bgcolor;
+    }
+  }
 }
 
 .button {

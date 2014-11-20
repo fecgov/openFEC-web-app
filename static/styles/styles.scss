@@ -224,15 +224,17 @@ a.page-nav__item {
   @extend .button;
   height: 32px;
   width: 32px;
-  margin-left: 2px;
   padding: 0;
   line-height: 32px;
+  border-radius: 0 4px 4px 0;
 }
 
 .field {
-  input[type="text"] {
-    width: 418px;
+  input[name="name"] {
+    width: 420px;
     float: left;
+    border-radius: 4px 0 0 4px;
+    border-right-width: 0;
   }
 }
 

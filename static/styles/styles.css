@@ -242,6 +242,12 @@ dl {
     -o-appearance: none;
     appearance: none;
     outline: none; }
+  .button.disabled, .disabled.add-filter {
+    color: #D3D3D3;
+    cursor: default; }
+    .button.disabled:hover, .disabled.add-filter:hover {
+      color: #D3D3D3;
+      background-color: #F6F6F6; }
 
 button,
 input[type="submit"],
@@ -290,6 +296,18 @@ input[type="submit"],
     -o-appearance: none;
     appearance: none;
     outline: none; }
+  button.disabled,
+  input[type="submit"].disabled,
+  .primary.disabled,
+  .vex.vex-theme-default .disabled.vex-dialog-button.vex-dialog-button-primary {
+    color: #D3D3D3;
+    cursor: default; }
+    button.disabled:hover,
+    input[type="submit"].disabled:hover,
+    .primary.disabled:hover,
+    .vex.vex-theme-default .disabled.vex-dialog-button.vex-dialog-button-primary:hover {
+      color: #D3D3D3;
+      background-color: #2678BA; }
   button:active,
   input[type="submit"]:active,
   .primary:active,
@@ -513,13 +531,15 @@ a.page-nav__item {
 .add-filter {
   height: 32px;
   width: 32px;
-  margin-left: 2px;
   padding: 0;
-  line-height: 32px; }
+  line-height: 32px;
+  border-radius: 0 4px 4px 0; }
 
-.field input[type="text"] {
-  width: 418px;
-  float: left; }
+.field input[name="name"] {
+  width: 420px;
+  float: left;
+  border-radius: 4px 0 0 4px;
+  border-right-width: 0; }
 
 .results-header {
   padding-bottom: 1rem; }
