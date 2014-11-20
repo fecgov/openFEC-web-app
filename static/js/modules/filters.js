@@ -70,14 +70,23 @@ var bindFilters = function(e) {
 
     // make name filter work
     $('#category-filters input').on('input', function() {
-        if ($('.add-filter').length === 0) {
-            $(this).parent().append('<a class="add-filter">+</a>');
+        var $nameField = $(this),
+            $plusButton = $nameField.siblings('.add-filter');
+
+        if ($nameField.val() === "") {
+            $plusButton.addClass('disabled');
+        }
+        else {
+            $plusButton.removeClass('disabled');
         }
     });
 
     // apply name filter
     $('#category-filters').on('click', '.add-filter', function() {
-        activateFilter.call($(this).prev()[0]);
+        var $plusButton = $(this);
+        if ($plusButton.hasClass('disabled') === false) {
+            activateFilter.call($plusButton.prev()[0]);
+        }
     });
 };
 
