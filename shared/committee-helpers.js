@@ -9,7 +9,8 @@ module.exports = {
             name,
             treasurer,
             state,
-            party;
+            party,
+            organization;
 
         if (typeof results !== 'undefined') {
             len = results.length;
@@ -27,6 +28,8 @@ module.exports = {
                 designation = '';
             }
 
+            organization = committee.organization_type || '';
+
             name = committee.name || '';
             if (typeof committee.treasurer !== 'undefined') {
                 treasurer = committee.treasurer.name_full;
@@ -43,7 +46,8 @@ module.exports = {
                 state: state,
                 party: party,
                 type: type,
-                designation: designation
+                designation: designation,
+                organzation: organization
             });
         }
 
