@@ -284,6 +284,10 @@ tr:nth-child(even) {
     background-color: $blue;
     border-color: $blue;
     color: #fff;
+
+    &:after {
+      color: #fff;
+    }
   }
 
   &:after {

@@ -578,6 +578,8 @@ tr:nth-child(even) {
     background-color: #2678BA;
     border-color: #2678BA;
     color: #fff; }
+    .sort-header:hover:after {
+      color: #fff; }
   .sort-header:after {
     position: absolute;
     right: .5rem;
