@@ -284,6 +284,10 @@ tr:nth-child(even) {
     background-color: $blue;
     border-color: $blue;
     color: #fff;
+
+    &:after {
+      color: #fff;
+    }
   }
 
   &:after {
@@ -395,5 +399,15 @@ tr:nth-child(even) {
 
   .peg {
     display: none;
+  }
+}
+
+.nprogress-busy {
+  #results,
+  #filters,
+  #candidates,
+  #committees {
+    @include transition(opacity .2s);
+    opacity: .5;
   }
 }
