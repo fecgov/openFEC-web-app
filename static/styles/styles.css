@@ -566,17 +566,46 @@ td {
 tr:nth-child(even) {
   background-color: #F6F6F6; }
 
-.sortable-header {
+.sort-header {
   -webkit-transition: background-color 0.1s;
   -moz-transition: background-color 0.1s;
   transition: background-color 0.1s;
+  position: relative;
   background-color: #fff;
   color: #2678BA;
   cursor: pointer; }
-  .sortable-header:hover {
+  .sort-header:hover {
     background-color: #2678BA;
     border-color: #2678BA;
     color: #fff; }
+  .sort-header:after {
+    position: absolute;
+    right: .5rem;
+    bottom: .75rem; }
+  .sort-header.sort-up:after {
+    font-family: 'themify';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e62a"; }
+  .sort-header.sort-down:after {
+    font-family: 'themify';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e627"; }
 
 .meta-box {
   float: left;
