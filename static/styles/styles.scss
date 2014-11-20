@@ -401,3 +401,13 @@ tr:nth-child(even) {
     display: none;
   }
 }
+
+.nprogress-busy {
+  #results,
+  #filters,
+  #candidates,
+  #committees {
+    @include transition(opacity .2s);
+    opacity: .5;
+  }
+}

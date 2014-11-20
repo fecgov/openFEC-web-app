@@ -689,4 +689,13 @@ tr:nth-child(even) {
   #nprogress .peg {
     display: none; }
 
+.nprogress-busy #results,
+.nprogress-busy #filters,
+.nprogress-busy #candidates,
+.nprogress-busy #committees {
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  opacity: .5; }
+
 /*# sourceMappingURL=styles.css.map */
