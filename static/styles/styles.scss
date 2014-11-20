@@ -35,23 +35,26 @@ body {
 
 .page-nav {
   @extend %flat-list;
+}
 
-  .page-nav__item {
-    padding: 2rem;
-    border-right: 1px solid $light-gray;
+.page-nav__item {
+  padding: 2rem;
+  border-right: 1px solid $light-gray;
+  color: #fff;
+  display: block;
+  font-size: 1.125rem;
+  line-height: 2rem;
+}
+
+a.page-nav__item {
+  @include transition(background-color .1s);
+
+  &:hover {
+    background-color: $licorice-2;
     color: #fff;
   }
-
-  a {
-    display: block;
-    font-size: 1.125rem;
-    line-height: 2rem;
-
-    &:hover {
-      background-color: $licorice-2;
-    }
-  }
 }
+
 
 .page-nav__search {
   @include span-columns(10);
@@ -240,6 +243,7 @@ th {
 
 td {
   padding: .5rem;
+  border: none;
 }
 
 .flex-cell {
@@ -334,7 +338,11 @@ tr:nth-child(even) {
 
 // MODULE: Progress bar
 
-#progress {
-  height: 10px;
+#nprogress {
   background: $light-gray;
+
+  .bar {
+    background: $green;
+    height: 10px;
+  }
 }

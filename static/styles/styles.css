@@ -81,6 +81,9 @@ cite {
 .lead-text {
   font-size: 1.125rem; }
 
+.query {
+  border-bottom: 1px solid #515A61; }
+
 fieldset {
   background: #f1f1f1;
   border: 1px solid #D7D7D7;
@@ -333,16 +336,21 @@ body {
 .page-nav {
   background-color: #3E4957; }
 
-.page-nav .page-nav__item {
+.page-nav__item {
   padding: 2rem;
   border-right: 1px solid #F6F6F6;
-  color: #fff; }
-.page-nav a {
+  color: #fff;
   display: block;
   font-size: 1.125rem;
   line-height: 2rem; }
-  .page-nav a:hover {
-    background-color: #323A45; }
+
+a.page-nav__item {
+  -webkit-transition: background-color 0.1s;
+  -moz-transition: background-color 0.1s;
+  transition: background-color 0.1s; }
+  a.page-nav__item:hover {
+    background-color: #323A45;
+    color: #fff; }
 
 .page-nav__search {
   float: left;
@@ -518,7 +526,8 @@ th {
     border-right: none; }
 
 td {
-  padding: .5rem; }
+  padding: .5rem;
+  border: none; }
 
 .flex-cell {
   white-space: nowrap;
@@ -604,8 +613,10 @@ tr:nth-child(even) {
     display: inline-block;
     float: none; }
 
-#progress {
-  height: 10px;
+#nprogress {
   background: #F6F6F6; }
+  #nprogress .bar {
+    background: #148552;
+    height: 10px; }
 
 /*# sourceMappingURL=styles.css.map */
