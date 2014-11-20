@@ -236,6 +236,7 @@ a.page-nav__item {
   @include span-columns(24);
 }
 
+
 table {
   margin: 0;
   border: 1px solid $medium-gray;
@@ -295,6 +296,10 @@ tr:nth-child(even) {
   padding: 1rem;
   background-color: $meta-box-color;
   border: 1px solid $medium-gray;
+}
+
+.meta-box--bottom {
+  margin-top: 2rem;
 }
 
 .results-count {

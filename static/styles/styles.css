@@ -590,6 +590,9 @@ tr:nth-child(even) {
   .meta-box:last-child {
     margin-right: 0; }
 
+.meta-box--bottom {
+  margin-top: 2rem; }
+
 .results-count {
   float: left;
   display: block;
