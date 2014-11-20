@@ -5,12 +5,34 @@ var _ = require('underscore');
 var queryString = require('querystring');
 
 var routeToTable = function(category) {
-    var qs = queryString.parse(document.location.search);
+    var qs = queryString.parse(document.location.search),
+        context = {},
+        param;
 
-    if (_.isEmpty(qs)) {
+    // cleanup
+    for (param in qs) {
+        if (qs.hasOwnProperty(param)) {
+            if (param !== "") {
+                context[param.replace(/\?/, '')] = qs[param];
+            }
+        }
+    }
+
+    if (_.isEmpty(context)) {
         events.emit('load:browse', {
             'category': category
         });
+    }
+    else {
+        if (_.values(qs).length === 1 && typeof qs.q !== 'undefined') {
+            events.emit('search:submitted', {'query': qs.q});
+        }
+        else {
+            events.emit('load:searchResults', {
+                'category': category,
+                'filters': context
+            });
+        }
     }
 };
 

@@ -30,7 +30,7 @@ module.exports = {
         });
 
         events.on('bind:search', function() {
-            $('.filter-records').on('click', function() {
+            $('.results-header a').on('click', function() {
                 event.preventDefault();
 
                 var context = {},
