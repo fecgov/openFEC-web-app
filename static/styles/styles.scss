@@ -38,16 +38,18 @@ body {
 }
 
 .page-nav__item {
+  @include span-columns(6, block-collapse);
+}
+
+.page-nav__link {
+  @include transition(background-color .1s);
+  text-align: center;
   padding: 2rem;
   border-right: 1px solid $light-gray;
   color: #fff;
   display: block;
   font-size: 1.125rem;
   line-height: 2rem;
-}
-
-a.page-nav__item {
-  @include transition(background-color .1s);
 
   &:hover {
     background-color: $licorice-2;
@@ -55,11 +57,11 @@ a.page-nav__item {
   }
 }
 
-
 .page-nav__search {
-  @include span-columns(10);
-  padding-left: 0;
+  @include span-columns(12, block-collapse);
   margin-right: 0;
+  padding: 2rem 2rem 2rem 0;
+  border-right: 1px solid $light-gray;
 
   .search-bar,
   .search-submit {
@@ -157,6 +159,9 @@ a.page-nav__item {
 
 .filter-header-bar {
   position: relative;
+}
+
+.disclosure-title {
   background-color: $light-gray;
   border-color: $medium-gray;
   border-style: solid;
@@ -266,6 +271,14 @@ table {
 tr {
   border: none;
   font-size: .875rem;
+
+  &:nth-child(even) {
+    background-color: $light-gray;
+  }
+
+  &:hover {
+    background: rgba($blue, .1);
+  }
 }
 
 th {
@@ -287,11 +300,6 @@ td {
 .flex-cell {
   white-space: nowrap; // Prevents text-wrapping
   width: 1%; // Setting this along with a fixed width on the table makes cells flexible
-}
-
-
-tr:nth-child(even) {
-  background-color: $light-gray;
 }
 
 .sort-header {
