@@ -1,0 +1,20 @@
+// MODULE: Hero Unit
+.hero {
+  padding: 5rem 0;
+  color: #fff;
+  text-align: center;
+  background-color: $licorice;
+  background-image: url('../img/mesh@2x.png');
+  background-size: contain;
+}
+
+.sub-hero {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+@include media($small) {
+  .hero {
+    padding: 2rem 0;
+  }
+}

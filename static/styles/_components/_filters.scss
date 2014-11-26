@@ -1,0 +1,46 @@
+// MODULE: Filter fields
+
+.filter-field-container {
+  @include clearfix();
+  border-color: $medium-gray;
+  border-style: solid;
+  border-width: 0 1px 1px 1px;
+  padding: 1rem;
+
+  .field {
+    @include span-columns(12);
+    padding: 1rem 0;
+
+    &:nth-child(even) {
+      @include omega()
+    }
+  }
+}
+
+.field.active {
+  label {
+    color: $green;
+  }
+
+  .chosen-single {
+    border: 2px solid $green;
+  }
+}
+
+// HACK: Remove this after the demo
+.add-filter {
+  @extend .button;
+  @include span-columns(2 of 12, block-collapse);
+  height: 32px;
+  padding: 0;
+  line-height: 32px;
+  border-radius: 0 4px 4px 0;
+}
+
+.field {
+  input[name="name"] {
+    @include span-columns(10 of 12, block-collapse);
+    border-radius: 4px 0 0 4px;
+    border-right-width: 0;
+  }
+}

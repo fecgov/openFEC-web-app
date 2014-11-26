@@ -1,0 +1,23 @@
+@import "data-view";
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  @include outer-container();
+}
+
+@include media($medium) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.sub-section {
+  @include clearfix();
+  padding: 2rem 0;
+  border-bottom: 1px dotted $base-border-color;
+}
