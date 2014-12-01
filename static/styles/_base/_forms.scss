@@ -93,6 +93,20 @@ select {
     float: left;
     border-radius: 0 $base-border-radius $base-border-radius 0;
   }
+
+  @include media($medium) {
+    #{$all-text-inputs} {
+      width: 60%;
+      float: left;
+      border-radius: $base-border-radius 0 0 $base-border-radius;
+    }
+
+    input[type="submit"] {
+      width: 40%;
+      float: left;
+      border-radius: 0 $base-border-radius $base-border-radius 0;
+    }
+  }
 }
 
 // Overriding Chosen styles

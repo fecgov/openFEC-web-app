@@ -46,17 +46,23 @@
 }
 
 
-@include media($small) {
-  .page-nav__item {
-    @include span-columns(2, block-collapse);
-  }
-
+@include media($medium) {
   .page-nav__link {
     padding: .5rem;
 
     &:last-child {
       border-right: none;
     }
+  }
+
+  .page-nav__search {
+    padding: .5rem;
+  }
+}
+
+@include media($small) {
+  .page-nav__item {
+    @include span-columns(2, block-collapse);
   }
 
   .page-nav__search {

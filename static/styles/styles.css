@@ -1,3 +1,8 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
 body {
   -webkit-font-smoothing: antialiased;
   background-color: white;
@@ -162,6 +167,15 @@ select {
   width: 25%;
   float: left;
   border-radius: 0 0.25em 0.25em 0; }
+@media screen and (max-width: 48em) {
+  .input-button-combo input[type="email"], .input-button-combo input[type="number"], .input-button-combo input[type="password"], .input-button-combo input[type="search"], .input-button-combo input[type="tel"], .input-button-combo input[type="text"], .input-button-combo input[type="url"], .input-button-combo input[type="color"], .input-button-combo input[type="date"], .input-button-combo input[type="datetime"], .input-button-combo input[type="datetime-local"], .input-button-combo input[type="month"], .input-button-combo input[type="time"], .input-button-combo input[type="week"] {
+    width: 60%;
+    float: left;
+    border-radius: 0.25em 0 0 0.25em; }
+  .input-button-combo input[type="submit"] {
+    width: 40%;
+    float: left;
+    border-radius: 0 0.25em 0.25em 0; } }
 
 table {
   border-collapse: collapse;
@@ -308,11 +322,6 @@ input[type="submit"],
   .primary:active,
   .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary:active {
     background-color: #1B5585; }
-
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
 
 .vex.vex-theme-default {
   background-color: rgba(255, 255, 255, 0.5);
@@ -693,6 +702,14 @@ td {
   .page-nav__search .search-submit {
     padding: 0; }
 
+@media screen and (max-width: 48em) {
+  .page-nav__link {
+    padding: .5rem; }
+    .page-nav__link:last-child {
+      border-right: none; }
+
+  .page-nav__search {
+    padding: .5rem; } }
 @media screen and (max-width: 30em) {
   .page-nav__item {
     float: left;
@@ -700,11 +717,6 @@ td {
     width: 53.71149%; }
     .page-nav__item:last-child {
       width: 46.28851%; }
-
-  .page-nav__link {
-    padding: .5rem; }
-    .page-nav__link:last-child {
-      border-right: none; }
 
   .page-nav__search {
     float: left;
