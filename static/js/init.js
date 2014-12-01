@@ -21,3 +21,7 @@ tables.init();
 progress.init();
 errors.init();
 router.init();
+
+$(document).ready(function() {
+    $('body').addClass('js-initialized');
+});
