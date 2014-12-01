@@ -1,13 +1,13 @@
 @mixin button($bgcolor, $textcolor, $hoverbg, $hovertext) {
   @include appearance(none);
   @include transition(background-color .1s);
+  @include font-size(1.6);
   -webkit-font-smoothing: antialiased;
   background: $bgcolor;
   border-radius: $base-border-radius;
   border: none;
   display: inline-block;
   color: $textcolor;
-  font-size: $base-font-size;
   font-weight: bold;
   text-align: center;
   line-height: 1;

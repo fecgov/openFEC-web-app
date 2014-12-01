@@ -3,14 +3,14 @@
 
 .meta-box {
   @include span-columns(24);
-  margin-bottom: 2rem;
-  padding: 1rem;
+  margin-bottom: 2em;
+  padding: 1em;
   background-color: $meta-box-color;
   border: 1px solid $medium-gray;
 }
 
 .meta-box--bottom {
-  margin-top: 2rem;
+  margin-top: 2em;
 }
 
 .results-count {
@@ -27,6 +27,6 @@
 
 .pagination__link {
   &:nth-child(2) {
-    margin-left: 1rem;
+    margin-left: 1em;
   }
 }

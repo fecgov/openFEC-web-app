@@ -12,12 +12,12 @@
   }
 
   .vex-content {
+    @include font-size(1.8);
     background-color: $licorice-2;
     color: #fff;
     border-left: 10px solid $red;
     border-radius: 0 $base-border-radius $base-border-radius 0;
     box-shadow: 0 0 2px 0px rgba(0,0,0,.5);
-    font-size: 1.125rem;
     font-family: $sans-serif;
   }
 

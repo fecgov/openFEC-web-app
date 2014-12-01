@@ -1,9 +1,9 @@
 // MODULE: Header
 .usa {
+  @include font-size(1.4);
   background-color: #e6e6e6;
   text-align: center;
-  font-size: .75rem;
-  padding: .25rem;
+  padding: .5em;
 }
 
 .site-header {

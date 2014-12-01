@@ -1,6 +1,6 @@
 // MODULE: Hero Unit
 .hero {
-  padding: 5rem 0;
+  padding: 5em 0;
   color: #fff;
   text-align: center;
   background-color: $licorice;
@@ -10,11 +10,11 @@
 
 .sub-hero {
   text-align: center;
-  padding: 3rem 0;
+  padding: 3em 0;
 }
 
 @include media($small) {
   .hero {
-    padding: 2rem 0;
+    padding: 2em 0;
   }
 }

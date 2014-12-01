@@ -11,13 +11,13 @@ body {
 
 @include media($medium) {
   .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1em;
+    padding-right: 1em;
   }
 }
 
 .sub-section {
   @include clearfix();
-  padding: 2rem 0;
+  padding: 2em 0;
   border-bottom: 1px dotted $base-border-color;
 }

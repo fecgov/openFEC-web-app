@@ -12,14 +12,14 @@
 }
 
 .page-nav__link {
+  @include font-size(1.8);
+  @include rem(padding, 2rem);
   @include transition(background-color .1s);
   text-align: center;
-  padding: 2rem;
   border-right: 1px solid $light-gray;
   color: #fff;
   display: block;
-  font-size: 1.125rem;
-  line-height: 2rem;
+  line-height: 2;
 
   &:hover {
     background-color: $licorice-2;
@@ -29,13 +29,13 @@
 
 .page-nav__search {
   @include span-columns(12, block-collapse);
+  @include rem(padding, 2rem 2rem 2rem 0);
   margin-right: 0;
-  padding: 2rem 2rem 2rem 0;
   border-right: 1px solid $light-gray;
 
   .search-bar,
   .search-submit {
-    height: 2rem;
+    @include rem(height, 3.2rem);
     margin-bottom: 0;
     border: none;
   }
@@ -48,7 +48,7 @@
 
 @include media($medium) {
   .page-nav__link {
-    padding: .5rem;
+    @include rem(padding, .5rem);
 
     &:last-child {
       border-right: none;
@@ -56,7 +56,7 @@
   }
 
   .page-nav__search {
-    padding: .5rem;
+    @include rem(padding, .5rem);
   }
 }
 
@@ -67,7 +67,7 @@
 
   .page-nav__search {
     @include span-columns(4);
+    @include rem(padding, .5rem 0 0 0);
     border-right: none;
-    padding: .5rem 0 0 0;
   }
 }

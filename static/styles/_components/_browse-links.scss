@@ -3,7 +3,7 @@
   @extend %flat-list;
   @include span-columns(12);
   @include shift(6);
-  padding: 1rem 0;
+  @include rem(padding, 1.5rem 0);
 
   li {
     @include span-columns(6 of 12);
@@ -30,7 +30,7 @@
       @include span-columns(4);
 
       &:first-child {
-        margin-bottom: 1rem;
+        margin-bottom: 1em;
       }
     }
   }
