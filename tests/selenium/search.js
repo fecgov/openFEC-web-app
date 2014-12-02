@@ -1,27 +1,35 @@
-var webdriverio = require('webdriverio'),
-    client = webdriverio.remote({
-        desiredCapabilities: {
-            browserName: 'chrome',
-            version: '',
-            platform: 'OS X 10.10',
-            tags: ['examples'],
-            name: 'Search'
-        },
-        host: 'ondemand.saucelabs.com',
-        port: 80,
-        user: process.env.SAUCE_USERNAME,
-        key: process.env.SAUCE_ACCESS_KEY,
-        logLevel: 'verbose'
-    }).init();
- 
-client
-    .url('http://localhost')
-    .waitFor('.js-initialized', 2000)
-    .setValue('#large-search input[name=search]', 'smith')
-    .click('#large-search input[type=submit]')
-    .waitForVisible('#progress', 1000)
-    .waitForVisible('.sub-section')
-    .getText('h2', function(err, text) {
-        assert.equal(err, 'Search results: smith');
+var webdriver = require('selenium-webdriver'),
+    sauce = 'http://ondemand.saucelabs.com:80/wd/hub',
+    chai = require('chai'),
+    assert = chai.assert,
+    searchField,
+    driver = new webdriver.Builder()
+    .usingServer(sauce)
+    .withCapabilities({
+        browserName: 'chrome',
+        version: '',
+        platform: 'OS X 10.10',
+        name: 'Browse candidates',
+        username: process.env.SAUCE_USERNAME,
+        accessKey: process.env.SAUCE_ACCESS_KEY
     })
-    .end();
+    .build();
+ 
+driver.get('http://localhost');
+driver.wait(function() {
+    return driver.findElement(webdriver.By.className('js-initialized'));
+}, 4000);
+searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
+searchField.sendKeys('smith');
+driver.findElement(webdriver.By.css('#large-search input[type=submit]')).click();
+driver.wait(function() {
+    return driver.findElement(webdriver.By.id('progress'));
+}, 2000);
+driver.wait(function() {
+    return driver.findElement(webdriver.By.className('sub-section'));
+}, 2000);
+driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
+    assert.equal(text, 'Search results: <span class="query">smith</span>');
+});
+
+driver.quit();

@@ -20,8 +20,9 @@
     "vex-js": "^2.2.1"
   },
   "devDependencies": {
-    "watchify": "~2.0.0",
-    "webdriverio": "^2.3.0"
+    "chai": "^1.10.0",
+    "selenium-webdriver": "^2.44.0",
+    "watchify": "~2.0.0"
   },
   "scripts": {
     "test": "mocha tests/unit",
