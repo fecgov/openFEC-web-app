@@ -1,6 +1,29 @@
+language: python
+python:
+  - "2.7"
+addons:
+  postgresql: "9.3"
+  sauce_connect:
+    username: 18fopenfec
+    access_key:
+      secure: "Y0DDAcVE2+zoR5qQsIVr0YB/mFNH39AzIItM+oYrI6OZVX6N2b7dH77vahj7PUwy5OK8qEU563DMuUvxA32tlU8DSaeq7zTnMZfEPvev6lLS3/QSms0li3A0yzr9H5NWh40NkvmV8dnFLEbVpyEwZE923uuzGoYxAQNXaman6zY="
+env: SQLA_CONN="postgresql://:@/cfdm_test"
+before_script:
+  - git clone git@github.com:18F/openFEC.git
+  - cd openFEC
+  - psql -c 'create database cfdm_test;' -U postgres 
+  - md5sum data/cfdm_test.pgdump.sql
+  - psql -f data/cfdm_test.pgdump.sql -U postgres cfdm_test
+  - psql -c "SELECT count(*) FROM dimcand" -U postgres cfdm_test
+  - pip install -r webservices/requirements.txt
+  - python webservices/rest.py
+  - cd ..
+  - node app.js
 install:
     - sudo apt-get install nodejs
     - npm install -g mocha
     - npm install
 script:
     - npm run test
+    - node tests/selenium/search.js
+    - node tests/selenium/browse-candidates.js
