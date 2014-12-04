@@ -88,5 +88,30 @@ driver.findElement(webdriver.By.className('pagination__link')).getInnerHtml().th
 // click prev link
 driver.findElement(webdriver.By.className('pagination__link')).click()
     .then(verifyFirstPage);
+//open the state filter drop down
+driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[4]/div')).click()
+    .then(function() {
+        // select Indiana
+        driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[4]/div/div/ul/li[16]')).click()
+            .then(function() {
+                // make sure active styling is applied to field
+                driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[4]')).getAttribute('class').then(function(classes) {
+                   assert.equal(classes, 'field active');
+
+                    // make sure table updates
+                    driver.executeScript(getResultsRows).then(function(rows) {
+                        assert.equal(rows, 3);
+                    });
+
+                    driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[4]/div/a/abbr')).click()
+                        .then(function() {
+                            // make sure active styling is gone
+                            driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[4]')).getAttribute('class').then(function(classes) {
+                               assert.equal(classes, 'field');
+                            });
+                        });
+                });
+            });
+    });
 
 driver.quit();
