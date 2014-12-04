@@ -16,7 +16,8 @@ before_script:
     - psql -f data/cfdm_test.pgdump.sql -U postgres cfdm_test
     - psql -c "SELECT count(*) FROM dimcand" -U postgres cfdm_test
     - pip install -r webservices/requirements.txt
-    - python webservices/rest.py; cd ..
+    - python webservices/rest.py &
+    - cd ..
     - node app.js
     - sudo cp ../openFEC/webservices/setup/nginx_conf_default_no_ssl \ /etc/nginx/vhosts/default.conf
     - sudo ln -s /etc/nginx/vhosts/default.conf \ /etc/nginx/sites-available/default
