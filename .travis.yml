@@ -9,18 +9,21 @@ addons:
       secure: "Y0DDAcVE2+zoR5qQsIVr0YB/mFNH39AzIItM+oYrI6OZVX6N2b7dH77vahj7PUwy5OK8qEU563DMuUvxA32tlU8DSaeq7zTnMZfEPvev6lLS3/QSms0li3A0yzr9H5NWh40NkvmV8dnFLEbVpyEwZE923uuzGoYxAQNXaman6zY="
 env: SQLA_CONN="postgresql://:@/cfdm_test"
 before_script:
-  - git clone https://github.com/18F/openFEC.git 
-  - cd openFEC
-  - psql -c 'create database cfdm_test;' -U postgres 
-  - md5sum data/cfdm_test.pgdump.sql
-  - psql -f data/cfdm_test.pgdump.sql -U postgres cfdm_test
-  - psql -c "SELECT count(*) FROM dimcand" -U postgres cfdm_test
-  - pip install -r webservices/requirements.txt
-  - python webservices/rest.py
-  - cd ..
-  - node app.js
+    - git clone https://github.com/18F/openFEC.git 
+    - cd openFEC
+    - psql -c 'create database cfdm_test;' -U postgres 
+    - md5sum data/cfdm_test.pgdump.sql
+    - psql -f data/cfdm_test.pgdump.sql -U postgres cfdm_test
+    - psql -c "SELECT count(*) FROM dimcand" -U postgres cfdm_test
+    - pip install -r webservices/requirements.txt
+    - python webservices/rest.py; cd ..
+    - node app.js
+    - sudo cp ../openFEC/webservices/setup/nginx_conf_default_no_ssl \ /etc/nginx/vhosts/default.conf
+    - sudo ln -s /etc/nginx/vhosts/default.conf \ /etc/nginx/sites-available/default
+    - sudo rm /usr/local/etc/nginx/nginx.conf
+    - sudo ln -s /etc/nginx/vhosts/default.conf /etc/nginx/nginx.conf
 install:
-    - sudo apt-get install nodejs
+    - sudo apt-get install nodejs nginx
     - npm install -g mocha
     - npm install
 script:
