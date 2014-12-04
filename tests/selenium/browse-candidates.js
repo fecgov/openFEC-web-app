@@ -4,6 +4,7 @@ var webdriver = require('selenium-webdriver'),
     assert = chai.assert,
     getResultsRows,
     verifyFirstPage,
+    filterToggleButton,
     driver = new webdriver.Builder()
     .usingServer(sauce)
     .withCapabilities({
@@ -113,5 +114,35 @@ driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[4]/div'))
                 });
             });
     });
+
+filterToggleButton = driver.findElement(webdriver.By.className('disclosure-toggle'));
+
+// close filters
+filterToggleButton.click();
+
+filterToggleButton.getAttribute('class').then(function(classes) {
+    // make sure it changes to closed styling
+    assert.equal(classes, 'disclosure-toggle disclosure-toggle--closed');
+
+    // make sure the fields actually get hidden
+    driver.findElement(webdriver.By.className('filter-field-container')).getCssValue('display').then(function(displayVal) {
+        assert.equal(displayVal, 'none');
+    });
+    
+});
+
+// reopen filters
+filterToggleButton.click();
+
+filterToggleButton.getAttribute('class').then(function(classes) {
+    // make sure it changes to open styling
+    assert.equal(classes, 'disclosure-toggle');
+    // make sure the fields actually get displayed
+    assert.ok(function() {
+        driver.wait(function() {
+            return driver.findElement(webdriver.By.className('filter-field-container').isDisplayed());
+        }, 1000);
+    });
+});
 
 driver.quit();
