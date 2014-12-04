@@ -20,10 +20,9 @@ before_script:
     - cd ..
     - node app.js &
     - sudo mkdir /etc/nginx/vhosts
-    - sudo cp openFEC/webservices/setup/nginx_conf_default_no_ssl /etc/nginx/vhosts/default.conf
-    - sudo ln -s /etc/nginx/vhosts/default.conf /etc/nginx/sites-available/default
+    - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/sites-available/default/default.conf
     - sudo rm /usr/local/etc/nginx/nginx.conf
-    - sudo ln -s /etc/nginx/vhosts/default.conf /etc/nginx/nginx.conf
+    - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/nginx.conf
 install:
     - sudo apt-get install nodejs nginx
     - npm install -g mocha
