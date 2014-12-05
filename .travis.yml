@@ -17,6 +17,7 @@ before_script:
     - psql -c "SELECT count(*) FROM dimcand" -U postgres cfdm_test
     - pip install -r webservices/requirements.txt
     - python webservices/rest.py &
+    - sleep 5
     - cd ..
     - node app.js &
     - sudo mkdir /etc/nginx/vhosts
