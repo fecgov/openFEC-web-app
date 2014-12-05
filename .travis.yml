@@ -29,6 +29,7 @@ install:
     - npm install -g mocha
     - npm install
 script:
+    - curl http://localhost
     - npm run test
     - node tests/selenium/search.js
     - node tests/selenium/browse-candidates.js
