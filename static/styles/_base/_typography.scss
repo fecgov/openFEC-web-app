@@ -1,9 +1,13 @@
+html {
+  font-size: 62.5%;
+}
+
 body {
+  @include font-size(1.4);
   -webkit-font-smoothing: antialiased;
   background-color: $base-background-color;
   color: $base-font-color;
   font-family: $base-font-family;
-  font-size: $base-font-size * .875;
   line-height: $unitless-line-height;
 }
 
@@ -15,32 +19,32 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: $base-font-size * 3.125;
+  @include font-size(4.8);
   font-weight: 300;
 }
 
 h2 {
-  font-size: $base-font-size * 2.5;
+  @include font-size(3.6);
   font-weight: 300;
   margin-bottom: 1rem;
 }
 
 h3 {
-  font-size: $base-font-size * 2;
+  @include font-size(3.2);
   font-weight: 400;
 }
 
 h4 {
-  font-size: $base-font-size * 1.25;
+  @include font-size(2.4);
   font-weight: 400;
 }
 
 h5 {
-  font-size: $base-font-size * 1.25; // 16 * 1.25 = 20px
+  @include font-size(2.0);
 }
 
 h6 {
-  font-size: $base-font-size;
+  @include font-size(1.8);
 }
 
 p {
@@ -94,7 +98,7 @@ cite {
 // Universal text classes
 
 .lead-text {
-  font-size: $base-font-size * 1.125;
+  @include font-size(1.8);
 }
 
 .query {

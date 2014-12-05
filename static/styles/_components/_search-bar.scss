@@ -1,0 +1,39 @@
+// MODULE: Search bar
+
+.search-bar {
+  margin: 0;
+  border: 0;
+}
+
+#large-search {
+  label {
+    margin-bottom: 2em;
+  }
+}
+
+.search--large {
+  @include span-columns(18);
+  @include shift(3);
+
+  .search-bar {
+    @include font-size(3.2);
+    height: 2em;
+
+    @include placeholder {
+      font-weight: 300;
+    }
+  }
+
+  input[type="submit"] {
+    @include font-size(3.2);
+    padding: .5em;
+    font-weight: 300;
+  }
+}
+
+@include media($medium) {
+  .search--large {
+    @include span-columns(12);
+    @include shift(0);
+  }
+}
