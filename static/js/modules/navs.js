@@ -13,8 +13,8 @@ var navClickHandler = function(e) {
 };
 
 var changeActiveNavLink = function(category) {
-    $('.page-nav__item').removeClass('active');
-    $('.page-nav__item[name=' + category + ']').addClass('active');
+    $('.page-nav__link').removeClass('active');
+    $('.page-nav__link[name=' + category + ']').addClass('active');
 
     $('#main').data('section', category);
 };
@@ -34,7 +34,7 @@ var hideNav = function() {
 module.exports = {
     init: function() {
         var section = $('#main').data('section');
-        $('#main').on('click', 'a.page-nav__item', navClickHandler);
+        $('#main').on('click', 'a.page-nav__link', navClickHandler);
         $('#main').on('click', '.browse-links a', navClickHandler);
 
         events.on('render:browse', renderHandler);

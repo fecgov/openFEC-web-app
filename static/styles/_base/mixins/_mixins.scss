@@ -1,0 +1,102 @@
+/*
+* Global mixins.
+*/
+
+/*
+* Sets the font-size in rems with a px fallback.
+*/
+@mixin font-size($sizeValue: 1.6) {
+  font-size: ($sizeValue * 10) + px;
+  font-size: $sizeValue + rem;
+}
+
+@mixin u-visually_hidden {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+/*
+* Parses a text value to an int.
+*/
+@function parseInt($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+/*
+* Sets the property to the values in rem, with a px fallback for old browsers.
+*
+* $property The css property to set the values on
+* $values A list of rem values to set on the property.
+*
+* Example: @include rem(margin, 1rem 0 2rem);
+*/
+@mixin rem($property, $values) {
+  $px : ();
+  $rem: ();
+
+  @each $value in $values {
+
+    @if $value == 0 or $value == auto {
+      $px : append($px , $value);
+      $rem: append($rem, $value);
+    }
+
+    @else {
+      $unit: unit($value);
+      $val: parseInt($value);
+
+      @if $unit == "px" {
+        $px : append($px,  $value);
+        $rem: append($rem, ($val / 10 + rem));
+      }
+
+      @if $unit == "rem" {
+        $px : append($px,  ($val * 10 + px));
+        $rem: append($rem, $value);
+      }
+    }
+  }
+
+  @if $px == $rem {
+    #{$property}: $px;
+  } @else {
+    #{$property}: $px;
+    #{$property}: $rem;
+  }
+}
+
+// Mixin for generating flash messages - comes with bitters
+
+@mixin flash($color) {
+  background: $color;
+  color: darken($color, 60);
+  font-weight: bold;
+  margin-bottom: $base-line-height / 2;
+  padding: $base-line-height / 2;
+
+  a {
+    color: darken($color, 70);
+
+    &:hover {
+      color: darken($color, 90);
+    }
+  }
+}
+
+// Mixin that gives all of the styles necessary to put a themify icon into CSS
+// Using the content property
+
+@mixin icon() {
+  font-family: 'themify';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

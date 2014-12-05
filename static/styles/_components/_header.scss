@@ -1,0 +1,15 @@
+// MODULE: Header
+.usa {
+  @include font-size(1.4);
+  background-color: #e6e6e6;
+  text-align: center;
+  padding: .5em;
+}
+
+.site-header {
+  border-bottom: 5px solid $red;
+}
+
+.site-header__inner {
+  padding: em(20) 0;
+}

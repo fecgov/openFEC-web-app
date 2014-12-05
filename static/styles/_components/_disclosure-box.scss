@@ -1,0 +1,41 @@
+// MODULE: Filter box
+.filter-box {
+  margin-bottom: 2em;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+
+.filter-header-bar {
+  position: relative;
+}
+
+.disclosure-title {
+  background-color: $light-gray;
+  border-color: $medium-gray;
+  border-style: solid;
+  border-width: 1px;
+  padding: .5em 1em;
+  font-weight: 600;
+}
+
+.disclosure-toggle {
+  background-color: $blue;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 0;
+  width: 45px;
+  height: 100%;
+
+  &:before {
+    @include icon();
+    content: "\e622"; // Minus icon
+  }
+}
+
+.disclosure-toggle--closed {
+  background-color: $blue;
+  &:before {
+    @include icon();
+    content: "\e61a"; // Plus icon
+  }
+}
