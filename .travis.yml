@@ -20,9 +20,8 @@ before_script:
     - cd ..
     - node app.js &
     - sudo mkdir /etc/nginx/vhosts
-    - sudo mkdir -p /etc/nginx/sites-available/default
-    - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/sites-available/default/
-    - sudo rm /usr/local/etc/nginx/nginx.conf
+    - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/sites-available/default
+    - sudo rm /etc/nginx/nginx.conf
     - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/nginx.conf
 install:
     - sudo apt-get install nodejs nginx
