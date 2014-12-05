@@ -24,6 +24,7 @@ before_script:
     - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/sites-available/default
     - sudo rm /etc/nginx/nginx.conf
     - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/nginx.conf
+    - sudo service postgresql restart
 install:
     - sudo apt-get install nodejs nginx
     - npm install -g mocha
