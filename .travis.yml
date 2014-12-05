@@ -19,7 +19,7 @@ before_script:
     - python webservices/rest.py &
     - cd ..
     - node app.js &
-    - sudo mkdir /etc/nginx/vhosts
+    - sudo mkdir -p /etc/nginx/vhosts/default
     - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/sites-available/default/default.conf
     - sudo rm /usr/local/etc/nginx/nginx.conf
     - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/nginx.conf
