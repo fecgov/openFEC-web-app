@@ -20,6 +20,7 @@ before_script:
     - cd ..
     - node app.js &
     - sudo mkdir /etc/nginx/vhosts
+    - sudo cp openFEC/webservices/setup/nginx_conf_default_no_ssl /etc/nginx/vhosts/default.conf
     - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/sites-available/default
     - sudo rm /etc/nginx/nginx.conf
     - sudo cp /etc/nginx/vhosts/default.conf /etc/nginx/nginx.conf
