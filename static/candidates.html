@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Open FEC Beta</title>
+  <link href="js/vendor/chosen/chosen.min.css" rel="stylesheet" type="text/css"/>
+  <link href="nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" href="/static/vex-js/css/vex-theme-default.css" />
+  <link rel="stylesheet" href="/static/styles/themify-icons.css">
+  <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
+  <link href='https://fonts.googleapis.com/css?family=Raleway:300,400,600,700|Open+Sans:300,400,600,700|Source+Code+Pro:400' rel='stylesheet' type='text/css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="usa">
+      An official website of the United States Government <img src="img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website">
+    </div>
+    <div class="container site-header__inner">
+      <a class="logo" href="/" title="Home"><img src="img/brand.svg" alt="OpenFEC Logo"></a>
+    </div><!-- .container -->
+  </header>
+
+  <nav class="header-nav page-nav">
+    <div class="container">
+      <ul class="page-nav__list">
+        <li class="page-nav__item page-nav__search input-button-combo">
+          <form id="search" action="/search">
+            <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search">
+            <input class="search-submit" type="submit" value="Search">
+          </form>
+        </li>
+        <li class="page-nav__item"><a class="page-nav__link" href="candidates" name="candidates">Candidates</a></li>
+        <li class="page-nav__item"><a class="page-nav__link" href="committees" name="committees">Committees</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="progress" class="container hidden"></div>
+
+  <main id="main" class="entity candidate">
+    <header class="entity__header">
+      <div class="container">
+        <div class="entity__header--top row">
+          <div class="chunk--half">
+            <h1>Janet Smith</h1>
+            <ul class="entity__meta">
+              <li>Candidate for U.S. House of Representatives</li>
+              <li>Principal committee: <a href="#">JANE FOR DELAWARE</a></li>
+            </ul>
+          </div>
+          <div class="time-period chunk--half">
+            <label for="time-period-select">View records for</label>
+            <select id="time-period-select">
+              <option>2012-2014</option>
+              <option>2010-2012</option>
+            </select>
+          </div>
+        </div>
+        <div class="entity__header--bottom row">
+          <div class="chunk--third">
+            <h4>Candidate Information</h4>
+            <dl class="entity__info">
+              <dt>Candidate ID:</dt>
+              <dd>1234567</dd>
+              <dt>Status:</dt>
+              <dd>Incumbent</dd>
+              <dt>Party:</dt>
+              <dd>Democratic Party</dd>
+              <dt>State:</dt>
+              <dd>Delaware</dd>
+              <dt>District</dt>
+              <dd>01</dd>
+            </dl>
+          </div>
+          <div class="chunk--third">
+            <h4>Candidate Committees</h4>
+            <dl class="entity__related-entities">
+              <dt>Principal Candidate Campaign Committee</dt>
+              <dd>JANET FOR DELAWARE</dd>
+              <dt>Authorized Committee</dt>
+              <dd>FRIENDS OF JANET</dd>
+            </dl>
+          </div>
+          <div class="chunk--third">
+            <h4>Related Committees</h4>
+            <dl class="entity__related-entities">
+              <dt>Joint Fundraising Committee</dt>
+              <dd>CANDIDATES XYZ</dd>
+              <dt>Leadership PAC</dt>
+              <dd>LEADERPAC</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </header>
+    <nav class="page-tabs" role="tablist">
+      <div class="container">
+        <ul>
+          <li role="tab" class="page-tabs__item" aria-selected="true"><a href="#">Financial Summary</a></li>
+          <li role="tab" class="page-tabs__item"><a href="#">Outside Spending</a></li>
+          <li role="tab" class="page-tabs__item"><a href="#">Filings</a></li>
+        </ul>
+      </div>
+    </nav>
+    <section class="entity__section" id="section-1" aria-labelledby="section-1-header">
+      <div class="container">
+        <h2 id="section-1-header">Financial Summary</h2>
+        <p class="lead-text">Get the full picture of all of the money received and spent by this candidate’s principal and authorized committees.</p>
+        <div class="entity__subsection">
+          <h3>Candidate Committees</h3>
+          <p class="lead-text">Committees linked to the candidate for purposes of campaign fundraising.</p>
+          <div class="figure-group">
+            <h4><a href="#">JANET FOR DELAWARE</a></h4>
+            <p class="figure-group__description">Principal Candidate Campaign Committee</p>
+            <figure class="chunk--half">
+            </figure>
+            <figure class="chunk--half summary-table">
+            </figure>
+          </div>
+          <div class="figure-group">
+            <h4><a href="#">FRIENDS OF JANET</a></h4>
+            <p class="figure-group__description">Principal Candidate Campaign Committee</p>
+            <figure class="chunk--half">
+            </figure>
+            <figure class="chunk--half summary-table">
+            </figure>
+          </div>
+        </div>
+        <div class="entity__subsection">
+          <h3>Other Related Committees</h3>
+          <p class="lead-text">Committees linked to the candidate for purposes other than campaign fundraising.</p>
+          <div class="figure-group">
+            <h4><a href="#">CANDIDATES XYZ</a></h4>
+            <p class="figure-group__description">Principal Candidate Campaign Committee</p>
+            <figure class="chunk--half">
+            </figure>
+            <figure class="chunk--half summary-table">
+            </figure>
+          </div>
+          <div class="figure-group">
+            <h4><a href="#">LEADERPAC</a></h4>
+            <p class="figure-group__description">Principal Candidate Campaign Committee</p>
+            <figure class="chunk--half">
+            </figure>
+            <figure class="chunk--half summary-table">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="js/vendor/chosen/chosen.jquery.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

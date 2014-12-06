@@ -1,0 +1,20 @@
+.page-tabs {
+  background-color: $light-gray;
+  text-align: center;
+  padding: .5em 0 0 0;
+}
+
+.page-tabs__item {
+  @include font-size(1.8);
+  display: inline-block;
+  padding: .5em 2em;
+  border-right: 1px solid $medium-gray;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  &[aria-selected="true"] {
+    border-bottom: .5em solid $blue;
+  }
+}

@@ -1,0 +1,80 @@
+// Header styles for candidate, committee and district pages
+
+.entity__header {
+  padding: 2em 0;
+}
+
+.entity__header--top {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  padding: 2em 0;
+}
+
+.entity__header--bottom {
+  padding: 2em 0;
+}
+
+
+.time-period {
+  text-align: right;
+}
+
+#time-period-select {
+  float: right;
+}
+
+.entity__info {
+  dt,
+  dd {
+    width: 50%;
+    float: left;
+  }
+}
+
+.entity__related-entities {
+  dd {
+    margin-bottom: 1em;
+  }
+}
+
+// This is the section that is associated with a tab
+.entity__section {
+  padding: 4em 0;
+}
+
+// This is a grouping of data in a section, labeled by a h3
+.entity__subsection {
+  @include primary-divider();
+  @include span-columns(24);
+  @include clearfix();
+  padding: 2em 0;
+
+}
+
+// Contained in a subsection, this is a group of figures (i.e. for a committee)
+.figure-group {
+  @include secondary-divider();
+  @include span-columns(24);
+  @include clearfix();
+  padding: 2em 0;
+}
+
+.figure-group__description {}
+
+// Candidate-specific styles
+
+.candidate {
+  .entity__header {
+    background-color: $licorice;
+    color: #fff;
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  }
+
+  .entity__header--top {
+    border-color: #fff;
+  }
+}

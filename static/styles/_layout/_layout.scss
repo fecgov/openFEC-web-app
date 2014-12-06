@@ -9,6 +9,11 @@ body {
   @include outer-container();
 }
 
+.row {
+  @include span-columns(24);
+  @include clearfix();
+}
+
 @include media($medium) {
   .container {
     padding-left: 1em;
@@ -20,4 +25,16 @@ body {
   @include clearfix();
   padding: 2em 0;
   border-bottom: 1px dotted $base-border-color;
+}
+
+
+// Chunks
+// These are common grouping sizes, described by their desktop size
+
+.chunk--half {
+  @include span-columns(12);
+}
+
+.chunk--third {
+  @include span-columns(8);
 }
