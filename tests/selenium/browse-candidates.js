@@ -13,7 +13,8 @@ var webdriver = require('selenium-webdriver'),
         platform: 'OS X 10.10',
         name: 'Browse candidates',
         username: process.env.SAUCE_USERNAME,
-        accessKey: process.env.SAUCE_ACCESS_KEY
+        accessKey: process.env.SAUCE_ACCESS_KEY,
+        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER
     })
     .build();
 
