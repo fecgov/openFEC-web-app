@@ -29,11 +29,11 @@ driver.findElement(webdriver.By.css('#large-search input[type=submit]')).click()
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
-}, 2000);
+}, 4000);
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('sub-section'));
-}, 2000);
+}, 4000);
 
 driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
     assert.equal(text, 'Search results: <span class="query">smith</span>');
@@ -42,7 +42,7 @@ driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text
 // make sure the nav in header became visisble
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('header-nav')).isDisplayed();
-}, 1000);
+}, 2000);
 
 // click "view all" committees
 driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/div[2]/div/a')).click().then(function() {
