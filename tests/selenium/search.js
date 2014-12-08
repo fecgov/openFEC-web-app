@@ -21,7 +21,7 @@ driver.get('http://localhost');
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
-}, 4000);
+}, 6000);
 
 searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
 searchField.sendKeys('smith');
