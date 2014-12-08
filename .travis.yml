@@ -31,6 +31,7 @@ install:
     - sudo apt-get install nodejs nginx
     - npm install -g mocha
     - npm install
+    - npm run build
 script:
     - npm run test
     - node tests/selenium/search.js
