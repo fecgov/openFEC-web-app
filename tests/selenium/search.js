@@ -16,6 +16,7 @@ var webdriver = require('selenium-webdriver'),
     })
     .build();
  
+console.log(process.env.TRAVIS_JOB_NUMBER);
 driver.get('http://localhost');
 
 driver.wait(function() {

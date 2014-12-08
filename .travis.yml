@@ -37,4 +37,3 @@ script:
     - curl http://127.0.0.1:3000
     - npm run test
     - node tests/selenium/search.js
-    - node tests/selenium/browse-candidates.js
