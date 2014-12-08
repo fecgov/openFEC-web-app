@@ -14,9 +14,12 @@
   padding: 2em 0;
 }
 
+.entity__header--bio {
+  @include span-columns(18);
+}
 
 .time-period {
-  text-align: right;
+  @include span-columns(6);
 }
 
 #time-period-select {
@@ -49,10 +52,16 @@
       color: #fff;
       text-decoration: underline;
     }
+
+    .chosen-container a {
+      color: $blue;
+    }
+
   }
 
   .entity__header--top {
     border-color: #fff;
+    text-decoration: none;
   }
 }
 

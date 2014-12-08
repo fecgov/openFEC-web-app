@@ -37,10 +37,19 @@ body {
   &:nth-child(even) {
     @include omega();
   }
+
+  @include media($medium) {
+    @include span-columns(12);
+  }
 }
 
 .chunk--third {
   @include span-columns(8);
+
+  @include media($medium) {
+    @include span-columns(12);
+    margin-top: 1em;
+  }
 }
 
 // Styles for big chunks of content
