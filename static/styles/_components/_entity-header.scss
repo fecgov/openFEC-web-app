@@ -37,29 +37,6 @@
   }
 }
 
-// This is the section that is associated with a tab
-.entity__section {
-  padding: 4em 0;
-}
-
-// This is a grouping of data in a section, labeled by a h3
-.entity__subsection {
-  @include primary-divider();
-  @include span-columns(24);
-  @include clearfix();
-  padding: 2em 0;
-
-}
-
-// Contained in a subsection, this is a group of figures (i.e. for a committee)
-.figure-group {
-  @include secondary-divider();
-  @include span-columns(24);
-  @include clearfix();
-  padding: 2em 0;
-}
-
-.figure-group__description {}
 
 // Candidate-specific styles
 
@@ -76,5 +53,25 @@
 
   .entity__header--top {
     border-color: #fff;
+  }
+}
+
+
+// Outside spending tab
+.outside__summary {
+  .chunk--half {
+    margin-bottom: 2em;
+  }
+}
+
+.outside__committees {
+
+  .chunk--third {
+    border-right: 1px solid $medium-gray;
+    padding: 0 1em;
+
+    &:last-child {
+      border-right: none;
+    }
   }
 }

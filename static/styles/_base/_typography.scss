@@ -26,7 +26,6 @@ h1 {
 h2 {
   @include font-size(3.6);
   font-weight: 300;
-  margin-bottom: 1rem;
 }
 
 h3 {
@@ -37,18 +36,20 @@ h3 {
 h4 {
   @include font-size(2.4);
   font-weight: 400;
+  margin-bottom: 1em;
 }
 
 h5 {
-  @include font-size(2.0);
+  @include font-size(1.8);
 }
 
 h6 {
-  @include font-size(1.8);
+  @include font-size(1.6);
 }
 
 p {
   margin: 0 0 ($base-line-height * .5);
+  -webkit-margin-before: 0;
 }
 
 a {
@@ -99,8 +100,13 @@ cite {
 
 .lead-text {
   @include font-size(1.8);
+  margin-top: 0;
 }
 
 .query {
   border-bottom: 1px solid $dark-gray;
+}
+
+.text-note {
+  font-style: italic;
 }

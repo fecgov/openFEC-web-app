@@ -33,8 +33,30 @@ body {
 
 .chunk--half {
   @include span-columns(12);
+
+  &:nth-child(even) {
+    @include omega();
+  }
 }
 
 .chunk--third {
   @include span-columns(8);
+}
+
+// Styles for big chunks of content
+// .page__section will often be a <section> element
+.page-section {
+  padding: 4em 0;
+}
+
+// This is a grouping of content withinin a section, labeled by a h3
+.page-subsection {
+  @include primary-divider();
+  @include clearfix();
+  padding: 2em 0;
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+
 }

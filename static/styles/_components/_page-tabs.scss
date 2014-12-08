@@ -5,16 +5,25 @@
 }
 
 .page-tabs__item {
-  @include font-size(1.8);
   display: inline-block;
-  padding: .5em 2em;
-  border-right: 1px solid $medium-gray;
+  margin-left: -4px; // Removing extra space from inline-block display
+  
+  a {
+    @include font-size(1.8);
+    display: block;
+    padding: .5em 2em;
+    border-right: 1px solid $medium-gray;
+
+    &[aria-selected="true"] {
+      border-bottom: .5em solid $blue;
+    }
+  }
 
   &:last-child {
-    border-right: none;
+    a {
+      border-right: none;
+    }
   }
 
-  &[aria-selected="true"] {
-    border-bottom: .5em solid $blue;
-  }
+
 }
