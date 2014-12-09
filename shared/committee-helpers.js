@@ -26,17 +26,17 @@ module.exports = {
             }
 
             if (typeof committee.treasurer !== 'undefined') {
-                treasurer = committee.treasurer.name_full || '';
+                treasurer = committee.treasurer[0].name_full || '';
             }
 
             if (typeof committee.address !== 'undefined') {
-                state = committee.address.state || '';
+                state = committee.address[0].state || '';
             }
 
             if (typeof committee.description !== 'undefined') {
-                party = committee.description.party_full || '';
-                name = committee.description.name || '';
-                organization = committee.description.organization_type_full || '';
+                party = committee.description[0].party_full || '';
+                name = committee.description[0].name || '';
+                organization = committee.description[0].organization_type_full || '';
             }
 
             // don't output any undefineds
