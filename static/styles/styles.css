@@ -621,9 +621,9 @@ td {
   float: left;
   display: block;
   width: 17.05961%;
-  height: 32px;
+  height: 40px;
   padding: 0;
-  line-height: 32px;
+  line-height: 40px;
   border-radius: 0 4px 4px 0; }
   .add-filter:last-child {
     width: 14.70196%; }
@@ -633,7 +633,8 @@ td {
   display: block;
   width: 85.29804%;
   border-radius: 4px 0 0 4px;
-  border-right-width: 0; }
+  border-right-width: 0;
+  height: 40px; }
   .field input[name="name"]:last-child {
     width: 82.94039%; }
 
@@ -902,6 +903,14 @@ section[aria-hidden="true"],
   .outside__committees .chunk--third:last-child {
     border-right: none; }
 
+.committee .entity__header {
+  background-color: #DCDCE0; }
+
+.chunk--two-thirds .entity__info dt {
+  width: 25%; }
+.chunk--two-thirds .entity__info dd {
+  width: 75%; }
+
 .page-tabs {
   background-color: #EFEFEF;
   text-align: center;
@@ -923,6 +932,8 @@ section[aria-hidden="true"],
 
 figure {
   margin: 0; }
+  figure figcaption {
+    margin-bottom: 1em; }
 
 .table__row:after {
   content: "";
@@ -994,6 +1005,29 @@ figure {
     width: 80%; }
   .figure-group__summary .table__cell:last-of-type {
     width: 20%; }
+
+.figure-group__controls {
+  margin-bottom: 0; }
+  .figure-group__controls input[type="checkbox"] {
+    display: inline-block; }
+  .figure-group__controls label {
+    display: inline-block; }
+  .figure-group__controls .controls--slider {
+    margin-top: 1em; }
+
+.finance-table .table__row {
+  border-bottom: 1px dashed #979797;
+  padding: 1em 0; }
+  .finance-table .table__row:last-child {
+    border-bottom: none; }
+.finance-table .table__cell:nth-child(1) {
+  width: 45%; }
+.finance-table .table__cell:nth-child(2) {
+  width: 25%; }
+.finance-table .table__cell:nth-child(3) {
+  width: 30%; }
+.finance-table .table__row--note {
+  padding-top: 1em; }
 
 /*!
 Chosen, a Select Box Enhancer for jQuery and Prototype
@@ -1453,6 +1487,11 @@ body {
     display: table;
     clear: both; }
 
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both; }
+
 @media screen and (max-width: 48em) {
   .container {
     padding-left: 1em;
@@ -1499,6 +1538,14 @@ body {
       margin-top: 1em; }
       .chunk--third:last-child {
         margin-right: 0; } }
+
+.chunk--two-thirds {
+  float: left;
+  display: block;
+  margin-right: 1.16509%;
+  width: 66.2783%; }
+  .chunk--two-thirds:last-child {
+    margin-right: 0; }
 
 .page-section {
   padding: 4em 0; }

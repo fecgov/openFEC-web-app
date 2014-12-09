@@ -1,6 +1,10 @@
 // Resetting default margin on figures
 figure {
   margin: 0;
+
+  figcaption {
+    margin-bottom: 1em;
+  }
 }
 
 // Simple two-column faux tables using divs
@@ -80,5 +84,48 @@ figure {
     &:last-of-type {
       width: 20%;
     }
+  }
+}
+
+.figure-group__controls {
+  margin-bottom: 0;
+
+  input[type="checkbox"] {
+    display: inline-block;
+  }
+
+  label {
+    display: inline-block;
+  }
+
+  .controls--slider {
+    margin-top: 1em;
+  }
+}
+
+// Finance tables like the Key Numbers tables on committee pages
+
+.finance-table {
+  .table__row {
+    @include secondary-divider();
+    padding: 1em 0;
+  }
+
+  .table__cell {
+    &:nth-child(1) {
+      width: 45%;
+    }
+
+    &:nth-child(2) {
+      width: 25%;
+    }
+
+    &:nth-child(3) {
+      width: 30%;
+    }
+  }
+
+  .table__row--note {
+    padding-top: 1em;
   }
 }
