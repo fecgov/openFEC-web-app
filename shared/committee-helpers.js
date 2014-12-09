@@ -17,37 +17,37 @@ module.exports = {
         }
 
         for (i = 0; i < len; i++) {
-            committee = results[i][0];
+            committee = results[i].archive[0];
+            committee.properties = results[i].properties;
 
-            if (typeof committee.status !== 'undefined') {
-                type = committee.status[0].type;
-                designation = committee.status[0].designation;
-            }
-            else {
-                type = committee.type;
-                designation = '';
+            if (typeof committee.properties !== 'undefined' && typeof committee.properties.candidates !== 'undefined') {
+                type = committee.properties.candidates[0].type_full || '';
+                designation = committee.properties.candidates[0].designation_full || '';
             }
 
-            organization = committee.organization_type || '';
-
-            name = committee.name || '';
             if (typeof committee.treasurer !== 'undefined') {
-                treasurer = committee.treasurer.name_full;
+                treasurer = committee.treasurer.name_full || '';
             }
-            else {
-                treasurer = '';
-            }
-            state = committee.address.state || '';
-            party = '';
 
+            if (typeof committee.address !== 'undefined') {
+                state = committee.address.state || '';
+            }
+
+            if (typeof committee.description !== 'undefined') {
+                party = committee.description.party_full || '';
+                name = committee.description.name || '';
+                organization = committee.description.organization_type_full || '';
+            }
+
+            // don't output any undefineds
             committees.push({
-                name: name,
-                treasurer: treasurer,
-                state: state,
-                party: party,
-                type: type,
-                designation: designation,
-                organization: organization
+                name: name || '',
+                treasurer: treasurer || '',
+                state: state || '',
+                party: party || '',
+                type: type || '',
+                designation: designation || '',
+                organization: organization || ''
             });
         }
 
