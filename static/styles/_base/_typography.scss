@@ -127,3 +127,37 @@ cite {
 .text--note {
   font-style: italic;
 }
+
+// Data styles
+// When we're presenting data but not using semantic headers
+.data {
+  @include font-size(1.6);
+  margin: 0;
+  padding: 0;
+  color: $licorice;
+}
+
+// Think of this as the <dt>
+.data--label {
+  @extend .data;
+  font-weight: bold;
+}
+
+// And this as the <dd>
+.data--content,
+.data--link {
+  @extend .data;
+}
+
+// This is just a parenthetical note
+.data--note {
+  @include font-size(1.4);
+  font-style: italic;
+}
+
+// For showing big fancy numbers
+.data--display {
+  @include font-size(2.4);
+  margin: 1em 0;
+  padding:0;
+}
