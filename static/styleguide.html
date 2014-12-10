@@ -22,31 +22,133 @@
   <main class="container">
     <div class="styles">
       <h1 class="styles__heading">Typography</h1>
-      <h1>H1 Heading</h1>
-      <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+      <div class="chunk--half">
+        <h1>H1 Heading</h1>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
 
-      <h2>H2 Heading</h2>
-      <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <h2>H2 Heading</h2>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
 
-      <h3>H3 Heading</h3>
-      <p class="text--lead">Lead Text: Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-      <h4>H4 Heading</h4>
-      <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-      <h5>H5 Heading</h5>
-      <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-      <h6>H6 Heading</h6>
-
-      <h2 class="styles__heading">Links</h2>
-      <a href="#">This is a regular link</a> | <a href="#" class="link--delete">Delete / cancel link</a> | <a href="#" class="link--learn">Learn more link &raquo;</a>
-
-      <h2 class="styles__heading">Figures, etc.</h2>
-      <p class="text--note">Note text Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+        <h3>H3 Heading</h3>
+        <p class="text--lead">Lead Text: Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <h4>H4 Heading</h4>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <h5>H5 Heading</h5>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <h6>H6 Heading</h6>
+      </div>
+      <div class="chunk--half">
+        <h2 class="styles__heading">Links</h2>
+        <a href="#">This is a regular link</a> | <a href="#" class="link--delete">Delete / cancel link</a> | <a href="#" class="link--learn">Learn more link &raquo;</a>
+        <h2 class="styles__heading">Figures, etc.</h2>
+        <p class="data--display">Data display</p>
+        <p class="data--label">Data label</p>
+        <p class="data--content">Data content</p>
+        <p class="data--note">Data note</p>
+        <p class="text--note">Note text Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+      </div>
     </div>
 
     <div class="styles">
+      <h1 class="styles__heading">Colors</h1>
+      <div class="clearfix">
+        <h3 class="styles__heading">Interaction colors</h3>
+        <div class="swatch color-primary">Primary</div>
+        <div class="swatch color-error">Error</div>
+        <div class="swatch color-activity">Activity</div>
+      </div>
+      <div class="clearfix">
+        <h3 class="styles__heading">Interaction colors</h3>
+        <div class="swatch color-support">Support</div>
+        <div class="swatch color-oppose">Oppose</div>
+        <div class="swatch color-receipt">Receipt</div>
+        <div class="swatch color-disbursement">Disbursement</div>
+        <div class="swatch color-cash">Cash</div>
+        <div class="swatch color-debt">Debt</div>
+      </div>
+    </div>
 
+    <div class="styles">
+      <h1 class="styles__heading">Icons &amp; Logo</h1>
+      <ul class="icon-list chunk--third">
+        <li><i class="ti-plus"></i> Expand</li>
+        <li><i class="ti-minus"></i> Collapse</li>
+        <li><i class="ti-check"></i> Add / Confirm</li>
+        <li><i class="ti-close"></i> Remove / Cancel</li>
+        <li><i class="ti-user"></i> Candidate</li>
+      </ul>
+      <ul class="icon-list chunk--third">
+        <li><i class="ti-star"></i> Committee</li>
+        <li><i class="ti-angle-down"></i> Drop-down menu</li>
+        <li><i class="ti-arrow-up"></i> Sort: low to high</li>
+        <li><i class="ti-arrow-down"></i> Sort: high to low</li>
+        <li><i class="ti-arrow-left"></i> Previous</li>
+      </ul>
+      <ul class="icon-list chunk--third">
+        <li><i class="ti-arrow-right"></i> Next</li>
+        <li><i class="ti-help"></i> Glossary</li>
+        <li><i class="ti-list"></i> List view</li>
+        <li><i class="ti-layout-grid2-alt"></i> Table view</li>
+        <li><i class="ti-bar-chart"></i> Graph view</li>
+      </ul>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Form</h1>
+      <form class="form chunk--two-thirds">
+        <legend>Form Legend</legend>
+        <fieldset>
+          <label for="sample-input">Text input</label>
+          <input type="text" id="sample-input" placeholder="Placeholder">
+          <label for="sample-add">Add filter</label>
+          <div class="input-button-combo add-filter">
+            <input type="text" name="name" />
+            <a class="add-filter__button"><i class="ti-check"></i></a>
+          </div>
+          <div class="form__group">
+            <div class="form__subgroup">
+              <input type="checkbox" id="sample-checkbox" checked>
+              <label for="sample-checkbox">Checkbox</label>
+            </div>
+          </div>
+          <div class="form__group">
+            <div class="form__subgroup">
+              <input type="radio" name="3" id="sample-radio" checked>
+              <label for="sample-radio">Radio</label>
+            </div>
+            <div class="form__subgroup">
+              <input type="radio" name="3" id="sample-radio2">
+              <label for="sample-radio">Radio</label>
+            </div>
+          </div>
+          <label for="sample-select">Select</label>
+          <select id="sample-select" class="chosen-select" data-placeholder="Select">
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>
+          <label for="sample-textarea">Text Area</label>
+          <textarea></textarea>
+          <input type="submit" value="Submit">
+        </fieldset>
+      </form>
+    </div>
+    <div class="styles">
+      <h1 class="styles__heading">Buttons</h1>
+      <a class="button primary" href="#">Primary button</a>
+      <a class="button" href="#">Secondary button</a>
     </div>
   </main>
-
+  <script src="js/modules/tablist.js"></script>
+  <script src="js/vendor/retina.min.js"></script>
+  <script src="js/vendor/chosen/chosen.jquery.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+  jQuery(document).ready(function($){
+    $('.chosen-select').chosen({
+      width: "200px",
+      disable_search: true,
+    });
+  });
+  </script>
 </body>
 </html>

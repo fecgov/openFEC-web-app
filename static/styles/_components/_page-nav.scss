@@ -20,8 +20,10 @@
   color: #fff;
   display: block;
   line-height: 2;
+  text-decoration: none;
 
-  &:hover {
+  &:hover,
+  &:active {
     background-color: $licorice-2;
     color: #fff;
   }

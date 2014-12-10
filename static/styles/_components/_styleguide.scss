@@ -8,8 +8,7 @@
 }
 
 .styles {
-  @include span-columns(18);
-  @include shift(3);
+  @include clearfix();
   padding: 2em 0;
 }
 
@@ -23,7 +22,40 @@ h1.styles__heading {
 
 h2.styles__heading {
   color: #d4d4d4;
-  border-top: 1px solid #333;
-  margin: 4rem 0 0;
-  padding: 2rem 0;
+  padding: 4rem 0 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+h3.styles__heading {
+  color: #d4d4d4;
+  margin: 1em 0 .5em;
+}
+// Colors
+
+.swatch {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  float: left;
+  text-align: center;
+  padding: 40px 0;
+  color: #fff;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+// Icons
+.icon-list {
+  i {
+    margin-right: 20px;
+  }
+
+  li {
+    margin-bottom: 1em;
+  }
 }

@@ -34,7 +34,14 @@ $data-support-2: #103552; // Darker blue
 $data-oppose: #A9205C; // Purple
 $data-oppose-2: #6B143B; // Darker purple
 $data-receipt: #148552; // Green
+$data-receipt-2: darken($data-receipt, 10%);
 $data-disbursement: #DB4857; // Salmon
+$data-disbursement-2: darken($data-disbursement, 10%);
+$data-cash: #158552;
+$data-cash-2: darken($data-cash, 10%);
+$data-debt: #323A45;
+$data-debt-2: darken($data-debt, 10%);
+
 
 // UI Colors
 $meta-box-color: #FBFBFD;
