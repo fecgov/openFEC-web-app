@@ -5,7 +5,7 @@
   -webkit-font-smoothing: antialiased;
   background: $bgcolor;
   border-radius: $base-border-radius;
-  border: none;
+  border: 1px solid $bgcolor;
   display: inline-block;
   color: $textcolor;
   font-weight: bold;
@@ -21,6 +21,7 @@
   &:hover {
     background-color: $hoverbg;
     color: $hovertext;
+    border: 1px solid $hoverbg;
   }
 
   &:active,
@@ -43,7 +44,12 @@
 .button {
   @include button($light-gray, $dark-gray, $dark-gray, #fff);
   border: 1px solid $medium-gray;
+}
 
+.button--selected {
+  background-color: $dark-gray;
+  color: #fff;
+  border: 1px solid $dark-gray;
 }
 
 button,
@@ -53,5 +59,27 @@ input[type="submit"],
 
   &:active {
     background-color: $blue-2;
+  }
+}
+
+.button--group {
+  display: inline-block;
+
+  .button {
+    border-radius: 0;
+    margin-left: -4px;
+
+    &:first-child {
+      border-top-left-radius: $base-border-radius;
+      border-bottom-left-radius: $base-border-radius;
+      border-right: none;
+      margin-left: 0;
+    }
+
+    &:last-child {
+      border-top-right-radius: $base-border-radius;
+      border-bottom-right-radius: $base-border-radius;
+      border-left: none;
+    }
   }
 }
