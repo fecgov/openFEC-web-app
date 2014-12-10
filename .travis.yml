@@ -34,5 +34,4 @@ install:
     - npm run build
 script:
     - npm run test
-    - curl http://localhost/rest/candidate
     - node tests/selenium/search.js

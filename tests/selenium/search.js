@@ -47,13 +47,17 @@ driver.wait(function() {
 // click "view all" committees
 driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/div[2]/div/a')).click().then(function() {
     // make sure name filter is populated and active
-    driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
-        assert.equal(classes, 'field active');
-    });
+    driver.wait(function() {
+        driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
+            assert.equal(classes, 'field active');
+        });
+    }, 2000);
 
-    driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/input')).getAttribute('value').then(function(text) {
-        assert.equal(text, 'smith');
-    });
+    driver.wait(function() {
+        driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/input')).getAttribute('value').then(function(text) {
+            assert.equal(text, 'smith');
+        });
+    }, 2000);
 });
 
 driver.quit();
