@@ -12,7 +12,7 @@ describe('API Module', function() {
                 }
             };
 
-            assert.equal(api.buildURL(context), 'rest/candidate?year=2000&state=IL&');
+            assert.equal(api.buildURL(context), 'rest/candidate?year=2000&state=IL&fields=*');
         });
     });
 });
