@@ -56,6 +56,7 @@ a {
   @include transition(color 0.1s linear);
   color: $base-link-color;
   text-decoration: none;
+  text-decoration: underline;
 
   &:hover {
     color: $hover-link-color;
@@ -64,6 +65,22 @@ a {
   &:active, &:focus {
     color: $hover-link-color;
     outline: none;
+  }
+
+  &.link--delete {
+    color: $red;
+
+    &:hover {
+      color: $red-2;
+    }
+  }
+
+  &.link--learn {
+    color: $green;
+
+    &:hover {
+      color: $green-2;
+    }
   }
 }
 
@@ -98,15 +115,15 @@ cite {
 
 // Universal text classes
 
-.lead-text {
+.text--lead {
   @include font-size(1.8);
   margin-top: 0;
 }
 
-.query {
+.text--query {
   border-bottom: 1px solid $dark-gray;
 }
 
-.text-note {
+.text--note {
   font-style: italic;
 }
