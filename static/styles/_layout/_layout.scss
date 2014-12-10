@@ -25,13 +25,6 @@ body {
   }
 }
 
-.sub-section {
-  @include clearfix();
-  @include rem(padding, 2.0rem 0);
-  border-bottom: 1px dotted $base-border-color;
-}
-
-
 // Chunks
 // These are common grouping sizes, described by their desktop size
 
@@ -63,14 +56,14 @@ body {
 // Styles for big chunks of content
 // .page__section will often be a <section> element
 .page-section {
-  padding: 4em 0;
+  @include rem(padding, 4.0rem 0);
 }
 
 // This is a grouping of content withinin a section, labeled by a h3
 .page-subsection {
   @include primary-divider();
   @include clearfix();
-  @include rem(padding, 2.0rem 0);
+  @include rem(padding, 4.0rem 0);
 
   &:last-of-type {
     padding-bottom: 0;
@@ -86,7 +79,7 @@ body {
   @include rem(padding, 2.0rem 0);
 
   &:first-of-type {
-    padding-top: 1em;
+    padding-top: 0;
   }
 
   &:last-of-type {

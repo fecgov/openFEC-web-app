@@ -1661,15 +1661,6 @@ body {
   .container {
     padding-left: 1em;
     padding-right: 1em; } }
-.sub-section {
-  padding: 20px 0;
-  padding: 2rem 0;
-  border-bottom: 1px dotted #979797; }
-  .sub-section:after {
-    content: "";
-    display: table;
-    clear: both; }
-
 .chunk--half {
   float: left;
   display: block;
@@ -1714,12 +1705,13 @@ body {
     margin-right: 0; }
 
 .page-section {
-  padding: 4em 0; }
+  padding: 40px 0;
+  padding: 4rem 0; }
 
 .page-subsection {
   border-bottom: 1px solid #515A61;
-  padding: 20px 0;
-  padding: 2rem 0; }
+  padding: 40px 0;
+  padding: 4rem 0; }
   .page-subsection:after {
     content: "";
     display: table;
@@ -1743,7 +1735,7 @@ body {
     display: table;
     clear: both; }
   .page-sub-subsection:first-of-type, .figure-group:first-of-type {
-    padding-top: 1em; }
+    padding-top: 0; }
   .page-sub-subsection:last-of-type, .figure-group:last-of-type {
     padding-bottom: 0;
     border-bottom: none; }
