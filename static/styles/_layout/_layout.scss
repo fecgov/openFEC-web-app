@@ -27,7 +27,7 @@ body {
 
 .sub-section {
   @include clearfix();
-  padding: 2em 0;
+  @include rem(padding, 2.0rem 0);
   border-bottom: 1px dotted $base-border-color;
 }
 
@@ -70,10 +70,27 @@ body {
 .page-subsection {
   @include primary-divider();
   @include clearfix();
-  padding: 2em 0;
+  @include rem(padding, 2.0rem 0);
 
   &:last-of-type {
     padding-bottom: 0;
+    border-bottom: none;
   }
 
+}
+
+.page-sub-subsection {
+  @include secondary-divider();
+  @include span-columns(24);
+  @include clearfix();
+  @include rem(padding, 2.0rem 0);
+
+  &:first-of-type {
+    padding-top: 1em;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
 }

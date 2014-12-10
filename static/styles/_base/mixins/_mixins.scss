@@ -107,16 +107,8 @@
 
 @mixin primary-divider() {
   border-bottom: 1px solid $dark-gray;
-
-  &:last-child {
-    border-bottom: none;
-  }
 }
 
 @mixin secondary-divider() {
   border-bottom: 1px dashed $medium-gray;
-  
-  &:last-child {
-    border-bottom: none;
-  }
 }
