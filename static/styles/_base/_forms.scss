@@ -140,13 +140,8 @@ select {
 
 .form__group {
   margin: 1em 0;
-}
 
-// For grouping together a label and an input
-.form__subgroup {
-  input,
   label {
-    display: inline-block;
     margin-top: 0;
   }
 }
