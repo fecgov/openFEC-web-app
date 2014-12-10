@@ -9,8 +9,8 @@
 }
 
 .disclosure-title {
-  background-color: $light-gray;
-  border-color: $medium-gray;
+  background-color: $lightest-gray;
+  border-color: $light-gray;
   border-style: solid;
   border-width: 1px;
   padding: .5em 1em;
@@ -41,4 +41,12 @@
     @include icon();
     content: "\e61a"; // Plus icon
   }
+}
+
+.disclosure__inner {
+  @include clearfix();
+  @include rem(padding, 1rem);
+  border-color: $light-gray;
+  border-style: solid;
+  border-width: 0 1px 1px 1px;
 }

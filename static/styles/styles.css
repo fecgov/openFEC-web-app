@@ -95,7 +95,7 @@ a {
   text-decoration: none; }
 
 hr {
-  border-bottom: 1px solid #979797;
+  border-bottom: 1px solid #b3b3b3;
   border-left: none;
   border-right: none;
   border-top: none;
@@ -106,7 +106,7 @@ img {
   max-width: 100%; }
 
 blockquote {
-  border-left: 2px solid #979797;
+  border-left: 2px solid #b3b3b3;
   color: #74818b;
   margin: 1.5 0;
   padding-left: 0.75; }
@@ -197,7 +197,7 @@ select[multiple=multiple] {
   margin: 1em 0;
   background-color: white;
   border-radius: 0.25em;
-  border: 1px solid #979797;
+  border: 1px solid #b3b3b3;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
   font-family: "Open Sans", helvetica, arial, sans-serif;
   padding: 1em 1em;
@@ -205,7 +205,7 @@ select[multiple=multiple] {
   textarea:hover,
   input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover,
   select[multiple=multiple]:hover {
-    border-color: #7e7e7e; }
+    border-color: #9a9a9a; }
   textarea:focus,
   input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus,
   select[multiple=multiple]:focus {
@@ -265,7 +265,7 @@ select {
 
 .form {
   background: #FBFBFD;
-  border: 1px solid #979797;
+  border: 1px solid #b3b3b3;
   padding: 2em;
   margin: 2em 0; }
 
@@ -279,7 +279,7 @@ table {
   margin: 0;
   table-layout: fixed;
   width: 100%;
-  border: 1px solid #DFDDDD;
+  border: 1px solid #D7D7D7;
   overflow-x: scroll; }
 
 thead tr:hover {
@@ -287,8 +287,8 @@ thead tr:hover {
 
 th {
   padding: .5em;
-  border-right: 1px solid #DFDDDD;
-  border-bottom: 1px solid #DFDDDD;
+  border-right: 1px solid #D7D7D7;
+  border-bottom: 1px solid #D7D7D7;
   text-align: left;
   font-weight: normal; }
   th:last-child {
@@ -302,7 +302,7 @@ tr {
   font-size: 1.4rem;
   border: none; }
   tr:nth-child(even) {
-    background-color: #DFDDDD; }
+    background-color: #F8F8F8; }
   tr:hover {
     background: rgba(38, 120, 186, 0.1); }
 
@@ -321,7 +321,8 @@ td {
   position: relative;
   background-color: #fff;
   color: #2678BA;
-  cursor: pointer; }
+  cursor: pointer;
+  border-bottom: 2px solid #2678BA; }
   .sort-header:hover {
     background-color: #2678BA;
     border-color: #2678BA;
@@ -385,9 +386,9 @@ td {
     border-right: none; }
   .table--simple th {
     font-weight: bold;
-    border-bottom: 1px solid #979797; }
+    border-bottom: 1px solid #b3b3b3; }
   .table--simple td {
-    border-bottom: 1px solid #DFDDDD; }
+    border-bottom: 1px solid #D7D7D7; }
 
 ul, ol {
   margin: 0;
@@ -421,9 +422,9 @@ dl {
   font-size: 1.6rem;
   font-family: "Open Sans", helvetica, arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  background: #DFDDDD;
+  background: #F8F8F8;
   border-radius: 0.25em;
-  border: 1px solid #DFDDDD;
+  border: 1px solid #F8F8F8;
   display: inline-block;
   color: #515A61;
   font-weight: bold;
@@ -435,11 +436,11 @@ dl {
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
-  border: 1px solid #979797; }
+  border: 1px solid #b3b3b3; }
   .button:hover, .add-filter__button:hover {
-    background-color: #515A61;
+    background-color: #b3b3b3;
     color: #fff;
-    border: 1px solid #515A61; }
+    border: 1px solid #b3b3b3; }
   .button:active, .add-filter__button:active, .button:focus, .add-filter__button:focus {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -452,12 +453,12 @@ dl {
     cursor: default; }
     .button.disabled:hover, .disabled.add-filter__button:hover {
       color: #D3D3D3;
-      background-color: #DFDDDD; }
+      background-color: #F8F8F8; }
 
 .button--selected {
-  background-color: #515A61;
+  background-color: #b3b3b3;
   color: #fff;
-  border: 1px solid #515A61; }
+  border: 1px solid #b3b3b3; }
 
 button,
 input[type="submit"],
@@ -673,8 +674,8 @@ input[type="submit"],
   position: relative; }
 
 .disclosure-title {
-  background-color: #DFDDDD;
-  border-color: #979797;
+  background-color: #F8F8F8;
+  border-color: #D7D7D7;
   border-style: solid;
   border-width: 1px;
   padding: .5em 1em;
@@ -719,25 +720,27 @@ input[type="submit"],
     -moz-osx-font-smoothing: grayscale;
     content: "\e61a"; }
 
-.filter-field-container {
-  border-color: #979797;
+.disclosure__inner, .filter-field-container {
+  padding: 10px;
+  padding: 1rem;
+  border-color: #D7D7D7;
   border-style: solid;
-  border-width: 0 1px 1px 1px;
-  padding: 1em; }
-  .filter-field-container:after {
+  border-width: 0 1px 1px 1px; }
+  .disclosure__inner:after, .filter-field-container:after {
     content: "";
     display: table;
     clear: both; }
-  .filter-field-container .field {
-    float: left;
-    display: block;
-    margin-right: 1.16509%;
-    width: 49.41745%;
-    padding: 1em 0; }
-    .filter-field-container .field:last-child {
-      margin-right: 0; }
-    .filter-field-container .field:nth-child(even) {
-      margin-right: 0; }
+
+.filter-field-container .field {
+  float: left;
+  display: block;
+  margin-right: 1.16509%;
+  width: 49.41745%;
+  padding: 1em 0; }
+  .filter-field-container .field:last-child {
+    margin-right: 0; }
+  .filter-field-container .field:nth-child(even) {
+    margin-right: 0; }
 
 .field.active label {
   color: #148552; }
@@ -799,7 +802,7 @@ input[type="submit"],
   margin-bottom: 2em;
   padding: 1em;
   background-color: #FBFBFD;
-  border: 1px solid #979797; }
+  border: 1px solid #D7D7D7; }
   .meta-box:last-child {
     margin-right: 0; }
 
@@ -847,7 +850,7 @@ input[type="submit"],
   -moz-transition: background-color 0.1s;
   transition: background-color 0.1s;
   text-align: center;
-  border-right: 1px solid #DFDDDD;
+  border-right: 1px solid #D7D7D7;
   color: #fff;
   display: block;
   line-height: 2;
@@ -863,7 +866,7 @@ input[type="submit"],
   padding: 20px 20px 20px 0;
   padding: 2rem 2rem 2rem 0;
   margin-right: 0;
-  border-right: 1px solid #DFDDDD; }
+  border-right: 1px solid #D7D7D7; }
   .page-nav__search:last-child {
     width: 49.41745%; }
   .page-nav__search .search-bar,
@@ -907,7 +910,7 @@ input[type="submit"],
   top: 2em; }
 
 #nprogress {
-  background: #DFDDDD;
+  background: #D7D7D7;
   height: 10px; }
   #nprogress .bar {
     background: #148552;
@@ -1032,7 +1035,7 @@ section[aria-hidden="true"],
   margin-bottom: 2em; }
 
 .outside__committees .chunk--third {
-  border-right: 1px solid #979797;
+  border-right: 1px solid #b3b3b3;
   padding: 0 1em; }
   .outside__committees .chunk--third:last-child {
     border-right: none; }
@@ -1046,7 +1049,7 @@ section[aria-hidden="true"],
   width: 75%; }
 
 .page-tabs {
-  background-color: #DFDDDD;
+  border-bottom: 1px solid #D7D7D7;
   text-align: center;
   padding: .5em 0 0 0; }
 
@@ -1058,7 +1061,7 @@ section[aria-hidden="true"],
     font-size: 1.8rem;
     display: block;
     padding: .5em 2em;
-    border-right: 1px solid #979797;
+    border-right: 1px solid #b3b3b3;
     text-decoration: none; }
     .page-tabs__item a[aria-selected="true"] {
       border-bottom: 0.5em solid #2678BA; }
@@ -1109,7 +1112,7 @@ figure {
     margin-top: 1em; }
 
 .finance-table .table__row {
-  border-bottom: 1px dashed #979797;
+  border-bottom: 1px dashed #b3b3b3;
   padding: 1em 0; }
 .finance-table .table__cell:nth-child(1) {
   width: 45%; }
@@ -1557,7 +1560,7 @@ This file is generated by `grunt build`, do not edit it by hand.
   padding: 2rem 0; }
 
 .divider--secondary {
-  border-bottom: 1px dashed #979797;
+  border-bottom: 1px dashed #b3b3b3;
   padding: 20px 0;
   padding: 2rem 0; }
 
@@ -1739,7 +1742,7 @@ body {
     border-bottom: none; }
 
 .page-sub-subsection, .figure-group {
-  border-bottom: 1px dashed #979797;
+  border-bottom: 1px dashed #b3b3b3;
   float: left;
   display: block;
   margin-right: 1.16509%;

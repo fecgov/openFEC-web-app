@@ -43,14 +43,14 @@
 }
 
 .button {
-  @include button($light-gray, $dark-gray, $dark-gray, #fff);
+  @include button($lightest-gray, $dark-gray, $medium-gray, #fff);
   border: 1px solid $medium-gray;
 }
 
 .button--selected {
-  background-color: $dark-gray;
+  background-color: $medium-gray;
   color: #fff;
-  border: 1px solid $dark-gray;
+  border: 1px solid $medium-gray;
 }
 
 button,

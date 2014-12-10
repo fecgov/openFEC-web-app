@@ -34,7 +34,7 @@ tr {
   border: none;
 
   &:nth-child(even) {
-    background-color: $light-gray;
+    background-color: $lightest-gray;
   }
 
   &:hover {
@@ -58,6 +58,7 @@ td {
   background-color: #fff;
   color: $blue;
   cursor: pointer;
+  border-bottom: 2px solid $blue;
 
   &:hover {
     background-color: $blue;
