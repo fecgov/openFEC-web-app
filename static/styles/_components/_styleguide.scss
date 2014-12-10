@@ -1,0 +1,29 @@
+.styleguide {
+  .site-header {
+    padding: 2em 0;
+    background: $licorice-2;
+    color: #fff;
+    border: none;
+  }
+}
+
+.styles {
+  @include span-columns(18);
+  @include shift(3);
+  padding: 2em 0;
+}
+
+h1.styles__heading {
+  margin: 2rem 0;
+  padding: 1rem 2rem;
+  font-size: 4em;
+  background: #D4D4D4;
+  color: #fff;
+}
+
+h2.styles__heading {
+  color: #d4d4d4;
+  border-top: 1px solid #333;
+  margin: 4rem 0 0;
+  padding: 2rem 0;
+}
