@@ -1,1 +1,18 @@
 // LAYOUT: Data view
+
+.results-header {
+  @include clearfix();
+  padding-bottom: 1em;
+
+  h3 {
+    @include span-columns(20)
+  }
+
+  .button {
+    @include span-columns(4);
+  }
+}
+
+#results {
+  @include span-columns(24);
+}
