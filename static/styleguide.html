@@ -19,7 +19,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main id="main" class="container">
     <div class="styles">
       <h1 class="styles__heading">Typography</h1>
       <div class="chunk--half">
@@ -106,20 +106,11 @@
             <a class="add-filter__button"><i class="ti-check"></i></a>
           </div>
           <div class="form__group">
-            <div class="form__subgroup">
-              <input type="checkbox" id="sample-checkbox" checked>
-              <label for="sample-checkbox">Checkbox</label>
-            </div>
+            <label for="sample-checkbox"><input type="checkbox" id="sample-checkbox" checked> Checkbox</label>
           </div>
           <div class="form__group">
-            <div class="form__subgroup">
-              <input type="radio" name="3" id="sample-radio" checked>
-              <label for="sample-radio">Radio</label>
-            </div>
-            <div class="form__subgroup">
-              <input type="radio" name="3" id="sample-radio2">
-              <label for="sample-radio">Radio</label>
-            </div>
+            <label for="sample-radio"><input type="radio" name="3" id="sample-radio" checked> Radio</label>
+            <label for="sample-radio"><input type="radio" name="3" id="sample-radio2"> Radio</label>
           </div>
           <label for="sample-select">Select</label>
           <select id="sample-select" class="chosen-select" data-placeholder="Select">
@@ -132,12 +123,158 @@
         </fieldset>
       </form>
     </div>
+
     <div class="styles">
       <h1 class="styles__heading">Buttons</h1>
       <a class="button primary" href="#">Primary button</a>
       <a class="button" href="#">Secondary button</a>
+      <div class="button--group">
+        <a class="button" href="#">Button 1</a>
+        <a class="button button--selected" href="#">Button 2</a>
+        <a class="button" href="#">Button 3</a>
+      </div>
+      <div class="button--group">
+        <a class="button" href="#" title="List view"><i class="ti-list"></i></a>
+        <a class="button button--selected" href="#" title="Table view"><i class="ti-layout-grid2-alt"></i></a>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Dislcosures</h1>
+      <div class="filter-box">
+        <div class="filter-header-bar">
+          <div class="disclosure-title">
+            Disclosure
+          </div>
+          <button class="disclosure-toggle"></button>
+        </div>
+        <div class="filter-field-container">
+          <p>Maecenas faucibus mollis interdum. Curabitur blandit tempus porttitor. Aenean lacinia bibendum nulla sed consectetur.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Tables</h1>
+      <h2 class="styles__heading">Data Table</h2>
+      <table class="table--sortable">
+        <thead>
+          <tr>
+            <th class="sort-header">Column 1</th>
+            <th class="sort-header">Column 2</th>
+            <th class="sort-header">Column 3</th>
+            <th class="sort-header">Column 4</th>
+            <th class="sort-header">Column 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>B</td>
+            <td>B</td>
+            <td>B</td>
+            <td>B</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>C</td>
+            <td>C</td>
+            <td>C</td>
+            <td>C</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="styles__heading">Simple Table</h2>
+      <table class="table--simple">
+        <thead>
+          <tr>
+            <th>Simple table heading</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="styles__heading">(Faux) Finance Table</h2>
+      <div class="table finance-table">
+        <div class="table__row">
+          <div class="table__cell data--label">
+            Total receipts
+          </div>
+          <div class="table__cell data--content">
+            $1,000,000
+          </div>
+          <div class="table__cell data--link">
+            <a href="#">View all &raquo;</a>
+          </div>
+        </div>
+        <div class="table__row">
+          <div class="table__cell data--label">
+            Total disbursements
+          </div>
+          <div class="table__cell data-content">
+            $1,000,000
+          </div>
+          <div class="table__cell data--link">
+            <a href="#">View all &raquo;</a>
+          </div>
+        </div>
+        <div class="table__row--note data--note">
+          Totals last updated 11/11/14 at 11:00 AM
+        </div>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Widgets &amp; Callouts</h1>
+      <div class="meta-box">
+        <div id="results-count" class="results-count">
+          <p>Results: # records</p>
+          <p>Viewing: 0 - 0</p>
+        </div>
+        <div class="pagination">
+          <a href="{{prevURL}}" id="prev" class="pagination__link link--icon"><i class="ti-arrow-left"></i> Previous 0</a>
+          <a href="{{nextURL}}" id="next" class="pagination__link link--icon">Next 0 <i class="ti-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Dividers</h1>
+      <h2 class="styles__heading">Primary divider</h2>
+      <hr class="divider--primary">
+      <h2 class="styles__heading">Secondary divider</h2>
+      <hr class="divider--secondary">
     </div>
   </main>
+
+  <footer>
+    <div class="container">
+     Last updated 12/10/2014
+     </div>
+  </footer>
+
   <script src="js/modules/tablist.js"></script>
   <script src="js/vendor/retina.min.js"></script>
   <script src="js/vendor/chosen/chosen.jquery.min.js"></script>
