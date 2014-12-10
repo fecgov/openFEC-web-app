@@ -29,6 +29,9 @@
   &:before {
     @include icon();
     content: "\e622"; // Minus icon
+    position: absolute;
+    top: 25%;
+    left: 35%;
   }
 }
 

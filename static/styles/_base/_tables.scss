@@ -3,7 +3,7 @@ table {
   margin: 0;
   table-layout: fixed;
   width: 100%;
-  border: 1px solid $medium-gray;
+  border: 1px solid $light-gray;
   overflow-x: scroll; // scroll horizontally on smaller viewports
 }
 
@@ -15,8 +15,8 @@ thead {
 
 th {
   padding: .5em;
-  border-right: 1px solid $medium-gray;
-  border-bottom: 1px solid $medium-gray;
+  border-right: 1px solid $light-gray;
+  border-bottom: 1px solid $light-gray;
   text-align: left;
   font-weight: normal;
 
@@ -125,6 +125,15 @@ td {
   td {
     padding: .5em 0;
     border-right: none;
+  }
+
+  th {
+    font-weight: bold;
+    border-bottom: 1px solid $medium-gray;
+  }
+
+  td {
+    border-bottom: 1px solid $light-gray;
   }
 
 }
