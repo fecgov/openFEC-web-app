@@ -2,6 +2,7 @@
   @include appearance(none);
   @include transition(background-color .1s);
   @include font-size(1.6);
+  font-family: $sans-serif;
   -webkit-font-smoothing: antialiased;
   background: $bgcolor;
   border-radius: $base-border-radius;

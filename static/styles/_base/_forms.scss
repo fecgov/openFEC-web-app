@@ -107,7 +107,9 @@ select {
     border-right: none;
   }
 
-  input[type="submit"] {
+  input[type="submit"],
+  button,
+  .button {
     width: 25%;
     float: left;
     border-radius: 0 $base-border-radius $base-border-radius 0;
