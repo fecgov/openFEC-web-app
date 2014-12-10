@@ -89,3 +89,42 @@ td {
     }
   }
 }
+
+// Simple two-column faux tables using divs
+
+.table__row {
+  @include clearfix();
+}
+
+.table__cell {
+  float: left;
+}
+
+.table__row--note {
+  width: 100%;
+  font-weight: normal;
+  display: block;
+}
+
+.table__row--total {
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+// If you're actually using table markup
+
+.table--simple {
+  border: none;
+  margin-top: .5em;
+
+  tr {
+    background: none;
+  }
+
+  th,
+  td {
+    padding: .5em 0;
+    border-right: none;
+  }
+
+}
