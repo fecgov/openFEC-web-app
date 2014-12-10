@@ -1,7 +1,7 @@
-<div class="data container">
+<section class="data container page-section">
     <h2>Search results{{#if query}}: <span class="text--query">{{query}}</span>{{/if}}</h2>
 
-    <div class="sub-section">
+    <div class="page-sub-subsection">
       {{#if candidates}}
           <div class="results-header">
               <h3>Candidate Results</h3>
@@ -10,7 +10,7 @@
           {{> candidates-table}}
       {{/if}}
     </div>
-    <div class="sub-section">
+    <div class="page-sub-subsection">
       {{#if committees}}
           <div class="results-header">
               <h3>Committees Results</h3>
@@ -19,4 +19,4 @@
           {{> committees-table}}
       {{/if}}
     </div>
-</div>
+</section>
