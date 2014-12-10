@@ -1,4 +1,9 @@
-// LAYOUT: Data view
+// LAYOUT: Data results view
+// Styling any view with a results table
+
+#filters {
+  margin-top: 2em;
+}
 
 .results-header {
   @include clearfix();
