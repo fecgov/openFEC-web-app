@@ -4,29 +4,40 @@ module.exports = {
             i,
             j,
             len,
-            elections,
-            election,
-            year,
-            jlen;
+            newCandidateObj;
 
         if (typeof results !== 'undefined') {
             len = results.length;
         }
 
         for (i = 0; i < len; i++) {
-            elections = results[i].elections;
-            jlen = elections.length;
+            newCandidateObj = {
+                name: '',
+                office: '',
+                election: '',
+                party: '',
+                state: '',
+                district: ''
+            };
 
-            for (j = 0; j < jlen; j++) {
-                candidates.push({
-                    'name': results[i].name.full_name,
-                    'office': elections[j].office_sought,
-                    'election': elections[j].election_year,
-                    'party': elections[j].party_affiliation,
-                    'state': elections[j].state,
-                    'district': elections[j].district
-                });
+            if (typeof results[i].elections !== 'undefined') {
+                newCandidateObj.office = results[i].elections[0].office_sought_full || '';
+                newCandidateObj.party = results[i].elections[0].party_affiliation || '';
+
+                if (typeof results[i].elections[0].primary_commitee !== 'undefined') {
+                    newCandidateObj.election = results[i].elections[0].primary_committee.election_year || '';
+                }
+
+                newCandidateObj.state = results[i].elections[0].state || '';
+                newCandidateObj.district = results[i].elections[0].district || '';
             }
+
+            if (typeof results[i].name !== 'undefined') {
+                newCandidateObj.name = results[i].name.full_name || '';
+            }
+
+            candidates.push(newCandidateObj);
+
         }
 
         return candidates;
