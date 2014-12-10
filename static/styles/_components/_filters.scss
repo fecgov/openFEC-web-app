@@ -31,9 +31,9 @@
 .add-filter {
   @extend .button;
   @include span-columns(2 of 12, block-collapse);
-  height: 32px;
+  height: 40px;
   padding: 0;
-  line-height: 32px;
+  line-height: 40px;
   border-radius: 0 4px 4px 0;
 }
 
@@ -42,5 +42,6 @@
     @include span-columns(10 of 12, block-collapse);
     border-radius: 4px 0 0 4px;
     border-right-width: 0;
+    height: 40px;
   }
 }

@@ -1,0 +1,105 @@
+// Header styles for candidate, committee and district pages
+
+.entity__header {
+  padding: 2em 0;
+}
+
+.entity__header--top {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  padding: 2em 0;
+}
+
+.entity__header--bottom {
+  padding: 2em 0;
+}
+
+.entity__header--bio {
+  @include span-columns(18);
+}
+
+.time-period {
+  @include span-columns(6);
+}
+
+#time-period-select {
+  float: right;
+}
+
+.entity__info {
+  dt,
+  dd {
+    width: 50%;
+    float: left;
+  }
+}
+
+.entity__related-entities {
+  dd {
+    margin-bottom: 1em;
+  }
+}
+
+
+// Candidate-specific styles
+
+.candidate {
+  .entity__header {
+    background-color: $licorice;
+    color: #fff;
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .chosen-container a {
+      color: $blue;
+    }
+
+  }
+
+  .entity__header--top {
+    border-color: #fff;
+    text-decoration: none;
+  }
+}
+
+
+// Outside spending tab
+.outside__summary {
+  .chunk--half {
+    margin-bottom: 2em;
+  }
+}
+
+.outside__committees {
+
+  .chunk--third {
+    border-right: 1px solid $medium-gray;
+    padding: 0 1em;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+// Committee page
+.committee {
+  .entity__header {
+    background-color: $committee-bg;
+  }
+}
+
+.chunk--two-thirds {
+  .entity__info {
+    dt {
+      width: 25%;
+    }
+
+    dd {
+      width: 75%;
+    }
+  }
+}

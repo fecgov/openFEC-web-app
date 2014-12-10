@@ -9,6 +9,15 @@ body {
   @include outer-container();
 }
 
+.row {
+  @include span-columns(24);
+  @include clearfix();
+}
+
+.clearfix {
+  @include clearfix();
+}
+
 @include media($medium) {
   .container {
     padding-left: 1em;
@@ -20,4 +29,51 @@ body {
   @include clearfix();
   padding: 2em 0;
   border-bottom: 1px dotted $base-border-color;
+}
+
+
+// Chunks
+// These are common grouping sizes, described by their desktop size
+
+.chunk--half {
+  @include span-columns(12);
+
+  &:nth-child(even) {
+    @include omega();
+  }
+
+  @include media($medium) {
+    @include span-columns(12);
+  }
+}
+
+.chunk--third {
+  @include span-columns(8);
+
+  @include media($medium) {
+    @include span-columns(12);
+    margin-top: 1em;
+  }
+}
+
+.chunk--two-thirds {
+  @include span-columns(16)
+}
+
+// Styles for big chunks of content
+// .page__section will often be a <section> element
+.page-section {
+  padding: 4em 0;
+}
+
+// This is a grouping of content withinin a section, labeled by a h3
+.page-subsection {
+  @include primary-divider();
+  @include clearfix();
+  padding: 2em 0;
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+
 }
