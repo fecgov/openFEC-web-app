@@ -13,7 +13,7 @@ module.exports = {
         for (i = 0; i < len; i++) {
             // don't want leftover vars from one iteration to the next
             // should the corresponding if block is false
-            newCommitteeObj = {;
+            newCommitteeObj = {
                 name:'',
                 treasurer:'',
                 state: '',
@@ -27,22 +27,22 @@ module.exports = {
             committee.properties = results[i].properties;
 
             if (typeof committee.properties !== 'undefined' && typeof committee.properties.candidates !== 'undefined') {
-                newCommiteeObj.type = committee.properties.candidates[0].type_full || '';
-                newCommiteeObj.designation = committee.properties.candidates[0].designation_full || '';
+                newCommitteeObj.type = committee.properties.candidates[0].type_full || '';
+                newCommitteeObj.designation = committee.properties.candidates[0].designation_full || '';
             }
 
             if (typeof committee.treasurer !== 'undefined') {
-                newCommiteeObj.treasurer = committee.treasurer[0].name_full || '';
+                newCommitteeObj.treasurer = committee.treasurer[0].name_full || '';
             }
 
             if (typeof committee.address !== 'undefined') {
-                newCommiteeObj.state = committee.address[0].state || '';
+                newCommitteeObj.state = committee.address[0].state || '';
             }
 
             if (typeof committee.description !== 'undefined') {
-                newCommiteeObj.party = committee.description[0].party_full || '';
-                newCommiteeObj.name = committee.description[0].name || '';
-                newCommiteeObj.organization = committee.description[0].organization_type_full || '';
+                newCommitteeObj.party = committee.description[0].party_full || '';
+                newCommitteeObj.name = committee.description[0].name || '';
+                newCommitteeObj.organization = committee.description[0].organization_type_full || '';
             }
 
             committees.push(newCommitteeObj);
