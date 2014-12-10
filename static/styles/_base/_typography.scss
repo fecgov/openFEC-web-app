@@ -36,7 +36,6 @@ h3 {
 h4 {
   @include font-size(2.4);
   font-weight: 400;
-  margin-bottom: 1em;
 }
 
 h5 {
@@ -82,6 +81,10 @@ a {
       color: $green-2;
     }
   }
+}
+
+.link--icon {
+  text-decoration: none; // Don't underline if there's an icon in the link
 }
 
 hr {
