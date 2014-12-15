@@ -1,0 +1,449 @@
+<div class="entity candidate tab-interface">
+  <header class="entity__header">
+    <div class="container">
+      <div class="entity__header--top row">
+        <div class="entity__header--bio">
+          <h1>{{ name }}</h1>
+          <ul class="entity__meta">
+            <li>Candidate for {{ office }}</li>
+            <li>Principal committee: <a href="#">[ Committee name ]</a></li>
+          </ul>
+        </div>
+        <div class="time-period">
+          <label for="time-period-select">View records for</label>
+          <select id="time-period-select" class="chosen-select">
+            <option>2012-2014</option>
+            <option>2010-2012</option>
+          </select>
+        </div>
+      </div>
+      <div class="entity__header--bottom row">
+        <div class="chunk--third">
+          <h4>Candidate Information</h4>
+          <dl class="entity__info data">
+            <dt>Candidate ID:</dt>
+            <dd>{{ id }}</dd>
+            <dt>Status:</dt>
+            <dd>{{ incumbent_challenge }}</dd>
+            <dt>Party:</dt>
+            <dd>{{ party }}</dd>
+            <dt>State:</dt>
+            <dd>{{ state }}</dd>
+            <dt>District</dt>
+            <dd>{{ district }}</dd>
+          </dl>
+        </div>
+        <div class="chunk--third">
+          <h4>Candidate Committees</h4>
+          <dl class="entity__related-entities data">
+            <dt>Principal Candidate Campaign Committee</dt>
+            <dd>JANET FOR DELAWARE</dd>
+            <dt>Authorized Committee</dt>
+            <dd>FRIENDS OF JANET</dd>
+          </dl>
+        </div>
+        <div class="chunk--third">
+          <h4>Related Committees</h4>
+          <dl class="entity__related-entities data">
+            <dt>Joint Fundraising Committee</dt>
+            <dd>CANDIDATES XYZ</dd>
+            <dt>Leadership PAC</dt>
+            <dd>LEADERPAC</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </header>
+  <nav class="page-tabs">
+    <div class="container">
+      <ul role="tablist">
+        <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
+        <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Outside Spending</a></li>
+        <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Filings</a></li>
+      </ul>
+    </div>
+  </nav>
+  <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
+    <div class="container">
+      <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+      <p class="text--lead">Get the full picture of all of the money received and spent by this candidate’s principal and authorized committees.</p>
+      <div class="page-subsection">
+        <h3>Candidate Committees</h3>
+        <p class="text--lead">Committees linked to the candidate for purposes of campaign fundraising.</p>
+        <div class="figure-group">
+          <h5><a href="#">JANET FOR DELAWARE</a></h5>
+          <p class="figure-group__description">Principal Candidate Campaign Committee | Last updated 11/11/2014</p>
+          <figure class="figure-group__graphic">
+            <img src="img/barchart.png">
+          </figure>
+          <figure class="figure-group__summary meta-box">
+            <h6>Summary</h6>
+            <div class="table">
+              <div class="table__row">
+                <div class="table__cell">Total receipts</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row">
+                <div class="table__cell">Total disbursements</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row--total">
+                <span class="table__row--note text--note">As of 10/15/2014</span>
+                <div class="table__cell">Cash on hand</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row--total">
+                <div class="table__cell">Debt</div>
+                <div class="table__cell">$0</div>
+              </div>
+            </div>
+          </figure>
+        </div>
+        <div class="figure-group">
+          <h5><a href="#">FRIENDS OF JANET</a></h5>
+          <p class="figure-group__description">Principal Candidate Campaign Committee</p>
+          <figure class="figure-group__graphic">
+            <img src="img/barchart.png">
+          </figure>
+          <figure class="figure-group__summary meta-box">
+            <h6>Summary</h6>
+            <div class="table">
+              <div class="table__row">
+                <div class="table__cell">Total receipts</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row">
+                <div class="table__cell">Total disbursements</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row--total">
+                <span class="table__row--note text--note">As of 10/15/2014</span>
+                <div class="table__cell">Cash on hand</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row--total">
+                <div class="table__cell">Debt</div>
+                <div class="table__cell">$0</div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </div>
+      <div class="page-subsection">
+        <h3>Other Related Committees</h3>
+        <p class="text--lead">Committees linked to the candidate for purposes other than campaign fundraising.</p>
+        <div class="figure-group">
+          <h5><a href="#">CANDIDATES XYZ</a></h5>
+          <p class="figure-group__description">Principal Candidate Campaign Committee</p>
+          <figure class="figure-group__graphic">
+            <img src="img/barchart.png">
+          </figure>
+          <figure class="figure-group__summary meta-box">
+            <h6>Summary</h6>
+            <div class="table">
+              <div class="table__row">
+                <div class="table__cell">Total receipts</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row">
+                <div class="table__cell">Total disbursements</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row--total">
+                <span class="table__row--note text--note">As of 10/15/2014</span>
+                <div class="table__cell">Cash on hand</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row--total">
+                <div class="table__cell">Debt</div>
+                <div class="table__cell">$0</div>
+              </div>
+            </div>
+          </figure>
+        </div>
+        <div class="figure-group">
+          <h5><a href="#">LEADERPAC</a></h5>
+          <p class="figure-group__description">Principal Candidate Campaign Committee</p>
+          <figure class="figure-group__graphic">
+            <img src="img/barchart.png">
+          </figure>
+          <figure class="figure-group__summary meta-box">
+            <h6>Summary</h6>
+            <div class="table">
+              <div class="table__row">
+                <div class="table__cell">Total receipts</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row">
+                <div class="table__cell">Total disbursements</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row--total">
+                <span class="table__row--note text--note">As of 10/15/2014</span>
+                <div class="table__cell">Cash on hand</div>
+                <div class="table__cell">$0</div>
+              </div>
+              <div class="table__row--total">
+                <div class="table__cell">Debt</div>
+                <div class="table__cell">$0</div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-header">
+    <div class="container">
+      <h2 id="section-2-header" tabindex="0">Outside Spending</h2>
+      <p class="text--lead">View the support this candidate has received from outside groups like PACs and Super PACs.</p>
+      <div class="page-subsection outside__summary">
+        <h3>Independent Expenditures Summary</h3>
+        <div class="figure-group">
+          <h5>Total Outside Spending</h5>
+          <img src="img/support-oppose--big.png">
+        </div>
+        <div class="figure-group">
+          <figure class="chunk--half">
+            <h5>Super PACs</h5>
+            <img src="img/support-oppose.png">
+          </figure>
+          <figure class="chunk--half">
+            <h5>Party Committees</h5>
+            <img src="img/support-oppose.png">
+          </figure>
+          <figure class="chunk--half">
+            <h5>PACs</h5>
+            <img src="img/support-oppose.png">
+          </figure>
+          <figure class="chunk--half">
+            <h5>Individuals, Corporations &amp; Unions</h5>
+            <img src="img/support-oppose.png">
+          </figure>
+        </div>
+      </div>
+      <div class="page-subsection outside__committees">
+        <h3>Committees with Independent Expenditures</h3>
+        <div class="figure-group">
+          <h4>Supporting committees</h4>
+          <div class="chunk--third">
+            <table class="table--simple">
+              <thead>
+                <tr>
+                  <th colspan="2"><h5>Super PACs</h5></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="chunk--third">
+            <table class="table--simple">
+              <thead>
+                <tr>
+                  <th colspan="2"><h5>Party Committees</h5></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="chunk--third">
+            <table class="table--simple">
+              <thead>
+                <tr>
+                  <th colspan="2"><h5>PACs</h5></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="figure-group">
+          <h4>Opposing committees</h4>
+          <div class="chunk--third">
+            <table class="table--simple">
+              <thead>
+                <tr>
+                  <th colspan="2"><h5>Super PACs</h5></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="chunk--third">
+            <table class="table--simple">
+              <thead>
+                <tr>
+                  <th colspan="2"><h5>Party Committees</h5></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="chunk--third">
+            <table class="table--simple">
+              <thead>
+                <tr>
+                  <th colspan="2"><h5>PACs</h5></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+                <tr>
+                  <td><a href="#">Committee name</a></td>
+                  <td>$1,000,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="page-subsection">
+        <h3>Electioneering Communications</h3>
+        <p class="text--lead">[insert definition of electioneering comms here]</p>
+        <table>
+          <thead>
+            <th class="sort-header">Committee name</th>
+            <th class="sort-header">Total spent</th>
+            <th class="sort-header">Itemized transactions</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="#">Committee name</a></td>
+              <td>$0</td>
+              <td><a href="#">View &raquo</a></td>
+            </tr>
+            <tr>
+              <td><a href="#">Committee name</a></td>
+              <td>$0</td>
+              <td><a href="#">View &raquo</a></td>
+            </tr>
+            <tr>
+              <td><a href="#">Committee name</a></td>
+              <td>$0</td>
+              <td><a href="#">View &raquo</a></td>
+            </tr>
+            <tr>
+              <td><a href="#">Committee name</a></td>
+              <td>$0</td>
+              <td><a href="#">View &raquo</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section class="page-section" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-header">
+    <div class="container">
+      <h2 id="section-3-header" tabindex="0">Filings</h2>
+      <p class="text--lead">View all the paper work filed by this candidate. For reports filed by the candidate’s related committees, view the committee pages.</p>
+      <div class="page-subsection">
+        <table>
+          <thead>
+            <th class="sort-header">Filing name</th>
+            <th class="sort-header">Filing type</th>
+            <th class="sort-header">Date</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="#">Committee name</a></td>
+              <td>Statement of candidacy</td>
+              <td>1/1/2014</td>
+            </tr>
+            <tr>
+              <td><a href="#">Committee name</a></td>
+              <td>Statement of candidacy</td>
+              <td>1/1/2012</td>
+            </tr>
+            <tr>
+              <td><a href="#">Committee name</a></td>
+              <td>Statement of candidacy</td>
+              <td>1/1/201-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="js/modules/tablist.js"></script>
+<script>
+jQuery(document).ready(function($){
+  $('.chosen-select').chosen({
+    width: "100%",
+    disable_search: true,
+  });
+});
+</script>
