@@ -25,7 +25,7 @@ module.exports = {
                     'election': elections[j].election_year,
                     'party': elections[j].party_affiliation,
                     'state': elections[j].state,
-                    'district': elections[j].district,
+                    'district': elections[j].district
                 });
             }
         }
