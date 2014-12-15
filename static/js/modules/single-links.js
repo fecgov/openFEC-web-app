@@ -14,7 +14,8 @@ var singleClickHandler = function(e) {
         'candidate_id': id
       }
     });
-  } else if ( category === 'committee' ) {
+  }
+  else if ( category === 'committee' ) {
     console.log('cmte');
     events.emit('load:singleEntity', {
       category: 'committees',
