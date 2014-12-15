@@ -97,6 +97,16 @@ module.exports = {
         events.on('selected:filter', filterLoadHandler);
         events.on('deselected:filter', filterLoadHandler);
         events.on('nav:pagination', filterLoadHandler);
+
+        events.on('load:singleEntity', function(e) {
+          var promise = callAPI(buildURL(e));
+          promise.done(function(data) {
+            e.data = data;
+            events.emit('render:singleEntity', e);
+          }).fail(function() {
+            events.emit('err:load:searchResults');
+          })
+        })
     },
 
     entitiesArray: entitiesArray,
