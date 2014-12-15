@@ -47,7 +47,8 @@ module.exports = {
                 party: party,
                 type: type,
                 designation: designation,
-                organization: organization
+                organization: organization,
+                id: committee.committee_id
             });
         }
 
