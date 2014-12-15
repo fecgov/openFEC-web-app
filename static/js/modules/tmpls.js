@@ -120,7 +120,7 @@ var renderSearchResultsList = function(e) {
             category = categories[i - 1] + 's';
             templates[tmplName] = Handlebars.registerPartial(tmplName, arguments[i][0]);
             context[category] = mapFields(category, e.results[categories[i - 1]]);
-        } 
+        }
 
         context.query = e.query;
 
@@ -141,6 +141,18 @@ var renderLandingView = function() {
         $('#main').html(templates['landing']());
     });
 };
+
+var renderSingleEntity = function(e) {
+  $.when(
+    loadTemplate('views/' + e.category + '-single.handlebars')
+  ).done(function(tmpl1) {
+    var context = {};
+    context = mapFields(e.category, e.data.results);
+    templates[tmpl1] = Handlebars.compile(tmpl1);
+    $('#main').html(templates[tmpl1](context[0]));
+  });
+};
+
 
 var mapFields = function(category, results) {
     switch (category) {
@@ -174,5 +186,6 @@ module.exports = {
             events.emit('render:landingView');
         });
         events.on('render:landingView', renderLandingView);
+        events.on('render:singleEntity', renderSingleEntity);
     }
 };
