@@ -22,7 +22,7 @@ var buildURL = function(context) {
         }
     }
 
-    return URL;
+    return URL + 'fields=*';
 };
 
 var changeURL = function(context) {
