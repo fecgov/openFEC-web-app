@@ -71,7 +71,7 @@ var bindFilters = function(e) {
     // make name filter work
     $('#category-filters input').on('input', function() {
         var $nameField = $(this),
-            $plusButton = $nameField.siblings('.add-filter');
+            $plusButton = $nameField.siblings('.add-filter__button');
 
         if ($nameField.val() === "") {
             $plusButton.addClass('disabled');
@@ -82,7 +82,7 @@ var bindFilters = function(e) {
     });
 
     // apply name filter
-    $('#category-filters').on('click', '.add-filter', function() {
+    $('#category-filters').on('click', '.add-filter__button', function() {
         var $plusButton = $(this);
         if ($plusButton.hasClass('disabled') === false) {
             activateFilter.call($plusButton.prev()[0]);
