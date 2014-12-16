@@ -61,7 +61,7 @@
         <div class="entity__header--bottom row">
           <div class="chunk--third">
             <h4>Candidate Information</h4>
-            <dl class="entity__info">
+            <dl class="entity__info data">
               <dt>Candidate ID:</dt>
               <dd>1234567</dd>
               <dt>Status:</dt>
@@ -76,7 +76,7 @@
           </div>
           <div class="chunk--third">
             <h4>Candidate Committees</h4>
-            <dl class="entity__related-entities">
+            <dl class="entity__related-entities data">
               <dt>Principal Candidate Campaign Committee</dt>
               <dd>JANET FOR DELAWARE</dd>
               <dt>Authorized Committee</dt>
@@ -85,7 +85,7 @@
           </div>
           <div class="chunk--third">
             <h4>Related Committees</h4>
-            <dl class="entity__related-entities">
+            <dl class="entity__related-entities data">
               <dt>Joint Fundraising Committee</dt>
               <dd>CANDIDATES XYZ</dd>
               <dt>Leadership PAC</dt>
@@ -107,10 +107,10 @@
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container">
         <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-        <p class="lead-text">Get the full picture of all of the money received and spent by this candidate’s principal and authorized committees.</p>
+        <p class="text--lead">Get the full picture of all of the money received and spent by this candidate’s principal and authorized committees.</p>
         <div class="page-subsection">
           <h3>Candidate Committees</h3>
-          <p class="lead-text">Committees linked to the candidate for purposes of campaign fundraising.</p>
+          <p class="text--lead">Committees linked to the candidate for purposes of campaign fundraising.</p>
           <div class="figure-group">
             <h5><a href="#">JANET FOR DELAWARE</a></h5>
             <p class="figure-group__description">Principal Candidate Campaign Committee | Last updated 11/11/2014</p>
@@ -129,7 +129,7 @@
                   <div class="table__cell">$0</div>
                 </div>
                 <div class="table__row--total">
-                  <span class="table__row--note text-note">As of 10/15/2014</span>
+                  <span class="table__row--note text--note">As of 10/15/2014</span>
                   <div class="table__cell">Cash on hand</div>
                   <div class="table__cell">$0</div>
                 </div>
@@ -158,7 +158,7 @@
                   <div class="table__cell">$0</div>
                 </div>
                 <div class="table__row--total">
-                  <span class="table__row--note text-note">As of 10/15/2014</span>
+                  <span class="table__row--note text--note">As of 10/15/2014</span>
                   <div class="table__cell">Cash on hand</div>
                   <div class="table__cell">$0</div>
                 </div>
@@ -172,7 +172,7 @@
         </div>
         <div class="page-subsection">
           <h3>Other Related Committees</h3>
-          <p class="lead-text">Committees linked to the candidate for purposes other than campaign fundraising.</p>
+          <p class="text--lead">Committees linked to the candidate for purposes other than campaign fundraising.</p>
           <div class="figure-group">
             <h5><a href="#">CANDIDATES XYZ</a></h5>
             <p class="figure-group__description">Principal Candidate Campaign Committee</p>
@@ -191,7 +191,7 @@
                   <div class="table__cell">$0</div>
                 </div>
                 <div class="table__row--total">
-                  <span class="table__row--note text-note">As of 10/15/2014</span>
+                  <span class="table__row--note text--note">As of 10/15/2014</span>
                   <div class="table__cell">Cash on hand</div>
                   <div class="table__cell">$0</div>
                 </div>
@@ -220,7 +220,7 @@
                   <div class="table__cell">$0</div>
                 </div>
                 <div class="table__row--total">
-                  <span class="table__row--note text-note">As of 10/15/2014</span>
+                  <span class="table__row--note text--note">As of 10/15/2014</span>
                   <div class="table__cell">Cash on hand</div>
                   <div class="table__cell">$0</div>
                 </div>
@@ -237,7 +237,7 @@
     <section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-header">
       <div class="container">
         <h2 id="section-2-header" tabindex="0">Outside Spending</h2>
-        <p class="lead-text">View the support this candidate has received from outside groups like PACs and Super PACs.</p>
+        <p class="text--lead">View the support this candidate has received from outside groups like PACs and Super PACs.</p>
         <div class="page-subsection outside__summary">
           <h3>Independent Expenditures Summary</h3>
           <div class="figure-group">
@@ -268,8 +268,12 @@
           <div class="figure-group">
             <h4>Supporting committees</h4>
             <div class="chunk--third">
-              <h5>Super PACs</h5>
-              <table class="mini-table">
+              <table class="table--simple">
+                <thead>
+                  <tr>
+                    <th colspan="2"><h5>Super PACs</h5></th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <td><a href="#">Committee name</a></td>
@@ -287,8 +291,12 @@
               </table>
             </div>
             <div class="chunk--third">
-              <h5>Party Committees</h5>
-              <table class="mini-table">
+              <table class="table--simple">
+                <thead>
+                  <tr>
+                    <th colspan="2"><h5>Party Committees</h5></th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <td><a href="#">Committee name</a></td>
@@ -306,8 +314,12 @@
               </table>
             </div>
             <div class="chunk--third">
-              <h5>PACs</h5>
-              <table class="mini-table">
+              <table class="table--simple">
+                <thead>
+                  <tr>
+                    <th colspan="2"><h5>PACs</h5></th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <td><a href="#">Committee name</a></td>
@@ -328,8 +340,12 @@
           <div class="figure-group">
             <h4>Opposing committees</h4>
             <div class="chunk--third">
-              <h5>Super PACs</h5>
-              <table class="mini-table">
+              <table class="table--simple">
+                <thead>
+                  <tr>
+                    <th colspan="2"><h5>Super PACs</h5></th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <td><a href="#">Committee name</a></td>
@@ -347,8 +363,12 @@
               </table>
             </div>
             <div class="chunk--third">
-              <h5>Party Committees</h5>
-              <table class="mini-table">
+              <table class="table--simple">
+                <thead>
+                  <tr>
+                    <th colspan="2"><h5>Party Committees</h5></th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <td><a href="#">Committee name</a></td>
@@ -366,8 +386,12 @@
               </table>
             </div>
             <div class="chunk--third">
-              <h5>PACs</h5>
-              <table class="mini-table">
+              <table class="table--simple">
+                <thead>
+                  <tr>
+                    <th colspan="2"><h5>PACs</h5></th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <td><a href="#">Committee name</a></td>
@@ -388,7 +412,7 @@
         </div>
         <div class="page-subsection">
           <h3>Electioneering Communications</h3>
-          <p class="lead-text">[insert definition of electioneering comms here]</p>
+          <p class="text--lead">[insert definition of electioneering comms here]</p>
           <table>
             <thead>
               <th class="sort-header">Committee name</th>
@@ -424,7 +448,7 @@
     <section class="page-section" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-header">
       <div class="container">
         <h2 id="section-3-header" tabindex="0">Filings</h2>
-        <p class="lead-text">View all the paper work filed by this candidate. For reports filed by the candidate’s related committees, view the committee pages.</p>
+        <p class="text--lead">View all the paper work filed by this candidate. For reports filed by the candidate’s related committees, view the committee pages.</p>
         <div class="page-subsection">
           <table>
             <thead>

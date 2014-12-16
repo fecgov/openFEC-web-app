@@ -36,7 +36,6 @@ h3 {
 h4 {
   @include font-size(2.4);
   font-weight: 400;
-  margin-bottom: 1em;
 }
 
 h5 {
@@ -56,6 +55,7 @@ a {
   @include transition(color 0.1s linear);
   color: $base-link-color;
   text-decoration: none;
+  text-decoration: underline;
 
   &:hover {
     color: $hover-link-color;
@@ -65,6 +65,26 @@ a {
     color: $hover-link-color;
     outline: none;
   }
+
+  &.link--delete {
+    color: $red;
+
+    &:hover {
+      color: $red-2;
+    }
+  }
+
+  &.link--learn {
+    color: $green;
+
+    &:hover {
+      color: $green-2;
+    }
+  }
+}
+
+.link--icon {
+  text-decoration: none; // Don't underline if there's an icon in the link
 }
 
 hr {
@@ -98,15 +118,49 @@ cite {
 
 // Universal text classes
 
-.lead-text {
+.text--lead {
   @include font-size(1.8);
   margin-top: 0;
 }
 
-.query {
+.text--query {
   border-bottom: 1px solid $dark-gray;
 }
 
-.text-note {
+.text--note {
   font-style: italic;
+}
+
+// Data styles
+// When we're presenting data but not using semantic headers
+.data {
+  @include font-size(1.6);
+  margin: 0;
+  padding: 0;
+  color: $licorice;
+}
+
+// Think of this as the <dt>
+.data--label {
+  @extend .data;
+  font-weight: bold;
+}
+
+// And this as the <dd>
+.data--content,
+.data--link {
+  @extend .data;
+}
+
+// This is just a parenthetical note
+.data--note {
+  @include font-size(1.4);
+  font-style: italic;
+}
+
+// For showing big fancy numbers
+.data--display {
+  @include font-size(2.4);
+  margin: 1em 0;
+  padding:0;
 }

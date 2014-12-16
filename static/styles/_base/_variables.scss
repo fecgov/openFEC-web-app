@@ -12,8 +12,9 @@ $base-border-radius: em(4);
 
 // Colors
 $dark-gray: #515A61;
-$medium-gray: #979797;
-$light-gray: #EFEFEF;
+$medium-gray: #b3b3b3;
+$light-gray: #D7D7D7;
+$lightest-gray: #F8F8F8;
 $light-red: #FBE3E4;
 $light-yellow: #FFF6BF;
 $light-green: #E6EFC2;
@@ -34,7 +35,14 @@ $data-support-2: #103552; // Darker blue
 $data-oppose: #A9205C; // Purple
 $data-oppose-2: #6B143B; // Darker purple
 $data-receipt: #148552; // Green
+$data-receipt-2: darken($data-receipt, 10%);
 $data-disbursement: #DB4857; // Salmon
+$data-disbursement-2: darken($data-disbursement, 10%);
+$data-cash: #158552;
+$data-cash-2: darken($data-cash, 10%);
+$data-debt: #323A45;
+$data-debt-2: darken($data-debt, 10%);
+
 
 // UI Colors
 $meta-box-color: #FBFBFD;

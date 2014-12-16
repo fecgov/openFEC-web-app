@@ -31,7 +31,9 @@ var bindPaginationLinks = function(e) {
 
 // Implementing tablesort
 var sortTable = function(e){
-  new tablesort(document.getElementById('results'));
+  $('.table--sortable').each(function(){
+    new tablesort(this);
+  });
 }
 
 module.exports = {

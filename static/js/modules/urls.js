@@ -37,6 +37,7 @@ module.exports = {
     init: function() {
         events.on('load:browse', changeURL);
         events.on('render:browse', changeURL);
+        events.on('load:singleEntity', changeURL);
         events.on('selected:filter', changeURL);
         events.on('removed:filter', changeURL);
         events.on('render:searchResultsList', changeURL);

@@ -1,5 +1,5 @@
 .page-tabs {
-  background-color: $light-gray;
+  border-bottom: 1px solid $light-gray;
   text-align: center;
   padding: .5em 0 0 0;
 }
@@ -7,12 +7,13 @@
 .page-tabs__item {
   display: inline-block;
   margin-left: -4px; // Removing extra space from inline-block display
-  
+
   a {
     @include font-size(1.8);
     display: block;
     padding: .5em 2em;
     border-right: 1px solid $medium-gray;
+    text-decoration: none;
 
     &[aria-selected="true"] {
       border-bottom: .5em solid $blue;

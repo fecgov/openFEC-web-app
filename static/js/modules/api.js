@@ -44,12 +44,22 @@ var filterLoadHandler = function(e) {
     });;
 };
 
+var loadSingleEntity = function(e) {
+  var promise = callAPI(buildURL(e));
+  promise.done(function(data) {
+    e.data = data;
+    events.emit('render:singleEntity', e);
+  }).fail(function() {
+    events.emit('err:load:singleEntity');
+  })
+}
+
 module.exports = {
     init: function() {
         events.on('search:submitted', function(e) {
             var entities = [],
                 promises = [],
-                i, 
+                i,
                 len = entitiesArray.length;
 
             for (i = 0; i < len; i++) {
@@ -63,7 +73,7 @@ module.exports = {
                 e.results = {};
 
                 for (i = 0; i < len; i++) {
-                    e.results[entitiesArray[i]] = arguments[i][0].results;   
+                    e.results[entitiesArray[i]] = arguments[i][0].results;
                 }
 
                 events.emit('render:searchResultsList', e);
@@ -97,6 +107,8 @@ module.exports = {
         events.on('selected:filter', filterLoadHandler);
         events.on('deselected:filter', filterLoadHandler);
         events.on('nav:pagination', filterLoadHandler);
+
+        events.on('load:singleEntity', loadSingleEntity);
     },
 
     entitiesArray: entitiesArray,

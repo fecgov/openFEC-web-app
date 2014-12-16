@@ -7,65 +7,21 @@ figure {
   }
 }
 
-// Simple two-column faux tables using divs
-
-.table__row {
-  @include clearfix();
-}
-
-.table__cell {
-  float: left;
-}
-
-.table__row--note {
-  width: 100%;
-  font-weight: normal;
-  display: block;
-}
-
-.table__row--total {
-  font-weight: bold;
-  margin-top: 1em;
-}
-
-// If you're actually using table markup
-
-.mini-table {
-  border: none;
-  margin-top: .5em;
-
-  tr {
-    background: none;
-  }
-
-  td {
-    padding: 0;
-  }
-}
-
 // Contained in a subsection, this is a group of figures (i.e. for a committee)
 .figure-group {
-  @include secondary-divider();
-  @include span-columns(24);
-  @include clearfix();
-  padding: 2em 0;
-
-  &:first-of-type {
-    padding-top: 1em;
-  }
-
-  &:last-of-type {
-    padding-bottom: 0;
-  }
-
+  @extend .page-sub-subsection;
+  
   h5 {
     margin-bottom: .5em;
+  }
+
+  .table--simple h5 {
+    margin-bottom: 0;
   }
 }
 
 .figure-group__description {
   margin-bottom: 2em;
-
 }
 
 .figure-group__graphic {

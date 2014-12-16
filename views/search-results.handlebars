@@ -1,22 +1,24 @@
-<div class="data container">
-    <h2>Search results{{#if query}}: <span class="query">{{query}}</span>{{/if}}</h2>
+<div class="container">
+  <section class="data page-section">
+      <h2>Search results{{#if query}}: <span class="text--query">{{query}}</span>{{/if}}</h2>
 
-    <div class="sub-section">
-      {{#if candidates}}
-          <div class="results-header">
-              <h3>Candidate Results</h3>
-              <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">View all</a>
-          </div>
-          {{> candidates-table}}
-      {{/if}}
-    </div>
-    <div class="sub-section">
-      {{#if committees}}
-          <div class="results-header">
-              <h3>Committees Results</h3>
-              <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">View all</a>
-          </div>
-          {{> committees-table}}
-      {{/if}}
-    </div>
+      <div class="page-subsection">
+        {{#if candidates}}
+            <div class="results-header">
+                <h3>Candidate Results</h3>
+                <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">View all</a>
+            </div>
+            {{> candidates-table}}
+        {{/if}}
+      </div>
+      <div class="page-subsection">
+        {{#if committees}}
+            <div class="results-header">
+                <h3>Committees Results</h3>
+                <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">View all</a>
+            </div>
+            {{> committees-table}}
+        {{/if}}
+      </div>
+  </section>
 </div>
