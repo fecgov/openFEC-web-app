@@ -4,52 +4,51 @@ module.exports = {
             len,
             committee,
             committees = [],
-            type,
-            designation,
-            name,
-            treasurer,
-            state,
-            party,
-            organization;
+            newCommitteeObj;
 
         if (typeof results !== 'undefined') {
             len = results.length;
         }
 
         for (i = 0; i < len; i++) {
-            committee = results[i][0];
+            // don't want leftover vars from one iteration to the next
+            // should the corresponding if block is false
+            newCommitteeObj = {
+                id: '',
+                name:'',
+                treasurer:'',
+                state: '',
+                party: '',
+                type: '',
+                designation: '',
+                organization: ''
+            };
+
+            committee = results[i];
+            committee.status = results[i].status;
+
+            newCommitteeObj.id = committee.committee_id || '';
 
             if (typeof committee.status !== 'undefined') {
-                type = committee.status[0].type;
-                designation = committee.status[0].designation;
-            }
-            else {
-                type = committee.type;
-                designation = '';
+                newCommitteeObj.type = committee.status.type_full || '';
+                newCommitteeObj.designation = committee.status.designation_full || '';
             }
 
-            organization = committee.organization_type || '';
-
-            name = committee.name || '';
             if (typeof committee.treasurer !== 'undefined') {
-                treasurer = committee.treasurer.name_full;
+                newCommitteeObj.treasurer = committee.treasurer.name_full || '';
             }
-            else {
-                treasurer = '';
-            }
-            state = committee.address.state || '';
-            party = '';
 
-            committees.push({
-                name: name,
-                treasurer: treasurer,
-                state: state,
-                party: party,
-                type: type,
-                designation: designation,
-                organization: organization,
-                id: committee.committee_id
-            });
+            if (typeof committee.address !== 'undefined') {
+                newCommitteeObj.state = committee.address.state || '';
+            }
+
+            if (typeof committee.description !== 'undefined') {
+                newCommitteeObj.party = committee.description.party_full || '';
+                newCommitteeObj.name = committee.description.name || '';
+                newCommitteeObj.organization = committee.description.organization_type_full || '';
+            }
+
+            committees.push(newCommitteeObj);
         }
 
         return committees;

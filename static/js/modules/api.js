@@ -29,7 +29,7 @@ var buildURL = function(e) {
         }
     }
 
-    return URL;
+    return URL + 'fields=*';
 };
 
 var filterLoadHandler = function(e) {
@@ -83,7 +83,7 @@ module.exports = {
         });
 
         events.on('load:browse', function(e) {
-            var promise = callAPI('rest/' + entityMap[e.category]);
+            var promise = callAPI('rest/' + entityMap[e.category] + '?fields=*');
 
             promise.done(function(data) {
                 e.data = data;

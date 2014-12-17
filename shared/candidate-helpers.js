@@ -4,29 +4,50 @@ module.exports = {
             i,
             j,
             len,
-            elections,
-            election,
-            year,
-            jlen;
+            jlen,
+            newCandidateObj;
 
         if (typeof results !== 'undefined') {
             len = results.length;
         }
 
         for (i = 0; i < len; i++) {
-            elections = results[i].elections;
-            jlen = elections.length;
+            // if there are multiple elections associated with this
+            // candidate, express them as separate rows
+            jlen = results[i].elections.length || 1;
+
             for (j = 0; j < jlen; j++) {
-                candidates.push({
-                    'name': results[i].name.full_name,
-                    'id': results[i].candidate_id,
-                    'incumbent_challenge': elections[j].incumbent_challenge,
-                    'office': elections[j].office_sought,
-                    'election': elections[j].election_year,
-                    'party': elections[j].party_affiliation,
-                    'state': elections[j].state,
-                    'district': elections[j].district
-                });
+                newCandidateObj = {
+                    id: '',
+                    name: '',
+                    office: '',
+                    election: '',
+                    party: '',
+                    state: '',
+                    district: '',
+                    incumbent_challenge: ''
+                };
+
+                newCandidateObj.id = results[i].candidate_id;
+
+                if (typeof results[i].elections !== 'undefined') {
+                    newCandidateObj.office = results[i].elections[j].office_sought_full || '';
+                    newCandidateObj.party = results[i].elections[j].party_affiliation || '';
+                    newCandidateObj.incumbent_challenge = results[i].elections[j].incumbent_challenge_full || '';
+
+                    if (typeof results[i].elections[j].primary_committee !== 'undefined') {
+                        newCandidateObj.election = results[i].elections[j].primary_committee.election_year || '';
+                    }
+
+                    newCandidateObj.state = results[i].elections[j].state || '';
+                    newCandidateObj.district = results[i].elections[j].district || '';
+                }
+
+                if (typeof results[i].name !== 'undefined') {
+                    newCandidateObj.name = results[i].name.full_name || '';
+                }
+
+                candidates.push(newCandidateObj);
             }
         }
 
