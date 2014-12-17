@@ -12,12 +12,14 @@ module.exports = {
 
         for (i = 0; i < len; i++) {
             newCandidateObj = {
+                id: '',
                 name: '',
                 office: '',
                 election: '',
                 party: '',
                 state: '',
-                district: ''
+                district: '',
+                incumbent_challenge: ''
             };
 
             if (typeof results[i].elections !== 'undefined') {

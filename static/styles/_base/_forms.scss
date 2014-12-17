@@ -1,8 +1,12 @@
 fieldset {
-  background: lighten($base-border-color, 10);
-  border: 1px solid $base-border-color;
-  margin: 0 0 ($base-line-height / 2) 0;
-  padding: $base-line-height;
+  border: none;
+  padding: 1em 0;
+  margin: 1em 0;
+}
+
+
+legend {
+
 }
 
 input,
@@ -14,6 +18,8 @@ select {
 }
 
 label {
+  @include font-size(1.6);
+  margin-top: 2em;
   margin-bottom: $base-line-height / 4;
 
   &.required:after {
@@ -23,10 +29,19 @@ label {
   abbr {
     display: none;
   }
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+label + textarea,
+label + #{$all-text-inputs} {
+  margin: 0 0 1em 0;
 }
 
 #{$all-text-inputs} {
-  @include rem(height, 3.2rem);
+  @include rem(height, 4.0rem);
 }
 
 textarea,
@@ -35,12 +50,13 @@ select[multiple=multiple] {
   @include box-sizing(border-box);
   @include transition(border-color);
   @include font-size($form-font-size);
+  margin: 1em 0;
   background-color: white;
   border-radius: $form-border-radius;
   border: 1px solid $form-border-color;
   box-shadow: $form-box-shadow;
   font-family: $form-font-family;
-  padding: .5em 1em;
+  padding: 1em 1em;
   width: 100%;
 
   &:hover {
@@ -76,19 +92,24 @@ input[type="file"] {
 select {
   width: auto;
   max-width: 100%;
-  margin-bottom: $base-line-height;
 }
 
 
 // Custom form elements
 .input-button-combo {
+  @include clearfix();
+
   #{$all-text-inputs} {
     width: 75%;
     float: left;
     border-radius: $base-border-radius 0 0 $base-border-radius;
+    margin: 0;
+    border-right: none;
   }
 
-  input[type="submit"] {
+  input[type="submit"],
+  button,
+  .button {
     width: 25%;
     float: left;
     border-radius: 0 $base-border-radius $base-border-radius 0;
@@ -106,5 +127,23 @@ select {
       float: left;
       border-radius: 0 $base-border-radius $base-border-radius 0;
     }
+  }
+}
+
+// If you want some styling on the forms
+.form {
+  background: $meta-box-color;
+  border: 1px solid $medium-gray;
+  padding: 2em;
+  margin: 2em 0;
+}
+
+// For grouping together checkboxes or radio buttons
+
+.form__group {
+  margin: 1em 0;
+
+  label {
+    margin-top: 0;
   }
 }

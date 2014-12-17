@@ -3,6 +3,7 @@
 var search = require('./modules/search.js');
 var api = require('./modules/api.js');
 var navs = require('./modules/navs.js');
+var singleLinks = require('./modules/single-links.js');
 var tmpls = require('./modules/tmpls.js');
 var filters = require('./modules/filters.js');
 var urls = require('./modules/urls.js');
@@ -14,6 +15,7 @@ var router = require('./modules/router.js');
 api.init();
 search.init();
 navs.init();
+singleLinks.init();
 tmpls.init();
 filters.init();
 urls.init();

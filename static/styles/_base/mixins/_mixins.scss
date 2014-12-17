@@ -100,3 +100,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+// Dividers
+// Primary dividers are more divisive... secondar, less so
+
+@mixin primary-divider() {
+  border-bottom: 1px solid $dark-gray;
+}
+
+@mixin secondary-divider() {
+  border-bottom: 1px dashed $medium-gray;
+}

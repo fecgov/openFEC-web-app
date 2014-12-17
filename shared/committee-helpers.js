@@ -14,6 +14,7 @@ module.exports = {
             // don't want leftover vars from one iteration to the next
             // should the corresponding if block is false
             newCommitteeObj = {
+                id: '',
                 name:'',
                 treasurer:'',
                 state: '',
@@ -23,26 +24,28 @@ module.exports = {
                 organization: ''
             };
 
-            committee = results[i].archive[0];
-            committee.properties = results[i].properties;
+            committee = results[i];
+            committee.status = results[i].status;
 
-            if (typeof committee.properties !== 'undefined' && typeof committee.properties.candidates !== 'undefined') {
-                newCommitteeObj.type = committee.properties.candidates[0].type_full || '';
-                newCommitteeObj.designation = committee.properties.candidates[0].designation_full || '';
+            newCommitteeObj.id = committee.committee_id || '';
+
+            if (typeof committee.status !== 'undefined') {
+                newCommitteeObj.type = committee.status.type_full || '';
+                newCommitteeObj.designation = committee.status.designation_full || '';
             }
 
             if (typeof committee.treasurer !== 'undefined') {
-                newCommitteeObj.treasurer = committee.treasurer[0].name_full || '';
+                newCommitteeObj.treasurer = committee.treasurer.name_full || '';
             }
 
             if (typeof committee.address !== 'undefined') {
-                newCommitteeObj.state = committee.address[0].state || '';
+                newCommitteeObj.state = committee.address.state || '';
             }
 
             if (typeof committee.description !== 'undefined') {
-                newCommitteeObj.party = committee.description[0].party_full || '';
-                newCommitteeObj.name = committee.description[0].name || '';
-                newCommitteeObj.organization = committee.description[0].organization_type_full || '';
+                newCommitteeObj.party = committee.descriptionparty_full || '';
+                newCommitteeObj.name = committee.description.name || '';
+                newCommitteeObj.organization = committee.description.organization_type_full || '';
             }
 
             committees.push(newCommitteeObj);
