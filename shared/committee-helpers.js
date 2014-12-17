@@ -43,7 +43,7 @@ module.exports = {
             }
 
             if (typeof committee.description !== 'undefined') {
-                newCommitteeObj.party = committee.descriptionparty_full || '';
+                newCommitteeObj.party = committee.description.party_full || '';
                 newCommitteeObj.name = committee.description.name || '';
                 newCommitteeObj.organization = committee.description.organization_type_full || '';
             }
