@@ -21,7 +21,12 @@ var buildURL = function(e) {
 
     if (typeof e.filters.cmte_id !== 'undefined') {
         URL += '/' + e.filters.cmte_id;
-        delete e.filters.cmte_id;
+
+        // if we're requesting a single committee, filters 
+        // aren't applicable, though they still get passed
+        // in if there were filters chosen leading up to
+        // finding this committee
+        delete e.filters;
     }
 
     URL += '?';
