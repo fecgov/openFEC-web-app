@@ -16,8 +16,15 @@ var callAPI = function(url) {
 };
 
 var buildURL = function(e) {
-    var URL = 'rest/' + entityMap[e.category] + '?',
+    var URL = 'rest/' + entityMap[e.category],
         field;
+
+    if (typeof e.filters.cmte_id !== 'undefined') {
+        URL += '/' + e.filters.cmte_id;
+        delete e.filters.cmte_id;
+    }
+
+    URL += '?';
 
     if (typeof e.query !== 'undefined') {
         URL += 'q=' + e.query + '&';
