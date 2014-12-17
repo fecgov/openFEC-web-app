@@ -14,5 +14,16 @@ describe('API Module', function() {
 
             assert.equal(api.buildURL(context), 'rest/candidate?year=2000&state=IL&fields=*');
         });
+
+        it('should return an appropriate URL for single committees', function() {
+            var context = {
+                category: 'committees',
+                filters: {
+                    cmte_id: '12345'
+                }
+            };
+
+            assert.equal(api.buildURL(context), 'rest/committee/12345?fields=*');
+        });
     });
 });
