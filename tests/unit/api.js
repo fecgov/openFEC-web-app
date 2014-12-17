@@ -19,12 +19,11 @@ describe('API Module', function() {
             var context = {
                 category: 'committees',
                 filters: {
-                    cmte_id: '12345',
-                    state: 'OH'
+                    cmte_id: '12345'
                 }
             };
 
-            assert.equal(api.buildURL(context), 'rest/committee/12345?state=OH&fields=*');
+            assert.equal(api.buildURL(context), 'rest/committee/12345?fields=*');
         });
     });
 });
