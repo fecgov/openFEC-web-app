@@ -16,7 +16,6 @@ var singleClickHandler = function(e) {
     });
   }
   else if ( category === 'committee' ) {
-    console.log('cmte');
     events.emit('load:singleEntity', {
       category: 'committees',
       filters: {
