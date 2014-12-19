@@ -7,22 +7,10 @@ var singleClickHandler = function(e) {
   var id = $(this).data('id');
   var category = $(this).data('category');
 
-  if ( category === 'candidate' ) {
-    events.emit('load:singleEntity', {
-      category: 'candidates',
-      filters: {
-        'candidate_id': id
-      }
-    });
-  }
-  else if ( category === 'committee' ) {
-    events.emit('load:singleEntity', {
-      category: 'committees',
-      filters: {
-        'cmte_id': id
-      }
-    });
-  }
+  events.emit('load:singleEntity', {
+    category: category + 's',
+    id: id
+  });
 }
 
 module.exports = {

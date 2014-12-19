@@ -19,7 +19,7 @@ describe('API Module', function() {
             var context = {
                 category: 'committees',
                 filters: {
-                    cmte_id: '12345'
+                    id: '12345'
                 }
             };
 

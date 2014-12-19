@@ -14,7 +14,7 @@ var renderBrowse = function(e) {
     }
     else {
         var tmplName = e.category + '-table',
-            promise = loadTemplate('views/partials/' + tmplName + '.handlebars');
+            promise = loadTemplate('/views/partials/' + tmplName + '.handlebars');
 
         promise.done(function(data) {
             var context = {};
@@ -85,8 +85,8 @@ var renderFilters = function(e) {
 
     // pre-load table partial so the template can be shared on client + server
     $.when(
-        loadTemplate('views/' + tmplName + '.handlebars'),
-        loadTemplate('views/partials/' + tmplName + '-table.handlebars')
+        loadTemplate('/views/' + tmplName + '.handlebars'),
+        loadTemplate('/views/partials/' + tmplName + '-table.handlebars')
     ).done(function(tmpl1, tmpl2) {
         templates[tmplName] = Handlebars.compile(tmpl1[0]);
         templates[partialName] = Handlebars.registerPartial(partialName, tmpl2[0]);
@@ -100,10 +100,10 @@ var renderSearchResultsList = function(e) {
         i,
         len = categories.length;
 
-    promises.push(loadTemplate('views/search-results.handlebars'));
+    promises.push(loadTemplate('/views/search-results.handlebars'));
 
     for (i = 0; i < len; i++) {
-        promises.push(loadTemplate('views/partials/' + categories[i] + 's-table.handlebars'));
+        promises.push(loadTemplate('/views/partials/' + categories[i] + 's-table.handlebars'));
     }
 
     $.when.apply($, promises).done(function() {
@@ -133,8 +133,8 @@ var renderSearchResultsList = function(e) {
 
 var renderLandingView = function() {
     $.when(
-        loadTemplate('views/search.handlebars'),
-        loadTemplate('views/partials/search-bar.handlebars')
+        loadTemplate('/views/search.handlebars'),
+        loadTemplate('/views/partials/search-bar.handlebars')
     ).done(function(tmpl1, tmpl2) {
         templates['landing'] = Handlebars.compile(tmpl1[0]);
         templates['search-bar'] = Handlebars.registerPartial('search-bar', tmpl2[0]);
@@ -144,7 +144,7 @@ var renderLandingView = function() {
 
 var renderSingleEntity = function(e) {
   $.when(
-    loadTemplate('views/' + e.category + '-single.handlebars')
+    loadTemplate('/views/' + e.category + '-single.handlebars')
   ).done(function(tmpl1) {
     var context = {};
     context = mapFields(e.category, e.data.results);
