@@ -7,7 +7,17 @@ var buildURL = function(context) {
         field;
 
     if (typeof context.category !== 'undefined') {
-        URL += context.category + '?';
+        URL += context.category;
+
+        if (typeof context.id !== 'undefined') {
+            URL += '/' + context.id;
+
+            return URL;
+        }
+
+        if (typeof context.query !== 'undefined' || typeof context.filters !== 'undefined') {
+            URL += '?';
+        }
 
         if (typeof context.query !== 'undefined') {
             URL += 'q=' + encodeURIComponent(context.query) + '&';
@@ -41,7 +51,7 @@ module.exports = {
     init: function() {
         events.on('load:browse', changeURL);
         events.on('render:browse', changeURL);
-        events.on('load:singleEntity', changeURL);
+        events.on('render:singleEntity', changeURL);
         events.on('selected:filter', changeURL);
         events.on('removed:filter', changeURL);
         events.on('render:searchResultsList', changeURL);
