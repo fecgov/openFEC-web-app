@@ -33,9 +33,14 @@ app.get('/search', function(req, res, next) {
 
 app.get('/candidates', function(req, res, next) {
     // TODO: make relative urls work
-    var URL = 'http://localhost/rest/candidate';
-    if (typeof req.query.name !== 'undefined') {
-        URL += '?name=' + req.query.name;
+    var URL = 'http://localhost/rest/candidate?';
+    if (typeof req.query !== 'undefined') {
+        for (param in req.query) {
+            URL += param + '=' + req.query[param] + '&';
+        }
+    }
+    else {
+        URL += 'fields=*';
     }
 
     request(URL, function(err, response, body) {
@@ -48,7 +53,8 @@ app.get('/candidates', function(req, res, next) {
 
             res.render('candidates', {
                 section: 'candidates', 
-                candidates: candidates
+                candidates: candidates,
+                navShown: true
             });
         }
     });
@@ -57,7 +63,7 @@ app.get('/candidates', function(req, res, next) {
 app.get('/committees', function(req, res, next) {
      // TODO: make relative urls work
     var URL = 'http://localhost/rest/committee';
-    if (typeof req.query.name !== 'undefined') {
+    if (typeof req.query !== 'undefined') {
         URL += '?name=' + req.query.name;
     }
 
