@@ -9,7 +9,7 @@ describe('URL Module', function() {
                 query: 'ladybug'  
             };
 
-            assert.equal(urls.buildURL(context), '/insects?q=ladybug&fields=*');
+            assert.equal(urls.buildURL(context), '/insects?q=ladybug&');
         });
 
         it('should return a URL to match the given context when filtered', function() {
@@ -21,7 +21,7 @@ describe('URL Module', function() {
                 }
             };
 
-            assert.equal(urls.buildURL(context), '/insects?numLegs=4&color=red&fields=*');
+            assert.equal(urls.buildURL(context), '/insects?numLegs=4&color=red&');
         });
 
     });

@@ -139,6 +139,7 @@ var renderLandingView = function() {
         templates['landing'] = Handlebars.compile(tmpl1[0]);
         templates['search-bar'] = Handlebars.registerPartial('search-bar', tmpl2[0]);
         $('#main').html(templates['landing']());
+        events.emit('bind:singleEntity');
     });
 };
 

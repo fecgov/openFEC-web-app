@@ -89,7 +89,7 @@ module.exports = {
         });
 
         events.on('load:browse', function(e) {
-            var promise = callAPI('rest/' + entityMap[e.category] + '?fields=*');
+            var promise = callAPI('/rest/' + entityMap[e.category] + '?fields=*');
 
             promise.done(function(data) {
                 e.data = data;
