@@ -20,9 +20,13 @@ var buildURL = function(context) {
                 }
             }
         }
+
+        if (URL.indexOf('fields') === -1) {
+            URL += 'fields=*';
+        }
     }
 
-    return URL + 'fields=*';
+    return URL;
 };
 
 var changeURL = function(context) {

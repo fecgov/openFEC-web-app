@@ -119,6 +119,8 @@ var activateInitialFilters = function() {
         if (qs.hasOwnProperty(param)) {
             if (param !== "") {
                 activateFilter.call({
+                    // sadly the querystring module doesn't remove
+                    // question marks from its parsed values
                     name: param.replace(/\?/, ''),
                     value: qs[param]
                 }, false);
