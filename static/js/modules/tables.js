@@ -55,7 +55,5 @@ module.exports = {
 
         // if loaded on a page with a results table
         bindPaginationLinks();
-
-
     }
 };

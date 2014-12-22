@@ -127,7 +127,6 @@ var activateInitialFilters = function() {
             }
         }
     }
-    
 }
 
 module.exports = {
