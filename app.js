@@ -22,10 +22,12 @@ var loadSingleEntity = function(entityType, id, res) {
     var URL = 'http://localhost/rest/' + entityType + '/' + id + '?fields=*';
 
     request(URL, function(err, response, body) {
-        var context = {};
+        var data,
+            context = {};
 
-        context.data = JSON.parse(body);
-        _.extend(context, entityBuildMethodMap[entityType](context.data.results));
+        data = JSON.parse(body);
+        _.extend(context, entityBuildMethodMap[entityType](data.results));
+        context[0].navShown = true;
         res.render(entityType + 's-single', context[0]);
     });
 }
