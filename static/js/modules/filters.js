@@ -11,6 +11,8 @@ var toTitleCase = function(str) {
 var activateFilter = function(resultsLoaded) {
     var $field;
 
+    selectedFilters[this.name] = this.value;
+
     // if triggered from DOM event
     if (typeof resultsLoaded === 'undefined') {
         disableForm();
@@ -29,8 +31,6 @@ var activateFilter = function(resultsLoaded) {
         addActiveStyle($field);
         $field.val(this.value).trigger("chosen:updated");
     }
-
-    selectedFilters[this.name] = this.value;
 };
 
 var deactivateFilter = function() {
