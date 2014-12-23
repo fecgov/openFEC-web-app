@@ -25,9 +25,8 @@ var loadSingleEntity = function(entityType, id, res) {
         var context = {};
 
         context.data = JSON.parse(body);
-        context.results = entityBuildMethodMap[entityType](context.data.results);
-
-        res.render('candidates-single', context);
+        _.extend(context, entityBuildMethodMap[entityType](context.data.results));
+        res.render(entityType + 's-single', context[0]);
     });
 }
 
@@ -103,5 +102,10 @@ app.get('/committees', function(req, res, next) {
 app.get('/candidates/:id', function(req, res, next) {
     loadSingleEntity('candidate', req.params.id, res);
 });
+
+app.get('/committees/:id', function(req, res, next) {
+    loadSingleEntity('committee', req.params.id, res);
+});
+
 
 app.listen(3000);
