@@ -12,6 +12,10 @@ module.exports = {
 
         context.filters = context.filters || {};
 
+        if (typeof context.filters.fields === 'undefined') {
+            context.filters.fields = '*';
+        }
+
         // if we are not at the last page, build next page url
         if (pagination.page < pagination.pages) {
             // bump up page to build next page's url
