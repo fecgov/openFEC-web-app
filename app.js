@@ -1,6 +1,8 @@
 var express = require('express'),
     handlebars = require('express-handlebars'),
     request = require('request'),
+    _ = require('underscore'),
+    helpers = require('./shared/helpers.js');
     candidateHelpers = require('./shared/candidate-helpers.js'),
     committeeHelpers = require('./shared/committee-helpers.js');
 
@@ -18,32 +20,43 @@ var entityBuildMethodMap = {
 
 var loadResultsView = function(entityType, req, res, next) {
     // TODO: make relative urls work
-    var URL = 'http://localhost/rest/' + entityType + '?';
+    var URL = 'http://localhost/rest/' + entityType + '?',
+        filters = {};
     if (typeof req.query !== 'undefined') {
         for (param in req.query) {
             URL += param + '=' + req.query[param] + '&';
+            // assemble filters obj for context in templating
+            filters[param] = req.query[param];
         }
     }
     else {
         URL += 'fields=*';
     }
 
-    request(URL, function(err, response, body) {
-        if (!err && response.statusCode == 200) {
-            var data,
-                results,
-                context = {
-                    navShown: true,
-                    section: entityType + 's'
-                };
+    filters.fields = '*';
 
-            data = JSON.parse(body);            
-            results = entityBuildMethodMap[entityType](data.results);
-            context[entityType + 's'] = results;
+    (function(filters) {
+        request(URL, function(err, response, body) {
+            if (!err && response.statusCode == 200) {
+                var data,
+                    results,
+                    context = {
+                        navShown: true,
+                        section: entityType + 's',
+                        filters: filters,
+                        category: entityType + 's'
+                    };
 
-            res.render(entityType + 's', context);
-        }
-    });
+                data = JSON.parse(body);            
+                context.data = data;
+                results = entityBuildMethodMap[entityType](data.results);
+                context[entityType + 's'] = results;
+                _.extend(context, helpers.getPaginationValues(context));
+
+                res.render(entityType + 's', context);
+            }
+        });
+    })();
 };
 
 app.engine('handlebars', tmpls.engine);
