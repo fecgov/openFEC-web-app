@@ -18,6 +18,19 @@ var entityBuildMethodMap = {
     'committee': committeeHelpers.buildCommitteeContext
 }
 
+var loadSingleEntity = function(entityType, id, res) {
+    var URL = 'http://localhost/rest/' + entityType + '/' + id + '?fields=*';
+
+    request(URL, function(err, response, body) {
+        var context = {};
+
+        context.data = JSON.parse(body);
+        context.results = entityBuildMethodMap[entityType](context.data.results);
+
+        res.render('candidates-single', context);
+    });
+}
+
 var loadResultsView = function(entityType, req, res, next) {
     // TODO: make relative urls work
     var URL = 'http://localhost/rest/' + entityType + '?',
@@ -85,6 +98,10 @@ app.get('/candidates', function(req, res, next) {
 
 app.get('/committees', function(req, res, next) {
     loadResultsView('committee', req, res, next);  
+});
+
+app.get('/candidates/:id', function(req, res, next) {
+    loadSingleEntity('candidate', req.params.id, res);
 });
 
 app.listen(3000);

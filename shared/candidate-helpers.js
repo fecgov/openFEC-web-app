@@ -18,10 +18,12 @@ module.exports = {
                 party: '',
                 state: '',
                 district: '',
-                incumbent_challenge: ''
+                incumbent_challenge: '',
+                nameURL: ''
             };
 
             newCandidateObj.id = results[i].candidate_id;
+            newCandidateObj.nameURL = '/candidates/' + newCandidateObj.id;
 
             if (typeof results[i].elections !== 'undefined') {
                 newCandidateObj.office = results[i].elections[0].office_sought_full || '';
