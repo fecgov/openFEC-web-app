@@ -3,7 +3,6 @@ var webdriver = require('selenium-webdriver'),
     chai = require('chai'),
     assert = chai.assert,
     searchField,
-    mocks = require('../mocks/mocks.js'),
     driver = new webdriver.Builder()
     .usingServer(sauce)
     .withCapabilities({
@@ -21,9 +20,7 @@ driver.get('http://localhost:3000');
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
-}, 6000).then(function() {
-    mocks.init();
-});
+}, 6000);
 
 searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
 searchField.sendKeys('smith');
