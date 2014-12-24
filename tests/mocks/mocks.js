@@ -5,7 +5,7 @@ module.exports = {
     init: function() {
         $.mockjax({
             url: 'rest/committee?q=smith&per_page=5',
-            responseText: '{
+            responseText: {
                 "api_version": "0.2", 
                 "pagination": {
                     "count": 2, 
@@ -111,7 +111,7 @@ module.exports = {
                         }
                     }
                 ]
-            }'
+            }
         });
     }
 }
