@@ -25,7 +25,7 @@ var loadSingleEntity = function(entityType, id, res) {
         var data,
             context = {};
 
-        data = JSON.parse(body);
+        data = body;
         _.extend(context, entityBuildMethodMap[entityType](data.results));
         context[0].navShown = true;
         res.render(entityType + 's-single', context[0]);
