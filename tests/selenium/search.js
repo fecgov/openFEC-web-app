@@ -17,7 +17,7 @@ var webdriver = require('selenium-webdriver'),
     })
     .build();
  
-driver.get('http://localhost');
+driver.get('http://localhost:3000');
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
