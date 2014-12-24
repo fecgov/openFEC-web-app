@@ -16,7 +16,7 @@ var webdriver = require('selenium-webdriver'),
     })
     .build();
  
-driver.get('http://localhost:5000/committee');
+driver.get('http://localhost');
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
