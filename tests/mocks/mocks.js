@@ -1,8 +1,8 @@
-var $ = require('jquery'),
-    mockjax = require('jquery-mockjax');
-
 module.exports = {
     init: function() {
+        var $ = require('jquery'),
+            mockjax = require('jquery-mockjax');
+
         $.mockjax({
             url: 'rest/committee?q=smith&per_page=5',
             responseText: {
