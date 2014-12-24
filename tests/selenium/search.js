@@ -3,6 +3,7 @@ var webdriver = require('selenium-webdriver'),
     chai = require('chai'),
     assert = chai.assert,
     searchField,
+    mocks = require('../mocks/mocks.js').init(),
     driver = new webdriver.Builder()
     .usingServer(sauce)
     .withCapabilities({
