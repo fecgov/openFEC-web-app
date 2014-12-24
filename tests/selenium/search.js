@@ -17,7 +17,7 @@ var webdriver = require('selenium-webdriver'),
     })
     .build();
  
-driver.get('http://localhost?test=true');
+driver.get('http://localhost:3000?test=true');
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
@@ -25,6 +25,7 @@ driver.wait(function() {
 
 driver.executeScript(mocks.getCommitteeResults);
 driver.executeScript(mocks.getCandidateResults);
+driver.executeScript(mocks.getCommitteeRecords);
 
 searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
 searchField.sendKeys('smith');
@@ -50,17 +51,22 @@ driver.wait(function() {
 }, 2000);
 
 // click "view all" committees
-driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click().then(function() {
-    // make sure name filter is populated and active
-        driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
-            assert.equal(classes, 'field active');
-            console.log('1');
-        });
+driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click();
 
-        driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
-            assert.equal(text, 'smith');
-            console.log('2');
-        });
+// wait for candidate table to be shown
+driver.wait(function() {
+    return driver.findElement(webdriver.By.xpath('//*[@id="filters"]'));
+}, 2000);
+
+// make sure name filter is populated and active
+driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
+    assert.equal(classes, 'field active');
+    console.log('1');
+});
+
+driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
+    assert.equal(text, 'smith');
+    console.log('2');
 });
 
 driver.quit();
