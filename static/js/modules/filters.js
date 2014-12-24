@@ -63,7 +63,7 @@ var bindFilters = function(e) {
     });
 
     if (typeof e !== 'undefined' && typeof e.query !== 'undefined') {
-        $('#category-filters').find('input[name=name]').val(e.query).parent().addClass('active');
+        $('#category-filters').find('input[name=name]').val(e.query).parents('.field').addClass('active');
 
         selectedFilters['name'] = e.query;
     }

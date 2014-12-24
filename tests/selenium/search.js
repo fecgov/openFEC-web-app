@@ -28,18 +28,19 @@ driver.wait(function() {
 searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
 searchField.sendKeys('smith');
 
-driver.findElement(webdriver.By.css('#large-search input[type=submit]')).click();
+driver.findElement(webdriver.By.css('#large-search button#submit-search')).click();
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
 }, 4000);
 
+// results are visible
 driver.wait(function() {
-    return driver.findElement(webdriver.By.className('sub-section'));
+    return driver.findElement(webdriver.By.className('page-subsection'));
 }, 4000);
 
 driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
-    assert.equal(text, 'Search results: <span class="query">smith</span>');
+    assert.equal(text, 'Search results: <span class="text--query">smith</span>');
 });
 
 // make sure the nav in header became visisble
@@ -48,19 +49,17 @@ driver.wait(function() {
 }, 2000);
 
 // click "view all" committees
-driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/div[2]/div/a')).click().then(function() {
+driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click().then(function() {
     // make sure name filter is populated and active
-    driver.wait(function() {
         driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
             assert.equal(classes, 'field active');
+            console.log('1');
         });
-    }, 2000);
 
-    driver.wait(function() {
-        driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/input')).getAttribute('value').then(function(text) {
+        driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
             assert.equal(text, 'smith');
+            console.log('2');
         });
-    }, 2000);
 });
 
 driver.quit();
