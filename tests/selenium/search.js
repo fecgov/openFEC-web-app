@@ -2,6 +2,7 @@ var webdriver = require('selenium-webdriver'),
     sauce = 'http://ondemand.saucelabs.com:80/wd/hub',
     chai = require('chai'),
     assert = chai.assert,
+    mocks = require('../mocks/mocks.js'),
     searchField,
     driver = new webdriver.Builder()
     .usingServer(sauce)
@@ -16,11 +17,14 @@ var webdriver = require('selenium-webdriver'),
     })
     .build();
  
-driver.get('http://localhost:3000');
+driver.get('http://localhost?test=true');
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
 }, 6000);
+
+driver.executeScript(mocks.getCommitteeResults);
+driver.executeScript(mocks.getCandidateResults);
 
 searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
 searchField.sendKeys('smith');

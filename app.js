@@ -81,16 +81,17 @@ app.use('/views', express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/node_modules'));
 
 app.get('/', function(req, res, next) {
-    res.render('search');
+    if (req.query.test == 'true') {
+        // for selenium tests
+        res.render('search', {'mockjax': true});
+    }
+    else {
+        res.render('search');
+    }
 });
 
 app.get('/search', function(req, res, next) {
-    if (Object.keys(req.query).length === 0) {
-        res.render('search');
-    }
-    else {
-        res.redirect('/candidates?fields=*&q=' + req.query.search);
-    }
+    res.render('search');
 });
 
 app.get('/candidates', function(req, res, next) {
