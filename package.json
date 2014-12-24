@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "chai": "^1.10.0",
+    "jquery-mockjax": "^1.6.1",
     "selenium-webdriver": "^2.44.0",
     "watchify": "~2.0.0"
   },
