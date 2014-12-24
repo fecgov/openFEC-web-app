@@ -1,6 +1,5 @@
 @import "alerts";
 @import "browse-links";
-@import "data-table";
 @import "disclosure-box";
 @import "filters";
 @import "header";
@@ -10,3 +9,11 @@
 @import "progress-bar";
 @import "search-bar";
 @import "states";
+@import "entity";
+@import "page-tabs";
+@import "figures";
+@import "chosen-override";
+@import "dividers";
+
+// Remove for production
+@import "styleguide";

@@ -2,7 +2,6 @@ module.exports = {
     buildCandidateContext: function(results) {
         var candidates = [],
             i,
-            j,
             len,
             newCandidateObj;
 
@@ -12,17 +11,24 @@ module.exports = {
 
         for (i = 0; i < len; i++) {
             newCandidateObj = {
+                id: '',
                 name: '',
                 office: '',
                 election: '',
                 party: '',
                 state: '',
-                district: ''
+                district: '',
+                incumbent_challenge: '',
+                nameURL: ''
             };
+
+            newCandidateObj.id = results[i].candidate_id;
+            newCandidateObj.nameURL = '/candidates/' + newCandidateObj.id;
 
             if (typeof results[i].elections !== 'undefined') {
                 newCandidateObj.office = results[i].elections[0].office_sought_full || '';
                 newCandidateObj.party = results[i].elections[0].party_affiliation || '';
+                newCandidateObj.incumbent_challenge = results[i].elections[0].incumbent_challenge_full || '';
 
                 if (typeof results[i].elections[0].primary_committee !== 'undefined') {
                     newCandidateObj.election = results[i].elections[0].primary_committee.election_year || '';
@@ -37,7 +43,6 @@ module.exports = {
             }
 
             candidates.push(newCandidateObj);
-
         }
 
         return candidates;

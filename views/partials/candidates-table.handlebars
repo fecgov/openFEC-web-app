@@ -19,7 +19,7 @@
     </div><!--- .meta-box -->
 {{/if}}
 
-<table id="results">
+<table id="results" class="table--sortable">
     <thead>
         <tr>
             <th>Name</th>
@@ -33,7 +33,7 @@
     <tbody>
         {{#each candidates}}
             <tr>
-                <td class="flex-cell">{{name}}</td>
+                <td class="flex-cell"><a class="single-link" data-id="{{ id }}" data-category="candidate" href="{{nameURL}}">{{name}}</a></td>
                 <td>{{office}}</td>
                 <td>{{election}}</td>
                 <td>{{party}}</td>
@@ -55,10 +55,10 @@
         {{#if paginationLinks}}
             <div class="pagination">
                 {{#if prevURL}}
-                    <a href="{{prevURL}}" id="prev" class="pagination__link"><i class="ti-arrow-left"></i> Previous {{perPage}}</a>
+                    <a href="{{prevURL}}" id="prev" class="pagination__link link--icon"><i class="ti-arrow-left"></i> Previous {{perPage}}</a>
                 {{/if}}
                 {{#if nextURL}}
-                    <a href="{{nextURL}}" id="next" class="pagination__link">Next {{perPage}} <i class="ti-arrow-right"></i></a>
+                    <a href="{{nextURL}}" id="next" class="pagination__link link--icon">Next {{perPage}} <i class="ti-arrow-right"></i></a>
                 {{/if}}
             </div>
         {{/if}}
