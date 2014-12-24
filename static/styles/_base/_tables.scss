@@ -1,22 +1,140 @@
 table {
   border-collapse: collapse;
-  margin: ($base-line-height / 2) 0;
+  margin: 0;
   table-layout: fixed;
   width: 100%;
+  border: 1px solid $light-gray;
+  overflow-x: scroll; // scroll horizontally on smaller viewports
+}
+
+thead {
+  tr:hover {
+    background-color: #fff;
+  }
 }
 
 th {
-  border-bottom: 1px solid darken($base-border-color, 15%);
-  font-weight: bold;
-  padding: ($base-line-height / 2) 0;
+  padding: .5em;
+  border-right: 1px solid $light-gray;
+  border-bottom: 1px solid $light-gray;
   text-align: left;
-}
+  font-weight: normal;
 
-td {
-  border-bottom: 1px solid $base-border-color;
-  padding: ($base-line-height / 2) 0;
+  &:last-child {
+    border-right: none;
+  }
 }
 
 tr, td, th {
   vertical-align: middle;
+}
+
+tr {
+  @include font-size(1.4);
+  border: none;
+
+  &:nth-child(even) {
+    background-color: $lightest-gray;
+  }
+
+  &:hover {
+    background: rgba($blue, .1);
+  }
+}
+
+td {
+  padding: .5em;
+  border: none;
+}
+
+.flex-cell {
+  white-space: nowrap; // Prevents text-wrapping
+  width: 1%; // Setting this along with a fixed width on the table makes cells flexible
+}
+
+.sort-header {
+  @include transition(background-color .1s);
+  position: relative;
+  background-color: #fff;
+  color: $blue;
+  cursor: pointer;
+  border-bottom: 2px solid $blue;
+
+  &:hover {
+    background-color: $blue;
+    border-color: $blue;
+    color: #fff;
+
+    &:after {
+      color: #fff;
+    }
+  }
+
+  &:after {
+    position: absolute;
+    right: .5em;
+    bottom: .75em;
+  }
+
+  &.sort-up {
+    &:after {
+      @include icon();
+      content: "\e62a";
+    }
+  }
+
+  &.sort-down {
+    &:after {
+      @include icon();
+      content: "\e627";
+    }
+  }
+}
+
+// Simple two-column faux tables using divs
+
+.table__row {
+  @include clearfix();
+}
+
+.table__cell {
+  float: left;
+}
+
+.table__row--note {
+  width: 100%;
+  font-weight: normal;
+  display: block;
+}
+
+.table__row--total {
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+// If you're actually using table markup
+
+.table--simple {
+  border: none;
+  margin-top: .5em;
+
+  tr {
+    background: none;
+  }
+
+  th,
+  td {
+    padding: .5em 0;
+    border-right: none;
+  }
+
+  th {
+    font-weight: bold;
+    border-bottom: 1px solid $medium-gray;
+  }
+
+  td {
+    border-bottom: 1px solid $light-gray;
+  }
+
 }

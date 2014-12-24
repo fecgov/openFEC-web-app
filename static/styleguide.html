@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Open FEC Beta</title>
+  <link href="js/vendor/chosen/chosen.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../node_modules/nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" href="../node_modules/vex-js/css/vex-theme-default.css" />
+  <link rel="stylesheet" href="styles/themify-icons.css">
+  <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
+  <link href='https://fonts.googleapis.com/css?family=Raleway:300,400,600,700|Open+Sans:300,400,600,700|Source+Code+Pro:400' rel='stylesheet' type='text/css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body class="styleguide">
+  <header class="site-header">
+    <div class="container">
+      <h1>FEC Styleguide v1.0</h1>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <div class="styles">
+      <h1 class="styles__heading">Typography</h1>
+      <div class="chunk--half">
+        <h1>H1 Heading</h1>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+
+        <h2>H2 Heading</h2>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+
+        <h3>H3 Heading</h3>
+        <p class="text--lead">Lead Text: Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <h4>H4 Heading</h4>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <h5>H5 Heading</h5>
+        <p>Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <h6>H6 Heading</h6>
+      </div>
+      <div class="chunk--half">
+        <h2 class="styles__heading">Links</h2>
+        <a href="#">This is a regular link</a> | <a href="#" class="link--delete">Delete / cancel link</a> | <a href="#" class="link--learn">Learn more link &raquo;</a>
+        <h2 class="styles__heading">Figures, etc.</h2>
+        <p class="data--display">Data display</p>
+        <p class="data--label">Data label</p>
+        <p class="data--content">Data content</p>
+        <p class="data--note">Data note</p>
+        <p class="text--note">Note text Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Colors</h1>
+      <div class="clearfix">
+        <h3 class="styles__heading">Interaction colors</h3>
+        <div class="swatch color-primary">Primary</div>
+        <div class="swatch color-error">Error</div>
+        <div class="swatch color-activity">Activity</div>
+      </div>
+      <div class="clearfix">
+        <h3 class="styles__heading">Interaction colors</h3>
+        <div class="swatch color-support">Support</div>
+        <div class="swatch color-oppose">Oppose</div>
+        <div class="swatch color-receipt">Receipt</div>
+        <div class="swatch color-disbursement">Disbursement</div>
+        <div class="swatch color-cash">Cash</div>
+        <div class="swatch color-debt">Debt</div>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Icons &amp; Logo</h1>
+      <ul class="icon-list chunk--third">
+        <li><i class="ti-plus"></i> Expand</li>
+        <li><i class="ti-minus"></i> Collapse</li>
+        <li><i class="ti-check"></i> Add / Confirm</li>
+        <li><i class="ti-close"></i> Remove / Cancel</li>
+        <li><i class="ti-user"></i> Candidate</li>
+      </ul>
+      <ul class="icon-list chunk--third">
+        <li><i class="ti-star"></i> Committee</li>
+        <li><i class="ti-angle-down"></i> Drop-down menu</li>
+        <li><i class="ti-arrow-up"></i> Sort: low to high</li>
+        <li><i class="ti-arrow-down"></i> Sort: high to low</li>
+        <li><i class="ti-arrow-left"></i> Previous</li>
+      </ul>
+      <ul class="icon-list chunk--third">
+        <li><i class="ti-arrow-right"></i> Next</li>
+        <li><i class="ti-help"></i> Glossary</li>
+        <li><i class="ti-list"></i> List view</li>
+        <li><i class="ti-layout-grid2-alt"></i> Table view</li>
+        <li><i class="ti-bar-chart"></i> Graph view</li>
+      </ul>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Form</h1>
+      <form class="form chunk--two-thirds">
+        <legend>Form Legend</legend>
+        <fieldset>
+          <label for="sample-input">Text input</label>
+          <input type="text" id="sample-input" placeholder="Placeholder">
+          <label for="sample-add">Add filter</label>
+          <div class="input-button-combo add-filter">
+            <input type="text" name="name" />
+            <a class="add-filter__button"><i class="ti-check"></i></a>
+          </div>
+          <div class="form__group">
+            <label for="sample-checkbox"><input type="checkbox" id="sample-checkbox" checked> Checkbox</label>
+          </div>
+          <div class="form__group">
+            <label for="sample-radio"><input type="radio" name="3" id="sample-radio" checked> Radio</label>
+            <label for="sample-radio"><input type="radio" name="3" id="sample-radio2"> Radio</label>
+          </div>
+          <label for="sample-select">Select</label>
+          <select id="sample-select" class="chosen-select" data-placeholder="Select">
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>
+          <label for="sample-textarea">Text Area</label>
+          <textarea></textarea>
+          <input type="submit" value="Submit">
+        </fieldset>
+      </form>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Buttons</h1>
+      <a class="button primary" href="#">Primary button</a>
+      <a class="button" href="#">Secondary button</a>
+      <div class="button--group">
+        <a class="button" href="#">Button 1</a>
+        <a class="button button--selected" href="#">Button 2</a>
+        <a class="button" href="#">Button 3</a>
+      </div>
+      <div class="button--group">
+        <a class="button" href="#" title="List view"><i class="ti-list"></i></a>
+        <a class="button button--selected" href="#" title="Table view"><i class="ti-layout-grid2-alt"></i></a>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Dislcosures</h1>
+      <div class="filter-box">
+        <div class="filter-header-bar">
+          <div class="disclosure-title">
+            Disclosure
+          </div>
+          <button class="disclosure-toggle"></button>
+        </div>
+        <div class="filter-field-container">
+          <p>Maecenas faucibus mollis interdum. Curabitur blandit tempus porttitor. Aenean lacinia bibendum nulla sed consectetur.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Tables</h1>
+      <h2 class="styles__heading">Data Table</h2>
+      <table class="table--sortable">
+        <thead>
+          <tr>
+            <th class="sort-header">Column 1</th>
+            <th class="sort-header">Column 2</th>
+            <th class="sort-header">Column 3</th>
+            <th class="sort-header">Column 4</th>
+            <th class="sort-header">Column 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>B</td>
+            <td>B</td>
+            <td>B</td>
+            <td>B</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>C</td>
+            <td>C</td>
+            <td>C</td>
+            <td>C</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="styles__heading">Simple Table</h2>
+      <table class="table--simple">
+        <thead>
+          <tr>
+            <th>Simple table heading</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="styles__heading">(Faux) Finance Table</h2>
+      <div class="table finance-table">
+        <div class="table__row">
+          <div class="table__cell data--label">
+            Total receipts
+          </div>
+          <div class="table__cell data--content">
+            $1,000,000
+          </div>
+          <div class="table__cell data--link">
+            <a href="#">View all &raquo;</a>
+          </div>
+        </div>
+        <div class="table__row">
+          <div class="table__cell data--label">
+            Total disbursements
+          </div>
+          <div class="table__cell data-content">
+            $1,000,000
+          </div>
+          <div class="table__cell data--link">
+            <a href="#">View all &raquo;</a>
+          </div>
+        </div>
+        <div class="table__row--note data--note">
+          Totals last updated 11/11/14 at 11:00 AM
+        </div>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Widgets &amp; Callouts</h1>
+      <div class="meta-box">
+        <div id="results-count" class="results-count">
+          <p>Results: # records</p>
+          <p>Viewing: 0 - 0</p>
+        </div>
+        <div class="pagination">
+          <a href="{{prevURL}}" id="prev" class="pagination__link link--icon"><i class="ti-arrow-left"></i> Previous 0</a>
+          <a href="{{nextURL}}" id="next" class="pagination__link link--icon">Next 0 <i class="ti-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="styles">
+      <h1 class="styles__heading">Dividers</h1>
+      <h2 class="styles__heading">Primary divider</h2>
+      <hr class="divider--primary">
+      <h2 class="styles__heading">Secondary divider</h2>
+      <hr class="divider--secondary">
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+     Last updated 12/10/2014
+     </div>
+  </footer>
+
+  <script src="js/modules/tablist.js"></script>
+  <script src="js/vendor/retina.min.js"></script>
+  <script src="js/vendor/chosen/chosen.jquery.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+  jQuery(document).ready(function($){
+    $('.chosen-select').chosen({
+      width: "200px",
+      disable_search: true,
+    });
+  });
+  </script>
+</body>
+</html>

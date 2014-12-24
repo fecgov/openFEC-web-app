@@ -1,0 +1,9 @@
+.divider--primary {
+  @include primary-divider();
+  @include rem(padding, 2.0rem 0);
+}
+
+.divider--secondary {
+  @include secondary-divider();
+  @include rem(padding, 2.0rem 0);
+}

@@ -31,17 +31,29 @@ var bindPaginationLinks = function(e) {
 
 // Implementing tablesort
 var sortTable = function(e){
-  new tablesort(document.getElementById('results'));
+  $('.table--sortable').each(function(){
+    new tablesort(this);
+  });
+}
+
+var singleClickHandler = function(e) {
+  e.preventDefault();
+  var id = $(this).data('id');
+  var category = $(this).data('category');
+
+  events.emit('load:singleEntity', {
+    category: category + 's',
+    id: id
+  });
 }
 
 module.exports = {
     init: function() {
         events.on('bind:browse', bindPaginationLinks);
         events.on('bind:browse', sortTable);
+        $('#main').on('click', '.single-link', singleClickHandler);
 
         // if loaded on a page with a results table
         bindPaginationLinks();
-
-
     }
 };

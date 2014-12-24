@@ -17,17 +17,22 @@
 
   .search-bar {
     @include font-size(3.2);
-    height: 2em;
+    @include rem(height, 7rem);
 
     @include placeholder {
       font-weight: 300;
     }
   }
 
-  input[type="submit"] {
+  button {
     @include font-size(3.2);
+    @include rem(height, 7rem);
     padding: .5em;
     font-weight: 300;
+
+    i {
+      font-size: .75em;
+    }
   }
 }
 
