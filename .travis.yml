@@ -34,5 +34,4 @@ install:
     - npm run build
 script:
     - npm run test
-    - curl http://localhost/rest/committee?q=smith&per_page=5
     - node tests/selenium/search.js

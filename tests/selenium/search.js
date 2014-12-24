@@ -9,7 +9,7 @@ var webdriver = require('selenium-webdriver'),
         browserName: 'chrome',
         version: '',
         platform: 'OS X 10.10',
-        name: 'Browse candidates',
+        name: 'Search',
         username: process.env.SAUCE_USERNAME,
         accessKey: process.env.SAUCE_ACCESS_KEY,
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER
@@ -24,7 +24,7 @@ driver.wait(function() {
 
 searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
 searchField.sendKeys('smith');
-
+driver.wait(function(){}, 100000);
 driver.findElement(webdriver.By.css('#large-search input[type=submit]')).click();
 
 driver.wait(function() {
