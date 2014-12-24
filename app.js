@@ -19,13 +19,13 @@ var entityBuildMethodMap = {
 }
 
 var loadSingleEntity = function(entityType, id, res) {
-    var URL = 'http://localhost/rest/' + entityType + '/' + id + '?fields=*';
+    var URL = 'http://localhost/rest/' + entityType + '?' + entityType + '_id=' + id + '&fields=*';
 
     request(URL, function(err, response, body) {
         var data,
             context = {};
 
-        data = body;
+        data = JSON.parse(body);
         _.extend(context, entityBuildMethodMap[entityType](data.results));
         context[0].navShown = true;
         res.render(entityType + 's-single', context[0]);
