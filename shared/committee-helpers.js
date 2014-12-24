@@ -21,13 +21,15 @@ module.exports = {
                 party: '',
                 type: '',
                 designation: '',
-                organization: ''
+                organization: '',
+                nameURL: ''
             };
 
             committee = results[i];
             committee.status = results[i].status;
 
             newCommitteeObj.id = committee.committee_id || '';
+            newCommitteeObj.nameURL = '/committees/' + newCommitteeObj.id;
 
             if (typeof committee.status !== 'undefined') {
                 newCommitteeObj.type = committee.status.type_full || '';
