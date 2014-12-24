@@ -16,7 +16,7 @@ var webdriver = require('selenium-webdriver'),
     })
     .build();
  
-driver.get('http://localhost');
+driver.get('http://localhost:3000');
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
@@ -24,7 +24,7 @@ driver.wait(function() {
 
 searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
 searchField.sendKeys('smith');
-driver.wait(function(){}, 100000);
+
 driver.findElement(webdriver.By.css('#large-search input[type=submit]')).click();
 
 driver.wait(function() {
