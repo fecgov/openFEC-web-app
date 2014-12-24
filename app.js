@@ -19,7 +19,7 @@ var entityBuildMethodMap = {
 }
 
 var loadSingleEntity = function(entityType, id, res) {
-    var URL = 'http://localhost/rest/' + entityType + '?' + entityType + '_id=' + id + '&fields=*';
+    var URL = 'http://localhost:5000/' + entityType + '?' + entityType + '_id=' + id + '&fields=*';
 
     request(URL, function(err, response, body) {
         var data,
@@ -34,7 +34,7 @@ var loadSingleEntity = function(entityType, id, res) {
 
 var loadResultsView = function(entityType, req, res, next) {
     // TODO: make relative urls work
-    var URL = 'http://localhost/rest/' + entityType + '?',
+    var URL = 'http://localhost:5000/' + entityType + '?',
         filters = {};
     if (typeof req.query !== 'undefined') {
         for (param in req.query) {
