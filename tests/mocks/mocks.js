@@ -1,9 +1,9 @@
-var $ = require('jquery'),
+var jQuery = require('jquery'),
     mockjax = require('jquery-mockjax');
 
 module.exports = {
     init: function() {
-        $.mockjax({
+        jQuery.mockjax({
             url: 'rest/committee?q=smith&per_page=5',
             responseText: {
                 "api_version": "0.2", 
