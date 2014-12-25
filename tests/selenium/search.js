@@ -30,21 +30,17 @@ driver.executeScript(mocks.getCommitteeRecords);
 searchField = driver.findElement(webdriver.By.css('#large-search input[name=search]'));
 searchField.sendKeys('smith');
 
-driver.findElement(webdriver.By.css('#large-search button#submit-search')).click();
+driver.findElement(webdriver.By.css('#large-search button#submit-search')).click().then(function() {
+    // make sure progress bar shows up
+    return driver.findElement(webdriver.By.id('progress')).isDisplayed();
+});
 
-// make sure progress bar shows up
+// results are visible and header is correct
 driver.wait(function() {
-    return driver.findElement(webdriver.By.id('progress'));
-}, 10000);
-
-// results are visible
-driver.wait(function() {
-    return driver.findElement(webdriver.By.tagName('h2'));
-}, 40000);
-
-driver.wait(function() {
-    return driver.findElement(webdriver.By.tagName('h2'));
-}, 40000).then(function() {
+    return driver.findElement(webdriver.By.id('progress')).getAttribute('class').then(function(classes) {
+        return classes.indexOf('nprogress-custom-parent') === -1;
+    });
+}, 10000).then(function() {
     driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
         assert.equal(text, 'Search results: <span class="text--query">smith</span>');
     });
@@ -58,27 +54,20 @@ driver.wait(function() {
 // click "view all" committees
 driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click();
 
-// wait for candidate table to be shown
-driver.wait(function() {
-    return webdriver.By.id('filters');
-}, 10000);
-
 // make sure name filter is populated and active
 driver.wait(function() {
-    return driver.findElement(webdriver.By.id('name-field'));
-}, 40000);
-
-driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
-    assert.equal(classes, 'field active');
-    console.log('1');
+    return driver.findElement(webdriver.By.id('committees')).isDisplayed();
+}, 25000).then(function() {
+    driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
+        assert.equal(classes, 'field active');
+    });
 });
 
 driver.wait(function() {
-    return driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input'));
+    return driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).isDisplayed();
 }, 8000).then(function() {
     driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
         assert.equal(text, 'smith');
-        console.log('2');
     });
 });
 
