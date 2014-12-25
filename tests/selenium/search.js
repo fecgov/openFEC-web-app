@@ -60,7 +60,7 @@ driver.wait(function() {
 }, 10000);
 
 // make sure name filter is populated and active
-driver.findElement(webdriver.By.css('#category-filters div:first-child')).getAttribute('class').then(function(classes) {
+driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
     assert.equal(classes, 'field active');
     console.log('1');
 });
