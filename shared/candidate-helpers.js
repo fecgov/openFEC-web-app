@@ -29,10 +29,7 @@ module.exports = {
                 newCandidateObj.office = results[i].elections[0].office_sought_full || '';
                 newCandidateObj.party = results[i].elections[0].party_affiliation || '';
                 newCandidateObj.incumbent_challenge = results[i].elections[0].incumbent_challenge_full || '';
-
-                if (typeof results[i].elections[0].primary_committee !== 'undefined') {
-                    newCandidateObj.election = results[i].elections[0].primary_committee.election_year || '';
-                }
+                newCandidateObj.incumbent_challenge = results[i].elections[0].election_year || '';
 
                 newCandidateObj.state = results[i].elections[0].state || '';
                 newCandidateObj.district = results[i].elections[0].district || '';
