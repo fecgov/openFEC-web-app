@@ -38,7 +38,7 @@ driver.wait(function() {
 
 // results are visible
 driver.wait(function() {
-    return driver.findElement(webdriver.By.className('page-subsection'));
+    return driver.findElement(webdriver.By.id('committees'));
 }, 10000);
 
 driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
