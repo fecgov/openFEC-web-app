@@ -62,7 +62,7 @@ driver.wait(function() {
     // make sure name filter is populated and active
     driver.wait(function() {
         return driver.findElement(webdriver.By.id('name-field'));
-    }, 20000).then(function() {
+    }, 25000).then(function() {
         driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
             assert.equal(classes, 'field active');
             console.log('1');
