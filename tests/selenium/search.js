@@ -57,7 +57,7 @@ driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a'
 // wait for candidate table to be shown
 driver.wait(function() {
     return webdriver.By.id('filters');
-}, 10000)
+}, 10000).then(function() {
 
     // make sure name filter is populated and active
     driver.wait(function() {
