@@ -90,6 +90,9 @@ module.exports = {
                 e.results = {};
 
                 for (i = 0; i < len; i++) {
+                    if (typeof arguments[i][0] === 'string') {
+                        arguments[i][0] = JSON.parse(arguments[i][0]);
+                    }
                     e.results[entitiesArray[i]] = arguments[i][0].results;
                 }
 

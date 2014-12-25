@@ -21,7 +21,7 @@ var webdriver = require('selenium-webdriver'),
 
 verifyFirstPage = function() {
     // confirm record count exists and is correct
-    driver.findElement(webdriver.By.xpath('//*[@id="results-count"]/p[1]')).getInnerHtml().then(function(text) {
+    driver.findElement(webdriver.By.css('#results-count-first p:first-child')).getInnerHtml().then(function(text) {
         assert.equal(text, 'Results: 32 records');
     });
 
