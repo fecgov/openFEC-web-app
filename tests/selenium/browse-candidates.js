@@ -2,6 +2,7 @@ var webdriver = require('selenium-webdriver'),
     sauce = 'http://ondemand.saucelabs.com:80/wd/hub',
     chai = require('chai'),
     assert = chai.assert,
+    mocks = require('../mocks/mocks.js'),
     getResultsRows,
     verifyFirstPage,
     filterToggleButton,
@@ -20,8 +21,8 @@ var webdriver = require('selenium-webdriver'),
 
 verifyFirstPage = function() {
     // confirm record count exists and is correct
-    driver.findElement(webdriver.By.css('#results-count p:first-child')).getInnerHtml().then(function(text) {
-        assert.equal(text, 'Results: 22 records');
+    driver.findElement(webdriver.By.xpath('//*[@id="results-count"]/p[1]')).getInnerHtml().then(function(text) {
+        assert.equal(text, 'Results: 32 records');
     });
 
     // the table should have one row for each of 20 results + header row
@@ -55,10 +56,14 @@ verifyFirstPage = function() {
     });
 }; 
 
-driver.get('http://localhost');
+driver.get('http://localhost:3000?test=true');
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
 }, 4000);
+
+driver.executeScript(mocks.getCandidates);
+driver.executeScript(mocks.getCandidatesPage1);
+driver.executeScript(mocks.getCandidatesPage2);
 
 // click box under search bar that says 'candidates'
 driver.findElement(webdriver.By.css('.browse-links a[name=candidates]')).click();
@@ -77,9 +82,8 @@ driver.wait(function() {
 }, 2000);
 
 // the results count should update
-// TODO: this is a bug. should actually display 21 - 22
 driver.findElement(webdriver.By.css('#results-count p:last-child')).getInnerHtml().then(function(text) {
-    assert.equal(text, 'Viewing: 21 - 40');
+    assert.equal(text, 'Viewing: 21 - 32');
 });
 
 // prev link should have right text

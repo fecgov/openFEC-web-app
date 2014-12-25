@@ -11,6 +11,7 @@ var tables = require('./modules/tables.js');
 var progress = require('./modules/progress.js');
 var errors = require('./modules/errors.js');
 var router = require('./modules/router.js');
+var mocks = require('../../tests/mocks/mocks.js');
 
 api.init();
 search.init();
@@ -26,4 +27,11 @@ router.init();
 
 $(document).ready(function() {
     $('body').addClass('js-initialized');
+    mocks.getCommitteeResults();
+    mocks.getCandidates();
+    mocks.getCandidatesPage1();
+    mocks.getCandidatesPage2();
 });
+
+
+

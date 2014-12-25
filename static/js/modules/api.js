@@ -47,6 +47,10 @@ var filterLoadHandler = function(e) {
         promise = callAPI(url);
 
     promise.done(function(data) {
+        if (typeof data === 'string') {
+            data = JSON.parse(data);
+        }
+
         e.data = data;
         events.emit('render:browse', e);
     }).fail(function() {
@@ -57,6 +61,10 @@ var filterLoadHandler = function(e) {
 var loadSingleEntity = function(e) {
   var promise = callAPI(buildURL(e));
   promise.done(function(data) {
+    if (typeof data === 'string') {
+        data = JSON.parse(data);
+    }
+
     e.data = data;
     events.emit('render:singleEntity', e);
   }).fail(function() {
@@ -96,6 +104,11 @@ module.exports = {
             var promise = callAPI('/rest/' + entityMap[e.category] + '?fields=*');
 
             promise.done(function(data) {
+    if (typeof data === 'string') {
+        data = JSON.parse(data);
+    }
+
+
                 e.data = data;
                 events.emit('render:browse', e);
             }).fail(function() {
@@ -107,6 +120,10 @@ module.exports = {
             var promise = callAPI(buildURL(e));
 
             promise.done(function(data) {
+                if (typeof data === 'string') {
+                    data = JSON.parse(data);
+                }
+
                 e.data = data;
                 events.emit('render:searchResults', e);
             }).fail(function() {

@@ -79,6 +79,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/static'));
 app.use('/views', express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/node_modules'));
+app.use('/tests', express.static(__dirname + '/tests'));
 
 app.get('/', function(req, res, next) {
     if (req.query.test == 'true') {
