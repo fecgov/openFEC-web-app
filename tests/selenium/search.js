@@ -70,7 +70,6 @@ driver.wait(function() {
 
 driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
     assert.equal(classes, 'field active');
-    console.log('1');
 });
 
 driver.wait(function() {
@@ -78,7 +77,6 @@ driver.wait(function() {
 }, 8000).then(function() {
     driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
         assert.equal(text, 'smith');
-        console.log('2');
     });
 });
 
