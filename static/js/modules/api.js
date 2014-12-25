@@ -56,12 +56,7 @@ var filterLoadHandler = function(e) {
         promise = callAPI(url);
 
     promise.done(function(data) {
-        if (typeof data === 'string') {
-            data = JSON.parse(data);
-        }
-
-        e.data = data;
-        events.emit('render:browse', e);
+        promiseResolved(data, 'render:browse', e);
     }).fail(function() {
         events.emit('err:load:filters');
     });;
