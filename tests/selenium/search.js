@@ -35,14 +35,14 @@ driver.findElement(webdriver.By.css('#large-search button#submit-search')).click
 // make sure progress bar shows up
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
-}, 10000).then(function() {
-    // results are visible
-    driver.wait(function() {
-        return driver.findElement(webdriver.By.tagName('h2'));
-    }, 20000).then(function() {
-        driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
-            assert.equal(text, 'Search results: <span class="text--query">smith</span>');
-        });
+}, 10000);
+
+// results are visible
+driver.wait(function() {
+    return driver.findElement(webdriver.By.tagName('h2'));
+}, 20000).then(function() {
+    driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
+        assert.equal(text, 'Search results: <span class="text--query">smith</span>');
     });
 });
 
