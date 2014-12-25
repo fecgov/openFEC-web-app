@@ -40,7 +40,7 @@ driver.wait(function() {
 // results are visible
 driver.wait(function() {
     return driver.findElement(webdriver.By.tagName('h2'));
-}, 10000).then(function() {
+}, 20000).then(function() {
     driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
         assert.equal(text, 'Search results: <span class="text--query">smith</span>');
     });
@@ -61,7 +61,7 @@ driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a'
     // make sure name filter is populated and active
     driver.wait(function() {
         return driver.findElement(webdriver.By.id('name-field'));
-    }, 12000).then(function() {
+    }, 20000).then(function() {
         driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
             assert.equal(classes, 'field active');
             console.log('1');
