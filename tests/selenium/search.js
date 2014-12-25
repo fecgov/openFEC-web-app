@@ -57,12 +57,12 @@ driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a'
 // wait for candidate table to be shown
 driver.wait(function() {
     return webdriver.By.id('filters');
-}, 10000).then(function() {
+}, 10000)
 
     // make sure name filter is populated and active
     driver.wait(function() {
         return driver.findElement(webdriver.By.id('name-field'));
-    }, 25000).then(function() {
+    }, 40000).then(function() {
         driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
             assert.equal(classes, 'field active');
             console.log('1');
