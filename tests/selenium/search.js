@@ -40,7 +40,7 @@ driver.wait(function() {
 // results are visible
 driver.wait(function() {
     return driver.findElement(webdriver.By.tagName('h2'));
-}, 20000).then(function() {
+}, 40000).then(function() {
     driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
         assert.equal(text, 'Search results: <span class="text--query">smith</span>');
     });
