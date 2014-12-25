@@ -32,14 +32,17 @@ searchField.sendKeys('smith');
 
 driver.findElement(webdriver.By.css('#large-search button#submit-search')).click();
 
+// make sure progress bar shows up
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
 }, 8000);
 
 // results are visible
-driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
-    assert.equal(text, 'Search results: <span class="text--query">smith</span>');
-});
+driver.wait(function() {
+    driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
+        assert.equal(text, 'Search results: <span class="text--query">smith</span>');
+    });
+}, 8000);
 
 // make sure the nav in header became visisble
 driver.wait(function() {
