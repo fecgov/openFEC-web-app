@@ -39,10 +39,12 @@ driver.wait(function() {
 
 // results are visible
 driver.wait(function() {
-    driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
-        assert.equal(text, 'Search results: <span class="text--query">smith</span>');
-    });
-}, 8000);
+    return driver.findElement(webdriver.By.tagName('h2'));
+}, 4000);
+
+driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
+    assert.equal(text, 'Search results: <span class="text--query">smith</span>');
+});
 
 // make sure the nav in header became visisble
 driver.wait(function() {
@@ -58,7 +60,7 @@ driver.wait(function() {
 }, 10000);
 
 // make sure name filter is populated and active
-driver.findElement(webdriver.By.css('#category-filters div.field:first-child')).getAttribute('class').then(function(classes) {
+driver.findElement(webdriver.By.css('#category-filters div:first-child')).getAttribute('class').then(function(classes) {
     assert.equal(classes, 'field active');
     console.log('1');
 });
