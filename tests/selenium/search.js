@@ -42,8 +42,12 @@ driver.wait(function() {
     return driver.findElement(webdriver.By.tagName('h2'));
 }, 8000);
 
-driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
-    assert.equal(text, 'Search results: <span class="text--query">smith</span>');
+driver.wait(function() {
+    return driver.findElement(webdriver.By.tagName('h2'));
+}, 8000).then(function() {
+    driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
+        assert.equal(text, 'Search results: <span class="text--query">smith</span>');
+    });
 });
 
 // make sure the nav in header became visisble
