@@ -77,10 +77,10 @@ driver.findElement(webdriver.By.css('.browse-links a[name=candidates]')).click()
 // confirm progress bar exists
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
-}, 4000).then(function() {
+}, 4000)
+    .then(function() {
         verifyFirstPage();
     });
-});
 
 // pagination
 driver.findElement(webdriver.By.className('pagination__link')).click();
@@ -105,7 +105,6 @@ driver.findElement(webdriver.By.className('pagination__link')).click()
     .then(function() {
         verifyFirstPage();
     });
-});
 
 //open the state filter drop down
 driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[4]/div')).click()
