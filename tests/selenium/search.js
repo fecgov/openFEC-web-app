@@ -60,7 +60,7 @@ driver.wait(function() {
 }, 10000);
 
 // make sure name filter is populated and active
-driver.findElement(webdriver.By.css('.field.active')).findElement('label').getAttribute('name').then(function(labelName) {
+driver.findElement(webdriver.By.css('.field.active label')).getAttribute('name').then(function(labelName) {
     assert.equal(labelName, 'name');
     console.log('1');
 });
