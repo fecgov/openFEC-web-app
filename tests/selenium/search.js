@@ -52,29 +52,29 @@ driver.wait(function() {
 }, 2000);
 
 // click "view all" committees
-driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click();
+driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click().then(function() {
+    // wait for candidate table to be shown
+    driver.wait(function() {
+        return webdriver.By.id('filters');
+    }, 10000);
 
-// wait for candidate table to be shown
-driver.wait(function() {
-    return webdriver.By.id('filters');
-}, 10000);
-
-// make sure name filter is populated and active
-driver.wait(function() {
-    return driver.findElement(webdriver.By.id('name-field'));
-}, 8000).then(function() {
-    driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
-        assert.equal(classes, 'field active');
-        console.log('1');
+    // make sure name filter is populated and active
+    driver.wait(function() {
+        return driver.findElement(webdriver.By.id('name-field'));
+    }, 8000).then(function() {
+        driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
+            assert.equal(classes, 'field active');
+            console.log('1');
+        });
     });
-});
 
-driver.wait(function() {
-    return driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input'));
-}, 8000).then(function() {
-    driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
-        assert.equal(text, 'smith');
-        console.log('2');
+    driver.wait(function() {
+        return driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input'));
+    }, 8000).then(function() {
+        driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
+            assert.equal(text, 'smith');
+            console.log('2');
+        });
     });
 });
 
