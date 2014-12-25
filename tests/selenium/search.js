@@ -34,12 +34,12 @@ driver.findElement(webdriver.By.css('#large-search button#submit-search')).click
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
-}, 4000);
+}, 6000);
 
 // results are visible
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('page-subsection'));
-}, 4000);
+}, 6000);
 
 driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
     assert.equal(text, 'Search results: <span class="text--query">smith</span>');

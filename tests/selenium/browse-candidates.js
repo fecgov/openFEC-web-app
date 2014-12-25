@@ -35,7 +35,7 @@ driver.findElement(webdriver.By.css('.browse-links a[name=candidates]')).click()
 // confirm progress bar exists
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
-}, 2000).then(function() {
+}, 4000).then(function() {
     // confirm record count exists and is correct
     // this occurs twice and isn't made into a named function because selenium
     // seems to cache the found elements and on subsequent calls to the
@@ -81,7 +81,7 @@ driver.findElement(webdriver.By.className('pagination__link')).click();
 // confirm progress bar exists
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
-}, 2000);
+}, 4000);
 
 // the results count should update
 driver.findElement(webdriver.By.css('.results-count p:last-child')).getInnerHtml().then(function(text) {
