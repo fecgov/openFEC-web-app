@@ -40,7 +40,7 @@ driver.wait(function() {
     // this occurs twice and isn't made into a named function because selenium
     // seems to cache the found elements and on subsequent calls to the
     // function, throws an "Element is no longer attached to the DOM"
-    driver.findElement(webdriver.By.xpath('//*[@class="results-count"]/p[1]')).getInnerHtml().then(function(text) {
+    driver.findElement(webdriver.By.xpath('//*[@id="results-count-first"]/p[1]')).getInnerHtml().then(function(text) {
         assert.equal(text, 'Results: 32 records');
     });
 
@@ -100,7 +100,7 @@ driver.findElement(webdriver.By.className('pagination__link')).click()
         // this occurs twice and isn't made into a named function because selenium
         // seems to cache the found elements and on subsequent calls to the
         // function, throws an "Element is no longer attached to the DOM"
-        driver.findElement(webdriver.By.css('#results-count p:first-child')).getInnerHtml().then(function(text) {
+        driver.findElement(webdriver.By.css('#results-count-first p:first-child')).getInnerHtml().then(function(text) {
             assert.equal(text, 'Results: 32 records');
         });
 
