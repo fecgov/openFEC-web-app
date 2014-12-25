@@ -13,30 +13,31 @@ module.exports = {
         });
     },
 
+    // * are treated as wildcards in strings
     getCommitteeRecords: function() {
         return $.mockjax({
-            url: 'rest/committee?q=smith&fields=*',
+            url: /^rest\/committee?q=smith&fields=*/,
             proxy: '/tests/mocks/json/committee-records.json'
         });
     },
 
     getCandidates: function() {
         return $.mockjax({
-            url: 'rest/candidate?fields=*',
+            url: /^rest\/candidate?fields=*/,
             proxy: '/tests/mocks/json/candidates.json'
         });
     },
 
     getCandidatesPage1: function() {
         return $.mockjax({
-            url: 'rest/candidate?fields=*&page=1&',
+            url: /^rest\/candidate?fields=*&page=1&/,
             proxy: '/tests/mocks/json/candidates.json'
         });
     },
 
     getCandidatesPage2: function() {
         return $.mockjax({
-            url: 'rest/candidate?fields=*&page=2&',
+            url: /^rest\/candidate?fields=*&page=2&/,
             proxy: '/tests/mocks/json/candidates-page2.json'
         });
     }
