@@ -57,17 +57,17 @@ driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a'
 // wait for candidate table to be shown
 driver.wait(function() {
     return webdriver.By.id('filters');
-}, 10000).then(function() {
-    // make sure name filter is populated and active
-    driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
-        assert.equal(classes, 'field active');
-        console.log('1');
-    });
+}, 10000);
 
-    driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
-        assert.equal(text, 'smith');
-        console.log('2');
-    });
+// make sure name filter is populated and active
+driver.findElement(webdriver.By.css('.field.active')).findElement('label').getAttribute('name').then(function(labelName) {
+    assert.equal(labelName, 'name');
+    console.log('1');
+});
+
+driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]/div/input')).getAttribute('value').then(function(text) {
+    assert.equal(text, 'smith');
+    console.log('2');
 });
 
 driver.quit();
