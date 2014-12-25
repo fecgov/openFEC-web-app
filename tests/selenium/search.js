@@ -37,10 +37,6 @@ driver.wait(function() {
 }, 8000);
 
 // results are visible
-driver.wait(function() {
-    return driver.findElement(webdriver.By.id('committees'));
-}, 10000);
-
 driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
     assert.equal(text, 'Search results: <span class="text--query">smith</span>');
 });
