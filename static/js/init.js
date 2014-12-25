@@ -11,7 +11,7 @@ var tables = require('./modules/tables.js');
 var progress = require('./modules/progress.js');
 var errors = require('./modules/errors.js');
 var router = require('./modules/router.js');
-//var mocks = require('../../tests/mocks/mocks.js');
+var mocks = require('../../tests/mocks/mocks.js');
 
 api.init();
 search.init();
@@ -33,6 +33,10 @@ $(document).ready(function() {
     //mocks.getCandidates();
     //mocks.getCandidatesPage1();
     //mocks.getCandidatesPage2();
+    mocks.getCommittees();
+    mocks.getCommitteesPage1();
+    mocks.getCommitteesPage2();
+    mocks.getCommitteesHouse();
 });
 
 
