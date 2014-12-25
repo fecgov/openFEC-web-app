@@ -42,6 +42,15 @@ var buildURL = function(e) {
     return URL;
 };
 
+var promiseResolved = function(data, eventName, e) {
+    if (typeof data === 'string') {
+        data = JSON.parse(data);
+    }
+
+    e.data = data;
+    events.emit(eventName, e);
+}
+
 var filterLoadHandler = function(e) {
     var url = buildURL(e),
         promise = callAPI(url);
@@ -61,12 +70,7 @@ var filterLoadHandler = function(e) {
 var loadSingleEntity = function(e) {
   var promise = callAPI(buildURL(e));
   promise.done(function(data) {
-    if (typeof data === 'string') {
-        data = JSON.parse(data);
-    }
-
-    e.data = data;
-    events.emit('render:singleEntity', e);
+    promiseResolved(data, 'render:singleEntity', e);
   }).fail(function() {
     events.emit('err:load:singleEntity');
   })
@@ -104,13 +108,7 @@ module.exports = {
             var promise = callAPI('/rest/' + entityMap[e.category] + '?fields=*');
 
             promise.done(function(data) {
-    if (typeof data === 'string') {
-        data = JSON.parse(data);
-    }
-
-
-                e.data = data;
-                events.emit('render:browse', e);
+                promiseResolved(data, 'render:browse', e);
             }).fail(function() {
                 events.emit('err:load:browse');
             });
@@ -120,12 +118,7 @@ module.exports = {
             var promise = callAPI(buildURL(e));
 
             promise.done(function(data) {
-                if (typeof data === 'string') {
-                    data = JSON.parse(data);
-                }
-
-                e.data = data;
-                events.emit('render:searchResults', e);
+                promiseResolved(data, 'render:searchResults', e);
             }).fail(function() {
                 events.emit('err:load:searchResults');
             });;
