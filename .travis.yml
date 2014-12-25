@@ -15,3 +15,4 @@ script:
     - npm run test
     - node tests/selenium/search.js
     - node tests/selenium/browse-candidates.js
+    - node tests/selenium/browse-committees.js
