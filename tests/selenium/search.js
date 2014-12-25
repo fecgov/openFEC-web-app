@@ -51,12 +51,11 @@ driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a'
 
 // wait for candidate table to be shown
 driver.wait(function() {
-    driver.executeScript(alert('hi'));
-    return webdriver.By.xpath('//*[@id="category-filters"]/div[1]');
-}, 8000);
+    return webdriver.By.id('filters');
+}, 10000);
 
 // make sure name filter is populated and active
-driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
+driver.findElement(webdriver.By.css('#category-filters div.field:first-child')).getAttribute('class').then(function(classes) {
     assert.equal(classes, 'field active');
     console.log('1');
 });
