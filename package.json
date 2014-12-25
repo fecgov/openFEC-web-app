@@ -26,7 +26,7 @@
     "watchify": "~2.0.0"
   },
   "scripts": {
-    "test": "mocha tests/unit",
+    "test": "mocha --reporter nyan tests/unit",
     "watch": "watchify static/js/init.js -o static/js/app.js --debug --verbose",
     "build": "browserify static/js/init.js > static/js/app.js",
     "sass-watch": "sass --watch static/styles/:static/styles/",
