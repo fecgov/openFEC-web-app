@@ -35,7 +35,7 @@ driver.findElement(webdriver.By.css('#large-search button#submit-search')).click
 // make sure progress bar shows up
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
-}, 8000).then(function() {
+}, 10000).then(function() {
     // results are visible
     driver.wait(function() {
         return driver.findElement(webdriver.By.tagName('h2'));
@@ -52,11 +52,12 @@ driver.wait(function() {
 }, 2000);
 
 // click "view all" committees
-driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click().then(function() {
-    // wait for candidate table to be shown
-    driver.wait(function() {
-        return webdriver.By.id('filters');
-    }, 10000);
+driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click();
+
+// wait for candidate table to be shown
+driver.wait(function() {
+    return webdriver.By.id('filters');
+}, 10000).then(function() {
 
     // make sure name filter is populated and active
     driver.wait(function() {
