@@ -30,7 +30,8 @@ var buildURL = function(e) {
     }
 
     for (field in e.filters) {
-        if (e.filters.hasOwnProperty(field)) {
+        // 'test' is for Selenium tests and shouldn't carry through
+        if (e.filters.hasOwnProperty(field) && field !== 'test') {
             URL += field + '=' + e.filters[field] + '&'
         }
     }

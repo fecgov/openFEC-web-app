@@ -23,7 +23,7 @@ module.exports = {
 
     getCandidates: function() {
         return $.mockjax({
-            url: /^\/rest\/candidate\?fields=\*$/,
+            url: /^\/rest\/candidate\?fields=\*&*$/,
             proxy: '/tests/mocks/json/candidates.json'
         });
     },
@@ -40,5 +40,13 @@ module.exports = {
             url: /^\/rest\/candidate\?fields=\*&page=2&$/,
             proxy: '/tests/mocks/json/candidates-page2.json'
         });
+    },
+
+    getCandidatesIndiana: function() {
+        return $.mockjax({
+            url: /^\/rest\/candidate\?state=IN&fields=\*$/,
+            proxy: '/tests/mocks/json/candidates-indiana.json'
+        });
     }
+
 }

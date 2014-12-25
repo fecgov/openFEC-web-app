@@ -19,9 +19,28 @@ var webdriver = require('selenium-webdriver'),
     })
     .build();
 
-verifyFirstPage = function() {
+driver.get('http://localhost:3000?test=true');
+driver.wait(function() {
+    return driver.findElement(webdriver.By.className('js-initialized'));
+}, 4000);
+
+driver.executeScript(mocks.getCandidates);
+driver.executeScript(mocks.getCandidatesPage1);
+driver.executeScript(mocks.getCandidatesPage2);
+driver.executeScript(mocks.getCandidatesIndiana);
+
+// click box under search bar that says 'candidates'
+driver.findElement(webdriver.By.css('.browse-links a[name=candidates]')).click();
+
+// confirm progress bar exists
+driver.wait(function() {
+    return driver.findElement(webdriver.By.id('progress'));
+}, 2000).then(function() {
     // confirm record count exists and is correct
-    driver.findElement(webdriver.By.css('#results-count-first p:first-child')).getInnerHtml().then(function(text) {
+    // this occurs twice and isn't made into a named function because selenium
+    // seems to cache the found elements and on subsequent calls to the
+    // function, throws an "Element is no longer attached to the DOM"
+    driver.findElement(webdriver.By.xpath('//*[@class="results-count"]/p[1]')).getInnerHtml().then(function(text) {
         assert.equal(text, 'Results: 32 records');
     });
 
@@ -54,24 +73,7 @@ verifyFirstPage = function() {
             });
         });
     });
-}; 
-
-driver.get('http://localhost:3000?test=true');
-driver.wait(function() {
-    return driver.findElement(webdriver.By.className('js-initialized'));
-}, 4000);
-
-driver.executeScript(mocks.getCandidates);
-driver.executeScript(mocks.getCandidatesPage1);
-driver.executeScript(mocks.getCandidatesPage2);
-
-// click box under search bar that says 'candidates'
-driver.findElement(webdriver.By.css('.browse-links a[name=candidates]')).click();
-
-// confirm progress bar exists
-driver.wait(function() {
-    return driver.findElement(webdriver.By.id('progress'));
-}, 2000).then(verifyFirstPage);
+});
 
 // pagination
 driver.findElement(webdriver.By.className('pagination__link')).click();
@@ -82,7 +84,7 @@ driver.wait(function() {
 }, 2000);
 
 // the results count should update
-driver.findElement(webdriver.By.css('#results-count p:last-child')).getInnerHtml().then(function(text) {
+driver.findElement(webdriver.By.css('.results-count p:last-child')).getInnerHtml().then(function(text) {
     assert.equal(text, 'Viewing: 21 - 32');
 });
 
@@ -93,7 +95,46 @@ driver.findElement(webdriver.By.className('pagination__link')).getInnerHtml().th
 
 // click prev link
 driver.findElement(webdriver.By.className('pagination__link')).click()
-    .then(verifyFirstPage);
+    .then(function() {
+        // confirm record count exists and is correct
+        // this occurs twice and isn't made into a named function because selenium
+        // seems to cache the found elements and on subsequent calls to the
+        // function, throws an "Element is no longer attached to the DOM"
+        driver.findElement(webdriver.By.css('#results-count-first p:first-child')).getInnerHtml().then(function(text) {
+            assert.equal(text, 'Results: 32 records');
+        });
+
+        // the table should have one row for each of 20 results + header row
+        // webdriver.By.css doesn't return what I'd expect, so using qSA instead
+        getResultsRows = function() {
+            return document.querySelectorAll('table tr').length;
+        };
+
+        driver.executeScript(getResultsRows).then(function(rows) {
+            assert.equal(rows, 21);
+        });
+
+        // the right data should be output
+        driver.findElements(webdriver.By.css('#results tr:first-child td')).then(function(cols) {
+            var firstRow = [
+                'DODDS, PHILIP',
+                'House',
+                '2012',
+                'Invalid Party Code',
+                'FL',
+                '03'
+            ],
+            i = 0;
+
+            cols.forEach(function(col) {
+                col.getText().then(function(text) {
+                    assert.equal(text, firstRow[i]);
+                    i++;
+                });
+            });
+        });
+});
+
 //open the state filter drop down
 driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[4]/div')).click()
     .then(function() {
