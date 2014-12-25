@@ -51,6 +51,7 @@ driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a'
 
 // wait for candidate table to be shown
 driver.wait(function() {
+    driver.executeScript(alert('hi'));
     return webdriver.By.xpath('//*[@id="category-filters"]/div[1]');
 }, 8000);
 
