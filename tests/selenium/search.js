@@ -21,7 +21,7 @@ driver.get('http://localhost:3000?test=true');
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('js-initialized'));
-}, 6000);
+}, 8000);
 
 driver.executeScript(mocks.getCommitteeResults);
 driver.executeScript(mocks.getCandidateResults);
@@ -34,12 +34,12 @@ driver.findElement(webdriver.By.css('#large-search button#submit-search')).click
 
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress'));
-}, 6000);
+}, 8000);
 
 // results are visible
 driver.wait(function() {
     return driver.findElement(webdriver.By.className('page-subsection'));
-}, 6000);
+}, 8000);
 
 driver.findElement(webdriver.By.tagName('h2')).getInnerHtml().then(function(text) {
     assert.equal(text, 'Search results: <span class="text--query">smith</span>');
@@ -56,7 +56,7 @@ driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a'
 // wait for candidate table to be shown
 driver.wait(function() {
     return driver.findElement(webdriver.By.xpath('//*[@id="filters"]'));
-}, 6000);
+}, 8000);
 
 // make sure name filter is populated and active
 driver.findElement(webdriver.By.xpath('//*[@id="category-filters"]/div[1]')).getAttribute('class').then(function(classes) {
