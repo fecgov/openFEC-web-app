@@ -57,7 +57,7 @@ driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a'
     return driver.findElement(webdriver.By.id('progress')).isDisplayed();
 });
 
-// results are visible and header is correct
+// results are visible and name field is active
 driver.wait(function() {
     return driver.findElement(webdriver.By.id('progress')).getAttribute('class').then(function(classes) {
         return classes.indexOf('nprogress-custom-parent') === -1;
