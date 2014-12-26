@@ -52,10 +52,7 @@ driver.wait(function() {
 }, 2000);
 
 // click "view all" committees
-driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click();
-
-// make sure name filter is populated and active
-driver.findElement(webdriver.By.css('#large-search button#submit-search')).click().then(function() {
+driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click().then(function() {
     // make sure progress bar shows up
     return driver.findElement(webdriver.By.id('progress')).isDisplayed();
 });
