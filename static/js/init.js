@@ -27,6 +27,12 @@ router.init();
 
 $(document).ready(function() {
     $('body').addClass('js-initialized');
+
+    // I'm leaving these comments in place because they are useful in 
+    // writing/debugging tests off of a local environment and it gets 
+    // stripped out when Browserify condenses the JS into a 
+    // production version. [TS]
+
     //mocks.getCommitteeResults();
     //mocks.getCandidateResults();
     //mocks.getCommitteeRecords();
