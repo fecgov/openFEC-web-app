@@ -55,9 +55,17 @@ driver.wait(function() {
 driver.findElement(webdriver.By.xpath('//*[@id="main"]/div/section/div[2]/div/a')).click();
 
 // make sure name filter is populated and active
+driver.findElement(webdriver.By.css('#large-search button#submit-search')).click().then(function() {
+    // make sure progress bar shows up
+    return driver.findElement(webdriver.By.id('progress')).isDisplayed();
+});
+
+// results are visible and header is correct
 driver.wait(function() {
-    return driver.findElement(webdriver.By.id('committees'));
-}, 100000).then(function() {
+    return driver.findElement(webdriver.By.id('progress')).getAttribute('class').then(function(classes) {
+        return classes.indexOf('nprogress-custom-parent') === -1;
+    });
+}, 10000).then(function() {
     driver.findElement(webdriver.By.id('name-field')).getAttribute('class').then(function(classes) {
         assert.equal(classes, 'field active');
     });
