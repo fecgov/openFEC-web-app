@@ -66,14 +66,14 @@ var condenseResults = function(args, e) {
         }
 
         if (_.isEmpty(results)) {
-            results = args[i][0].results;
+            results = args[i].results[0];
         }
         else {
-            results = _.extend(results, args[i][0].results);
+            results = _.extend(results, args[i].results[0]);
         }
     }
 
-    e.data.results = results;
+    e.data.results.push(results);
 
     return e;
 }
@@ -90,17 +90,20 @@ var filterLoadHandler = function(e) {
 };
 
 var loadSingleEntity = function(e) {
-  var promises = [];
+    var candidatePromise = callAPI(buildURL(e));
 
-  promises.push(callAPI(buildURL(e)));
-  promises.push(callAPI('rest/total/' + e.id));
+    candidatePromise.done(function(data) {
+        var totalsPromise = callAPI('rest/total/' + data.results[0].elections[0].affiliated_committees[0].committee_id);
 
-  $.when.apply($, promises).done(function() {
-    e = condenseResults(arguments, e);
-    events.emit('render:singleEntity', e);
-  }).fail(function() {
-    events.emit('err:load:singleEntity');
-  })
+        totalsPromise.done(function(totals) {
+            e = condenseResults([data, totals], e);
+            events.emit('render:singleEntity', e);
+        }).fail(function() {
+            events.emit('err:load:singleEntity');
+        });
+    }).fail(function() {
+        events.emit('err:load:singleEntity');
+    });
 }
 
 var loadSearchResultsList = function(e) {

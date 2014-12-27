@@ -39,6 +39,15 @@ module.exports = {
                 newCandidateObj.name = results[i].name.full_name || '';
             }
 
+            if (typeof results[i].totals !== 'undefined') {
+                // this data isn't from the source it should be from
+                // to be improved [ts]
+                newCandidateObj.total_receipts = results[i].totals[0].receipts || 'unavailable';
+                newCandidateObj.total_disbursements = results[i].totals[0].total_disbursements || 'unavailable';
+                newCandidateObj.total_cash = results[i].totals[0].total_contributions || 'unavailable';
+                newCandidateObj.total_debt = results[i].totals[0].total_disbursements || 'unavailable';
+            }
+
             candidates.push(newCandidateObj);
         }
 

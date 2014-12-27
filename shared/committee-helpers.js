@@ -49,7 +49,7 @@ module.exports = {
                 newCommitteeObj.name = committee.description.name || '';
                 newCommitteeObj.organization = committee.description.organization_type_full || '';
             }
-
+debugger;
             committees.push(newCommitteeObj);
         }
 
