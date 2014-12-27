@@ -88,7 +88,7 @@ var renderSearchResultsList = function(e) {
             tmplName = categories[i - 1] + 's-table';
             category = categories[i - 1] + 's';
             templates[tmplName] = Handlebars.registerPartial(tmplName, arguments[i][0]);
-            context[category] = mapFields(category, e.results[categories[i - 1]]);
+            context[category] = mapFields(category, e.data.results[categories[i - 1]]);
         }
 
         context.query = e.query;
@@ -122,7 +122,6 @@ var renderSingleEntity = function(e) {
     $('#main').html(templates[tmpl1](context[0]));
   });
 };
-
 
 var mapFields = function(category, results) {
     switch (category) {
