@@ -1,3 +1,21 @@
+var _ = require('underscore');
+
+var buildTotalsSummaryContext = function(results) {
+    var totals = {},
+        totalReceipts = results.totals[0].total_receipts,
+        totalDisbursements = results.totals[0].total_disbursements,
+        totalCash = results.reports[0].cash_on_hand_end_period,
+        totalDebt = results.reports[0].debts_owed_by_committee;
+
+    // a total can be 0, which returns false, giving incorrect "unavailable"s if we don't do it this way [ts]
+    totals.total_receipts = typeof totalReceipts !== 'undefined'? '$' + totalReceipts : 'unavailable';
+    totals.total_disbursements = typeof totalDisbursements !== 'undefined' ? '$' + totalDisbursements : 'unavailable';
+    totals.total_cash = typeof totalCash !== 'undefined' ? '$' + totalCash : 'unavailable';
+    totals.total_debt = typeof totalDebt !== 'undefined' ? '$' + totalDebt : 'unavailable';
+
+    return totals;
+}
+
 module.exports = {
     buildCandidateContext: function(results) {
         var candidates = [],
@@ -40,12 +58,7 @@ module.exports = {
             }
 
             if (typeof results[i].totals !== 'undefined') {
-                // this data isn't from the source it should be from
-                // to be improved [ts]
-                newCandidateObj.total_receipts = results[i].totals[0].receipts || 'unavailable';
-                newCandidateObj.total_disbursements = results[i].totals[0].total_disbursements || 'unavailable';
-                newCandidateObj.total_cash = results[i].totals[0].total_contributions || 'unavailable';
-                newCandidateObj.total_debt = results[i].totals[0].total_disbursements || 'unavailable';
+                newCandidateObj = _.extend(newCandidateObj, buildTotalsSummaryContext(results[i]));
             }
 
             candidates.push(newCandidateObj);
