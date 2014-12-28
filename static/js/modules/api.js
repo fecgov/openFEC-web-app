@@ -90,6 +90,15 @@ var filterLoadHandler = function(e) {
 };
 
 var loadSingleEntity = function(e) {
+    if (e.category === 'candidate') {
+        loadCandidate(e);
+    }
+    else {
+        loadCommittee(e);
+    }
+}
+
+var loadCandidate = function(e) {
     var candidatePromise = callAPI(buildURL(e));
 
     candidatePromise.done(function(data) {
@@ -107,6 +116,15 @@ var loadSingleEntity = function(e) {
     }).fail(function() {
         events.emit('err:load:singleEntity');
     });
+}
+
+var loadCommittee = function(e) {
+  var promise = callAPI(buildURL(e));
+  promise.done(function(data) {
+    promiseResolved(data, 'render:singleEntity', e);
+  }).fail(function() {
+    events.emit('err:load:singleEntity');
+  });
 }
 
 var loadSearchResultsList = function(e) {
