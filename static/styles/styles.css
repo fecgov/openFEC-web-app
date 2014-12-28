@@ -370,10 +370,9 @@ td {
 .table__cell {
   padding: 0 10px;
   padding: 0 1rem;
-  width: 80%;
   float: left; }
   .table__cell:last-child {
-    width: 20%; }
+    float: right; }
 
 .table__row--note {
   font-size: 14px;

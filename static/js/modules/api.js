@@ -93,10 +93,13 @@ var loadSingleEntity = function(e) {
     var candidatePromise = callAPI(buildURL(e));
 
     candidatePromise.done(function(data) {
-        var totalsPromise = callAPI('rest/total/' + data.results[0].elections[0].affiliated_committees[0].committee_id);
+        var totalsPromises = [],
+            cycle = data.results[0].elections[0].election_year;
 
-        totalsPromise.done(function(totals) {
-            e = condenseResults([data, totals], e);
+        totalsPromises.push(callAPI('/rest/total/' + data.results[0].elections[0].primary_committee.committee_id + '?election_cycle=' + cycle));
+// data.results[0].elections[0].affiliated_committees[0].committee_id
+        $.when.apply($, totalsPromises).done(function() {
+            e = condenseResults([data, arguments[0]], e);
             events.emit('render:singleEntity', e);
         }).fail(function() {
             events.emit('err:load:singleEntity');
