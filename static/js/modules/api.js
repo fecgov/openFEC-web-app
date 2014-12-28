@@ -106,7 +106,6 @@ var loadCandidate = function(e) {
             cycle = data.results[0].elections[0].election_year;
 
         totalsPromises.push(callAPI('/rest/total/' + data.results[0].elections[0].primary_committee.committee_id + '?election_cycle=' + cycle));
-// data.results[0].elections[0].affiliated_committees[0].committee_id
         $.when.apply($, totalsPromises).done(function() {
             e = condenseResults([data, arguments[0]], e);
             events.emit('render:singleEntity', e);
