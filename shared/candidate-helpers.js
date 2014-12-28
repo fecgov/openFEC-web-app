@@ -1,5 +1,4 @@
 var _ = require('underscore');
-var committeeHelpers = require('./committee-helpers.js');
 
 var buildTotalsSummaryContext = function(results) {
     var totals = {},
