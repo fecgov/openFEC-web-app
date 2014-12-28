@@ -108,7 +108,6 @@ var renderLandingView = function() {
         templates['landing'] = Handlebars.compile(tmpl1[0]);
         templates['search-bar'] = Handlebars.registerPartial('search-bar', tmpl2[0]);
         $('#main').html(templates['landing']());
-        events.emit('bind:singleEntity');
     });
 };
 
@@ -120,6 +119,7 @@ var renderSingleEntity = function(e) {
     context = mapFields(e.category, e.data.results);
     templates[tmpl1] = Handlebars.compile(tmpl1);
     $('#main').html(templates[tmpl1](context[0]));
+    events.emit('bind:singleEntity');
   });
 };
 

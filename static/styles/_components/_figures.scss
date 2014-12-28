@@ -9,38 +9,35 @@ figure {
 
 // Contained in a subsection, this is a group of figures (i.e. for a committee)
 .figure-group {
-  @extend .page-sub-subsection;
-  
-  h5 {
-    margin-bottom: .5em;
-  }
+  @include clearfix();
+  clear: both;
+  background-color: $lightest-gray;
+  border: 1px solid $light-gray;
+  position: relative;
+}
 
-  .table--simple h5 {
-    margin-bottom: 0;
-  }
+.figure-group__header {
+  @include clearfix();
+  @include rem(padding, 2rem 2rem);
+  border-bottom: 1px solid $light-gray;
+}
+
+.figure-group__title {
+  margin: 0;
 }
 
 .figure-group__description {
-  margin-bottom: 2em;
+  @include font-size(1.2);
+  background-color: $dark-gray;
+  color: $lightest-gray;
+}
+
+.figure-group__inner {
+  @include rem(padding, 2rem 2rem);
 }
 
 .figure-group__graphic {
   @include span-columns(16);
-}
-
-.figure-group__summary {
-  @include span-columns(8);
-  margin-bottom: 0;
-
-  .table__cell {
-    &:first-of-type {
-      width: 80%;
-    }
-
-    &:last-of-type {
-      width: 20%;
-    }
-  }
 }
 
 .figure-group__controls {
@@ -59,6 +56,10 @@ figure {
   }
 }
 
+.figure__title {
+  border-bottom: 1px solid $medium-gray;
+}
+
 // Finance tables like the Key Numbers tables on committee pages
 
 .finance-table {
@@ -66,21 +67,7 @@ figure {
     @include secondary-divider();
     padding: 1em 0;
   }
-
-  .table__cell {
-    &:nth-child(1) {
-      width: 45%;
-    }
-
-    &:nth-child(2) {
-      width: 25%;
-    }
-
-    &:nth-child(3) {
-      width: 30%;
-    }
-  }
-
+  
   .table__row--note {
     padding-top: 1em;
   }
