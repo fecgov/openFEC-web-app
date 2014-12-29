@@ -1,25 +1,36 @@
 'use strict';
 
 var events = require('./events.js');
+var queryString = require('querystring');
 
 // http://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript/196991#196991
 var toTitleCase = function(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
-var activateFilter = function() {
-    disableForm();
+var activateFilter = function(resultsLoaded) {
+    var $field;
 
     selectedFilters[this.name] = this.value;
 
-    events.emit('selected:filter', {
-        field: this.name,
-        value: this.value,
-        category: $('#main').data('section'),
-        filters: selectedFilters
-    });
+    // if triggered from DOM event
+    if (typeof resultsLoaded === 'undefined') {
+        disableForm();
+        events.emit('selected:filter', {
+            field: this.name,
+            value: this.value,
+            category: $('#main').data('section'),
+            filters: selectedFilters
+        });
 
-    addActiveStyle(this);
+        addActiveStyle(this);
+    }
+    // if triggered by page load with filters in query string
+    else {
+        $field = $('select[name=' + this.name + ']');
+        addActiveStyle($field);
+        $field.val(this.value).trigger("chosen:updated");
+    }
 };
 
 var deactivateFilter = function() {
@@ -100,6 +111,24 @@ var removeActiveStyle = function(field) {
     $(field).parent().removeClass('active');
 };
 
+var activateInitialFilters = function() {
+    var qs = queryString.parse(document.location.search),
+        param;
+
+    for (param in qs) {
+        if (qs.hasOwnProperty(param)) {
+            if (param !== "") {
+                activateFilter.call({
+                    // sadly the querystring module doesn't remove
+                    // question marks from its parsed values
+                    name: param.replace(/\?/, ''),
+                    value: qs[param]
+                }, false);
+            }
+        }
+    }
+}
+
 module.exports = {
     init: function() {
         events.on('bind:filters', bindFilters);
@@ -114,5 +143,8 @@ module.exports = {
 
         // if loaded on a page with filters, init chosen
         bindFilters();
+
+        // if the page was loaded with filters set in the query string
+        activateInitialFilters();
     }
 };

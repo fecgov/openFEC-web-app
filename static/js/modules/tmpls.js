@@ -3,6 +3,8 @@
 var urls = require('./urls.js');
 var events = require('./events.js');
 var Handlebars = require('handlebars');
+var _ = require('underscore');
+var helpers = require('../../../shared/helpers.js');
 var candidateHelpers = require('../../../shared/candidate-helpers.js');
 var committeeHelpers = require('../../../shared/committee-helpers.js');
 var categories = require('./api.js').entitiesArray;
@@ -14,49 +16,16 @@ var renderBrowse = function(e) {
     }
     else {
         var tmplName = e.category + '-table',
-            promise = loadTemplate('/views/partials/' + tmplName + '.handlebars');
+            promise = loadTemplate('/views/partials/' + tmplName + '.handlebars'),
+            pagination;
 
         promise.done(function(data) {
             var context = {};
 
             context[e.category] = mapFields(e.category, e.data.results);
-            context.resultsCount = e.data.pagination.count;
-            context.page = e.data.pagination.page;
 
-            if (typeof e.filters === 'undefined') {
-                e.filters = {};
-            }
-
-            // if we are not at the last page, build next page url
-            if (e.data.pagination.page < e.data.pagination.pages) {
-                // bump up page to build next page's url
-                e.filters.page = e.data.pagination.page + 1;
-                context.nextURL = urls.buildURL(e);
-
-                // reset page filter
-                e.filters.page = e.data.pagination.page;
-            }
-
-            // if this is not the first page, build prev page url
-            if (context.page > 1) {
-                // drop page number down to build prev page url
-                e.filters.page = e.data.pagination.page - 1;
-                context.prevURL = urls.buildURL(e);
-
-                // reset page filter
-                e.filters.page = e.data.pagination.page;
-            }
-            if (context.prevURL || context.nextURL) {
-                context.paginationLinks = true;
-            }
-
-            context.perPage = e.data.pagination.per_page;
-            context.currentResultsStart = context.perPage * (context.page - 1) + 1;
-            context.currentResultsEnd = context.perPage * context.page;
-
-            if (context.currentResultsEnd && context.currentResultsStart) {
-                context.resultsRange = true;
-            }
+            pagination = helpers.getPaginationValues(e);
+            _.extend(context, pagination);
 
             templates[tmplName] = Handlebars.compile(data);
             $('#' + e.category).html(templates[tmplName](context));

@@ -35,7 +35,11 @@ var buildURL = function(e) {
         }
     }
 
-    return URL + 'fields=*';
+    if (URL.indexOf('fields') === -1) {
+        URL += 'fields=*';
+    }
+
+    return URL;
 };
 
 var filterLoadHandler = function(e) {
