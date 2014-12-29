@@ -103,15 +103,23 @@ var loadCandidate = function(e) {
 
     candidatePromise.done(function(data) {
         var totalsPromises = [],
-            cycle = data.results[0].elections[0].election_year;
+            cycle = data.results[0].elections[0].election_year || '',
+            committeeId;
 
-        totalsPromises.push(callAPI('/rest/total/' + data.results[0].elections[0].primary_committee.committee_id + '?election_cycle=' + cycle));
-        $.when.apply($, totalsPromises).done(function() {
-            e = condenseResults([data, arguments[0]], e);
-            events.emit('render:singleEntity', e);
-        }).fail(function() {
-            events.emit('err:load:singleEntity');
-        });
+        // we have enough info to load totals
+        if (cycle !== '' && typeof data.results[0].elections[0].primary_committee !== 'undefined') {
+            committeeId = data.results[0].elections[0].primary_committee.committee_id || ''
+            totalsPromises.push(callAPI('/rest/total/' + committeeId + '?election_cycle=' + cycle));
+            $.when.apply($, totalsPromises).done(function() {
+                e = condenseResults([data, args[0]], e);
+                events.emit('render:singleEntity', e);
+            }).fail(function() {
+                events.emit('err:load:singleEntity');
+            });
+        }
+        else {
+            promiseResolved(data, 'render:singleEntity', e);            
+        }
     }).fail(function() {
         events.emit('err:load:singleEntity');
     });
