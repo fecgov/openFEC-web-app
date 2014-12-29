@@ -90,10 +90,10 @@ var filterLoadHandler = function(e) {
 };
 
 var loadSingleEntity = function(e) {
-    if (e.category === 'candidate') {
+    if (e.category === 'candidates') {
         loadCandidate(e);
     }
-    else {
+    else if (e.category === 'committees') {
         loadCommittee(e);
     }
 }
