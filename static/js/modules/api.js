@@ -16,17 +16,11 @@ var callAPI = function(url) {
 };
 
 var buildURL = function(e) {
-    var URL = 'rest/' + entityMap[e.category],
+    var URL = '/rest/' + entityMap[e.category],
         field;
 
-    if (typeof e.filters.cmte_id !== 'undefined') {
-        URL += '/' + e.filters.cmte_id;
-
-        // if we're requesting a single committee, filters 
-        // aren't applicable, though they still get passed
-        // in if there were filters chosen leading up to
-        // finding this committee
-        delete e.filters;
+    if (typeof e.id !== 'undefined') {
+        URL += '/' + e.id;
     }
 
     URL += '?';
@@ -95,7 +89,7 @@ module.exports = {
         });
 
         events.on('load:browse', function(e) {
-            var promise = callAPI('rest/' + entityMap[e.category] + '?fields=*');
+            var promise = callAPI('/rest/' + entityMap[e.category] + '?fields=*');
 
             promise.done(function(data) {
                 e.data = data;
