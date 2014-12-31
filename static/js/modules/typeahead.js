@@ -1,5 +1,6 @@
 'use strict';
 var Handlebars = require('handlebars');
+var events = require('./events.js');
 
 module.exports = {
   init: function() {
@@ -78,33 +79,48 @@ module.exports = {
     });
     committeeEngine.initialize();
 
+    // Templates for results
+    var suggestionTpl = Handlebars.compile('<span>{{ name }} (id: {{ id }})</span>');
+    function headerTpl(label) {
+      return Handlebars.compile('<h5>' + label + '</h5>');
+    }
+
+    // Setting up typeahead
     $('.search-bar').typeahead({
       minLength: 3,
       highlight: true,
       hint: false
     },
     {
-      name: 'Candidates',
+      name: 'candidates',
       displayKey: 'name',
       source: candidatesEngine.ttAdapter(),
       templates: {
-        suggestion: Handlebars.compile('<span class="single-link" data-id="{{ id }}" data-category="candidate">{{ name }}: {{ id }}</span>'),
-        header: Handlebars.compile('<h5>Candidates</h5>'),
+        suggestion: suggestionTpl,
+        header: headerTpl('Candidates'),
       }
     },
     {
-      name: 'Committees',
+      name: 'committees',
       displayKey: 'name',
       source: committeeEngine.ttAdapter(),
       templates: {
-        suggestion: Handlebars.compile('<span class="single-link" data-id="{{ id }}" data-category="committee">{{ name }}: {{ id }}</span>'),
-        header: Handlebars.compile('<h5>Committees</h5>'),
+        suggestion: suggestionTpl,
+        header: headerTpl('Committees'),
       }
     }
     )
 
     $('.twitter-typeahead').css({
       display: 'block',
+    })
+
+    // Open single entity pages when selected
+    $(document).on('typeahead:selected', function(e, suggestion, datasetName) {
+      events.emit('load:singleEntity', {
+        category: datasetName,
+        id: suggestion.id
+      });
     })
   }
 }
