@@ -979,12 +979,19 @@ input[type="submit"],
   top: 7rem !important;
   width: 75% !important;
   text-align: left;
-  padding: 20px; }
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid #D7D7D7; }
 
 .tt-suggestions {
   font-size: 24px;
   font-size: 2.4rem;
   color: #000; }
+
+.tt-suggestion {
+  padding: 20px 20px 0 20px;
+  margin-bottom: 0;
+  line-height: 1;
+  border-bottom: 1px solid #D7D7D7; }
 
 section[aria-hidden="true"],
 .hidden {

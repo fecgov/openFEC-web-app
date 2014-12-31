@@ -49,10 +49,18 @@
   top: 7rem !important;
   width: 75% !important;
   text-align: left;
-  padding: 20px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.3);
+  border: 1px solid $light-gray;
 }
 
 .tt-suggestions {
   @include font-size(2.4);
   color: #000;
+}
+
+.tt-suggestion {
+  padding: 20px 20px 0 20px;
+  margin-bottom: 0;
+  line-height: 1;
+  border-bottom: 1px solid $light-gray;
 }

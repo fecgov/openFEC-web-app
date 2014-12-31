@@ -4,15 +4,15 @@ module.exports = {
   init: function() {
     var engine = new Bloodhound({
       name: 'candidates',
-      // prefetch: {
-      //   url: "/rest/candidate?year=2012&per_page=500",
-      //   filter: function(response) {
-      //     var results = response.results;
-      //     results = $.map(results, function(result) { return {name: result.name.full_name } });
-      //     console.log(results);
-      //     return results;
-      //   }
-      // },
+      prefetch: {
+        url: "js/data/candidates_2012.json",
+        filter: function(response) {
+          var results = response.results;
+          results = $.map(results, function(result) { return {name: result.name.full_name } });
+          console.log('prefetch' + results);
+          return results;
+        }
+      },
       remote: {
         url: "/rest/candidate?name=%QUERY",
         filter: function(response) {
