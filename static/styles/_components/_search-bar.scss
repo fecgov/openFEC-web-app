@@ -42,3 +42,17 @@
     @include shift(0);
   }
 }
+
+// Typeahead
+.tt-dropdown-menu {
+  background: #fff;
+  top: 7rem !important;
+  width: 75% !important;
+  text-align: left;
+  padding: 20px;
+}
+
+.tt-suggestions {
+  @include font-size(2.4);
+  color: #000;
+}
