@@ -45,22 +45,30 @@
 
 // Typeahead
 .tt-dropdown-menu {
+  @include font-size(1.4);
   background: #fff;
-  top: 7rem !important;
+  top: 32px !important;
   width: 75% !important;
   text-align: left;
   box-shadow: 0 1px 1px rgba(0,0,0,.3);
   border: 1px solid $light-gray;
+}
 
-  h5 {
-    color: #fff;
-    padding: 10px;
-    background: $medium-gray;
+#large-search {
+  .tt-dropdown-menu {
+    @include font-size(1.8);
+    top: 70px !important;
   }
 }
 
+.tt-dropdown-title {
+  display: block;
+  color: #fff;
+  padding: 5px 20px;
+  background: $dark-gray;
+}
+
 .tt-suggestions {
-  @include font-size(1.8);
   color: #000;
 }
 

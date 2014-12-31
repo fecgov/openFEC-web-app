@@ -975,20 +975,27 @@ input[type="submit"],
     .search--large:last-child {
       margin-right: 0; } }
 .tt-dropdown-menu {
+  font-size: 14px;
+  font-size: 1.4rem;
   background: #fff;
-  top: 7rem !important;
+  top: 32px !important;
   width: 75% !important;
   text-align: left;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid #D7D7D7; }
-  .tt-dropdown-menu h5 {
-    color: #fff;
-    padding: 10px;
-    background: #b3b3b3; }
 
-.tt-suggestions {
+#large-search .tt-dropdown-menu {
   font-size: 18px;
   font-size: 1.8rem;
+  top: 70px !important; }
+
+.tt-dropdown-title {
+  display: block;
+  color: #fff;
+  padding: 5px 20px;
+  background: #515A61; }
+
+.tt-suggestions {
   color: #000; }
 
 .tt-suggestion {

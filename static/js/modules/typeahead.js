@@ -43,6 +43,7 @@ module.exports = {
       },
       limit: 3
     });
+    candidatesEngine.clearPrefetchCache();
     candidatesEngine.initialize();
 
 
@@ -85,12 +86,13 @@ module.exports = {
       },
       limit: 3
     });
+    committeeEngine.clearPrefetchCache();
     committeeEngine.initialize();
 
     // Templates for results
-    var suggestionTpl = Handlebars.compile('<span>{{ name }} (id: {{ id }})</span>');
+    var suggestionTpl = Handlebars.compile('<span>{{ name }}</span>');
     function headerTpl(label) {
-      return Handlebars.compile('<h5>' + label + '</h5>');
+      return Handlebars.compile('<span class="tt-dropdown-title">' + label + '</span>');
     }
 
     // Setting up typeahead
