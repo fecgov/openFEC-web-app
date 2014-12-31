@@ -983,7 +983,7 @@ input[type="submit"],
   border: 1px solid #D7D7D7; }
   .tt-dropdown-menu h5 {
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px;
     background: #b3b3b3; }
 
 .tt-suggestions {
@@ -992,7 +992,7 @@ input[type="submit"],
   color: #000; }
 
 .tt-suggestion {
-  padding: 20px 20px 0 20px;
+  padding: 10px 20px;
   margin-bottom: 0;
   line-height: 1;
   border-bottom: 1px solid #D7D7D7; }

@@ -5,20 +5,30 @@ module.exports = {
   init: function() {
     // Creating a candidate suggestion engine
     var candidatesEngine = new Bloodhound({
-      name: 'candidates',
+      name: 'Candidates',
       prefetch: {
         url: "js/data/candidates_2012.json", // Prefetch 648 candidates from 2012
         filter: function(response) {
-          var results = response.results;
-          results = $.map(results, function(result) { return {name: result.name.full_name } });
+          var results = $.map(response.results, function(result) {
+            var filteredResults =   {
+              name: result.name.full_name,
+              id: result.candidate_id
+            }
+            return filteredResults;
+          });
           return results;
         }
       },
       remote: {
         url: "/rest/candidate?name=%QUERY",
         filter: function(response) {
-          var results = response.results;
-          results = $.map(results, function(result) { return {name: result.name.full_name } });
+          var results = $.map(response.results, function(result) {
+            var filteredResults =   {
+              name: result.name.full_name,
+              id: result.candidate_id
+            }
+            return filteredResults;
+          });
           return results;
         }
       },
@@ -30,22 +40,33 @@ module.exports = {
     });
     candidatesEngine.initialize();
 
+
     // Committee Engine
     var committeeEngine = new Bloodhound({
-      name: 'candidates',
-      prefetch: { // Prefetch 2000 Principal committees
-        url: "js/data/committees_p.json",
+      name: 'Committees',
+      prefetch: {
+        url: "js/data/committees_p.json", // Prefetch 2000 Principal committees
         filter: function(response) {
-          var results = response.results;
-          results = $.map(results, function(result) { return {name: result.name } });
+          var results = $.map(response.results, function(result) {
+            var filteredResults =   {
+              name: result.name,
+              id: result.committee_id
+            }
+            return filteredResults;
+          });
           return results;
         }
       },
       remote: {
         url: "/rest/committee?name=%QUERY",
         filter: function(response) {
-          var results = response.results;
-          results = $.map(results, function(result) { return {name: result.name } });
+          var results = $.map(response.results, function(result) {
+            var filteredResults =   {
+              name: result.name,
+              id: result.committee_id
+            }
+            return filteredResults;
+          });
           return results;
         }
       },
@@ -67,6 +88,7 @@ module.exports = {
       displayKey: 'name',
       source: candidatesEngine.ttAdapter(),
       templates: {
+        suggestion: Handlebars.compile('<span class="single-link" data-id="{{ id }}" data-category="candidate">{{ name }}: {{ id }}</span>'),
         header: Handlebars.compile('<h5>Candidates</h5>'),
       }
     },
@@ -75,6 +97,7 @@ module.exports = {
       displayKey: 'name',
       source: committeeEngine.ttAdapter(),
       templates: {
+        suggestion: Handlebars.compile('<span class="single-link" data-id="{{ id }}" data-category="committee">{{ name }}: {{ id }}</span>'),
         header: Handlebars.compile('<h5>Committees</h5>'),
       }
     }
