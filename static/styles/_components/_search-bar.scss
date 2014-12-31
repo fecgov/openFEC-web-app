@@ -51,10 +51,16 @@
   text-align: left;
   box-shadow: 0 1px 1px rgba(0,0,0,.3);
   border: 1px solid $light-gray;
+
+  h5 {
+    color: #fff;
+    padding: 10px 20px;
+    background: $medium-gray;
+  }
 }
 
 .tt-suggestions {
-  @include font-size(2.4);
+  @include font-size(1.8);
   color: #000;
 }
 
@@ -63,4 +69,10 @@
   margin-bottom: 0;
   line-height: 1;
   border-bottom: 1px solid $light-gray;
+}
+
+.tt-cursor {
+  cursor: pointer;
+  background: $blue;
+  color: #fff;
 }
