@@ -37,7 +37,11 @@ module.exports = {
         var tokens = Bloodhound.tokenizers.whitespace(d.name);
         return tokens;
       },
-      queryTokenizer: Bloodhound.tokenizers.whitespace
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      dupDetector: function(remoteMatch, localMatch) {
+        return remoteMatch.name === localMatch.name;
+      },
+      limit: 3
     });
     candidatesEngine.initialize();
 
@@ -75,7 +79,11 @@ module.exports = {
         var tokens = Bloodhound.tokenizers.whitespace(d.name);
         return tokens;
       },
-      queryTokenizer: Bloodhound.tokenizers.whitespace
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      dupDetector: function(remoteMatch, localMatch) {
+        return remoteMatch.name === localMatch.name;
+      },
+      limit: 3
     });
     committeeEngine.initialize();
 
