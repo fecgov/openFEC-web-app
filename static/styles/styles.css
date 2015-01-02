@@ -1004,6 +1004,13 @@ input[type="submit"],
   line-height: 1;
   border-bottom: 1px solid #D7D7D7; }
 
+.tt-suggestion__office {
+  font-size: 14px;
+  font-size: 1.4rem;
+  float: right;
+  color: #515A61;
+  font-style: italic; }
+
 .tt-cursor {
   cursor: pointer;
   background: #2678BA;

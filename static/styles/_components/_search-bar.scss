@@ -79,6 +79,13 @@
   border-bottom: 1px solid $light-gray;
 }
 
+.tt-suggestion__office {
+  @include font-size(1.4);
+  float: right;
+  color: $dark-gray;
+  font-style: italic;
+}
+
 .tt-cursor {
   cursor: pointer;
   background: $blue;

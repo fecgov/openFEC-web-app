@@ -4,31 +4,53 @@ var events = require('./events.js');
 
 module.exports = {
   init: function() {
+    function filterCandidates(result) {
+      // Label House, President, Senate
+      var officeFull;
+      switch(result.elections[0].office_sought) {
+        case "H":
+          officeFull = "House of Representatives";
+          break;
+        case "S":
+          officeFull = "Senate";
+          break;
+        case "P":
+          officeFull = "President";
+          break;
+      }
+      var filteredResults =   {
+        name: result.name.full_name,
+        id: result.candidate_id,
+        office: officeFull
+      }
+      return filteredResults;
+    }
+
+    function filterCommittees(result) {
+      var filteredResults =   {
+        name: result.name,
+        id: result.committee_id
+      }
+      return filteredResults;
+    }
+
     // Creating a candidate suggestion engine
     var candidatesEngine = new Bloodhound({
       name: 'Candidates',
       prefetch: {
-        url: "js/data/candidates_2012.json", // Prefetch 648 candidates from 2012
+        url: "js/data/candidates_2014.json", // Prefetch all 2014 candidates
         filter: function(response) {
-          var results = $.map(response.results, function(result) {
-            var filteredResults =   {
-              name: result.name.full_name,
-              id: result.candidate_id
-            }
-            return filteredResults;
+          var results = $.map(response.results, function(result){
+            return filterCandidates(result);
           });
           return results;
         }
       },
       remote: {
-        url: "/rest/candidate?name=%QUERY",
+        url: "/rest/candidate?name=%QUERY&fields=name,candidate_id,office_sought",
         filter: function(response) {
-          var results = $.map(response.results, function(result) {
-            var filteredResults =   {
-              name: result.name.full_name,
-              id: result.candidate_id
-            }
-            return filteredResults;
+          var results = $.map(response.results, function(result){
+            return filterCandidates(result);
           });
           return results;
         }
@@ -38,10 +60,10 @@ module.exports = {
         return tokens;
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      dupDetector: function(remoteMatch, localMatch) {
-        return remoteMatch.name === localMatch.name;
-      },
-      limit: 3
+      // dupDetector: function(remoteMatch, localMatch) {
+      //   return remoteMatch.name === localMatch.name;
+      // },
+      // limit: 5
     });
     candidatesEngine.clearPrefetchCache();
     candidatesEngine.initialize();
@@ -54,24 +76,16 @@ module.exports = {
         url: "js/data/committees_p.json", // Prefetch 2000 Principal committees
         filter: function(response) {
           var results = $.map(response.results, function(result) {
-            var filteredResults =   {
-              name: result.name,
-              id: result.committee_id
-            }
-            return filteredResults;
+            return filterCommittees(result);
           });
           return results;
         }
       },
       remote: {
-        url: "/rest/committee?name=%QUERY",
+        url: "/rest/committee?name=%QUERY&fields=name,committee_id",
         filter: function(response) {
           var results = $.map(response.results, function(result) {
-            var filteredResults =   {
-              name: result.name,
-              id: result.committee_id
-            }
-            return filteredResults;
+            return filterCommittees(result);
           });
           return results;
         }
@@ -90,7 +104,9 @@ module.exports = {
     committeeEngine.initialize();
 
     // Templates for results
-    var suggestionTpl = Handlebars.compile('<span>{{ name }}</span>');
+    var candidateSuggestion = Handlebars.compile('<span>{{ name }} <span class="tt-suggestion__office">{{ office }}</span></span>');
+    var committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
+
     function headerTpl(label) {
       return Handlebars.compile('<span class="tt-dropdown-title">' + label + '</span>');
     }
@@ -106,7 +122,7 @@ module.exports = {
       displayKey: 'name',
       source: candidatesEngine.ttAdapter(),
       templates: {
-        suggestion: suggestionTpl,
+        suggestion: candidateSuggestion,
         header: headerTpl('Candidates'),
       }
     },
@@ -115,7 +131,7 @@ module.exports = {
       displayKey: 'name',
       source: committeeEngine.ttAdapter(),
       templates: {
-        suggestion: suggestionTpl,
+        suggestion: committeeSuggestion,
         header: headerTpl('Committees'),
       }
     }
