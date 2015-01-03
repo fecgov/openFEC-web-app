@@ -117,7 +117,7 @@ var renderSingleEntity = function(e) {
     loadTemplate('/views/' + e.category + '-single.handlebars')
   ).done(function(tmpl1) {
     var context = {};
-    context = mapFields(e.category, e.data.results);
+    context = mapFields(e.category, e.results);
     templates[tmpl1] = Handlebars.compile(tmpl1);
     $('#main').html(templates[tmpl1](context[0]));
   });

@@ -55,13 +55,46 @@ var filterLoadHandler = function(e) {
 };
 
 var loadSingleEntity = function(e) {
-  var promise = callAPI(buildURL(e));
-  promise.done(function(data) {
-    e.data = data;
+  var promises = [],
+      relatedParams,
+      url1,
+      url2;
+  if (e.category === 'candidates') {
+    relatedParams = {
+      category: 'committees',
+      filters: {
+        candidate_id: e.id
+      }
+    }
+  }
+  else if (e.category === 'committees') {
+    // Do stuff to get related candidates
+  }
+
+  url1 = buildURL(e);
+  url2 = buildURL(relatedParams);
+
+  promises.push(callAPI(url1));
+  promises.push(callAPI(url2));
+
+  $.when.apply($, promises).done(function(){
+    var i,
+    len = arguments.length;
+    e.results = {};
+
+    for (i = 0; i < len; i++) {
+      if (i === 0){
+        e.results = arguments[i][0].results;
+      }
+      else {
+        // committee data
+        e.results[entitiesArray[i]] = arguments[i][0].results;
+      }
+    }
     events.emit('render:singleEntity', e);
   }).fail(function() {
     events.emit('err:load:singleEntity');
-  })
+  });
 }
 
 module.exports = {
