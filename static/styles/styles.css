@@ -974,6 +974,48 @@ input[type="submit"],
     margin-left: 0%; }
     .search--large:last-child {
       margin-right: 0; } }
+.tt-dropdown-menu {
+  font-size: 14px;
+  font-size: 1.4rem;
+  background: #fff;
+  top: 32px !important;
+  width: 75% !important;
+  text-align: left;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid #D7D7D7; }
+
+#large-search .tt-dropdown-menu {
+  font-size: 18px;
+  font-size: 1.8rem;
+  top: 70px !important; }
+
+.tt-dropdown-title {
+  display: block;
+  color: #fff;
+  padding: 5px 20px;
+  background: #515A61; }
+
+.tt-suggestions {
+  color: #000; }
+
+.tt-suggestion {
+  padding: 10px 20px;
+  margin-bottom: 0;
+  line-height: 1;
+  border-bottom: 1px solid #D7D7D7; }
+
+.tt-suggestion__office {
+  font-size: 14px;
+  font-size: 1.4rem;
+  float: right;
+  color: #515A61;
+  font-style: italic; }
+
+.tt-cursor {
+  cursor: pointer;
+  background: #2678BA;
+  color: #fff; }
+
 section[aria-hidden="true"],
 .hidden {
   display: none; }

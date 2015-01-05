@@ -42,3 +42,52 @@
     @include shift(0);
   }
 }
+
+// Typeahead
+.tt-dropdown-menu {
+  @include font-size(1.4);
+  background: #fff;
+  top: 32px !important;
+  width: 75% !important;
+  text-align: left;
+  box-shadow: 0 1px 1px rgba(0,0,0,.3);
+  border: 1px solid $light-gray;
+}
+
+#large-search {
+  .tt-dropdown-menu {
+    @include font-size(1.8);
+    top: 70px !important;
+  }
+}
+
+.tt-dropdown-title {
+  display: block;
+  color: #fff;
+  padding: 5px 20px;
+  background: $dark-gray;
+}
+
+.tt-suggestions {
+  color: #000;
+}
+
+.tt-suggestion {
+  padding: 10px 20px;
+  margin-bottom: 0;
+  line-height: 1;
+  border-bottom: 1px solid $light-gray;
+}
+
+.tt-suggestion__office {
+  @include font-size(1.4);
+  float: right;
+  color: $dark-gray;
+  font-style: italic;
+}
+
+.tt-cursor {
+  cursor: pointer;
+  background: $blue;
+  color: #fff;
+}
