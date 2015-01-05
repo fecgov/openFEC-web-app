@@ -34,9 +34,14 @@ var filterCommittees = function(result) {
 
 module.exports = {
   init: function(){
+    var candidateEngine,
+        committeeEngine,
+        candidateSuggestion,
+        committeeSuggestion,
+        headerTpl;
 
     // Creating a candidate suggestion engine
-    var candidatesEngine = new Bloodhound({
+    candidateEngine = new Bloodhound({
       name: 'Candidates',
       prefetch: {
         url: "js/data/candidates_2014.json", // Prefetch all 2014 candidates
@@ -67,11 +72,11 @@ module.exports = {
       limit: 5
     });
 
-    candidatesEngine.clearPrefetchCache();
-    candidatesEngine.initialize();
+    candidateEngine.clearPrefetchCache();
+    candidateEngine.initialize();
 
     // Committee Engine
-    var committeeEngine = new Bloodhound({
+    committeeEngine = new Bloodhound({
       name: 'Committees',
       prefetch: {
         url: "js/data/committees_p.json", // Prefetch 2000 Principal committees
@@ -106,16 +111,12 @@ module.exports = {
     committeeEngine.initialize();
 
     // Templates for results
-    var candidateSuggestion,
-        committeeSuggestion,
-        headerTpl;
-
     candidateSuggestion = Handlebars.compile('<span>{{ name }} <span class="tt-suggestion__office">{{ office }}</span></span>');
     committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
     headerTpl = function(label) {
       return Handlebars.compile('<span class="tt-dropdown-title">' + label + '</span>');
     }
-    
+
     // Setting up typeahead
     $('.search-bar').typeahead({
       minLength: 3,
@@ -125,7 +126,7 @@ module.exports = {
     {
       name: 'candidates',
       displayKey: 'name',
-      source: candidatesEngine.ttAdapter(),
+      source: candidateEngine.ttAdapter(),
       templates: {
         suggestion: candidateSuggestion,
         header: headerTpl('Candidates'),
