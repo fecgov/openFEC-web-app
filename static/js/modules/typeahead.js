@@ -32,18 +32,6 @@ var filterCommittees = function(result) {
   return filteredResults;
 }
 
-// Templates for results
-var candidateSuggestion,
-    committeeSuggestion,
-    headerTpl;
-
-candidateSuggestion = Handlebars.compile('<span>{{ name }} <span class="tt-suggestion__office">{{ office }}</span></span>');
-committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
-headerTpl = function(label) {
-  return Handlebars.compile('<span class="tt-dropdown-title">' + label + '</span>');
-}
-
-
 module.exports = {
   init: function(){
 
@@ -117,6 +105,17 @@ module.exports = {
     committeeEngine.clearPrefetchCache();
     committeeEngine.initialize();
 
+    // Templates for results
+    var candidateSuggestion,
+        committeeSuggestion,
+        headerTpl;
+
+    candidateSuggestion = Handlebars.compile('<span>{{ name }} <span class="tt-suggestion__office">{{ office }}</span></span>');
+    committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
+    headerTpl = function(label) {
+      return Handlebars.compile('<span class="tt-dropdown-title">' + label + '</span>');
+    }
+    
     // Setting up typeahead
     $('.search-bar').typeahead({
       minLength: 3,
