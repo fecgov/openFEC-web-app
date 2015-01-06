@@ -1,6 +1,6 @@
 {{#if resultsCount}}
     <div class="meta-box">
-        <div id="results-count" class="results-count">
+        <div id="results-count-first" class="results-count">
           <p>Results: {{resultsCount}} records</p>
             {{#if resultsRange}}
                 <p>Viewing: {{currentResultsStart}} - {{currentResultsEnd}}</p>
@@ -48,7 +48,7 @@
 
 {{#if resultsCount}}
     <div class="meta-box meta-box--bottom">
-        <div id="results-count" class="results-count">
+        <div id="results-count-last" class="results-count">
           <p>Results: {{resultsCount}} records</p>
             {{#if resultsRange}}
                 <p>Viewing: {{currentResultsStart}} - {{currentResultsEnd}}</p>

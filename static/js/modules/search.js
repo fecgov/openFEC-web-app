@@ -13,7 +13,7 @@ var enableSearchForm = function() {
 
 module.exports = {
     init: function() {
-        $('#search, #large-search').on('submit', function(e) {
+        $('#main').on('submit', '#search, #large-search', function(e) {
             e.preventDefault();
             var $form = $(e.target),
                 $submitButton = $form.find('input[type=submit]'),
@@ -25,7 +25,7 @@ module.exports = {
             events.emit('search:submitted', {'query': searchQuery});
         });
 
-        $('#large-search').on('submit', function(e) {
+        $('#main').on('submit', '#large-search', function(e) {
             $('#main').html('');
         });
 

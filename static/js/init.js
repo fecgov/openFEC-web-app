@@ -12,6 +12,7 @@ var progress = require('./modules/progress.js');
 var errors = require('./modules/errors.js');
 var router = require('./modules/router.js');
 var typeahead = require('./modules/typeahead.js');
+//var mocks = require('../../tests/mocks/mocks.js');
 
 api.init();
 search.init();
@@ -25,3 +26,23 @@ progress.init();
 errors.init();
 router.init();
 typeahead.init();
+
+$(document).ready(function() {
+    $('body').addClass('js-initialized');
+
+    // I'm leaving these comments in place because they are useful in 
+    // writing/debugging tests off of a local environment and it gets 
+    // stripped out when Browserify condenses the JS into a 
+    // production version. [TS]
+
+    //mocks.getCommitteeResults();
+    //mocks.getCandidateResults();
+    //mocks.getCommitteeRecords();
+    //mocks.getCandidates();
+    //mocks.getCandidatesPage1();
+    //mocks.getCandidatesPage2();
+    //mocks.getCommittees();
+    //mocks.getCommitteesPage1();
+    //mocks.getCommitteesPage2();
+    //mocks.getCommitteesHouse();
+});

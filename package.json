@@ -20,10 +20,13 @@
     "vex-js": "^2.2.1"
   },
   "devDependencies": {
+    "chai": "^1.10.0",
+    "jquery-mockjax": "^1.6.1",
+    "selenium-webdriver": "^2.44.0",
     "watchify": "~2.0.0"
   },
   "scripts": {
-    "test": "mocha tests/unit",
+    "test": "mocha --reporter nyan tests/unit",
     "watch": "watchify static/js/init.js -o static/js/app.js --debug --verbose",
     "build": "browserify static/js/init.js > static/js/app.js",
     "sass-watch": "sass --watch static/styles/:static/styles/",

@@ -1,0 +1,110 @@
+{
+    "api_version": "0.2", 
+    "pagination": {
+        "count": 2, 
+        "page": 1, 
+        "pages": 1, 
+        "per_page": 2
+    }, 
+    "results": [
+        {
+            "candidate_id": "H6IN03187", 
+            "elections": [
+                {
+                    "district": "03", 
+                    "election_year": 2014, 
+                    "office": "H", 
+                    "office_sought": "H", 
+                    "office_sought_full": "House", 
+                    "party": "DEM", 
+                    "party_affiliation": "Democratic Party", 
+                    "state": "IN"
+                }, 
+                {
+                    "candidate_inactive": null, 
+                    "candidate_status": null, 
+                    "district": "03", 
+                    "election_year": 2012.0, 
+                    "incumbent_challenge": "C", 
+                    "incumbent_challenge_full": "challenger", 
+                    "office": "H", 
+                    "office_sought": "H", 
+                    "office_sought_full": "House", 
+                    "party": "DEM", 
+                    "party_affiliation": "Democratic Party", 
+                    "state": "IN"
+                }
+            ], 
+            "expire_date": null, 
+            "form_type": "F2Z", 
+            "load_date": "2014-09-18 13:28:23", 
+            "mailing_addresses": [
+                {
+                    "city": "FORT WAYNES", 
+                    "expire_date": "2011-10-23", 
+                    "state": "IN", 
+                    "street_1": "1132 COLUMBIA AVENUE", 
+                    "street_2": null, 
+                    "zip": "46805"
+                }, 
+                {
+                    "city": "FORTWAYN", 
+                    "state": "IN", 
+                    "street_1": "1020 COLISEUM ROOM 126", 
+                    "street_2": null, 
+                    "zip": "46805"
+                }
+            ], 
+            "name": {
+                "full_name": "SCHRADER, THOMAS ALLEN", 
+                "name_1": "THOMAS ALLEN", 
+                "name_2": "SCHRADER"
+            }
+        }, 
+        {
+            "candidate_id": "H2IN01131", 
+            "elections": [
+                {
+                    "candidate_inactive": null, 
+                    "candidate_status": null, 
+                    "district": "01", 
+                    "election_year": 2012.0, 
+                    "incumbent_challenge": "C", 
+                    "incumbent_challenge_full": "challenger", 
+                    "office": "H", 
+                    "office_sought": "H", 
+                    "office_sought_full": "House", 
+                    "party": "REP", 
+                    "party_affiliation": "Republican Party", 
+                    "state": "IN"
+                }
+            ], 
+            "expire_date": null, 
+            "form_type": "F2Z", 
+            "load_date": "2014-09-18 13:28:23", 
+            "mailing_addresses": [
+                {
+                    "city": "VALPARAISO", 
+                    "expire_date": "2012-10-23", 
+                    "state": "IN", 
+                    "street_1": "424 ROLLING MEADOW DRIVE", 
+                    "street_2": null, 
+                    "zip": "46385"
+                }, 
+                {
+                    "city": "VALPARAISO", 
+                    "state": "IN", 
+                    "street_1": "424 ROLLING MEADOW DRIVE", 
+                    "street_2": null, 
+                    "zip": "46385"
+                }
+            ], 
+            "name": {
+                "full_name": "WENGER, DAVE", 
+                "name_1": "DAVE", 
+                "name_2": "WENGER"
+            }
+        }
+    ]
+}
+
