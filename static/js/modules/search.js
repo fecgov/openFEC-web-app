@@ -9,11 +9,27 @@ var enableSearchForm = function() {
 
     $submitButton.removeAttr('disabled');
     $searchBox.removeAttr('disabled');
-};
+}
+
+var bindSearch = function() {
+    $('#main').on('click', '.results-header a', function() {
+        event.preventDefault();
+
+        var context = {},
+            $target = $(event.target);
+
+        context.category = $target.data('category');
+        context.query = $target.data('query');
+
+        $('#main').data('section', context.category);
+
+        events.emit('load:searchResults', context);
+    });
+}
 
 module.exports = {
     init: function() {
-        $('#search, #large-search').on('submit', function(e) {
+        $(document).on('submit', '#search, #large-search', function(e) {
             e.preventDefault();
             var $form = $(e.target),
                 $submitButton = $form.find('input[type=submit]'),
@@ -25,27 +41,14 @@ module.exports = {
             events.emit('search:submitted', {'query': searchQuery});
         });
 
-        $('#large-search').on('submit', function(e) {
+        $('#main').on('submit', '#large-search', function(e) {
             $('#main').html('');
         });
 
-        events.on('bind:search', function() {
-            $('.results-header a').on('click', function() {
-                event.preventDefault();
-
-                var context = {},
-                    $target = $(event.target);
-
-                context.category = $target.data('category');
-                context.query = $target.data('query');
-
-                $('#main').data('section', context.category);
-
-                events.emit('load:searchResults', context);
-            });
-        });
-
+        events.on('bind:search', bindSearch);
         events.on('err:load:search', enableSearchForm);
         events.on('render:searchResultsList', enableSearchForm);
+    
+        bindSearch();
     }
 };

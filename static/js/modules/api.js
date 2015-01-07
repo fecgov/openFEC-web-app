@@ -30,7 +30,8 @@ var buildURL = function(e) {
     }
 
     for (field in e.filters) {
-        if (e.filters.hasOwnProperty(field)) {
+        // 'test' is for Selenium tests and shouldn't carry through
+        if (e.filters.hasOwnProperty(field) && field !== 'test') {
             URL += field + '=' + e.filters[field] + '&'
         }
     }
@@ -42,115 +43,92 @@ var buildURL = function(e) {
     return URL;
 };
 
+var promiseResolved = function(data, eventName, e) {
+    if (typeof data === 'string') {
+        data = JSON.parse(data);
+    }
+
+    e.data = data;
+    events.emit(eventName, e);
+}
+
 var filterLoadHandler = function(e) {
     var url = buildURL(e),
         promise = callAPI(url);
 
     promise.done(function(data) {
-        e.data = data;
-        events.emit('render:browse', e);
+        promiseResolved(data, 'render:browse', e);
     }).fail(function() {
         events.emit('err:load:filters');
     });;
 };
 
 var loadSingleEntity = function(e) {
-  var promises = [],
-      relatedParams,
-      url1,
-      url2;
-  if (e.category === 'candidates') {
-    relatedParams = {
-      category: 'committees',
-      filters: {
-        candidate_id: e.id
-      }
-    }
-  }
-  else if (e.category === 'committees') {
-    // Do stuff to get related candidates
-  }
-
-  url1 = buildURL(e);
-  url2 = buildURL(relatedParams);
-
-  promises.push(callAPI(url1));
-  promises.push(callAPI(url2));
-
-  $.when.apply($, promises).done(function(){
-    var i,
-    len = arguments.length;
-    e.results = {};
-
-    for (i = 0; i < len; i++) {
-      if (i === 0){
-        e.results = arguments[i][0].results;
-      }
-      else {
-        // committee data
-        e.results[entitiesArray[i]] = arguments[i][0].results;
-      }
-    }
-    events.emit('render:singleEntity', e);
+  var promise = callAPI(buildURL(e));
+  promise.done(function(data) {
+    promiseResolved(data, 'render:singleEntity', e);
   }).fail(function() {
     events.emit('err:load:singleEntity');
   });
 }
 
+var loadSearchResultsList = function(e) {
+    var entities = [],
+        promises = [],
+        i,
+        len = entitiesArray.length;
+
+    for (i = 0; i < len; i++) {
+        promises.push(callAPI('rest/' + entitiesArray[i] + '?q=' + encodeURIComponent(e.query) + '&per_page=5'));
+    }
+
+
+    $.when.apply($, promises).done(function() {
+        var i,
+            len = arguments.length;
+        e.results = {};
+
+        for (i = 0; i < len; i++) {
+            if (typeof arguments[i][0] === 'string') {
+                arguments[i][0] = JSON.parse(arguments[i][0]);
+            }
+            e.results[entitiesArray[i]] = arguments[i][0].results;
+        }
+
+        events.emit('render:searchResultsList', e);
+    }).fail(function() {
+        events.emit('err:load:searchResultsList');
+    });
+}
+
+var loadSearchResults = function(e) {
+    var promise = callAPI(buildURL(e));
+
+    promise.done(function(data) {
+        promiseResolved(data, 'render:searchResults', e);
+    }).fail(function() {
+        events.emit('err:load:searchResults');
+    });
+}
+
+var loadBrowse = function(e) {
+    var promise = callAPI('/rest/' + entityMap[e.category] + '?fields=*');
+
+    promise.done(function(data) {
+        promiseResolved(data, 'render:browse', e);
+    }).fail(function() {
+        events.emit('err:load:browse');
+    });
+}
+
 module.exports = {
     init: function() {
-        events.on('search:submitted', function(e) {
-            var entities = [],
-                promises = [],
-                i,
-                len = entitiesArray.length;
-
-            for (i = 0; i < len; i++) {
-                promises.push(callAPI('rest/' + entitiesArray[i] + '?q=' + encodeURIComponent(e.query) + '&per_page=5'));
-            }
-
-
-            $.when.apply($, promises).done(function() {
-                var i,
-                    len = arguments.length;
-                e.results = {};
-
-                for (i = 0; i < len; i++) {
-                    e.results[entitiesArray[i]] = arguments[i][0].results;
-                }
-
-                events.emit('render:searchResultsList', e);
-            }).fail(function() {
-                events.emit('err:load:searchResultsList');
-            });
-        });
-
-        events.on('load:browse', function(e) {
-            var promise = callAPI('/rest/' + entityMap[e.category] + '?fields=*');
-
-            promise.done(function(data) {
-                e.data = data;
-                events.emit('render:browse', e);
-            }).fail(function() {
-                events.emit('err:load:browse');
-            });
-        });
-
-        events.on('load:searchResults', function(e) {
-            var promise = callAPI(buildURL(e));
-
-            promise.done(function(data) {
-                e.data = data;
-                events.emit('render:searchResults', e);
-            }).fail(function() {
-                events.emit('err:load:searchResults');
-            });;
-        });
-
+        events.on('search:submitted', loadSearchResultsList);
+        events.on('load:browse', loadBrowse);
+        events.on('load:searchResults', loadSearchResults);
         events.on('selected:filter', filterLoadHandler);
         events.on('deselected:filter', filterLoadHandler);
         events.on('nav:pagination', filterLoadHandler);
-
         events.on('load:singleEntity', loadSingleEntity);
     },
 

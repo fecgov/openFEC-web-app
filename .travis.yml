@@ -1,6 +1,18 @@
+addons:
+  sauce_connect:
+    username: 18fopenfec
+    access_key:
+      secure: "Y0DDAcVE2+zoR5qQsIVr0YB/mFNH39AzIItM+oYrI6OZVX6N2b7dH77vahj7PUwy5OK8qEU563DMuUvxA32tlU8DSaeq7zTnMZfEPvev6lLS3/QSms0li3A0yzr9H5NWh40NkvmV8dnFLEbVpyEwZE923uuzGoYxAQNXaman6zY="
+before_script:
+    - node app.js &
+    - sleep 5
 install:
     - sudo apt-get install nodejs
     - npm install -g mocha
     - npm install
+    - npm run build
 script:
     - npm run test
+    - node tests/selenium/search.js
+    - node tests/selenium/browse-candidates.js
+    - node tests/selenium/browse-committees.js

@@ -1,0 +1,1095 @@
+{
+                "api_version": "0.2", 
+                "pagination": {
+                    "count": 32, 
+                    "page": 1, 
+                    "pages": 2, 
+                    "per_page": 20
+                }, 
+                "results": [
+                    {
+                        "candidate_id": "H2FL03130", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": "C", 
+                                "candidate_status_full": "candidate", 
+                                "district": "03", 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "999", 
+                                "party_affiliation": "Invalid Party Code", 
+                                "primary_committee": {
+                                    "committee_id": "C00520551", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2012.0, 
+                                    "type": "H", 
+                                    "type_full": "House"
+                                }, 
+                                "state": "FL"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "ALACHUA", 
+                                "expire_date": "2011-10-23", 
+                                "state": "FL", 
+                                "street_1": "13695 NW 172 AVE", 
+                                "street_2": null, 
+                                "zip": "32615"
+                            }, 
+                            {
+                                "city": "ALACHUA", 
+                                "expire_date": "2012-10-23", 
+                                "state": "FL", 
+                                "street_1": "13695 NW 172 AVE", 
+                                "street_2": null, 
+                                "zip": "32615"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "DODDS, PHILIP", 
+                            "name_1": "PHILIP", 
+                            "name_2": "DODDS"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H4CA31105", 
+                        "elections": [
+                            {
+                                "district": "31", 
+                                "election_year": 2014, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "REP", 
+                                "party_affiliation": "Republican Party", 
+                                "state": "CA"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "WHITTIER", 
+                                "expire_date": "2012-10-23", 
+                                "state": "CA", 
+                                "street_1": "12598 ADLER DRIVE #B", 
+                                "street_2": null, 
+                                "zip": "90606"
+                            }, 
+                            {
+                                "city": "WHITTIER", 
+                                "state": "CA", 
+                                "street_1": "12598 ADLER DRIVE #B", 
+                                "street_2": null, 
+                                "zip": "90606"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "DOWNING, RYAN", 
+                            "name_1": "RYAN", 
+                            "name_2": "DOWNING"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H4MA06090", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": "C", 
+                                "candidate_status_full": "candidate", 
+                                "district": "06", 
+                                "election_year": 2014.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "primary_committee": {
+                                    "committee_id": "C00547240", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2014.0, 
+                                    "type": "H", 
+                                    "type_full": "House"
+                                }, 
+                                "state": "MA"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "SALEM", 
+                                "expire_date": "2011-10-23", 
+                                "state": "MA", 
+                                "street_1": "PO BOX 2013", 
+                                "street_2": null, 
+                                "zip": "09170"
+                            }, 
+                            {
+                                "city": "SALEM", 
+                                "expire_date": "2012-10-23", 
+                                "state": "MA", 
+                                "street_1": "PO BOX 2013", 
+                                "street_2": null, 
+                                "zip": "09170"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "MOULTON, SETH", 
+                            "name_1": "SETH", 
+                            "name_2": "MOULTON"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H4NJ01092", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": "C", 
+                                "candidate_status_full": "candidate", 
+                                "district": "01", 
+                                "election_year": 2014.0, 
+                                "incumbent_challenge": null, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "REP", 
+                                "party_affiliation": "Republican Party", 
+                                "primary_committee": {
+                                    "committee_id": "C00560144", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2014.0, 
+                                    "type": "H", 
+                                    "type_full": "House"
+                                }, 
+                                "state": "NJ"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "CHERRY HILL", 
+                                "expire_date": "2012-10-23", 
+                                "state": "NJ", 
+                                "street_1": "112 SOCIETY HILL BLVD", 
+                                "street_2": null, 
+                                "zip": "08003"
+                            }, 
+                            {
+                                "city": "CHERRY HILL", 
+                                "state": "NJ", 
+                                "street_1": "112 SOCIETY HILL BLVD", 
+                                "street_2": null, 
+                                "zip": "08003"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "COBB, GARY WILBERT", 
+                            "name_1": "GARY WILBERT", 
+                            "name_2": "COBB"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H2MI11216", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": "C", 
+                                "candidate_status_full": "candidate", 
+                                "district": "11", 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "O", 
+                                "incumbent_challenge_full": "open_seat", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "UNK", 
+                                "party_affiliation": "Unknown", 
+                                "primary_committee": {
+                                    "committee_id": "C00532432", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2012.0, 
+                                    "type": "H", 
+                                    "type_full": "House"
+                                }, 
+                                "state": "MI"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "EAST LANDING ", 
+                                "expire_date": "2010-10-23", 
+                                "state": "MI", 
+                                "street_1": "1400 OLD CANTON LANE #8 ", 
+                                "street_2": null, 
+                                "zip": "48823"
+                            }, 
+                            {
+                                "city": "NOVI", 
+                                "expire_date": "2012-10-23", 
+                                "state": "MI", 
+                                "street_1": "43422 WEST OAKS DRIVE #228", 
+                                "street_2": null, 
+                                "zip": "483773300"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "JOHNSON , DANIEL", 
+                            "name_1": "DANIEL", 
+                            "name_2": "JOHNSON"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H4FL19074", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": "C", 
+                                "candidate_status_full": "candidate", 
+                                "district": "19", 
+                                "election_year": 2014.0, 
+                                "incumbent_challenge": "O", 
+                                "incumbent_challenge_full": "open_seat", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "REP", 
+                                "party_affiliation": "Republican Party", 
+                                "primary_committee": {
+                                    "committee_id": "C00554972", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2014.0, 
+                                    "type": "H", 
+                                    "type_full": "House"
+                                }, 
+                                "state": "FL"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "BONITA SPRINGS", 
+                                "expire_date": "2011-10-23", 
+                                "state": "FL", 
+                                "street_1": "8951 BONITA BEACH RD STE 525-V2014", 
+                                "street_2": null, 
+                                "zip": "34135"
+                            }, 
+                            {
+                                "city": "BONITA SPRINGS", 
+                                "state": "FL", 
+                                "street_1": "8951 BONITA BEACH RD STE 525-V2014", 
+                                "street_2": null, 
+                                "zip": "34135"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "CLAWSON, CURTIS J", 
+                            "name_1": "CURTIS J", 
+                            "name_2": "CLAWSON"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H6IN03187", 
+                        "elections": [
+                            {
+                                "district": "03", 
+                                "election_year": 2014, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "state": "IN"
+                            }, 
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": null, 
+                                "district": "03", 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "state": "IN"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "FORT WAYNES", 
+                                "expire_date": "2011-10-23", 
+                                "state": "IN", 
+                                "street_1": "1132 COLUMBIA AVENUE", 
+                                "street_2": null, 
+                                "zip": "46805"
+                            }, 
+                            {
+                                "city": "FORTWAYN", 
+                                "state": "IN", 
+                                "street_1": "1020 COLISEUM ROOM 126", 
+                                "street_2": null, 
+                                "zip": "46805"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "SCHRADER, THOMAS ALLEN", 
+                            "name_1": "THOMAS ALLEN", 
+                            "name_2": "SCHRADER"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H4TX03098", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": null, 
+                                "district": "03", 
+                                "election_year": 2014.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "GRE", 
+                                "party_affiliation": "Green Party Added)", 
+                                "state": "TX"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "FRISCO", 
+                                "expire_date": "2012-10-23", 
+                                "state": "TX", 
+                                "street_1": "8713 KIMBERLY LANE", 
+                                "street_2": null, 
+                                "zip": "750332525"
+                            }, 
+                            {
+                                "city": "FRISCO", 
+                                "state": "TX", 
+                                "street_1": "8713 KIMBERLY LANE", 
+                                "street_2": null, 
+                                "zip": "750332525"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "BLAIR, PAUL", 
+                            "name_1": "PAUL", 
+                            "name_2": "BLAIR"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H4MI07186", 
+                        "elections": [
+                            {
+                                "district": "07", 
+                                "election_year": 2014, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "IND", 
+                                "party_affiliation": "Independent", 
+                                "primary_committee": {
+                                    "committee_id": "C00560565", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2014.0, 
+                                    "type": "H", 
+                                    "type_full": "House"
+                                }, 
+                                "state": "MI"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "JACKSON", 
+                                "expire_date": "2012-10-23", 
+                                "state": "MI", 
+                                "street_1": "1308 WESTLANE ST", 
+                                "street_2": null, 
+                                "zip": "49203"
+                            }, 
+                            {
+                                "city": "JACKSON", 
+                                "state": "MI", 
+                                "street_1": "1308 WESTLANE ST", 
+                                "street_2": null, 
+                                "zip": "49203"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "SWARTOUT, DAVID BERNARD", 
+                            "name_1": "DAVID BERNARD", 
+                            "name_2": "SWARTOUT"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H2IN01131", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": null, 
+                                "district": "01", 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "REP", 
+                                "party_affiliation": "Republican Party", 
+                                "state": "IN"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "VALPARAISO", 
+                                "expire_date": "2012-10-23", 
+                                "state": "IN", 
+                                "street_1": "424 ROLLING MEADOW DRIVE", 
+                                "street_2": null, 
+                                "zip": "46385"
+                            }, 
+                            {
+                                "city": "VALPARAISO", 
+                                "state": "IN", 
+                                "street_1": "424 ROLLING MEADOW DRIVE", 
+                                "street_2": null, 
+                                "zip": "46385"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "WENGER, DAVE", 
+                            "name_1": "DAVE", 
+                            "name_2": "WENGER"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H2NV02304", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": null, 
+                                "district": "02", 
+                                "election_year": 2011.0, 
+                                "incumbent_challenge": "O", 
+                                "incumbent_challenge_full": "open_seat", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "REP", 
+                                "party_affiliation": "Republican Party", 
+                                "state": "NV"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "RENO", 
+                                "expire_date": "2012-10-23", 
+                                "state": "NV", 
+                                "street_1": "PO BOX 6574", 
+                                "street_2": null, 
+                                "zip": "89513"
+                            }, 
+                            {
+                                "city": "RENO", 
+                                "state": "NV", 
+                                "street_1": "PO BOX 6574", 
+                                "street_2": null, 
+                                "zip": "89513"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "FELTON, GUY", 
+                            "name_1": "GUY", 
+                            "name_2": "FELTON"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H2NV02247", 
+                        "elections": [
+                            {
+                                "district": "02", 
+                                "election_year": 2012, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "state": "NV"
+                            }, 
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": "N", 
+                                "candidate_status_full": "not_yet_candidate", 
+                                "district": "02", 
+                                "election_year": 2011.0, 
+                                "incumbent_challenge": "O", 
+                                "incumbent_challenge_full": "open_seat", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "primary_committee": {
+                                    "committee_id": "C00496125", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2011.0, 
+                                    "type": "H", 
+                                    "type_full": "House"
+                                }, 
+                                "state": "NV"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "RENO", 
+                                "expire_date": "2010-10-23", 
+                                "state": "NV", 
+                                "street_1": "3255 THORNHILL DR", 
+                                "street_2": null, 
+                                "zip": "89509"
+                            }, 
+                            {
+                                "city": "RENO", 
+                                "expire_date": "2012-10-23", 
+                                "state": "NV", 
+                                "street_1": "3255 THORNHILL DR", 
+                                "street_2": null, 
+                                "zip": "89509"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "MARSHALL, KATE", 
+                            "name_1": "KATE", 
+                            "name_2": "MARSHALL"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H6FL08213", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": "C", 
+                                "candidate_status_full": "candidate", 
+                                "district": "09", 
+                                "election_year": 2014.0, 
+                                "incumbent_challenge": null, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "state": "FL"
+                            }, 
+                            {
+                                "district": "09", 
+                                "election_year": 2012, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "state": "FL"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "ORLANDO", 
+                                "state": "FL", 
+                                "street_1": "8419 OAK PARK ROAD", 
+                                "street_2": null, 
+                                "zip": "328193240"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "GRAYSON, ALAN MARK", 
+                            "name_1": "ALAN MARK", 
+                            "name_2": "GRAYSON"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "P80003338", 
+                        "elections": [
+                            {
+                                "affiliated_committees": [
+                                    {
+                                        "committee_id": "C00434357", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }, 
+                                    {
+                                        "committee_id": "C00443317", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "D", 
+                                        "type_full": "Delegate Committee"
+                                    }, 
+                                    {
+                                        "committee_id": "C00446435", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }, 
+                                    {
+                                        "committee_id": "C00450809", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }, 
+                                    {
+                                        "committee_id": "C00455949", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }, 
+                                    {
+                                        "committee_id": "C00462176", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }, 
+                                    {
+                                        "committee_id": "C00496992", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }, 
+                                    {
+                                        "committee_id": "C00519694", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }, 
+                                    {
+                                        "committee_id": "C00446195", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "N", 
+                                        "type_full": "PAC - Nonqualified"
+                                    }, 
+                                    {
+                                        "committee_id": "C00528364", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }, 
+                                    {
+                                        "committee_id": "C00529842", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "U", 
+                                        "type_full": "Single Candidate Independent Expenditure"
+                                    }
+                                ], 
+                                "candidate_inactive": null, 
+                                "candidate_status": "C", 
+                                "candidate_status_full": "candidate", 
+                                "district": null, 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "I", 
+                                "incumbent_challenge_full": "incumbent", 
+                                "office": "P", 
+                                "office_sought": "P", 
+                                "office_sought_full": "President", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "primary_committee": {
+                                    "committee_id": "C00431445", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2012.0, 
+                                    "type": "P", 
+                                    "type_full": "Presidential"
+                                }, 
+                                "state": "US"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "CHICAGO", 
+                                "expire_date": "2007-10-23", 
+                                "state": "IL", 
+                                "street_1": "233 NORTH MICHIGAN AVE STE 1720", 
+                                "street_2": null, 
+                                "zip": "60601"
+                            }, 
+                            {
+                                "city": "CHICAGO", 
+                                "expire_date": "2010-10-23", 
+                                "state": "IL", 
+                                "street_1": "PO BOX 8102", 
+                                "street_2": null, 
+                                "zip": "60680"
+                            }, 
+                            {
+                                "city": "CHICAGO", 
+                                "state": "IL", 
+                                "street_1": "PO BOX 8102", 
+                                "street_2": null, 
+                                "zip": "60680"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "OBAMA, BARACK", 
+                            "name_1": "BARACK", 
+                            "name_2": "OBAMA"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H2AR02061", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": null, 
+                                "district": "02", 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "LIB", 
+                                "party_affiliation": "Libertarian", 
+                                "state": "AR"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "LITTLE ROCK", 
+                                "expire_date": "2012-10-23", 
+                                "state": "AR", 
+                                "street_1": "P.O. BOX 21404", 
+                                "street_2": null, 
+                                "zip": "72221"
+                            }, 
+                            {
+                                "city": "LITTLE ROCK", 
+                                "state": "AR", 
+                                "street_1": "P.O. BOX 21404", 
+                                "street_2": null, 
+                                "zip": "72221"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "HAYES, CHRIS", 
+                            "name_1": "CHRIS", 
+                            "name_2": "HAYES"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H8IL12053", 
+                        "elections": [
+                            {
+                                "district": "12", 
+                                "election_year": 2012, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "state": "IL"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "GRANITE CITY", 
+                                "expire_date": "2010-10-23", 
+                                "state": null, 
+                                "street_1": null, 
+                                "street_2": null, 
+                                "zip": null
+                            }, 
+                            {
+                                "city": "GRANITE CITY", 
+                                "state": "IL", 
+                                "street_1": "1624 POPULAR STREET", 
+                                "street_2": null, 
+                                "zip": "62040"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "WIEZER, KENNETH CHARLES \"BUD\"", 
+                            "name_1": "KENNETH CHARLES", 
+                            "name_2": "WIEZER"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H8WI00018", 
+                        "elections": [
+                            {
+                                "district": "02", 
+                                "election_year": 2012, 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "DEM", 
+                                "party_affiliation": "Democratic Party", 
+                                "state": "WI"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "MADISON", 
+                                "expire_date": "2012-10-23", 
+                                "state": "WI", 
+                                "street_1": "119 MARTIN LUTHER KING JR BLVD LL4", 
+                                "street_2": null, 
+                                "zip": "53703"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "BALDWIN, TAMMY", 
+                            "name_1": "TAMMY", 
+                            "name_2": "BALDWIN"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H2FL03155", 
+                        "elections": [
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": null, 
+                                "district": "03", 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "UNK", 
+                                "party_affiliation": "Unknown", 
+                                "state": "FL"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2Z", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "ORANGE PARK ", 
+                                "expire_date": "2012-10-23", 
+                                "state": "FL", 
+                                "street_1": "P.O. BOX 1310 ", 
+                                "street_2": null, 
+                                "zip": "32067"
+                            }, 
+                            {
+                                "city": "ORANGE PARK", 
+                                "state": "FL", 
+                                "street_1": "P.O. BOX 1310", 
+                                "street_2": null, 
+                                "zip": "32067"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "WILLEY, KENNETH A.", 
+                            "name_1": "KENNETH A.", 
+                            "name_2": "WILLEY"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "P80000748", 
+                        "elections": [
+                            {
+                                "affiliated_committees": [
+                                    {
+                                        "committee_id": "C00437160", 
+                                        "designation": "U", 
+                                        "designation_full": "Unauthorized", 
+                                        "election_year": 2012.0, 
+                                        "type": "N", 
+                                        "type_full": "PAC - Nonqualified"
+                                    }
+                                ], 
+                                "candidate_inactive": null, 
+                                "candidate_status": "C", 
+                                "candidate_status_full": "candidate", 
+                                "district": null, 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "P", 
+                                "office_sought": "P", 
+                                "office_sought_full": "President", 
+                                "party": "REP", 
+                                "party_affiliation": "Republican Party", 
+                                "state": "US"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "LAKE JACKSON", 
+                                "expire_date": "2005-10-23", 
+                                "state": "TX", 
+                                "street_1": "101 BLOSSOM", 
+                                "street_2": null, 
+                                "zip": "77566"
+                            }, 
+                            {
+                                "city": "CLUTE", 
+                                "expire_date": "2010-10-23", 
+                                "state": "TX", 
+                                "street_1": "845 W PLANTATION DR", 
+                                "street_2": null, 
+                                "zip": "77531"
+                            }, 
+                            {
+                                "city": "CLUTE", 
+                                "expire_date": "2011-10-23", 
+                                "state": "TX", 
+                                "street_1": "845 W PLANTATION DR", 
+                                "street_2": null, 
+                                "zip": "77531"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "PAUL, RONALD E", 
+                            "name_1": "RONALD E", 
+                            "name_2": "PAUL"
+                        }
+                    }, 
+                    {
+                        "candidate_id": "H2CA08164", 
+                        "elections": [
+                            {
+                                "primary_committee": {
+                                    "committee_id": "C00512202", 
+                                    "designation": "P", 
+                                    "designation_full": "Principal campaign committee", 
+                                    "election_year": 2014.0, 
+                                    "type": "H", 
+                                    "type_full": "House"
+                                }
+                            }, 
+                            {
+                                "candidate_inactive": null, 
+                                "candidate_status": "P", 
+                                "candidate_status_full": "prior_candidate", 
+                                "district": "08", 
+                                "election_year": 2012.0, 
+                                "incumbent_challenge": "C", 
+                                "incumbent_challenge_full": "challenger", 
+                                "office": "H", 
+                                "office_sought": "H", 
+                                "office_sought_full": "House", 
+                                "party": "REP", 
+                                "party_affiliation": "Republican Party", 
+                                "state": "CA"
+                            }
+                        ], 
+                        "expire_date": null, 
+                        "form_type": "F2", 
+                        "load_date": "2014-09-18 13:28:23", 
+                        "mailing_addresses": [
+                            {
+                                "city": "YUCCA VALLEY", 
+                                "expire_date": "2011-10-23", 
+                                "state": "CA", 
+                                "street_1": "PO BOX 365", 
+                                "street_2": null, 
+                                "zip": "92286"
+                            }, 
+                            {
+                                "city": "YUCCA VALLEY", 
+                                "expire_date": "2012-10-23", 
+                                "state": null, 
+                                "street_1": "PO BOX 365", 
+                                "street_2": null, 
+                                "zip": "92286"
+                            }
+                        ], 
+                        "name": {
+                            "full_name": "COOK, PAUL", 
+                            "name_1": "PAUL", 
+                            "name_2": "COOK"
+                        }
+                    }
+                ]
+            }        
+
