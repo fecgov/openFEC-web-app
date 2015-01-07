@@ -44,7 +44,7 @@ module.exports = {
     candidateEngine = new Bloodhound({
       name: 'Candidates',
       prefetch: {
-        url: "js/data/candidates_2014.json", // Prefetch all 2014 candidates
+        url: "/js/data/candidates_2014.json", // Prefetch all 2014 candidates
         filter: function(response) {
           var results = $.map(response.results, function(result){
             return filterCandidates(result);
@@ -79,7 +79,7 @@ module.exports = {
     committeeEngine = new Bloodhound({
       name: 'Committees',
       prefetch: {
-        url: "js/data/committees_p.json", // Prefetch 2000 Principal committees
+        url: "/js/data/committees_p.json", // Prefetch 2000 Principal committees
         filter: function(response) {
           var results = $.map(response.results, function(result) {
             return filterCommittees(result);
