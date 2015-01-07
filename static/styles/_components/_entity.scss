@@ -32,7 +32,6 @@
   dd {
     display: table-cell;
     padding: 0;
-    border-bottom: 1px solid $medium-gray;
   }
 
   dd {
@@ -50,34 +49,25 @@
 // Candidate-specific styles
 
 .candidate {
-  // .entity__header {
-  //   background-color: $licorice;
-  //   color: #fff;
-
-  //   .data {
-  //     color: #fff;
-  //   }
-    
-  //   a {
-  //     color: #fff;
-  //     text-decoration: underline;
-  //   }
-
-  //   .chosen-container a {
-  //     color: $blue;
-  //   }
-
-  // }
-
   .entity__header {
-    background: $meta-box-color;
-    border-bottom: 1px solid $licorice;
+    background-color: $licorice;
+    color: #fff;
+
+    .data {
+      color: #fff;
+    }
+    
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .chosen-container a {
+      color: $blue;
+    }
+
   }
 
-  .entity__header--top {
-    border-color: #fff;
-    text-decoration: none;
-  }
 }
 
 

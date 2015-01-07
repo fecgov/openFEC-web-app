@@ -1059,8 +1059,7 @@ section[aria-hidden="true"],
   .entity__info dt,
   .entity__info dd {
     display: table-cell;
-    padding: 0;
-    border-bottom: 1px solid #b3b3b3; }
+    padding: 0; }
   .entity__info dd {
     padding: 0 1em; }
 
@@ -1068,11 +1067,16 @@ section[aria-hidden="true"],
   margin-bottom: 1em; }
 
 .candidate .entity__header {
-  background: #FBFBFD;
-  border-bottom: 1px solid #3E4957; }
-.candidate .entity__header--top {
-  border-color: #fff;
-  text-decoration: none; }
+  background-color: #3E4957;
+  color: #fff; }
+  .candidate .entity__header .data, .candidate .entity__header .data--label, .candidate .entity__header .data--content,
+  .candidate .entity__header .data--link {
+    color: #fff; }
+  .candidate .entity__header a {
+    color: #fff;
+    text-decoration: underline; }
+  .candidate .entity__header .chosen-container a {
+    color: #2678BA; }
 
 .outside__summary .chunk--half {
   margin-bottom: 2em; }
