@@ -94,11 +94,15 @@ td {
 // Simple two-column faux tables using divs
 
 .table__row {
-  @include clearfix();
+  display: table-row;
+}
+
+.table__header {
 }
 
 .table__cell {
-  float: left;
+  display: table-cell;
+  padding: 0 1em;
 }
 
 .table__row--note {
@@ -115,6 +119,7 @@ td {
 // If you're actually using table markup
 
 .table--simple {
+  width: 100%;
   border: none;
   margin-top: .5em;
 
@@ -123,17 +128,20 @@ td {
   }
 
   th,
-  td {
-    padding: .5em 0;
+  td,
+  .table__cell {
+    padding: .5em 1em;
     border-right: none;
   }
 
-  th {
+  th,
+  .table__header {
     font-weight: bold;
     border-bottom: 1px solid $medium-gray;
   }
 
-  td {
+  td,
+  .table__row {
     border-bottom: 1px solid $light-gray;
   }
 

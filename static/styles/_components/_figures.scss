@@ -28,21 +28,6 @@ figure {
   @include span-columns(16);
 }
 
-.figure-group__summary {
-  @include span-columns(8);
-  margin-bottom: 0;
-
-  .table__cell {
-    &:first-of-type {
-      width: 80%;
-    }
-
-    &:last-of-type {
-      width: 20%;
-    }
-  }
-}
-
 .figure-group__controls {
   margin-bottom: 0;
 

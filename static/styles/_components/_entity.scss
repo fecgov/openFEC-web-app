@@ -5,13 +5,11 @@
 }
 
 .entity__header--top {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  padding: 2em 0;
+  padding: 1em 0 0;
 }
 
 .entity__header--bottom {
-  padding: 2em 0;
+  padding: 1em 0;
 }
 
 .entity__header--bio {
@@ -26,11 +24,19 @@
   float: right;
 }
 
-.entity__info {
+.entity__info {  
+  display: table;
+  width: 100%;
+
   dt,
   dd {
-    width: 50%;
-    float: left;
+    display: table-cell;
+    padding: 0;
+    border-bottom: 1px solid $medium-gray;
+  }
+
+  dd {
+    padding: 0 1em;
   }
 }
 
@@ -44,23 +50,28 @@
 // Candidate-specific styles
 
 .candidate {
-  .entity__header {
-    background-color: $licorice;
-    color: #fff;
+  // .entity__header {
+  //   background-color: $licorice;
+  //   color: #fff;
 
-    .data {
-      color: #fff;
-    }
+  //   .data {
+  //     color: #fff;
+  //   }
     
-    a {
-      color: #fff;
-      text-decoration: underline;
-    }
+  //   a {
+  //     color: #fff;
+  //     text-decoration: underline;
+  //   }
 
-    .chosen-container a {
-      color: $blue;
-    }
+  //   .chosen-container a {
+  //     color: $blue;
+  //   }
 
+  // }
+
+  .entity__header {
+    background: $meta-box-color;
+    border-bottom: 1px solid $licorice;
   }
 
   .entity__header--top {

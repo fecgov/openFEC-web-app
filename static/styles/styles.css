@@ -41,12 +41,12 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 39px;
   font-size: 3.9rem;
-  font-weight: 300; }
+  font-weight: 400; }
 
 h2 {
   font-size: 31px;
   font-size: 3.1rem;
-  font-weight: 400; }
+  font-weight: 600; }
 
 h3 {
   font-size: 25px;
@@ -360,13 +360,12 @@ td {
     -moz-osx-font-smoothing: grayscale;
     content: "\e627"; }
 
-.table__row:after {
-  content: "";
-  display: table;
-  clear: both; }
+.table__row {
+  display: table-row; }
 
 .table__cell {
-  float: left; }
+  display: table-cell;
+  padding: 0 1em; }
 
 .table__row--note {
   width: 100%;
@@ -378,18 +377,22 @@ td {
   margin-top: 1em; }
 
 .table--simple {
+  width: 100%;
   border: none;
   margin-top: .5em; }
   .table--simple tr {
     background: none; }
   .table--simple th,
-  .table--simple td {
-    padding: .5em 0;
+  .table--simple td,
+  .table--simple .table__cell {
+    padding: .5em 1em;
     border-right: none; }
-  .table--simple th {
+  .table--simple th,
+  .table--simple .table__header {
     font-weight: bold;
     border-bottom: 1px solid #b3b3b3; }
-  .table--simple td {
+  .table--simple td,
+  .table--simple .table__row {
     border-bottom: 1px solid #D7D7D7; }
 
 ul, ol {
@@ -976,6 +979,48 @@ input[type="submit"],
     margin-left: 0%; }
     .search--large:last-child {
       margin-right: 0; } }
+.tt-dropdown-menu {
+  font-size: 14px;
+  font-size: 1.4rem;
+  background: #fff;
+  top: 32px !important;
+  width: 75% !important;
+  text-align: left;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid #D7D7D7; }
+
+#large-search .tt-dropdown-menu {
+  font-size: 18px;
+  font-size: 1.8rem;
+  top: 70px !important; }
+
+.tt-dropdown-title {
+  display: block;
+  color: #fff;
+  padding: 5px 20px;
+  background: #515A61; }
+
+.tt-suggestions {
+  color: #000; }
+
+.tt-suggestion {
+  padding: 10px 20px;
+  margin-bottom: 0;
+  line-height: 1;
+  border-bottom: 1px solid #D7D7D7; }
+
+.tt-suggestion__office {
+  font-size: 14px;
+  font-size: 1.4rem;
+  float: right;
+  color: #515A61;
+  font-style: italic; }
+
+.tt-cursor {
+  cursor: pointer;
+  background: #2678BA;
+  color: #fff; }
+
 section[aria-hidden="true"],
 .hidden {
   display: none; }
@@ -984,12 +1029,10 @@ section[aria-hidden="true"],
   padding: 2em 0; }
 
 .entity__header--top {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  padding: 2em 0; }
+  padding: 1em 0 0; }
 
 .entity__header--bottom {
-  padding: 2em 0; }
+  padding: 1em 0; }
 
 .entity__header--bio {
   float: left;
@@ -1010,25 +1053,23 @@ section[aria-hidden="true"],
 #time-period-select {
   float: right; }
 
-.entity__info dt,
-.entity__info dd {
-  width: 50%;
-  float: left; }
+.entity__info {
+  display: table;
+  width: 100%; }
+  .entity__info dt,
+  .entity__info dd {
+    display: table-cell;
+    padding: 0;
+    border-bottom: 1px solid #b3b3b3; }
+  .entity__info dd {
+    padding: 0 1em; }
 
 .entity__related-entities dd {
   margin-bottom: 1em; }
 
 .candidate .entity__header {
-  background-color: #3E4957;
-  color: #fff; }
-  .candidate .entity__header .data, .candidate .entity__header .data--label, .candidate .entity__header .data--content,
-  .candidate .entity__header .data--link {
-    color: #fff; }
-  .candidate .entity__header a {
-    color: #fff;
-    text-decoration: underline; }
-  .candidate .entity__header .chosen-container a {
-    color: #2678BA; }
+  background: #FBFBFD;
+  border-bottom: 1px solid #3E4957; }
 .candidate .entity__header--top {
   border-color: #fff;
   text-decoration: none; }
@@ -1090,19 +1131,6 @@ figure {
   width: 66.2783%; }
   .figure-group__graphic:last-child {
     margin-right: 0; }
-
-.figure-group__summary {
-  float: left;
-  display: block;
-  margin-right: 1.16509%;
-  width: 32.55661%;
-  margin-bottom: 0; }
-  .figure-group__summary:last-child {
-    margin-right: 0; }
-  .figure-group__summary .table__cell:first-of-type {
-    width: 80%; }
-  .figure-group__summary .table__cell:last-of-type {
-    width: 20%; }
 
 .figure-group__controls {
   margin-bottom: 0; }
@@ -1741,6 +1769,8 @@ body {
   .page-subsection:last-of-type {
     padding-bottom: 0;
     border-bottom: none; }
+  .page-subsection:first-of-type {
+    padding-top: 0; }
 
 .page-sub-subsection, .figure-group {
   border-bottom: 1px dashed #b3b3b3;
