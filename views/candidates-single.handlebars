@@ -44,34 +44,42 @@
               <dt>Status:</dt>
               <dd>{{ incumbent_challenge }}</dd>
             </div>
+            {{#if primary_committee}}
             <div class="table__row">
-              <dt>Principal Committee:</dt>
-              <dd><a href="{{ principal_committee.url }}">{{ principal_committee.name }}</a></dd>
+              <dt>{{ primary_committee.designation}}:</dt>
+              <dd><a href="{{ primary_committee.url }}">{{ primary_committee.name }}</a></dd>
             </div>
+            {{/if}}
           </dl>
         </div>
       </div>
-      <div class="entity__header--bottom row">
-        <h3>Related Committees</h3>
-        <div class="chunk--half">
-          <h4>Candidate Committees</h4>
-          <dl class="entity__related-entities data">
-            {{#each committees}}
-            <dt>{{ this.designation }}</dt>
-            <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
-            {{/each}}
-          </dl>
+      {{#if related_committees }}
+        <div class="entity__header--bottom row">
+          <h3>Related Committees</h3>
+          {{#if affiliated_committees}}
+          <div class="chunk--half">
+            <h4>Authorized Committees</h4>
+            <dl class="entity__related-entities data">
+              {{#each affiliated_committees}}
+              <dt>{{ this.designation }}</dt>
+              <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
+              {{/each}}
+            </dl>
+          </div>
+          {{/if}}     
+          {{#if other_committees}}
+            <div class="chunk--half">
+              <h4>Other Committees</h4>
+              <dl class="entity__related-entities data">
+                {{#each other_committees}}
+                <dt>{{ this.designation }}</dt>
+                <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
+                {{/each}}
+              </dl>
+            </div>
+          {{/if}}
         </div>
-        <div class="chunk--half">
-          <h4>Other Committees</h4>
-          <dl class="entity__related-entities data">
-            {{#each committees}}
-            <dt>{{ this.designation }}</dt>
-            <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
-            {{/each}}
-          </dl>
-        </div>
-      </div>      
+      {{/if}}
     </div>
   </header>
 
