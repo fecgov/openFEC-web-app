@@ -17,25 +17,42 @@
           </div>
         </div>
         <div class="entity__header--bottom row">
-          <div class="chunk--two-thirds">
-            <h4>Candidate Information</h4>
+          <div class="chunk--half">
             <dl class="entity__info">
-              <dt>Committee ID:</dt>
-              <dd>{{ id }}</dd>
-              <dt>Designation:</dt>
-              <dd>{{ designation }}</dd>
-              <dt>Type:</dt>
-              <dd>{{ type }}</dd>
-              <dt>Party:</dt>
-              <dd>{{ party }}</dd>
-              <dt>Treasurer:</dt>
-              <dd>[ name ]</dd>
-              <dt>Address:</dt>
-              <dd>[ address ]</dd>
+              <div class="table__row">
+                <dt>Committee ID:</dt>
+                <dd>{{ id }}</dd>
+              </div>
+              <div class="table__row">
+                <dt>Designation:</dt>
+                <dd>{{ designation }}</dd>
+              </div>
+              <div class="table__row">
+                <dt>Type:</dt>
+                <dd>{{ type }}</dd>
+              </div>
             </dl>
           </div>
-          <div class="chunk--third">
-            <h4>Related Candidate:</h4>
+          <div class="chunk--half">
+            <dl class="entity__info">
+              <div class="table__row">
+                <dt>Party:</dt>
+                <dd>{{ party }}</dd>
+              </div>
+              <div class="table__row">              
+                <dt>Treasurer:</dt>
+                <dd>[ name ]</dd>
+              </div>
+              <div class="table__row">              
+                <dt>Address:</dt>
+                <dd>[ address ]</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+        <div class="entity__header--bottom row">
+          <div class="chunk--half">
+            <h3>Related Candidates</h3>
             <dl class="entity__related-entities">
               <dt><a href="#">[[ name ]]</a></dt>
             </dl>
