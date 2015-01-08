@@ -28,9 +28,10 @@ module.exports = {
                   designation: '',
                   url: '',
                 },
-                related_committees: false, // Set to true if either affiliated_ and other_ arrays have anything
-                affiliated_committees: [],
-                other_committees: [],
+                related_committees: false, // Set to true if any of these arrays have data
+                authorized_committees: [],
+                leadership_commmittees: [],
+                joint_committees: [],
             };
 
             newCandidateObj.id = results[i].candidate_id;
@@ -52,8 +53,10 @@ module.exports = {
                 }
 
                 if (typeof results[i].elections[0].affiliated_committees !== 'undefined') {
-                  var affiliatedCommittees = [],
-                      otherCommittees = [], 
+                  var committeesAll = [],
+                      committeesA = [],
+                      committeesD = [],
+                      committeesJ = [], 
                       j,
                       len2,
                       newCommitteeObj;                  
@@ -65,29 +68,35 @@ module.exports = {
                         id: '',
                         name: '',
                         designation: '',
+                        designation_code: '',
                         url: ''
                       }
                      
                       newCommitteeObj.id = results[i].elections[0].affiliated_committees[j].committee_id || '';
                       newCommitteeObj.name = results[i].elections[0].affiliated_committees[j].committee_name || '';
                       newCommitteeObj.designation = results[i].elections[0].affiliated_committees[j].designation_full || '';
+                      newCommitteeObj.designation_code = results[i].elections[0].affiliated_committees[j].designation || '';
                       newCommitteeObj.url = '/committees/' + results[i].elections[0].affiliated_committees[j].committee_id || '';
                       
-                      // Sort the committeeObj into the proper array depending on if its authorized
-                      if ( newCommitteeObj.designation === "Authorized by a candidate" ) { // Check if it's authorized
-                        affiliatedCommittees.push(newCommitteeObj);
-                        newCandidateObj.related_committees = true;
-
-                      } 
-                      else {
-                        otherCommittees.push(newCommitteeObj);
-                        newCandidateObj.related_committees = true;
-                      }
-                      
+                      committeesAll.push(newCommitteeObj);
+                      newCandidateObj.related_committees = true;
                     }
                   }
-                  newCandidateObj.affiliated_committees = affiliatedCommittees;
-                  newCandidateObj.other_committees = otherCommittees;
+                  // Sort into the correct array
+                  $.map(committeesAll, function(committee) {
+                    var designationCode = committee.designation_code,
+                        designations = {
+                          A: committeesA,
+                          D: committeesD,
+                          J: committeesJ
+                        };
+                        designationArray = designations[designationCode];
+                        designationArray.push(committee);
+                  })
+
+                  newCandidateObj.authorized_committees = committeesA;
+                  newCandidateObj.leadership_committees = committeesD;
+                  newCandidateObj.joint_committees = committeesJ;
                 }
             }
 

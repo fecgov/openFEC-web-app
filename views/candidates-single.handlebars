@@ -4,6 +4,7 @@
       <div class="entity__header--top row">
         <div class="entity__header--bio">
           <h1>{{ name }}</h1>
+          <h2>Candidate for {{ office }}</h2>
         </div>
         {{!-- <div class="time-period">
           <label for="time-period-select">View records for</label>
@@ -16,10 +17,6 @@
       <div class="entity__header--bottom row">
         <div class="chunk--third">
           <dl class="entity__info data">
-            <div class="table__row">
-              <dt>Office Sought:</dt>
-              <dd>{{ office }}</dd>
-            </div>
             <div class="table__row">
               <dt>Party:</dt>
               <dd>{{ party }}</dd>
@@ -44,40 +41,38 @@
               <dt>Status:</dt>
               <dd>{{ incumbent_challenge }}</dd>
             </div>
-            {{#if primary_committee}}
-            <div class="table__row">
-              <dt>{{ primary_committee.designation}}:</dt>
-              <dd><a href="{{ primary_committee.url }}">{{ primary_committee.name }}</a></dd>
-            </div>
-            {{/if}}
           </dl>
         </div>
       </div>
       {{#if related_committees }}
         <div class="entity__header--bottom row">
-          <h3>Related Committees</h3>
-          {{#if affiliated_committees}}
+          <h3>Related Commitees</h3>
           <div class="chunk--half">
-            <h4>Authorized Committees</h4>
-            <dl class="entity__related-entities data">
+            {{#if primary_committee}}
+              <h4>Principal Campaign Committee</h4>
+              <p><a href="{{ primary_committee.url }}">{{ primary_committee.name }}</a></p>
+            {{/if}}
+            {{#if authorized_committees}}
+              <h4>Authorized Committees</h4>
               {{#each affiliated_committees}}
-              <dt>{{ this.designation }}</dt>
-              <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
+                <p><a href="{{ this.nameURL }}">{{ this.name }}</a></p>
               {{/each}}
-            </dl>
+            {{/if}}
           </div>
-          {{/if}}     
-          {{#if other_committees}}
-            <div class="chunk--half">
-              <h4>Other Committees</h4>
-              <dl class="entity__related-entities data">
-                {{#each other_committees}}
-                <dt>{{ this.designation }}</dt>
-                <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
-                {{/each}}
-              </dl>
-            </div>
-          {{/if}}
+          <div class="chunk--half">
+            {{#if leadership_committees}}
+              <h4>Leadership PACs</h4>
+              {{#each leadership_committees}}
+                <p><a href="{{ this.nameURL }}">{{ this.name }}</a></p>
+              {{/each}}
+            {{/if}}
+            {{#if joint_committees}}
+              <h4>Joint Fundraising Committees</h4>
+              {{#each joint_committees}}
+                <p><a href="{{ this.nameURL }}">{{ this.name }}</a></p>
+              {{/each}}
+            {{/if}}
+          </div>          
         </div>
       {{/if}}
     </div>
