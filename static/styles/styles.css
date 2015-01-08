@@ -1148,12 +1148,6 @@ figure {
 .finance-table .table__row {
   border-bottom: 1px dashed #b3b3b3;
   padding: 1em 0; }
-.finance-table .table__cell:nth-child(1) {
-  width: 45%; }
-.finance-table .table__cell:nth-child(2) {
-  width: 25%; }
-.finance-table .table__cell:nth-child(3) {
-  width: 30%; }
 .finance-table .table__row--note {
   padding-top: 1em; }
 
