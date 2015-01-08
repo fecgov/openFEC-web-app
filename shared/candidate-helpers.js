@@ -22,11 +22,15 @@ module.exports = {
                 district: '',
                 incumbent_challenge: '',
                 nameURL: '',
-                committees: [],
-                principal_committee: {
+                primary_committee: {
+                  id: '',
                   name: '',
+                  designation: '',
                   url: '',
                 },
+                related_committees: false, // Set to true if either affiliated_ and other_ arrays have anything
+                affiliated_committees: [],
+                other_committees: [],
             };
 
             newCandidateObj.id = results[i].candidate_id;
@@ -39,36 +43,57 @@ module.exports = {
                 newCandidateObj.election = results[i].elections[0].election_year || '';
                 newCandidateObj.state = results[i].elections[0].state || '';
                 newCandidateObj.district = results[i].elections[0].district || '';
+
+                if (typeof results[i].elections[0].primary_committee !== 'undefined') {
+                  newCandidateObj.primary_committee.id = results[i].elections[0].primary_committee.committee_id || '';
+                  newCandidateObj.primary_committee.name = results[i].elections[0].primary_committee.committee_name || '';
+                  newCandidateObj.primary_committee.designation = results[i].elections[0].primary_committee.designation_full || '';
+                  newCandidateObj.primary_committee.url = '/committees/' + results[i].elections[0].primary_committee.committee_id || '';                
+                }
+
+                if (typeof results[i].elections[0].affiliated_committees !== 'undefined') {
+                  var affiliatedCommittees = [],
+                      otherCommittees = [], 
+                      j,
+                      len2,
+                      newCommitteeObj;                  
+                  len2 = results[i].elections[0].affiliated_committees.length;
+                  
+                  for ( j = 0; j < len2; j++ ) {
+                    if ( results[i].elections[0].affiliated_committees[j].designation !== "U") { // Ignore unauthorized
+                      newCommitteeObj = {
+                        id: '',
+                        name: '',
+                        designation: '',
+                        url: ''
+                      }
+                     
+                      newCommitteeObj.id = results[i].elections[0].affiliated_committees[j].committee_id || '';
+                      newCommitteeObj.name = results[i].elections[0].affiliated_committees[j].committee_name || '';
+                      newCommitteeObj.designation = results[i].elections[0].affiliated_committees[j].designation_full || '';
+                      newCommitteeObj.url = '/committees/' + results[i].elections[0].affiliated_committees[j].committee_id || '';
+                      
+                      // Sort the committeeObj into the proper array depending on if its authorized
+                      if ( newCommitteeObj.designation === "Authorized by a candidate" ) { // Check if it's authorized
+                        affiliatedCommittees.push(newCommitteeObj);
+                        newCandidateObj.related_committees = true;
+
+                      } 
+                      else {
+                        otherCommittees.push(newCommitteeObj);
+                        newCandidateObj.related_committees = true;
+                      }
+                      
+                    }
+                  }
+                  newCandidateObj.affiliated_committees = affiliatedCommittees;
+                  newCandidateObj.other_committees = otherCommittees;
+                }
             }
 
             if (typeof results[i].name !== 'undefined') {
                 newCandidateObj.name = results[i].name.full_name || '';
             }
-
-            if (typeof results.committee !== 'undefined') {
-              // Use the committee context builder for to build an array of committees
-              newCandidateObj.committees = committeeHelpers.buildCommitteeContext(results.committee);
-
-              // Go find the principal committee and add that property for easy reference
-              var j,
-                  len2;
-              len2 = results.committee.length;
-
-              for ( j = 0; j < len2; j++ ) {
-                var k,
-                    len3;
-                len3 = results.committee[j].candidates.length;
-
-                for (k = 0; k < len3; k++) {
-                  if (results.committee[j].candidates[k].candidate_id === results[i].candidate_id &&
-                    results.committee[j].candidates[k].designation_full === "Principal campaign committee") {
-                      newCandidateObj.principal_committee.name = results.committee[j].name;
-                      newCandidateObj.principal_committee.url = '/committees/' + results.committee[j].committee_id;
-                  }
-                }
-              }
-            }
-            // console.log(newCandidateObj);
             candidates.push(newCandidateObj);
         }
         return candidates;
