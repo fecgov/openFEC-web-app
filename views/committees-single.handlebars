@@ -4,21 +4,18 @@
         <div class="entity__header--top row">
           <div class="entity__header--bio">
             <h1>{{ name }}</h1>
-            <ul class="entity__meta">
-              <li>Committee for: <a href="#">[ candidate name ]</a></li>
-            </ul>
           </div>
-          <div class="time-period">
+          {{!-- <div class="time-period">
             <label for="time-period-select">View records for</label>
             <select id="time-period-select" class="chosen-select">
               <option>2012-2014</option>
               <option>2010-2012</option>
             </select>
-          </div>
+          </div> --}}
         </div>
         <div class="entity__header--bottom row">
           <div class="chunk--half">
-            <dl class="entity__info">
+            <dl class="entity__info data">
               <div class="table__row">
                 <dt>Committee ID:</dt>
                 <dd>{{ id }}</dd>
@@ -31,33 +28,43 @@
                 <dt>Type:</dt>
                 <dd>{{ type }}</dd>
               </div>
+              {{#if organization}}
+                <div class="table__row">
+                  <dt>Organization Type:</dt>
+                  <dd>{{ organization }}</dd>
+                </div>
+              {{/if}}
             </dl>
           </div>
           <div class="chunk--half">
-            <dl class="entity__info">
-              <div class="table__row">
-                <dt>Party:</dt>
-                <dd>{{ party }}</dd>
-              </div>
+            <dl class="entity__info data">
+              {{#if party}}
+                <div class="table__row">
+                  <dt>Party:</dt>
+                  <dd>{{ party }}</dd>
+                </div>
+              {{/if}}
               <div class="table__row">              
                 <dt>Treasurer:</dt>
-                <dd>[ name ]</dd>
+                <dd>{{ treasurer }}</dd>
               </div>
               <div class="table__row">              
                 <dt>Address:</dt>
-                <dd>[ address ]</dd>
+                <dd>{{ address.street_1 }}{{#if address.street_2}},{{/if}}, {{address.city}}, {{address.state}} {{address.zip}}</dd>
               </div>
             </dl>
           </div>
         </div>
-        <div class="entity__header--bottom row">
-          <div class="chunk--half">
-            <h3>Related Candidates</h3>
-            <dl class="entity__related-entities">
-              <dt><a href="#">[[ name ]]</a></dt>
-            </dl>
+        {{#if candidates}}
+          <div class="entity__header--bottom row">
+            <div class="chunk--half">
+              <h3>Related Candidates</h3>
+              {{#each candidates}}
+                <p><a href="{{ this.url }}">{{ this.name }}</a></p>
+              {{/each}}
+            </div>
           </div>
-        </div>
+        {{/if}}
       </div>
     </header>
     <nav class="page-tabs">

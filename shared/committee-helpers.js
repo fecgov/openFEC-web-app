@@ -22,7 +22,9 @@ module.exports = {
                 type: '',
                 designation: '',
                 organization: '',
-                nameURL: ''
+                address: {},
+                nameURL: '',
+                candidates: [],
             };
 
             committee = results[i];
@@ -42,6 +44,7 @@ module.exports = {
 
             if (typeof committee.address !== 'undefined') {
                 newCommitteeObj.state = committee.address.state || '';
+                newCommitteeObj.address = committee.address || '';
             }
 
             if (typeof committee.description !== 'undefined') {
@@ -50,7 +53,32 @@ module.exports = {
                 newCommitteeObj.organization = committee.description.organization_type_full || '';
             }
 
+            if (typeof committee.candidates !== 'undefined') {
+                var j,
+                    len2,
+                    newCandidateObj;
+                len2 = committee.candidates.length;
+
+                for ( j = 0; j < len2; j++ ) {
+                    candidate = committee.candidates[j];
+                    console.log(candidate);
+                    
+                    newCandidateObj = {
+                        id: '',
+                        name: '',
+                        office: '',
+                        url: '',
+                    }
+
+                    newCandidateObj.id = candidate.candidate_id || '';
+                    newCandidateObj.name = candidate.candidate_name || '';
+                    // newCandidateObj.office = candidate.office || '';
+                    newCandidateObj.url = '/candidates/' + candidate.candidate_id || '';
+                    newCommitteeObj.candidates.push(newCandidateObj);
+                }
+            }
             committees.push(newCommitteeObj);
+            // console.log(newCommitteeObj);
         }
 
         return committees;
