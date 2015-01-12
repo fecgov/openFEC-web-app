@@ -1055,9 +1055,14 @@ section[aria-hidden="true"],
   float: left;
   display: block;
   margin-right: 1.16509%;
-  width: 24.12618%; }
+  width: 15.69576%; }
   .time-period:last-child {
     margin-right: 0; }
+  .time-period .chosen-container-single .chosen-single {
+    font-size: 14px;
+    font-size: 1.4rem;
+    height: 32px;
+    line-height: 32px; }
 
 #time-period-select {
   float: right; }

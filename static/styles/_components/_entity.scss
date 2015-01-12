@@ -25,7 +25,12 @@
 }
 
 .time-period {
-  @include span-columns(6);
+  @include span-columns(4);
+  .chosen-container-single .chosen-single  {
+    @include font-size(1.4);
+    height: 32px;
+    line-height: 32px;
+  }
 }
 
 #time-period-select {
