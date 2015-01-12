@@ -3,8 +3,8 @@
     <div class="container">
       <div class="entity__header--top row">
         <div class="entity__header--bio">
-          <h1>{{ name }}</h1>
-          <h2>Candidate for {{ office }}</h2>
+          <span class="entity__type">Candidate for {{ office }}</span>
+          <h1 class="entity__name">{{ name }}</h1>
         </div>
         {{!-- <div class="time-period">
           <label for="time-period-select">View records for</label>
@@ -15,70 +15,72 @@
         </div> --}}
       </div>
       <div class="entity__header--bottom row">
-        <div class="chunk--third">
-          <dl class="entity__info data">
-            <div class="table__row">
-              <dt>Party:</dt>
-              <dd>{{ party }}</dd>
-            </div>
-            <div class="table__row">
-              <dt>State:</dt>
-              <dd>{{ state }}</dd>
-            </div>
-            <div class="table__row">
-              <dt>District</dt>
-              <dd>{{ district }}</dd>
-            </div>
-          </dl>
-        </div>
-        <div class="chunk--two-thirds">
-          <dl class="entity__info data">
-            <div class="table__row">
-              <dt>Candidate ID:</dt>
-              <dd>{{ id }}</dd>
-            </div>
-            <div class="table__row">
-              <dt>Status:</dt>
-              <dd>{{ incumbent_challenge }}</dd>
-            </div>
-            <div class="table__row">
-              <dt>Statement of Candidacy:</dt>
-              <dd>View filing &raquo;</dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-      {{#if related_committees }}
-        <div class="entity__header--bottom row">
-          <h3>Related Commitees</h3>
-          <div class="chunk--half">
+        <ul class="entity__info">
+          <li>
+            <h4 class=>Party</h4>
+            <span>{{ party }}</span>
+          </li>
+          <li>
+            <h4>Status</h4>
+            <span>{{ incumbent_challenge }}</span>
+          </li>
+          <li>
+            <h4>District</h4>
+            <span>{{ state }} {{#if district}}- {{district}} {{/if}}</span>
+          </li>
+          <li>
+            <h4>Candidate ID</h4>
+            <span>{{ id }}</span>
+          </li>
+          <li class="entity__term--wide">
+            <h4>Statement of Candidacy</h4>
+            <span>View filing &raquo;</span>
+          </li>
+        </ul>
+        {{!-- {{#if related_committees }} --}}
+        <ul class="entity__info entity__related-entities">
+          <li class="entity__term--extra-wide">
+            <h4>Related Committees</h4>
             {{#if primary_committee}}
-              <h4>Principal Campaign Committee</h4>
-              <p><a href="{{ primary_committee.url }}">{{ primary_committee.name }}</a></p>
+            <dl>
+              <dt>Principal Campaign Committee</dt>
+              <dd><a href="{{ primary_committee.url }}">{{ primary_committee.name }}</a></dd>
+            </dl>
             {{/if}}
             {{#if authorized_committees}}
-              <h4>Authorized Committees</h4>
+            <dl>
+              <dt>Authorized Committees</dt>
               {{#each affiliated_committees}}
-                <p><a href="{{ this.nameURL }}">{{ this.name }}</a></p>
+              <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
               {{/each}}
+            </dl>
             {{/if}}
-          </div>
-          <div class="chunk--half">
+
             {{#if leadership_committees}}
-              <h4>Leadership PACs</h4>
+            <dl>
+              <dt>Leadership PACs</dt>
               {{#each leadership_committees}}
-                <p><a href="{{ this.nameURL }}">{{ this.name }}</a></p>
+              <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
               {{/each}}
+            </dl>
             {{/if}}
+
             {{#if joint_committees}}
-              <h4>Joint Fundraising Committees</h4>
+            <dl>
+              <dt>Joint Fundraising Committees</dt>
               {{#each joint_committees}}
-                <p><a href="{{ this.nameURL }}">{{ this.name }}</a></p>
+              <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
               {{/each}}
-            {{/if}}
-          </div>          
-        </div>
-      {{/if}}
+            </dl>
+            {{/if}}            
+          </li>
+
+          <li class="entity__term--wide">
+            <h4>Elections</h4>
+            <span>{{ election }}</span>
+          </li>
+        </ul>
+      {{!-- {{/if}} --}}
     </div>
   </header>
 

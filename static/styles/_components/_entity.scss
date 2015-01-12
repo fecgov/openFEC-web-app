@@ -6,14 +6,22 @@
 
 .entity__header--top {
   padding: 1em 0 0;
-}
-
-.entity__header--bottom {
-  padding: 1em 0;
+  border-bottom: 4px solid #99A4B1;
 }
 
 .entity__header--bio {
   @include span-columns(18);
+}
+
+.entity__type {
+  @include font-size(1.6);
+  display: inline-block;
+  color: $licorice;
+  background-color: #99A4B1;
+  font-weight: bold;
+  padding: .25em .5em;
+  border-radius: 4px;
+  margin: 0 0 .625em 0;
 }
 
 .time-period {
@@ -24,24 +32,41 @@
   float: right;
 }
 
-.entity__info {  
-  display: table;
+.entity__info {
+  @include clearfix(); 
+  @include font-size(1.6); 
+  margin: 1.25em 0;
   width: 100%;
 
-  dt,
-  dd {
-    display: table-cell;
-    padding: 0;
+  li {
+    @include span-columns(4);
   }
 
-  dd {
-    padding: 0 1em;
+  .entity__term--wide {
+    @include span-columns(8);
+  }
+
+  .entity__term--extra-wide {
+    @include span-columns(16);
+  }
+
+  h4 {
+    color: #99A4B1;
+    border-bottom: 1px solid #99A4B1;
+  }
+
+  dl {
+    margin: 0;
   }
 }
 
 .entity__related-entities {
+  dl {
+    @include span-columns(8 of 16);
+  }
+
   dd {
-    margin-bottom: 1em;
+    @include font-size(1.4);
   }
 }
 
@@ -53,10 +78,6 @@
     background-color: $licorice;
     color: #fff;
 
-    .data {
-      color: #fff;
-    }
-    
     a {
       color: #fff;
       text-decoration: underline;

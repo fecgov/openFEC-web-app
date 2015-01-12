@@ -1029,10 +1029,8 @@ section[aria-hidden="true"],
   padding: 2em 0; }
 
 .entity__header--top {
-  padding: 1em 0 0; }
-
-.entity__header--bottom {
-  padding: 1em 0; }
+  padding: 1em 0 0;
+  border-bottom: 4px solid #99A4B1; }
 
 .entity__header--bio {
   float: left;
@@ -1041,6 +1039,17 @@ section[aria-hidden="true"],
   width: 74.70873%; }
   .entity__header--bio:last-child {
     margin-right: 0; }
+
+.entity__type {
+  font-size: 16px;
+  font-size: 1.6rem;
+  display: inline-block;
+  color: #3E4957;
+  background-color: #99A4B1;
+  font-weight: bold;
+  padding: .25em .5em;
+  border-radius: 4px;
+  margin: 0 0 .625em 0; }
 
 .time-period {
   float: left;
@@ -1054,24 +1063,55 @@ section[aria-hidden="true"],
   float: right; }
 
 .entity__info {
-  display: table;
+  font-size: 16px;
+  font-size: 1.6rem;
+  margin: 1.25em 0;
   width: 100%; }
-  .entity__info dt,
-  .entity__info dd {
-    display: table-cell;
-    padding: 0; }
-  .entity__info dd {
-    padding: 0 1em; }
+  .entity__info:after {
+    content: "";
+    display: table;
+    clear: both; }
+  .entity__info li {
+    float: left;
+    display: block;
+    margin-right: 1.16509%;
+    width: 15.69576%; }
+    .entity__info li:last-child {
+      margin-right: 0; }
+  .entity__info .entity__term--wide {
+    float: left;
+    display: block;
+    margin-right: 1.16509%;
+    width: 32.55661%; }
+    .entity__info .entity__term--wide:last-child {
+      margin-right: 0; }
+  .entity__info .entity__term--extra-wide {
+    float: left;
+    display: block;
+    margin-right: 1.16509%;
+    width: 66.2783%; }
+    .entity__info .entity__term--extra-wide:last-child {
+      margin-right: 0; }
+  .entity__info h4 {
+    color: #99A4B1;
+    border-bottom: 1px solid #99A4B1; }
+  .entity__info dl {
+    margin: 0; }
 
+.entity__related-entities dl {
+  float: left;
+  display: block;
+  margin-right: 1.75788%;
+  width: 49.12106%; }
+  .entity__related-entities dl:last-child {
+    margin-right: 0; }
 .entity__related-entities dd {
-  margin-bottom: 1em; }
+  font-size: 14px;
+  font-size: 1.4rem; }
 
 .candidate .entity__header {
   background-color: #3E4957;
   color: #fff; }
-  .candidate .entity__header .data, .candidate .entity__header .data--label, .candidate .entity__header .data--content,
-  .candidate .entity__header .data--link {
-    color: #fff; }
   .candidate .entity__header a {
     color: #fff;
     text-decoration: underline; }
