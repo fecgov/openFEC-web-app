@@ -12,7 +12,6 @@ var progress = require('./modules/progress.js');
 var errors = require('./modules/errors.js');
 var router = require('./modules/router.js');
 var typeahead = require('./modules/typeahead.js');
-//var mocks = require('../../tests/mocks/mocks.js');
 
 api.init();
 search.init();

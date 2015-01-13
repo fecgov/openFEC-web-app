@@ -69,7 +69,7 @@ var loadSingleEntity = function(e) {
     promiseResolved(data, 'render:singleEntity', e);
   }).fail(function() {
     events.emit('err:load:singleEntity');
-  })
+  });
 }
 
 var loadSearchResultsList = function(e) {
