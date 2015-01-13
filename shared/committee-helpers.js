@@ -60,9 +60,7 @@ module.exports = {
                 len2 = committee.candidates.length;
 
                 for ( j = 0; j < len2; j++ ) {
-                    candidate = committee.candidates[j];
-                    console.log(candidate);
-                    
+                    candidate = committee.candidates[j];                    
                     newCandidateObj = {
                         id: '',
                         name: '',
@@ -78,7 +76,6 @@ module.exports = {
                 }
             }
             committees.push(newCommitteeObj);
-            // console.log(newCommitteeObj);
         }
 
         return committees;
