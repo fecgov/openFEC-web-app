@@ -5,7 +5,8 @@ module.exports = {
         var candidates = [],
             i,
             len,
-            newCandidateObj;
+            newCandidateObj,
+            election;
 
         if (typeof results !== 'undefined') {
             len = results.length;
@@ -38,32 +39,35 @@ module.exports = {
             newCandidateObj.nameURL = '/candidates/' + newCandidateObj.id;
 
             if (typeof results[i].elections !== 'undefined') {
-                newCandidateObj.office = results[i].elections[0].office_sought_full || '';
-                newCandidateObj.party = results[i].elections[0].party_affiliation || '';
-                newCandidateObj.incumbent_challenge = results[i].elections[0].incumbent_challenge_full || '';
-                newCandidateObj.election = results[i].elections[0].election_year || '';
-                newCandidateObj.state = results[i].elections[0].state || '';
-                newCandidateObj.district = results[i].elections[0].district || '';
+                election = results[i].elections[0];
 
-                if (typeof results[i].elections[0].primary_committee !== 'undefined') {
-                  newCandidateObj.primary_committee.id = results[i].elections[0].primary_committee.committee_id || '';
-                  newCandidateObj.primary_committee.name = results[i].elections[0].primary_committee.committee_name || '';
-                  newCandidateObj.primary_committee.designation = results[i].elections[0].primary_committee.designation_full || '';
-                  newCandidateObj.primary_committee.url = '/committees/' + results[i].elections[0].primary_committee.committee_id || '';                
+                newCandidateObj.office = election.office_sought_full || '';
+                newCandidateObj.party = election.party_affiliation || '';
+                newCandidateObj.incumbent_challenge = election.incumbent_challenge_full || '';
+                newCandidateObj.election = election.election_year || '';
+                newCandidateObj.state = election.state || '';
+                newCandidateObj.district = election.district || '';
+
+                if (typeof election.primary_committee !== 'undefined') {
+                  newCandidateObj.primary_committee.id = election.primary_committee.committee_id || '';
+                  newCandidateObj.primary_committee.name = election.primary_committee.committee_name || '';
+                  newCandidateObj.primary_committee.designation = election.primary_committee.designation_full || '';
+                  newCandidateObj.primary_committee.url = '/committees/' + election.primary_committee.committee_id || '';
+                  newCandidateObj.related_committees = true;                
                 }
 
-                if (typeof results[i].elections[0].affiliated_committees !== 'undefined') {
+                if (typeof election.affiliated_committees !== 'undefined') {
                   var committeesAll = [],
-                      committeesA = [],
-                      committeesD = [],
-                      committeesJ = [], 
+                      committeesAuthorized = [],
+                      committeesLeadership = [],
+                      committeesJoint = [], 
                       j,
                       len2,
                       newCommitteeObj;                  
-                  len2 = results[i].elections[0].affiliated_committees.length;
+                  len2 = election.affiliated_committees.length;
                   
                   for ( j = 0; j < len2; j++ ) {
-                    if ( results[i].elections[0].affiliated_committees[j].designation !== "U") { // Ignore unauthorized
+                    if ( election.affiliated_committees[j].designation !== "U") { // Ignore unauthorized
                       newCommitteeObj = {
                         id: '',
                         name: '',
@@ -72,11 +76,11 @@ module.exports = {
                         url: ''
                       }
                      
-                      newCommitteeObj.id = results[i].elections[0].affiliated_committees[j].committee_id || '';
-                      newCommitteeObj.name = results[i].elections[0].affiliated_committees[j].committee_name || '';
-                      newCommitteeObj.designation = results[i].elections[0].affiliated_committees[j].designation_full || '';
-                      newCommitteeObj.designation_code = results[i].elections[0].affiliated_committees[j].designation || '';
-                      newCommitteeObj.url = '/committees/' + results[i].elections[0].affiliated_committees[j].committee_id || '';
+                      newCommitteeObj.id = election.affiliated_committees[j].committee_id || '';
+                      newCommitteeObj.name = election.affiliated_committees[j].committee_name || '';
+                      newCommitteeObj.designation = election.affiliated_committees[j].designation_full || '';
+                      newCommitteeObj.designation_code = election.affiliated_committees[j].designation || '';
+                      newCommitteeObj.url = '/committees/' + election.affiliated_committees[j].committee_id || '';
                       
                       committeesAll.push(newCommitteeObj);
                       newCandidateObj.related_committees = true;
@@ -86,17 +90,17 @@ module.exports = {
                   $.map(committeesAll, function(committee) {
                     var designationCode = committee.designation_code,
                         designations = {
-                          A: committeesA,
-                          D: committeesD,
-                          J: committeesJ
+                          A: committeesAuthorized,
+                          D: committeesLeadership,
+                          J: committeesJoint
                         };
                         designationArray = designations[designationCode];
                         designationArray.push(committee);
                   })
 
-                  newCandidateObj.authorized_committees = committeesA;
-                  newCandidateObj.leadership_committees = committeesD;
-                  newCandidateObj.joint_committees = committeesJ;
+                  newCandidateObj.authorized_committees = committeesAuthorized;
+                  newCandidateObj.leadership_committees = committeesLeadership;
+                  newCandidateObj.joint_committees = committeesJoint;
                 }
             }
 
