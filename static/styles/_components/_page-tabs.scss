@@ -1,7 +1,13 @@
 .page-tabs {
-  border-bottom: 1px solid $light-gray;
-  text-align: center;
-  padding: .5em 0 0 0;
+  background: $licorice-2;
+  text-align: left;
+  padding: 0;
+}
+
+.page-tabs__title {
+  @include rem(padding, 1rem 2rem);
+  float: left; 
+  color: #fff;
 }
 
 .page-tabs__item {
@@ -9,20 +15,22 @@
   margin-left: -4px; // Removing extra space from inline-block display
 
   a {
-    @include font-size(1.8);
+    @include font-size(1.6);
+    @include rem(padding, 1rem 2rem);
+    color: #fff;
     display: block;
-    padding: .5em 2em;
-    border-right: 1px solid $medium-gray;
+    border-right: 1px solid #fff;
     text-decoration: none;
 
     &[aria-selected="true"] {
-      border-bottom: .5em solid $blue;
+      background-color: #fff;
+      color: $licorice-2;
     }
   }
 
-  &:last-child {
+  &:first-child {
     a {
-      border-right: none;
+      border-left: 1px solid #fff;
     }
   }
 

@@ -9,19 +9,31 @@ figure {
 
 // Contained in a subsection, this is a group of figures (i.e. for a committee)
 .figure-group {
-  @extend .page-sub-subsection;
-  
-  h5 {
-    margin-bottom: .5em;
-  }
+  @include clearfix();
+  clear: both;
+  background-color: $lightest-gray;
+  border: 1px solid $light-gray;
+  position: relative;
+}
 
-  .table--simple h5 {
-    margin-bottom: 0;
-  }
+.figure-group__header {
+  @include clearfix();
+  @include rem(padding, 2rem 2rem);
+  border-bottom: 1px solid $light-gray;
+}
+
+.figure-group__title {
+  margin: 0;
 }
 
 .figure-group__description {
-  margin-bottom: 2em;
+  @include font-size(1.2);
+  background-color: $dark-gray;
+  color: $lightest-gray;
+}
+
+.figure-group__inner {
+  @include rem(padding, 2rem 2rem);
 }
 
 .figure-group__graphic {
@@ -42,6 +54,10 @@ figure {
   .controls--slider {
     margin-top: 1em;
   }
+}
+
+.figure__title {
+  border-bottom: 1px solid $medium-gray;
 }
 
 // Finance tables like the Key Numbers tables on committee pages

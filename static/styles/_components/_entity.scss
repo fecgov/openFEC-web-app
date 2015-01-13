@@ -6,35 +6,41 @@
 
 .entity__header--top {
   padding: 1em 0 0;
-  border-bottom: 4px solid #99A4B1;
+  border-bottom: 4px solid;
 }
 
-.entity__header--bio {
-  @include span-columns(18);
+.entity__name {
+  @include font-size(3.1);
 }
 
 .entity__type {
   @include font-size(1.6);
   display: inline-block;
-  color: $licorice;
-  background-color: #99A4B1;
   font-weight: bold;
   padding: .25em .5em;
   border-radius: 4px;
   margin: 0 0 .625em 0;
+  text-align: center;
 }
 
 .time-period {
-  @include span-columns(4);
+  float: right;
+
+  label {
+    display: inline-block;
+  }
+
+  .chosen-container {
+    width: auto;
+  }
+
   .chosen-container-single .chosen-single  {
     @include font-size(1.4);
+    display: inline-block;
+    width: 150px;
     height: 32px;
     line-height: 32px;
   }
-}
-
-#time-period-select {
-  float: right;
 }
 
 .entity__info {
@@ -43,26 +49,27 @@
   margin: 1.25em 0;
   width: 100%;
 
-  li {
-    @include span-columns(4);
-  }
-
-  .entity__term--wide {
-    @include span-columns(8);
-  }
-
-  .entity__term--extra-wide {
-    @include span-columns(16);
-  }
-
   h4 {
-    color: #99A4B1;
-    border-bottom: 1px solid #99A4B1;
+    color: $licorice;
+    font-weight: normal;
+    border-bottom: 1px solid $licorice;
   }
 
   dl {
     margin: 0;
   }
+}
+
+.entity__term {
+  @include span-columns(4);
+}
+
+.entity__term--wide {
+  @include span-columns(8);
+}
+
+.entity__term--extra-wide {
+  @include span-columns(16);
 }
 
 .entity__related-entities {
@@ -92,27 +99,55 @@
       color: $blue;
     }
 
-  }
-
-}
-
-
-// Outside spending tab
-.outside__summary {
-  .chunk--half {
-    margin-bottom: 2em;
-  }
-}
-
-.outside__committees {
-
-  .chunk--third {
-    border-right: 1px solid $medium-gray;
-    padding: 0 1em;
-
-    &:last-child {
-      border-right: none;
+    .entity__info h4 {
+      color: #99A4B1;
+      border-bottom: 1px solid #99A4B1;
     }
+
+    .entity__header--top {
+      border-bottom-color: #99A4B1;
+    }
+
+    .entity__type {
+      background-color: #99A4B1;
+      color: $licorice;
+    }
+
+    .entity__term h4 {
+      color: #99A4B1;
+      border-bottom-color: #99A4B1;
+    }
+  }
+}
+
+// Committee summary boxes on the Candidate Financial Summary page
+
+.committee-summary {
+  @include clearfix();
+
+  .row {
+    @include rem(margin-bottom, 2rem);
+  }
+
+  .quick-links {
+    @include span-columns(6);
+  }
+
+  .totals-table {
+    @include span-columns(18);
+  }
+
+  .chart--c-d,    // Cash & debt chart
+  .chart--r-d  {  // Receipts and disbursements chart
+    @include span-columns(24);
+  }
+}
+
+.totals-table {
+  @include font-size(1.6);
+
+  .table__cell:first-child {
+    font-weight: bold;
   }
 }
 
@@ -120,6 +155,20 @@
 .committee {
   .entity__header {
     background-color: $committee-bg;
+  }
+
+  .entity__header--top {
+    border-bottom-color: #63636E;
+  }
+
+  .entity__type {
+    background-color: #63636E;
+    color: $committee-bg;
+  }
+
+  .entity__term h4 {
+    color: #63636E;
+    border-bottom-color: #63636E;
   }
 }
 
