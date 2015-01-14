@@ -95,15 +95,28 @@ td {
 
 .table__row {
   @include clearfix();
+  border-bottom: 1px solid $light-gray;
+}
+
+.table__header {
 }
 
 .table__cell {
+  @include rem(padding, 0 1rem);
+  width: 80%;
   float: left;
+
+  &:last-child {
+    width: 20%;
+  }
 }
 
 .table__row--note {
+  @include font-size(1.4);
+  @include rem(padding, 0 1rem);
   width: 100%;
-  font-weight: normal;
+  padding: .5em 1em;
+  font-style: italic;
   display: block;
 }
 
@@ -112,28 +125,40 @@ td {
   margin-top: 1em;
 }
 
+.table__half {
+  width: 48%;
+  float: left;
+
+  &:last-child {
+    margin-left: 2%;
+  }
+}
+
 // If you're actually using table markup
 
 .table--simple {
+  width: 100%;
   border: none;
-  margin-top: .5em;
 
   tr {
     background: none;
   }
 
   th,
-  td {
-    padding: .5em 0;
+  td,
+  .table__cell {
+    padding: .5em 1em;
     border-right: none;
   }
 
-  th {
+  th,
+  .table__header {
     font-weight: bold;
-    border-bottom: 1px solid $medium-gray;
+    border-bottom: 1px solid $dark-gray;
   }
 
-  td {
+  td,
+  .table__row {
     border-bottom: 1px solid $light-gray;
   }
 

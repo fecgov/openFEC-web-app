@@ -70,6 +70,9 @@ body {
     border-bottom: none;
   }
 
+  &:first-of-type {
+    padding-top: 0;
+  }
 }
 
 .page-sub-subsection {

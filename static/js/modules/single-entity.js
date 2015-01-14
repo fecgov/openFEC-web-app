@@ -4,7 +4,7 @@ var events = require('./events.js');
 
 var initChosen = function() {
     $('.chosen-select').chosen({
-        width: "100%",
+        width: "auto",
         disable_search: true,
     });
 }
