@@ -103,11 +103,10 @@ td {
 
 .table__cell {
   @include rem(padding, 0 1rem);
-  width: 80%;
   float: left;
 
   &:last-child {
-    width: 20%;
+    float: right;
   }
 }
 

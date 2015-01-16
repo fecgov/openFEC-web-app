@@ -1,4 +1,26 @@
-var committeeHelpers = require('./committee-helpers.js');
+var _ = require('underscore');
+
+var buildTotalsSummaryContext = function(results) {
+    var totals = {},
+        totalReceipts = results.totals[0].receipts,
+        totalDisbursements = results.totals[0].disbursements,
+        totalCash = results.reports[0].cash_on_hand_end_period,
+        totalDebt = results.reports[0].debts_owed_by_committee,
+        yearsTotals = results.totals[0].cycle - 1 + ' - ' + results.totals[0].cycle,
+        reportYear = results.reports[0].report_year,
+        reportDesc = results.reports[0].report_type_full;
+
+    // a total can be 0, which returns false, giving incorrect "unavailable"s if we don't do it this way [ts]
+    totals.total_receipts = typeof totalReceipts !== 'undefined'? '$' + totalReceipts : 'unavailable';
+    totals.total_disbursements = typeof totalDisbursements !== 'undefined' ? '$' + totalDisbursements : 'unavailable';
+    totals.total_cash = typeof totalCash !== 'undefined' ? '$' + totalCash : 'unavailable';
+    totals.total_debt = typeof totalDebt !== 'undefined' ? '$' + totalDebt : 'unavailable';
+    totals.years_totals = yearsTotals;
+    totals.report_year = reportYear;
+    totals.report_desc = 'the ' + reportDesc.replace(/{.+}/, '') + reportYear + ' report';
+
+    return totals;
+}
 
 module.exports = {
     buildCandidateContext: function(results) {
@@ -107,6 +129,11 @@ module.exports = {
             if (typeof results[i].name !== 'undefined') {
                 newCandidateObj.name = results[i].name.full_name || '';
             }
+
+            if (typeof results[i].totals !== 'undefined') {
+                newCandidateObj = _.extend(newCandidateObj, buildTotalsSummaryContext(results[i]));
+            }
+
             candidates.push(newCandidateObj);
         }
         return candidates;

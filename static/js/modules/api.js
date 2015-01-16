@@ -1,6 +1,7 @@
 'use strict';
 
-var events = require('./events.js');
+var events = require('./events.js'),
+    _ = require('underscore');
 
 var entityMap = {
     'candidates': 'candidate',
@@ -52,6 +53,31 @@ var promiseResolved = function(data, eventName, e) {
     events.emit(eventName, e);
 }
 
+var condenseResults = function(args, e) {
+    var i,
+        len = args.length,
+        results = {};
+    e.data = {};
+    e.data.results = [];
+
+    for (i = 0; i < len; i++) {
+        if (typeof args[i][0] === 'string') {
+            args[i][0] = JSON.parse(args[i][0]);
+        }
+
+        if (_.isEmpty(results)) {
+            results = args[i].results[0];
+        }
+        else {
+            results = _.extend(results, args[i].results[0]);
+        }
+    }
+
+    e.data.results.push(results);
+
+    return e;
+}
+
 var filterLoadHandler = function(e) {
     var url = buildURL(e),
         promise = callAPI(url);
@@ -64,6 +90,34 @@ var filterLoadHandler = function(e) {
 };
 
 var loadSingleEntity = function(e) {
+    if (e.category === 'candidate') {
+        loadCandidate(e);
+    }
+    else {
+        loadCommittee(e);
+    }
+}
+
+var loadCandidate = function(e) {
+    var candidatePromise = callAPI(buildURL(e));
+
+    candidatePromise.done(function(data) {
+        var totalsPromises = [],
+            cycle = data.results[0].elections[0].election_year;
+
+        totalsPromises.push(callAPI('/rest/total/' + data.results[0].elections[0].primary_committee.committee_id + '?election_cycle=' + cycle));
+        $.when.apply($, totalsPromises).done(function() {
+            e = condenseResults([data, arguments[0]], e);
+            events.emit('render:singleEntity', e);
+        }).fail(function() {
+            events.emit('err:load:singleEntity');
+        });
+    }).fail(function() {
+        events.emit('err:load:singleEntity');
+    });
+}
+
+var loadCommittee = function(e) {
   var promise = callAPI(buildURL(e));
   promise.done(function(data) {
     promiseResolved(data, 'render:singleEntity', e);
@@ -82,19 +136,18 @@ var loadSearchResultsList = function(e) {
         promises.push(callAPI('rest/' + entitiesArray[i] + '?q=' + encodeURIComponent(e.query) + '&per_page=5'));
     }
 
-
     $.when.apply($, promises).done(function() {
         var i,
             len = arguments.length;
-        e.results = {};
+        e.data = {}
+        e.data.results = {};
 
         for (i = 0; i < len; i++) {
             if (typeof arguments[i][0] === 'string') {
                 arguments[i][0] = JSON.parse(arguments[i][0]);
             }
-            e.results[entitiesArray[i]] = arguments[i][0].results;
+            e.data.results[entitiesArray[i]] = arguments[i][0].results;
         }
-
         events.emit('render:searchResultsList', e);
     }).fail(function() {
         events.emit('err:load:searchResultsList');

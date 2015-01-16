@@ -75,6 +75,7 @@ module.exports = {
                     newCommitteeObj.candidates.push(newCandidateObj);
                 }
             }
+
             committees.push(newCommitteeObj);
         }
 
