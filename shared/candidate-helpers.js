@@ -87,7 +87,7 @@ module.exports = {
                     }
                   }
                   // Sort into the correct array
-                  _.map(committeesAll, function(committee) {
+                  $.map(committeesAll, function(committee) {
                     var designationCode = committee.designation_code,
                         designations = {
                           A: committeesAuthorized,
