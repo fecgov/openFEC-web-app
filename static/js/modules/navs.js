@@ -42,7 +42,8 @@ module.exports = {
         events.on('load:browse', unhideNav);
         events.on('render:landingView', hideNav);
         events.on('search:submitted', unhideNav);
-
+        events.on('render:singleEntity', unhideNav);
+        
         if (typeof section !== 'undefined') {
             changeActiveNavLink(section);
         }

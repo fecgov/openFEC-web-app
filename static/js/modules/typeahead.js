@@ -14,10 +14,10 @@ var filterCandidates = function(result) {
     "P": "President"
   }
 
-  officeFull = officeMap[result.elections[0].office_sought];
+  officeFull = officeMap[result.office_sought];
 
   filteredResults =   {
-    name: result.name.full_name,
+    name: result.name,
     id: result.candidate_id,
     office: officeFull
   }
@@ -39,24 +39,17 @@ module.exports = {
         candidateSuggestion,
         committeeSuggestion,
         headerTpl;
-
+    
     // Creating a candidate suggestion engine
     candidateEngine = new Bloodhound({
       name: 'Candidates',
-      prefetch: {
-        url: "/js/data/candidates_2014.json", // Prefetch all 2014 candidates
-        filter: function(response) {
-          var results = $.map(response.results, function(result){
-            return filterCandidates(result);
-          });
-          return results;
-        }
-      },
       remote: {
-        url: "/rest/candidate?name=%QUERY&fields=name,candidate_id,office_sought",
+        url: "/rest/name?q=%QUERY",
         filter: function(response) {
           var results = $.map(response.results, function(result){
-            return filterCandidates(result);
+            if ( result.candidate_id !== null ) {
+              return filterCandidates(result);
+            }            
           });
           return results;
         }
@@ -66,32 +59,20 @@ module.exports = {
         return tokens;
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      // dupDetector: function(remoteMatch, localMatch) {
-      //   return remoteMatch.name === localMatch.name;
-      // },
-      limit: 5
+      limit: 3
     });
-
-    candidateEngine.clearPrefetchCache();
     candidateEngine.initialize();
 
     // Committee Engine
     committeeEngine = new Bloodhound({
       name: 'Committees',
-      prefetch: {
-        url: "/js/data/committees_p.json", // Prefetch 2000 Principal committees
-        filter: function(response) {
-          var results = $.map(response.results, function(result) {
-            return filterCommittees(result);
-          });
-          return results;
-        }
-      },
       remote: {
-        url: "/rest/committee?name=%QUERY&fields=name,committee_id",
+        url: "/rest/name?q=%QUERY",
         filter: function(response) {
           var results = $.map(response.results, function(result) {
-            return filterCommittees(result);
+            if ( result.committee_id !== null ) {
+              return filterCommittees(result);              
+            }
           });
           return results;
         }
@@ -104,10 +85,9 @@ module.exports = {
       dupDetector: function(remoteMatch, localMatch) {
         return remoteMatch.name === localMatch.name;
       },
-      limit: 5
+      limit: 3
     });
 
-    committeeEngine.clearPrefetchCache();
     committeeEngine.initialize();
 
     // Templates for results
@@ -140,7 +120,8 @@ module.exports = {
         suggestion: committeeSuggestion,
         header: headerTpl('Committees'),
       }
-    });
+    }
+    );
 
     $('.twitter-typeahead').css({
       display: 'block',
