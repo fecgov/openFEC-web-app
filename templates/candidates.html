@@ -1,3 +1,10 @@
+{% extends 'layouts/main.html' %}
+
+{% block header %}
+    {% include 'partials/page-nav.html' %}
+{% endblock %}
+
+{% block body %}
 <div class="container">
 
   <section class="page-section">
@@ -263,7 +270,8 @@
       </div>
 
       <div id="candidates">
-          {{> candidates-table}}
+          {% include 'partials/candidates-table.html' %}
       </div>
   </section>
-</div>    
+</div>
+{% endblock %} 

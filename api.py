@@ -16,3 +16,10 @@ def load_search_results(query):
         'candidates': json.loads(candidates.text),
         'committees': json.loads(committees.text)
     }
+
+def load_candidates():
+    filters = {'fields': '*'}
+    candidates = requests.get(api_location + '/candidate',
+        params=filters)
+
+    return json.loads(candidates.text)
