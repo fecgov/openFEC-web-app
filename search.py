@@ -14,8 +14,12 @@ def get_search_results(query):
 
     return render_template('search-results.html', **locals())
 
-def get_candidates():
-    results = load_candidates()
+def get_candidates(params):
+    # move from immutablemultidict -> multidict -> dict
+    params = params.copy().to_dict()
+    params['fields'] = '*'
+
+    results = load_candidates(params)
     candidates = []
     heading = "Browse candidates"
 
@@ -41,7 +45,7 @@ def convert_candidates(c):
         'election': int(c['elections'][0]['election_year']),
         'party': c['elections'][0]['party_affiliation'],
         'state': c['elections'][0]['state'],
-        'district': int(c['elections'][0]['district']),
+        'district': int(c['elections'][0]['district']) if c['elections'][0]['district'] else '',
         'nameURL': '/candidates/' + c['candidate_id'],
         'id': c['candidate_id']
     }

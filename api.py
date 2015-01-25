@@ -17,8 +17,7 @@ def load_search_results(query):
         'committees': json.loads(committees.text)
     }
 
-def load_candidates():
-    filters = {'fields': '*'}
+def load_candidates(filters):
     candidates = requests.get(api_location + '/candidate',
         params=filters)
 

@@ -18,12 +18,11 @@ def search():
 
 @app.route('/candidates')
 def candidates():
-    return get_candidates()
+    return get_candidates(request.args)
 
 @app.route('/committees')
 def committees():
     return get_committees()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port,  debug=True)
-
+    app.run(host='0.0.0.0', port=port, debug=True)
