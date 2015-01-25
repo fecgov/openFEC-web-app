@@ -10,9 +10,9 @@ def home_page():
 
 @app.route('/search')
 def search():
-    search_query = request.args.get('search')
-    if search_query:
-        return get_search_results(search_query)
+    query = request.args.get('search')
+    if query:
+        return get_search_results(query)
     else:
         return home_page()
 

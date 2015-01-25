@@ -1,23 +1,23 @@
-{{#if resultsCount}}
+{% if resultsCount %}
     <div class="meta-box">
         <div id="results-count-first" class="results-count">
           <p>Results: {{resultsCount}} records</p>
-            {{#if resultsRange}}
+            {% if resultsRange %}
                 <p>Viewing: {{currentResultsStart}} - {{currentResultsEnd}}</p>
-            {{/if}}
+            {% endif %}
         </div>
-        {{#if paginationLinks}}
+        {% if paginationLinks %}
             <div class="pagination">
-                {{#if prevURL}}
+                {% if prevURL %}
                     <a href="{{prevURL}}" id="prev" class="pagination__link"><i class="ti-arrow-left"></i> Previous {{perPage}}</a>
-                {{/if}}
-                {{#if nextURL}}
+                {% endif %}
+                {% if nextURL %}
                     <a href="{{nextURL}}" id="next" class="pagination__link">Next {{perPage}} <i class="ti-arrow-right"></i></a>
-                {{/if}}
+                {% endif %}
             </div>
-        {{/if}}
+        {% endif %}
     </div><!--- .meta-box -->
-{{/if}}
+{% endif %}
 
 <table id="results" class="table--sortable">
     <thead>
@@ -32,37 +32,37 @@
         </tr>
     </thead>
     <tbody>
-        {{#each committees}}
+        {% for c in committees %}
             <tr>
-                <td><a class="single-link" data-id="{{ id }}" data-category="committee" href="{{nameURL}}">{{name}}</a></td>
-                <td>{{treasurer}}</td>
-                <td>{{state}}</td>
-                <td>{{party}}</td>
-                <td>{{organization}}</td>
-                <td>{{type}}</td>
-                <td>{{designation}}</td>
+                <td><a class="single-link" data-id="{{ c.id }}" data-category="committee" href="{{c.nameURL}}">{{c.name}}</a></td>
+                <td>{{c.treasurer}}</td>
+                <td>{{c.state}}</td>
+                <td>{{c.party}}</td>
+                <td>{{c.organization}}</td>
+                <td>{{c.type}}</td>
+                <td>{{c.designation}}</td>
             </tr>
-        {{/each}}
+        {% endfor %}
     </tbody>
 </table>
 
-{{#if resultsCount}}
+{% if resultsCount %}
     <div class="meta-box meta-box--bottom">
         <div id="results-count-last" class="results-count">
           <p>Results: {{resultsCount}} records</p>
-            {{#if resultsRange}}
+            {% if resultsRange %}
                 <p>Viewing: {{currentResultsStart}} - {{currentResultsEnd}}</p>
-            {{/if}}
+            {% endif %}
         </div>
-        {{#if paginationLinks}}
+        {% if paginationLinks %}
             <div class="pagination">
-                {{#if prevURL}}
+                {% if prevURL %}
                     <a href="{{prevURL}}" id="prev" class="pagination__link link--icon"><i class="ti-arrow-left"></i> Previous {{perPage}}</a>
-                {{/if}}
-                {{#if nextURL}}
+                {% endif %}
+                {% if nextURL %}
                     <a href="{{nextURL}}" id="next" class="pagination__link link--icon">Next {{perPage}} <i class="ti-arrow-right"></i></a>
-                {{/if}}
+                {% endif %}
             </div>
-        {{/if}}
+        {% endif %}
     </div><!--- .meta-box -->
-{{/if}}
+{% endif %}

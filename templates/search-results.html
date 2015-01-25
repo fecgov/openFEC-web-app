@@ -1,24 +1,28 @@
+{% extends "layouts/main.html" %}
+
+{% block body %}
 <div class="container">
   <section class="data page-section">
-      <h2>Search results{{#if query}}: <span class="text--query">{{query}}</span>{{/if}}</h2>
+      <h2>Search results{% if query %} <span class="text--query">{{query}}</span>{% endif %}</h2>
 
       <div class="page-subsection">
-        {{#if candidates}}
+        {%if candidates %}
             <div class="results-header">
                 <h3>Candidate Results</h3>
                 <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">View all</a>
             </div>
-            {{> candidates-table}}
-        {{/if}}
+            {% include "partials/candidates-table.html" %}
+        {% endif %}
       </div>
       <div class="page-subsection">
-        {{#if committees}}
+        {% if committees %}
             <div class="results-header">
                 <h3>Committees Results</h3>
                 <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">View all</a>
             </div>
-            {{> committees-table}}
-        {{/if}}
+            {% include "partials/committees-table.html" %}
+        {% endif %}
       </div>
   </section>
 </div>
+{% endblock %}
