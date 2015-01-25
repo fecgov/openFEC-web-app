@@ -1,4 +1,5 @@
 *.swp
+*.pyc
 node_modules
 .sass-cache/
 static/js/app.js

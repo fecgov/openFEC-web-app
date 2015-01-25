@@ -3,11 +3,10 @@
 <head>
     <meta charset="utf-8">
     <title>Open FEC Beta</title>
-    <link href="../js/vendor/chosen/chosen.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
+    <link href="static/js/vendor/chosen/chosen.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="../vex-js/css/vex-theme-default.css" />
     <link rel="stylesheet" href="../styles/themify-icons.css">
-    <link href="../styles/styles.css" rel="stylesheet" type="text/css"/>
+    <link href="static/styles/styles.css" rel="stylesheet" type="text/css"/>
     <link href='https://fonts.googleapis.com/css?family=Raleway:300,400,600,700|Open+Sans:300,400,600,700|Source+Code+Pro:400' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
@@ -15,14 +14,14 @@
 
 <header class="site-header">
   <div class="usa">
-    An official website of the United States Government <img src="../img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website">
+    An official website of the United States Government <img src="static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website">
   </div>
   <div class="container site-header__inner">
-    <a class="logo" href="/" title="Home"><img src="../img/brand.svg" alt="OpenFEC Logo"></a>
+    <a class="logo" href="/" title="Home"><img src="static/img/brand.svg" alt="OpenFEC Logo"></a>
   </div><!-- .container -->
 </header>
 
-<nav class="header-nav page-nav{{#unless navShown}} hidden{{/unless}}">
+<nav class="header-nav page-nav{% if not navShown %} hidden{% endif %}">
     <div class="container">
         <ul class="page-nav__list">
             <li class="page-nav__item page-nav__search input-button-combo">
@@ -40,15 +39,14 @@
 
 <div id="progress" class="container hidden"></div>
 
-<main id="main"{{#if section}} data-section="{{section}}"{{/if}}>
-  {{{body}}}
+<main id="main"{% if section %} data-section="{{section}}"{% endif %}>
+    {% block body %}{% endblock %}
 </main>
 
-<script src="../js/vendor/chosen/chosen.jquery.min.js"></script>
-{{#if mockjax}}
+<script src="static/js/vendor/chosen/chosen.jquery.min.js"></script>
+{% if mockjax %}
     <script src="jquery-mockjax/jquery.mockjax.js"></script>
-{{/if}}
-<script src="../js/vendor/typeahead.bundle.min.js"></script>
-<script src="../js/app.js"></script>
+{% endif %}
+<script src="static/js/vendor/typeahead.bundle.min.js"></script>
 </body>
 </html>

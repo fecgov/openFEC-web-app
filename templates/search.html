@@ -1,5 +1,7 @@
-{{> search-bar}}
+{% extends "layouts/main.html" %}
 
+{% block body %}
+{% include "partials/search-bar.html" %}
 <div class="sub-hero container">
   <h4>Or start by browsing a dataset:</h4>
   <ul class="browse-links">
@@ -7,3 +9,4 @@
     <li><a class="button" href="/committees" name="committees">Committees</a></li>
   </ul>
 </div>
+{% endblock %}
