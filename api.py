@@ -23,3 +23,10 @@ def load_candidates():
         params=filters)
 
     return json.loads(candidates.text)
+
+def load_committees():
+    filters = {'fields': '*'}
+    committees = requests.get(api_location + '/committee',
+        params=filters)
+
+    return json.loads(committees.text)

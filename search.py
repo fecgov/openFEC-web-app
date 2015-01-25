@@ -1,4 +1,4 @@
-from api import load_search_results, load_candidates
+from api import load_search_results, load_candidates, load_committees
 from flask import render_template
 
 def get_search_results(query):
@@ -10,17 +10,7 @@ def get_search_results(query):
         candidates.append(convert_candidates(c))
 
     for c in results['committees']['results']:
-        committees.append({
-            'name': c['description']['name'],
-            'treasurer': c['treasurer']['name_full'],
-            'state': c['address']['state'],
-            'organization': c['description'].get(
-                'organization_type_full', ''),
-            'type': c['status']['type_full'],
-            'designation': c['status']['designation_full'],
-            'nameURL': '/committees/' + c['committee_id'],
-            'id': c['committee_id']
-        })
+        committees.append(convert_committees(c))
 
     return render_template('search-results.html', **locals())
 
@@ -34,6 +24,16 @@ def get_candidates():
 
     return render_template('candidates.html', **locals())
 
+def get_committees():
+    results = load_committees()
+    committees = []
+    heading = "Browse committees"
+
+    for c in results['results']:
+        committees.append(convert_committees(c))
+
+    return render_template('committees.html', **locals())
+
 def convert_candidates(c):
     return {
         'name': c['name']['full_name'],
@@ -44,4 +44,18 @@ def convert_candidates(c):
         'district': int(c['elections'][0]['district']),
         'nameURL': '/candidates/' + c['candidate_id'],
         'id': c['candidate_id']
+    }
+
+def convert_committees(c):
+    return {
+        'name': c['description']['name'],
+        'treasurer': c['treasurer']['name_full'] if 
+            c.get('treasurer') else '',
+        'state': c['address']['state'],
+        'organization': c['description'].get(
+            'organization_type_full', ''),
+        'type': c['status']['type_full'],
+        'designation': c['status']['designation_full'],
+        'nameURL': '/committees/' + c['committee_id'],
+        'id': c['committee_id']
     }
