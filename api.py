@@ -3,29 +3,25 @@ import json
 
 from config import api_location
 
+# api urls are singular
+type_map = {
+    'candidates': 'candidate',
+    'committees': 'committee'
+}
+
 def load_search_results(query):
     filters = {'fields': '*', 'per_page': '5'}
 
     if query:
         filters['q'] = query
 
-    candidates = requests.get(api_location + '/candidate', params=filters)
-    committees = requests.get(api_location + '/committee', params=filters)
-
     return {
-        'candidates': json.loads(candidates.text),
-        'committees': json.loads(committees.text)
+        'candidates': load_single_type('candidates', filters),
+        'committees': load_single_type('committees', filters)
     }
 
-def load_candidates(filters):
-    candidates = requests.get(api_location + '/candidate',
+def load_single_type(data_type, filters):
+    results = requests.get(api_location + '/' + type_map[data_type],
         params=filters)
 
-    return json.loads(candidates.text)
-
-def load_committees():
-    filters = {'fields': '*'}
-    committees = requests.get(api_location + '/committee',
-        params=filters)
-
-    return json.loads(committees.text)
+    return json.loads(results.text)

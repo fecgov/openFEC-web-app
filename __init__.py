@@ -1,6 +1,6 @@
 from config import port
 from flask import Flask, render_template, request
-from search import get_search_results, get_candidates, get_committees
+from search import get_search_results, render
 
 app = Flask(__name__)
 
@@ -18,11 +18,11 @@ def search():
 
 @app.route('/candidates')
 def candidates():
-    return get_candidates(request.args)
+    return render('candidates', request.args)
 
 @app.route('/committees')
 def committees():
-    return get_committees()
+    return render('committees', request.args)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port, debug=True)
