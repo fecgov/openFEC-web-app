@@ -1,3 +1,10 @@
+{% extends 'layouts/main.html' %}
+
+{% block header %}
+    {% include 'partials/page-nav.html' %}
+{% endblock %}
+
+{% block body %}
 <div class="entity candidate tab-interface">
   <header class="entity__header">
     <div class="container">
@@ -24,7 +31,7 @@
           </li>
           <li class="entity__term">
             <h4>District</h4>
-            <span>{{ state }} {{#if district}}- {{district}} {{/if}}</span>
+            <span>{{ state }} {% if district %}- {{district}} {% endif %}</span>
           </li>
           <li class="entity__term">
             <h4>Candidate ID</h4>
@@ -35,42 +42,42 @@
             <span>View filing &raquo;</span>
           </li>
         </ul>
-        {{#if related_committees }}
+        {% if related_committees %}
         <ul class="entity__info entity__related-entities">
           <li class="entity__term--extra-wide">
             <h4>Related Committees</h4>
-            {{#if primary_committee}}
+            {% if primary_committee %}
             <dl>
               <dt>Principal Campaign Committee</dt>
               <dd><a href="{{ primary_committee.url }}">{{ primary_committee.name }}</a></dd>
             </dl>
-            {{/if}}
-            {{#if authorized_committees}}
+            {% endif %}
+            {% if authorized_committees %}
             <dl>
               <dt>Authorized Committees</dt>
-              {{#each affiliated_committees}}
-              <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
-              {{/each}}
+              {% for committee in affiliated_committees %}
+              <dd><a href="{{ committee.nameURL }}">{{ committee.name }}</a></dd>
+              {% endfor %}
             </dl>
-            {{/if}}
+            {% endif %}
 
-            {{#if leadership_committees}}
+            {% if leadership_committees %}
             <dl>
               <dt>Leadership PACs</dt>
-              {{#each leadership_committees}}
-              <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
-              {{/each}}
+              {% for committee in leadership_committees %}
+              <dd><a href="{{ committee.nameURL }}">{{ committee.name }}</a></dd>
+              {% endfor %}
             </dl>
-            {{/if}}
+            {% endif %}
 
-            {{#if joint_committees}}
+            {% if joint_committees %}
             <dl>
               <dt>Joint Fundraising Committees</dt>
-              {{#each joint_committees}}
-              <dd><a href="{{ this.nameURL }}">{{ this.name }}</a></dd>
-              {{/each}}
+              {% for committee in joint_committees %}
+              <dd><a href="{{ committee.nameURL }}">{{ committee.name }}</a></dd>
+              {% endfor %}
             </dl>
-            {{/if}}            
+            {% endif %}            
           </li>
 
           <li class="entity__term--wide">
@@ -78,7 +85,6 @@
             <span>{{ election }}</span>
           </li>
         </ul>
-      {{/if}}
     </div>
   </header>
 
@@ -87,19 +93,24 @@
       <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
       <p class="text--lead">Get the full picture of all of the money received and spent by this candidate’s principal and authorized committees.</p>
 
-      {{!-- {{#each committees}} --}}
       <div class="page-subsection">
-        <div class="figure-group committee-summary">
-          <div class="figure-group__header">
-            <span class="figure-group__description entity__type">{{ primary_committee.designation }}</span>
-            <h3 class="figure-group__title">{{ primary_committee.name }}</h3>
-          </div>
+
+        {% if primary_committee %}
+            <div class="figure-group committee-summary">
+              <div class="figure-group__header">
+                <span class="figure-group__description entity__type">{{ primary_committee.designation }}</span>
+                <h3 class="figure-group__title">{{ primary_committee.name }}</h3>
+              </div>
+        {% endif %}
+
           <div class="figure-group__inner">
             <div class="row">
               <div class="quick-links">
                 <h4 class="figure__title">Quick Links</h4>
                 <ul>
-                  <li><a href="{{ primary_commitete.url }}">Committee Page &raquo;</a></li>
+                  {% if primary_committee %}
+                  <li><a href="{{ primary_committee.url }}">Committee Page &raquo;</a></li>
+                  {% endif %}
                   <li><a>Most recent report &raquo;</a></li>
                   <li><a>Contributions received &raquo;</a></li>
                 </ul>
@@ -146,9 +157,9 @@
             </div>
           </div>
         </div>
-        {{!-- {{/each}} --}}
       </div>
-      {{!-- <div class="page-subsection">
+
+      <div class="page-subsection">
         <h3>Filings</h3>
         <p class="text--lead">View all the paper work filed by this candidate. For reports filed by the candidate’s related committees, view the committee pages.</p>
         <table>
@@ -175,9 +186,11 @@
             </tr>
           </tbody>
         </table>
-      </div> --}}
+      </div>
+      {% endif %}
     </div>
   </section>
 </div>
 
-<script src="/js/vendor/tablist.js"></script>
+<script src="/static/js/vendor/tablist.js"></script>
+{% endblock %} 

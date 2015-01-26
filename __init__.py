@@ -1,6 +1,6 @@
 from config import port
 from flask import Flask, render_template, request
-from search import get_search_results, render
+from views import render_search_results, render_table, render_page
 
 app = Flask(__name__)
 
@@ -12,17 +12,21 @@ def home_page():
 def search():
     query = request.args.get('search')
     if query:
-        return get_search_results(query)
+        return render_search_results(query)
     else:
         return home_page()
 
+@app.route('/candidates/<c_id>')
+def candidate_page(c_id):
+    return render_page('candidate', c_id)
+
 @app.route('/candidates')
 def candidates():
-    return render('candidates', request.args)
+    return render_table('candidates', request.args)
 
 @app.route('/committees')
 def committees():
-    return render('committees', request.args)
+    return render_table('committees', request.args)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port, debug=True)

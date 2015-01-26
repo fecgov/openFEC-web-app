@@ -3,10 +3,12 @@ import json
 
 from config import api_location
 
-# api urls are singular
+# api urls are singular, public urls are plural
 type_map = {
     'candidates': 'candidate',
-    'committees': 'committee'
+    'committees': 'committee',
+    'candidate': 'candidate',
+    'committee': 'committee'
 }
 
 def load_search_results(query):
