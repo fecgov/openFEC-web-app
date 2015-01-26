@@ -52,6 +52,7 @@
               <dd><a href="{{ primary_committee.url }}">{{ primary_committee.name }}</a></dd>
             </dl>
             {% endif %}
+
             {% if authorized_committees %}
             <dl>
               <dt>Authorized Committees</dt>
@@ -85,6 +86,7 @@
             <span>{{ election }}</span>
           </li>
         </ul>
+        {% endif %}
     </div>
   </header>
 
@@ -93,71 +95,35 @@
       <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
       <p class="text--lead">Get the full picture of all of the money received and spent by this candidate’s principal and authorized committees.</p>
 
-      <div class="page-subsection">
+      {% if primary_committee %}
+        {% with committee=primary_committee %}
+          {% include 'partials/committee-summary.html' %}
+        {% endwith %}
+      {% endif %}
 
-        {% if primary_committee %}
-            <div class="figure-group committee-summary">
-              <div class="figure-group__header">
-                <span class="figure-group__description entity__type">{{ primary_committee.designation }}</span>
-                <h3 class="figure-group__title">{{ primary_committee.name }}</h3>
-              </div>
-        {% endif %}
+      {% if authorized_committees %}
+        {% for c in authorized_committees %}
+            {% with committee=c %}
+                {% include 'partials/committee-summary.html' %}
+            {% endwith %}
+        {% endfor %}
+      {% endif %}
 
-          <div class="figure-group__inner">
-            <div class="row">
-              <div class="quick-links">
-                <h4 class="figure__title">Quick Links</h4>
-                <ul>
-                  {% if primary_committee %}
-                  <li><a href="{{ primary_committee.url }}">Committee Page &raquo;</a></li>
-                  {% endif %}
-                  <li><a>Most recent report &raquo;</a></li>
-                  <li><a>Contributions received &raquo;</a></li>
-                </ul>
-              </div>
-              <figure class="table--simple totals-table">
-                <h4 class="figure__title">Totals for {{totals.years_totals}}</h4>
-                <div class="table__half">
-                  <div class="table__row">
-                    <div class="table__cell">Total receipts</div>
-                    <div class="table__cell">{{totals.total_receipts}}</div>
-                  </div>
-                  <div class="table__row">
-                    <div class="table__cell">Total disbursements</div>
-                    <div class="table__cell">{{totals.total_disbursements}}</div>
-                  </div>
-                  <div class="table__row--note">
-                    Calculated from reports filed {{totals.report_year}}
-                  </div>
-                </div>
-                <div class="table__half">
-                  <div class="table__row">
-                    <div class="table__cell">Cash on hand</div>
-                    <div class="table__cell">{{totals.total_cash}}</div>
-                  </div>
-                  <div class="table__row">
-                    <div class="table__cell">Debt</div>
-                    <div class="table__cell">{{totals.total_debt}}</div>
-                  </div>
-                  <div class="table__row--note">
-                    As reported in {{totals.report_desc}}
-                  </div>
-                </div>
-              </figure>
-            </div>
-            <div class="row">
-              <figure class="chart-container chart--r-d">
-                <h4 class="figure__title">Finances over time</h4>
-              </figure>
-            </div>
-            <div class="row">
-              <figure class="chart-container chart--c-d">
-                <h4 class="figure__title">Finances over time</h4>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </div>
+      {% if leadership_committees %}
+        {% for c in leadership_committees %}
+            {% with committee=c %}
+                {% include 'partials/committee-summary.html' %}
+            {% endwith %}
+        {% endfor %}
+      {% endif %}
+
+      {% if joint_committees %}
+        {% for c in joint_committees %}
+            {% with committee=c %}
+                {% include 'partials/committee-summary.html' %}
+            {% endwith %}
+        {% endfor %}
+      {% endif %}
 
       <div class="page-subsection">
         <h3>Filings</h3>
@@ -187,7 +153,6 @@
           </tbody>
         </table>
       </div>
-      {% endif %}
     </div>
   </section>
 </div>

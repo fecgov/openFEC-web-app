@@ -27,12 +27,13 @@ def map_committee_table_values(c):
         'id': c['committee_id']
     }
 
-def _map_primary_committee_values(pc):
+def _map_committee_values(ac):
     c = {}
-    c['id'] = pc['committee_id'] 
-    c['name'] = pc['committee_name']
-    c['designation'] = pc['designation_full']
-    c['url'] = '/committees/' + pc['committee_id']
+    c['id'] = ac['committee_id'] 
+    c['name'] = ac['committee_name']
+    c['designation'] = ac['designation_full']
+    c['designation_code'] = ac['designation']
+    c['url'] = '/committees/' + ac['committee_id']
     return c
 
 def map_totals(t):
@@ -60,15 +61,38 @@ def map_totals(t):
 
     return totals_mapped
 
+committee_type_map = {
+    'A': 'authorized_committees',
+    'D': 'leadership_committees',
+    'J': 'joint_committees'
+}
+
 def map_candidate_page_values(c):
     candidate = map_candidate_table_values(c)
 
-    if c['elections']:
-        candidate['incumbent_challenge'] = c['elections'][0]['incumbent_challenge_full']
-        if c['elections'][0]['primary_committee']:
-            candidate['primary_committee'] = _map_primary_committee_values(
-                c['elections'][0]['primary_committee'])
+    if c.get('elections'):
+        c_e = c['elections'][0]
+        candidate['incumbent_challenge'] = c_e['incumbent_challenge_full']
+        if c_e['primary_committee']:
+            candidate['primary_committee'] = _map_committee_values(
+                c_e['primary_committee'])
             candidate['related_committees'] = True
+
+        if c_e.get('affiliated_committees'):
+            candidate['affiliated_committees'] = []
+            for i in range(len(c_e['affiliated_committees'])):
+                candidate['affiliated_committees'].append(
+                    _map_committee_values(c_e['affiliated_committees'][i]))
+
+            candidate['authorized_committees'] = []
+            candidate['leadership_committees'] = []
+            candidate['joint_committees'] = []
+
+            for i in range(len(candidate['affiliated_committees'])):
+                cmte = candidate['affiliated_committees'][i]
+                cmte_type = cmte['designation_code']
+                if (cmte_type in committee_type_map):
+                    candidate[committee_type_map[cmte_type]].append(cmte)
 
     return candidate
 
