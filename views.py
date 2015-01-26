@@ -44,6 +44,7 @@ def render_page(data_type, c_id):
                 t_data)
 
         if tmpl_vars.get('affiliated_committees'):
+            # for each type of committee we show, get the totals data
             for t in committee_type_map:
                 c_type = committee_type_map[t] 
                 for i in range(len(tmpl_vars[c_type])):

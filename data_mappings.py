@@ -1,4 +1,7 @@
 import re
+import locale
+
+locale.setlocale(locale.LC_ALL, '')
 
 def map_candidate_table_values(c):
     return {
@@ -40,11 +43,15 @@ def map_totals(t):
     reports = t['results'][0]['reports'][0]
     totals = t['results'][0]['totals'][0]
     totals_mapped = {
-        'total_receipts': totals['receipts'],
-        'total_disbursements': totals['disbursements'],
-        'total_cash': reports['cash_on_hand_end_period'],
-        'total_debt': reports['debts_owed_by_committee'],
-        'report_year': reports['report_year']
+        'total_receipts': locale.currency(
+            totals['receipts'], grouping=True),
+        'total_disbursements': locale.currency(
+            totals['disbursements'], grouping=True),
+        'total_cash': locale.currency(
+            reports['cash_on_hand_end_period'], grouping=True),
+        'total_debt': locale.currency(
+            reports['debts_owed_by_committee'], grouping=True),
+        'report_year': str(int(reports['report_year']))
     }
 
     if reports['election_cycle']:
@@ -55,7 +62,7 @@ def map_totals(t):
 
     if totals_mapped['report_year']:
         totals_mapped['report_desc'] = 'the ' 
-        totals_mapped['report_desc'] += re.sub('/{.+}/', 
+        totals_mapped['report_desc'] += re.sub('{.+}', 
             '', reports['report_type_full']) 
         totals_mapped['report_desc'] += ' report'
 
