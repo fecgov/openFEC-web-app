@@ -20,6 +20,10 @@ def search():
 def candidate_page(c_id):
     return render_page('candidate', c_id)
 
+@app.route('/committees/<c_id>')
+def committee_page(c_id):
+    return render_page('committee', c_id)
+
 @app.route('/candidates')
 def candidates():
     return render_table('candidates', request.args)

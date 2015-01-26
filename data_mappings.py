@@ -103,10 +103,24 @@ def map_candidate_page_values(c):
 
     return candidate
 
+def map_committee_page_values(c):
+    committee = map_committee_table_values(c)
+
+    if c['address']:
+        committee['address'] = {
+            'state': c['address'].get('state'),
+            'zip': c['address'].get('zip'),
+            'city': c['address'].get('city'),
+            'street_1': c['address'].get('street_1'),
+            'street_2': c['address'].get('street_2')
+        }
+
+    return committee
+
 type_map = {
     'candidates': map_candidate_table_values,
     'candidate': map_candidate_page_values,
     'committees': map_committee_table_values,
-    'committee': map_committee_table_values
+    'committee': map_committee_page_values
 }
 

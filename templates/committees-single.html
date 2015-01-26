@@ -1,3 +1,10 @@
+{% extends 'layouts/main.html' %}
+
+{% block header %}
+    {% include 'partials/page-nav.html' %}
+{% endblock %}
+
+{% block body %}
   <div id="main" class="entity committee tab-interface">
     <header class="entity__header">
       <div class="container">
@@ -22,18 +29,18 @@
                 <h4>Type</h4>
                 <span>{{ type }}</span>
             </li>
-            {{#if organization}}
+            {% if organization %}
             <li class="entity__term">
               <h4>Organization Type</h4>
               <span>{{ organization }}</span>
             </li>
-            {{/if}}
-            {{#if party}}
+            {% endif %}
+            {% if party %}
             <li class="entity__term">
               <h4>Political Party</h4>
               <span>{{ party }}</span>
             </li>
-            {{/if}}
+            {% endif %}
             <li class="entity__term">
               <h4>Committee ID</h4>
               <span>{{ id }}</span>
@@ -44,16 +51,16 @@
             </li>
           </ul>
           <ul class="entity__info">
-          {{!-- {{#if candidates}} --}}
+          {% if candidates %}
           <li class="entity__term--wide">
             <h4>Related Candidates</h4>
             <ul>
-            {{#each candidates}}
-              <li><a href="{{ this.url }}">{{ this.name }}</a></li>
-            {{/each}}
+            {% for c in candidates %}
+              <li><a href="{{ c.url }}">{{ c.name }}</a></li>
+            {% endfor %}
             </ul>
           </li>
-          {{!-- {{/if}} --}}
+          {% endif %}
           <li class="entity__term--wide">
             <h4>Most Recent Filings</h4>
             <ul>
@@ -63,7 +70,7 @@
           </li>
           <li class="entity__term--wide">
             <h4>Address</h4>
-            <span>{{ address.street_1 }}{{#if address.street_2}},{{/if}} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
+            <span>{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
           </li>
         </ul>          
       </div>
@@ -259,3 +266,4 @@
   </div>
 
   <script src="/js/vendor/tablist.js"></script>
+{% endblock %} 
