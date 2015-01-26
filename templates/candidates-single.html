@@ -116,31 +116,31 @@
                 </ul>
               </div>
               <figure class="table--simple totals-table">
-                <h4 class="figure__title">Totals for {{years_totals}}</h4>
+                <h4 class="figure__title">Totals for {{totals.years_totals}}</h4>
                 <div class="table__half">
                   <div class="table__row">
                     <div class="table__cell">Total receipts</div>
-                    <div class="table__cell">{{total_receipts}}</div>
+                    <div class="table__cell">{{totals.total_receipts}}</div>
                   </div>
                   <div class="table__row">
                     <div class="table__cell">Total disbursements</div>
-                    <div class="table__cell">{{total_disbursements}}</div>
+                    <div class="table__cell">{{totals.total_disbursements}}</div>
                   </div>
                   <div class="table__row--note">
-                    Calculated from reports filed {{report_year}}
+                    Calculated from reports filed {{totals.report_year}}
                   </div>
                 </div>
                 <div class="table__half">
                   <div class="table__row">
                     <div class="table__cell">Cash on hand</div>
-                    <div class="table__cell">{{total_cash}}</div>
+                    <div class="table__cell">{{totals.total_cash}}</div>
                   </div>
                   <div class="table__row">
                     <div class="table__cell">Debt</div>
-                    <div class="table__cell">{{total_debt}}</div>
+                    <div class="table__cell">{{totals.total_debt}}</div>
                   </div>
                   <div class="table__row--note">
-                    As reported in {{report_desc}}
+                    As reported in {{totals.report_desc}}
                   </div>
                 </div>
               </figure>
