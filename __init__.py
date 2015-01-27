@@ -1,4 +1,4 @@
-from openfecwebapp.config import port
+from openfecwebapp.config import port, debug, host
 from flask import Flask, render_template, request
 from openfecwebapp.views import render_search_results, render_table, render_page
 
@@ -33,4 +33,4 @@ def committees():
     return render_table('committees', request.args, request.url)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host=host, port=port, debug=debug)

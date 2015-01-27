@@ -26,7 +26,7 @@ def render_search_results(query):
         committees.append(map_committee_table_values(c))
 
     return render_template('search-results.html', candidates=candidates,
-        committees=committees)
+        committees=committees, query=query)
 
 def render_table(data_type, params, url):
     # move from immutablemultidict -> multidict -> dict
