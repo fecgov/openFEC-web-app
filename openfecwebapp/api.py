@@ -29,7 +29,7 @@ def load_single_type(data_type, filters):
     return json.loads(results.text)
 
 def load_totals(committee_id):
-    results = requests.get(api_location + '/total',
-        params={'committee_id': committee_id, 'fields': '*'})
+    results = requests.get(api_location + '/total/' + committee_id,
+        params={'fields': '*'})
 
     return json.loads(results.text)

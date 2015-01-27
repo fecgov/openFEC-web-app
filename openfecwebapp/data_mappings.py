@@ -134,7 +134,7 @@ def map_candidate_page_values(c):
         c_e = c['elections'][0]
         candidate['incumbent_challenge'] = c_e.get(
             'incumbent_challenge_full', '')
-        if c_e['primary_committee']:
+        if c_e.get('primary_committee'):
             candidate['primary_committee'] = _map_committee_values(
                 c_e['primary_committee'])
             candidate['related_committees'] = True
