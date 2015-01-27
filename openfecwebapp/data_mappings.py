@@ -101,7 +101,7 @@ def map_totals(t):
 
     if reports.get('debts_owed_by_committee'):
         totals_mapped['total_debt'] = locale.currency(
-        totals_mapped['debts_owed_by_committee'], grouping=True)
+        reports['debts_owed_by_committee'], grouping=True)
     else:
         totals_mapped['total_debt'] = 'unavailable'
 
