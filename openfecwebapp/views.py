@@ -42,7 +42,7 @@ def render_table(data_type, params, url):
     results_table['pagination'] = generate_pagination_values(results, params, url, data_type)
 
     for r in results['results']:
-        results_table[data_type].append(type_map[data_type](r, url))
+        results_table[data_type].append(type_map[data_type](r))
 
     return render_template(data_type + '.html', **results_table)
 
