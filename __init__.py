@@ -1,6 +1,6 @@
-from config import port
+from openfecwebapp.config import port
 from flask import Flask, render_template, request
-from views import render_search_results, render_table, render_page
+from openfecwebapp.views import render_search_results, render_table, render_page
 
 app = Flask(__name__)
 

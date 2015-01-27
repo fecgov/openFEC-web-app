@@ -1,7 +1,7 @@
 import requests
 import json
 
-from config import api_location
+from openfecwebapp.config import api_location
 
 # api urls are singular, public urls are plural
 type_map = {

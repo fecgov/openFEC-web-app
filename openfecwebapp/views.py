@@ -1,8 +1,17 @@
-from api import load_search_results, load_single_type, load_totals
+from openfecwebapp.api import (load_search_results, load_single_type,
+load_totals)
 from flask import render_template
-from data_mappings import (type_map, map_candidate_table_values,
-map_committee_table_values, map_candidate_page_values, map_totals,
-committee_type_map)
+from openfecwebapp.data_mappings import (type_map, 
+map_candidate_table_values, map_committee_table_values, 
+map_candidate_page_values, map_totals, committee_type_map)
+
+def _filter_empty_params(params):
+    new_params = {}
+    for p in params:
+        if params[p]:
+            new_params[p] = params[p]
+
+    return new_params
 
 def render_search_results(query):
     results = load_search_results(query)
@@ -20,16 +29,18 @@ def render_search_results(query):
 def render_table(data_type, params):
     # move from immutablemultidict -> multidict -> dict
     params = params.copy().to_dict()
+    params = _filter_empty_params(params)
     params['fields'] = '*'
 
     results = load_single_type(data_type, params)
-    vars()[data_type] = []
+    results_table = {}
+    results_table[data_type] = []
     heading = "Browse " + data_type
 
     for r in results['results']:
-        vars()[data_type].append(type_map[data_type](r))
+        results_table[data_type].append(type_map[data_type](r))
 
-    return render_template(data_type + '.html', **locals())
+    return render_template(data_type + '.html', **results_table)
 
 def render_page(data_type, c_id):
     c_data = load_single_type(data_type, {
@@ -51,7 +62,4 @@ def render_page(data_type, c_id):
                     tmpl_vars[c_type][i]['totals'] = map_totals(
                         load_totals(tmpl_vars[c_type][i]['id']))
 
-    for v in tmpl_vars:
-        vars()[v] = tmpl_vars[v]
-
-    return render_template(data_type + 's-single.html', **locals())
+    return render_template(data_type + 's-single.html', **tmpl_vars)
