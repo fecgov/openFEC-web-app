@@ -1,22 +1,5 @@
-{% if resultsCount %}
-    <div class="meta-box">
-        <div id="results-count-first" class="results-count">
-          <p>Results: {{resultsCount}} records</p>
-            {% if resultsRange %}
-                <p>Viewing: {{currentResultsStart}} - {{currentResultsEnd}}</p>
-            {% endif %}
-        </div>
-        {% if paginationLinks %}
-            <div class="pagination">
-                {% if prevURL %}
-                    <a href="{{prevURL}}" id="prev" class="pagination__link"><i class="ti-arrow-left"></i> Previous {{perPage}}</a>
-                {% endif %}
-                {% if nextURL %}
-                    <a href="{{nextURL}}" id="next" class="pagination__link">Next {{perPage}} <i class="ti-arrow-right"></i></a>
-                {% endif %}
-            </div>
-        {% endif %}
-    </div><!--- .meta-box -->
+{% if pagination %}
+    {% include 'partials/pagination.html' %}
 {% endif %}
 
 <table id="results" class="table--sortable">
@@ -46,23 +29,6 @@
     </tbody>
 </table>
 
-{% if resultsCount %}
-    <div class="meta-box meta-box--bottom">
-        <div id="results-count-last" class="results-count">
-          <p>Results: {{resultsCount}} records</p>
-            {% if resultsRange %}
-                <p>Viewing: {{currentResultsStart}} - {{currentResultsEnd}}</p>
-            {% endif %}
-        </div>
-        {% if paginationLinks %}
-            <div class="pagination">
-                {% if prevURL %}
-                    <a href="{{prevURL}}" id="prev" class="pagination__link link--icon"><i class="ti-arrow-left"></i> Previous {{perPage}}</a>
-                {% endif %}
-                {% if nextURL %}
-                    <a href="{{nextURL}}" id="next" class="pagination__link link--icon">Next {{perPage}} <i class="ti-arrow-right"></i></a>
-                {% endif %}
-            </div>
-        {% endif %}
-    </div><!--- .meta-box -->
+{% if pagination %}
+    {% include 'partials/pagination.html' %}
 {% endif %}

@@ -1,0 +1,20 @@
+{% if pagination.results_count %}
+    <div class="meta-box">
+        <div id="results-count-first" class="results-count">
+          <p>Results: {{pagination.results_count}} records</p>
+            {% if pagination.results_range %}
+                <p>Viewing: {{pagination.current_results_start}} - {{pagination.current_results_end}}</p>
+            {% endif %}
+        </div>
+        {% if pagination.pagination_links %}
+            <div class="pagination">
+                {% if pagination.prev_url %}
+                    <a href="{{pagination.prev_url}}" id="prev" class="pagination__link"><i class="ti-arrow-left"></i> Previous {{pagination.perPage}}</a>
+                {% endif %}
+                {% if pagination.next_url %}
+                    <a href="{{pagination.next_url}}" id="next" class="pagination__link">Next {{pagination.next_age}} <i class="ti-arrow-right"></i></a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div><!--- .meta-box -->
+{% endif %}

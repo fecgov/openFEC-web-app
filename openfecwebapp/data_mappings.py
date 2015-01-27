@@ -1,10 +1,44 @@
 import re
 import locale
 
+from flask import url_for
+
 locale.setlocale(locale.LC_ALL, '')
 
+def generate_pagination_values(c, params, url, data_type):
+    pagination = {}
+    per_page = int(c['pagination']['per_page'])
+    page = int(c['pagination']['page'])
+    current_results_start = per_page * (page - 1) + 1 
+    current_results_end = per_page * page
+    total_pages = int(c['pagination']['pages'])
+
+    pagination['results_count'] = c['pagination']['count']
+    pagination['page'] = page
+    pagination['per_page'] = per_page
+    pagination['current_results_start'] = current_results_start
+    pagination['current_results_end'] = current_results_end
+
+    if current_results_start or current_results_end:
+        pagination['results_range'] = True
+
+    if page < total_pages:
+        next_page_num = str(page + 1)
+        params['page'] = next_page_num
+        pagination['next_url'] = url_for(data_type, **params) 
+        pagination['pagination_links'] = True
+
+    if page - 1 > 0:
+        prev_page_num = str(page - 1)
+        params['page'] = prev_page_num
+        pagination['prev_url'] = url_for(data_type, **params) 
+        pagination['pagination_links'] = True
+
+
+    return pagination
+
 def map_candidate_table_values(c):
-    return {
+    candidate = {
         'name': c['name']['full_name'],
         'office': c['elections'][0]['office_sought_full'],
         'election': int(c['elections'][0]['election_year']),
@@ -16,8 +50,10 @@ def map_candidate_table_values(c):
         'id': c['candidate_id']
     }
 
+    return candidate
+
 def map_committee_table_values(c):
-    return {
+    committee = {
         'name': c['description']['name'],
         'treasurer': c['treasurer']['name_full'] if 
             c.get('treasurer') else '',
@@ -29,6 +65,8 @@ def map_committee_table_values(c):
         'nameURL': '/committees/' + c['committee_id'],
         'id': c['committee_id']
     }
+
+    return committee
 
 def _map_committee_values(ac):
     c = {}
@@ -42,17 +80,32 @@ def _map_committee_values(ac):
 def map_totals(t):
     reports = t['results'][0]['reports'][0]
     totals = t['results'][0]['totals'][0]
-    totals_mapped = {
-        'total_receipts': locale.currency(
-            totals['receipts'], grouping=True),
-        'total_disbursements': locale.currency(
-            totals['disbursements'], grouping=True),
-        'total_cash': locale.currency(
-            reports['cash_on_hand_end_period'], grouping=True),
-        'total_debt': locale.currency(
-            reports['debts_owed_by_committee'], grouping=True),
-        'report_year': str(int(reports['report_year']))
-    }
+    totals_mapped = {}
+    if totals.get('receipts'):
+        totals_mapped['total_receipts'] = locale.currency(
+        totals['receipts'], grouping=True)
+    else:
+        totals_mapped['total_receipts'] = 'unavailable'
+
+    if totals.get('total_disbursements'):
+        totals_mapped['total_disbursements'] = locale.currency(
+        totals['disbursements'], grouping=True)
+    else:
+        totals_mapped['total_disbursements'] = 'unavailable'
+
+    if reports.get('cash_on_hand_end_period'):
+        totals_mapped['total_cash'] = locale.currency(
+        reports['cash_on_hand_end_period'], grouping=True)
+    else:
+        totals_mapped['total_cash'] = 'unavailable'
+
+    if reports.get('debts_owed_by_committee'):
+        totals_mapped['total_debt'] = locale.currency(
+        'debts_owed_by_committee', grouping=True)
+    else:
+        totals_mapped['total_debt'] = 'unavailable'
+
+    totals_mapped['report_year'] = str(int(reports['report_year']))
 
     if reports['election_cycle']:
         cycle_minus_one = str(int(reports['election_cycle']) - 1)
@@ -79,7 +132,8 @@ def map_candidate_page_values(c):
 
     if c.get('elections'):
         c_e = c['elections'][0]
-        candidate['incumbent_challenge'] = c_e['incumbent_challenge_full']
+        candidate['incumbent_challenge'] = c_e.get(
+            'incumbent_challenge_full', '')
         if c_e['primary_committee']:
             candidate['primary_committee'] = _map_committee_values(
                 c_e['primary_committee'])
@@ -123,4 +177,3 @@ type_map = {
     'committees': map_committee_table_values,
     'committee': map_committee_page_values
 }
-

@@ -26,11 +26,11 @@ def committee_page(c_id):
 
 @app.route('/candidates')
 def candidates():
-    return render_table('candidates', request.args)
+    return render_table('candidates', request.args, request.url)
 
 @app.route('/committees')
 def committees():
-    return render_table('committees', request.args)
+    return render_table('committees', request.args, request.url)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port, debug=True)
