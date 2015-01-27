@@ -34,7 +34,6 @@ def generate_pagination_values(c, params, url, data_type):
         pagination['prev_url'] = url_for(data_type, **params) 
         pagination['pagination_links'] = True
 
-
     return pagination
 
 def map_candidate_table_values(c):
@@ -81,29 +80,19 @@ def map_totals(t):
     reports = t['results'][0]['reports'][0]
     totals = t['results'][0]['totals'][0]
     totals_mapped = {}
-    if totals.get('receipts'):
-        totals_mapped['total_receipts'] = locale.currency(
-        totals['receipts'], grouping=True)
-    else:
-        totals_mapped['total_receipts'] = 'unavailable'
+    value_map = {
+        'total_receipts': totals.get('receipts'),
+        'total_disbursements': totals.get('total_disbursements'),
+        'total_cash': reports.get('cash_on_hand_end_period'),
+        'total_debt': reports.get('debts_owed_by_committee')
+    }
 
-    if totals.get('total_disbursements'):
-        totals_mapped['total_disbursements'] = locale.currency(
-        totals['disbursements'], grouping=True)
-    else:
-        totals_mapped['total_disbursements'] = 'unavailable'
-
-    if reports.get('cash_on_hand_end_period'):
-        totals_mapped['total_cash'] = locale.currency(
-        reports['cash_on_hand_end_period'], grouping=True)
-    else:
-        totals_mapped['total_cash'] = 'unavailable'
-
-    if reports.get('debts_owed_by_committee'):
-        totals_mapped['total_debt'] = locale.currency(
-        reports['debts_owed_by_committee'], grouping=True)
-    else:
-        totals_mapped['total_debt'] = 'unavailable'
+    for v in value_map:
+        if value_map[v]:
+            totals_mapped[v] = locale.currency(
+            value_map[v], grouping=True)
+        else:
+            totals_mapped[v] = 'unavailable'
 
     totals_mapped['report_year'] = str(int(reports['report_year']))
 
@@ -160,7 +149,7 @@ def map_candidate_page_values(c):
 def map_committee_page_values(c):
     committee = map_committee_table_values(c)
 
-    if c['address']:
+    if c.get('address'):
         committee['address'] = {
             'state': c['address'].get('state'),
             'zip': c['address'].get('zip'),
