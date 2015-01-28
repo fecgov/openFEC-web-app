@@ -5,6 +5,8 @@ from flask import url_for
 
 locale.setlocale(locale.LC_ALL, '')
 
+# template vars for pagination results counts and
+# next/prev links on tabular views
 def generate_pagination_values(c, params, url, data_type):
     pagination = {}
     per_page = int(c['pagination']['per_page'])
@@ -22,12 +24,14 @@ def generate_pagination_values(c, params, url, data_type):
     if current_results_start or current_results_end:
         pagination['results_range'] = True
 
+    # next url
     if page < total_pages:
         next_page_num = str(page + 1)
         params['page'] = next_page_num
         pagination['next_url'] = url_for(data_type, **params) 
         pagination['pagination_links'] = True
 
+    # prev url
     if page - 1 > 0:
         prev_page_num = str(page - 1)
         params['page'] = prev_page_num
@@ -36,6 +40,7 @@ def generate_pagination_values(c, params, url, data_type):
 
     return pagination
 
+# maps basic values for candidates
 def map_candidate_table_values(c):
     candidate = {
         'name': c['name']['full_name'],
@@ -51,6 +56,7 @@ def map_candidate_table_values(c):
 
     return candidate
 
+# maps basic values for committees
 def map_committee_table_values(c):
     committee = {
         'name': c['description']['name'],
@@ -67,6 +73,7 @@ def map_committee_table_values(c):
 
     return committee
 
+# maps committee values shown on candidate pages
 def _map_committee_values(ac):
     c = {}
     c['id'] = ac['committee_id'] 
@@ -76,6 +83,7 @@ def _map_committee_values(ac):
     c['url'] = '/committees/' + ac['committee_id']
     return c
 
+# maps totals to be shown on candidate and committee pages
 def map_totals(t):
     reports = t['results'][0]['reports'][0]
     totals = t['results'][0]['totals'][0]
@@ -87,6 +95,7 @@ def map_totals(t):
         'total_debt': reports.get('debts_owed_by_committee')
     }
 
+    # format totals data in US dollars
     for v in value_map:
         if value_map[v]:
             totals_mapped[v] = locale.currency(
@@ -96,12 +105,14 @@ def map_totals(t):
 
     totals_mapped['report_year'] = str(int(reports['report_year']))
 
-    if reports['election_cycle']:
+    # "calculated from" on site
+    if reports.get('election_cycle'):
         cycle_minus_one = str(int(reports['election_cycle']) - 1)
         totals_mapped['years_totals'] = cycle_minus_one 
         totals_mapped['years_totals'] += ' - ' 
         totals_mapped['years_totals'] += str(reports['election_cycle'])
 
+    # "source:" on site
     if totals_mapped['report_year']:
         totals_mapped['report_desc'] = 'the ' 
         totals_mapped['report_desc'] += re.sub('{.+}', 
@@ -110,6 +121,8 @@ def map_totals(t):
 
     return totals_mapped
 
+# we want to show the committees on their related candidate 
+# pages in this order, with primary committees on top
 committee_type_map = {
     'A': 'authorized_committees',
     'D': 'leadership_committees',
@@ -128,11 +141,14 @@ def map_candidate_page_values(c):
                 c_e['primary_committee'])
             candidate['related_committees'] = True
 
+        # affiliated committees = committee_type_map, 
+        # plus more we ignore for the candidate pages
         if c_e.get('affiliated_committees'):
             candidate['affiliated_committees'] = []
             for i in range(len(c_e['affiliated_committees'])):
                 candidate['affiliated_committees'].append(
-                    _map_committee_values(c_e['affiliated_committees'][i]))
+                    _map_committee_values(c_e[
+                        'affiliated_committees'][i]))
 
             candidate['authorized_committees'] = []
             candidate['leadership_committees'] = []
@@ -141,8 +157,10 @@ def map_candidate_page_values(c):
             for i in range(len(candidate['affiliated_committees'])):
                 cmte = candidate['affiliated_committees'][i]
                 cmte_type = cmte['designation_code']
+                # drop anythin
                 if (cmte_type in committee_type_map):
-                    candidate[committee_type_map[cmte_type]].append(cmte)
+                    candidate[committee_type_map[
+                        cmte_type]].append(cmte)
 
     return candidate
 

@@ -129,10 +129,7 @@ module.exports = {
 
     // Open single entity pages when selected
     $(document).on('typeahead:selected', function(e, suggestion, datasetName) {
-      events.emit('load:singleEntity', {
-        category: datasetName,
-        id: suggestion.id
-      });
+        document.location = document.location.origin + '/' + datasetName + '/' + suggestion.id;
     })
   }
 }
