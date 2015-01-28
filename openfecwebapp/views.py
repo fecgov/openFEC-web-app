@@ -69,7 +69,9 @@ def render_page(data_type, c_id):
             for t in committee_type_map:
                 c_type = committee_type_map[t] 
                 for i in range(len(tmpl_vars[c_type])):
-                    tmpl_vars[c_type][i]['totals'] = map_totals(
-                        load_totals(tmpl_vars[c_type][i]['id']))
+                    results = load_totals(tmpl_vars[c_type][i]['id'])
+                    if len(results['results']) > 0:
+                        tmpl_vars[c_type][i]['totals'] = map_totals(
+                            results)
 
     return render_template(data_type + 's-single.html', **tmpl_vars)

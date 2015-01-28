@@ -121,8 +121,8 @@ def map_totals(t):
         totals_mapped['years_totals'] += str(reports['election_cycle'])
 
     # "source:" on site
-    if totals_mapped['report_year']:
-        totals_mapped['report_desc'] += re.sub('{.+}', 
+    if reports.get('report_type_full'):
+        totals_mapped['report_desc'] = re.sub('{.+}', 
             '', reports['report_type_full']) 
 
     return totals_mapped
