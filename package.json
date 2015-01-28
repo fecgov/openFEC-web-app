@@ -31,5 +31,8 @@
   "author": "",
   "bugs": {
     "url": "https://github.com/theresaanna/openfec-web-app/issues"
+  },
+  "dependencies": {
+    "handlebars": "^2.0.0"
   }
 }
