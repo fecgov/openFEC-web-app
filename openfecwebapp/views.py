@@ -5,7 +5,7 @@ from openfecwebapp.data_mappings import (type_map,
 map_candidate_table_values, map_committee_table_values, 
 map_candidate_page_values, map_totals, committee_type_map,
 generate_pagination_values)
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import abort
 
 def _filter_empty_params(params):
     new_params = {}
@@ -53,13 +53,10 @@ def render_page(data_type, c_id):
 
     # not handling error at api module because sometimes its ok to 
     # not get data back - like with search results
-    # debated doing a 500 instead because its possible a user could
-    # have clicked a link and we got back an api request with no data
-    # but also that a user typed an incorrect ID in the url 
-    try:
-        tmpl_vars = type_map[data_type](c_data['results'][0])
-    except NotFound:
+    if len(c_data['results']) == 0:
         abort(404)
+
+    tmpl_vars = type_map[data_type](c_data['results'][0])
 
     if data_type == 'candidate':
         if tmpl_vars.get('primary_committee'):

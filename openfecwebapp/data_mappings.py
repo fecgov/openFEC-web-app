@@ -58,29 +58,37 @@ def map_candidate_table_values(c):
 
 # maps basic values for committees
 def map_committee_table_values(c):
-    committee = {
-        'name': c['description']['name'],
-        'treasurer': c['treasurer']['name_full'] if 
-            c.get('treasurer') else '',
-        'state': c['address']['state'],
-        'organization': c['description'].get(
+    committee = {}
+
+    if c.get('description'):
+        committee['name'] = c['description'].get('name', '')
+        committee['organization'] = c['description'].get(
             'organization_type_full', ''),
-        'type': c['status']['type_full'],
-        'designation': c['status']['designation_full'],
-        'nameURL': '/committees/' + c['committee_id'],
-        'id': c['committee_id']
-    }
+
+    if c.get('treasurer'):
+        committee['treasurer'] = c['treasurer'].get('name_full', '')
+
+    if c.get('address'):
+        committee['state'] = c['address'].get('state')
+
+    if c.get('status'):
+        committee['type'] = c['status'].get('type_full', '')
+        committee['designation'] = c['status'].get(
+            'designation_full', '')
+
+    committee['nameURL'] ='/committees/' + c.get('committee_id', '')
+    committee['id'] = c.get('committee_id', '')
 
     return committee
 
 # maps committee values shown on candidate pages
 def _map_committee_values(ac):
     c = {}
-    c['id'] = ac['committee_id'] 
-    c['name'] = ac['committee_name']
-    c['designation'] = ac['designation_full']
-    c['designation_code'] = ac['designation']
-    c['url'] = '/committees/' + ac['committee_id']
+    c['id'] = ac.get('committee_id', '') 
+    c['name'] = ac.get('committee_name', '')
+    c['designation'] = ac.get('designation_full', '')
+    c['designation_code'] = ac.get('designation', '')
+    c['url'] = '/committees/' + ac.get('committee_id', '')
     return c
 
 # maps totals to be shown on candidate and committee pages
@@ -114,10 +122,8 @@ def map_totals(t):
 
     # "source:" on site
     if totals_mapped['report_year']:
-        totals_mapped['report_desc'] = 'the ' 
         totals_mapped['report_desc'] += re.sub('{.+}', 
             '', reports['report_type_full']) 
-        totals_mapped['report_desc'] += ' report'
 
     return totals_mapped
 
