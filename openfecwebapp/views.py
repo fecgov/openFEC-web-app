@@ -50,7 +50,15 @@ def render_page(data_type, c_id):
     c_data = load_single_type(data_type, {
         'fields': '*', data_type + '_id': c_id}) 
 
-    tmpl_vars = type_map[data_type](c_data['results'][0])
+    # not handling error at api module because sometimes its ok to 
+    # not get data back - like with search results
+    # debated doing a 500 instead because its possible a user could
+    # have clicked a link and we got back an api request with no data
+    # but also that a user typed an incorrect ID in the url 
+    try:
+        tmpl_vars = type_map[data_type](c_data['results'][0])
+    except NotFound:
+        abort(404)
 
     if data_type == 'candidate':
         if tmpl_vars.get('primary_committee'):
