@@ -168,6 +168,7 @@ def map_candidate_page_values(c):
                 if (cmte_type in committee_type_map):
                     candidate[committee_type_map[
                         cmte_type]].append(cmte)
+                    candidate['related_committees'] = True
 
     return candidate
 

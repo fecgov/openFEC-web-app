@@ -92,67 +92,8 @@
 
   <section class="page-section" id="section-1" aria-labelledby="section-1-header">
     <div class="container">
-      <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-      <p class="text--lead">Get the full picture of all of the money received and spent by this candidate’s principal and authorized committees.</p>
-
-      {% if primary_committee %}
-        {% with committee=primary_committee %}
-          {% include 'partials/committee-summary.html' %}
-        {% endwith %}
-      {% endif %}
-
-      {% if authorized_committees %}
-        {% for c in authorized_committees %}
-            {% with committee=c %}
-                {% include 'partials/committee-summary.html' %}
-            {% endwith %}
-        {% endfor %}
-      {% endif %}
-
-      {% if leadership_committees %}
-        {% for c in leadership_committees %}
-            {% with committee=c %}
-                {% include 'partials/committee-summary.html' %}
-            {% endwith %}
-        {% endfor %}
-      {% endif %}
-
-      {% if joint_committees %}
-        {% for c in joint_committees %}
-            {% with committee=c %}
-                {% include 'partials/committee-summary.html' %}
-            {% endwith %}
-        {% endfor %}
-      {% endif %}
-
-      <div class="page-subsection">
-        <h3>Filings</h3>
-        <p class="text--lead">View all the paper work filed by this candidate. For reports filed by the candidate’s related committees, view the committee pages.</p>
-        <table>
-          <thead>
-            <th class="sort-header">Filing name</th>
-            <th class="sort-header">Filing type</th>
-            <th class="sort-header">Date</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td><a href="#">Filing name</a></td>
-              <td>Statement of candidacy</td>
-              <td>1/1/2014</td>
-            </tr>
-            <tr>
-              <td><a href="#">Filing name</a></td>
-              <td>Statement of candidacy</td>
-              <td>1/1/2012</td>
-            </tr>
-            <tr>
-              <td><a href="#">Filing name</a></td>
-              <td>Statement of candidacy</td>
-              <td>1/1/201-</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {% include 'partials/financial-summary.html' %}
+      {% include 'partials/filings.html' %}
     </div>
   </section>
 </div>
