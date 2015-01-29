@@ -1011,8 +1011,8 @@ input[type="submit"],
   border: 1px solid #D7D7D7; }
 
 #large-search .tt-dropdown-menu {
-  font-size: 18px;
-  font-size: 1.8rem;
+  font-size: 16px;
+  font-size: 1.6rem;
   top: 70px !important; }
 
 .tt-dropdown-title {
