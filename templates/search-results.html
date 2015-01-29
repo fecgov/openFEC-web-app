@@ -9,6 +9,9 @@
   <section class="data page-section">
       <h2>Search results{% if query %} <span class="text--query">{{query}}</span>{% endif %}</h2>
 
+    {% if no_results %}
+        Sorry, no results
+    {% else %}
       <div class="page-subsection">
         {%if candidates %}
             <div class="results-header">
@@ -27,6 +30,7 @@
             {% include "partials/committees-table.html" %}
         {% endif %}
       </div>
+    {% endif %}
   </section>
 </div>
 {% endblock %}

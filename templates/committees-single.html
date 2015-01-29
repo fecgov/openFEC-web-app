@@ -80,44 +80,7 @@
     </nav> -->
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container">
-        <h2 id="section-1-header" tabindex="0">Financial Overview</h2>
-        <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-        <div class="page-subsection">
-          <figure class="table--simple totals-table">
-            <h3 class="figure__title">Totals for 2013 - 2014</h3>
-            <div class="table__half">
-              <div class="table__row">
-                <div class="table__cell">Total receipts</div>
-                <div class="table__cell">$0</div>
-              </div>
-              <div class="table__row">
-                <div class="table__cell">Total disbursements</div>
-                <div class="table__cell">$0</div>
-              </div>
-              <div class="table__row--note">
-                Calculated from reports filed 2013-2014
-              </div>
-            </div>
-            <div class="table__half">
-              <div class="table__row">
-                <div class="table__cell">Cash on hand</div>
-                <div class="table__cell">$0</div>
-              </div>
-              <div class="table__row">
-                <div class="table__cell">Debt</div>
-                <div class="table__cell">$0</div>
-              </div>
-              <div class="table__row--note">
-                As reported in 2014 Year-End Report
-              </div>
-            </div>
-          </figure>          
-         
-
-        </div>
-        <div class="page-subsection">
-
-        </div>
+        {% include 'partials/financial-summary.html' %}
       </div>
     </section>
   </div>

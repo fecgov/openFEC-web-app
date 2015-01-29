@@ -1,4 +1,4 @@
-from openfecwebapp.config import port, debug, host
+from openfecwebapp.local_config import port, debug, host
 from flask import Flask, render_template, request
 from openfecwebapp.views import render_search_results, render_table, render_page
 

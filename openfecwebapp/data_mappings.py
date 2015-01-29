@@ -63,7 +63,7 @@ def map_committee_table_values(c):
     if c.get('description'):
         committee['name'] = c['description'].get('name', '')
         committee['organization'] = c['description'].get(
-            'organization_type_full', ''),
+            'organization_type_full', '')
 
     if c.get('treasurer'):
         committee['treasurer'] = c['treasurer'].get('name_full', '')
@@ -111,7 +111,8 @@ def map_totals(t):
         else:
             totals_mapped[v] = 'unavailable'
 
-    totals_mapped['report_year'] = str(int(reports['report_year']))
+    if reports.get('report_year'):
+        totals_mapped['report_year'] = str(int(reports['report_year']))
 
     # "calculated from" on site
     if reports.get('election_cycle'):
@@ -121,8 +122,8 @@ def map_totals(t):
         totals_mapped['years_totals'] += str(reports['election_cycle'])
 
     # "source:" on site
-    if totals_mapped['report_year']:
-        totals_mapped['report_desc'] += re.sub('{.+}', 
+    if reports.get('report_type_full'):
+        totals_mapped['report_desc'] = re.sub('{.+}', 
             '', reports['report_type_full']) 
 
     return totals_mapped
@@ -163,10 +164,12 @@ def map_candidate_page_values(c):
             for i in range(len(candidate['affiliated_committees'])):
                 cmte = candidate['affiliated_committees'][i]
                 cmte_type = cmte['designation_code']
-                # drop anythin
+                # drop anything that's not of the types we're
+                # interested in
                 if (cmte_type in committee_type_map):
                     candidate[committee_type_map[
                         cmte_type]].append(cmte)
+                    candidate['related_committees'] = True
 
     return candidate
 
