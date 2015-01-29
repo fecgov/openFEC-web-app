@@ -163,7 +163,8 @@ def map_candidate_page_values(c):
             for i in range(len(candidate['affiliated_committees'])):
                 cmte = candidate['affiliated_committees'][i]
                 cmte_type = cmte['designation_code']
-                # drop anythin
+                # drop anything that's not of the types we're
+                # interested in
                 if (cmte_type in committee_type_map):
                     candidate[committee_type_map[
                         cmte_type]].append(cmte)

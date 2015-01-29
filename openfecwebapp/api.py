@@ -1,5 +1,4 @@
 import requests
-import json
 
 from openfecwebapp.config import api_location
 
@@ -26,10 +25,16 @@ def load_single_type(data_type, filters):
     results = requests.get(api_location + '/' + type_map[data_type],
         params=filters)
 
-    return json.loads(results.text)
+    if results.status_code == requests.codes.ok:
+        return results.json()
+    else:
+        return {}
 
 def load_totals(committee_id):
     results = requests.get(api_location + '/total/' + committee_id,
         params={'fields': '*'})
 
-    return json.loads(results.text)
+    if results.status_code == requests.codes.ok:
+        return results.json()
+    else:
+        return {}
