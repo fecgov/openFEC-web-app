@@ -56,7 +56,7 @@
 
 #large-search {
   .tt-dropdown-menu {
-    @include font-size(1.8);
+    @include font-size(1.6);
     top: 70px !important;
   }
 }
@@ -73,14 +73,27 @@
 }
 
 .tt-suggestion {
+  @include clearfix();
+  position: relative;
   padding: 10px 20px;
   margin-bottom: 0;
   line-height: 1;
   border-bottom: 1px solid $light-gray;
 }
 
+.tt-suggestion__name {
+  @include truncate();
+  display: block;
+  float: left;
+  width: 65%;
+}
+
 .tt-suggestion__office {
+  @include truncate();
   @include font-size(1.4);
+  text-align: right;
+  display: block;
+  width: 35%;
   float: right;
   color: $dark-gray;
   font-style: italic;
@@ -90,4 +103,8 @@
   cursor: pointer;
   background: $blue;
   color: #fff;
+
+  .tt-suggestion__office {
+    color: #fff;
+  }
 }

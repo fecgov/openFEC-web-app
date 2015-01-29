@@ -112,3 +112,11 @@
 @mixin secondary-divider() {
   border-bottom: 1px dashed $medium-gray;
 }
+
+// Truncate text to a single line with an ellipsis
+// Thanks to http://css-tricks.com/snippets/css/truncate-string-with-ellipsis/
+@mixin truncate() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
