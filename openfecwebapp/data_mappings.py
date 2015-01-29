@@ -63,7 +63,7 @@ def map_committee_table_values(c):
     if c.get('description'):
         committee['name'] = c['description'].get('name', '')
         committee['organization'] = c['description'].get(
-            'organization_type_full', ''),
+            'organization_type_full', '')
 
     if c.get('treasurer'):
         committee['treasurer'] = c['treasurer'].get('name_full', '')

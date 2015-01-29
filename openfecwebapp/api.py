@@ -1,6 +1,6 @@
 import requests
 
-from openfecwebapp.config import api_location
+from openfecwebapp.local_config import api_location
 
 # api urls are singular, public urls are plural
 type_map = {
