@@ -111,7 +111,8 @@ def map_totals(t):
         else:
             totals_mapped[v] = 'unavailable'
 
-    totals_mapped['report_year'] = str(int(reports['report_year']))
+    if reports.get('report_year'):
+        totals_mapped['report_year'] = str(int(reports['report_year']))
 
     # "calculated from" on site
     if reports.get('election_cycle'):
