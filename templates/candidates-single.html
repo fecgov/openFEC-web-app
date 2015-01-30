@@ -9,15 +9,8 @@
   <header class="entity__header">
     <div class="container">
       <div class="entity__header--top row">
-        <span class="entity__type">Candidate for {{ office }}</span>
-        <div class="time-period">
-          <label for="time-period-select">View:</label>
-          <select id="time-period-select" class="chosen-select">
-            <option>2013-2014</option>
-            <option>2011-2012</option>
-          </select>
-        </div>
         <h1 class="entity__name">{{ name }}</h1>
+        <span class="entity__type">Candidate for {{ office }}</span>
       </div>
       <div class="entity__header--bottom row">
         <ul class="entity__info">
@@ -37,10 +30,10 @@
             <h4>Candidate ID</h4>
             <span>{{ id }}</span>
           </li>
-          <li class="entity__term--wide">
+<!--      <li class="entity__term--wide">
             <h4>Statement of Candidacy</h4>
             <span>View filing &raquo;</span>
-          </li>
+          </li> -->
         </ul>
         {% if related_committees %}
         <ul class="entity__info entity__related-entities">
@@ -80,11 +73,10 @@
             </dl>
             {% endif %}            
           </li>
-
-          <li class="entity__term--wide">
+<!--      <li class="entity__term--wide">
             <h4>Elections</h4>
             <span>{{ election }}</span>
-          </li>
+          </li> -->
         </ul>
         {% endif %}
     </div>
@@ -93,7 +85,6 @@
   <section class="page-section" id="section-1" aria-labelledby="section-1-header">
     <div class="container">
       {% include 'partials/financial-summary.html' %}
-      {% include 'partials/filings.html' %}
     </div>
   </section>
 </div>

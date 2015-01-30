@@ -9,15 +9,8 @@
     <header class="entity__header">
       <div class="container">
         <div class="entity__header--top row">
-            <span class="entity__type">Committee - {{ designation }}</span>
-            <div class="time-period">
-              <label for="time-period-select">View:</label>
-              <select id="time-period-select" class="chosen-select">
-                <option>2012-2014</option>
-                <option>2010-2012</option>
-              </select>
-            </div>
             <h1 class="entity__name">{{ name }}</h1>
+            <span class="entity__type">Committee - {{ designation }}</span>
         </div>
         <div class="entity__header--bottom row">
           <ul class="entity__info">
@@ -61,13 +54,13 @@
             </ul>
           </li>
           {% endif %}
-          <li class="entity__term--wide">
+<!--           <li class="entity__term--wide">
             <h4>Most Recent Filings</h4>
             <ul>
               <li><a href="">Filing 1</a></li>
               <li><a href="">Filing 2</a></li>
             </ul>
-          </li>
+          </li> -->
           <li class="entity__term--wide">
             <h4>Address</h4>
             <span>{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
@@ -75,7 +68,7 @@
         </ul>          
       </div>
     </header>
-    <nav class="page-tabs">
+    <!-- <nav class="page-tabs">
       <div class="container">
         <h4 class="page-tabs__title">Explore:</h4>
         <ul role="tablist">
@@ -84,11 +77,10 @@
           <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Browse All Filings</a></li>
         </ul>
       </div>
-    </nav>
+    </nav> -->
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container">
         {% include 'partials/financial-summary.html' %}
-        {% include 'partials/filings.html' %}
       </div>
     </section>
   </div>
