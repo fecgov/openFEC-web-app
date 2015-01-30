@@ -31,7 +31,13 @@ class TestDataMappings(TestCase):
                     'committee_name': 'Friends of McPersonson',
                     'designation_full': 'Authorized',
                     'designation': 'PC' 
-                }
+                },
+                'affiliated_committees': [{
+                    'committee_id': 'D1234',
+                    'committee_name': 'Friends of McPersonson',
+                    'designation_full': 'Authorized',
+                    'designation': 'A' 
+                }]
             }],
             'candidate_id': 'A12345',
             'pagination': {
@@ -94,6 +100,16 @@ class TestDataMappings(TestCase):
             vals['primary_committee']['designation_code'])
         self.assertEqual('/committees/D1234',
             vals['primary_committee']['url'])
+
+        self.assertEqual('D1234', vals['authorized_committees'][0]['id'])
+        self.assertEqual('Friends of McPersonson', 
+            vals['authorized_committees'][0]['name'])
+        self.assertEqual('Authorized',
+            vals['authorized_committees'][0]['designation'])
+        self.assertEqual('A',
+            vals['authorized_committees'][0]['designation_code'])
+        self.assertEqual('/committees/D1234',
+            vals['authorized_committees'][0]['url'])
 
     def test_map_candidate_table_values(self):
         vals = map_candidate_table_values(self.candidate)

@@ -155,12 +155,10 @@ def map_candidate_page_values(c):
         # affiliated committees = committee_type_map, 
         # plus more we ignore for the candidate pages
         if c_e.get('affiliated_committees'):
-            candidate['affiliated_committees'] = []
-            for i in range(len(c_e['affiliated_committees'])):
-                candidate['affiliated_committees'].append(
-                    _map_committee_values(c_e[
-                        'affiliated_committees'][i]))
-
+            candidate['affiliated_committees'] = [
+                _map_committee_values(c)
+                for c in c_e['affiliated_committees']
+            ]
             candidate['authorized_committees'] = []
             candidate['leadership_committees'] = []
             candidate['joint_committees'] = []
