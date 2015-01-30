@@ -90,7 +90,9 @@ def _map_committee_values(ac):
     c['name'] = ac.get('committee_name', '')
     c['designation'] = ac.get('designation_full', '')
     c['designation_code'] = ac.get('designation', '')
-    c['url'] = '/committees/' + ac.get('committee_id', '')
+
+    if ac.get('committee_id'):
+        c['url'] = '/committees/' + ac.get('committee_id', '')
     return c
 
 # maps totals to be shown on candidate and committee pages
