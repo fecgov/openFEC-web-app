@@ -1,10 +1,9 @@
 python: "3.4"
-before_script:
-    - python __init__.py
+before-script:
+    - cd openfecwebapp
+    - cp example_config.py local_config.py
 install:
     - sudo pip install -r requirements.txt
 script:
-    - cd openfecwebapp
-    - cp example_config.py local_config.py
-    - cd tests
+    - cd openfecwebapp/tests
     - nosetests
