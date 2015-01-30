@@ -4,5 +4,7 @@ before_script:
 install:
     - sudo pip install -r requirements.txt
 script:
-    - cd openfecwebapp/tests
+    - cd openfecwebapp
+    - cp example_config.py local_config.py
+    - cd tests
     - nosetests
