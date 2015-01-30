@@ -1,8 +1,27 @@
 from openfecwebapp.local_config import port, debug, host
 from flask import Flask, render_template, request
-from openfecwebapp.views import render_search_results, render_table, render_page
+from openfecwebapp.views import (render_search_results, render_table,
+    render_page)
+from openfecwebapp.api import (load_search_results, load_single_type,
+    load_totals)
 
 app = Flask(__name__)
+
+def _filter_empty_params(params):
+    new_params = {}
+    for p in params:
+        if params[p]:
+            new_params[p] = params[p]
+
+    return new_params
+
+def _add_fields_star(params):
+    # move from immutablemultidict -> multidict -> dict
+    params = params.copy().to_dict()
+    params = _filter_empty_params(params)
+    params['fields'] = '*'
+
+    return params
 
 @app.route('/')
 def home_page():
@@ -12,25 +31,35 @@ def home_page():
 def search():
     query = request.args.get('search')
     if query:
-        return render_search_results(query)
+        return render_search_results(load_search_results(query), query)
     else:
         return home_page()
 
 @app.route('/candidates/<c_id>')
 def candidate_page(c_id):
-    return render_page('candidate', c_id)
+    data = load_single_type('candidate', {'fields': '*',
+        'candidate_id': c_id})
+    return render_page('candidate', data)
 
 @app.route('/committees/<c_id>')
 def committee_page(c_id):
-    return render_page('committee', c_id)
+    data = load_single_type('committee', {'fields': '*',
+        'committee_id': c_id})
+    return render_page('committee', data)
 
 @app.route('/candidates')
 def candidates():
-    return render_table('candidates', request.args, request.url)
+    params = _add_fields_star(request.args)
+    results = load_single_type('candidates', params)
+
+    return render_table('candidates', results, params, request.url)
 
 @app.route('/committees')
 def committees():
-    return render_table('committees', request.args, request.url)
+    params = _add_fields_star(request.args)
+    results = load_single_type('committees', params)
+
+    return render_table('committees', results, params, request.url)
 
 @app.errorhandler(404)
 def page_not_found(e):

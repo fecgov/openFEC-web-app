@@ -1,4 +1,3 @@
-import unittest
 from flask import Flask
 from flask.ext.testing import TestCase
 from openfecwebapp.data_mappings import *

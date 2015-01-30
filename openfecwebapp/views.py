@@ -7,16 +7,7 @@ map_candidate_page_values, map_totals, committee_type_map,
 generate_pagination_values)
 from werkzeug.exceptions import abort
 
-def _filter_empty_params(params):
-    new_params = {}
-    for p in params:
-        if params[p]:
-            new_params[p] = params[p]
-
-    return new_params
-
-def render_search_results(query):
-    results = load_search_results(query)
+def render_search_results(results, query):
     candidates = []
     committees = []
 
@@ -37,14 +28,7 @@ def render_search_results(query):
         committees=committees, query=query, no_results=no_results)
 
 # loads browse tabular views
-def render_table(data_type, params, url):
-    # move from immutablemultidict -> multidict -> dict
-    params = params.copy().to_dict()
-    params = _filter_empty_params(params)
-    params['fields'] = '*'
-
-    results = load_single_type(data_type, params)
-
+def render_table(data_type, results, params, url):
     # if we didn't get data back from the API
     if len(results) is 0:
         abort(500)
@@ -60,10 +44,7 @@ def render_table(data_type, params, url):
 
     return render_template(data_type + '.html', **results_table)
 
-def render_page(data_type, c_id):
-    c_data = load_single_type(data_type, {
-        'fields': '*', data_type + '_id': c_id}) 
-
+def render_page(data_type, c_data):
     # not handling error at api module because sometimes its ok to 
     # not get data back - like with search results
     if len(c_data) is 0:
