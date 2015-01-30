@@ -177,14 +177,7 @@ def map_candidate_page_values(c):
 def map_committee_page_values(c):
     committee = map_committee_table_values(c)
 
-    if c.get('address'):
-        committee['address'] = {
-            'state': c['address'].get('state'),
-            'zip': c['address'].get('zip'),
-            'city': c['address'].get('city'),
-            'street_1': c['address'].get('street_1'),
-            'street_2': c['address'].get('street_2')
-        }
+    committee['address'] = c.get('address', None)
 
     return committee
 
