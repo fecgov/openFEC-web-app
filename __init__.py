@@ -7,18 +7,10 @@ from openfecwebapp.api_caller import (load_search_results,
 
 app = Flask(__name__)
 
-def _filter_empty_params(params):
-    new_params = {}
-    for p in params:
-        if params[p]:
-            new_params[p] = params[p]
-
-    return new_params
-
 def _add_fields_star(params):
     # move from immutablemultidict -> multidict -> dict
     params = params.copy().to_dict()
-    params = _filter_empty_params(params)
+    params = {key: value for key, value in params.items() if value}
     params['fields'] = '*'
 
     return params
