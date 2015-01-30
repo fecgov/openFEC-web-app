@@ -2,14 +2,6 @@ import requests
 
 from openfecwebapp.local_config import api_location
 
-# api urls are singular, public urls are plural
-type_map = {
-    'candidates': 'candidate',
-    'committees': 'committee',
-    'candidate': 'candidate',
-    'committee': 'committee'
-}
-
 def load_search_results(query):
     filters = {'fields': '*', 'per_page': '5'}
 
@@ -22,7 +14,7 @@ def load_search_results(query):
     }
 
 def load_single_type(data_type, filters):
-    results = requests.get(api_location + '/' + type_map[data_type],
+    results = requests.get(api_location + '/' + data_type,
         params=filters)
 
     if results.status_code == requests.codes.ok:
