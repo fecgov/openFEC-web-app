@@ -77,7 +77,7 @@ def map_committee_table_values(c):
         committee['designation'] = c['status'].get(
             'designation_full', '')
 
-    if c.get('id'):
+    if c.get('committee_id'):
         committee['nameURL'] ='/committees/' + c.get('committee_id', '')
         committee['id'] = c.get('committee_id', '')
 
