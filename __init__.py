@@ -42,14 +42,14 @@ def committee_page(c_id):
 @app.route('/candidates')
 def candidates():
     params = _add_fields_star(request.args)
-    results = load_single_type('candidates', params)
+    results = load_single_type('candidate', params)
 
     return render_table('candidates', results, params, request.url)
 
 @app.route('/committees')
 def committees():
     params = _add_fields_star(request.args)
-    results = load_single_type('committees', params)
+    results = load_single_type('committee', params)
 
     return render_table('committees', results, params, request.url)
 

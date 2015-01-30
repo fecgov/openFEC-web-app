@@ -177,7 +177,7 @@ def map_candidate_page_values(c):
 def map_committee_page_values(c):
     committee = map_committee_table_values(c)
 
-    committee['address'] = c.get('address', None)
+    committee['address'] = c.get('address', {})
 
     return committee
 
