@@ -1,5 +1,4 @@
-from openfecwebapp.api import (load_search_results, load_single_type,
-load_totals)
+from openfecwebapp.api_caller import load_totals
 from flask import render_template
 from openfecwebapp.data_mappings import (type_map, 
 map_candidate_table_values, map_committee_table_values, 
