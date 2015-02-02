@@ -5,9 +5,12 @@ from flask import url_for
 
 locale.setlocale(locale.LC_ALL, '')
 
-# template vars for pagination results counts and
-# next/prev links on tabular views
 def generate_pagination_values(c, params, url, data_type):
+    """
+    returns template vars for pagination results counts and
+    next/prev links on tabular views like /committees,
+    /candidates and search results
+    """
     pagination = {}
     per_page = int(c['pagination']['per_page'])
     page = int(c['pagination']['page'])
@@ -40,8 +43,11 @@ def generate_pagination_values(c, params, url, data_type):
 
     return pagination
 
-# maps basic values for candidates
 def map_candidate_table_values(c):
+    """
+    maps and returns template vars for a single candidate
+    record. 
+    """
     candidate = {
         'name': c['name']['full_name'],
         'office': c['elections'][0]['office_sought_full'],
@@ -57,8 +63,11 @@ def map_candidate_table_values(c):
 
     return candidate
 
-# maps basic values for committees
 def map_committee_table_values(c):
+    """
+    maps and returns template vars for a single committee
+    record. 
+    """
     committee = {}
 
     if c.get('description'):
@@ -83,8 +92,11 @@ def map_committee_table_values(c):
 
     return committee
 
-# maps committee values shown on candidate pages
 def _map_committee_values(ac):
+    """
+    maps and returns template vars for committee values that 
+    are shown on candidate pages
+    """
     c = {}
     c['id'] = ac.get('committee_id', '') 
     c['name'] = ac.get('committee_name', '')
@@ -95,8 +107,12 @@ def _map_committee_values(ac):
         c['url'] = '/committees/' + ac.get('committee_id', '')
     return c
 
-# maps totals to be shown on candidate and committee pages
 def map_totals(t):
+    """
+    maps and returns template vars for financial summaries
+    from the 'totals' endpoint for use on candidat
+    and committee pages
+    """
     reports = t['results'][0]['reports'][0]
     totals = t['results'][0]['totals'][0]
     totals_mapped = {}
@@ -141,6 +157,9 @@ committee_type_map = {
 }
 
 def map_candidate_page_values(c):
+    """
+    returns template vars for rendering a single candidate page
+    """
     candidate = map_candidate_table_values(c)
 
     if c.get('elections'):
@@ -175,6 +194,9 @@ def map_candidate_page_values(c):
     return candidate
 
 def map_committee_page_values(c):
+    """
+    returns template vars for rendering a single committee page
+    """
     committee = map_committee_table_values(c)
 
     committee['address'] = c.get('address', {})
