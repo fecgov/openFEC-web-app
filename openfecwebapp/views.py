@@ -44,7 +44,7 @@ def render_table(data_type, results, params, url):
 def render_page(data_type, c_data):
     # not handling error at api module because sometimes its ok to 
     # not get data back - like with search results
-    if len(c_data['results']) is 0:
+    if c_data['results']:
         abort(500)
 
     tmpl_vars = type_map[data_type](c_data['results'][0])
