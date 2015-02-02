@@ -10,14 +10,12 @@ def render_search_results(results, query):
     candidates = []
     committees = []
 
-    if results.get('candidates') and results['candidates'].get(
-        'results'):
-        for c in results['candidates']['results']:
+    if results.get('candidates'):
+        for c in results['candidates'].get('results', []):
             candidates.append(map_candidate_table_values(c))
 
-    if results.get('committees') and results['committees'].get(
-        'results'):
-        for c in results['committees']['results']:
+    if results.get('committees'):
+        for c in results['committees'].get('results', []):
             committees.append(map_committee_table_values(c))
 
     # if true will show "no results" message
