@@ -56,7 +56,7 @@ def map_candidate_table_values(c):
         'state': c['elections'][0]['state'],
         'district': int(c['elections'][0]['district']) 
             if c['elections'][0]['district'] else '',
-        'nameURL': '/candidates/' + c['candidate_id']
+        'name_url': '/candidates/' + c['candidate_id']
             if c['candidate_id'] else '',
         'id': c['candidate_id']
     }
@@ -87,7 +87,7 @@ def map_committee_table_values(c):
             'designation_full', '')
 
     if c.get('committee_id'):
-        committee['nameURL'] ='/committees/' + c.get('committee_id', '')
+        committee['name_url'] ='/committees/' + c.get('committee_id', '')
         committee['id'] = c.get('committee_id', '')
 
     return committee

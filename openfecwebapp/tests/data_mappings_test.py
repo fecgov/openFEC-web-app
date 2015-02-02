@@ -120,7 +120,7 @@ class TestDataMappings(TestCase):
         self.assertEqual('TN', vals['state'])
         self.assertEqual(11, vals['district'])
         self.assertEqual('A12345', vals['id'])
-        self.assertEqual('/candidates/A12345', vals['nameURL'])
+        self.assertEqual('/candidates/A12345', vals['name_url'])
 
     def test_generate_pagination_values(self):
         params = {}
@@ -151,7 +151,7 @@ class TestDataMappings(TestCase):
         self.assertEqual('Partay', vals['type'])
         self.assertEqual('Very Authorized', vals['designation'])        
         self.assertEqual('B7890', vals['id'])
-        self.assertEqual('/committees/B7890', vals['nameURL'])
+        self.assertEqual('/committees/B7890', vals['name_url'])
 
     def test_map_totals(self):
         vals = map_totals(self.totals)
