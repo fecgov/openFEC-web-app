@@ -17,7 +17,7 @@
     <tbody>
         {% for c in committees %}
             <tr>
-                <td><a class="single-link" data-id="{{ c.id }}" data-category="committee" href="{{c.nameURL}}">{{c.name}}</a></td>
+                <td><a class="single-link" data-id="{{ c.id }}" data-category="committee" {% if c.name_url %}href="{{c.name_url}}"{% endif %}>{{c.name}}</a></td>
                 <td>{{c.treasurer}}</td>
                 <td>{{c.state}}</td>
                 <td>{{c.party}}</td>
