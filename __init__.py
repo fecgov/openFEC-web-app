@@ -16,16 +16,12 @@ def _add_fields_star(params):
     return params
 
 @app.route('/')
-def home_page():
-    return render_template('search.html');
-
-@app.route('/search')
 def search():
     query = request.args.get('search')
     if query:
         return render_search_results(load_search_results(query), query)
     else:
-        return home_page()
+        return render_template('search.html');
 
 @app.route('/candidates/<c_id>')
 def candidate_page(c_id):
