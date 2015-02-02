@@ -1,0 +1,21 @@
+// Styles for error pages
+
+.error-container {
+	@include span-columns(18);
+	@include shift(3);
+	padding: 2.5em;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+.error-container__bottom {
+	margin-top: 1.25em;
+	padding: 1.25em 0 0;
+	border-top: 1px solid $light-gray;
+}
+
+.error-nav {
+	@include span-columns(18);
+	@include shift(3);
+	padding: 1.25em 0;
+}
