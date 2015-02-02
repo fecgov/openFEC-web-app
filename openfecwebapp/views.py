@@ -27,7 +27,7 @@ def render_search_results(results, query):
 # loads browse tabular views
 def render_table(data_type, results, params, url):
     # if we didn't get data back from the API
-    if len(results) is 0:
+    if not results:
         abort(500)
 
     results_table = {}
@@ -44,7 +44,7 @@ def render_table(data_type, results, params, url):
 def render_page(data_type, c_data):
     # not handling error at api module because sometimes its ok to 
     # not get data back - like with search results
-    if c_data['results']:
+    if not 'results' in c_data or not c_data['results']:
         abort(500)
 
     tmpl_vars = type_map[data_type](c_data['results'][0])
