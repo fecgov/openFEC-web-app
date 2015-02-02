@@ -5,31 +5,47 @@ openfec-web-app
 See also http://github.com/18F/openFEC.
 
 ### Installing
-This application is a [Node.js](http://nodejs.org/)/[Express](http://expressjs.com/) app. Dependencies are installed via [npm](https://www.npmjs.org/). Make sure to have npm installed.
+This application is in [Flask](http://flask.pocoo.org/). Client side features are managed using [Browserify](http://browserify.org/) and [npm](https://www.npmjs.org/).
 
-Install application dependencies:
+It uses Python version 3.4. Its recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies.
+
+Install Python dependencies:
 ```
+$ pip install -r requirements.txt
+```
+
+Install client side dependencies:
+```
+$ npm install -g browserify
 $ npm install
 ```
 
 If you plan to do CSS development, you will want to install [Sass](http://sass-lang.com/). 
 
-If you plan to do client side JS developent, you will want to install [Browserify](http://browserify.org):
+If you plan to do client side JS developent, you will want to install [Watchify](https://github.com/substack/watchify):
 ```
-$ npm install -g browserify watchify
+$ npm install -g watchify
 ```
 
+### Configuration
+
+The Flask app talks to an API for data. See [openFEC](http://github.com/18F/openFEC).
+
+Copy `openfecwebapp/example_config.py` to `openfecwebapp/local_config.py` and change as needed.
+
 ### Run server
-If you have not before, you will need to compile the client side JS:
+To make the site fully functional, you will need to compile the client side JS:
+
 ```
 $ npm run build
 ```
-then:
+
+Then start the server:
+
 ```
-$ nodejs app.js
+$ python __init__.py
 ```
 
-It will serve the site on http://127.0.0.1:3000
 ### Development
 To compile client side JS changes once:
 ```

@@ -1,0 +1,34 @@
+  {% if related_committees %}
+      <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+      <p class="text--lead">Get the full picture of all of the money received and spent by this candidate’s principal and authorized committees.</p>
+
+      {% if primary_committee %}
+        {% with committee=primary_committee %}
+          {% include 'partials/committee-summary.html' %}
+        {% endwith %}
+      {% endif %}
+
+      {% if authorized_committees %}
+        {% for c in authorized_committees %}
+            {% with committee=c %}
+                {% include 'partials/committee-summary.html' %}
+            {% endwith %}
+        {% endfor %}
+      {% endif %}
+
+      {% if leadership_committees %}
+        {% for c in leadership_committees %}
+            {% with committee=c %}
+                {% include 'partials/committee-summary.html' %}
+            {% endwith %}
+        {% endfor %}
+      {% endif %}
+
+      {% if joint_committees %}
+        {% for c in joint_committees %}
+            {% with committee=c %}
+                {% include 'partials/committee-summary.html' %}
+            {% endwith %}
+        {% endfor %}
+      {% endif %}
+  {% endif %}

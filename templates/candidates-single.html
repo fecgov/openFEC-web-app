@@ -1,0 +1,93 @@
+{% extends 'layouts/main.html' %}
+
+{% block header %}
+    {% include 'partials/page-nav.html' %}
+{% endblock %}
+
+{% block body %}
+<div class="entity candidate tab-interface">
+  <header class="entity__header">
+    <div class="container">
+      <div class="entity__header--top row">
+        <h1 class="entity__name">{{ name }}</h1>
+        <span class="entity__type">Candidate for {{ office }}</span>
+      </div>
+      <div class="entity__header--bottom row">
+        <ul class="entity__info">
+          <li class="entity__term">
+            <h4 class=>Party</h4>
+            <span>{{ party }}</span>
+          </li>
+          <li class="entity__term">
+            <h4>Status</h4>
+            <span>{{ incumbent_challenge }}</span>
+          </li>
+          <li class="entity__term">
+            <h4>District</h4>
+            <span>{{ state }} {% if district %}- {{district}} {% endif %}</span>
+          </li>
+          <li class="entity__term">
+            <h4>Candidate ID</h4>
+            <span>{{ id }}</span>
+          </li>
+<!--      <li class="entity__term--wide">
+            <h4>Statement of Candidacy</h4>
+            <span>View filing &raquo;</span>
+          </li> -->
+        </ul>
+        {% if related_committees %}
+        <ul class="entity__info entity__related-entities">
+          <li class="entity__term--extra-wide">
+            <h4>Related Committees</h4>
+            {% if primary_committee %}
+            <dl>
+              <dt>Principal Campaign Committee</dt>
+              <dd><a {% if primary_committee.url %}href="{{ primary_committee.url }}"{% endif %}>{{ primary_committee.name }}</a></dd>
+            </dl>
+            {% endif %}
+
+            {% if authorized_committees %}
+            <dl>
+              <dt>Authorized Committees</dt>
+              {% for committee in affiliated_committees %}
+              <dd><a {% if committee_name.url %}href="{{ committee.name_url }}"{% endif %}>{{ committee.name }}</a></dd>
+              {% endfor %}
+            </dl>
+            {% endif %}
+
+            {% if leadership_committees %}
+            <dl>
+              <dt>Leadership PACs</dt>
+              {% for committee in leadership_committees %}
+              <dd><a {% if committee_name.url %}href="{{ committee.name_url }}"{% endif %}>{{ committee.name }}</a></dd>
+              {% endfor %}
+            </dl>
+            {% endif %}
+
+            {% if joint_committees %}
+            <dl>
+              <dt>Joint Fundraising Committees</dt>
+              {% for committee in joint_committees %}
+              <dd><a {% if committee_name.url %}href="{{ committee.name_url }}"{% endif %}>{{ committee.name }}</a></dd>
+              {% endfor %}
+            </dl>
+            {% endif %}            
+          </li>
+<!--      <li class="entity__term--wide">
+            <h4>Elections</h4>
+            <span>{{ election }}</span>
+          </li> -->
+        </ul>
+        {% endif %}
+    </div>
+  </header>
+
+  <section class="page-section" id="section-1" aria-labelledby="section-1-header">
+    <div class="container">
+      {% include 'partials/financial-summary.html' %}
+    </div>
+  </section>
+</div>
+
+<script src="/static/js/vendor/tablist.js"></script>
+{% endblock %} 

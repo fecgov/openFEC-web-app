@@ -1,0 +1,89 @@
+{% extends 'layouts/main.html' %}
+
+{% block header %}
+    {% include 'partials/page-nav.html' %}
+{% endblock %}
+
+{% block body %}
+  <div id="main" class="entity committee tab-interface">
+    <header class="entity__header">
+      <div class="container">
+        <div class="entity__header--top row">
+            <h1 class="entity__name">{{ name }}</h1>
+            <span class="entity__type">Committee - {{ designation }}</span>
+        </div>
+        <div class="entity__header--bottom row">
+          <ul class="entity__info">
+            <li class="entity__term">
+              <h4>Designation</h4>
+              <span>{{ designation }}</span>
+            </li>
+            <li class="entity__term">
+                <h4>Type</h4>
+                <span>{{ type }}</span>
+            </li>
+            {% if organization %}
+            <li class="entity__term">
+              <h4>Organization Type</h4>
+              <span>{{ organization }}</span>
+            </li>
+            {% endif %}
+            {% if party %}
+            <li class="entity__term">
+              <h4>Political Party</h4>
+              <span>{{ party }}</span>
+            </li>
+            {% endif %}
+            <li class="entity__term">
+              <h4>Committee ID</h4>
+              <span>{{ id }}</span>
+            </li>
+            <li class="entity__term">
+              <h4>Treasurer</h4>
+              <span>{{ treasurer }}</span>
+            </li>
+          </ul>
+          <ul class="entity__info">
+          {% if candidates %}
+          <li class="entity__term--wide">
+            <h4>Related Candidates</h4>
+            <ul>
+            {% for c in candidates %}
+              <li><a href="{{ c.url }}">{{ c.name }}</a></li>
+            {% endfor %}
+            </ul>
+          </li>
+          {% endif %}
+<!--           <li class="entity__term--wide">
+            <h4>Most Recent Filings</h4>
+            <ul>
+              <li><a href="">Filing 1</a></li>
+              <li><a href="">Filing 2</a></li>
+            </ul>
+          </li> -->
+          <li class="entity__term--wide">
+            <h4>Address</h4>
+            <span>{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
+          </li>
+        </ul>          
+      </div>
+    </header>
+    <!-- <nav class="page-tabs">
+      <div class="container">
+        <h4 class="page-tabs__title">Explore:</h4>
+        <ul role="tablist">
+          <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Overview</a></li>
+          <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Report Summaries</a></li>
+          <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Browse All Filings</a></li>
+        </ul>
+      </div>
+    </nav> -->
+    <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
+      <div class="container">
+        {% include 'partials/financial-summary.html' %}
+      </div>
+    </section>
+  </div>
+
+  <script src="/js/vendor/tablist.js"></script>
+{% endblock %} 

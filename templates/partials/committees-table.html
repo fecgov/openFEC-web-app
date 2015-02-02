@@ -1,0 +1,34 @@
+{% if pagination %}
+    {% include 'partials/pagination.html' %}
+{% endif %}
+
+<table id="results" class="table--sortable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Treasurer Name</th>
+            <th>State</th>
+            <th>Party</th>
+            <th>Organization Type</th>
+            <th>Type</th>
+            <th>Designation</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in committees %}
+            <tr>
+                <td><a class="single-link" data-id="{{ c.id }}" data-category="committee" {% if c.name_url %}href="{{c.name_url}}"{% endif %}>{{c.name}}</a></td>
+                <td>{{c.treasurer}}</td>
+                <td>{{c.state}}</td>
+                <td>{{c.party}}</td>
+                <td>{{c.organization}}</td>
+                <td>{{c.type}}</td>
+                <td>{{c.designation}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if pagination %}
+    {% include 'partials/pagination.html' %}
+{% endif %}

@@ -1011,8 +1011,8 @@ input[type="submit"],
   border: 1px solid #D7D7D7; }
 
 #large-search .tt-dropdown-menu {
-  font-size: 18px;
-  font-size: 1.8rem;
+  font-size: 16px;
+  font-size: 1.6rem;
   top: 70px !important; }
 
 .tt-dropdown-title {
@@ -1025,14 +1025,33 @@ input[type="submit"],
   color: #000; }
 
 .tt-suggestion {
+  position: relative;
   padding: 10px 20px;
   margin-bottom: 0;
   line-height: 1;
   border-bottom: 1px solid #D7D7D7; }
+  .tt-suggestion:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.tt-suggestion__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  float: left;
+  width: 65%; }
 
 .tt-suggestion__office {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 14px;
   font-size: 1.4rem;
+  text-align: right;
+  display: block;
+  width: 35%;
   float: right;
   color: #515A61;
   font-style: italic; }
@@ -1041,6 +1060,8 @@ input[type="submit"],
   cursor: pointer;
   background: #2678BA;
   color: #fff; }
+  .tt-cursor .tt-suggestion__office {
+    color: #fff; }
 
 section[aria-hidden="true"],
 .hidden {
