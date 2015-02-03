@@ -22,9 +22,9 @@ def load_single_type(data_type, filters):
     else:
         return {}
 
-def load_totals(committee_id):
-    results = requests.get(api_location + '/total/' + committee_id,
-        params={'fields': '*'})
+def load_totals(committee_ids):
+    results = requests.get(api_location + '/total',
+        params={'committee_id': committee_ids})
 
     if results.status_code == requests.codes.ok:
         return results.json()
