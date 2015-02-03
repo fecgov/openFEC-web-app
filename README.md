@@ -74,12 +74,6 @@ $ npm run watch-all
 
 ### Run Tests
 #### Unit Tests
-Install [Mocha](http://mochajs.org/):
 ```
-$ npm install -g mocha
-```
-
-Run tests:
-```
-$ npm run test
+$ nosetests openfecwebapp/tests
 ```
