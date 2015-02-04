@@ -1,0 +1,43 @@
+.page-header {
+	@include rem(padding, 1rem 2rem);
+	background: $page-header;
+	color: #fff;
+	h1 {
+		margin-bottom: 0;
+	}
+}
+
+.page-controls {
+	background: $page-header;
+	border-top: 1px solid $filter-bg;
+}
+
+.results-count {
+  @extend %flat-list;
+  float: right;
+  color: #fff;
+
+  li {
+    @include rem(padding, 1.0rem 2.0rem); 
+    line-height: 1.14;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: #fff;
+  }
+}
+
+.pagination {
+  text-align: right;
+  float: right;
+}
+
+.pagination__link {
+  &:nth-child(2) {
+    margin-left: 1em;
+  }
+}
