@@ -20,17 +20,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  @include font-size(3.9);
+  @include font-size(3.2);
   font-weight: 400;
 }
 
 h2 {
-  @include font-size(3.1);
+  @include font-size(2.8);
   font-weight: 600;
 }
 
 h3 {
-  @include font-size(2.5);
+  @include font-size(2.4);
   font-weight: 600;
 }
 
