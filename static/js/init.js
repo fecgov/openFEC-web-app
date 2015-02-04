@@ -14,4 +14,7 @@ $(document).ready(function() {
         new tablesort(this);
     });
 
+    $('.side-toggle').click(function(){
+    	$('.results-content').toggleClass('filters--open');
+    })
 });
