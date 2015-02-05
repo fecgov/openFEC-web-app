@@ -49,8 +49,8 @@
             {% if authorized_committees %}
             <dl>
               <dt>Authorized Committees</dt>
-              {% for committee in affiliated_committees %}
-              <dd><a {% if committee.url %}href="{{ committee.url }}"{% endif %}>{{ committee.name }}</a></dd>
+              {% for c_id in affiliated_committees %}
+              <dd><a {% if affiliated_committees[c_id].url %}href="{{ affiliated_committees[c_id].url }}"{% endif %}>{{ affiliated_committees[c_id].name }}</a></dd>
               {% endfor %}
             </dl>
             {% endif %}
@@ -58,8 +58,8 @@
             {% if leadership_committees %}
             <dl>
               <dt>Leadership PACs</dt>
-              {% for committee in leadership_committees %}
-              <dd><a {% if committee.url %}href="{{ committee.url }}"{% endif %}>{{ committee.name }}</a></dd>
+              {% for c_id in leadership_committees %}
+              <dd><a {% if leadership_committees[c_id].url %}href="{{ leadership_committees[c_id].url }}"{% endif %}>{{ leadership_committees[c_id].name }}</a></dd>
               {% endfor %}
             </dl>
             {% endif %}
