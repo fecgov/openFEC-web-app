@@ -104,7 +104,7 @@ def _map_committee_values(ac):
     c['designation_code'] = ac.get('designation', '')
 
     if ac.get('committee_id'):
-        c['url'] = '/committees/' + ac.get('committee_id', '')
+        c['name_url'] = '/committees/' + ac.get('committee_id', '')
     return c
 
 def map_totals(t):
