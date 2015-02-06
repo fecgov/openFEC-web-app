@@ -81,7 +81,7 @@ class TestDataMappings(TestCase):
                 }],
                 'totals': [{
                     'receipts': 231.45,
-                    'total_disbursements': 3453.54
+                    'disbursements': 3453.54
                 }]
             }]
         }

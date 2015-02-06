@@ -2,6 +2,20 @@ import requests
 
 from openfecwebapp.local_config import api_location
 
+"""
+It speeds up the API calls for totals if we specify
+which fields we want
+"""
+_totals_fields = [
+    'receipts',
+    'disbursements',
+    'cash_on_hand_end_period',
+    'debts_owed_by_committee',
+    'report_year',
+    'election_cycle',
+    'report_type_full' 
+]
+
 def load_search_results(query):
     filters = {'fields': '*', 'per_page': '5'}
 
@@ -24,7 +38,10 @@ def load_single_type(data_type, filters):
 
 def load_totals(committee_ids):
     results = requests.get(api_location + '/total',
-        params={'committee_id': committee_ids})
+        params={
+            'committee_id': committee_ids,
+            'fields': ",".join(_totals_fields)
+        })
 
     if results.status_code == requests.codes.ok:
         return results.json()
