@@ -110,17 +110,18 @@ def _map_committee_values(ac):
 def map_totals(t):
     """
     maps and returns template vars for financial summaries
-    from the 'totals' endpoint for use on candidat
+    from the 'totals' endpoint for use on candidate
     and committee pages
     """
-    reports = t['results'][0]['reports'][0]
+    reports = t['results'][0]['reports']
+    recent_report = t['results'][0]['reports'][0]
     totals = t['results'][0]['totals'][0]
     totals_mapped = {}
     value_map = {
         'total_receipts': totals.get('receipts'),
         'total_disbursements': totals.get('disbursements'),
-        'total_cash': reports.get('cash_on_hand_end_period'),
-        'total_debt': reports.get('debts_owed_by_committee')
+        'total_cash': recent_report.get('cash_on_hand_end_period'),
+        'total_debt': recent_report.get('debts_owed_by_committee')
     }
 
     # format totals data in US dollars
@@ -131,20 +132,33 @@ def map_totals(t):
         else:
             totals_mapped[v] = 'unavailable'
 
-    if reports.get('report_year'):
-        totals_mapped['report_year'] = str(int(reports['report_year']))
+    if recent_report.get('report_year'):
+        totals_mapped['report_year'] = str(int(recent_report['report_year']))
 
     # "calculated from" on site
-    if reports.get('election_cycle'):
-        cycle_minus_one = str(int(reports['election_cycle']) - 1)
+    if recent_report.get('election_cycle'):
+        cycle_minus_one = str(int(recent_report['election_cycle']) - 1)
         totals_mapped['years_totals'] = cycle_minus_one 
         totals_mapped['years_totals'] += ' - ' 
-        totals_mapped['years_totals'] += str(reports['election_cycle'])
+        totals_mapped['years_totals'] += str(recent_report['election_cycle'])
 
     # "source:" on site
-    if reports.get('report_type_full'):
+    if recent_report.get('report_type_full'):
         totals_mapped['report_desc'] = re.sub('{.+}', 
-            '', reports['report_type_full']) 
+            '', recent_report['report_type_full']) 
+
+    totals_mapped['quarters'] = []
+
+    # finances over time chart
+    for r in reports:
+        quarter = {}
+        quarter['receipts'] = r.get('total_receipts_period')
+        quarter['disbursements'] = r.get(
+            'total_disbursements_period')
+        totals_mapped['quarters'].append(quarter) 
+
+        if len(totals_mapped['quarters']) >= 8:
+            break;
 
     return totals_mapped
 
