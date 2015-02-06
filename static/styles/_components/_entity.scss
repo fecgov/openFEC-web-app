@@ -14,13 +14,7 @@
 }
 
 .entity__type {
-  @include font-size(1.6);
-  display: inline-block;
-  font-weight: bold;
-  padding: .25em .5em;
-  border-radius: 4px;
-  margin: 0 0 .625em 0;
-  text-align: center;
+  @include font-size(2.0);
 }
 
 .time-period {
@@ -61,11 +55,11 @@
 }
 
 .entity__term {
-  @include span-columns(4);
+  @include span-columns(4, block-collapse);
 }
 
 .entity__term--wide {
-  @include span-columns(8);
+  @include span-columns(8, block-collapse);
 }
 
 .entity__term--extra-wide {
@@ -106,11 +100,6 @@
 
     .entity__header--top {
       border-bottom-color: #99A4B1;
-    }
-
-    .entity__type {
-      background-color: #99A4B1;
-      color: $licorice;
     }
 
     .entity__term h4 {

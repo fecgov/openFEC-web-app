@@ -10,6 +10,17 @@
 .page-controls {
 	background: $page-header;
 	border-top: 1px solid $filter-bg;
+  width: 100%;
+}
+
+// Fixing posiiton of page controls
+.controls--fixed {
+  .page-controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
 }
 
 .results-count {
