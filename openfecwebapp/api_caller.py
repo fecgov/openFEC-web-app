@@ -13,7 +13,10 @@ _totals_fields = [
     'debts_owed_by_committee',
     'report_year',
     'election_cycle',
-    'report_type_full' 
+    'report_type_full',
+    'total_receipts_period',
+    'coverage_end_date_disbursements',
+    'total_disbursements_period'
 ]
 
 def load_search_results(query):
