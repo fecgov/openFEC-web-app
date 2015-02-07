@@ -2002,4 +2002,92 @@ body {
     padding-bottom: 0;
     border-bottom: none; }
 
+.chart-series {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-direction: row;
+  -webkit-box-align: end;
+  -moz-box-align: end;
+  box-align: end;
+  -webkit-align-items: flex-end;
+  -moz-align-items: flex-end;
+  -ms-align-items: flex-end;
+  -o-align-items: flex-end;
+  align-items: flex-end;
+  -ms-flex-align: end; }
+  .chart-series .chart-series__group {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-box-align: end;
+    -moz-box-align: end;
+    box-align: end;
+    -webkit-align-items: flex-end;
+    -moz-align-items: flex-end;
+    -ms-align-items: flex-end;
+    -o-align-items: flex-end;
+    align-items: flex-end;
+    -ms-flex-align: end;
+    margin: 0 .5em; }
+    .chart-series .chart-series__group:first-of-type {
+      margin-left: 0; }
+    .chart-series .chart-series__group:last-of-type {
+      margin-right: 0; }
+    .chart-series .chart-series__group .chart-series__group__bar {
+      -webkit-box-flex: 1;
+      -moz-box-flex: 1;
+      box-flex: 1;
+      -webkit-flex: 1;
+      -moz-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      margin-top: 2em;
+      background: #ccc;
+      position: relative; }
+      .chart-series .chart-series__group .chart-series__group__bar + .chart-series__group__bar {
+        margin-left: .25em; }
+      .chart-series .chart-series__group .chart-series__group__bar[data-key='disbursements'] {
+        background: red; }
+      .chart-series .chart-series__group .chart-series__group__bar[data-key='receipts'] {
+        background: green; }
+    .chart-series .chart-series__group .chart-series__group__label,
+    .chart-series .chart-series__group .chart-series__group__value {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      overflow: hidden; }
+    .chart-series .chart-series__group .chart-series__group__label {
+      bottom: 100%; }
+    .chart-series .chart-series__group .chart-series__group__value {
+      top: 100%; }
+
 /*# sourceMappingURL=styles.css.map */
