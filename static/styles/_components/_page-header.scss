@@ -2,15 +2,23 @@
 	@include rem(padding, 1rem 2rem);
 	background: $page-header;
 	color: #fff;
+
 	h1 {
 		margin-bottom: 0;
 	}
+
+  a,
+  a:hover,
+  a:active {
+    color: #fff;
+  }
 }
 
 .page-controls {
 	background: $page-header;
 	border-top: 1px solid $filter-bg;
   width: 100%;
+  color: #fff;
 }
 
 // Fixing posiiton of page controls
@@ -21,12 +29,25 @@
     left: 0;
     z-index: 999;
   }
+
+  .page-controls__top {
+    display: block;
+  }
+}
+
+.page-controls__top {
+  @include rem(padding, 1rem);
+  display: none;
+  border-bottom: 1px solid $licorice;
+}
+
+.page-controls__title {
+  @include font-size(1.6);
 }
 
 .results-count {
-  @extend %flat-list;
+  @extend .flat-list;
   float: right;
-  color: #fff;
 
   li {
     @include rem(padding, 1.0rem 2.0rem); 

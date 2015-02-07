@@ -419,11 +419,11 @@ ul, ol {
   margin: 0;
   padding: 0;
   list-style-type: none; }
-.browse-links:after, .header-nav__list:after, .results-count:after {
+.flat-list:after, .browse-links:after, .header-nav__list:after, .results-count:after {
   content: "";
   display: table;
   clear: both; }
-.browse-links li, .header-nav__list li, .results-count li {
+.flat-list li, .browse-links li, .header-nav__list li, .results-count li {
   float: left; }
 
 dl {
@@ -434,6 +434,7 @@ dl {
   dl dd {
     margin: 0; }
 
+button,
 .button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -462,20 +463,25 @@ dl {
   vertical-align: middle;
   white-space: nowrap;
   border: 1px solid #b3b3b3; }
+  button:hover,
   .button:hover {
     background-color: #b3b3b3;
     color: #fff;
     border: 1px solid #b3b3b3; }
-  .button:active, .button:focus {
+  button:active, button:focus,
+  .button:active,
+  .button:focus {
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
     outline: none; }
+  button.disabled,
   .button.disabled {
     color: #D3D3D3;
     cursor: default; }
+    button.disabled:hover,
     .button.disabled:hover {
       color: #D3D3D3;
       background-color: #F8F8F8; }
@@ -485,7 +491,6 @@ dl {
   color: #fff;
   border: 1px solid #b3b3b3; }
 
-button,
 input[type="submit"],
 .primary,
 .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary {
@@ -515,16 +520,13 @@ input[type="submit"],
   user-select: none;
   vertical-align: middle;
   white-space: nowrap; }
-  button:hover,
   input[type="submit"]:hover,
   .primary:hover,
   .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary:hover {
     background-color: #1B5585;
     color: #fff;
     border: 1px solid #1B5585; }
-  button:active, button:focus,
-  input[type="submit"]:active,
-  input[type="submit"]:focus,
+  input[type="submit"]:active, input[type="submit"]:focus,
   .primary:active,
   .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary:active,
   .primary:focus,
@@ -535,19 +537,16 @@ input[type="submit"],
     -o-appearance: none;
     appearance: none;
     outline: none; }
-  button.disabled,
   input[type="submit"].disabled,
   .primary.disabled,
   .vex.vex-theme-default .disabled.vex-dialog-button.vex-dialog-button-primary {
     color: #D3D3D3;
     cursor: default; }
-    button.disabled:hover,
     input[type="submit"].disabled:hover,
     .primary.disabled:hover,
     .vex.vex-theme-default .disabled.vex-dialog-button.vex-dialog-button-primary:hover {
       color: #D3D3D3;
       background-color: #2678BA; }
-  button:active,
   input[type="submit"]:active,
   .primary:active,
   .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary:active {
@@ -627,6 +626,9 @@ input[type="submit"],
 
 .u-fixed {
   position: fixed; }
+
+.u-hidden {
+  display: none; }
 
 .vex.vex-theme-default {
   background-color: rgba(255, 255, 255, 0.5);
@@ -771,35 +773,6 @@ input[type="submit"],
     display: table;
     clear: both; }
 
-.side-toggle {
-  padding: 10px;
-  padding: 1rem;
-  -webkit-transition: background-color, 0.1s;
-  -moz-transition: background-color, 0.1s;
-  transition: background-color, 0.1s;
-  border-radius: 0;
-  background: none;
-  border-width: 0 1px 0 0;
-  border-color: #BDC4CD;
-  border-style: solid; }
-  .side-toggle:hover, .side-toggle:active {
-    color: #3E4957;
-    background-color: #BDC4CD;
-    border-width: 0 1px 0 0;
-    border-color: #BDC4CD;
-    border-style: solid; }
-
-#filters {
-  -webkit-transition: left, 0.2s;
-  -moz-transition: left, 0.2s;
-  transition: left, 0.2s;
-  padding: 1.25em;
-  background: #BDC4CD;
-  position: absolute;
-  left: -100%;
-  width: 20%;
-  float: left; }
-
 .field.active label {
   color: #148552; }
 .field.active .chosen-single {
@@ -810,6 +783,44 @@ input[type="submit"],
   .field select {
     width: 100%;
     height: 40px; }
+
+.side-toggle {
+  padding: 10px;
+  padding: 1rem;
+  -webkit-transition: background-color, 0.1s;
+  -moz-transition: background-color, 0.1s;
+  transition: background-color, 0.1s;
+  border-radius: 0;
+  background: none;
+  border-width: 0 1px 0 0;
+  border-color: #BDC4CD;
+  border-style: solid;
+  color: #fff; }
+  .side-toggle:hover, .side-toggle:active {
+    color: #3E4957;
+    background-color: #BDC4CD;
+    border-width: 0 1px 0 0;
+    border-color: #BDC4CD;
+    border-style: solid; }
+
+.side--open .side-toggle {
+  background-color: #BDC4CD;
+  color: #3E4957; }
+.side--open .results-container {
+  left: 20%; }
+.side--open .side-panel {
+  left: 0; }
+
+.side-panel {
+  -webkit-transition: left, 0.2s;
+  -moz-transition: left, 0.2s;
+  transition: left, 0.2s;
+  padding: 1.25em;
+  background: #BDC4CD;
+  position: absolute;
+  left: -100%;
+  width: 20%;
+  float: left; }
 
 .usa {
   font-size: 12px;
@@ -1092,12 +1103,9 @@ section[aria-hidden="true"],
 .hidden {
   display: none; }
 
-.entity__header {
-  padding: 2em 0; }
-
 .entity__header--top {
-  padding: 1em 0 0;
-  border-bottom: 4px solid; }
+  padding-top: 20px;
+  padding-top: 2rem; }
 
 .entity__name {
   font-size: 31px;
@@ -1131,7 +1139,7 @@ section[aria-hidden="true"],
     display: table;
     clear: both; }
   .entity__info h4 {
-    color: #3E4957;
+    color: #fff;
     font-weight: normal;
     border-bottom: 1px solid #3E4957; }
   .entity__info dl {
@@ -1170,30 +1178,13 @@ section[aria-hidden="true"],
   font-size: 14px;
   font-size: 1.4rem; }
 
-.candidate .entity__header {
-  background-color: #3E4957;
-  color: #fff; }
-  .candidate .entity__header a {
-    color: #fff;
-    text-decoration: underline; }
-  .candidate .entity__header .chosen-container a {
-    color: #2678BA; }
-  .candidate .entity__header .entity__info h4 {
-    color: #99A4B1;
-    border-bottom: 1px solid #99A4B1; }
-  .candidate .entity__header .entity__header--top {
-    border-bottom-color: #99A4B1; }
-  .candidate .entity__header .entity__term h4 {
-    color: #99A4B1;
-    border-bottom-color: #99A4B1; }
-
 .committee-summary:after {
   content: "";
   display: table;
   clear: both; }
 .committee-summary .row {
-  margin-bottom: 20px;
-  margin-bottom: 2rem; }
+  margin-bottom: 30px;
+  margin-bottom: 3rem; }
 .committee-summary .quick-links {
   float: left;
   display: block;
@@ -1224,24 +1215,8 @@ section[aria-hidden="true"],
   .totals-table .table__cell:first-child {
     font-weight: bold; }
 
-.committee .entity__header {
-  background-color: #DCDCE0; }
-.committee .entity__header--top {
-  border-bottom-color: #63636E; }
-.committee .entity__type {
-  background-color: #63636E;
-  color: #DCDCE0; }
-.committee .entity__term h4 {
-  color: #63636E;
-  border-bottom-color: #63636E; }
-
-.chunk--two-thirds .entity__info dt {
-  width: 25%; }
-.chunk--two-thirds .entity__info dd {
-  width: 75%; }
-
 .page-tabs {
-  background: #323A45;
+  background: #505E70;
   text-align: left;
   padding: 0; }
 
@@ -1275,14 +1250,31 @@ figure {
     margin-bottom: 1em; }
 
 .figure-group {
+  -webkit-transition: height, 0.5s;
+  -moz-transition: height, 0.5s;
+  transition: height, 0.5s;
   clear: both;
-  background-color: #F8F8F8;
-  border: 1px solid #D7D7D7;
+  border: 1px solid #505E70;
   position: relative; }
   .figure-group:after {
     content: "";
     display: table;
     clear: both; }
+  .figure-group .js-reveal {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    margin-left: -62px; }
+
+.figure-group__side {
+  background-color: #505E70;
+  width: 1.875em;
+  padding: .3125em;
+  position: absolute;
+  height: 100%; }
+
+.figure-group__main {
+  padding-left: 1.875em; }
 
 .figure-group__header {
   padding: 20px 20px;
@@ -1297,10 +1289,8 @@ figure {
   margin: 0; }
 
 .figure-group__description {
-  font-size: 12px;
-  font-size: 1.2rem;
-  background-color: #515A61;
-  color: #F8F8F8; }
+  font-size: 14px;
+  font-size: 1.4rem; }
 
 .figure-group__inner {
   padding: 20px 20px;
@@ -1810,21 +1800,37 @@ This file is generated by `grunt build`, do not edit it by hand.
   color: #fff; }
   .page-header h1 {
     margin-bottom: 0; }
+  .page-header a,
+  .page-header a:hover,
+  .page-header a:active {
+    color: #fff; }
 
 .page-controls {
   background: #505E70;
   border-top: 1px solid #BDC4CD;
-  width: 100%; }
+  width: 100%;
+  color: #fff; }
 
 .controls--fixed .page-controls {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 999; }
+.controls--fixed .page-controls__top {
+  display: block; }
+
+.page-controls__top {
+  padding: 10px;
+  padding: 1rem;
+  display: none;
+  border-bottom: 1px solid #3E4957; }
+
+.page-controls__title {
+  font-size: 16px;
+  font-size: 1.6rem; }
 
 .results-count {
-  float: right;
-  color: #fff; }
+  float: right; }
   .results-count li {
     padding: 10px 20px;
     padding: 1rem 2rem;
@@ -1845,6 +1851,44 @@ This file is generated by `grunt build`, do not edit it by hand.
   margin-right: 10px;
   margin-right: 1.0rem;
   vertical-align: text-bottom; }
+
+footer {
+  height: 100px;
+  height: 10rem;
+  padding: 2em;
+  background-color: #323A45;
+  color: #fff; }
+  footer:after {
+    content: "";
+    display: table;
+    clear: both; }
+  footer a,
+  footer a:hover,
+  footer a:active {
+    color: #fff; }
+
+.footer__left {
+  float: left;
+  display: block;
+  margin-right: 1.16509%;
+  width: 49.41745%; }
+  .footer__left:last-child {
+    margin-right: 0; }
+  .footer__left img {
+    margin-right: 1.25em; }
+
+.footer__right {
+  float: left;
+  display: block;
+  margin-right: 1.16509%;
+  width: 49.41745%;
+  text-align: right; }
+  .footer__right:last-child {
+    margin-right: 0; }
+
+.footer__nav li {
+  display: inline-block;
+  padding: 0 .625em; }
 
 .styleguide .site-header {
   padding: 2em 0;
@@ -1892,12 +1936,6 @@ h3.styles__heading {
 .icon-list li {
   margin-bottom: 1em; }
 
-footer {
-  padding: 2em;
-  margin-top: 4em;
-  background-color: #323A45;
-  color: #fff; }
-
 .results-header {
   padding-bottom: 1em; }
   .results-header:after {
@@ -1927,10 +1965,6 @@ footer {
     content: "";
     display: table;
     clear: both; }
-  .results-content.filters--open .results-container {
-    left: 20%; }
-  .results-content.filters--open #filters {
-    left: 0; }
 
 .results-container {
   padding: 10px;
@@ -1944,9 +1978,22 @@ footer {
   left: 0;
   height: 100%; }
 
+* {
+  margin: 0; }
+
+body,
+html {
+  height: 100%; }
+
 body {
   padding: 0;
   margin: 0; }
+
+.page-wrap {
+  min-height: 100%; }
+  .page-wrap:after {
+    content: "";
+    display: block; }
 
 .container {
   max-width: 68em;

@@ -19,7 +19,7 @@
 }
 
 .header-nav__list {
-  @extend %flat-list;
+  @extend .flat-list;
   float: left;
 }
 

@@ -16,7 +16,7 @@ ul, ol {
   }
 }
 
-%flat-list {
+.flat-list {
   @include clearfix();
 
   li {

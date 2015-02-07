@@ -19,16 +19,6 @@
   background-color: $filter-bg;
   width: 100%;
   overflow: hidden;
-
-  &.filters--open {
-    .results-container {
-      left: 20%;
-    }
-
-    #filters {
-      left: 0;
-    }
-  }
 }
 
 .results-container {

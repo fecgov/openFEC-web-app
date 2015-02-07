@@ -21,9 +21,10 @@ $(document).ready(function() {
     });
 
     $('.side-toggle').click(function(){
-    	$('.results-content').toggleClass('filters--open');
+    	$('#main').toggleClass('side--open');
     })
 
+    // Sticky page controls
     if ( $pageControls.length > 0 ) {
     	var scrollPos,
     		controlsHeight,
@@ -42,5 +43,22 @@ $(document).ready(function() {
 	      }
 	    })
     }
+
+    // Expand button
+    if ( $('.js-reveal').length > 0 ) {
+    	var isHidden = true;
+    	$('.js-reveal').click(function(){
+    		if ( isHidden === true ) {
+    			$('.hidden-container').removeClass('u-hidden');
+    			$(this).html('Hide charts');
+    			isHidden = false;
+    		} else {
+				$('.hidden-container').addClass('u-hidden');
+    			$(this).html('View charts');
+    			isHidden = true;
+    		}
+    	})
+    }
+
 
 });
