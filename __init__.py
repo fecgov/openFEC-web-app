@@ -5,6 +5,9 @@ from openfecwebapp.views import (render_search_results, render_table,
 from openfecwebapp.api_caller import (load_search_results,
     load_single_type, load_totals)
 
+import locale
+locale.setlocale(locale.LC_ALL, '')
+
 app = Flask(__name__)
 
 def _add_fields_star(params):
@@ -56,6 +59,10 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
+
+@app.template_filter('currency')
+def currency_filter(num, grouping=True):
+    return locale.currency(num, grouping=grouping)
 
 if __name__ == '__main__':
     app.run(host=host, port=port, debug=debug)
