@@ -10,37 +10,54 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
-
-<header class="site-header">
-  <div class="usa">
-    <span class="u-float-left">Looking for fec.gov? <a href="https://fec.gov">Click here.</a></span>
-    An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website">
-    <span class="u-float-right">This site is in beta. Help us improve &raquo;</span>
-  </div>
-  <div class="header-nav">
-    <nav>
-      <ul class="header-nav__list">
-        <li class="header-nav__item"><a class="header-nav__brand" href="/" title="Home"><img src="/static/img/logo.svg" alt="OpenFEC Logo"></a></li>
-        <li class="header-nav__item"><a class="header-nav__link" href="/candidates" name="candidates"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
-        <li class="header-nav__item"><a class="header-nav__link" href="/committees" name="committees"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
-      </ul>
-    </nav>
-    <div class="header-nav__search input-button-combo">
-      <form id="search" action="/">
-        <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search">
-        <button class="search-submit"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
-      </form>
+<div class="page-wrap">
+  <header class="site-header">
+    <div class="usa">
+      <span class="u-float-left">Looking for fec.gov? <a href="https://fec.gov">Click here.</a></span>
+      An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website">
+      <span class="u-float-right">This site is in development.</span>
     </div>
+    <div class="header-nav">
+      <nav>
+        <ul class="header-nav__list">
+          <li class="header-nav__item"><a class="header-nav__brand" href="/" title="Home"><img src="/static/img/logo.svg" alt="OpenFEC Logo"></a></li>
+          <li class="header-nav__item"><a class="header-nav__link" href="/candidates" name="candidates"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
+          <li class="header-nav__item"><a class="header-nav__link" href="/committees" name="committees"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
+        </ul>
+      </nav>
+      <div class="header-nav__search input-button-combo">
+        <form id="search" action="/">
+          <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search">
+          <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  {% block header %}{% endblock %}
+
+  <div id="progress" class="container hidden"></div>
+
+  <main id="main"{% if section %} data-section="{{section}}"{% endif %}>
+      {% block body %}{% endblock %}
+  </main>
+</div> <!-- .page-wrap -->
+<footer>
+  <div class="footer__left">
+    <img src="/static/img/18f.png" alt="18F Logo" class="u-float-left">
+    <ul class="u-float-left">
+      <li>A project of <a href="https://18f.gsa.gov">18F</a></li>
+      <li><a href="https://github.com/18F/openFEC/">View project source code</a></li>
+    </ul>
   </div>
-</header>
 
-{% block header %}{% endblock %}
-
-<div id="progress" class="container hidden"></div>
-
-<main id="main"{% if section %} data-section="{{section}}"{% endif %}>
-    {% block body %}{% endblock %}
-</main>
+  <nav class="footer__right footer__nav">
+    <ul>
+      <li>Contact us</li>
+      <li><a href="http://fec.gov">Visit fec.gov</a></li>
+    </ul>
+  </nav>
+</footer>
 
 <script src="/static/js/vendor/chosen/chosen.jquery.min.js"></script>
 <script src="/static/js/vendor/typeahead.bundle.min.js"></script>
