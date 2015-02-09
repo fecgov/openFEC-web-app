@@ -14,8 +14,9 @@ def generate_pagination_values(c, params, url, data_type):
     pagination = {}
     per_page = int(c['pagination']['per_page'])
     page = int(c['pagination']['page'])
+    count = int(c['pagination']['count'])
     current_results_start = per_page * (page - 1) + 1 
-    current_results_end = per_page * page
+    current_results_end = min(per_page * page, count)
     total_pages = int(c['pagination']['pages'])
 
     pagination['results_count'] = c['pagination']['count']
