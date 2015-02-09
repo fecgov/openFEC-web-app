@@ -1,0 +1,54 @@
+.data--disbursements {
+  background: $data-disbursement;
+}
+
+.data--receipts {
+  background: $data-receipt;
+}
+
+.data--cash_on_hand {
+  background: $data-cash;
+}
+
+.data--debts_owed {
+  background: $data-debt;
+}
+
+.chart-series {
+  @include display(flex);
+  @include flex-direction(row);
+  @include align-items(flex-end);
+
+  .chart-series__group {
+    @include flex(1);
+    @include display(flex);
+    @include flex-direction(row);
+    @include align-items(flex-end);
+
+    margin: 0 .5em;
+
+    &:first-of-type { margin-left: 0; }
+    &:last-of-type { margin-right: 0; }
+
+    .chart-series__group__bar {
+      @include flex(1);
+
+      // space for the top label of the tallest bar
+      margin-top: 2em;
+
+      // for positioning labels
+      position: relative;
+
+      & + .chart-series__group__bar {
+        margin-left: .25em;
+      }
+
+    }
+
+    .chart-series__group__label,
+    .chart-series__group__value {
+      display: none;
+    }
+  }
+}
+
