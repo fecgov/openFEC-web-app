@@ -52,10 +52,20 @@
         <div class="row">
           <figure class="chart-container chart--r-d">
             <h4 class="figure__title">Finances Over Time</h4>
-                {% for q in committee.totals.quarters %}
-                    {{ q.receipts }}
-                    {{ q.disbursements }}
+            <div class="chart-series">
+            {% for q in committee.totals.quarters %}
+              <div class="chart-series__group">
+                {% for key in ('disbursements', 'receipts') %}
+                <div class="chart-series__group__bar"
+                  data-key="{{ key }}"
+                  data-value="{{ q[key] }}">
+                  <span class="chart-series__group__label">{{ key }}</span>
+                  <span class="chart-series__group__value">{{ q[key]|currency }}</span>
+                </div>
                 {% endfor %}
+              </div>
+            {% endfor %}
+            </div>
           </figure>
         </div>
         {% endif %}
