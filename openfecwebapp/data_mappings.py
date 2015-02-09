@@ -44,26 +44,6 @@ def generate_pagination_values(c, params, url, data_type):
 
     return pagination
 
-def map_candidate_table_values(c):
-    """
-    maps and returns template vars for a single candidate
-    record. 
-    """
-    candidate = {
-        'name': c['name']['full_name'],
-        'office': c['elections'][0]['office_sought_full'],
-        'election': int(c['elections'][0]['election_year']),
-        'party': c['elections'][0]['party_affiliation'],
-        'state': c['elections'][0]['state'],
-        'district': int(c['elections'][0]['district']) 
-            if c['elections'][0]['district'] else '',
-        'name_url': '/candidates/' + c['candidate_id']
-            if c['candidate_id'] else '',
-        'id': c['candidate_id']
-    }
-
-    return candidate
-
 def map_committee_table_values(c):
     """
     maps and returns template vars for a single committee
@@ -205,7 +185,7 @@ def map_committee_page_values(c):
     return committee
 
 type_map = {
-    'candidates': map_candidate_table_values,
+    'candidates': lambda x: x,
     'candidate': map_candidate_page_values,
     'committees': map_committee_table_values,
     'committee': map_committee_page_values
