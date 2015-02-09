@@ -1,20 +1,18 @@
 {% if pagination.results_count %}
-    <div class="meta-box">
-        <div id="results-count-first" class="results-count">
-          <p>Results: {{pagination.results_count}} records</p>
-            {% if pagination.results_range %}
-                <p>Viewing: {{pagination.current_results_start}} - {{pagination.current_results_end}}</p>
-            {% endif %}
-        </div>
-        {% if pagination.pagination_links %}
-            <div class="pagination">
-                {% if pagination.prev_url %}
-                    <a href="{{pagination.prev_url}}" id="prev" class="pagination__link"><i class="ti-arrow-left"></i> Previous {{pagination.per_page}}</a>
-                {% endif %}
-                {% if pagination.next_url %}
-                    <a href="{{pagination.next_url}}" id="next" class="pagination__link">Next {{pagination.per_page}} <i class="ti-arrow-right"></i></a>
-                {% endif %}
-            </div>
+    <ul class="results-count">
+      <li>Results: {{pagination.results_count}} records</li>
+        {% if pagination.results_range %}
+            <li>Viewing: {{pagination.current_results_start}} - {{pagination.current_results_end}}</li>
         {% endif %}
-    </div><!--- .meta-box -->
+        {% if pagination.pagination_links %}
+            <li>
+            {% if pagination.prev_url %}
+                <a href="{{pagination.prev_url}}" id="prev" class="pagination__link">&laquo; Previous {{pagination.per_page}}</a>
+            {% endif %}
+            {% if pagination.next_url %}
+                <a href="{{pagination.next_url}}" id="next" class="pagination__link">Next {{pagination.per_page}} &raquo;</a>
+            {% endif %}
+            </li>
+        {% endif %}
+    </ul>
 {% endif %}

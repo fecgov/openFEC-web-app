@@ -1,12 +1,7 @@
 // Header styles for candidate, committee and district pages
 
-.entity__header {
-  padding: 2em 0;
-}
-
 .entity__header--top {
-  padding: 1em 0 0;
-  border-bottom: 4px solid;
+  @include rem(padding-top, 2.0rem);
 }
 
 .entity__name {
@@ -14,13 +9,7 @@
 }
 
 .entity__type {
-  @include font-size(1.6);
-  display: inline-block;
-  font-weight: bold;
-  padding: .25em .5em;
-  border-radius: 4px;
-  margin: 0 0 .625em 0;
-  text-align: center;
+  @include font-size(2.0);
 }
 
 .time-period {
@@ -50,7 +39,7 @@
   width: 100%;
 
   h4 {
-    color: $licorice;
+    color: #fff;
     font-weight: normal;
     border-bottom: 1px solid $licorice;
   }
@@ -61,11 +50,11 @@
 }
 
 .entity__term {
-  @include span-columns(4);
+  @include span-columns(4, block-collapse);
 }
 
 .entity__term--wide {
-  @include span-columns(8);
+  @include span-columns(8, block-collapse);
 }
 
 .entity__term--extra-wide {
@@ -86,38 +75,7 @@
 // Candidate-specific styles
 
 .candidate {
-  .entity__header {
-    background-color: $licorice;
-    color: #fff;
 
-    a {
-      color: #fff;
-      text-decoration: underline;
-    }
-
-    .chosen-container a {
-      color: $blue;
-    }
-
-    .entity__info h4 {
-      color: #99A4B1;
-      border-bottom: 1px solid #99A4B1;
-    }
-
-    .entity__header--top {
-      border-bottom-color: #99A4B1;
-    }
-
-    .entity__type {
-      background-color: #99A4B1;
-      color: $licorice;
-    }
-
-    .entity__term h4 {
-      color: #99A4B1;
-      border-bottom-color: #99A4B1;
-    }
-  }
 }
 
 // Committee summary boxes on the Candidate Financial Summary page
@@ -126,7 +84,7 @@
   @include clearfix();
 
   .row {
-    @include rem(margin-bottom, 2rem);
+    @include rem(margin-bottom, 3rem);
   }
 
   .quick-links {
@@ -148,38 +106,5 @@
 
   .table__cell:first-child {
     font-weight: bold;
-  }
-}
-
-// Committee page
-.committee {
-  .entity__header {
-    background-color: $committee-bg;
-  }
-
-  .entity__header--top {
-    border-bottom-color: #63636E;
-  }
-
-  .entity__type {
-    background-color: #63636E;
-    color: $committee-bg;
-  }
-
-  .entity__term h4 {
-    color: #63636E;
-    border-bottom-color: #63636E;
-  }
-}
-
-.chunk--two-thirds {
-  .entity__info {
-    dt {
-      width: 25%;
-    }
-
-    dd {
-      width: 75%;
-    }
   }
 }

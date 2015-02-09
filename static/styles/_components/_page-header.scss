@@ -1,0 +1,75 @@
+.page-header {
+	@include rem(padding, 1rem 2rem);
+	background: $page-header;
+	color: #fff;
+
+	h1 {
+		margin-bottom: 0;
+	}
+
+  a,
+  a:hover,
+  a:active {
+    color: #fff;
+  }
+}
+
+.page-controls {
+	background: $page-header;
+	border-top: 1px solid $filter-bg;
+  width: 100%;
+  color: #fff;
+}
+
+// Fixing posiiton of page controls
+.controls--fixed {
+  .page-controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
+
+  .page-controls__top {
+    display: block;
+  }
+}
+
+.page-controls__top {
+  @include rem(padding, 1rem);
+  display: none;
+  border-bottom: 1px solid $licorice;
+}
+
+.page-controls__title {
+  @include font-size(1.6);
+}
+
+.results-count {
+  @extend .flat-list;
+  float: right;
+
+  li {
+    @include rem(padding, 1.0rem 2.0rem); 
+    line-height: 1.14;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: #fff;
+  }
+}
+
+.pagination {
+  text-align: right;
+  float: right;
+}
+
+.pagination__link {
+  &:nth-child(2) {
+    margin-left: 1em;
+  }
+}
