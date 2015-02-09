@@ -149,14 +149,18 @@ def map_totals(t):
 
     totals_mapped['quarters'] = []
 
-    # finances over time chart
+    # finances over time and cash and debt over time charts
     for r in reports:
         quarter = {}
         quarter['receipts'] = r.get('total_receipts_period')
         quarter['disbursements'] = r.get(
             'total_disbursements_period')
+        quarter['cash_on_hand'] = r.get('cash_on_hand_end_period')
+        quarter['debts_owed'] = r.get('debts_owed_by_committee')
         totals_mapped['quarters'].append(quarter) 
 
+        # when we have dates, ask the API for the specific
+        # election cycle instead.
         if len(totals_mapped['quarters']) >= 8:
             break;
 
