@@ -118,7 +118,7 @@ def map_totals(t):
     totals_mapped = {}
     value_map = {
         'total_receipts': totals.get('receipts'),
-        'total_disbursements': totals.get('total_disbursements'),
+        'total_disbursements': totals.get('disbursements'),
         'total_cash': reports.get('cash_on_hand_end_period'),
         'total_debt': reports.get('debts_owed_by_committee')
     }
