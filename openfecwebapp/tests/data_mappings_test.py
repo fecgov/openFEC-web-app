@@ -72,13 +72,26 @@ class TestDataMappings(TestCase):
 
         self.totals = {
             'results': [{
-                'reports': [{
+                'reports': [
+                {
+                    'total_receipts_period': '23.32',
+                    'total_disbursements_period': '1.24',
                     'cash_on_hand_end_period': 123.34,
                     'debts_owed_by_committee': 45678.90,
                     'report_year': 2010,
                     'election_cycle': 2010,
                     'report_type_full': 'End Report'
-                }],
+                },
+                {
+                    'total_receipts_period': '89.38',
+                    'total_disbursements_period': '93.23',
+                    'cash_on_hand_end_period': 452.32,
+                    'debts_owed_by_committee': 82.32,
+                    'report_year': 2012,
+                    'election_cycle': 2012,
+                    'report_type_full': 'Quarterly Report'
+                }
+                ],
                 'totals': [{
                     'receipts': 231.45,
                     'disbursements': 3453.54
@@ -99,7 +112,7 @@ class TestDataMappings(TestCase):
         self.assertEqual('PC',
             vals['primary_committee']['designation_code'])
         self.assertEqual('/committees/D1234',
-            vals['primary_committee']['url'])
+            vals['primary_committee']['name_url'])
 
         self.assertEqual('D1234', vals['authorized_committees'][0]['id'])
         self.assertEqual('Friends of McPersonson', 
@@ -109,7 +122,7 @@ class TestDataMappings(TestCase):
         self.assertEqual('A',
             vals['authorized_committees'][0]['designation_code'])
         self.assertEqual('/committees/D1234',
-            vals['authorized_committees'][0]['url'])
+            vals['authorized_committees'][0]['name_url'])
 
     def test_map_candidate_table_values(self):
         vals = map_candidate_table_values(self.candidate)
@@ -164,6 +177,15 @@ class TestDataMappings(TestCase):
         self.assertEqual('2009 - 2010', vals['years_totals'])
         self.assertEqual('End Report', vals['report_desc'])
 
+        self.assertEqual(123.34, vals['quarters'][0]['cash_on_hand'])
+        self.assertEqual(45678.90, vals['quarters'][0]['debts_owed'])
+        self.assertEqual('23.32', vals['quarters'][0]['receipts'])
+        self.assertEqual('1.24', vals['quarters'][0]['disbursements'])
+        self.assertEqual(452.32, vals['quarters'][1]['cash_on_hand'])
+        self.assertEqual(82.32, vals['quarters'][1]['debts_owed'])
+        self.assertEqual('89.38', vals['quarters'][1]['receipts'])
+        self.assertEqual('93.23', vals['quarters'][1]['disbursements'])
+
     def test_map_committee_page_values(self):
         vals = map_committee_page_values(self.committee)
 
@@ -172,7 +194,6 @@ class TestDataMappings(TestCase):
         self.assertEqual('#595', vals['address']['street_2'])
         self.assertEqual('Placetown', vals['address']['city'])
         self.assertEqual('23456', vals['address']['zip'])
-
 
 
 if __name__ == '__main__':
