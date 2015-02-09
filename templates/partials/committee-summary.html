@@ -56,13 +56,12 @@
         {% if committee.totals.quarters %}
         <div class="row">
           <figure class="chart-container chart--r-d">
-            <h4 class="figure__title">Finances over time</h4>
+            <h4 class="figure__title">Finances Over Time</h4>
             <div class="chart-series">
             {% for q in committee.totals.quarters %}
               <div class="chart-series__group">
-                {% for key in ('disbursements', 'receipts') %}
-                <div class="chart-series__group__bar"
-                  data-key="{{ key }}"
+                {% for key in ('receipts', 'disbursements') %}
+                <div class="chart-series__group__bar data--{{ key }}"
                   data-value="{{ q[key] }}">
                   <span class="chart-series__group__label">{{ key }}</span>
                   <span class="chart-series__group__value">{{ q[key]|currency }}</span>
@@ -80,16 +79,15 @@
             <h4 class="figure__title">Cash and Debt Over Time</h4>
              <div class="chart-series">
              {% for q in committee.totals.quarters %}
-              <div class="chart-series__group">
-                {% for key in ('cash_on_hand', 'debts_owed') %}
-                <div class="chart-series__group__bar"
-                  data-key="{{ key }}"
-                  data-value="{{ q[key] }}">
-                  <span class="chart-series__group__label">{{ key }}</span>
-                  <span class="chart-series__group__value">{{ q[key]|currency }}</span>
-                </div>
-                {% endfor %}
-              </div>
+               <div class="chart-series__group">
+                 {% for key in ('cash_on_hand', 'debts_owed') %}
+                 <div class="chart-series__group__bar data--{{ key }}"
+                   data-value="{{ q[key] }}">
+                   <span class="chart-series__group__label">{{ key }}</span>
+                   <span class="chart-series__group__value">{{ q[key]|currency }}</span>
+                 </div>
+                 {% endfor %}
+               </div>
              {% endfor %}
             </div>
           </figure>
