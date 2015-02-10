@@ -163,6 +163,7 @@ def map_candidate_page_values(c):
     """
     candidate = {}
     candidate['name'] = c['name']['full_name']
+    candidate['id'] = c['candidate_id']
 
     if c.get('elections'):
         c_e = c['elections'][0]
@@ -212,8 +213,18 @@ def map_committee_page_values(c):
 
     return committee
 
+def map_candidate_table_values(c):
+    """
+    this is a temporary fix for candidate listings.
+    """
+    candidate = dict(**c)
+    candidate_id = c['candidate_id']
+    candidate['id'] = candidate_id
+    candidate['name_url'] = '/candidates/%s' % candidate_id
+    return c
+
 type_map = {
-    'candidates': lambda x: x,
+    'candidates': map_candidate_table_values,
     'candidate': map_candidate_page_values,
     'committees': map_committee_table_values,
     'committee': map_committee_page_values
