@@ -101,15 +101,16 @@ class TestDataMappings(TestCase):
         self.assertEqual('/committees/D1234',
             vals['primary_committee']['url'])
 
-        self.assertEqual('D1234', vals['authorized_committees'][0]['id'])
+        self.assertEqual('D1234', vals['authorized_committees'][
+            'D1234']['id'])
         self.assertEqual('Friends of McPersonson', 
-            vals['authorized_committees'][0]['name'])
+            vals['authorized_committees']['D1234']['name'])
         self.assertEqual('Authorized',
-            vals['authorized_committees'][0]['designation'])
+            vals['authorized_committees']['D1234']['designation'])
         self.assertEqual('A',
-            vals['authorized_committees'][0]['designation_code'])
+            vals['authorized_committees']['D1234']['designation_code'])
         self.assertEqual('/committees/D1234',
-            vals['authorized_committees'][0]['url'])
+            vals['authorized_committees']['D1234']['url'])
 
     def test_generate_pagination_values(self):
         params = {}

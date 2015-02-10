@@ -56,16 +56,17 @@ def render_page(data_type, c_data):
                 t_data)
 
         if tmpl_vars.get('affiliated_committees'):
-            # for each type of committee we show, get the totals data
             committee_ids = []
-            for t in committee_type_map:
-                c_type = committee_type_map[t] 
-                for i, val in enumerate(tmpl_vars[c_type]):
-                    committee_ids.append(tmpl_vars[c_type][i]['id'])
+            for cmte_id in tmpl_vars['affiliated_committees']:
+                if cmte['designation_code'] in committee_type_map: 
+                    committee_ids.append(cmte['id'])
+                    cmte_type = committee_type_map[
+                        cmte['designation_code']]
 
-                    results = load_totals(",".join(committee_ids))
-                    if results['results']:
-                        tmpl_vars[c_type][i]['totals'] = map_totals(
-                            results)
+            results = load_totals(",".join(committee_ids))
+            for r in results['results']:
+                c_id = r['committee_id']
+                tmpl_vars[cmte_type][c_id]['totals'] = map_totals(
+                    results)
 
     return render_template(data_type + 's-single.html', **tmpl_vars)

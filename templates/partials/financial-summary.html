@@ -10,7 +10,7 @@
 
       {% if authorized_committees %}
         {% for c in authorized_committees %}
-            {% with committee=c %}
+            {% with committee=authorized_committees[c] %}
                 {% include 'partials/committee-summary.html' %}
             {% endwith %}
         {% endfor %}
@@ -18,7 +18,7 @@
 
       {% if leadership_committees %}
         {% for c in leadership_committees %}
-            {% with committee=c %}
+            {% with committee=leadership_committees[c] %}
                 {% include 'partials/committee-summary.html' %}
             {% endwith %}
         {% endfor %}
@@ -26,7 +26,7 @@
 
       {% if joint_committees %}
         {% for c in joint_committees %}
-            {% with committee=c %}
+            {% with committee=joint_committees[c] %}
                 {% include 'partials/committee-summary.html' %}
             {% endwith %}
         {% endfor %}
