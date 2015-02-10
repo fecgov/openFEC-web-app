@@ -43,14 +43,13 @@ tr {
 }
 
 td {
+  @include truncate();
   padding: .5em;
   border: none;
+  width: 16%;
 }
 
 .flex-cell {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   width: 30%;
 }
 
