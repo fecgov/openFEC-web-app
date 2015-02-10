@@ -20,7 +20,7 @@ _totals_fields = [
 ]
 
 def load_search_results(query):
-    filters = {'fields': '*', 'per_page': '5'}
+    filters = {'per_page': '5'}
 
     if query:
         filters['q'] = query
