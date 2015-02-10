@@ -58,10 +58,10 @@ a {
   @include transition(color 0.1s linear);
   color: $base-link-color;
   text-decoration: none;
-  text-decoration: underline;
 
   &:hover {
     color: $hover-link-color;
+    text-decoration: underline;
   }
 
   &:active, &:focus {

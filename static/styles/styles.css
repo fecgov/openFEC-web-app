@@ -77,10 +77,10 @@ a {
   -moz-transition: color 0.1s linear;
   transition: color 0.1s linear;
   color: #2678BA;
-  text-decoration: none;
-  text-decoration: underline; }
+  text-decoration: none; }
   a:hover {
-    color: #194f7a; }
+    color: #194f7a;
+    text-decoration: underline; }
   a:active, a:focus {
     color: #194f7a;
     outline: none; }
@@ -310,13 +310,14 @@ tr {
     background: rgba(38, 120, 186, 0.1); }
 
 td {
-  padding: .5em;
-  border: none; }
-
-.flex-cell {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: .5em;
+  border: none;
+  width: 16%; }
+
+.flex-cell {
   width: 30%; }
 
 .sort-header {
