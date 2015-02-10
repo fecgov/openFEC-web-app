@@ -53,23 +53,13 @@
           </figure>
         </div>
 
+        {% import 'macros/charts.html' as charts %}
+
         {% if committee.totals.quarters %}
         <div class="row">
           <figure class="chart-container chart--r-d">
             <h4 class="figure__title">Finances Over Time</h4>
-            <div class="chart-series">
-            {% for q in committee.totals.quarters %}
-              <div class="chart-series__group">
-                {% for key in ('receipts', 'disbursements') %}
-                <div class="chart-series__group__bar data--{{ key }}"
-                  data-value="{{ q[key] }}">
-                  <span class="chart-series__group__label">{{ key }}</span>
-                  <span class="chart-series__group__value">{{ q[key]|currency }}</span>
-                </div>
-                {% endfor %}
-              </div>
-            {% endfor %}
-            </div>
+            {{ charts.chart_series_grouped(committee.totals.quarters, ('receipts', 'disbursements'), format=currency) }}
           </figure>
         </div>
         {% endif %}
@@ -77,19 +67,7 @@
         <div class="row">
           <figure class="chart-container chart--c-d">
             <h4 class="figure__title">Cash and Debt Over Time</h4>
-             <div class="chart-series">
-             {% for q in committee.totals.quarters %}
-               <div class="chart-series__group">
-                 {% for key in ('cash_on_hand', 'debts_owed') %}
-                 <div class="chart-series__group__bar data--{{ key }}"
-                   data-value="{{ q[key] }}">
-                   <span class="chart-series__group__label">{{ key }}</span>
-                   <span class="chart-series__group__value">{{ q[key]|currency }}</span>
-                 </div>
-                 {% endfor %}
-               </div>
-             {% endfor %}
-            </div>
+            {{ charts.chart_series_grouped(committee.totals.quarters, ('cash_on_hand', 'debts_owed'), format=currency) }}
           </figure>
         </div>
       </div> 
