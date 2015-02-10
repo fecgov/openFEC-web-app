@@ -1,57 +1,77 @@
-.data--disbursements {
-  background: $data-disbursement;
+.chart-series__bar {
+  @include box-sizing(border-box);
+  background: #ccc;
 }
 
-.data--receipts {
-  background: $data-receipt;
-}
+.data--disbursements { background: $data-disbursement; }
+
+.data--receipts { background: $data-receipt; }
 
 .data--cash,
-.data--cash_on_hand {
-  background: $data-cash;
-}
+.data--cash_on_hand { background: $data-cash; }
 
 .data--debt,
-.data--debts_owed {
-  background: $data-debt;
+.data--debts_owed { background: $data-debt; }
+
+.data--support { background: $data-support; }
+.data--oppose { background: $data-oppose; }
+
+.chart-series {
+  margin: 1em 0;
 }
 
-.chart-series:not(.chart-series--horizontal) {
+// horizontal bar charts
+.chart-series--horizontal {
+  .chart-series__bar {
+    margin-bottom: .25em;
+    padding-left: .5em;
+    white-space: nowrap;
+    min-height: 1em;
+  }
+
+  .chart-series__group {
+    margin-bottom: .5em;
+  }
+}
+
+// vertical bar charts use flexbox
+// see: <http://caniuse.com/#feat=flexbox>
+.chart-series--vertical {
   @include display(flex);
   @include flex-direction(row);
   @include align-items(flex-end);
 
-  margin: 1em 0;
+  height: 200px;
 
-  .chart-series__bar {
+  &.chart-series--short {
+    height: 100px;
+  }
+
+  .chart-series__bar,
+  .chart-series__group {
     @include flex(1);
 
     // for positioning labels
     position: relative;
+    height: 100%;
 
     margin-left: 1em;
-
     &:first-of-type {
       margin-left: 0;
     }
   }
 
+  .chart-series__bar {
+  }
+
   .chart-series__group {
-    @include flex(1);
     @include display(flex);
     @include flex-direction(row);
     @include align-items(flex-end);
 
-    margin-left: 1em;
-
-    &:first-of-type {
-      margin-left: 0;
-    }
-
     .chart-series__bar + .chart-series__bar {
       margin-left: .5em;
     }
-
   }
 
   .chart-series__bar__label,
