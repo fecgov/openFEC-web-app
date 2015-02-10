@@ -64,10 +64,9 @@ def render_page(data_type, c_data):
                         cmte['designation_code']]
 
             results = load_totals(",".join(committee_ids))
-            if results['results']:
-                for r in results['results']:
-                    c_id = r['committee_id']
-                    tmpl_vars[cmte_type][c_id]['totals'] = map_totals(
-                        results)
+            for r in results['results']:
+                c_id = r['committee_id']
+                tmpl_vars[cmte_type][c_id]['totals'] = map_totals(
+                    results)
 
     return render_template(data_type + 's-single.html', **tmpl_vars)
