@@ -1,6 +1,6 @@
 // MODULE: Browse links
 .browse-links {
-  @extend %flat-list;
+  @extend .flat-list;
   @include span-columns(12);
   @include shift(6);
   @include rem(padding, 1.5rem 0);

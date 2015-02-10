@@ -42,6 +42,7 @@
   }
 }
 
+button,
 .button {
   @include button($lightest-gray, $dark-gray, $medium-gray, #fff);
   border: 1px solid $medium-gray;
@@ -53,7 +54,6 @@
   border: 1px solid $medium-gray;
 }
 
-button,
 input[type="submit"],
 .primary {
   @include button($blue, #fff, $blue-2, #fff);

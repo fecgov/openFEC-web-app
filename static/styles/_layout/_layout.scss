@@ -1,8 +1,26 @@
 @import "data-view";
 
+* {
+  margin: 0; // For sticky footer (http://css-tricks.com/snippets/css/sticky-footer/)
+}
+
+body,
+html {
+  height: 100%;
+}
+
 body {
   padding: 0;
   margin: 0;
+}
+
+.page-wrap {
+  min-height: 100%;
+
+  &:after {
+    content: "";
+    display: block;
+  }
 }
 
 .container {
