@@ -2,7 +2,7 @@ var d3 = require('d3');
 
 module.exports = {
   init: function() {
-    console.log('sorry for being charty to the party');
+    // console.log('sorry for being charty to the party');
 
     var barChart = chartSeries()
       .max(function(values) {
