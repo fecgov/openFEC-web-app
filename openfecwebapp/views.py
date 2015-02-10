@@ -57,7 +57,7 @@ def render_page(data_type, c_data):
 
         if tmpl_vars.get('affiliated_committees'):
             committee_ids = []
-            for cmte_id in tmpl_vars['affiliated_committees']:
+            for cmte in tmpl_vars['affiliated_committees'].values():
                 if cmte['designation_code'] in committee_type_map: 
                     committee_ids.append(cmte['id'])
                     cmte_type = committee_type_map[

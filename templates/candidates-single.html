@@ -10,13 +10,14 @@
     <div class="container">
       <div class="entity__header--top row">
         <h1 class="entity__name">{{ name }}</h1>
+        {% with election = elections[0] %}
         <span class="entity__type">Candidate for {{ office }}</span>
       </div>
       <div class="entity__header--bottom row">
         <ul class="entity__info">
           <li class="entity__term">
             <h4 class=>Party</h4>
-            <span>{{ party }}</span>
+            <span>{{ election.party_affiliation }}</span>
           </li>
           <li class="entity__term">
             <h4>Status</h4>
@@ -35,6 +36,7 @@
             <span>View filing &raquo;</span>
           </li> -->
         </ul>
+        {% endwith %}
         {% if related_committees %}
         <ul class="entity__info entity__related-entities">
           <li class="entity__term--extra-wide">
