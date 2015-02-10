@@ -6,18 +6,35 @@
   background: $data-receipt;
 }
 
+.data--cash,
 .data--cash_on_hand {
   background: $data-cash;
 }
 
+.data--debt,
 .data--debts_owed {
   background: $data-debt;
 }
 
-.chart-series {
+.chart-series:not(.chart-series--horizontal) {
   @include display(flex);
   @include flex-direction(row);
   @include align-items(flex-end);
+
+  margin: 1em 0;
+
+  .chart-series__bar {
+    @include flex(1);
+
+    // for positioning labels
+    position: relative;
+
+    margin-left: 1em;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
 
   .chart-series__group {
     @include flex(1);
@@ -25,30 +42,21 @@
     @include flex-direction(row);
     @include align-items(flex-end);
 
-    margin: 0 .5em;
+    margin-left: 1em;
 
-    &:first-of-type { margin-left: 0; }
-    &:last-of-type { margin-right: 0; }
-
-    .chart-series__group__bar {
-      @include flex(1);
-
-      // space for the top label of the tallest bar
-      margin-top: 2em;
-
-      // for positioning labels
-      position: relative;
-
-      & + .chart-series__group__bar {
-        margin-left: .25em;
-      }
-
+    &:first-of-type {
+      margin-left: 0;
     }
 
-    .chart-series__group__label,
-    .chart-series__group__value {
-      display: none;
+    .chart-series__bar + .chart-series__bar {
+      margin-left: .5em;
     }
+
+  }
+
+  .chart-series__bar__label,
+  .chart-series__bar__value {
+    display: none;
   }
 }
 

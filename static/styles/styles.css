@@ -1896,13 +1896,15 @@ footer {
 .data--receipts {
   background: #148552; }
 
+.data--cash,
 .data--cash_on_hand {
   background: #158552; }
 
+.data--debt,
 .data--debts_owed {
   background: #323A45; }
 
-.chart-series {
+.chart-series:not(.chart-series--horizontal) {
   display: -webkit-box;
   display: -moz-box;
   display: box;
@@ -1925,8 +1927,21 @@ footer {
   -ms-align-items: flex-end;
   -o-align-items: flex-end;
   align-items: flex-end;
-  -ms-flex-align: end; }
-  .chart-series .chart-series__group {
+  -ms-flex-align: end;
+  margin: 1em 0; }
+  .chart-series:not(.chart-series--horizontal) .chart-series__bar {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    position: relative;
+    margin-left: 1em; }
+    .chart-series:not(.chart-series--horizontal) .chart-series__bar:first-of-type {
+      margin-left: 0; }
+  .chart-series:not(.chart-series--horizontal) .chart-series__group {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     box-flex: 1;
@@ -1957,26 +1972,14 @@ footer {
     -o-align-items: flex-end;
     align-items: flex-end;
     -ms-flex-align: end;
-    margin: 0 .5em; }
-    .chart-series .chart-series__group:first-of-type {
+    margin-left: 1em; }
+    .chart-series:not(.chart-series--horizontal) .chart-series__group:first-of-type {
       margin-left: 0; }
-    .chart-series .chart-series__group:last-of-type {
-      margin-right: 0; }
-    .chart-series .chart-series__group .chart-series__group__bar {
-      -webkit-box-flex: 1;
-      -moz-box-flex: 1;
-      box-flex: 1;
-      -webkit-flex: 1;
-      -moz-flex: 1;
-      -ms-flex: 1;
-      flex: 1;
-      margin-top: 2em;
-      position: relative; }
-      .chart-series .chart-series__group .chart-series__group__bar + .chart-series__group__bar {
-        margin-left: .25em; }
-    .chart-series .chart-series__group .chart-series__group__label,
-    .chart-series .chart-series__group .chart-series__group__value {
-      display: none; }
+    .chart-series:not(.chart-series--horizontal) .chart-series__group .chart-series__bar + .chart-series__bar {
+      margin-left: .5em; }
+  .chart-series:not(.chart-series--horizontal) .chart-series__bar__label,
+  .chart-series:not(.chart-series--horizontal) .chart-series__bar__value {
+    display: none; }
 
 .styleguide .site-header {
   padding: 2em 0;
