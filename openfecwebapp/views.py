@@ -12,7 +12,7 @@ def render_search_results(results, query):
 
     if results.get('candidates'):
         for c in results['candidates'].get('results', []):
-            candidates.append(map_candidate_table_values(c))
+            candidates.append(c)
 
     if results.get('committees'):
         for c in results['committees'].get('results', []):
