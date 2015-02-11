@@ -49,7 +49,7 @@
             <h4>Related Candidates</h4>
             <ul>
             {% for c in candidates %}
-              <li><a href="{{ c.url }}">{{ c.name }}</a></li>
+              <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{ c.name }}</a></li>
             {% endfor %}
             </ul>
           </li>
