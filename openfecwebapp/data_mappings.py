@@ -111,7 +111,7 @@ def map_totals(t):
     from the 'totals' endpoint for use on candidat
     and committee pages
     """
-    if not t['results'][0].get('reports') and not t['results'][0].get('totals'):
+    if not t['results'][0].get('reports') or not t['results'][0].get('totals'):
         return {}
  
     reports = t['results'][0]['reports'][0]
