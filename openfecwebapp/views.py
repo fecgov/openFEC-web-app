@@ -1,7 +1,7 @@
 from openfecwebapp.api_caller import load_totals
 from flask import render_template
 from openfecwebapp.data_mappings import (type_map, 
-map_candidate_table_values, map_committee_table_values, 
+map_committee_table_values, 
 map_candidate_page_values, map_totals, committee_type_map,
 generate_pagination_values)
 from werkzeug.exceptions import abort
