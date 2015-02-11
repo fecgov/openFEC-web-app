@@ -57,8 +57,6 @@ def map_candidate_table_values(c):
         'state': c['elections'][0]['state'],
         'district': int(c['elections'][0]['district']) 
             if c['elections'][0]['district'] else '',
-        'name_url': '/candidates/' + c['candidate_id']
-            if c['candidate_id'] else '',
         'id': c['candidate_id']
     }
 
@@ -88,7 +86,6 @@ def map_committee_table_values(c):
             'designation_full', '')
 
     if c.get('committee_id'):
-        committee['name_url'] ='/committees/' + c.get('committee_id', '')
         committee['id'] = c.get('committee_id', '')
 
     return committee
@@ -114,6 +111,9 @@ def map_totals(t):
     from the 'totals' endpoint for use on candidat
     and committee pages
     """
+    if not t['results'][0].get('reports') or not t['results'][0].get('totals'):
+        return {}
+ 
     reports = t['results'][0]['reports'][0]
     totals = t['results'][0]['totals'][0]
     totals_mapped = {}
@@ -161,35 +161,41 @@ def map_candidate_page_values(c):
     """
     returns template vars for rendering a single candidate page
     """
-    candidate = map_candidate_table_values(c)
+    candidate = {}
+    candidate['name'] = c['name']['full_name']
+    candidate['state'] = c['mailing_addresses'][0].get('state', '')
 
     if c.get('elections'):
         c_e = c['elections'][0]
+        candidate['party'] = c_e.get('party_affiliation', '')
         candidate['incumbent_challenge'] = c_e.get(
             'incumbent_challenge_full', '')
         if c_e.get('primary_committee'):
             candidate['primary_committee'] = _map_committee_values(
                 c_e['primary_committee'])
+            candidate['office'] = c_e['primary_committee'].get(
+                'type_full', '')
             candidate['related_committees'] = True
 
         # affiliated committees = committee_type_map, 
         # plus more we ignore for the candidate pages
         if c_e.get('affiliated_committees'):
-            candidate['affiliated_committees'] = [
-                _map_committee_values(c)
+            candidate['affiliated_committees'] = {
+                c['committee_id']: _map_committee_values(c)
                 for c in c_e['affiliated_committees']
-            ]
-            candidate['authorized_committees'] = []
-            candidate['leadership_committees'] = []
-            candidate['joint_committees'] = []
+            }
+            candidate['authorized_committees'] = {}
+            candidate['leadership_committees'] = {}
+            candidate['joint_committees'] = {}
 
-            for cmte in candidate['affiliated_committees']:
+            for cmte_id in candidate['affiliated_committees']:
+                cmte = candidate['affiliated_committees'][cmte_id]
                 cmte_type = cmte['designation_code']
                 # drop anything that's not of the types we're
                 # interested in
-                if (cmte_type in committee_type_map):
+                if cmte_type in committee_type_map:
                     candidate[committee_type_map[
-                        cmte_type]].append(cmte)
+                        cmte_type]][cmte_id] = cmte
                     candidate['related_committees'] = True
 
     return candidate

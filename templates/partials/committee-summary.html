@@ -15,7 +15,7 @@
               <h4 class="figure__title">Quick Links</h4>
               <ul>
                 {% if committee %}
-                <li><a href="{{ committee.url }}">Committee Page &raquo;</a></li>
+                <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">Committee Page &raquo;</a></li>
                 {% endif %}
                 <li><a>Most recent report &raquo;</a></li>
                 <li><a>Contributions received &raquo;</a></li>
