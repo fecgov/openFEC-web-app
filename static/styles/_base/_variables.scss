@@ -40,6 +40,7 @@ $data-oppose: #A9205C; // Purple
 $data-oppose-2: #6B143B; // Darker purple
 $data-receipt: #148552; // Green
 $data-receipt-2: darken($data-receipt, 10%);
+$data-receipt: $blue;
 $data-disbursement: #DB4857; // Salmon
 $data-disbursement-2: darken($data-disbursement, 10%);
 $data-cash: #158552;
