@@ -84,10 +84,40 @@
         </div>
       </nav>
     </div>
+
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container">
           <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
+          <figure class="table--simple totals-table">
+            <h4 class="figure__title">Totals for {{totals.years_totals}}</h4>
+            <div class="table__half">
+              <div class="table__row">
+                <div class="table__cell">Total receipts</div>
+                <div class="table__cell">{{totals.total_receipts}}</div>
+              </div>
+              <div class="table__row">
+                <div class="table__cell">Total disbursements</div>
+                <div class="table__cell">{{totals.total_disbursements}}</div>
+              </div>
+              <div class="table__row--note">
+                Calculated from reports filed {{totals.report_year}}
+              </div>
+            </div>
+            <div class="table__half">
+              <div class="table__row">
+                <div class="table__cell">Cash on hand</div>
+                <div class="table__cell">{{totals.total_cash}}</div>
+              </div>
+              <div class="table__row">
+                <div class="table__cell">Debt</div>
+                <div class="table__cell">{{totals.total_debt}}</div>
+              </div>
+              <div class="table__row--note">
+                Source: {{totals.report_desc}}
+              </div>
+            </div>
+        </figure>
       </div>
     </section>
   </div>

@@ -64,6 +64,8 @@ def _get_candidate_page_totals(tmpl_vars):
     return tmpl_vars
 
 def _get_committee_page_totals(tmpl_vars):
+    totals = load_totals(tmpl_vars['id'])
+    tmpl_vars['totals'] = map_totals(totals)
     return tmpl_vars
 
 _totals_map = {
