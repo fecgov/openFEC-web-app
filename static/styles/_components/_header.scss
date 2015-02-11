@@ -1,15 +1,123 @@
 // MODULE: Header
 .usa {
-  @include font-size(1.4);
-  background-color: #e6e6e6;
+  @include font-size(1.2);
   text-align: center;
   padding: .5em;
+  border-bottom: 1px solid $licorice;
 }
 
 .site-header {
-  border-bottom: 5px solid $red;
+  background: $licorice-2;
+  color: #fff;
+
+  a {
+  	color: #fff;
+  }
+}
+.header-nav {
+  @include clearfix();
 }
 
-.site-header__inner {
-  padding: em(20) 0;
+.header-nav__list {
+  @extend .flat-list;
+  float: left;
+}
+
+.header-nav__link {
+  @include rem(padding, 1rem 2rem);	
+  @include font-size(1.8);
+  @include transition(background-color .1s);
+  text-align: center;
+  display: block;
+  line-height: 2;
+  text-decoration: none;
+
+  &:hover,
+  &:active {
+    background: $licorice;
+    color: #fff;
+  }
+}
+
+.header-nav__brand {
+	@include rem(padding, 1rem 2rem);
+	@include transition(background-color .1s);
+	background-color: $red;
+	display: block;
+	text-align: center;
+  position: relative;
+
+  &:after {
+    content: '';
+    @include transition(border-color .1s);
+    display: block;
+    position: absolute;
+    right: -10px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 28px 0 28px 10px;
+    border-color: transparent transparent transparent $red;
+  }
+
+	&:hover,
+	&:active {
+		background: $red-2;
+
+    &:after {
+      border-color: transparent transparent transparent $red-2;
+    }
+	}
+}
+
+.header-nav__search {
+  @include clearfix();
+  @include rem(padding, 1rem 2rem);
+  float: right;
+  margin-right: 0;
+  width: 340px;
+
+  input[type="text"],
+  button {
+  	@include rem(height, 3.2rem);
+    margin-bottom: 0;
+    border: none;
+  }
+
+  input[type="text"] {
+  	width: 260px;
+  }
+
+  .search-submit {
+  	width: 40px;
+  	padding: 0;
+  }
+}
+
+
+@include media($medium) {
+  .header-nav__link {
+    @include rem(padding, .5rem);
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .header-nav__search {
+    @include rem(padding, .5rem);
+  }
+}
+
+@include media($small) {
+  .header-nav__item {
+    @include span-columns(2, block-collapse);
+  }
+
+  .header-nav__search {
+    @include span-columns(4);
+    @include rem(padding, .5rem 0 0 0);
+    border-right: none;
+  }
 }

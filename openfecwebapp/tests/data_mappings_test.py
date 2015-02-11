@@ -39,6 +39,9 @@ class TestDataMappings(TestCase):
                     'designation': 'A' 
                 }]
             }],
+            'mailing_addresses': [{
+                'state': 'CA'
+            }],
             'candidate_id': 'A12345',
             'pagination': {
                 'per_page': '20',
@@ -90,6 +93,8 @@ class TestDataMappings(TestCase):
         vals = map_candidate_page_values(self.candidate)
 
         self.assertTrue(vals['related_committees'])
+        self.assertEqual(vals['state'], 'CA')
+        self.assertEqual(vals['name'], 'Person McPersonson')
         self.assertEqual('challenger', vals['incumbent_challenge'])
         self.assertEqual('D1234', vals['primary_committee']['id'])
         self.assertEqual('Friends of McPersonson', 
@@ -101,26 +106,16 @@ class TestDataMappings(TestCase):
         self.assertEqual('/committees/D1234',
             vals['primary_committee']['url'])
 
-        self.assertEqual('D1234', vals['authorized_committees'][0]['id'])
+        self.assertEqual('D1234', vals['authorized_committees'][
+            'D1234']['id'])
         self.assertEqual('Friends of McPersonson', 
-            vals['authorized_committees'][0]['name'])
+            vals['authorized_committees']['D1234']['name'])
         self.assertEqual('Authorized',
-            vals['authorized_committees'][0]['designation'])
+            vals['authorized_committees']['D1234']['designation'])
         self.assertEqual('A',
-            vals['authorized_committees'][0]['designation_code'])
+            vals['authorized_committees']['D1234']['designation_code'])
         self.assertEqual('/committees/D1234',
-            vals['authorized_committees'][0]['url'])
-
-    def test_map_candidate_table_values(self):
-        vals = map_candidate_table_values(self.candidate)
-
-        self.assertEqual('Person McPersonson', vals['name'])
-        self.assertEqual('Supreme Ruler', vals['office'])
-        self.assertEqual(2012, vals['election'])
-        self.assertEqual('TN', vals['state'])
-        self.assertEqual(11, vals['district'])
-        self.assertEqual('A12345', vals['id'])
-        self.assertEqual('/candidates/A12345', vals['name_url'])
+            vals['authorized_committees']['D1234']['url'])
 
     def test_generate_pagination_values(self):
         params = {}
@@ -151,7 +146,6 @@ class TestDataMappings(TestCase):
         self.assertEqual('Partay', vals['type'])
         self.assertEqual('Very Authorized', vals['designation'])        
         self.assertEqual('B7890', vals['id'])
-        self.assertEqual('/committees/B7890', vals['name_url'])
 
     def test_map_totals(self):
         vals = map_totals(self.totals)
