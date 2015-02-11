@@ -29,6 +29,9 @@ $green: #148552;
 $green-2: #0F5E3B;
 $licorice: #3E4957;
 $licorice-2: #323A45;
+$licorice-3: #505E70;
+$page-header: $licorice-3;
+$filter-bg: #BDC4CD;
 
 // Data colors
 $data-support: #1B5585; // Blue
@@ -37,6 +40,7 @@ $data-oppose: #A9205C; // Purple
 $data-oppose-2: #6B143B; // Darker purple
 $data-receipt: #148552; // Green
 $data-receipt-2: darken($data-receipt, 10%);
+$data-receipt: $blue;
 $data-disbursement: #DB4857; // Salmon
 $data-disbursement-2: darken($data-disbursement, 10%);
 $data-cash: #158552;

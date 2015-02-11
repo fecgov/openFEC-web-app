@@ -1,8 +1,26 @@
 @import "data-view";
 
+* {
+  margin: 0; // For sticky footer (http://css-tricks.com/snippets/css/sticky-footer/)
+}
+
+body,
+html {
+  height: 100%;
+}
+
 body {
   padding: 0;
   margin: 0;
+}
+
+.page-wrap {
+  min-height: 100%;
+
+  &:after {
+    content: "";
+    display: block;
+  }
 }
 
 .container {
@@ -88,60 +106,5 @@ body {
   &:last-of-type {
     padding-bottom: 0;
     border-bottom: none;
-  }
-}
-
-.chart-series {
-  @include display(flex);
-  @include flex-direction(row);
-  @include align-items(flex-end);
-
-  .chart-series__group {
-    @include flex(1);
-    @include display(flex);
-    @include flex-direction(row);
-    @include align-items(flex-end);
-
-    margin: 0 .5em;
-
-    &:first-of-type { margin-left: 0; }
-    &:last-of-type { margin-right: 0; }
-
-    .chart-series__group__bar {
-      @include flex(1);
-
-      // space for the top label of the tallest bar
-      margin-top: 2em;
-
-      // default background color
-      background: #ccc;
-
-      // for positioning labels
-      position: relative;
-
-      & + .chart-series__group__bar {
-        margin-left: .25em;
-      }
-
-      // we should probably target these with classes
-      &[data-key='disbursements'] { background: red; }
-      &[data-key='receipts'] { background: green; }
-    }
-
-    .chart-series__group__label,
-    .chart-series__group__value {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .chart-series__group__label {
-      bottom: 100%;
-    }
-
-    .chart-series__group__value {
-      top: 100%;
-    }
   }
 }

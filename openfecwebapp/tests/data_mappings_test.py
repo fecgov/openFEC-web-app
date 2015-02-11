@@ -124,17 +124,6 @@ class TestDataMappings(TestCase):
         self.assertEqual('/committees/D1234',
             vals['authorized_committees'][0]['name_url'])
 
-    def test_map_candidate_table_values(self):
-        vals = map_candidate_table_values(self.candidate)
-
-        self.assertEqual('Person McPersonson', vals['name'])
-        self.assertEqual('Supreme Ruler', vals['office'])
-        self.assertEqual(2012, vals['election'])
-        self.assertEqual('TN', vals['state'])
-        self.assertEqual(11, vals['district'])
-        self.assertEqual('A12345', vals['id'])
-        self.assertEqual('/candidates/A12345', vals['name_url'])
-
     def test_generate_pagination_values(self):
         params = {}
         url = 'http://yay.com'

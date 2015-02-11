@@ -12,21 +12,3 @@
 .meta-box--bottom {
   margin-top: 2em;
 }
-
-.results-count {
-  @include span-columns(12);
-  p {
-    margin: 0;
-  }
-}
-
-.pagination {
-  @include span-columns(12);
-  text-align: right;
-}
-
-.pagination__link {
-  &:nth-child(2) {
-    margin-left: 1em;
-  }
-}

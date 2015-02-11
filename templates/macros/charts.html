@@ -1,0 +1,36 @@
+{% macro chart_bar(value, key, format=None, attr={}) %}
+<div class="chart-series__bar data--{{ key }} {{ attr.class|default('') }}"
+  data-key="{{ key }}"
+  data-value="{{ value }}">
+  <div class="chart-series__bar__tooltip">
+    <span class="chart-series__bar__label">{{ key }}</span>
+    <span class="chart-series__bar__value">
+      {% if format %}{{ value|format }}{% else %}{{ value }}{% endif %}
+    </span>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro chart_series(bars, value_key, orient='vertical', format=None, attr={}) %}
+<div class="chart-series chart-series--{{ orient }} {{ attr.class|default('') }}">
+  {% for bar in bars %}
+    {{ chart_bar(bar[value_key], value_key, format=format, attr={}) }}
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro chart_series_grouped(groups, value_keys, label_key='label', orient='vertical', format=None, attr={}) %}
+<div class="chart-series chart-series--grouped chart-series--{{ orient }} {{ attr.class|default('') }}">
+  {% for group in groups %}
+  <div class="chart-series__group">
+    {% for key in value_keys %}
+      {{ chart_bar(group[key], key, format=format, attr={}) }}
+    {% endfor %}
+    <div class="chart-series__group__label">{{ group[label_key]|default('') }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro attrs(attr={}) %}
+{% endmacro %}

@@ -1,71 +1,65 @@
   <div class="page-subsection">
     <div class="figure-group committee-summary">
-      <div class="figure-group__header">
-        <span class="figure-group__description entity__type">{{ committee.designation }}</span>
-        <h3 class="figure-group__title">{{ committee.name }}</h3>
+      <div class="figure-group__side">
+        <img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">
       </div>
+      <div class="figure-group__main">
+        <div class="figure-group__header">
+          <h3 class="figure-group__title">{{ committee.name }}</h3>
+          <span class="figure-group__description">{{ committee.designation }}</span>
+        </div>
 
-      <div class="figure-group__inner">
-        <div class="row">
-          <div class="quick-links">
-            <h4 class="figure__title">Quick Links</h4>
-            <ul>
-              {% if committee %}
-              <li><a href="{{ committee.url }}">Committee Page &raquo;</a></li>
-              {% endif %}
-              <li><a>Most recent report &raquo;</a></li>
-              <li><a>Contributions received &raquo;</a></li>
-            </ul>
-          </div>
-          <figure class="table--simple totals-table">
-            <h4 class="figure__title">Totals for {{committee.totals.years_totals}}</h4>
-            <div class="table__half">
-              <div class="table__row">
-                <div class="table__cell">Total receipts</div>
-                <div class="table__cell">{{committee.totals.total_receipts}}</div>
-              </div>
-              <div class="table__row">
-                <div class="table__cell">Total disbursements</div>
-                <div class="table__cell">{{committee.totals.total_disbursements}}</div>
-              </div>
-              <div class="table__row--note">
-                Calculated from reports filed {{committee.totals.report_year}}
-              </div>
+        <div class="figure-group__inner">
+          <div class="row">
+            <div class="quick-links">
+              <h4 class="figure__title">Quick Links</h4>
+              <ul>
+                {% if committee %}
+                <li><a href="{{ committee.url }}">Committee Page &raquo;</a></li>
+                {% endif %}
+                <li><a>Most recent report &raquo;</a></li>
+                <li><a>Contributions received &raquo;</a></li>
+              </ul>
             </div>
-            <div class="table__half">
-              <div class="table__row">
-                <div class="table__cell">Cash on hand</div>
-                <div class="table__cell">{{committee.totals.total_cash}}</div>
+            <figure class="table--simple totals-table">
+              <h4 class="figure__title">Totals for {{committee.totals.years_totals}}</h4>
+              <div class="table__half">
+                <div class="table__row">
+                  <div class="table__cell">Total receipts</div>
+                  <div class="table__cell">{{committee.totals.total_receipts}}</div>
+                </div>
+                <div class="table__row">
+                  <div class="table__cell">Total disbursements</div>
+                  <div class="table__cell">{{committee.totals.total_disbursements}}</div>
+                </div>
+                <div class="table__row--note">
+                  Calculated from reports filed {{committee.totals.report_year}}
+                </div>
               </div>
-              <div class="table__row">
-                <div class="table__cell">Debt</div>
-                <div class="table__cell">{{committee.totals.total_debt}}</div>
-              </div>
-              <div class="table__row--note">
-                Source: {{committee.totals.report_desc}}
+              <div class="table__half">
+                <div class="table__row">
+                  <div class="table__cell">Cash on hand</div>
+                  <div class="table__cell">{{committee.totals.total_cash}}</div>
+                </div>
+                <div class="table__row">
+                  <div class="table__cell">Debt</div>
+                  <div class="table__cell">{{committee.totals.total_debt}}</div>
+                </div>
+                <div class="table__row--note">
+                  Source: {{committee.totals.report_desc}}
+                </div>
               </div>
             </div>
           </figure>
         </div>
 
+        {% import 'macros/charts.html' as charts %}
+
         {% if committee.totals.quarters %}
         <div class="row">
           <figure class="chart-container chart--r-d">
             <h4 class="figure__title">Finances Over Time</h4>
-            <div class="chart-series">
-            {% for q in committee.totals.quarters %}
-              <div class="chart-series__group">
-                {% for key in ('disbursements', 'receipts') %}
-                <div class="chart-series__group__bar"
-                  data-key="{{ key }}"
-                  data-value="{{ q[key] }}">
-                  <span class="chart-series__group__label">{{ key }}</span>
-                  <span class="chart-series__group__value">{{ q[key]|currency }}</span>
-                </div>
-                {% endfor %}
-              </div>
-            {% endfor %}
-            </div>
+            {{ charts.chart_series_grouped(committee.totals.quarters, ('receipts', 'disbursements'), format=currency) }}
           </figure>
         </div>
         {% endif %}
@@ -73,22 +67,10 @@
         <div class="row">
           <figure class="chart-container chart--c-d">
             <h4 class="figure__title">Cash and Debt Over Time</h4>
-             <div class="chart-series">
-             {% for q in committee.totals.quarters %}
-              <div class="chart-series__group">
-                {% for key in ('cash_on_hand', 'debts_owed') %}
-                <div class="chart-series__group__bar"
-                  data-key="{{ key }}"
-                  data-value="{{ q[key] }}">
-                  <span class="chart-series__group__label">{{ key }}</span>
-                  <span class="chart-series__group__value">{{ q[key]|currency }}</span>
-                </div>
-                {% endfor %}
-              </div>
-             {% endfor %}
-            </div>
+            {{ charts.chart_series_grouped(committee.totals.quarters, ('cash_on_hand', 'debts_owed'), format=currency) }}
           </figure>
         </div>
-      </div>
-    </div>
+      </div> 
+      <button class="js-reveal">View charts</button>
+    </div> <!-- .figure-group -->
   </div>

@@ -1,9 +1,9 @@
 table {
+  background-color: #fff;
   border-collapse: collapse;
   margin: 0;
   table-layout: fixed;
   width: 100%;
-  border: 1px solid $light-gray;
   overflow-x: scroll; // scroll horizontally on smaller viewports
 }
 
@@ -48,8 +48,10 @@ td {
 }
 
 .flex-cell {
-  white-space: nowrap; // Prevents text-wrapping
-  width: 1%; // Setting this along with a fixed width on the table makes cells flexible
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 30%;
 }
 
 .sort-header {
