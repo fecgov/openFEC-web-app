@@ -2,10 +2,12 @@
 <div class="chart-series__bar data--{{ key }} {{ attr.class|default('') }}"
   data-key="{{ key }}"
   data-value="{{ value }}">
-  <span class="chart-series__bar__label">{{ key }}</span>
-  <span class="chart-series__bar__value">
-    {% if format %}{{ value|format }}{% else %}{{ value }}{% endif %}
-  </span>
+  <div class="chart-series__bar__tooltip">
+    <span class="chart-series__bar__label">{{ key }}</span>
+    <span class="chart-series__bar__value">
+      {% if format %}{{ value|format }}{% else %}{{ value }}{% endif %}
+    </span>
+  </div>
 </div>
 {% endmacro %}
 
@@ -17,13 +19,14 @@
 </div>
 {% endmacro %}
 
-{% macro chart_series_grouped(groups, value_keys, orient='vertical', format=None, attr={}) %}
+{% macro chart_series_grouped(groups, value_keys, label_key='label', orient='vertical', format=None, attr={}) %}
 <div class="chart-series chart-series--grouped chart-series--{{ orient }} {{ attr.class|default('') }}">
   {% for group in groups %}
   <div class="chart-series__group">
     {% for key in value_keys %}
       {{ chart_bar(group[key], key, format=format, attr={}) }}
     {% endfor %}
+    <div class="chart-series__group__label">{{ group[label_key]|default('') }}</div>
   </div>
   {% endfor %}
 </div>

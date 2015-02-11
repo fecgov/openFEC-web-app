@@ -25,7 +25,7 @@
 <pre>{% raw %}
 {{ charts.chart_series_grouped(grouped_bar_data, ('receipts', 'disbursements'), format=currency) }}
 {% endraw %}</pre>
-      {{ charts.chart_series_grouped(grouped_bar_data, ('receipts', 'disbursements'), format=currency) }}
+      {{ charts.chart_series_grouped(grouped_bar_data, ('receipts', 'disbursements'), label_key="date", format=currency) }}
     </figure>
 
     <figure class="chart-container chart--r-d">
