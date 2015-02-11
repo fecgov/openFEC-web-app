@@ -16,20 +16,6 @@ _totals_fields = [
     'report_type_full' 
 ]
 
-_candidate_fields = [
-    'affiliated_committees',
-    'name'
-]
-
-_committee_fields = [
-    '*'
-]
-
-_fields_map = {
-    'candidate': _candidate_fields,
-    'committee': _committee_fields
-}
-
 def _call_api(url, filters):
     results = requests.get(url, params=filters)
 
@@ -56,8 +42,7 @@ def load_single_type_summary(data_type, filters):
 
 def load_single_type(data_type, c_id):
     url = api_location + '/' + data_type + '/' + c_id
-    fields = _fields_map[data_type]
-    filters = {'fields': ",".join(fields)}
+    filters = {'fields': "*"}
 
     return _call_api(url, filters)
 

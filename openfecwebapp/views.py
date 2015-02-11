@@ -47,7 +47,8 @@ def render_page(data_type, c_data):
     if not 'results' in c_data or not c_data['results']:
         abort(500)
 
-    tmpl_vars = type_map[data_type](c_data['results'][0])
+    tmpl_vars = c_data['results'][0]
+    tmpl_vars.update(type_map[data_type](c_data['results'][0]))
 
     if data_type == 'candidate':
         if tmpl_vars.get('primary_committee'):

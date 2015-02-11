@@ -146,6 +146,7 @@ def map_candidate_page_values(c):
     """
     candidate = {}
     candidate['name'] = c['name']['full_name']
+    candidate['state'] = c['mailing_addresses'][0].get('state', '')
 
     if c.get('elections'):
         c_e = c['elections'][0]
@@ -155,10 +156,6 @@ def map_candidate_page_values(c):
         if c_e.get('primary_committee'):
             candidate['primary_committee'] = _map_committee_values(
                 c_e['primary_committee'])
-            candidate['state'] = c_e['primary_committee'].get(
-                'state', '')
-            candidate['district'] = c_e['primary_committee'].get(
-                'district', '')
             candidate['office'] = c_e['primary_committee'].get(
                 'type_full', '')
             candidate['related_committees'] = True

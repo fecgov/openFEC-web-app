@@ -39,6 +39,9 @@ class TestDataMappings(TestCase):
                     'designation': 'A' 
                 }]
             }],
+            'mailing_addresses': [{
+                'state': 'CA'
+            }],
             'candidate_id': 'A12345',
             'pagination': {
                 'per_page': '20',
@@ -90,6 +93,8 @@ class TestDataMappings(TestCase):
         vals = map_candidate_page_values(self.candidate)
 
         self.assertTrue(vals['related_committees'])
+        self.assertEqual(vals['state'], 'CA')
+        self.assertEqual(vals['name'], 'Person McPersonson')
         self.assertEqual('challenger', vals['incumbent_challenge'])
         self.assertEqual('D1234', vals['primary_committee']['id'])
         self.assertEqual('Friends of McPersonson', 
