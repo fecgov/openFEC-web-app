@@ -593,7 +593,7 @@ input[type="submit"],
     background-color: #6B143B; }
 
 .color-receipt {
-  background-color: #148552; }
+  background-color: #2678BA; }
   .color-receipt:hover {
     background-color: #0d5937; }
 
@@ -1891,9 +1891,6 @@ footer {
   padding: 0 .625em; }
 
 .chart-series__bar {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
   background: #ccc; }
 
 .data--disbursement,
@@ -1901,7 +1898,7 @@ footer {
   background: #DB4857; }
 
 .data--receipts {
-  background: #148552; }
+  background: #2678BA; }
 
 .data--cash,
 .data--cash_on_hand {
@@ -1918,15 +1915,19 @@ footer {
   background: #A9205C; }
 
 .chart-series {
-  margin: 1em 0; }
+  position: relative;
+  margin: 1em 0;
+  overflow: hidden; }
 
 .chart-series--horizontal .chart-series__bar {
   margin-bottom: .25em;
-  padding-left: .5em;
+  padding: .5em;
   white-space: nowrap;
   min-height: 1em; }
 .chart-series--horizontal .chart-series__group {
-  margin-bottom: .5em; }
+  margin-bottom: 2em; }
+.chart-series--horizontal .chart-series__axis {
+  display: none; }
 
 .chart-series--vertical {
   display: -webkit-box;
@@ -1952,7 +1953,9 @@ footer {
   -o-align-items: flex-end;
   align-items: flex-end;
   -ms-flex-align: end;
-  height: 200px; }
+  padding-left: 100px;
+  padding-bottom: 30px;
+  height: 300px; }
   .chart-series--vertical.chart-series--short {
     height: 100px; }
   .chart-series--vertical .chart-series__bar,
@@ -1966,7 +1969,7 @@ footer {
     flex: 1;
     position: relative;
     height: 100%;
-    margin-left: 1em; }
+    margin-left: 3em; }
     .chart-series--vertical .chart-series__bar:first-of-type,
     .chart-series--vertical .chart-series__group:first-of-type {
       margin-left: 0; }
@@ -1996,9 +1999,66 @@ footer {
     -ms-flex-align: end; }
     .chart-series--vertical .chart-series__group .chart-series__bar + .chart-series__bar {
       margin-left: .5em; }
-  .chart-series--vertical .chart-series__bar__label,
-  .chart-series--vertical .chart-series__bar__value {
-    display: none; }
+  .chart-series--vertical .chart-series__axis {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 30px;
+    width: 80px;
+    z-index: -10; }
+  .chart-series--vertical .chart-series__axis__tick {
+    position: absolute;
+    text-align: right;
+    width: 100%;
+    height: 1em; }
+    .chart-series--vertical .chart-series__axis__tick:after {
+      content: " ";
+      display: block;
+      height: 1px;
+      width: 1200px;
+      position: absolute;
+      left: 100%;
+      bottom: 0;
+      background: #D7D7D7; }
+  .chart-series--vertical .chart-series__axis__tick__text {
+    position: relative;
+    top: .25em;
+    padding-right: .5em; }
+
+.chart-series__group__label {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  text-align: center; }
+
+.chart-series__bar__tooltip {
+  display: none;
+  width: 120px;
+  margin-left: -60px;
+  background: #3E4957;
+  padding: .5em;
+  z-index: 1000;
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); }
+  .chart-series__bar__tooltip:after {
+    height: 0;
+    width: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #3E4957;
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px; }
+
+.chart-series__bar:hover .chart-series__bar__tooltip {
+  display: block; }
 
 .styleguide .site-header {
   padding: 2em 0;
@@ -2215,93 +2275,5 @@ body {
   .page-sub-subsection:last-of-type {
     padding-bottom: 0;
     border-bottom: none; }
-
-.chart-series {
-  display: -webkit-box;
-  display: -moz-box;
-  display: box;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  box-orient: horizontal;
-  -webkit-flex-direction: row;
-  -moz-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-direction: row;
-  -webkit-box-align: end;
-  -moz-box-align: end;
-  box-align: end;
-  -webkit-align-items: flex-end;
-  -moz-align-items: flex-end;
-  -ms-align-items: flex-end;
-  -o-align-items: flex-end;
-  align-items: flex-end;
-  -ms-flex-align: end; }
-  .chart-series .chart-series__group {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    box-flex: 1;
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    box-orient: horizontal;
-    -webkit-flex-direction: row;
-    -moz-flex-direction: row;
-    flex-direction: row;
-    -ms-flex-direction: row;
-    -webkit-box-align: end;
-    -moz-box-align: end;
-    box-align: end;
-    -webkit-align-items: flex-end;
-    -moz-align-items: flex-end;
-    -ms-align-items: flex-end;
-    -o-align-items: flex-end;
-    align-items: flex-end;
-    -ms-flex-align: end;
-    margin: 0 .5em; }
-    .chart-series .chart-series__group:first-of-type {
-      margin-left: 0; }
-    .chart-series .chart-series__group:last-of-type {
-      margin-right: 0; }
-    .chart-series .chart-series__group .chart-series__group__bar {
-      -webkit-box-flex: 1;
-      -moz-box-flex: 1;
-      box-flex: 1;
-      -webkit-flex: 1;
-      -moz-flex: 1;
-      -ms-flex: 1;
-      flex: 1;
-      margin-top: 2em;
-      background: #ccc;
-      position: relative; }
-      .chart-series .chart-series__group .chart-series__group__bar + .chart-series__group__bar {
-        margin-left: .25em; }
-      .chart-series .chart-series__group .chart-series__group__bar[data-key='disbursements'] {
-        background: red; }
-      .chart-series .chart-series__group .chart-series__group__bar[data-key='receipts'] {
-        background: green; }
-    .chart-series .chart-series__group .chart-series__group__label,
-    .chart-series .chart-series__group .chart-series__group__value {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      overflow: hidden; }
-    .chart-series .chart-series__group .chart-series__group__label {
-      bottom: 100%; }
-    .chart-series .chart-series__group .chart-series__group__value {
-      top: 100%; }
 
 /*# sourceMappingURL=styles.css.map */
