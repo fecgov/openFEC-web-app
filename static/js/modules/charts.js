@@ -1,4 +1,9 @@
 var d3 = require('d3');
+var formatCurrency = function(dollars) {
+  return '$' + formatCommas(dollars);
+}
+
+var formatCommas = d3.format(',');
 
 module.exports = {
   init: function() {
@@ -40,8 +45,8 @@ function chartSeries() {
           scale = d3.scale.linear()
             .domain(domain)
             .range([0, 100]);
-
       var dim = dimension.apply(node, arguments);
+      d3.select(this).call(drawScale, scale, dim);
       bars.each(function(d) {
         d.size = scale(d.value);
         // console.log(d.value, "->", d.height);
@@ -64,6 +69,22 @@ function chartSeries() {
     return chart;
   };
 
+  function drawScale(selection, scale, dimension) {
+    console.log(scale.ticks(4));
+    var axis = selection.append('div')
+          .attr("class", "chart-series__axis"),
+        property = dimension === 'width' ? 'right' : 'bottom',
+        ticks = axis.selectAll('.tick')
+          .data(scale.ticks(4))
+          .enter()
+          .append('div')
+            .attr('class', 'chart-series__axis__tick')
+            .style(property, function(d) { return scale(d) + '%' })
+            .append('span')
+              .attr('class', 'chart-series__axis__tick__text')
+              .text(function(d) { return formatCurrency(d) })
+
+  }
   return chart;
 }
 
