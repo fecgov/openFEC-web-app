@@ -56,4 +56,4 @@ def server_error(e):
     return render_template('500.html'), 500
 
 if __name__ == '__main__':
-    app.run(host=host, port=port, debug=debug)
+    app.run(host=host, port=int(port), debug=debug)

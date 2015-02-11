@@ -1,0 +1,47 @@
+// Side panel
+// This is the styles for slide out side panels
+
+.side-toggle {
+  @include rem(padding, 1.0rem);
+  @include transition(background-color, .1s);
+  border-radius: 0;
+  background: none;
+  border-width: 0 1px 0 0;
+  border-color: $filter-bg;
+  border-style: solid;
+  color: #fff;
+
+  &:hover,
+  &:active {
+    color: $licorice;
+    background-color: $filter-bg;
+    border-width: 0 1px 0 0;
+    border-color: $filter-bg;
+    border-style: solid;
+  }
+}
+
+.side--open {
+  .side-toggle {
+    background-color: $filter-bg;
+    color: $licorice;
+  }
+
+  .results-container {
+    left: 20%;
+  }
+
+  .side-panel {
+    left: 0;
+  }
+}
+
+.side-panel {
+  @include transition(left, .2s);
+  padding: 1.25em;
+  background: $filter-bg;
+  position: absolute;
+  left: -100%;
+  width: 20%;
+  float: left;
+}

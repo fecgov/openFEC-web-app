@@ -1,11 +1,7 @@
-{% if pagination %}
-    {% include 'partials/pagination.html' %}
-{% endif %}
-
 <table id="results" class="table--sortable">
     <thead>
         <tr>
-            <th>Name</th>
+            <th class="flex-cell">Name</th>
             <th>Treasurer Name</th>
             <th>State</th>
             <th>Party</th>
@@ -17,7 +13,7 @@
     <tbody>
         {% for c in committees %}
             <tr>
-                <td><a class="single-link" data-id="{{ c.id }}" data-category="committee" {% if c.name_url %}href="{{c.name_url}}"{% endif %}>{{c.name}}</a></td>
+                <td class="flex-cell"><a class="single-link" data-id="{{ c.id }}" data-category="committee" {% if c.name_url %}href="{{c.name_url}}"{% endif %}>{{c.name}}</a></td>
                 <td>{{c.treasurer}}</td>
                 <td>{{c.state}}</td>
                 <td>{{c.party}}</td>
@@ -28,7 +24,3 @@
         {% endfor %}
     </tbody>
 </table>
-
-{% if pagination %}
-    {% include 'partials/pagination.html' %}
-{% endif %}

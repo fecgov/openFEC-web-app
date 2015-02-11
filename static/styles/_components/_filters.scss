@@ -1,18 +1,5 @@
 // MODULE: Filter fields
 
-.filter-field-container {
-  @extend .disclosure__inner;
-  
-  .field {
-    @include span-columns(12);
-    padding: 1em 0;
-
-    &:nth-child(even) {
-      @include omega()
-    }
-  }
-}
-
 .field.active {
   label {
     color: $green;
@@ -23,26 +10,17 @@
   }
 }
 
-.add-filter {
-  #{$all-text-inputs} {
-    @include span-columns(10 of 12, block-collapse);
-    margin: 0;
-  }
-}
-
-.add-filter__button {
-  @extend .button;
-  @include span-columns(2 of 12, block-collapse);
-  height: 40px;
-  padding: 0;
-  line-height: 40px;
-  border-radius: 0 4px 4px 0;
-}
-
-
 .field {
+  margin-bottom: 1.25em;
+
   select {
     width: 100%;
     height: 40px;
+  }
+}
+
+.controls--fixed {
+  #filters {
+
   }
 }

@@ -10,10 +10,29 @@ figure {
 // Contained in a subsection, this is a group of figures (i.e. for a committee)
 .figure-group {
   @include clearfix();
+  @include transition(height, .5s);
   clear: both;
-  background-color: $lightest-gray;
-  border: 1px solid $light-gray;
+  border: 1px solid $licorice-3;
   position: relative;
+
+  .js-reveal {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    margin-left: -62px;
+  }
+}
+
+.figure-group__side {
+  background-color: $licorice-3;
+  width: 1.875em;
+  padding: .3125em;
+  position: absolute;
+  height: 100%;
+}
+
+.figure-group__main {
+  padding-left: 1.875em;
 }
 
 .figure-group__header {
@@ -27,9 +46,7 @@ figure {
 }
 
 .figure-group__description {
-  @include font-size(1.2);
-  background-color: $dark-gray;
-  color: $lightest-gray;
+  @include font-size(1.4);
 }
 
 .figure-group__inner {
