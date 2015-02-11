@@ -146,7 +146,6 @@ class TestDataMappings(TestCase):
         self.assertEqual('Partay', vals['type'])
         self.assertEqual('Very Authorized', vals['designation'])        
         self.assertEqual('B7890', vals['id'])
-        self.assertEqual('/committees/B7890', vals['name_url'])
 
     def test_map_totals(self):
         vals = map_totals(self.totals)

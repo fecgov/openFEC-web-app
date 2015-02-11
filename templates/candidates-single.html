@@ -20,7 +20,7 @@
           </li>
           <li class="entity__term">
             <h4>Status</h4>
-            <span>{{ incumbent_challenge }}</span>
+            <span>{{ incumbent_challenge | title }}</span>
           </li>
           <li class="entity__term">
             <h4>District</h4>
@@ -42,7 +42,7 @@
             {% if primary_committee %}
             <dl>
               <dt>Principal Campaign Committee</dt>
-              <dd><a {% if primary_committee.url %}href="{{ primary_committee.url }}"{% endif %}>{{ primary_committee.name }}</a></dd>
+              <dd><a href="{{ url_for('committee_page', c_id=primary_committee.id) }}">{{ primary_committee.name }}</a></dd>
             </dl>
             {% endif %}
 
@@ -50,7 +50,7 @@
             <dl>
               <dt>Authorized Committees</dt>
               {% for c_id in affiliated_committees %}
-              <dd><a {% if affiliated_committees[c_id].url %}href="{{ affiliated_committees[c_id].url }}"{% endif %}>{{ affiliated_committees[c_id].name }}</a></dd>
+              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ affiliated_committees[c_id].name }}</a></dd>
               {% endfor %}
             </dl>
             {% endif %}
@@ -59,7 +59,7 @@
             <dl>
               <dt>Leadership PACs</dt>
               {% for c_id in leadership_committees %}
-              <dd><a {% if leadership_committees[c_id].url %}href="{{ leadership_committees[c_id].url }}"{% endif %}>{{ leadership_committees[c_id].name }}</a></dd>
+              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ leadership_committees[c_id].name }}</a></dd>
               {% endfor %}
             </dl>
             {% endif %}
@@ -68,7 +68,7 @@
             <dl>
               <dt>Joint Fundraising Committees</dt>
               {% for c_id in joint_committees %}
-              <dd><a {% if joint_committees[c_id].url %}href="{{ joint_committees[c_id].url }}"{% endif %}>{{ joint_committees[c_id].name }}</a></dd>
+              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ joint_committees[c_id].name }}</a></dd>
               {% endfor %}
             </dl>
             {% endif %}            
