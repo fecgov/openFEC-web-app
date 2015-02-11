@@ -50,7 +50,7 @@ def map_candidate_table_values(c):
     record. 
     """
     candidate = {
-        'name': c['name']['full_name'],
+        'name': c['name'],
         'office': c['elections'][0]['office_sought_full'],
         'election': int(c['elections'][0]['election_year']),
         'party': c['elections'][0]['party_affiliation'],
