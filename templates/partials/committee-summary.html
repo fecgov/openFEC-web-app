@@ -51,26 +51,27 @@
               </div>
             </figure>
           </div>
+          {% if committee.totals.quarters %}
           <div class="hidden-container u-hidden">
             {% import 'macros/charts.html' as charts %}
-            {% if committee.totals.quarters %}
             <div class="row">
               <figure class="chart-container chart--r-d">
                 <h4 class="figure__title">Finances Over Time</h4>
-                {{ charts.chart_series_grouped(committee.totals.quarters, ('receipts', 'disbursements'), format=currency) }}
+                {{ charts.chart_series_grouped(committee.totals, ('receipts', 'disbursements'), format=currency) }}
               </figure>
             </div>
-            {% endif %}
-
             <div class="row">
               <figure class="chart-container chart--c-d">
                 <h4 class="figure__title">Cash and Debt Over Time</h4>
-                {{ charts.chart_series_grouped(committee.totals.quarters, ('cash_on_hand', 'debts_owed'), format=currency) }}
+                {{ charts.chart_series_grouped(committee.totals, ('cash_on_hand', 'debts_owed'), format=currency) }}
               </figure>
             </div>
           </div><!-- .hidden-container -->
+          {% endif %}
         </div>
       </div> 
+      {% if committee.totals.quarters %}
       <button class="js-reveal">View charts</button>
+      {% endif %}
     </div> <!-- .figure-group -->
   </div>
