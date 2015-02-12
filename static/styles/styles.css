@@ -1978,7 +1978,7 @@ footer {
   -ms-flex-align: end;
   padding-left: 100px;
   padding-bottom: 30px;
-  height: 300px; }
+  height: 200px; }
   .chart-series--vertical.chart-series--short {
     height: 100px; }
   .chart-series--vertical .chart-series__bar,
@@ -1992,7 +1992,7 @@ footer {
     flex: 1;
     position: relative;
     height: 100%;
-    margin-left: 3em; }
+    margin-left: 2em; }
     .chart-series--vertical .chart-series__bar:first-of-type,
     .chart-series--vertical .chart-series__group:first-of-type {
       margin-left: 0; }

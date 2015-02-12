@@ -81,7 +81,7 @@ $chart-bottom: 30px;
   @include align-items(flex-end);
   padding-left: 100px;
   padding-bottom: $chart-bottom;
-  height: 300px;
+  height: 200px;
 
   &.chart-series--short {
     height: 100px;
@@ -94,8 +94,9 @@ $chart-bottom: 30px;
     // for positioning labels
     position: relative;
     height: 100%;
+    
+    margin-left: 2em;
 
-    margin-left: 3em;
     &:first-of-type {
       margin-left: 0;
     }
