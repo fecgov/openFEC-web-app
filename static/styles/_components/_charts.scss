@@ -1,0 +1,197 @@
+$chart-bottom: 30px;
+
+.chart-series__bar {
+  background: #ccc;
+  overflow: hidden;
+}
+
+.data--disbursement,
+.data--disbursements { 
+  background: $data-disbursement; 
+  .chart-series__bar__tooltip {
+    border-color: $data-disbursement;
+    color: $data-disbursement;
+    background: $data-disbursement;
+  }
+}
+
+.data--receipts { 
+  background: $data-receipt; 
+  .chart-series__bar__tooltip {
+    border-color: $data-receipt;
+    color: $data-receipt;
+    background: $data-receipt;
+  }
+}
+
+.data--cash,
+.data--cash_on_hand { 
+  background: $data-cash; 
+  .chart-series__bar__tooltip {
+    border-color: $data-cash;
+    color: $data-cash;
+  }
+
+}
+
+.data--debt,
+.data--debts_owed { 
+  background: $data-debt; 
+  .chart-series__bar__tooltip {
+    border-color: $data-debt;
+    color: $data-debt;
+  }
+}
+
+.data--support { background: $data-support; }
+.data--oppose { background: $data-oppose; }
+
+.chart-series {
+  position: relative;
+  margin: 1em 0;
+  overflow: hidden;
+}
+
+// horizontal bar charts
+.chart-series--horizontal {
+  // text is contained in the bar, so... gray?
+  color: #999;
+
+  .chart-series__bar {
+    margin-bottom: .25em;
+    padding: .5em;
+    white-space: nowrap;
+    min-height: 1em;
+  }
+
+  .chart-series__group {
+    margin-bottom: 2em;
+  }
+
+  .chart-series__axis {
+    display: none;
+  }
+}
+
+// vertical bar charts use flexbox
+// see: <http://caniuse.com/#feat=flexbox>
+.chart-series--vertical {
+  @include display(flex);
+  @include flex-direction(row);
+  @include align-items(flex-end);
+  padding-left: 100px;
+  padding-bottom: $chart-bottom;
+  height: 300px;
+
+  &.chart-series--short {
+    height: 100px;
+  }
+
+  .chart-series__bar,
+  .chart-series__group {
+    @include flex(1);
+
+    // for positioning labels
+    position: relative;
+    height: 100%;
+
+    margin-left: 3em;
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+
+  .chart-series__bar {
+  }
+
+  .chart-series__group {
+    @include display(flex);
+    @include flex-direction(row);
+    @include align-items(flex-end);
+
+    .chart-series__bar + .chart-series__bar {
+      margin-left: .5em;
+    }
+  }
+
+  .chart-series__axis {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: $chart-bottom;
+    width: 80px;
+    z-index: -10;
+  }
+
+  .chart-series__axis__tick {
+    position: absolute;
+    text-align: right;
+    width: 100%;
+    height: 1em;
+
+    &:after {
+      content: " ";
+      display: block;
+      height: 1px;
+      width: 1200px;
+      position: absolute;
+      left: 100%;
+      bottom: 0;
+      background: $light-gray;
+    }
+  }
+
+  .chart-series__axis__tick__text {
+    position: relative;
+    top: .25em;
+    padding-right: .5em;
+  }
+}
+
+.chart-series__group__label {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.chart-series__bar__tooltip {
+  // @include transition(right .1s ease-in);
+  padding: .75em;
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 2px solid;
+  border-right: none;
+}
+
+.chart-series__bar:hover {
+  overflow: visible;
+
+  .chart-series__bar__tooltip {
+    // @include transition(right .1s ease-in);
+    right: 100%;
+    background: rgba(#fff, 1);
+  }
+}
+
+// For charts in tables
+.chart-series--horizontal.table--simple {
+  .chart-series__bar__label {
+    @include span-columns(6, block-collapse);
+  }
+
+  .chart-series__bar__value {
+    @include span-columns(2, block-collapse);
+  }
+
+  .chart-series__bar {
+    margin-bottom: 0;
+  }
+
+  .table__cell--bar {
+    @include span-columns(16, block-collapse);
+  }
+}

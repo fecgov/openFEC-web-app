@@ -3,6 +3,7 @@
 var filters = require('./modules/filters.js');
 var typeahead = require('./modules/typeahead.js');
 var tablesort = require('tablesort');
+var charts = require('./modules/charts.js');
 
 filters.init();
 typeahead.init();

@@ -33,6 +33,7 @@
     "url": "https://github.com/theresaanna/openfec-web-app/issues"
   },
   "dependencies": {
+    "d3": "^3.5.3",
     "handlebars": "^2.0.0",
     "tablesort": "^2.2.3"
   }
