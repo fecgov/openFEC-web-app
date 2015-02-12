@@ -50,14 +50,6 @@ def committees():
 
     return render_table('committees', results, params, request.url)
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
-
-@app.errorhandler(500)
-def server_error(e):
-    return render_template('500.html'), 500
-
 @app.route('/charts')
 def charts():
     data = {}
@@ -65,6 +57,14 @@ def charts():
     data['bar_data'] = map(lambda d: {'debt': d['cash_on_hand']}, data['grouped_bar_data'])
     data['committee'] = {'totals': {'receipts': 500000, 'disbursements': 450000}}
     return render_template('charts.html', **data)
+    
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('500.html'), 500
 
 @app.template_filter('currency')
 def currency_filter(num, grouping=True):
