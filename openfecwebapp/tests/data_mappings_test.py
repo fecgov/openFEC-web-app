@@ -93,7 +93,7 @@ class TestDataMappings(TestCase):
         vals = map_candidate_page_values(self.candidate)
 
         self.assertTrue(vals['related_committees'])
-        self.assertEqual(vals['state'], 'CA')
+        self.assertEqual(vals['state'], 'TN')
         self.assertEqual(vals['name'], 'Person McPersonson')
         self.assertEqual('challenger', vals['incumbent_challenge'])
         self.assertEqual('D1234', vals['primary_committee']['id'])
