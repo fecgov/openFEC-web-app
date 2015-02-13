@@ -46,21 +46,20 @@ $(document).ready(function() {
 	    })
     }
 
-    // Expand button
-    if ( $('.js-reveal').length > 0 ) {
-    	var isHidden = true;
-    	$('.js-reveal').click(function(){
-    		if ( isHidden === true ) {
-    			$('.hidden-container').removeClass('u-hidden');
-    			$(this).html('Hide charts');
-    			isHidden = false;
-    		} else {
-				$('.hidden-container').addClass('u-hidden');
-    			$(this).html('View charts');
-    			isHidden = true;
-    		}
-    	})
+    // Reveal containers
+    if ( $('.js-reveal-container').length > 0 ) {
+        var $revealButton = $('.js-reveal-button');
+        $revealButton.click(function(){
+            var $revealContainer = $(this).parents('.js-reveal-container'),
+                $revealContent = $revealContainer.find('.js-reveal-content');
+            if ( $revealContent.hasClass('u-hidden') ) {
+                $revealContent.removeClass('u-hidden').attr('aria-hidden', 'false');
+                $(this).html('Hide charts');
+            } else {
+                $revealContent.addClass('u-hidden').attr('aria-hidden', 'true');
+                $(this).html('View charts');
+            }
+        })
     }
-
 
 });

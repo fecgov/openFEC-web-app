@@ -1,4 +1,4 @@
-  <div class="page-subsection">
+  <div class="page-subsection js-reveal-container">
     <div class="figure-group committee-summary">
       <div class="figure-group__side">
         <img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">
@@ -51,7 +51,7 @@
               </div>
             </figure>
           </div>
-          <div class="hidden-container u-hidden">
+          <div class="js-reveal-content u-hidden" aria-hidden="true">
             {% import 'macros/charts.html' as charts %}
             <div class="row">
               <figure class="chart-container chart--r-d">
@@ -68,6 +68,6 @@
           </div><!-- .hidden-container -->
         </div>
       </div> 
-      <button class="js-reveal">View charts</button>
+      <button class="js-reveal-button">View charts</button>
     </div> <!-- .figure-group -->
   </div>

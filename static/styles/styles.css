@@ -1263,7 +1263,7 @@ figure {
     content: "";
     display: table;
     clear: both; }
-  .figure-group .js-reveal {
+  .figure-group .js-reveal-button {
     position: absolute;
     bottom: -20px;
     left: 50%;
