@@ -56,7 +56,13 @@
             <div class="row">
               <figure class="chart-container chart--r-d">
                 <h4 class="figure__title">Finances Over Time</h4>
-                {{ charts.chart_series_grouped(committee.fake_data, ('receipts', 'disbursements'), label_key="date") }}
+                {% macro group_bar_tooltip(value, key) %}
+                  <div class="chart-series__bar__tooltip">
+                    <h5 class="chart-series__bar__tooltip__title">{{ key|titlecase }}</h5>
+                    <span class="chart-series__bar__tooltip__value">{{ value|currency }}</span>
+                  </div>
+                {% endmacro %}
+                {{ charts.chart_series_grouped(committee.fake_data, ('receipts', 'disbursements'), label_key="date", tooltip=group_bar_tooltip) }}
               </figure>
             </div>
             <div class="row">
