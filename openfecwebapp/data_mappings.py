@@ -163,10 +163,10 @@ def map_candidate_page_values(c):
     """
     candidate = {}
     candidate['name'] = c['name']['full_name']
-    candidate['state'] = c['elections'][0].get('state', '')
 
     if c.get('elections'):
         c_e = c['elections'][0]
+        candidate['state'] = c_e.get('state', '')
         candidate['party'] = c_e.get('party_affiliation', '')
         candidate['incumbent_challenge'] = c_e.get(
             'incumbent_challenge_full', '')
