@@ -2,6 +2,7 @@ import re
 import locale
 
 from flask import url_for
+from openfecwebapp.api_caller import load_totals
 
 locale.setlocale(locale.LC_ALL, '')
 
@@ -105,17 +106,12 @@ def _map_committee_values(ac):
         c['url'] = '/committees/' + ac.get('committee_id', '')
     return c
 
-def map_totals(t):
+def _map_committee_financials(reports, totals):
     """
     maps and returns template vars for financial summaries
     from the 'totals' endpoint for use on candidat
     and committee pages
     """
-    if not t['results'][0].get('reports') or not t['results'][0].get('totals'):
-        return {}
- 
-    reports = t['results'][0]['reports'][0]
-    totals = t['results'][0]['totals'][0]
     totals_mapped = {}
     value_map = {
         'total_receipts': totals.get('receipts'),
@@ -148,6 +144,42 @@ def map_totals(t):
             '', reports['report_type_full']) 
 
     return totals_mapped
+
+def add_committee_data(context, data_type):
+    if context.get('primary_committee'):
+        t_data = load_totals(context['primary_committee']['id'])
+        results = t_data['results'][0]
+        reports = results.get('reports', {})
+        totals = results.get('totals', {})
+        if reports:
+            reports = reports[0]
+        if totals:
+            totals = totals[0]
+        context['primary_committee'].update(_map_committee_financials(
+            reports, totals))
+
+    if context.get('affiliated_committees'):
+        committee_ids = []
+        for cmte in context['affiliated_committees'].values():
+            if cmte['designation_code'] in committee_type_map: 
+                committee_ids.append(cmte['id'])
+                cmte_type = committee_type_map[
+                    cmte['designation_code']]
+                context[cmte_type][cmte['id']] = cmte
+
+        results = load_totals(",".join(committee_ids))
+        for r in results['results']:
+            c_id = r['committee_id']
+            reports = r.get('reports', {})
+            totals = r.get('totals', {})
+            if reports:
+                reports = reports[0]
+            if totals:
+                totals = totals[0]
+            context[cmte_type][c_id].update(_map_committee_financials(
+                reports, totals))
+
+    return context
 
 # we want to show the committees on their related candidate 
 # pages in this order, with primary committees on top

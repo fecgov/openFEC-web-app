@@ -20,7 +20,7 @@
           </li>
           <li class="entity__term">
             <h4>Status</h4>
-            <span>{{ incumbent_challenge | title }}</span>
+            <span>{{ incumbent_challenge|default("")|title }}</span>
           </li>
           <li class="entity__term">
             <h4>District</h4>
