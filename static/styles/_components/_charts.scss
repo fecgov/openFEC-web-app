@@ -1,26 +1,27 @@
+// the amount of padding at the bottom of vertical bar charts
 $chart-bottom: 30px;
+// the width of the axis for vertical bar charts
+$chart-axis-width: 100px;
+
+$tooltip-arrow-size: 8px;
+$tooltip-border-color: #999;
 
 .chart-series__bar {
   background: #ccc;
-  overflow: hidden;
 }
 
 .data--disbursement,
 .data--disbursements { 
   background: $data-disbursement; 
   .chart-series__bar__tooltip {
-    border-color: $data-disbursement;
     color: $data-disbursement;
-    background: $data-disbursement;
   }
 }
 
 .data--receipts { 
   background: $data-receipt; 
   .chart-series__bar__tooltip {
-    border-color: $data-receipt;
     color: $data-receipt;
-    background: $data-receipt;
   }
 }
 
@@ -28,7 +29,6 @@ $chart-bottom: 30px;
 .data--cash_on_hand { 
   background: $data-cash; 
   .chart-series__bar__tooltip {
-    border-color: $data-cash;
     color: $data-cash;
   }
 
@@ -38,7 +38,6 @@ $chart-bottom: 30px;
 .data--debts_owed { 
   background: $data-debt; 
   .chart-series__bar__tooltip {
-    border-color: $data-debt;
     color: $data-debt;
   }
 }
@@ -49,7 +48,6 @@ $chart-bottom: 30px;
 .chart-series {
   position: relative;
   margin: 1em 0;
-  overflow: hidden;
 }
 
 // horizontal bar charts
@@ -79,7 +77,7 @@ $chart-bottom: 30px;
   @include display(flex);
   @include flex-direction(row);
   @include align-items(flex-end);
-  padding-left: 100px;
+  padding-left: $chart-axis-width;
   padding-bottom: $chart-bottom;
   height: 200px;
 
@@ -103,6 +101,7 @@ $chart-bottom: 30px;
   }
 
   .chart-series__bar {
+    // XXX
   }
 
   .chart-series__group {
@@ -117,35 +116,38 @@ $chart-bottom: 30px;
 
   .chart-series__axis {
     position: absolute;
-    left: 0;
     top: 0;
+    left: $chart-axis-width;
+    right: 0;
     bottom: $chart-bottom;
-    width: 80px;
     z-index: -10;
   }
 
   .chart-series__axis__tick {
     position: absolute;
     text-align: right;
+    width: $chart-axis-width;
+    left: 0;
     width: 100%;
     height: 1em;
+
+    .chart-series__axis__tick__text {
+      position: absolute;
+      right: 100%;
+      top: .2em;
+      padding-right: 1em;
+    }
 
     &:after {
       content: " ";
       display: block;
-      height: 1px;
-      width: 1200px;
+      height: 0;
       position: absolute;
-      left: 100%;
+      left: -.5em;
+      right: 0;
       bottom: 0;
-      background: $light-gray;
+      border-top: 1px solid $light-gray;
     }
-  }
-
-  .chart-series__axis__tick__text {
-    position: relative;
-    top: .25em;
-    padding-right: .5em;
   }
 }
 
@@ -154,27 +156,65 @@ $chart-bottom: 30px;
   top: 100%;
   left: 0;
   width: 100%;
+  padding-top: .25em;
   text-align: center;
 }
 
 .chart-series__bar__tooltip {
-  // @include transition(right .1s ease-in);
-  padding: .75em;
-  z-index: 1000;
   position: absolute;
-  top: 0;
-  right: 0;
-  border: 2px solid;
-  border-right: none;
+  left: 50%;
+  margin-bottom: $tooltip-arrow-size - 1;
+  // XXX the margin-left is handled in JavaScript
+
+  background: #fff;
+  border: 1px solid $tooltip-border-color;
+  padding: .5em .75em .25em;
+
+  display: none;
+  bottom: 120%;
+  opacity: 0;
+  @include transition(bottom .5s);
+  @include transition(opacity .5s);
+
+  .chart-series__bar__tooltip__title {
+    white-space: nowrap;
+  }
+
+  &:after,
+  &:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-color: transparent;
+    border-top-color: #fff;
+    border-width: $tooltip-arrow-size;
+    margin-left: -$tooltip-arrow-size;
+  }
+
+  &:before {
+    border-color: transparent;
+    border-top-color: $tooltip-border-color;
+    border-width: $tooltip-arrow-size + 1;
+    margin-left: -($tooltip-arrow-size + 1);
+  }
 }
 
-.chart-series__bar:hover {
-  overflow: visible;
-
+.chart-series__bar:hover,
+.chart-series__bar:focus,
+.chart-series__bar:active {
   .chart-series__bar__tooltip {
-    // @include transition(right .1s ease-in);
-    right: 100%;
-    background: rgba(#fff, 1);
+    display: block;
+    bottom: 100%;
+    opacity: 1;
+    z-index: 1000;
   }
 }
 
