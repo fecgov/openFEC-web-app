@@ -3,7 +3,8 @@ from flask import Flask, render_template, request
 from openfecwebapp.views import (render_search_results, render_table,
     render_page)
 from openfecwebapp.api_caller import (load_search_results,
-    load_single_type, load_totals, load_single_type_summary)
+    load_single_type, load_totals, load_single_type_summary,
+    install_cache)
 
 app = Flask(__name__)
 
@@ -56,4 +57,7 @@ def server_error(e):
     return render_template('500.html'), 500
 
 if __name__ == '__main__':
+    import sys
+    if '--cached' in sys.argv:
+        install_cache()
     app.run(host=host, port=int(port), debug=debug)
