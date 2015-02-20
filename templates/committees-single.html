@@ -119,7 +119,17 @@
             </div>
           </div>
         </figure>
-        {% endif %}
+        <h2 id="section-1-header">Financial Summary</h2>
+        {% else %}
+        <div class="meta-box error-container">
+          <h2 id="section-1-header" tabindex="0">No financial data</h2>
+          <p class="text--lead">This committee has not filed any reports for the time period selected.</p>
+          <div class="error-container__bottom">
+              <h4>Is this information incorrect? Let us know.</h4>
+              <a class="button">Contact support</a>
+         </div>
+        </div>
+        {% endif %}        
       </div>
     </section>
   </div>

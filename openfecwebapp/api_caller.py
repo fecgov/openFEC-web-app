@@ -54,3 +54,7 @@ def load_totals(committee_ids):
     }
 
     return _call_api(url, params)
+
+def install_cache():
+    import requests_cache
+    requests_cache.install_cache()
