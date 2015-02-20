@@ -42,7 +42,7 @@ def load_single_type_summary(data_type, filters):
 
 def load_single_type(data_type, c_id):
     url = api_location + '/' + data_type + '/' + c_id
-    filters = {'fields': "*", 'election_year': '*'}
+    filters = {'fields': "*", 'year': '*'}
 
     return _call_api(url, filters)
 

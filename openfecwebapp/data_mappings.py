@@ -182,6 +182,11 @@ def _get_candidate_page_financials(context):
         results = load_totals(",".join(committee_ids))
         for r in results['results']:
             c_id = r['committee_id']
+            # shouldn't be needed once API refactor removes filtering
+            # on candidates I believe. keyerror when we load totals
+            # for a year that isn't associated with the candidate [ts]
+            if not context[cmte_type].get(c_id):
+                context[cmte_type][c_id] = {}
             context[cmte_type][c_id].update(_map_committee_financials(
                 _get_reports_totals_results(r)))
 
