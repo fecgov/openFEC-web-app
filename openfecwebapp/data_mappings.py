@@ -106,12 +106,14 @@ def _map_committee_values(ac):
         c['url'] = '/committees/' + ac.get('committee_id', '')
     return c
 
-def _map_committee_financials(reports, totals):
+def _map_committee_financials(vals):
     """
     maps and returns template vars for financial summaries
     from the 'totals' endpoint for use on candidat
     and committee pages
     """
+    reports = vals['reports']
+    totals = vals['totals']
     totals_mapped = {}
     value_map = {
         'total_receipts': totals.get('receipts'),
@@ -145,18 +147,28 @@ def _map_committee_financials(reports, totals):
 
     return totals_mapped
 
-def add_committee_data(context, data_type):
+def _get_reports_totals_results(results):
+    reports = results.get('reports', {})
+    totals = results.get('totals', {})
+    if reports:
+        reports = reports[0]
+    if totals:
+        totals = totals[0]
+    return {'reports': reports, 'totals': totals}
+
+def _get_committee_page_financials(context):
+    results = load_totals(context['committee_id'])
+    context['totals'] = _map_committee_financials(
+        _get_reports_totals_results(results['results'][0]))
+
+    return context
+
+def _get_candidate_page_financials(context):
     if context.get('primary_committee'):
         t_data = load_totals(context['primary_committee']['id'])
-        results = t_data['results'][0]
-        reports = results.get('reports', {})
-        totals = results.get('totals', {})
-        if reports:
-            reports = reports[0]
-        if totals:
-            totals = totals[0]
+        results = _get_reports_totals_results(t_data['results'][0])
         context['primary_committee'].update(_map_committee_financials(
-            reports, totals))
+            results))
 
     if context.get('affiliated_committees'):
         committee_ids = []
@@ -170,16 +182,22 @@ def add_committee_data(context, data_type):
         results = load_totals(",".join(committee_ids))
         for r in results['results']:
             c_id = r['committee_id']
-            reports = r.get('reports', {})
-            totals = r.get('totals', {})
-            if reports:
-                reports = reports[0]
-            if totals:
-                totals = totals[0]
             context[cmte_type][c_id].update(_map_committee_financials(
-                reports, totals))
+                _get_reports_totals_results(r)))
 
     return context
+
+_totals_map = {
+    'candidate': _get_candidate_page_financials,
+    'committee': _get_committee_page_financials
+}
+
+def add_committee_data(context, data_type):
+    """ loads and maps for templating financial summary data
+    for each of the committees related to a candidate that are
+    of the type we display, or for a committee itself
+    """
+    return _totals_map[data_type](context)
 
 # we want to show the committees on their related candidate 
 # pages in this order, with primary committees on top
