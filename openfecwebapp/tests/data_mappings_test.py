@@ -1,5 +1,6 @@
 from flask import Flask
 from flask.ext.testing import TestCase
+from mock import patch
 from openfecwebapp.data_mappings import *
 
 class TestDataMappings(TestCase):
@@ -27,17 +28,13 @@ class TestDataMappings(TestCase):
                 'district': '11',
                 'incumbent_challenge_full': 'challenger',
                 'primary_committee': {
+                    'id': 'D1234',
                     'committee_id': 'D1234',
                     'committee_name': 'Friends of McPersonson',
-                    'designation_full': 'Authorized',
-                    'designation': 'PC' 
+                    'designation': 'Authorized',
+                    'designation_code': 'PC' 
                 },
-                'affiliated_committees': [{
-                    'committee_id': 'D1234',
-                    'committee_name': 'Friends of McPersonson',
-                    'designation_full': 'Authorized',
-                    'designation': 'A' 
-                }]
+                'authorized_committees': {}
             }],
             'mailing_addresses': [{
                 'state': 'CA'
@@ -54,7 +51,7 @@ class TestDataMappings(TestCase):
         self.committee = {
             'description': {
                 'name': 'Friends of McPersonson',
-                'organization_type_full': 'Secret Club'
+                'organization_type': 'Secret Club'
             },
             'treasurer': {
                 'name_full': 'Money McMaster'
@@ -68,13 +65,14 @@ class TestDataMappings(TestCase):
             },
             'status': {
                 'type_full': 'Partay',
-                'designation_full': 'Very Authorized'
+                'designation': 'Very Authorized'
             },
             'committee_id': 'B7890'
         }
 
         self.totals = {
             'results': [{
+                'committee_id': 'D1234',
                 'reports': [{
                     'cash_on_hand_end_period': 123.34,
                     'debts_owed_by_committee': 45678.90,
@@ -89,8 +87,30 @@ class TestDataMappings(TestCase):
             }]
         }
 
+        self.early_ac = [
+            {
+                'id': 'D1234',
+                'committee_id': 'D1234',
+                'committee_name': 'Friends of McPersonson',
+                'designation': 'Authorized',
+                'designation_code': 'A' 
+
+            }
+        ]
+
+        self.late_ac = {
+            'D1234': {
+                'id': 'D1234',
+                'committee_id': 'D1234',
+                'committee_name': 'Friends of McPersonson',
+                'designation': 'Authorized',
+                'designation_code': 'A' 
+            }
+        }
+
     def test_map_candidate_page_values(self):
-        vals = map_candidate_page_values(self.candidate)
+        candidate = self.candidate.update(self.early_ac)
+        vals = map_candidate_page_values(candidate)
 
         self.assertTrue(vals['related_committees'])
         self.assertEqual(vals['state'], 'TN')
@@ -147,16 +167,21 @@ class TestDataMappings(TestCase):
         self.assertEqual('Very Authorized', vals['designation'])        
         self.assertEqual('B7890', vals['id'])
 
-    def test_map_totals(self):
-        vals = map_totals(self.totals)
+    @patch('openfecwebapp.data_mappings.load_totals')
+    def test_add_committee_data(self, mock_totals):
+        mock_totals.return_value = self.totals
+        candidate = self.candidate
+        candidate['authorized_committees'] = self.late_ac
 
-        self.assertEqual('$231.45', vals['total_receipts'])
-        self.assertEqual('$3,453.54', vals['total_disbursements'])
-        self.assertEqual('$123.34', vals['total_cash'])
-        self.assertEqual('$45,678.90', vals['total_debt'])
-        self.assertEqual('2010', vals['report_year'])
-        self.assertEqual('2009 - 2010', vals['years_totals'])
-        self.assertEqual('End Report', vals['report_desc'])
+        vals = add_committee_data(candidate, 'candidate')
+        c = vals['authorized_committees']['D1234']
+        self.assertEqual('$231.45', c['total_receipts'])
+        self.assertEqual('$3,453.54', c['total_disbursements'])
+        self.assertEqual('$123.34', c['total_cash'])
+        self.assertEqual('$45,678.90', c['total_debt'])
+        self.assertEqual('2010', c['report_year'])
+        self.assertEqual('2009 - 2010', c['years_totals'])
+        self.assertEqual('End Report', c['report_desc'])
 
     def test_map_committee_page_values(self):
         vals = map_committee_page_values(self.committee)
