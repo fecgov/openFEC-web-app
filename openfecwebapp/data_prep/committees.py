@@ -1,5 +1,3 @@
-from flask import url_for
-
 def map_committee_table_values(c):
     """
     maps and returns template vars for a single committee
