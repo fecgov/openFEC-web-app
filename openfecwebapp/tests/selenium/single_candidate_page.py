@@ -1,20 +1,13 @@
-from selenium import webdriver
-import unittest
-
-BASE_URL = 'http://localhost:3000'
+from .base_test_class import BaseTest
 
 
-class SingleCandidatePageTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
+class SingleCandidatePageTests(BaseTest):
+
+    def setUp(self):
+        self.url = self.base_url + '/committees/C00315176'
 
     def testSingleCandidatePageLoads(self):
-        self.driver.get(BASE_URL + '/committees/C00315176')
+        self.driver.get(self.url)
         self.assertEqual(
             self.driver.find_element_by_tag_name('h1').text,
             'FEINSTEIN FOR SENATE')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
