@@ -1,4 +1,4 @@
-  <div class="page-subsection">
+  <div class="page-subsection js-reveal-container">
     <div class="figure-group committee-summary">
       <div class="figure-group__side">
         <img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">
@@ -51,20 +51,31 @@
               </div>
             </figure>
           </div>
-          <div class="hidden-container u-hidden">
+          <div class="js-reveal-content u-hidden" aria-hidden="true">
+
+            {% import 'macros/charts.html' as charts %}
+            {% macro group_bar_tooltip(value, key) %}
+              <div class="chart-series__bar__tooltip">
+                <h5 class="chart-series__bar__tooltip__title">{{ key|replace('_', ' ')|title }}</h5>
+                <span class="chart-series__bar__tooltip__value">{{ value|currency }}</span>
+              </div>
+            {% endmacro %}
+
             <div class="row">
               <figure class="chart-container chart--r-d">
-                <h4 class="figure__title">Finances over time</h4>
+                <h4 class="figure__title">Finances Over Time</h4>
+                {{ charts.chart_series_grouped(committee.fake_data, ('receipts', 'disbursements'), label_key="date", tooltip=group_bar_tooltip) }}
               </figure>
             </div>
             <div class="row">
               <figure class="chart-container chart--c-d">
-                <h4 class="figure__title">Finances over time</h4>
+                <h4 class="figure__title">Cash and Debt Over Time</h4>
+                {{ charts.chart_series_grouped(committee.fake_data, ('cash_on_hand', 'debts_owed'), label_key="date", tooltip=group_bar_tooltip) }}
               </figure>
             </div>
-          </div>
+          </div><!-- .hidden-container -->
         </div>
       </div> 
-      <button class="js-reveal">View charts</button>
+      <button class="js-reveal-button">View charts</button>
     </div> <!-- .figure-group -->
   </div>

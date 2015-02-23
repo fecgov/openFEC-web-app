@@ -46,6 +46,12 @@ Then start the server:
 $ python __init__.py
 ```
 
+If you'd like the app to cache API requests it makes, use the `--cached` flag:
+
+```
+$ python __init__.py --cached
+```
+
 ### Development
 To compile client side JS changes once:
 ```
