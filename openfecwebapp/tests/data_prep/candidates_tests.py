@@ -40,14 +40,3 @@ class TestDataMappings(TestCase):
             vals['affiliated_committees']['D1234']['designation'])
         self.assertEqual('/committees/D1234',
             vals['affiliated_committees']['D1234']['url'])
-
-    def test_map_candidate_table_values(self):
-        vals = map_candidate_table_values(candidate)
-
-        self.assertEqual(vals['name'], 'Person McPersonson')
-        self.assertEqual(vals['office'], 'Supreme Ruler')
-        self.assertEqual(vals['election'], 2012)
-        self.assertEqual(vals['party'], 'Cool People')
-        self.assertEqual(vals['state'], 'TN')
-        self.assertEqual(vals['district'], 11)
-        self.assertEqual(vals['id'], 'A12345')
