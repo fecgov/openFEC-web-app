@@ -64,8 +64,9 @@ def _get_committee_page_financials(context):
     on committee pages
     """
     results = load_totals(context['committee_id'])
-    context['totals'] = _map_committee_financials(
-        _get_reports_totals_results(results['results'][0]))
+    if results.get('results'):
+        context['totals'] = _map_committee_financials(
+            _get_reports_totals_results(results['results'][0]))
 
     return context
 
