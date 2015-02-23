@@ -121,6 +121,14 @@ def _filter_affiliated_committees(context):
 
     return [cmtes, ",".join(committee_ids), cmte_map]
 
+def add_fake_chart_data_pc(c):
+    c['primary_committee']['fake_data'] = [{"cash_on_hand": 217341.3, "debts_owed": 30000, "disbursements": 78988.83, "receipts": 110402.55, "date": "Q1 - 2012"}, {"cash_on_hand": 208841.3, "debts_owed": 30000, "disbursements": 78988.83, "receipts": 101902.55, "date": "Q1 - 2012"}, {"cash_on_hand": 185927.58, "debts_owed": 30000, "disbursements": 10926.53, "receipts": 8555.0, "date": "Q1 - 2012"}, {"cash_on_hand": 232215.95, "debts_owed": 30000, "disbursements": 28688.71, "receipts": 45715.0, "date": "Q1 - 2012"}, {"cash_on_hand": 188299.11, "debts_owed": 30000, "disbursements": 87884.86, "receipts": 55309.91, "date": "Q1 - 2012"}, {"cash_on_hand": 216189.66, "debts_owed": 30000, "disbursements": 172159.64, "receipts": 179508.0, "date": "Q1 - 2012"}, {"cash_on_hand": 215189.66, "debts_owed": 30000, "disbursements": 172159.64, "receipts": 178508.0, "date": "Q1 - 2012"}, {"cash_on_hand": 204669.17, "debts_owed": 520.18, "disbursements": 58153.97, "receipts": 62568.4, "date": "Q1 - 2012"}]
+
+    return c
+
+def add_fake_chart_data_ac():
+    return {'fake_data': [{"cash_on_hand": 217341.3, "debts_owed": 30000, "disbursements": 78988.83, "receipts": 110402.55, "date": "Q1 - 2012"}, {"cash_on_hand": 208841.3, "debts_owed": 30000, "disbursements": 78988.83, "receipts": 101902.55, "date": "Q1 - 2012"}, {"cash_on_hand": 185927.58, "debts_owed": 30000, "disbursements": 10926.53, "receipts": 8555.0, "date": "Q1 - 2012"}, {"cash_on_hand": 232215.95, "debts_owed": 30000, "disbursements": 28688.71, "receipts": 45715.0, "date": "Q1 - 2012"}, {"cash_on_hand": 188299.11, "debts_owed": 30000, "disbursements": 87884.86, "receipts": 55309.91, "date": "Q1 - 2012"}, {"cash_on_hand": 216189.66, "debts_owed": 30000, "disbursements": 172159.64, "receipts": 179508.0, "date": "Q1 - 2012"}, {"cash_on_hand": 215189.66, "debts_owed": 30000, "disbursements": 172159.64, "receipts": 178508.0, "date": "Q1 - 2012"}, {"cash_on_hand": 204669.17, "debts_owed": 520.18, "disbursements": 58153.97, "receipts": 62568.4, "date": "Q1 - 2012"}]}
+
 def add_committee_financial_data(context, data_type):
     """ loads and maps for templating financial summary data
     for each of the committees related to a candidate that are
@@ -130,6 +138,9 @@ def add_committee_financial_data(context, data_type):
         if context.get('primary_committee'):
             context['primary_committee'].update(
                 _get_pc_financials(context))
+            # remove with fake data
+            context['primary_committee'].update(
+                add_fake_chart_data_pc(context))
         if context.get('affiliated_committees'):
             ac = _filter_affiliated_committees(context)
             context.update(ac[0])
@@ -143,6 +154,9 @@ def add_committee_financial_data(context, data_type):
                     for c_id in financials[c_type]:
                         context[c_type][c_id].update(
                             financials[c_type][c_id])        
+                        # remove with fake chart data
+                        context[c_type][c_id].update(
+                            add_fake_chart_data_ac())
     elif data_type == 'committee':
         context.update(_get_committee_page_financials(context))
 
