@@ -1,6 +1,9 @@
 from selenium import webdriver
 import unittest
+from nose.plugins.attrib import attr
 
+
+@attr('selenium')
 class BaseTest(unittest.TestCase):
 
     @classmethod
