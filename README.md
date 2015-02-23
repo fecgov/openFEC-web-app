@@ -77,3 +77,10 @@ $ npm run watch-all
 ```
 $ nosetests openfecwebapp/tests
 ```
+#### Browser Tests
+First, install [PhantomJS](http://phantomjs.org/).
+
+Then:
+```
+$ nosetests openfecwebapp/tests -a 'selenium'
+``` 
