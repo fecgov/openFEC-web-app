@@ -22,31 +22,31 @@
               </ul>
             </div>
             <figure class="table--simple totals-table">
-              <h4 class="figure__title">Totals for {{committee.totals.years_totals}}</h4>
+              <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
               <div class="table__half">
                 <div class="table__row">
                   <div class="table__cell">Total receipts</div>
-                  <div class="table__cell">{{committee.totals.total_receipts}}</div>
+                  <div class="table__cell">{{committee.total_receipts}}</div>
                 </div>
                 <div class="table__row">
                   <div class="table__cell">Total disbursements</div>
-                  <div class="table__cell">{{committee.totals.total_disbursements}}</div>
+                  <div class="table__cell">{{committee.total_disbursements}}</div>
                 </div>
                 <div class="table__row--note">
-                  Calculated from reports filed {{committee.totals.report_year}}
+                  Calculated from reports filed {{committee.report_year}}
                 </div>
               </div>
               <div class="table__half">
                 <div class="table__row">
                   <div class="table__cell">Cash on hand</div>
-                  <div class="table__cell">{{committee.totals.total_cash}}</div>
+                  <div class="table__cell">{{committee.total_cash}}</div>
                 </div>
                 <div class="table__row">
                   <div class="table__cell">Debt</div>
-                  <div class="table__cell">{{committee.totals.total_debt}}</div>
+                  <div class="table__cell">{{committee.total_debt}}</div>
                 </div>
                 <div class="table__row--note">
-                  Source: {{committee.totals.report_desc}}
+                  Source: {{committee.report_desc}}
                 </div>
               </div>
             </figure>
