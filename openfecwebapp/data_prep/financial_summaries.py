@@ -139,8 +139,7 @@ def add_committee_financial_data(context, data_type):
             context['primary_committee'].update(
                 _get_pc_financials(context))
             # remove with fake data
-            context['primary_committee'].update(
-                add_fake_chart_data_pc(context))
+            context.update(add_fake_chart_data_pc(context))
         if context.get('affiliated_committees'):
             ac = _filter_affiliated_committees(context)
             context.update(ac[0])

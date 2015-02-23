@@ -1,3 +1,4 @@
+from flask import url_for
 from openfecwebapp.data_prep.shared import committee_type_map
 
 def map_candidate_table_values(c):
@@ -30,7 +31,8 @@ def _map_committee_values(ac):
     c['designation_code'] = ac.get('designation', '')
 
     if ac.get('committee_id'):
-        c['url'] = '/committees/' + ac.get('committee_id', '')
+        c['url'] = url_for('committee_page', c_id=c['id'])
+
     return c
 
 def map_candidate_page_values(c):
