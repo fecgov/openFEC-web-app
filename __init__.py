@@ -39,14 +39,14 @@ def candidates():
     params = _add_fields_star(request.args)
     results = load_single_type_summary('candidate', params)
 
-    return render_table('candidates', results, params, request.url)
+    return render_table('candidates', results, params,)
 
 @app.route('/committees')
 def committees():
     params = _add_fields_star(request.args)
     results = load_single_type_summary('committee', params)
 
-    return render_table('committees', results, params, request.url)
+    return render_table('committees', results, params,)
 
 @app.errorhandler(404)
 def page_not_found(e):

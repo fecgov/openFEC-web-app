@@ -27,7 +27,7 @@ def render_search_results(results, query):
         committees=committees, query=query, no_results=no_results)
 
 # loads browse tabular views
-def render_table(data_type, results, params, url):
+def render_table(data_type, results, params):
     # if we didn't get data back from the API
     if not results:
         abort(500)
@@ -37,7 +37,7 @@ def render_table(data_type, results, params, url):
     heading = "Browse " + data_type
 
     results_table['pagination'] = generate_pagination_values(
-        results, params, url, data_type)
+        results, params, data_type)
 
     for r in results['results']:
         results_table[data_type].append(type_map[data_type](r))

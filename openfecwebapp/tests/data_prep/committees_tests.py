@@ -1,5 +1,5 @@
 import unittest
-from openfecwebapp.data_prep.committees import map_committee_table_values, map_committee_page_values
+from openfecwebapp.data_prep.committees import *
 from openfecwebapp.tests.mock_data import committee
 
 class TestDataMappings(unittest.TestCase):

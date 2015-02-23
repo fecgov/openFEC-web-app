@@ -69,9 +69,11 @@ def _get_committee_page_financials(context):
 
     return context
 
-def _map_committee_financials_by_type(results, types):
+def _make_dicts_for_financials(results, types):
     """ takes the results of a call to the totals endpoint
-    and organizes it in a way where it can be templated
+    and organizes it in a way where it can be templated,
+    dicts with committee ids as keys within the list of
+    the corresponding committee type
     """
     cmtes = {}
     for r in results['results']:
@@ -103,7 +105,7 @@ def _filter_affiliated_committees(context):
     for each affiliated committee and a mapping of ids
     to committee types
     """
-    c = {}
+    cmtes = {}
     committee_ids = []
     cmte_map = {}
     for cmte in context['affiliated_committees'].values():
@@ -111,13 +113,13 @@ def _filter_affiliated_committees(context):
             committee_ids.append(cmte['id'])
             cmte_type = committee_type_map[
                 cmte['designation_code']]
-            if not c.get(cmte_type):
-                c[cmte_type] = {}
-            c[cmte_type][cmte['id']] = cmte
+            if not cmtes.get(cmte_type):
+                cmtes[cmte_type] = {}
+            cmtes[cmte_type][cmte['id']] = cmte
             cmte_map[cmte['id']] = committee_type_map[cmte[
                 'designation_code']]
 
-    return [c, ",".join(committee_ids), cmte_map]
+    return [cmtes, ",".join(committee_ids), cmte_map]
 
 def add_committee_financial_data(context, data_type):
     """ loads and maps for templating financial summary data
@@ -133,7 +135,7 @@ def add_committee_financial_data(context, data_type):
             context.update(ac[0])
             results = load_totals(ac[1])
             if results:
-                financials = _map_committee_financials_by_type(results, ac[2])
+                financials = _make_dicts_for_financials(results, ac[2])
                 # updates specific candidate dicts so that we don't
                 # blow away data they currently hold in doing
                 # context.update(financials)

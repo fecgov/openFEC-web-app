@@ -1,4 +1,6 @@
-def generate_pagination_values(c, params, url, data_type):
+from flask import url_for
+
+def generate_pagination_values(c, params, data_type):
     """
     returns template vars for pagination results counts and
     next/prev links on tabular views like /committees,

@@ -13,13 +13,13 @@ candidate = {
             'committee_id': 'D1234',
             'committee_name': 'Friends of McPersonson',
             'designation_full': 'Authorized',
-            'designation': 'PC' 
+            'designation_code': 'PC' 
         },
         'affiliated_committees': [{
             'committee_id': 'D1234',
             'committee_name': 'Friends of McPersonson',
             'designation_full': 'Authorized',
-            'designation': 'A' 
+            'designation_code': 'A' 
         }]
     }],
     'mailing_addresses': [{
@@ -31,6 +31,20 @@ candidate = {
         'page': '2',
         'pages': '5',
         'count': '100'
+    },
+    'primary_committee': {
+        'committee_id': 'D1234',
+        'committee_name': 'Friends of McPersonson',
+        'designation_full': 'Authorized',
+        'designation': 'PC' 
+    },
+    'affiliated_committees': {
+        'D1234': {
+            'id': 'D1234',
+            'committee_name': 'Friends of McPersonson',
+            'designation_full': 'Authorized',
+            'designation_code': 'A' 
+        }
     }
 }
 
@@ -68,6 +82,29 @@ totals = {
         'totals': [{
             'receipts': 231.45,
             'disbursements': 3453.54
-        }]
+        }],
+        'committee_id': 'D1234'
     }]
 }
+
+early_ac = [
+    {
+        'id': 'D1234',
+        'committee_id': 'D1234',
+        'committee_name': 'Friends of McPersonson',
+        'designation': 'Authorized',
+        'designation_code': 'A' 
+
+    }
+]
+
+late_ac = {
+    'D1234': {
+        'id': 'D1234',
+        'committee_id': 'D1234',
+        'committee_name': 'Friends of McPersonson',
+        'designation': 'Authorized',
+        'designation_code': 'A' 
+    }
+}
+
