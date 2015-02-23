@@ -1,24 +1,6 @@
 from flask import url_for
 from openfecwebapp.data_prep.shared import committee_type_map
 
-def map_candidate_table_values(c):
-    """
-    maps and returns template vars for a single candidate
-    record. 
-    """
-    candidate = {
-        'name': c['name']['full_name'],
-        'office': c['elections'][0]['office_sought_full'],
-        'election': int(c['elections'][0]['election_year']),
-        'party': c['elections'][0]['party_affiliation'],
-        'state': c['elections'][0]['state'],
-        'district': int(c['elections'][0]['district']) 
-            if c['elections'][0]['district'] else '',
-        'id': c['candidate_id']
-    }
-
-    return candidate
-
 def _map_committee_values(ac):
     """
     maps and returns template vars for committee values that 

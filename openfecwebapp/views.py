@@ -1,6 +1,5 @@
 from flask import render_template
-from openfecwebapp.data_prep.candidates import (map_candidate_table_values,
-map_candidate_page_values)
+from openfecwebapp.data_prep.candidates import map_candidate_page_values
 from openfecwebapp.data_prep.committees import (map_committee_table_values,
 map_committee_page_values)
 from openfecwebapp.data_prep.shared import generate_pagination_values
