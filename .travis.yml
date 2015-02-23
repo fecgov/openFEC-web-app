@@ -1,5 +1,5 @@
 python: "3.4"
-before-script:
+before_script:
     - cd openfecwebapp
     - cp example_config.py local_config.py
 install:
