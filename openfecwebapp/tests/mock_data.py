@@ -89,7 +89,6 @@ totals = {
 
 early_ac = [
     {
-        'id': 'D1234',
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
@@ -100,7 +99,6 @@ early_ac = [
 
 late_ac = {
     'D1234': {
-        'id': 'D1234',
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
