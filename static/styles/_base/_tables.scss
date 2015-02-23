@@ -99,17 +99,15 @@ td {
   border-bottom: 1px solid $light-gray;
 }
 
-.table__header {
-}
-
 .table__cell {
   @include rem(padding, 0 1rem);
   float: left;
-
-  &:last-child {
-    float: right;
-  }
+  line-height: 1;
 }
+
+.table__cell--heading {
+  font-weight: bold;
+}    
 
 .table__row--note {
   @include font-size(1.4);
