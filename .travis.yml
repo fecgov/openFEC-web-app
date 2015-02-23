@@ -5,5 +5,5 @@ before_script:
 install:
     - sudo pip install -r requirements.txt
 script:
-    - cd openfecwebapp/tests
+    - cd tests
     - nosetests
