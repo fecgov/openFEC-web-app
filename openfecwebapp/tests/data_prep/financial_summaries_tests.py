@@ -1,5 +1,8 @@
 import unittest
-from openfecwebapp.data_prep.financial_summaries import _map_committee_financials, add_committee_financial_data, _get_reports_totals_results, _make_dicts_for_financials, _filter_affiliated_committees
+from openfecwebapp.data_prep.financial_summaries import (
+ _map_committee_financials, add_committee_financial_data,
+_get_reports_totals_results, _make_dicts_for_financials,
+_filter_affiliated_committees)
 from openfecwebapp.tests.mock_data import *
 
 class TestFinancialSummaries(unittest.TestCase):
