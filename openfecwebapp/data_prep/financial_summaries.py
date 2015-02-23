@@ -27,8 +27,6 @@ def _map_committee_financials(vals):
         if value_map[v]:
             totals_mapped[v] = locale.currency(
             value_map[v], grouping=True)
-        else:
-            totals_mapped[v] = 'unavailable'
 
     if reports.get('report_year'):
         totals_mapped['report_year'] = str(int(reports['report_year']))
