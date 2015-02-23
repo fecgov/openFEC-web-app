@@ -36,7 +36,7 @@ candidate = {
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
-        'designation': 'PC' 
+        'designation_code': 'PC' 
     },
     'affiliated_committees': {
         'D1234': {
@@ -92,7 +92,7 @@ early_ac = [
         'id': 'D1234',
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
-        'designation': 'Authorized',
+        'designation_full': 'Authorized',
         'designation_code': 'A' 
 
     }
@@ -103,7 +103,7 @@ late_ac = {
         'id': 'D1234',
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
-        'designation': 'Authorized',
+        'designation_full': 'Authorized',
         'designation_code': 'A' 
     }
 }
