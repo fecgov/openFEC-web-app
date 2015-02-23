@@ -108,34 +108,6 @@ class TestDataMappings(TestCase):
             }
         }
 
-    def test_map_candidate_page_values(self):
-        candidate = self.candidate.update(self.early_ac)
-        vals = map_candidate_page_values(candidate)
-
-        self.assertTrue(vals['related_committees'])
-        self.assertEqual(vals['state'], 'TN')
-        self.assertEqual(vals['name'], 'Person McPersonson')
-        self.assertEqual('challenger', vals['incumbent_challenge'])
-        self.assertEqual('D1234', vals['primary_committee']['id'])
-        self.assertEqual('Friends of McPersonson', 
-            vals['primary_committee']['name'])
-        self.assertEqual('Authorized',
-            vals['primary_committee']['designation'])
-        self.assertEqual('PC',
-            vals['primary_committee']['designation_code'])
-        self.assertEqual('/committees/D1234',
-            vals['primary_committee']['url'])
-
-        self.assertEqual('D1234', vals['authorized_committees'][
-            'D1234']['id'])
-        self.assertEqual('Friends of McPersonson', 
-            vals['authorized_committees']['D1234']['name'])
-        self.assertEqual('Authorized',
-            vals['authorized_committees']['D1234']['designation'])
-        self.assertEqual('A',
-            vals['authorized_committees']['D1234']['designation_code'])
-        self.assertEqual('/committees/D1234',
-            vals['authorized_committees']['D1234']['url'])
 
     def test_generate_pagination_values(self):
         params = {}
@@ -156,17 +128,6 @@ class TestDataMappings(TestCase):
         self.assertEqual('/candidates?page=3', vals['next_url'])
         self.assertEqual('/candidates?page=1', vals['prev_url'])
 
-    def test_map_committee_table_values(self):
-        vals = map_committee_table_values(self.committee)
-
-        self.assertEqual('Friends of McPersonson', vals['name'])
-        self.assertEqual('Secret Club', vals['organization'])
-        self.assertEqual('Money McMaster', vals['treasurer'])
-        self.assertEqual('KY', vals['state'])
-        self.assertEqual('Partay', vals['type'])
-        self.assertEqual('Very Authorized', vals['designation'])        
-        self.assertEqual('B7890', vals['id'])
-
     @patch('openfecwebapp.data_mappings.load_totals')
     def test_add_committee_data(self, mock_totals):
         mock_totals.return_value = self.totals
@@ -183,14 +144,6 @@ class TestDataMappings(TestCase):
         self.assertEqual('2009 - 2010', c['years_totals'])
         self.assertEqual('End Report', c['report_desc'])
 
-    def test_map_committee_page_values(self):
-        vals = map_committee_page_values(self.committee)
-
-        self.assertEqual('123 Boulevard St.', 
-            vals['address']['street_1'])
-        self.assertEqual('#595', vals['address']['street_2'])
-        self.assertEqual('Placetown', vals['address']['city'])
-        self.assertEqual('23456', vals['address']['zip'])
 
 
 

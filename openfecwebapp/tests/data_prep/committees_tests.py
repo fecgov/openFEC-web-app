@@ -1,9 +1,8 @@
-from flask import Flask
-from flask.ext.testing import TestCase
-from openfecwebapp.data_prep.committees import *
+import unittest
+from openfecwebapp.data_prep.committees import map_committee_table_values, map_committee_page_values
 from openfecwebapp.tests.mock_data import committee
 
-class TestDataMappings(TestCase):
+class TestDataMappings(unittest.TestCase):
 
     def test_map_committee_table_values(self):
         vals = map_committee_table_values(committee)
