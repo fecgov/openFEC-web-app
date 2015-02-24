@@ -16,6 +16,7 @@ $dark-gray: #515A61;
 $medium-gray: #b3b3b3;
 $light-gray: #D7D7D7;
 $lightest-gray: #F8F8F8;
+$light-blue-gray: #BDC4CD;
 $light-red: #FBE3E4;
 $light-yellow: #FFF6BF;
 $light-green: #E6EFC2;
@@ -31,7 +32,7 @@ $licorice: #3E4957;
 $licorice-2: #323A45;
 $licorice-3: #505E70;
 $page-header: $licorice-3;
-$filter-bg: #BDC4CD;
+$filter-bg: $light-blue-gray;
 
 // Data colors
 $data-support: #1B5585; // Blue
