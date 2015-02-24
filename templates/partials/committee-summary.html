@@ -62,13 +62,25 @@
 
           <div class="row">
             <figure class="chart-container chart--r-d">
-              <h4 class="figure__title">Finances Over Time</h4>
+              <div class="figure__title">
+                <h4>Receipts and Disbursements</h4>
+                <ul class="figure__key flat-list">
+                  <li><span class="swatch data--receipts"></span> Receipts</li>
+                  <li><span class="swatch data--disbursements"></span> Disbursements</li>
+                </ul>
+              </div>
               {{ charts.chart_series_grouped(committee.fake_data, ('receipts', 'disbursements'), label_key="date", tooltip=group_bar_tooltip) }}
             </figure>
           </div>
           <div class="row">
             <figure class="chart-container chart--c-d">
-              <h4 class="figure__title">Cash and Debt Over Time</h4>
+              <div class="figure__title">
+                <h4>Cash and Debt</h4>
+                <ul class="figure__key flat-list">
+                  <li><span class="swatch data--cash"></span> Cash</li>
+                  <li><span class="swatch data--debt"></span> Debt</li>
+                </ul>
+              </div>
               {{ charts.chart_series_grouped(committee.fake_data, ('cash_on_hand', 'debts_owed'), label_key="date", tooltip=group_bar_tooltip) }}
             </figure>
           </div>

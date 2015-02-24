@@ -79,7 +79,28 @@ figure {
 }
 
 .figure__title {
+  @include clearfix();
   border-bottom: 1px solid $medium-gray;
+
+  h4 {
+    float: left;
+  }
+}
+
+.figure__key {
+  float: right;
+
+  li {
+    @include rem(margin-right, 2.0rem);
+  }
+  .swatch {
+    @include rem(margin-right, 1.0rem);
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    padding: 0;
+    display: inline-block;
+  }
 }
 
 // Finance tables like the Key Numbers tables on committee pages

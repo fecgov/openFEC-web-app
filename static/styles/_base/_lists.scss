@@ -18,7 +18,8 @@ ul, ol {
 
 .flat-list {
   @include clearfix();
-
+  padding: 0;
+  
   li {
     float: left;
   }
