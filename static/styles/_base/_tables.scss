@@ -46,7 +46,6 @@ td {
   @include truncate();
   padding: .5em;
   border: none;
-  width: 16%;
 }
 
 .flex-cell {
@@ -145,7 +144,7 @@ td {
   th,
   td,
   .table__cell {
-    padding: .5em 1em;
+    padding: .5em .5em;
     border-right: none;
   }
 
@@ -160,4 +159,17 @@ td {
     border-bottom: 1px solid $light-gray;
   }
 
+}
+
+.totals-table {
+  @include font-size(1.6);
+
+  .table__cell {
+    width: 40%;
+
+    &:first-child {
+      width: 60%;
+      font-weight: bold;
+    }
+  }
 }
