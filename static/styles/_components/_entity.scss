@@ -101,10 +101,12 @@
   }
 }
 
-.totals-table {
-  @include font-size(1.6);
-
-  .table__cell:first-child {
-    font-weight: bold;
+.other-committees {
+  .figure-group {
+    border-color: $light-blue-gray;
+  }
+  
+  .figure-group__side {
+    background-color: $light-blue-gray;
   }
 }

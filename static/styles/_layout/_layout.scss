@@ -89,7 +89,7 @@ body {
   }
 
   &:first-of-type {
-    padding-top: 0;
+    @include rem(padding-top, 2.0rem 0);
   }
 }
 

@@ -35,7 +35,7 @@ h3 {
 }
 
 h4 {
-  @include font-size(1.6);
+  @include font-size(2.0);
   font-weight: 600;
 }
 
@@ -166,4 +166,9 @@ cite {
   @include font-size(2.4);
   margin: 1em 0;
   padding:0;
+}
+
+// Special section headers
+.page-subsection h3 {
+  @include rem(margin-bottom, 2.0rem);
 }
