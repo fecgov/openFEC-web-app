@@ -16,7 +16,7 @@ def render_search_results(results, query):
 
     if results.get('committees'):
         for c in results['committees'].get('results', []):
-            committees.append(map_committee_table_values(c))
+            committees.append(c)
 
     # if true will show "no results" message
     no_results = True if not len(candidates) and not len(committees) else False
