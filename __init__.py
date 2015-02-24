@@ -11,11 +11,10 @@ locale.setlocale(locale.LC_ALL, '')
 
 app = Flask(__name__)
 
-def _add_fields_star(params):
+def _convert_to_dict(params):
     # move from immutablemultidict -> multidict -> dict
     params = params.copy().to_dict()
     params = {key: value for key, value in params.items() if value}
-    params['fields'] = '*'
 
     return params
 
@@ -39,14 +38,15 @@ def committee_page(c_id):
 
 @app.route('/candidates')
 def candidates():
-    params = _add_fields_star(request.args)
+    params = _convert_to_dict(request.args)
+    params['fields'] = '*'
     results = load_single_type_summary('candidate', params)
 
     return render_table('candidates', results, params)
 
 @app.route('/committees')
 def committees():
-    params = _add_fields_star(request.args)
+    params = _convert_to_dict(request.args)
     results = load_single_type_summary('committee', params)
 
     return render_table('committees', results, params)
