@@ -872,7 +872,8 @@ input[type="submit"],
   text-decoration: none; }
   .header-nav__link:hover, .header-nav__link:active {
     background: #3E4957;
-    color: #fff; }
+    color: #fff;
+    text-decoration: none; }
 
 .header-nav__brand {
   padding: 10px 20px;
