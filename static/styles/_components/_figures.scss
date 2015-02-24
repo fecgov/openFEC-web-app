@@ -11,6 +11,7 @@ figure {
 .figure-group {
   @include clearfix();
   @include transition(height, .5s);
+  @include rem(margin-bottom, 5.0rem);
   clear: both;
   border: 1px solid $licorice-3;
   position: relative;
@@ -20,6 +21,10 @@ figure {
     bottom: -20px;
     left: 50%;
     margin-left: -62px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
   }
 }
 
