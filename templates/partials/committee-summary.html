@@ -25,11 +25,11 @@
             <div class="table__half">
               <div class="table__row">
                 <div class="table__cell">Total receipts</div>
-                <div class="table__cell">{{committee.total_receipts}}</div>
+                <div class="table__cell">{{committee.total_receipts|default("unavailable")}}</div>
               </div>
               <div class="table__row">
                 <div class="table__cell">Total disbursements</div>
-                <div class="table__cell">{{committee.total_disbursements}}</div>
+                <div class="table__cell">{{committee.total_disbursements|default("unavailable")}}</div>
               </div>
               <div class="table__row--note">
                 Calculated from reports filed {{committee.report_year}}
@@ -38,11 +38,11 @@
             <div class="table__half">
               <div class="table__row">
                 <div class="table__cell">Cash on hand</div>
-                <div class="table__cell">{{committee.total_cash}}</div>
+                <div class="table__cell">{{committee.total_cash|default("unavailable")}}</div>
               </div>
               <div class="table__row">
                 <div class="table__cell">Debt</div>
-                <div class="table__cell">{{committee.total_debt}}</div>
+                <div class="table__cell">{{committee.total_debt|default("unavailable")}}</div>
               </div>
               <div class="table__row--note">
                 Source: {{committee.report_desc}}
