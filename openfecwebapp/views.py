@@ -1,7 +1,6 @@
 from flask import render_template
 from openfecwebapp.data_prep.candidates import map_candidate_page_values
-from openfecwebapp.data_prep.committees import (map_committee_table_values,
-map_committee_page_values)
+from openfecwebapp.data_prep.committees import map_committee_page_values
 from openfecwebapp.data_prep.shared import generate_pagination_values
 from openfecwebapp.data_prep.financial_summaries import add_committee_financial_data
 
@@ -17,7 +16,7 @@ def render_search_results(results, query):
 
     if results.get('committees'):
         for c in results['committees'].get('results', []):
-            committees.append(map_committee_table_values(c))
+            committees.append(c)
 
     # if true will show "no results" message
     no_results = True if not len(candidates) and not len(committees) else False
@@ -46,7 +45,7 @@ def render_table(data_type, results, params):
 type_map = {
     'candidates': lambda x: x,
     'candidate': map_candidate_page_values,
-    'committees': map_committee_table_values,
+    'committees': lambda x: x,
     'committee': map_committee_page_values
 }
 
