@@ -49,29 +49,11 @@
             {% if authorized_committees %}
             <dl>
               <dt>Authorized Committees</dt>
-              {% for c_id in affiliated_committees %}
-              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ affiliated_committees[c_id].name }}</a></dd>
+              {% for c_id in authorized_committees %}
+              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ authorized_committees[c_id].name }}</a></dd>
               {% endfor %}
             </dl>
-            {% endif %}
-
-            {% if leadership_committees %}
-            <dl>
-              <dt>Leadership PACs</dt>
-              {% for c_id in leadership_committees %}
-              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ leadership_committees[c_id].name }}</a></dd>
-              {% endfor %}
-            </dl>
-            {% endif %}
-
-            {% if joint_committees %}
-            <dl>
-              <dt>Joint Fundraising Committees</dt>
-              {% for c_id in joint_committees %}
-              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ joint_committees[c_id].name }}</a></dd>
-              {% endfor %}
-            </dl>
-            {% endif %}            
+            {% endif %}        
           </li>
 <!--      <li class="entity__term--wide">
             <h4>Elections</h4>
