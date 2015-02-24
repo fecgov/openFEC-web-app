@@ -1,81 +1,79 @@
-  <div class="page-subsection js-reveal-container">
-    <div class="figure-group committee-summary">
-      <div class="figure-group__side">
-        <img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">
+  <div class="figure-group committee-summary js-reveal-container">
+    <div class="figure-group__side">
+      <img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">
+    </div>
+    <div class="figure-group__main">
+      <div class="figure-group__header">
+        <h4 class="figure-group__title">{{ committee.name }}</h4>
+        <span class="figure-group__description">{{ committee.designation }}</span>
       </div>
-      <div class="figure-group__main">
-        <div class="figure-group__header">
-          <h3 class="figure-group__title">{{ committee.name }}</h3>
-          <span class="figure-group__description">{{ committee.designation }}</span>
-        </div>
 
-        <div class="figure-group__inner">
-          <div class="row">
-            <div class="quick-links">
-              <h4 class="figure__title">Quick Links</h4>
-              <ul>
-                {% if committee %}
-                <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">Committee Page &raquo;</a></li>
-                {% endif %}
-                <li><a>Most recent report &raquo;</a></li>
-                <li><a>Contributions received &raquo;</a></li>
-              </ul>
+      <div class="figure-group__inner">
+        <div class="row">
+          <div class="quick-links">
+            <h4 class="figure__title">Quick Links</h4>
+            <ul>
+              {% if committee %}
+              <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">Committee Page &raquo;</a></li>
+              {% endif %}
+<!--            <li><a>Most recent report &raquo;</a></li>
+              <li><a>Contributions received &raquo;</a></li> -->
+            </ul>
+          </div>
+          <figure class="table--simple totals-table">
+            <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
+            <div class="table__half">
+              <div class="table__row">
+                <div class="table__cell">Total receipts</div>
+                <div class="table__cell">{{committee.total_receipts}}</div>
+              </div>
+              <div class="table__row">
+                <div class="table__cell">Total disbursements</div>
+                <div class="table__cell">{{committee.total_disbursements}}</div>
+              </div>
+              <div class="table__row--note">
+                Calculated from reports filed {{committee.report_year}}
+              </div>
             </div>
-            <figure class="table--simple totals-table">
-              <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
-              <div class="table__half">
-                <div class="table__row">
-                  <div class="table__cell">Total receipts</div>
-                  <div class="table__cell">{{committee.total_receipts}}</div>
-                </div>
-                <div class="table__row">
-                  <div class="table__cell">Total disbursements</div>
-                  <div class="table__cell">{{committee.total_disbursements}}</div>
-                </div>
-                <div class="table__row--note">
-                  Calculated from reports filed {{committee.report_year}}
-                </div>
+            <div class="table__half">
+              <div class="table__row">
+                <div class="table__cell">Cash on hand</div>
+                <div class="table__cell">{{committee.total_cash}}</div>
               </div>
-              <div class="table__half">
-                <div class="table__row">
-                  <div class="table__cell">Cash on hand</div>
-                  <div class="table__cell">{{committee.total_cash}}</div>
-                </div>
-                <div class="table__row">
-                  <div class="table__cell">Debt</div>
-                  <div class="table__cell">{{committee.total_debt}}</div>
-                </div>
-                <div class="table__row--note">
-                  Source: {{committee.report_desc}}
-                </div>
+              <div class="table__row">
+                <div class="table__cell">Debt</div>
+                <div class="table__cell">{{committee.total_debt}}</div>
               </div>
+              <div class="table__row--note">
+                Source: {{committee.report_desc}}
+              </div>
+            </div>
+          </figure>
+        </div>
+        <div class="js-reveal-content u-hidden" aria-hidden="true">
+
+          {% import 'macros/charts.html' as charts %}
+          {% macro group_bar_tooltip(value, key) %}
+            <div class="chart-series__bar__tooltip">
+              <h5 class="chart-series__bar__tooltip__title">{{ key|replace('_', ' ')|title }}</h5>
+              <span class="chart-series__bar__tooltip__value">{{ value|currency }}</span>
+            </div>
+          {% endmacro %}
+
+          <div class="row">
+            <figure class="chart-container chart--r-d">
+              <h4 class="figure__title">Finances Over Time</h4>
+              {{ charts.chart_series_grouped(committee.fake_data, ('receipts', 'disbursements'), label_key="date", tooltip=group_bar_tooltip) }}
             </figure>
           </div>
-          <div class="js-reveal-content u-hidden" aria-hidden="true">
-
-            {% import 'macros/charts.html' as charts %}
-            {% macro group_bar_tooltip(value, key) %}
-              <div class="chart-series__bar__tooltip">
-                <h5 class="chart-series__bar__tooltip__title">{{ key|replace('_', ' ')|title }}</h5>
-                <span class="chart-series__bar__tooltip__value">{{ value|currency }}</span>
-              </div>
-            {% endmacro %}
-
-            <div class="row">
-              <figure class="chart-container chart--r-d">
-                <h4 class="figure__title">Finances Over Time</h4>
-                {{ charts.chart_series_grouped(committee.fake_data, ('receipts', 'disbursements'), label_key="date", tooltip=group_bar_tooltip) }}
-              </figure>
-            </div>
-            <div class="row">
-              <figure class="chart-container chart--c-d">
-                <h4 class="figure__title">Cash and Debt Over Time</h4>
-                {{ charts.chart_series_grouped(committee.fake_data, ('cash_on_hand', 'debts_owed'), label_key="date", tooltip=group_bar_tooltip) }}
-              </figure>
-            </div>
-          </div><!-- .hidden-container -->
-        </div>
-      </div> 
-      <button class="js-reveal-button">View charts</button>
-    </div> <!-- .figure-group -->
-  </div>
+          <div class="row">
+            <figure class="chart-container chart--c-d">
+              <h4 class="figure__title">Cash and Debt Over Time</h4>
+              {{ charts.chart_series_grouped(committee.fake_data, ('cash_on_hand', 'debts_owed'), label_key="date", tooltip=group_bar_tooltip) }}
+            </figure>
+          </div>
+        </div><!-- .hidden-container -->
+      </div>
+    </div> 
+    <button class="js-reveal-button">View charts</button>
+  </div> <!-- .figure-group -->
