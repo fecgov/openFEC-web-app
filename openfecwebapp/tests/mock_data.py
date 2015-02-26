@@ -84,6 +84,20 @@ totals = {
             'disbursements': 3453.54
         }],
         'committee_id': 'D1234'
+    },
+    {
+        'reports': [{
+            'cash_on_hand_end_period': 0,
+            'debts_owed_by_committee': 0,
+            'report_year': 2010,
+            'election_cycle': 2010,
+            'report_type_full': 'End Report {stuff}'
+        }],
+        'totals': [{
+            'receipts': 0,
+            'disbursements': 0
+        }],
+        'committee_id': 'D1234'
     }]
 }
 
