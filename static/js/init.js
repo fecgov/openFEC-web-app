@@ -60,4 +60,8 @@ $(document).ready(function() {
         })
     }
 
+    // unload overlay
+    $(window).on("beforeunload", function(e){
+       $('body').prepend('<div class="unloading"></div>'); 
+    });
 });
