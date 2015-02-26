@@ -24,7 +24,7 @@ def _map_committee_financials(vals):
 
     # format totals data in US dollars
     for v in value_map:
-        if value_map[v]:
+        if value_map[v] is not None:
             totals_mapped[v] = locale.currency(
             value_map[v], grouping=True)
 
