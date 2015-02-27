@@ -27,20 +27,22 @@
       <div class="page-subsection other-committees">
       <h3>Other Committees</h3>
         {% if leadership_committees %}
-        <h3>Leadership PACs</h3>
+        <h4>Leadership PACs</h4>
+        <ul>
           {% for c in leadership_committees %}
               {% with committee=leadership_committees[c] %}
-                <li><h4><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.name }} &raquo;</a></h4></li>
+                <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.name }} &raquo;</a></li>
               {% endwith %}
           {% endfor %}
+        </ul>
         {% endif %}
 
         {% if joint_committees %}
-        <h3>Joint Fundraising Committees</h3>
+        <h4>Joint Fundraising Committees</h4>
         <ul>
           {% for c in joint_committees %}
               {% with committee=joint_committees[c] %}
-              <li><h4><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.name }} &raquo;</a></h4></li>
+              <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.name }} &raquo;</a></li>
               {% endwith %}
           {% endfor %}
         </ul>
