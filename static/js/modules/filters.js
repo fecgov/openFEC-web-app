@@ -87,6 +87,8 @@ var removeActiveStyle = function(field) {
 };
 
 var activateInitialFilters = function() {
+    // this activates dropdowns
+    // name filter is activated in the template
     var qs = queryString.parse(document.location.search),
         param;
 
