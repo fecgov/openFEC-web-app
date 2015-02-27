@@ -6,12 +6,6 @@ class LandingPageTests(BaseTest):
     def setUp(self):
         self.url = self.base_url
 
-    def getHeader(self):
-        return self.driver.find_element_by_class_name('site-header')
-
-    def getMain(self):
-        return self.driver.find_element_by_tag_name('main')
-
     def testLandingPageLoads(self):
         self.driver.get(self.url)
         self.assertEqual(
