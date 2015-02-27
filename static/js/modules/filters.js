@@ -90,7 +90,8 @@ var activateInitialFilters = function() {
     // this activates dropdowns
     // name filter is activated in the template
     var qs = queryString.parse(document.location.search),
-        param;
+        param,
+        open;
 
     for (param in qs) {
         if (qs.hasOwnProperty(param)) {
@@ -101,8 +102,13 @@ var activateInitialFilters = function() {
                     name: param.replace(/\?/, ''),
                     value: qs[param]
                 }, false);
+                open = true;
             }
         }
+    }
+
+    if (open) {
+        $('#main').addClass('side--open');
     }
 }
 
