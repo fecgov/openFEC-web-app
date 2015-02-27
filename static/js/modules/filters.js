@@ -86,6 +86,18 @@ var removeActiveStyle = function(field) {
     $(field).parent().removeClass('active');
 };
 
+// all of the filters we use on candidates and committees
+var fieldMap = [
+    'name',
+    'year',
+    'party',
+    'state',
+    'district',
+    'office',
+    'designation',
+    'organization_type'
+]
+
 var activateInitialFilters = function() {
     // this activates dropdowns
     // name filter is activated in the template
@@ -95,7 +107,7 @@ var activateInitialFilters = function() {
 
     for (param in qs) {
         if (qs.hasOwnProperty(param)) {
-            if (qs[param] !== "") {
+            if (qs[param] !== "" && $.inArray(param, fieldMap) !== -1) {
                 activateFilter.call({
                     // sadly the querystring module doesn't remove
                     // question marks from its parsed values
