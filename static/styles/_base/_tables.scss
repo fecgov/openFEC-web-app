@@ -76,14 +76,14 @@ td {
     bottom: .75em;
   }
 
-  &.sort-up {
+  &.sort-down {
     &:after {
       @include icon();
       content: "\e62a";
     }
   }
 
-  &.sort-down {
+  &.sort-up {
     &:after {
       @include icon();
       content: "\e627";
