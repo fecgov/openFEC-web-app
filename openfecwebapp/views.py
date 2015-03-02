@@ -40,6 +40,9 @@ def render_table(data_type, results, params):
     for r in results['results']:
         results_table[data_type].append(type_map[data_type](r))
 
+    if params.get('name'):
+        results_table['filter_name'] = params['name']
+
     return render_template(data_type + '.html', **results_table)
 
 type_map = {

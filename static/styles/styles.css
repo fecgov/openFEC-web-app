@@ -792,7 +792,7 @@ input[type="submit"],
 
 .field.active label {
   color: #148552; }
-.field.active .chosen-single {
+.field.active .chosen-single, .field.active input {
   border: 2px solid #148552; }
 
 .field {
