@@ -24,7 +24,7 @@ def _map_committee_financials(vals):
 
     # format totals data in US dollars
     for v in value_map:
-        if value_map[v]:
+        if value_map[v] is not None:
             totals_mapped[v] = locale.currency(
             value_map[v], grouping=True)
 
@@ -91,9 +91,10 @@ def _get_pc_financials(context):
     """
     c = {}
     totals = load_totals(context['primary_committee']['id'])
-    results = _get_reports_totals_results(totals['results'][0])
-    c = _map_committee_financials(results)
-    c['name'] = context['primary_committee']['name']
+    if totals.get('results'):
+        results = _get_reports_totals_results(totals['results'][0])
+        c = _map_committee_financials(results)
+        c['name'] = context['primary_committee']['name']
 
     return c
 

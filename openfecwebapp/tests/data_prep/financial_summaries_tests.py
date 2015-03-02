@@ -22,6 +22,17 @@ class TestFinancialSummaries(unittest.TestCase):
         self.assertEqual('2009 - 2010', c['years_totals'])
         self.assertEqual('End Report ', c['report_desc'])
 
+        results = {
+            'reports': totals['results'][1]['reports'][0],
+            'totals': totals['results'][1]['totals'][0]
+        }
+        c = _map_committee_financials(results)
+
+        self.assertEqual('$0.00', c['total_receipts'])
+        self.assertEqual('$0.00', c['total_disbursements'])
+        self.assertEqual('$0.00', c['total_cash'])
+        self.assertEqual('$0.00', c['total_debt'])
+
     def test_get_reports_totals_results(self):
         c = _get_reports_totals_results(totals['results'][0])
 
