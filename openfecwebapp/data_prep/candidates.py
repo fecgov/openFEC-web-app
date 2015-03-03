@@ -13,7 +13,9 @@ def _map_committee_values(ac):
     c['designation_code'] = ac.get('designation', '')
     c['active_though'] = ac.get('active_though', '')
     c['organization_type_code'] = ac.get('organization_type', '')
-    c['organization_type'] = ac.get('organization_type_full', '')
+    c['organization'] = ac.get('organization_type_full', '')
+    c['type'] = ac.get('committee_type_full', '')
+    c['type_full'] = ac.get('committee_type', '')
 
     if ac.get('committee_id'):
         c['url'] = url_for('committee_page', c_id=c['id'])
