@@ -29,7 +29,6 @@ class CandidatesPageTests(BaseTest):
 
     def testCandidatesFilterSideBar(self):
         self.driver.get(self.url)
-        #self.driver.find_element_by_class_name('side-toggle').click()
         self.openFilters()
         main = self.getMain()
         self.assertEqual(main.get_attribute('class'), 'side--open')
