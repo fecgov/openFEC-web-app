@@ -6,7 +6,7 @@ candidate = {
         'party_affiliation': 'Cool People',
         'state': 'TN',
         'election_year': '2012',
-        'office_sought_full': 'Supreme Ruler',
+        'office_full': 'Supreme Ruler',
         'district': '11',
         'incumbent_challenge_full': 'challenger',
         'primary_committee': {
