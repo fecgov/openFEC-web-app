@@ -26,7 +26,7 @@ def search():
     else:
         return render_template('search.html');
 
-@app.route('/candidates/<c_id>')
+@app.route('/candidate/<c_id>')
 def candidate_page(c_id):
     data = load_single_type('candidate', c_id)
     return render_page('candidate', data)
@@ -39,7 +39,6 @@ def committee_page(c_id):
 @app.route('/candidates')
 def candidates():
     params = _convert_to_dict(request.args)
-    params['fields'] = '*'
     results = load_single_type_summary('candidate', params)
 
     return render_table('candidates', results, params)
@@ -58,7 +57,7 @@ def charts():
     data['bar_data'] = map(lambda d: {'debt': d['cash_on_hand']}, data['grouped_bar_data'])
     data['committee'] = {'totals': {'receipts': 500000, 'disbursements': 450000}}
     return render_template('charts.html', **data)
-    
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
