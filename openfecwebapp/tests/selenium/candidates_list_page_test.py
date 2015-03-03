@@ -38,6 +38,7 @@ class CandidatesPageTests(BaseTest):
         self.driver.get(self.url)
         self.openFilters()
         name_div = self.getFilterDivByName('name')
+        time.sleep(1)
         name_div.find_element_by_tag_name('input').send_keys('Alliegro')
         name_div.find_element_by_tag_name('input').send_keys(Keys.ENTER)
         self.assertEqual(

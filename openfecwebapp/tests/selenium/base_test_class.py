@@ -9,8 +9,8 @@ class BaseTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
-        #cls.driver.set_window_size(1600, 550)
+        cls.driver = webdriver.PhantomJS()
+        cls.driver.set_window_size(1600, 550)
         cls.base_url = 'http://localhost:3000'
 
     @classmethod
