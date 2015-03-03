@@ -9,11 +9,8 @@ def _map_committee_values(ac):
     c = {}
     c['id'] = ac.get('committee_id', '')
     c['name'] = ac.get('committee_name', '')
-    c['designation'] = ac.get('designation_full', '')
-    c['designation_code'] = ac.get('designation', '')
-    c['active_though'] = ac.get('active_though', '')
-    c['organization_type_code'] = ac.get('organization_type', '')
-    c['organization'] = ac.get('organization_type_full', '')
+    c['designation'] = ac.get('committee_designation_full', '')
+    c['designation_code'] = ac.get('committee_designation', '')
     c['type'] = ac.get('committee_type_full', '')
     c['type_full'] = ac.get('committee_type', '')
 
@@ -32,27 +29,26 @@ def map_candidate_page_values(c):
     candidate['party'] = c.get('party_full', '')
     candidate['incumbent_challenge'] = c.get(
             'incumbent_challenge_full', '')
-    candidate['office'] = c.get(
-            'office_full', '')
+    candidate['office'] = c.get('office_full', '')
     candidate['district'] = c.get('district', '')
 
-    candidate['primary_committee'] = {'name': '','id':''}
     candidate['authorized_committees'] = {}
     candidate['leadership_committees'] = {}
     candidate['joint_committees'] = {}
 
-    for com in c['committees']:
-        if com['committee_designation'] == 'P':
+    for cmte in c['committees']:
+        if cmte['committee_designation'] == 'P':
             candidate['primary_committee'] = _map_committee_values(
-                com)
+                cmte)
         else:
-            cmte = com[cmte_id]
-            cmte_type = cmte['designation_code']
+            cmte_id = cmte['committee_id']
+            cmte_type = cmte['committee_designation']
             # drop anything that's not of the types we're
             # interested in
             if cmte_type in committee_type_map:
-                candidate[committee_type_map[
-                    cmte_type]][cmte_id] = cmte
-                candidate['related_committees'] = True
+                    candidate[committee_type_map[
+                        cmte_type]][cmte_id] = cmte
+                    candidate['related_committees'] = True
+                    print("\n", cmte, "\n")
 
     return candidate

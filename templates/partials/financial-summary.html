@@ -12,7 +12,7 @@
             {% include 'partials/committee-summary.html' %}
           {% endwith %}
         {% endif %}
-        
+
         {% if authorized_committees %}
           {% for c in authorized_committees %}
               {% with committee=authorized_committees[c] %}
@@ -42,16 +42,16 @@
         <ul>
           {% for c in joint_committees %}
               {% with committee=joint_committees[c] %}
-              <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.name }} &raquo;</a></li>
+              <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.committee_name }} &raquo;</a></li>
               {% endwith %}
           {% endfor %}
         </ul>
         {% endif %}
       </div>
     {% endif %}
-  
+
   {% else %}
-  
+
   <div class="meta-box error-container">
     <h2 id="section-1-header" tabindex="0">No results</h2>
     <p class="text--lead">This candidate is not associated with any committees, which means there is no financial data to show.</p>

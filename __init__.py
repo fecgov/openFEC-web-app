@@ -15,7 +15,6 @@ def _convert_to_dict(params):
     # move from immutablemultidict -> multidict -> dict
     params = params.copy().to_dict()
     params = {key: value for key, value in params.items() if value}
-
     return params
 
 @app.route('/')
@@ -40,14 +39,12 @@ def committee_page(c_id):
 def candidates():
     params = _convert_to_dict(request.args)
     results = load_single_type_summary('candidate', params)
-
     return render_table('candidates', results, params)
 
 @app.route('/committees')
 def committees():
     params = _convert_to_dict(request.args)
     results = load_single_type_summary('committee', params)
-
     return render_table('committees', results, params)
 
 @app.route('/charts')

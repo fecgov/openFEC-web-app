@@ -9,7 +9,7 @@ locale.setlocale(locale.LC_ALL, '')
 def _map_committee_financials(vals):
     """
     maps and returns template vars for financial summaries
-    from the 'totals' endpoint for use on candidat
+    from the 'totals' endpoint for use on candidate
     and committee pages
     """
     reports = vals['reports']
@@ -89,6 +89,7 @@ def _get_pc_financials(context):
     """ glues getting primary committee financial summary data from
     API, mapping the values for templating
     """
+
     c = {}
     totals = load_totals(context['primary_committee']['id'])
     if totals.get('results'):
@@ -158,5 +159,5 @@ def add_committee_financial_data(context, data_type):
                             add_fake_chart_data_ac())
     elif data_type == 'committee':
         context.update(_get_committee_page_financials(context))
-
+    print(context)
     return context
