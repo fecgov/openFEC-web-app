@@ -4,14 +4,19 @@ def map_committee_page_values(c):
     """
     committee = {}
 
-    if c.get('status'):
-        committee['type'] = c['status'].get('type_full', '')
-        committee['designation'] = c['status'].get(
-            'designation_full', '')
-
-    if c.get('treasurer'):
-        committee['treasurer'] = c['treasurer'].get('name_full', '')
-
-    committee['address'] = c.get('address', {})
+    committee['name'] = c.get('name', '')
+    committee['type'] = c.get('type_full', '')
+    committee['designation'] = c.get(
+        'designation_full', '')
+    committee['treasurer'] = c.get('treasurer_name', '')
+    committee['organization_type_full']= c.get('committee_type_full', '')
+    committee['address'] = {
+        'address':{
+            'street_1' : c.get('street_1', ''),
+            'street_2' : c.get('street_2', ''),
+            'city' : c.get('city', ''),
+            'zip' : c.get('zip', '')
+        }
+    }
 
     return committee
