@@ -30,11 +30,11 @@ def map_candidate_page_values(c):
         candidate['party'] = c_e.get('party_affiliation', '')
         candidate['incumbent_challenge'] = c_e.get(
             'incumbent_challenge_full', '')
+        candidate['office'] = c_e['office_full']
+
         if c_e.get('primary_committee'):
             candidate['primary_committee'] = _map_committee_values(
                 c_e['primary_committee'])
-            candidate['office'] = c_e['primary_committee'].get(
-                'type_full', '')
             candidate['related_committees'] = True
 
         # affiliated committees = committee_type_map, 
