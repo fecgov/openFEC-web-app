@@ -22,4 +22,3 @@ class SearchResultsTest(BaseTest):
                 self.assertEqual(
                     sorted(self.getColumn(i, data), reverse=True),
                     self.getColumn(i, data))
-
