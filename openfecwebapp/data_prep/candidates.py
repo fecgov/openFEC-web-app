@@ -24,7 +24,7 @@ def map_candidate_page_values(c):
     returns template vars for rendering a single candidate page
     """
     candidate = {}
-    candidate['name'] = c['name']
+    candidate['name'] = c.get('name', '')
     candidate['state'] = c.get('state', '')
     candidate['party'] = c.get('party_full', '')
     candidate['incumbent_challenge'] = c.get(
@@ -46,8 +46,8 @@ def map_candidate_page_values(c):
             # drop anything that's not of the types we're
             # interested in
             if cmte_type in committee_type_map:
-                    candidate[committee_type_map[
-                        cmte_type]][cmte_id] = cmte
+                    candidate[committee_type_map[cmte_type]][
+                        cmte_id] = _map_committee_values(cmte)
                     candidate['related_committees'] = True
 
     return candidate

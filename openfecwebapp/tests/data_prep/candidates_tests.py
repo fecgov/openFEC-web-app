@@ -20,7 +20,7 @@ class TestDataMappings(TestCase):
         return app
 
     def test_map_candidate_page_values(self):
-        vals = map_candidate_page_values(candidate)
+        vals = map_candidate_page_values(candidate['results'][0])
 
         self.assertTrue(vals['related_committees'])
         self.assertEqual(vals['state'], 'TN')
@@ -28,15 +28,15 @@ class TestDataMappings(TestCase):
         self.assertEqual('challenger', vals['incumbent_challenge'])
         self.assertEqual('D1234', vals['primary_committee']['id'])
         self.assertEqual('Friends of McPersonson', 
-            vals['primary_committee']['committee_name'])
+            vals['primary_committee']['name'])
         self.assertEqual('/committees/D1234',
             vals['primary_committee']['url'])
 
-        self.assertEqual('D1234', vals['affiliated_committees'][
+        self.assertEqual('D1234', vals['authorized_committees'][
             'D1234']['id'])
         self.assertEqual('Friends of McPersonson', 
-            vals['affiliated_committees']['D1234']['committee_name'])
-        self.assertEqual('Authorized',
-            vals['affiliated_committees']['D1234']['designation'])
+            vals['authorized_committees']['D1234']['name'])
+        self.assertEqual('Authorized committee',
+            vals['authorized_committees']['D1234']['designation'])
         self.assertEqual('/committees/D1234',
-            vals['affiliated_committees']['D1234']['url'])
+            vals['authorized_committees']['D1234']['url'])

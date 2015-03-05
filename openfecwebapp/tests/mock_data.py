@@ -15,7 +15,7 @@ candidate = {
         'office_full': 'Supreme Ruler',
         'district': '11',
         'incumbent_challenge_full': 'challenger',
-        'committees': [{
+        'committees': [
             {
                 'committee_id': 'D1234',
                 'committee_name': 'Friends of McPersonson',
@@ -28,19 +28,19 @@ candidate = {
                 'committee_designation': 'A',
                 'committee_designation_full': 'Authorized committee' 
             }
-        }],
+        ]
     }],
     # gets generated later, manually inserted for sake of testing
     'primary_committee': {
         'committee_id': 'D1234',
-        'committee_name': 'Friends of McPersonson',
+        'name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
         'designation_code': 'PC' 
     },
     'affiliated_committees': {
         'D1234': {
             'id': 'D1234',
-            'committee_name': 'Friends of McPersonson',
+            'name': 'Friends of McPersonson',
             'designation_full': 'Authorized',
             'designation_code': 'A' 
         }
