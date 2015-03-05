@@ -25,22 +25,26 @@
           <li class="header-nav__item"><a class="header-nav__link" href="/committees" name="committees"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
         </ul>
       </nav>
-      <div class="header-nav__search input-button-combo">
-        <form id="search" action="/">
-          <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search">
-          <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
-        </form>
+      <div class="header-nav__right">
+        <div class="header-nav__search input-button-combo">
+          <form id="search" action="/">
+            <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search">
+            <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
+          </form>
+        </div>
+        <button id="glossary-toggle" data-slide="right" class="header-nav__link side-toggle"><i class="ti ti-help-alt"></i></button>
       </div>
     </div>
   </header>
 
   {% block header %}{% endblock %}
+  <div class="main-container">
+    <main id="main"{% if section %} data-section="{{section}}"{% endif %}>
+        {% block body %}{% endblock %}
+    </main>
+    {% include './partials/glossary.html' %}
+  </div>
 
-  <div id="progress" class="container hidden"></div>
-
-  <main id="main"{% if section %} data-section="{{section}}"{% endif %}>
-      {% block body %}{% endblock %}
-  </main>
 </div> <!-- .page-wrap -->
 <footer>
   <div class="footer__left">

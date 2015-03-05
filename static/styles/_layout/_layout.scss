@@ -23,6 +23,12 @@ body {
   }
 }
 
+.main-container {
+  @include transition(margin-right, .1s);
+  position: relative;
+  overflow-x: hidden;
+}
+
 .container {
   @include outer-container();
 }

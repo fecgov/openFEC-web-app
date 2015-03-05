@@ -12,7 +12,8 @@
   color: #fff;
 
   &:hover,
-  &:active {
+  &:active,
+  &.active {
     color: $licorice;
     background-color: $filter-bg;
     border-width: 0 1px 0 0;
@@ -21,27 +22,45 @@
   }
 }
 
-.side--open {
-  .side-toggle {
-    background-color: $filter-bg;
-    color: $licorice;
-  }
+.side-panel {
+  padding: 1.25em;
+  background: $filter-bg;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  z-index: 999;
+}
 
-  .results-container {
-    left: 20%;
-  }
+.side-panel--left {
+  @include transition(left, .2s);
+  left: -100%;
+  float: left;
 
-  .side-panel {
+  &.side-panel--open {
     left: 0;
   }
 }
 
-.side-panel {
-  @include transition(left, .2s);
-  padding: 1.25em;
-  background: $filter-bg;
-  position: absolute;
-  left: -100%;
-  width: 20%;
-  float: left;
+.side-panel--right {
+  @include transition(right, .2s);
+  right: -100%;
+  float: right;  
+
+  &.side-panel--open {
+    right: 0;
+  }
+
+}
+
+.panel-active--left {
+  .results-container {
+      margin-left: 300px;    
+  }
+}
+
+.panel-active--right {
+  #main {
+    margin-right: 300px;
+  }
 }

@@ -11,14 +11,14 @@
 </header>
 
 <div class="page-controls">
-  <button class="side-toggle">Filters</button>
+  <button id="filter-toggle" class="side-toggle" data-slide="left">Filters</button>
   {% if pagination %}
     {% include 'partials/pagination.html' %}
   {% endif %}
 </div>
 
 <section class="results-content">
-  <div id="filters" class="side-panel">
+  <div id="filters" class="side-panel side-panel--left">
     <form id="category-filters">
         <div class="field" id="name-field">
           <label for="name">Name</label>
