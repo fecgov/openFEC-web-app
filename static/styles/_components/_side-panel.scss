@@ -33,7 +33,7 @@
 }
 
 .side-panel--left {
-  @include transition(left, .2s);
+  // @include transition(left, .2s);
   left: -100%;
   float: left;
 
@@ -43,7 +43,7 @@
 }
 
 .side-panel--right {
-  @include transition(right, .2s);
+  // @include transition(right, .2s);
   right: -100%;
   float: right;  
 

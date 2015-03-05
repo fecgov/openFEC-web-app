@@ -32,7 +32,7 @@
           </li>
           {% if primary_committee %}
           <li class="entity__term--wide">
-            <h5>Principal Campaign Committee</h5>
+            <h5><span class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</span></h5>
             <a href="{{ url_for('committee_page', c_id=primary_committee.id) }}">{{ primary_committee.name }}</a>
           </li>  
           {% endif %}

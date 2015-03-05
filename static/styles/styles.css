@@ -830,18 +830,12 @@ input[type="submit"],
   z-index: 999; }
 
 .side-panel--left {
-  -webkit-transition: left, 0.2s;
-  -moz-transition: left, 0.2s;
-  transition: left, 0.2s;
   left: -100%;
   float: left; }
   .side-panel--left.side-panel--open {
     left: 0; }
 
 .side-panel--right {
-  -webkit-transition: right, 0.2s;
-  -moz-transition: right, 0.2s;
-  transition: right, 0.2s;
   right: -100%;
   float: right; }
   .side-panel--right.side-panel--open {
@@ -1994,14 +1988,15 @@ footer {
   padding: 0 .625em; }
 
 .term {
-  padding: 2px 4px;
-  display: inline-block;
-  border-bottom: 1px dotted #fff;
   cursor: pointer; }
 
+.term--underlined {
+  padding: 2px 4px;
+  display: inline-block;
+  border-bottom: 1px dotted #fff; }
+
 .term--highlight {
-  background: #fff;
-  color: #2678BA; }
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4); }
 
 .glossary__term {
   padding: 1em 0; }
@@ -2339,9 +2334,6 @@ body {
     display: block; }
 
 .main-container {
-  -webkit-transition: margin-right, 0.1s;
-  -moz-transition: margin-right, 0.1s;
-  transition: margin-right, 0.1s;
   position: relative;
   overflow-x: hidden; }
 
