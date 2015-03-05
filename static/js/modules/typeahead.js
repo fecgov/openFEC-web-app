@@ -40,7 +40,8 @@ module.exports = {
         committeeEngine,
         candidateSuggestion,
         committeeSuggestion,
-        headerTpl;
+        headerTpl,
+        glossaryEngine;
     
     // Creating a candidate suggestion engine
     candidateEngine = new Bloodhound({
@@ -126,19 +127,18 @@ module.exports = {
     );
 
     // Glossary typeahead
-    var glossaryEngine = new Bloodhound({
-        name: 'Glossary',
-        local: terms,
-        datumTokenizer: function(d) {
-            var tokens = Bloodhound.tokenizers.whitespace(d.term);
-            return tokens;
-          },
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 3
+    glossaryEngine = new Bloodhound({
+      name: 'Glossary',
+      local: terms,
+      datumTokenizer: function(d) {
+          var tokens = Bloodhound.tokenizers.whitespace(d.term);
+          return tokens;
+        },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      limit: 3
     })
 
     glossaryEngine.initialize();
-    // var glossarySuggestion = Handlebars.compile('<span>{{ name }}</span>');
 
     $('#glossary-search').typeahead({
             minLength: 3,

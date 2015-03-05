@@ -53,7 +53,7 @@ $(document).ready(function() {
         var headerHeight = $('.site-header').height(),
             footerHeight = $('footer').height(),
             pageHeight = $('.page-wrap').height(),
-            mainHeight = pageHeight - headerHeight - footerHeight;
+            mainHeight = pageHeight - headerHeight;
             $('.main-container').height(mainHeight);
     }
 

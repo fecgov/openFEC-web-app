@@ -30,6 +30,10 @@ body {
   overflow-x: hidden;
 }
 
+#main {
+  height: 100%;
+}
+
 .container {
   @include outer-container();
 }

@@ -1,12 +1,13 @@
 .term {
-	text-decoration: underline;
+	padding: 2px 4px;
+	display: inline-block;
+	border-bottom: 1px dotted #fff;
+	cursor: pointer;
 }
 
 .term--highlight {
-	background: rgba($green, .6);
-	color: #fff;
-	padding: .5em;
-	border-radius: 5px;
+	background: #fff;
+	color: $blue;
 }
 .glossary__term {
 	padding: 1em 0;
