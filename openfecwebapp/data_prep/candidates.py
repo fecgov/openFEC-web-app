@@ -49,6 +49,5 @@ def map_candidate_page_values(c):
                     candidate[committee_type_map[
                         cmte_type]][cmte_id] = cmte
                     candidate['related_committees'] = True
-                    print("\n", cmte, "\n")
 
     return candidate

@@ -159,5 +159,5 @@ def add_committee_financial_data(context, data_type):
                             add_fake_chart_data_ac())
     elif data_type == 'committee':
         context.update(_get_committee_page_financials(context))
-    print(context)
+
     return context
