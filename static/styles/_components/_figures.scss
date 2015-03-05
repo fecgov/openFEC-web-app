@@ -11,15 +11,20 @@ figure {
 .figure-group {
   @include clearfix();
   @include transition(height, .5s);
+  @include rem(margin-bottom, 5.0rem);
   clear: both;
   border: 1px solid $licorice-3;
   position: relative;
 
-  .js-reveal {
+  .js-reveal-button {
     position: absolute;
     bottom: -20px;
     left: 50%;
     margin-left: -62px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
   }
 }
 
@@ -74,7 +79,28 @@ figure {
 }
 
 .figure__title {
+  @include clearfix();
   border-bottom: 1px solid $medium-gray;
+
+  h4 {
+    float: left;
+  }
+}
+
+.figure__key {
+  float: right;
+
+  li {
+    @include rem(margin-right, 2.0rem);
+  }
+  .swatch {
+    @include rem(margin-right, 1.0rem);
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    padding: 0;
+    display: inline-block;
+  }
 }
 
 // Finance tables like the Key Numbers tables on committee pages

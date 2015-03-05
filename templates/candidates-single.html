@@ -10,77 +10,65 @@
     <div class="container">
       <div class="entity__header--top row">
         <h1 class="entity__name">{{ name }}</h1>
-        <span class="entity__type"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates"> Candidate for {{ office }}</span>
+        <span class="entity__type"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidate for {{ office }}</span>
       </div>
       <div class="entity__header--bottom row">
         <ul class="entity__info">
           <li class="entity__term">
-            <h4 class=>Party</h4>
+            <h5 class=>Party</h5>
             <span>{{ party }}</span>
           </li>
           <li class="entity__term">
-            <h4>Status</h4>
-            <span>{{ incumbent_challenge | title }}</span>
+            <h5>Status</h5>
+            <span>{{ incumbent_challenge|default("")|title }}</span>
           </li>
           <li class="entity__term">
-            <h4>District</h4>
+            <h5>District</h5>
             <span>{{ state }} {% if district %}- {{district}} {% endif %}</span>
           </li>
           <li class="entity__term">
-            <h4>Candidate ID</h4>
+            <h5>Candidate ID</h5>
             <span>{{ candidate_id }}</span>
           </li>
-<!--      <li class="entity__term--wide">
-            <h4>Statement of Candidacy</h4>
+          {% if primary_committee %}
+          <li class="entity__term--wide">
+            <h5>Principal Campaign Committee</h5>
+            <a href="{{ url_for('committee_page', c_id=primary_committee.id) }}">{{ primary_committee.name }}</a>
+          </li>  
+          {% endif %}
+          {% if authorized_committees %}
+          <li class="entity__term--wide">
+            <h5>Authorized Committees</h5>
+            {% for c_id in authorized_committees %}
+            <p><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ authorized_committees[c_id].name }}</a></p>
+            {% endfor %}
+          </li>
+          {% endif %}
+     <!--      <li class="entity__term--wide">
+            <h5>Statement of Candidacy</h5>
             <span>View filing &raquo;</span>
           </li> -->
-        </ul>
+      </ul>
         {% if related_committees %}
-        <ul class="entity__info entity__related-entities">
-          <li class="entity__term--extra-wide">
-            <h4>Related Committees</h4>
-            {% if primary_committee %}
-            <dl>
-              <dt>Principal Campaign Committee</dt>
-              <dd><a href="{{ url_for('committee_page', c_id=primary_committee.id) }}">{{ primary_committee.name }}</a></dd>
-            </dl>
-            {% endif %}
+        <!-- <ul class="entity__info entity__related-entities"> -->
 
-            {% if authorized_committees %}
-            <dl>
-              <dt>Authorized Committees</dt>
-              {% for c_id in affiliated_committees %}
-              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ affiliated_committees[c_id].name }}</a></dd>
-              {% endfor %}
-            </dl>
-            {% endif %}
-
-            {% if leadership_committees %}
-            <dl>
-              <dt>Leadership PACs</dt>
-              {% for c_id in leadership_committees %}
-              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ leadership_committees[c_id].name }}</a></dd>
-              {% endfor %}
-            </dl>
-            {% endif %}
-
-            {% if joint_committees %}
-            <dl>
-              <dt>Joint Fundraising Committees</dt>
-              {% for c_id in joint_committees %}
-              <dd><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ joint_committees[c_id].name }}</a></dd>
-              {% endfor %}
-            </dl>
-            {% endif %}            
-          </li>
 <!--      <li class="entity__term--wide">
-            <h4>Elections</h4>
+            <h5>Elections</h5>
             <span>{{ election }}</span>
           </li> -->
-        </ul>
+        <!-- </ul> -->
         {% endif %}
+      </div>
     </div>
   </header>
+  
+  <div class="page-controls">
+    <div class="page-controls__top">
+      <div class="container">
+        <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates"> {{ name }}</span>
+      </div>
+    </div>
+  </div>
 
   <section class="page-section" id="section-1" aria-labelledby="section-1-header">
     <div class="container">

@@ -46,7 +46,6 @@ td {
   @include truncate();
   padding: .5em;
   border: none;
-  width: 16%;
 }
 
 .flex-cell {
@@ -77,14 +76,14 @@ td {
     bottom: .75em;
   }
 
-  &.sort-up {
+  &.sort-down {
     &:after {
       @include icon();
       content: "\e62a";
     }
   }
 
-  &.sort-down {
+  &.sort-up {
     &:after {
       @include icon();
       content: "\e627";
@@ -99,17 +98,15 @@ td {
   border-bottom: 1px solid $light-gray;
 }
 
-.table__header {
-}
-
 .table__cell {
   @include rem(padding, 0 1rem);
   float: left;
-
-  &:last-child {
-    float: right;
-  }
+  line-height: 1;
 }
+
+.table__cell--heading {
+  font-weight: bold;
+}    
 
 .table__row--note {
   @include font-size(1.4);
@@ -147,7 +144,7 @@ td {
   th,
   td,
   .table__cell {
-    padding: .5em 1em;
+    padding: .5em .5em;
     border-right: none;
   }
 
@@ -162,4 +159,17 @@ td {
     border-bottom: 1px solid $light-gray;
   }
 
+}
+
+.totals-table {
+  @include font-size(1.6);
+
+  .table__cell {
+    width: 40%;
+
+    &:first-child {
+      width: 60%;
+      font-weight: bold;
+    }
+  }
 }

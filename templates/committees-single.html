@@ -14,58 +14,58 @@
         </div>
         <div class="entity__header--bottom row">
           <ul class="entity__info">
-            <li class="entity__term">
-              <h4>Designation</h4>
+            <li class="entity__term--wide">
+              <h5>Designation</h5>
               <span>{{ designation }}</span>
             </li>
             <li class="entity__term">
-                <h4>Type</h4>
+                <h5>Type</h5>
                 <span>{{ type }}</span>
             </li>
             {% if organization %}
             <li class="entity__term">
-              <h4>Organization Type</h4>
+              <h5>Organization Type</h5>
               <span>{{ organization }}</span>
             </li>
             {% endif %}
             {% if party %}
             <li class="entity__term">
-              <h4>Political Party</h4>
+              <h5>Political Party</h5>
               <span>{{ party }}</span>
             </li>
             {% endif %}
             <li class="entity__term">
-              <h4>Committee ID</h4>
-              <span>{{ id }}</span>
+              <h5>Committee ID</h5>
+              <span>{{ committee_id }}</span>
             </li>
-            <li class="entity__term">
-              <h4>Treasurer</h4>
+            <li class="entity__term--wide">
+              <h5>Treasurer</h5>
               <span>{{ treasurer }}</span>
             </li>
           </ul>
           <ul class="entity__info">
-          {% if candidates %}
-          <li class="entity__term--wide">
-            <h4>Related Candidates</h4>
-            <ul>
-            {% for c in candidates %}
-              <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{ c.name }}</a></li>
-            {% endfor %}
-            </ul>
-          </li>
-          {% endif %}
+            {% if candidates %}
+            <li class="entity__term--wide">
+              <h5>Related Candidates</h5>
+              <ul>
+              {% for c in candidates %}
+                <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{ c.name }}</a></li>
+              {% endfor %}
+              </ul>
+            </li>
+            <li class="entity__term--wide">
+              <h5>Address</h5>
+              <span>{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
+            </li>
 <!--           <li class="entity__term--wide">
-            <h4>Most Recent Filings</h4>
+            <h5>Most Recent Filings</h5>
             <ul>
               <li><a href="">Filing 1</a></li>
               <li><a href="">Filing 2</a></li>
             </ul>
           </li> -->
-          <li class="entity__term--wide">
-            <h4>Address</h4>
-            <span>{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
-          </li>
-        </ul>          
+          {% endif %}    
+        </ul>    
       </div>
     </header>
     <div class="page-controls u-hidden">
@@ -84,16 +84,47 @@
         </div>
       </nav>
     </div>
+
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container">
         {% if totals %}
-        <h2 id="section-1-header">Financial Summary</h2>
+        <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+        <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
+        <figure class="page-subsection table--simple totals-table">
+          <h5 class="figure__title">Totals for {{totals.years_totals}}</h5>
+          <div class="table__half">
+            <div class="table__row">
+              <div class="table__cell">Total receipts</div>
+              <div class="table__cell">{{totals.total_receipts}}</div>
+            </div>
+            <div class="table__row">
+              <div class="table__cell">Total disbursements</div>
+                <div class="table__cell">{{totals.total_disbursements}}</div>
+            </div>
+            <div class="table__row--note">
+              Calculated from reports filed {{totals.report_year}}
+            </div>
+          </div>
+          <div class="table__half">
+            <div class="table__row">
+              <div class="table__cell">Cash on hand</div>
+              <div class="table__cell">{{totals.total_cash}}</div>
+            </div>
+            <div class="table__row">
+              <div class="table__cell">Debt</div>
+              <div class="table__cell">{{totals.total_debt}}</div>
+            </div>
+            <div class="table__row--note">
+              Source: {{totals.report_desc}}
+            </div>
+          </div>
+        </figure>
         {% else %}
         <div class="meta-box error-container">
           <h2 id="section-1-header" tabindex="0">No financial data</h2>
           <p class="text--lead">This committee has not filed any reports for the time period selected.</p>
           <div class="error-container__bottom">
-              <h4>Is this information incorrect? Let us know.</h4>
+              <h5>Is this information incorrect? Let us know.</h5>
               <a class="button">Contact support</a>
          </div>
         </div>

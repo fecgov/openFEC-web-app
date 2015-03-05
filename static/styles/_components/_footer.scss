@@ -1,32 +1,33 @@
 footer {
-	@include clearfix();
-	@include rem(height, 10rem);
-	  padding: 2em;
-	  background-color: $licorice-2;
-	  color: #fff;
+    @include clearfix();
+    @include rem(height, 10rem);
+    min-height: 20%;
+    padding: 2em;
+    background-color: $licorice-2;
+    color: #fff;
 
   a,
   a:hover,
   a:active {
-  	color: #fff;
+    color: #fff;
   }
 }
 
 .footer__left {
-	@include span-columns(12);
-	img {
-		margin-right: 1.25em;
-	}
+    @include span-columns(12);
+    img {
+        margin-right: 1.25em;
+    }
 }
 
 .footer__right {
-	@include span-columns(12);
-	text-align: right;
+    @include span-columns(12);
+    text-align: right;
 }
 
 .footer__nav {
-	li {
-		display: inline-block;
-		padding: 0 .625em;
-	}
+    li {
+        display: inline-block;
+        padding: 0 .625em;
+    }
 }

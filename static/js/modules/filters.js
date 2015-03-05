@@ -86,21 +86,41 @@ var removeActiveStyle = function(field) {
     $(field).parent().removeClass('active');
 };
 
+// all of the filters we use on candidates and committees
+var fieldMap = [
+    'name',
+    'year',
+    'party',
+    'state',
+    'district',
+    'office',
+    'designation',
+    'organization_type'
+]
+
 var activateInitialFilters = function() {
+    // this activates dropdowns
+    // name filter is activated in the template
     var qs = queryString.parse(document.location.search),
-        param;
+        param,
+        open;
 
     for (param in qs) {
         if (qs.hasOwnProperty(param)) {
-            if (param !== "") {
+            if (qs[param] !== "" && $.inArray(param, fieldMap) !== -1) {
                 activateFilter.call({
                     // sadly the querystring module doesn't remove
                     // question marks from its parsed values
                     name: param.replace(/\?/, ''),
                     value: qs[param]
                 }, false);
+                open = true;
             }
         }
+    }
+
+    if (open) {
+        $('#main').addClass('side--open');
     }
 }
 

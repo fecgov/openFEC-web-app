@@ -16,6 +16,7 @@ $dark-gray: #515A61;
 $medium-gray: #b3b3b3;
 $light-gray: #D7D7D7;
 $lightest-gray: #F8F8F8;
+$light-blue-gray: #BDC4CD;
 $light-red: #FBE3E4;
 $light-yellow: #FFF6BF;
 $light-green: #E6EFC2;
@@ -31,14 +32,15 @@ $licorice: #3E4957;
 $licorice-2: #323A45;
 $licorice-3: #505E70;
 $page-header: $licorice-3;
-$filter-bg: #BDC4CD;
+$filter-bg: $light-blue-gray;
 
 // Data colors
 $data-support: #1B5585; // Blue
 $data-support-2: #103552; // Darker blue
 $data-oppose: #A9205C; // Purple
 $data-oppose-2: #6B143B; // Darker purple
-$data-receipt: #148552; // Green
+// $data-receipt: #148552; // Green
+$data-receipt: $blue;
 $data-receipt-2: darken($data-receipt, 10%);
 $data-disbursement: #DB4857; // Salmon
 $data-disbursement-2: darken($data-disbursement, 10%);

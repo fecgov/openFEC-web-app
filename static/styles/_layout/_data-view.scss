@@ -23,7 +23,6 @@
 }
 
 .results-container {
-  @include rem(padding, 1rem);
   @include transition(left, .2s);
   background: #fff;
   position: relative;

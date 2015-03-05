@@ -6,10 +6,14 @@
 
 .entity__name {
   @include font-size(3.1);
+  font-weight: bold;
 }
 
 .entity__type {
   @include font-size(2.0);
+  @include rem(line-height, 2.4rem);
+  display: block;
+  padding: .5em 0;
 }
 
 .time-period {
@@ -38,9 +42,9 @@
   margin: 1.25em 0;
   width: 100%;
 
-  h4 {
+  h5 {
     color: #fff;
-    font-weight: normal;
+    font-weight: bold;
     border-bottom: 1px solid $licorice;
   }
 
@@ -101,10 +105,12 @@
   }
 }
 
-.totals-table {
-  @include font-size(1.6);
-
-  .table__cell:first-child {
-    font-weight: bold;
+.other-committees {
+  .figure-group {
+    border-color: $light-blue-gray;
+  }
+  
+  .figure-group__side {
+    background-color: $light-blue-gray;
   }
 }
