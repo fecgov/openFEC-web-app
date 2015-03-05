@@ -3,9 +3,11 @@
 var filters = require('./modules/filters.js');
 var typeahead = require('./modules/typeahead.js');
 var tablesort = require('tablesort');
+var glossary = require('./modules/glossary.js');
 
 filters.init();
 typeahead.init();
+glossary.init();
 
 $(document).ready(function() {
 	var $body,
@@ -20,8 +22,10 @@ $(document).ready(function() {
         new tablesort(this);
     });
 
-    $('.side-toggle').click(function(){
-    	$('#main').toggleClass('side--open');
+    $('#filter-toggle').click(function(){
+    	$('body').toggleClass('panel-active--left');
+        $('.side-panel--left').toggleClass('side-panel--open');
+        $(this).toggleClass('active');
     })
 
     // Sticky page controls
@@ -43,6 +47,17 @@ $(document).ready(function() {
 	      }
 	    })
     }
+
+    // Forcing the .main-container to fit the entire height of the page
+    var setMainSize = function() {
+        var headerHeight = $('.site-header').height(),
+            footerHeight = $('footer').height(),
+            pageHeight = $('.page-wrap').height(),
+            mainHeight = pageHeight - headerHeight - footerHeight;
+            $('.main-container').height(mainHeight);
+    }
+
+    setMainSize();
 
     // Expand button
     if ( $('.js-reveal').length > 0 ) {
