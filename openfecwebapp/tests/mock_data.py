@@ -48,25 +48,23 @@ candidate = {
 }
 
 committee = {
-    'description': {
+    'results': [{
         'name': 'Friends of McPersonson',
-        'organization_type_full': 'Secret Club'
-    },
-    'treasurer': {
-        'name_full': 'Money McMaster'
-    },
-    'address': {
+        'organization_type_full': 'Secret Club',
+        'treasurer_name': 'Money McMaster',
         'street_1': '123 Boulevard St.',
         'street_2': '#595',
         'city': 'Placetown',
         'state': 'KY',
-        'zip': '23456'
-    },
-    'status': {
-        'type_full': 'Partay',
-        'designation_full': 'Very Authorized'
-    },
-    'committee_id': 'B7890'
+        'zip': '23456',
+        'organization_type_full': 'Partay',
+        'designation_full': 'Authorized',
+        'committee_id': 'B7890',
+        'candidates': [{
+            'candidate_id': 'A2345',
+            'candidate_name': 'Best Candidate'
+        }]
+    }]
 }
 
 totals = {
