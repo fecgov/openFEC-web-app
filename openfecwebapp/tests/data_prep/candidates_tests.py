@@ -28,14 +28,14 @@ class TestDataMappings(TestCase):
         self.assertEqual('challenger', vals['incumbent_challenge'])
         self.assertEqual('D1234', vals['primary_committee']['id'])
         self.assertEqual('Friends of McPersonson', 
-            vals['primary_committee']['name'])
+            vals['primary_committee']['committee_name'])
         self.assertEqual('/committees/D1234',
             vals['primary_committee']['url'])
 
         self.assertEqual('D1234', vals['affiliated_committees'][
             'D1234']['id'])
         self.assertEqual('Friends of McPersonson', 
-            vals['affiliated_committees']['D1234']['name'])
+            vals['affiliated_committees']['D1234']['committee_name'])
         self.assertEqual('Authorized',
             vals['affiliated_committees']['D1234']['designation'])
         self.assertEqual('/committees/D1234',
