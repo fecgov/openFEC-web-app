@@ -1,6 +1,8 @@
 'use strict';
 var Handlebars = require('handlebars');
 var events = require('./events.js');
+var terms = require('./terms');
+var glossary = require('./glossary.js');
 
 var filterCandidates = function(result) {
 
@@ -97,7 +99,7 @@ module.exports = {
       return Handlebars.compile('<span class="tt-dropdown-title">' + label + '</span>');
     }
 
-    // Setting up typeahead
+    // Setting up main search typehead
     $('.search-bar').typeahead({
       minLength: 3,
       highlight: true,
@@ -123,13 +125,45 @@ module.exports = {
     }
     );
 
+    // Glossary typeahead
+    var glossaryEngine = new Bloodhound({
+        name: 'Glossary',
+        local: terms,
+        datumTokenizer: function(d) {
+            var tokens = Bloodhound.tokenizers.whitespace(d.term);
+            return tokens;
+          },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        limit: 3
+    })
+
+    glossaryEngine.initialize();
+    // var glossarySuggestion = Handlebars.compile('<span>{{ name }}</span>');
+
+    $('#glossary-search').typeahead({
+            minLength: 3,
+            highlight: true,
+            hint: false
+        },
+        {
+            name: 'Definitions',
+            displayKey: 'term',
+            source: glossaryEngine.ttAdapter()
+        }
+    );  
+
     $('.twitter-typeahead').css({
       display: 'block',
     })
 
     // Open single entity pages when selected
     $(document).on('typeahead:selected', function(e, suggestion, datasetName) {
-        document.location = document.location.origin + '/' + datasetName + '/' + suggestion.id;
+        if ( datasetName === 'Definitions' ) {
+          glossary.defineTerm(suggestion.term, suggestion.definition);
+        } 
+        else {
+          document.location = document.location.origin + '/' + datasetName + '/' + suggestion.id;
+        }
     })
   }
 }
