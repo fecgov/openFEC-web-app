@@ -1,0 +1,19 @@
+.term {
+	text-decoration: underline;
+}
+
+.term--highlight {
+	background: rgba($green, .6);
+	color: #fff;
+	padding: .5em;
+	border-radius: 5px;
+}
+.glossary__term {
+	padding: 1em 0;
+}
+
+#glossary {
+	.tt-dropdown-menu {
+		width: 100%;
+	}
+}
