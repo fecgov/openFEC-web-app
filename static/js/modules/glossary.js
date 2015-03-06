@@ -61,7 +61,7 @@ hideGlossary = function() {
     $('.side-panel--right').removeClass('side-panel--open');
     $('.term--highlight').removeClass('term--highlight');   
     $('body').removeClass('panel-active--right');
-    $(this).removeClass('active');
+    $('#glossary-toggle').removeClass('active');
     glossaryIsOpen = false;
     clearTerm();
 }
