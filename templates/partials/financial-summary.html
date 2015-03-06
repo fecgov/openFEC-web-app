@@ -6,7 +6,7 @@
 
       {% if primary_committee or authorized_committees %}
       <div class="page-subsection">
-        <h3>Primary and Authorized Committees</h3>
+        <h3 class="term" data-term="Campaign Committee">Campaign Committees</h3>
         {% if primary_committee %}
           {% with committee=primary_committee %}
             {% include 'partials/committee-summary.html' %}

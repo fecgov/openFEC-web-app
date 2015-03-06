@@ -5,7 +5,7 @@
     <div class="figure-group__main">
       <div class="figure-group__header">
         <h4 class="figure-group__title">{{ committee.name }}</h4>
-        <span class="figure-group__description">{{ committee.designation }}</span>
+        <span class="figure-group__description term" data-term="{{ committee.designation }}">{{ committee.designation }}</span>
       </div>
 
       <div class="figure-group__inner">
@@ -24,11 +24,11 @@
             <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
             <div class="table__half">
               <div class="table__row">
-                <div class="table__cell">Total receipts</div>
+                <div class="table__cell">Total <span class="term" data-term="Receipts">receipts</span></div>
                 <div class="table__cell">{{committee.total_receipts|default("unavailable")}}</div>
               </div>
               <div class="table__row">
-                <div class="table__cell">Total disbursements</div>
+                <div class="table__cell">Total <span class="term" data-term="Disbursements">disbursements</span></div>
                 <div class="table__cell">{{committee.total_disbursements|default("unavailable")}}</div>
               </div>
               <div class="table__row--note">
@@ -37,11 +37,11 @@
             </div>
             <div class="table__half">
               <div class="table__row">
-                <div class="table__cell">Cash on hand</div>
+                <div class="table__cell"><span class="term" data-term="Cash on Hand">Cash on hand</span></div>
                 <div class="table__cell">{{committee.total_cash|default("unavailable")}}</div>
               </div>
               <div class="table__row">
-                <div class="table__cell">Debt</div>
+                <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
                 <div class="table__cell">{{committee.total_debt|default("unavailable")}}</div>
               </div>
               <div class="table__row--note">
