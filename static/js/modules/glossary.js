@@ -4,27 +4,47 @@ var _ = require('underscore');
 
 var glossaryLink = $('.term'),
     glossaryIsOpen = false,
+    indexToLowercase,
     findDefinition,
     setDefinition,
     showGlossary,
     hideGlossary,
     clearTerm;
 
-// Indexing the terms
-terms = _.indexBy(terms, 'term');
+// Indexing the terms and then lowercasing the indices
+indexToLowercase = function(arrayOfObjects, index){
+    var key, 
+        newKey,
+        object = _.indexBy(arrayOfObjects, index),
+        keys = Object.keys(object),
+        n = keys.length,
+        newObject = {};
+    for ( var i = 0; i < n; i++ ) {
+      key = keys[i];
+      newKey = keys[i].toLowerCase();
+      newObject[newKey] = object[key];    
+    }
+    return newObject;    
+}
+
+terms = indexToLowercase(terms, 'term');
 
 // Adding title to all terms
 $('.term').attr('title', 'Click to define');
 
 // Looks through the terms array to find the definition
+// Returnes a definedTerm object
 findDefinition = function(term){
-    var definition;
+    var term = term.toLowerCase(),
+        definition,
+        definedTerm = {};
     if ( terms.hasOwnProperty(term) ) {
-        definition = terms[term].definition;
+        definedTerm.term = terms[term].term;
+        definedTerm.definition = terms[term].definition;
     } else {
-        definition = null;
+        definedTerm = null;
     }
-    return definition;
+    return definedTerm;
 }
 
 // Opens the glossary
@@ -39,20 +59,28 @@ showGlossary = function() {
 // Hides the glossary
 hideGlossary = function() {
     $('.side-panel--right').removeClass('side-panel--open');
-    $('body').removeClass('side-panel--right--open');
     $('.term--highlight').removeClass('term--highlight');   
+    $('body').removeClass('panel-active--right');
+    $(this).removeClass('active');
+    glossaryIsOpen = false;
     clearTerm();
 }
 
 // Sets the values in the glossary and highlights the defined terms
-setDefinition = function(term, definition) {
+// Takes a definedTerm object like {term: 'string', definition: 'string'}
+setDefinition = function(definedTerm) {
+    var term,
+        definition;
+
     // Set the values of everything
-    if ( definition !== null ) {
+    if ( definedTerm !== null ) {
+        term = definedTerm.term;
+        definition = definedTerm.definition;
         $('#glossary-term').html(term);  
         $('#glossary-definition').html(definition);
     } 
     else {
-        $('#glossary-definition').html('Sorry, there are no definitions for the term: "<strong>' + term + '</strong>". Please try again.');
+        $('#glossary-definition').html('Sorry, there are no definitions for this term. Please try again.');
         $('#glossary-term').html('');
     }
 
@@ -68,21 +96,16 @@ clearTerm = function() {
 
 module.exports = {
   init: function(){
-    setDefinition();
-    
     glossaryLink.click(function(){
-        var term = $(this).data('term'),
-            definition = findDefinition(term);
+        var dataTerm = $(this).data('term'),
+            definedTerm = findDefinition(dataTerm);
         showGlossary();
-        setDefinition(term, definition);    
+        setDefinition(definedTerm);    
     })
 
     $('#glossary-toggle').click(function(){
         if (glossaryIsOpen) {
             hideGlossary();
-            $('body').removeClass('panel-active--right');
-            $(this).removeClass('active');
-            glossaryIsOpen = false;
         } else {
             showGlossary();
         }
@@ -91,9 +114,8 @@ module.exports = {
     $("#glossary-search").keyup(function(event){
         if(event.keyCode == 13){
             var value = $(this).val(),
-                definition;
-            definition = findDefinition(value);
-            setDefinition(value, definition);
+                definedTerm = findDefinition(value);
+            setDefinition(definedTerm);
         }
     });
  },
