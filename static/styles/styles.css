@@ -923,7 +923,8 @@ input[type="submit"],
     height: 3.2rem;
     margin-bottom: 0;
     border: none; }
-  .header-nav__search input[type="text"] {
+  .header-nav__search input[type="text"],
+  .header-nav__search .tt-dropdown-menu {
     width: 260px; }
   .header-nav__search .search-submit {
     width: 40px;
@@ -1060,7 +1061,7 @@ input[type="submit"],
   font-size: 1.4rem;
   background: #fff;
   top: 32px !important;
-  width: 75% !important;
+  width: 75%;
   text-align: left;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid #D7D7D7; }
