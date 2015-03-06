@@ -159,7 +159,7 @@ module.exports = {
     // Open single entity pages when selected
     $(document).on('typeahead:selected', function(e, suggestion, datasetName) {
         if ( datasetName === 'Definitions' ) {
-          glossary.defineTerm(suggestion.term, suggestion.definition);
+          glossary.setDefinition(suggestion.term, suggestion.definition);
         } 
         else {
           document.location = document.location.origin + '/' + datasetName + '/' + suggestion.id;

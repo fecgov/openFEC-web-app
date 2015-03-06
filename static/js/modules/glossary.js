@@ -8,12 +8,13 @@ var glossaryLink = $('.term'),
     setDefinition,
     showGlossary,
     hideGlossary,
-    defineTerm,
-    clearTerm,
-    showDefinition;
+    clearTerm;
 
 // Indexing the terms
 terms = _.indexBy(terms, 'term');
+
+// Adding title to all terms
+$('.term').attr('title', 'Click to define');
 
 // Looks through the terms array to find the definition
 findDefinition = function(term){
@@ -24,16 +25,6 @@ findDefinition = function(term){
         definition = null;
     }
     return definition;
-}
-
-// Assigns the correct data-definition to each <span class="term">
-setDefinition = function(){
-    $('.term').each(function(){
-        var term = $(this).data('term'),
-            definition;
-        definition = findDefinition(term);
-        $(this).attr('title', 'Click to define').attr('data-definition', definition);
-    })
 }
 
 // Opens the glossary
@@ -54,11 +45,16 @@ hideGlossary = function() {
 }
 
 // Sets the values in the glossary and highlights the defined terms
-defineTerm = function(term, definition) {
+setDefinition = function(term, definition) {
     // Set the values of everything
-    $('#glossary-search').val(term);
-    $('#glossary-term').html(term);
-    $('#glossary-definition').html(definition);
+    if ( definition !== null ) {
+        $('#glossary-term').html(term);  
+        $('#glossary-definition').html(definition);
+    } 
+    else {
+        $('#glossary-definition').html('Sorry, there are no definitions for the term: "<strong>' + term + '</strong>". Please try again.');
+        $('#glossary-term').html('');
+    }
 
     // Highlight the term and remove other highlights
     $('.term--highlight').removeClass('term--highlight');
@@ -76,9 +72,9 @@ module.exports = {
     
     glossaryLink.click(function(){
         var term = $(this).data('term'),
-            definition = $(this).data('definition');
+            definition = findDefinition(term);
         showGlossary();
-        defineTerm(term, definition);    
+        setDefinition(term, definition);    
     })
 
     $('#glossary-toggle').click(function(){
@@ -97,15 +93,10 @@ module.exports = {
             var value = $(this).val(),
                 definition;
             definition = findDefinition(value);
-            if ( definition !== null ) {
-                defineTerm(value, definition);
-            } else {
-                $('#glossary-definition').html('Sorry, there are no terms matching your search: "<strong>' + value + '</strong>". Please try again.');
-                $('#glossary-term').html('');
-            }
+            setDefinition(value, definition);
         }
     });
  },
 
-    defineTerm: defineTerm
+    setDefinition: setDefinition
 }
