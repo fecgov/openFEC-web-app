@@ -1,21 +1,28 @@
 .term {
+	@include icon-after("\e718");
+	@include transition(color, .1s);
 	cursor: pointer;
+
+	&:hover,
+	&:active {
+	}
 }
 
 .term--underlined {
-	padding: 2px 4px;
+	padding: 2px 6px 0 6px;
 	display: inline-block;
 	border-bottom: 1px dotted #fff;
 
 	&.term--highlight {
 		background: #fff;
-		color: $blue;
+		color: $green;
+		border-radius: 2px;
+		border-bottom: none;
 		text-shadow: none;
 	}
 }
 
 .term--highlight {
-	text-shadow: 0px 1px 1px rgba(0,0,0,.4);
 }
 .glossary__term {
 	padding: 1em 0;
