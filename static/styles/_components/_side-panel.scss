@@ -23,44 +23,39 @@
 }
 
 .side-panel {
+  display: none;
   padding: 1.25em;
   background: $filter-bg;
-  position: absolute;
+  position: relative;
   top: 0;
   bottom: 0;
-  width: 300px;
+  width: 20%;
+  height: 100%;
   z-index: 999;
 }
 
-.side-panel--left {
-  // @include transition(left, .2s);
-  left: -100%;
-  float: left;
+.side-panel--open {
+  display: block;
+}
 
-  &.side-panel--open {
-    left: 0;
-  }
+.side-panel--left {
+  float: left;
 }
 
 .side-panel--right {
-  // @include transition(right, .2s);
-  right: -100%;
   float: right;  
-
-  &.side-panel--open {
-    right: 0;
-  }
-
+  box-shadow: inset 1px 0 1px 1px rgba(0,0,0,.2);
 }
 
 .panel-active--left {
   .results-container {
-      margin-left: 300px;    
+      width: 80%;
   }
 }
 
 .panel-active--right {
   #main {
-    margin-right: 300px;
+    width: 80%;
+    float: left;
   }
 }

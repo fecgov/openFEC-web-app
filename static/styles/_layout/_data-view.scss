@@ -24,10 +24,10 @@
 }
 
 .results-container {
-  @include transition(left, .2s);
   background: #fff;
   position: relative;
   width: 100%;
   left: 0;
   height: 100%;
+  float: left;
 }
