@@ -28,15 +28,14 @@ $(document).ready(function() {
     if ( $pageControls.length > 0 ) {
         var scrollPos,
             controlsHeight,
-            $firstSection = $pageControls.next(), // Find the first element after the controls
-            firstTop = $firstSection.offset().top;
+            controlsTop = $pageControls.offset().top;
         $(document).scroll(function(){
           scrollPos = $(window).scrollTop();
 
-          if (scrollPos >= firstTop) {
+          if (scrollPos >= controlsTop) {
             controlsHeight = $pageControls.height();
             $body.addClass('controls--fixed');
-            // $body.css('padding-top', controlsHeight);
+            $body.css('padding-top', controlsHeight);
           } else {
             $body.removeClass('controls--fixed');
             $body.css('padding-top', 0);
