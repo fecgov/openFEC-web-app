@@ -101,6 +101,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@mixin icon-after($code) {
+  &:after {
+    @include icon();
+    content: $code;
+    display: inline-block;
+    margin-left: 5px;
+    font-size: .8em;
+  }
+}
+
 
 // Dividers
 // Primary dividers are more divisive... secondar, less so
