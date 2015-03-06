@@ -6,6 +6,12 @@
 	padding: 2px 4px;
 	display: inline-block;
 	border-bottom: 1px dotted #fff;
+
+	&.term--highlight {
+		background: #fff;
+		color: $blue;
+		text-shadow: none;
+	}
 }
 
 .term--highlight {

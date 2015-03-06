@@ -9,6 +9,7 @@ var glossaryLink = $('.term'),
     showGlossary,
     hideGlossary,
     defineTerm,
+    clearTerm,
     showDefinition;
 
 // Indexing the terms
@@ -49,6 +50,7 @@ hideGlossary = function() {
     $('.side-panel--right').removeClass('side-panel--open');
     $('body').removeClass('side-panel--right--open');
     $('.term--highlight').removeClass('term--highlight');   
+    clearTerm();
 }
 
 // Sets the values in the glossary and highlights the defined terms
@@ -61,6 +63,11 @@ defineTerm = function(term, definition) {
     // Highlight the term and remove other highlights
     $('.term--highlight').removeClass('term--highlight');
     $('span[data-term="' + term + '"]').addClass('term--highlight');
+}
+
+clearTerm = function() {
+    $('#glossary-term').html('');
+    $('#glossary-definition').html('');
 }
 
 module.exports = {
@@ -94,6 +101,7 @@ module.exports = {
                 defineTerm(value, definition);
             } else {
                 $('#glossary-definition').html('Sorry, there are no terms matching your search: "<strong>' + value + '</strong>". Please try again.');
+                $('#glossary-term').html('');
             }
         }
     });
