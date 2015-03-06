@@ -96,7 +96,7 @@
   }
 
   .totals-table {
-    @include span-columns(18);
+    @include span-columns(24);
   }
 
   .chart--c-d,    // Cash & debt chart
