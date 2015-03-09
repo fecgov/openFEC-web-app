@@ -15,16 +15,16 @@ var glossaryLink = $('.term'),
 indexToLowercase = function(arrayOfObjects, index){
     var key, 
         newKey,
-        object = _.indexBy(arrayOfObjects, index),
-        keys = Object.keys(object),
+        indexedTerms = _.indexBy(arrayOfObjects, index),
+        keys = Object.keys(indexedTerms),
         n = keys.length,
-        newObject = {};
+        indexedLowercaseTerms = {};
     for ( var i = 0; i < n; i++ ) {
       key = keys[i];
       newKey = keys[i].toLowerCase();
-      newObject[newKey] = object[key];    
+      indexedLowercaseTerms[newKey] = indexedTerms[key];    
     }
-    return newObject;    
+    return indexedLowercaseTerms;    
 }
 
 terms = indexToLowercase(terms, 'term');
