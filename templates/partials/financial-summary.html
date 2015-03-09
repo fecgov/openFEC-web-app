@@ -12,7 +12,7 @@
             {% include 'partials/committee-summary.html' %}
           {% endwith %}
         {% endif %}
-        
+
         {% if authorized_committees %}
           {% for c in authorized_committees %}
               {% with committee=authorized_committees[c] %}
@@ -49,9 +49,9 @@
         {% endif %}
       </div>
     {% endif %}
-  
+
   {% else %}
-  
+
   <div class="meta-box error-container">
     <h2 id="section-1-header" tabindex="0">No results</h2>
     <p class="text--lead">This candidate is not associated with any committees, which means there is no financial data to show.</p>

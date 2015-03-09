@@ -107,7 +107,7 @@ module.exports = {
       hint: false
     },
     {
-      name: 'candidates',
+      name: 'candidate',
       displayKey: 'name',
       source: candidateEngine.ttAdapter(),
       templates: {

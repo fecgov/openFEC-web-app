@@ -16,7 +16,7 @@
         <ul class="entity__info">
           <li class="entity__term">
             <h5 class=>Party</h5>
-            <span>{{ party }}</span>
+            <span>{{ party_full }}</span>
           </li>
           <li class="entity__term">
             <h5 class="term" data-term="Status">Status</h5>
@@ -34,7 +34,7 @@
           <li class="entity__term--wide">
             <h5><span class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</span></h5>
             <a href="{{ url_for('committee_page', c_id=primary_committee.id) }}">{{ primary_committee.name }}</a>
-          </li>  
+          </li>
           {% endif %}
           {% if authorized_committees %}
           <li class="entity__term--wide">
@@ -61,7 +61,7 @@
       </div>
     </div>
   </header>
-  
+
   <div class="page-controls">
     <div class="page-controls__top">
       <div class="container">
@@ -78,4 +78,4 @@
 </div>
 
 <script src="/static/js/vendor/tablist.js"></script>
-{% endblock %} 
+{% endblock %}

@@ -97,7 +97,8 @@
     border: none;
   }
 
-  input[type="text"] {
+  input[type="text"],
+  .tt-dropdown-menu {
   	width: 260px;
   }
 
@@ -106,7 +107,6 @@
   	padding: 0;
   }
 }
-
 
 @include media($medium) {
   .header-nav__link {

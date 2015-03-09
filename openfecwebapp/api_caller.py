@@ -13,7 +13,7 @@ _totals_fields = [
     'debts_owed_by_committee',
     'report_year',
     'election_cycle',
-    'report_type_full' 
+    'report_type_full'
 ]
 
 def _call_api(url, filters):
@@ -42,7 +42,7 @@ def load_single_type_summary(data_type, filters):
 
 def load_single_type(data_type, c_id):
     url = api_location + '/' + data_type + '/' + c_id
-    filters = {'fields': "*", 'year': '*'}
+    filters = {'year': '*'}
 
     return _call_api(url, filters)
 

@@ -944,7 +944,8 @@ input[type="submit"],
     height: 3.2rem;
     margin-bottom: 0;
     border: none; }
-  .header-nav__search input[type="text"] {
+  .header-nav__search input[type="text"],
+  .header-nav__search .tt-dropdown-menu {
     width: 260px; }
   .header-nav__search .search-submit {
     width: 40px;

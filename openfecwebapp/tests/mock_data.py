@@ -1,47 +1,46 @@
 candidate = {
-    'name': {
-        'full_name': 'Person McPersonson'
-    },
-    'elections': [{
-        'party_affiliation': 'Cool People',
-        'state': 'TN',
-        'election_year': '2012',
-        'office_full': 'Supreme Ruler',
-        'district': '11',
-        'incumbent_challenge_full': 'challenger',
-        'primary_committee': {
-            'committee_id': 'D1234',
-            'committee_name': 'Friends of McPersonson',
-            'designation_full': 'Authorized',
-            'designation_code': 'PC' 
-        },
-        'affiliated_committees': [{
-            'committee_id': 'D1234',
-            'committee_name': 'Friends of McPersonson',
-            'designation_full': 'Authorized',
-            'designation_code': 'A' 
-        }]
-    }],
-    'mailing_addresses': [{
-        'state': 'CA'
-    }],
-    'candidate_id': 'A12345',
     'pagination': {
         'per_page': '20',
         'page': '2',
         'pages': '5',
         'count': '100'
     },
+    'results': [{
+        'candidate_id': 'A12345',
+        'name': 'Person McPersonson',
+        'active_through': '2012',
+        'party_full': 'Cool People',
+        'state': 'TN',
+        'election_year': '2012',
+        'office_full': 'Supreme Ruler',
+        'district': '11',
+        'incumbent_challenge_full': 'challenger',
+        'committees': [
+            {
+                'committee_id': 'D1234',
+                'committee_name': 'Friends of McPersonson',
+                'committee_designation': 'P',
+                "committee_designation_full": "Principal campaign committee"
+            },
+            {
+                'committee_id': 'D1234',
+                'committee_name': 'Friends of McPersonson',
+                'committee_designation': 'A',
+                'committee_designation_full': 'Authorized committee' 
+            }
+        ]
+    }],
+    # gets generated later, manually inserted for sake of testing
     'primary_committee': {
         'committee_id': 'D1234',
-        'committee_name': 'Friends of McPersonson',
+        'name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
         'designation_code': 'PC' 
     },
     'affiliated_committees': {
         'D1234': {
             'id': 'D1234',
-            'committee_name': 'Friends of McPersonson',
+            'name': 'Friends of McPersonson',
             'designation_full': 'Authorized',
             'designation_code': 'A' 
         }
@@ -49,25 +48,23 @@ candidate = {
 }
 
 committee = {
-    'description': {
+    'results': [{
         'name': 'Friends of McPersonson',
-        'organization_type_full': 'Secret Club'
-    },
-    'treasurer': {
-        'name_full': 'Money McMaster'
-    },
-    'address': {
+        'organization_type_full': 'Secret Club',
+        'treasurer_name': 'Money McMaster',
         'street_1': '123 Boulevard St.',
         'street_2': '#595',
         'city': 'Placetown',
         'state': 'KY',
-        'zip': '23456'
-    },
-    'status': {
-        'type_full': 'Partay',
-        'designation_full': 'Very Authorized'
-    },
-    'committee_id': 'B7890'
+        'zip': '23456',
+        'organization_type_full': 'Partay',
+        'designation_full': 'Authorized',
+        'committee_id': 'B7890',
+        'candidates': [{
+            'candidate_id': 'A2345',
+            'candidate_name': 'Best Candidate'
+        }]
+    }]
 }
 
 totals = {
