@@ -67,7 +67,7 @@ module.exports = {
     committeeEngine = new Bloodhound({
       name: 'Committees',
       remote: {
-        url: "/rest/name?q=%QUERY",
+        url: "/rest/names?q=%QUERY",
         filter: function(response) {
           var results = $.map(response.results, function(result) {
             if ( result.committee_id !== null ) {
@@ -113,7 +113,7 @@ module.exports = {
       }
     },
     {
-      name: 'committees',
+      name: 'committee',
       displayKey: 'name',
       source: committeeEngine.ttAdapter(),
       templates: {
