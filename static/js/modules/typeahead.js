@@ -44,7 +44,7 @@ module.exports = {
     candidateEngine = new Bloodhound({
       name: 'Candidates',
       remote: {
-        url: "/rest/name?q=%QUERY",
+        url: "/rest/names?q=%QUERY",
         filter: function(response) {
           var results = $.map(response.results, function(result){
             if ( result.candidate_id !== null ) {

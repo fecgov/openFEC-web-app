@@ -31,8 +31,8 @@ def load_search_results(query):
         filters['q'] = query
 
     return {
-        'candidates': load_single_type_summary('candidate', filters),
-        'committees': load_single_type_summary('committee', filters)
+        'candidates': load_single_type_summary('candidates', filters),
+        'committees': load_single_type_summary('committees', filters)
     }
 
 def load_single_type_summary(data_type, filters):
