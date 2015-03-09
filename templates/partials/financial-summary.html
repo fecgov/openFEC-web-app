@@ -42,7 +42,7 @@
         <ul>
           {% for c in joint_committees %}
               {% with committee=joint_committees[c] %}
-              <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.committee_name }} &raquo;</a></li>
+              <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.name }} &raquo;</a></li>
               {% endwith %}
           {% endfor %}
         </ul>
