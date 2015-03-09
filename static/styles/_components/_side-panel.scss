@@ -12,7 +12,8 @@
   color: #fff;
 
   &:hover,
-  &:active {
+  &:active,
+  &.active {
     color: $licorice;
     background-color: $filter-bg;
     border-width: 0 1px 0 0;
@@ -21,27 +22,40 @@
   }
 }
 
-.side--open {
-  .side-toggle {
-    background-color: $filter-bg;
-    color: $licorice;
-  }
+.side-panel {
+  display: none;
+  padding: 1.25em;
+  background: $filter-bg;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  height: 100%;
+  z-index: 999;
+}
 
+.side-panel--open {
+  display: block;
+}
+
+.side-panel--left {
+  float: left;
+}
+
+.side-panel--right {
+  float: right;  
+  box-shadow: inset 1px 0 1px 1px rgba(0,0,0,.2);
+}
+
+.panel-active--left {
   .results-container {
-    left: 20%;
-  }
-
-  .side-panel {
-    left: 0;
+      width: 80%;
   }
 }
 
-.side-panel {
-  @include transition(left, .2s);
-  padding: 1.25em;
-  background: $filter-bg;
-  position: absolute;
-  left: -100%;
-  width: 20%;
-  float: left;
+.panel-active--right {
+  #main {
+    width: 80%;
+    float: left;
+  }
 }

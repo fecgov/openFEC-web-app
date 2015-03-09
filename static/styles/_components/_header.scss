@@ -13,6 +13,12 @@
   a {
   	color: #fff;
   }
+
+ .side-toggle {
+    float: left;
+    border-right: none;
+    border-left:  1px solid $light-gray;
+  }
 }
 .header-nav {
   @include clearfix();
@@ -72,11 +78,16 @@
 	}
 }
 
+.header-nav__right {
+  @include clearfix();
+  float: right;
+}
+
 .header-nav__search {
   @include clearfix();
   @include rem(padding, 1rem 2rem);
-  float: right;
   margin-right: 0;
+  float: left;
   width: 340px;
 
   input[type="text"],

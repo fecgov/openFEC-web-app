@@ -12,7 +12,7 @@
     <tbody>
         {% for c in candidates %}
             <tr>
-                <td class="flex-cell"><a class="single-link" data-id="{{ c.candidate_id }}" data-category="candidate" href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{c.name}}</a></td>
+                <td class="flex-cell"><a class="single-link" title="{{c.name}}" data-id="{{ c.candidate_id }}" data-category="candidate" href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{c.name}}</a></td>
                 <td>{{c.office_full}}</td>
                 <td>{{c.active_through}}</td>
                 <td>{{c.party_full}}</td>

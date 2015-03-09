@@ -24,6 +24,11 @@ body {
   }
 }
 
+.main-container {
+  position: relative;
+  overflow-x: hidden;
+}
+
 .container {
   @include outer-container();
 }
