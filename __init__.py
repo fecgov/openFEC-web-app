@@ -38,13 +38,13 @@ def committee_page(c_id):
 @app.route('/candidates')
 def candidates():
     params = _convert_to_dict(request.args)
-    results = load_single_type_summary('candidate', params)
+    results = load_single_type_summary('candidates', params)
     return render_table('candidates', results, params)
 
 @app.route('/committees')
 def committees():
     params = _convert_to_dict(request.args)
-    results = load_single_type_summary('committee', params)
+    results = load_single_type_summary('committees', params)
     return render_table('committees', results, params)
 
 @app.route('/charts')
