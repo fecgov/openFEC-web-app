@@ -9,7 +9,7 @@ locale.setlocale(locale.LC_ALL, '')
 def _map_committee_financials(vals):
     """
     maps and returns template vars for financial summaries
-    from the 'totals' endpoint for use on candidat
+    from the 'totals' endpoint for use on candidate
     and committee pages
     """
     reports = vals['reports']
@@ -34,14 +34,14 @@ def _map_committee_financials(vals):
     # "calculated from" on site
     if reports.get('election_cycle'):
         cycle_minus_one = str(int(reports['election_cycle']) - 1)
-        totals_mapped['years_totals'] = cycle_minus_one 
-        totals_mapped['years_totals'] += ' - ' 
+        totals_mapped['years_totals'] = cycle_minus_one
+        totals_mapped['years_totals'] += ' - '
         totals_mapped['years_totals'] += str(reports['election_cycle'])
 
     # "source:" on site
     if reports.get('report_type_full'):
-        totals_mapped['report_desc'] = re.sub('{.+}', 
-            '', reports['report_type_full']) 
+        totals_mapped['report_desc'] = re.sub('{.+}',
+            '', reports['report_type_full'])
 
     return totals_mapped
 
@@ -89,6 +89,7 @@ def _get_pc_financials(context):
     """ glues getting primary committee financial summary data from
     API, mapping the values for templating
     """
+
     c = {}
     totals = load_totals(context['primary_committee']['id'])
     if totals.get('results'):
@@ -109,7 +110,7 @@ def _filter_affiliated_committees(context):
     committee_ids = []
     cmte_map = {}
     for cmte in context['affiliated_committees'].values():
-        if cmte['designation_code'] in committee_type_map: 
+        if cmte['designation_code'] in committee_type_map:
             committee_ids.append(cmte['id'])
             cmte_type = committee_type_map[
                 cmte['designation_code']]
@@ -152,7 +153,7 @@ def add_committee_financial_data(context, data_type):
                 for c_type in financials:
                     for c_id in financials[c_type]:
                         context[c_type][c_id].update(
-                            financials[c_type][c_id])        
+                            financials[c_type][c_id])
                         # remove with fake chart data
                         context[c_type][c_id].update(
                             add_fake_chart_data_ac())
