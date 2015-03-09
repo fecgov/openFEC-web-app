@@ -7,17 +7,16 @@
 
 #large-search {
   label {
-    margin-bottom: 2em;
+    margin-bottom: 30px;
   }
 }
 
 .search--large {
-  @include span-columns(18);
-  @include shift(3);
-
+  padding-bottom: 10px;
+  
   .search-bar {
-    @include font-size(3.2);
-    @include rem(height, 7rem);
+    @include font-size(2.4);
+    @include rem(height, 6rem);
 
     @include placeholder {
       font-weight: 300;
@@ -25,8 +24,8 @@
   }
 
   button {
-    @include font-size(3.2);
-    @include rem(height, 7rem);
+    @include font-size(2.4);
+    @include rem(height, 6rem);
     padding: .5em;
     font-weight: 300;
 

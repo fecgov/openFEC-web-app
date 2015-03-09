@@ -2,11 +2,70 @@
 
 {% block body %}
 {% include "partials/search-bar.html" %}
-<div class="sub-hero container">
-  <h4>Or start by browsing a dataset:</h4>
-  <ul class="browse-links">
-    <li><a class="button" href="/candidates" name="candidates">Candidates</a></li>
-    <li><a class="button" href="/committees" name="committees">Committees</a></li>
-  </ul>
-</div>
+<section class="page-section" aria-labelledby="browse-heading">
+    <div class="container">
+        <div class="page-section__intro">
+            <h2 id="browse-heading">Get to Know the Data</h2>
+            <p class="text--lead">Not sure exactly what you’re looking for? Start with a full set of data and then filter down to what you’re looking for.</p>
+            <p class="text--lead">We currently have data for all candidates, committees, and their reports and filings.</p>
+        </div>
+        <div class="card-grid">
+            <div class="row">
+                <div class="card card--icon">
+                    <div class="card__icon">
+                        <img width="40" height="40" src="/static/img/icon-candidate.svg" alt="Icon representing candidates">
+                    </div>
+                    <div class="card__content">
+                        <h3>Candidates</h3>
+                        <p>Candidates are individuals who have filed to run for office. Active candidates will have one or more committees that they use to raise and spend money. If a person has been a candidate for multiple offices, they will have a candidate record for each office sought.</p>
+                        <p><a href="/candidates">Browse all candidates &raquo;</a></p>
+                    </div>
+                </div>
+                <div class="card card--icon">
+                    <div class="card__icon">
+                        <img width="40" height="40" src="/static/img/icon-committee.svg" alt="Icon representing committees">
+                    </div>
+                    <div class="card__content">
+                        <h3>Committees</h3>
+                        <p>Committees are the legal entities that raise and spend money in elections. They may be associated with one or more candidates; be backed by businesses, unions or other organizations; or be independent.</p>
+                        <p><a href="/candidates">Browse all committees &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card card--icon">
+                    <div class="card__icon">
+                        <img width="40" height="40" src="/static/img/icon-candidate.svg" alt="Icon representing candidates">
+                    </div>
+                    <div class="card__content">
+                        <h3>Report Totals</h3>
+                        <p>Report totals reflect the information that candidates include on their required financial filings. They include metrics like the amount of money raised, the amount spent, and their cash on hand. You can view report totals on committee pages.</p>
+                    </div>
+                </div>
+                <div class="card card--icon">
+                    <div class="card__icon">
+                        <img width="40" height="40" src="/static/img/icon-committee.svg" alt="Icon representing committees">
+                    </div>
+                    <div class="card__content">
+                        <h3>Filings</h3>
+                        <p>Candidates are required to file with the FEC to declare their candidacy and committees file to incorporate as a committee. Committees also regularly file disclosure reports. All of these filings are available in PDF and HTML form by viewing a candidate or committee page.</p>
+                    </div>
+                </div>
+            </div>                        
+        </div>
+    </div>
+</section>
+
+<section class="page-section section--gray" aria-labelledby="help-heading">
+    <div class="container">
+        <div class="page-section__intro">
+            <h2 id="help-heading"><i class="ti-help-alt"></i> Need Help Understanding the Terms?</h2>
+            <p class="text--lead">If you come across a technical word or phrase you don't understand, you may be able to find its definition in the glossary on this site. Simply click on the word to pull up its definition, or click on the question mark icon in the header to open the glossary and search for a term.</p>
+            <p class="text--lead">For example, click on this term to see its definition: <span class="term" data-term="principal campaign committee">Principal campaign committee</span></p>
+        </div>
+        <div class="aside image--framed__container">
+            <img class="img--framed" src="/static/img/glossary-example.gif" alt="To use the glossary, click on the question mark icon in the menu.">
+        </div>
+    </div>
+</section>
 {% endblock %}

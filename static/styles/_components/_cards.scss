@@ -1,0 +1,30 @@
+// Styles for card-based layouts
+
+// If we're showing a grid of cards. Default is 2 across
+.card-grid {
+	@include clearfix();
+	@include rem(padding, 2.0rem 0);
+	clear: both;
+
+	.card {
+		@include span-columns(12);
+		height: 230px;
+		margin-bottom: 10px;
+	}	
+}
+
+.card {
+	@include rem(padding, 2.0rem);
+	border: 1px solid $light-blue-gray;
+	background: $meta-box-color;
+}
+
+.card--icon {
+	.card__icon {
+		@include span-columns(2 of 12);
+	}
+
+	.card__content {
+		@include span-columns(10 of 12);
+	}
+}
