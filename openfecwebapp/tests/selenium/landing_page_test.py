@@ -10,7 +10,7 @@ class LandingPageTests(BaseTest):
         self.driver.get(self.url)
         self.assertEqual(
             self.driver.find_element_by_tag_name('h1').text,
-            'Explore campaign finance data')
+            'Discover FEC Data Easier Than Ever')
 
     def testHeaderSearch(self):
         self.driver.get(self.url)

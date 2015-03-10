@@ -12,7 +12,7 @@ class CommitteesPageTests(BaseTest):
         return self.driver.find_element_by_xpath('//*[@for="' + name + '"]/..')
 
     def openFilters(self):
-        self.driver.find_element_by_class_name('side-toggle').click()
+        self.driver.find_element_by_id('filter-toggle').click()
 
     def getColumn(self, index, data):
         return [row.find_elements_by_tag_name('td')[index].text
@@ -67,15 +67,18 @@ class CommitteesPageTests(BaseTest):
     def testCommitteesFilterSideBar(self):
         self.driver.get(self.url)
         self.openFilters()
-        main = self.getMain()
-        self.assertEqual(main.get_attribute('class'), 'side--open')
+        # main = self.getMain()
+        # self.assertEqual(main.get_attribute('class'), 'side--open')
+        filters = self.driver.find_element_by_id('filters')
+        self.assertEqual(filters.get_attribute('class'),
+                         'side-panel side-panel--left side-panel--open')
 
     def testCommitteeNameFilter(self):
         self.driver.get(self.url)
         self.openFilters()
         name_div = self.getFilterDivByName('name')
         time.sleep(1)
-        name_div.find_element_by_tag_name('input').send_keys('beef')
+        name_div.find_element_by_tag_name('input').send_keys('pork')
         name_div.find_element_by_tag_name('input').send_keys(Keys.ENTER)
         self.assertEqual(
             len(self.driver.find_element_by_tag_name('tbody')
@@ -83,8 +86,7 @@ class CommitteesPageTests(BaseTest):
             1)
         self.assertEqual(
             self.driver.find_element_by_class_name('single-link').text,
-            ('BEEF-PAC (BEEF POLITICAL ACTION COMMITTEE '
-             'OF TEXAS CATTLE FEEDERS ASSOCIATION)'))
+            ('NATIONAL PORK PRODUCERS COUNCIL PORK PAC'))
 
     def testCommitteePartyFilter(self):
         self.checkFilter(
