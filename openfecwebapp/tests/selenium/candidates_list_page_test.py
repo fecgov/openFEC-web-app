@@ -70,11 +70,8 @@ class CandidatesPageTests(BaseTest):
     def testCandidatesFilterSideBar(self):
         self.driver.get(self.url)
         self.openFilters()
-        # main = self.getMain()
-        # self.assertEqual(main.get_attribute('class'), 'side--open')
         filters = self.driver.find_element_by_id('filters')
-        self.assertEqual(filters.get_attribute('class'),
-                         'side-panel side-panel--left side-panel--open')
+        self.assertIn('side-panel--open', filters.get_attribute('class'))
 
     def testCandidateNameFilter(self):
         self.driver.get(self.url)

@@ -1,10 +1,15 @@
 from .base_test_class import BaseTest
+from selenium.webdriver.common.keys import Keys as K
+import time
 
 
 class LandingPageTests(BaseTest):
 
     def setUp(self):
         self.url = self.base_url
+
+    def getGlossary(self):
+        return self.driver.find_element_by_id('glossary')
 
     def testLandingPageLoads(self):
         self.driver.get(self.url)
@@ -29,3 +34,21 @@ class LandingPageTests(BaseTest):
         self.assertEqual(
             self.driver.find_element_by_tag_name('h2').text,
             'Search results obama')
+
+    def testGlossaryToggle(self):
+        self.driver.get(self.url)
+        self.driver.find_element_by_id('glossary-toggle').click()
+        glossary = self.getGlossary()
+        self.assertIn('side-panel--open', glossary.get_attribute('class'))
+        time.sleep(1)
+        glossary.find_element_by_id('hide-glossary').click()
+        self.assertNotIn('side-panel--open', glossary.get_attribute('class'))
+
+    def testGlossarySearch(self):
+        self.driver.get(self.url)
+        self.driver.find_element_by_id('glossary-toggle').click()
+        glossary = self.getGlossary()
+        glossary.find_element_by_id('glossary-search').send_keys('can')
+        glossary.find_element_by_id('glossary-search').send_keys(K.ARROW_DOWN)
+        glossary.find_element_by_id('glossary-search').send_keys(K.ENTER)
+        self.assertIn('Can', glossary.find_element_by_id('glossary-term').text)
