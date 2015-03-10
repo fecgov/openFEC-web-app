@@ -84,3 +84,15 @@ input[type="submit"],
     }
   }
 }
+
+.button--close {
+  background: none;
+  border: none;
+  padding: 0;
+  
+  &:active,
+  &:hover {
+    background: none;
+    border: none;
+  }
+}

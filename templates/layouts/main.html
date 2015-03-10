@@ -44,7 +44,6 @@
     <main id="main"{% if section %} data-section="{{section}}"{% endif %}>
         {% block body %}{% endblock %}
     </main>
-    {% include './partials/glossary.html' %}
   </div>
 
 </div> <!-- .page-wrap -->
@@ -64,6 +63,8 @@
     </ul>
   </nav>
 </footer>
+
+{% include './partials/glossary.html' %}
 
 <script src="/static/js/vendor/chosen/chosen.jquery.min.js"></script>
 <script src="/static/js/vendor/typeahead.bundle.min.js"></script>

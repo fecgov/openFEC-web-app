@@ -88,7 +88,11 @@ body {
 }
 
 .page-section__intro {
-  @include span-columns(18);
+  @include clearfix();
+
+  .text--lead {
+      @include span-columns(18);    
+  }
 }
 
 // This is a grouping of content withinin a section, labeled by a h3

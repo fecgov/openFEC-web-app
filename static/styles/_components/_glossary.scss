@@ -28,7 +28,9 @@
 	padding: 1em 0;
 }
 
-#glossary {
+.glossary {
+	z-index: 999;
+
 	.tt-dropdown-menu {
 		width: 100%;
 	}

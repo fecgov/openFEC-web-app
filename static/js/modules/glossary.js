@@ -103,7 +103,7 @@ module.exports = {
         setDefinition(definedTerm);    
     })
 
-    $('#glossary-toggle').click(function(){
+    $('#glossary-toggle, #hide-glossary').click(function(){
         if (glossaryIsOpen) {
             hideGlossary();
         } else {

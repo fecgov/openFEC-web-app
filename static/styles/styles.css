@@ -49,7 +49,8 @@ h2,
 .h2 {
   font-size: 28px;
   font-size: 2.8rem;
-  font-weight: 600; }
+  font-weight: 600;
+  margin-bottom: 1em; }
 
 h3,
 .h3 {
@@ -145,6 +146,9 @@ cite {
 
 .text--note {
   font-style: italic; }
+
+.text--white {
+  color: #fff; }
 
 .data, .data--label, .data--content,
 .data--link {
@@ -450,13 +454,13 @@ ul, ol {
   margin: 0;
   padding: 0;
   list-style-type: none; }
-.flat-list, .browse-links, .header-nav__list, .results-count {
+.flat-list, .header-nav__list, .results-count {
   padding: 0; }
-  .flat-list:after, .browse-links:after, .header-nav__list:after, .results-count:after {
+  .flat-list:after, .header-nav__list:after, .results-count:after {
     content: "";
     display: table;
     clear: both; }
-  .flat-list li, .browse-links li, .header-nav__list li, .results-count li {
+  .flat-list li, .header-nav__list li, .results-count li {
     float: left; }
 
 dl {
@@ -600,6 +604,14 @@ input[type="submit"],
       border-bottom-right-radius: 0.25em;
       border-left: none; }
 
+.button--close {
+  background: none;
+  border: none;
+  padding: 0; }
+  .button--close:active, .button--close:hover {
+    background: none;
+    border: none; }
+
 .color-primary {
   background-color: #2678BA; }
   .color-primary:hover {
@@ -695,52 +707,6 @@ input[type="submit"],
     display: inline-block;
     float: none; }
 
-.browse-links {
-  float: left;
-  display: block;
-  margin-right: 1.16509%;
-  width: 49.41745%;
-  margin-left: 25.29127%;
-  padding: 15px 0;
-  padding: 1.5rem 0; }
-  .browse-links:last-child {
-    margin-right: 0; }
-  .browse-links li {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 48.82117%; }
-    .browse-links li:last-child {
-      margin-right: 0; }
-    .browse-links li .button {
-      display: block; }
-
-@media screen and (max-width: 48em) {
-  .browse-links {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 100%;
-    margin-left: 0%; }
-    .browse-links:last-child {
-      margin-right: 0; }
-    .browse-links li {
-      float: left;
-      display: block;
-      margin-right: 2.35765%;
-      width: 48.82117%; }
-      .browse-links li:last-child {
-        margin-right: 0; } }
-@media screen and (max-width: 30em) {
-  .browse-links li {
-    float: left;
-    display: block;
-    margin-right: 7.42297%;
-    width: 100%; }
-    .browse-links li:last-child {
-      margin-right: 0; }
-    .browse-links li:first-child {
-      margin-bottom: 1em; } }
 .filter-box {
   margin-bottom: 2em;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1); }
@@ -837,32 +803,36 @@ input[type="submit"],
     border-style: solid; }
 
 .side-panel {
-  display: none;
   padding: 1.25em;
-  background: #BDC4CD;
-  position: relative;
   top: 0;
   bottom: 0;
   width: 20%;
   height: 100%;
   z-index: 999; }
 
-.side-panel--open {
-  display: block; }
-
 .side-panel--left {
-  float: left; }
+  display: none;
+  background: #BDC4CD;
+  float: left;
+  position: relative; }
+  .side-panel--left.side-panel--open {
+    display: block; }
 
 .side-panel--right {
-  float: right;
-  box-shadow: inset 1px 0 1px 1px rgba(0, 0, 0, 0.2); }
+  -webkit-transition: right 0.2s;
+  -moz-transition: right 0.2s;
+  transition: right 0.2s;
+  display: block;
+  background: rgba(50, 58, 69, 0.95);
+  position: fixed;
+  top: 0;
+  right: -100%;
+  box-shadow: -1px 0 1px 1px rgba(0, 0, 0, 0.2); }
+  .side-panel--right.side-panel--open {
+    right: 0; }
 
 .panel-active--left .results-container {
   width: 80%; }
-
-.panel-active--right #main {
-  width: 80%;
-  float: left; }
 
 .usa {
   font-size: 12px;
@@ -2084,8 +2054,10 @@ footer {
 .glossary__term {
   padding: 1em 0; }
 
-#glossary .tt-dropdown-menu {
-  width: 100%; }
+.glossary {
+  z-index: 999; }
+  .glossary .tt-dropdown-menu {
+    width: 100%; }
 
 .chart-series__bar {
   background: #ccc; }
@@ -2547,12 +2519,16 @@ body {
   padding: 40px 0;
   padding: 4rem 0; }
 
-.page-section__intro {
+.page-section__intro:after {
+  content: "";
+  display: table;
+  clear: both; }
+.page-section__intro .text--lead {
   float: left;
   display: block;
   margin-right: 1.16509%;
   width: 74.70873%; }
-  .page-section__intro:last-child {
+  .page-section__intro .text--lead:last-child {
     margin-right: 0; }
 
 .page-subsection {
