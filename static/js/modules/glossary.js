@@ -92,6 +92,7 @@ setDefinition = function(definedTerm) {
 clearTerm = function() {
     $('#glossary-term').html('');
     $('#glossary-definition').html('');
+    $("#glossary-search").val('');
 }
 
 module.exports = {
