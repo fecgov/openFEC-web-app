@@ -52,3 +52,9 @@ class LandingPageTests(BaseTest):
         glossary.find_element_by_id('glossary-search').send_keys(K.ARROW_DOWN)
         glossary.find_element_by_id('glossary-search').send_keys(K.ENTER)
         self.assertIn('Can', glossary.find_element_by_id('glossary-term').text)
+
+    def testGlossaryLoadFromTerm(self):
+        self.driver.get(self.url)
+        self.driver.find_element_by_class_name('term').click()
+        glossary = self.getGlossary()
+        self.assertIn('side-panel--open', glossary.get_attribute('class'))
