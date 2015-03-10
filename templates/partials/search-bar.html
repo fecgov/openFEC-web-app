@@ -1,12 +1,15 @@
-<section class="hero">
+<section class="hero" aria-labelledby="hero-heading">
   <div class="container">
-    <h1>Explore campaign finance data</h1>
-    <form id="large-search" action="/">
-        <label for="search" class="text--lead">Begin by searching for <span class="term term--underlined" data-term="Candidate">candidates</span> and <span class="term term--underlined" data-term="Campaign Committee">committees</span> by name</label>
-        <div class="input-button-combo search--large">
-          <input type="text" name="search" class="search-bar" placeholder="e.g. Barack Obama"/>
-          <button class="primary" id="submit-search"><i class="ti-search"></i> Search</button>
-        </div>
-    </form>
+    <div class="hero__content">
+      <h1 id="hero-heading" class="text--display">Discover FEC Data Easier Than Ever</h1>
+      <p class="text--hero">OpenFEC is a new tool to help to help you see the money raised and spent in federal elections.</p>
+      <form id="large-search" action="/">
+          <label for="search" class="text--hero">To get started, search for a federal <span class="term term--underlined" data-term="Candidate">candidate</span> or committee.</label>
+          <div class="input-button-combo search--large">
+            <input type="text" name="search" class="search-bar" placeholder="Enter a candidate name"/>
+            <button class="primary" id="submit-search"><i class="ti-search"></i> Search</button>
+          </div>
+      </form>
+    </div>
   </div>
 </section>

@@ -23,10 +23,7 @@
 }
 
 .side-panel {
-  display: none;
   padding: 1.25em;
-  background: $filter-bg;
-  position: relative;
   top: 0;
   bottom: 0;
   width: 20%;
@@ -34,17 +31,29 @@
   z-index: 999;
 }
 
-.side-panel--open {
-  display: block;
-}
-
 .side-panel--left {
+  display: none;
+  background: $filter-bg;
   float: left;
+  position: relative;
+
+  &.side-panel--open {
+    display: block;
+  }
 }
 
 .side-panel--right {
-  float: right;  
-  box-shadow: inset 1px 0 1px 1px rgba(0,0,0,.2);
+  @include transition(right .2s);
+  display: block;
+  background: rgba($licorice-2, .95);  
+  position: fixed;
+  top: 0;
+  right: -100%;
+  box-shadow: -1px 0 1px 1px rgba(0,0,0,.2);
+
+  &.side-panel--open {
+    right: 0;
+  }
 }
 
 .panel-active--left {
@@ -54,8 +63,5 @@
 }
 
 .panel-active--right {
-  #main {
-    width: 80%;
-    float: left;
-  }
+
 }

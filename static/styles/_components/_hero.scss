@@ -1,16 +1,16 @@
 // MODULE: Hero Unit
 .hero {
-  padding: 5em 0;
+  @include rem(padding, 6.0rem 0);
   color: #fff;
   text-align: center;
-  background-color: $page-header;
+  background-color: $licorice;
   background-image: url('../img/mesh@2x.png');
   background-size: contain;
 }
 
-.sub-hero {
-  text-align: center;
-  padding: 3em 0;
+.hero__content {
+  @include span-columns(18);
+  @include shift(3);
 }
 
 @include media($small) {

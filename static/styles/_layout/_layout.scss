@@ -49,6 +49,10 @@ body {
   }
 }
 
+.aside {
+  @include span-columns(6);
+}
+
 // Chunks
 // These are common grouping sizes, described by their desktop size
 
@@ -83,6 +87,14 @@ body {
   @include rem(padding, 4.0rem 0);
 }
 
+.page-section__intro {
+  @include clearfix();
+
+  .text--lead {
+      @include span-columns(18);    
+  }
+}
+
 // This is a grouping of content withinin a section, labeled by a h3
 .page-subsection {
   @include primary-divider();
@@ -113,4 +125,10 @@ body {
     padding-bottom: 0;
     border-bottom: none;
   }
+}
+
+// Style variants
+.section--gray {
+  background-color: $lightest-gray;
+  border-top: 1px solid $light-gray;
 }

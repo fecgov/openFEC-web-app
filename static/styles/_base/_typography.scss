@@ -19,38 +19,45 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
-h1 {
+h1,
+.h1 {
   @include font-size(3.2);
   font-weight: 600;
 }
 
-h2 {
+h2,
+.h2 {
   @include font-size(2.8);
   font-weight: 600;
+  margin-bottom: 1em;
 }
 
-h3 {
+h3,
+.h3 {
   @include font-size(2.4);
   font-weight: 600;
 }
 
-h4 {
+h4,
+.h4 {
   @include font-size(2.0);
   font-weight: 600;
 }
 
-h5 {
+h5,
+.h5 {
   @include font-size(1.6);
   font-weight: 600;
 }
 
-h6 {
+h6,
+.h6 {
   @include font-size(1.4);
   font-weight: 600;
 }
 
 p {
-  margin: 0 0 ($base-line-height * .5);
+  margin-bottom: 1em;
   -webkit-margin-before: 0;
 }
 
@@ -121,9 +128,18 @@ cite {
 
 // Universal text classes
 
+.text--display {
+  @include font-size(4.0);
+  margin-bottom: .5em;
+}
+
+.text--hero {
+  @include font-size(2.4);
+  margin-bottom: 1em;
+}
+
 .text--lead {
   @include font-size(1.8);
-  margin-top: 0;
 }
 
 .text--query {
@@ -132,6 +148,10 @@ cite {
 
 .text--note {
   font-style: italic;
+}
+
+.text--white {
+  color: #fff;
 }
 
 // Data styles

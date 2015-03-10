@@ -92,6 +92,7 @@ setDefinition = function(definedTerm) {
 clearTerm = function() {
     $('#glossary-term').html('');
     $('#glossary-definition').html('');
+    $("#glossary-search").val('');
 }
 
 module.exports = {
@@ -103,7 +104,7 @@ module.exports = {
         setDefinition(definedTerm);    
     })
 
-    $('#glossary-toggle').click(function(){
+    $('#glossary-toggle, #hide-glossary').click(function(){
         if (glossaryIsOpen) {
             hideGlossary();
         } else {

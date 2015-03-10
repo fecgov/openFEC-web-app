@@ -15,7 +15,7 @@
 
 	&.term--highlight {
 		background: #fff;
-		color: $green;
+		color: $licorice;
 		border-radius: 2px;
 		border-bottom: none;
 		text-shadow: none;
@@ -28,7 +28,9 @@
 	padding: 1em 0;
 }
 
-#glossary {
+.glossary {
+	z-index: 999;
+
 	.tt-dropdown-menu {
 		width: 100%;
 	}

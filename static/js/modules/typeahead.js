@@ -41,7 +41,8 @@ module.exports = {
         candidateSuggestion,
         committeeSuggestion,
         headerTpl,
-        glossaryEngine;
+        glossaryEngine,
+        glossarySuggestion;
     
     // Creating a candidate suggestion engine
     candidateEngine = new Bloodhound({
@@ -139,7 +140,7 @@ module.exports = {
     })
 
     glossaryEngine.initialize();
-
+    glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
     $('#glossary-search').typeahead({
             minLength: 3,
             highlight: true,
@@ -148,7 +149,10 @@ module.exports = {
         {
             name: 'Definitions',
             displayKey: 'term',
-            source: glossaryEngine.ttAdapter()
+            source: glossaryEngine.ttAdapter(),
+            templates: {
+              suggestion: glossarySuggestion,
+            }
         }
     );  
 
