@@ -20,7 +20,7 @@
           </li>
           <li class="entity__term">
             <h5 class="term" data-term="Status">Status</h5>
-            <span>{{ incumbent_challenge|default("")|title }}</span>
+            <span>{% if incumbent_challenge %}{{ incumbent_challenge|title }}{% endif %}</span>
           </li>
           <li class="entity__term">
             <h5>District</h5>
