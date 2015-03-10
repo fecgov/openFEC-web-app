@@ -48,15 +48,15 @@ $(document).ready(function() {
     }
 
     // Forcing the .main-container to fit the entire height of the page
-    var setMainSize = function() {
-        var headerHeight = $('.site-header').height(),
-            footerHeight = $('footer').height(),
-            pageHeight = $('.page-wrap').height(),
-            mainHeight = pageHeight - headerHeight;
-            $('.main-container').height(mainHeight);
-    }
+    // var setMainSize = function() {
+    //     var headerHeight = $('.site-header').height(),
+    //         footerHeight = $('footer').height(),
+    //         pageHeight = $('.page-wrap').height(),
+    //         mainHeight = pageHeight - headerHeight;
+    //         $('.main-container').height(mainHeight);
+    // }
 
-    setMainSize();
+    // setMainSize();
 
 
     // Reveal containers
