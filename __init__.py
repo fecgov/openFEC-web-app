@@ -1,4 +1,4 @@
-from openfecwebapp.local_config import port, debug, host
+from openfecwebapp.local_config import port, debug, host, api_location
 from flask import Flask, render_template, request
 from openfecwebapp.views import (render_search_results, render_table,
     render_page)
@@ -10,6 +10,8 @@ import locale
 locale.setlocale(locale.LC_ALL, '')
 
 app = Flask(__name__)
+
+app.jinja_env.globals['api_location'] = api_location
 
 def _convert_to_dict(params):
     # move from immutablemultidict -> multidict -> dict
