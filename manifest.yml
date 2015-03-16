@@ -3,3 +3,7 @@ applications:
 - name: fec-web
   host: fec
   buildpack: python_buildpack
+env:
+  FEC_WEB_DEBUG: True
+  FEC_WEB_API_URL: 'http://fec-api-dev.cf.18f.us/'
+
