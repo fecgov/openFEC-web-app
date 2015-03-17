@@ -1,4 +1,4 @@
-from openfecwebapp.config import debug, host
+from openfecwebapp.config import port, debug, host
 from flask import Flask, render_template, request
 from openfecwebapp.views import (render_search_results, render_table,
     render_page)
@@ -72,5 +72,4 @@ def currency_filter(num, grouping=True):
 if __name__ == '__main__':
     if '--cached' in sys.argv:
         install_cache()
-    port = os.getenv('VCAP_APP_PORT', '3000')
     app.run(host=host, port=int(port), debug=debug)
