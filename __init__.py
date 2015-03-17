@@ -1,4 +1,5 @@
-from openfecwebapp.config import port, debug, host
+from openfecwebapp.config import (port, debug, host, api_location,
+    username, password, debug)
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from openfecwebapp.views import (render_search_results, render_table,
@@ -7,7 +8,6 @@ from openfecwebapp.api_caller import (load_search_results,
     load_single_type, load_totals, load_single_type_summary,
     install_cache)
 
-import os
 import sys
 import locale
 locale.setlocale(locale.LC_ALL, '')
@@ -23,7 +23,7 @@ app.config['BASIC_AUTH_FORCE'] = True
 basic_auth = BasicAuth(app)
 
 def _convert_to_dict(params):
-""" move from immutablemultidict -> multidict -> dict """
+    """ move from immutablemultidict -> multidict -> dict """
     params = params.copy().to_dict()
     params = {key: value for key, value in params.items() if value}
     return params
