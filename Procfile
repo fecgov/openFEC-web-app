@@ -1,1 +1,1 @@
-web: python __init__.py --cache
+web: python __init__.py --cached
