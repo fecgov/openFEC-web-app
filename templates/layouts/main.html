@@ -10,6 +10,11 @@
     <link href="/static/styles/styles.css" rel="stylesheet" type="text/css"/>
     <link href='https://fonts.googleapis.com/css?family=Raleway:300,400,600,700|Open+Sans:300,400,600,700|Source+Code+Pro:400' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    {% if api_location %}
+    <script>
+        API_LOCATION = "{{api_location}}"
+    </script>
+    {% endif %}
 </head>
 <body>
 <div class="page-wrap">

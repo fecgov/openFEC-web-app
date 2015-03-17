@@ -13,6 +13,8 @@ locale.setlocale(locale.LC_ALL, '')
 
 app = Flask(__name__)
 
+app.jinja_env.globals['api_location'] = api_location
+
 def _convert_to_dict(params):
     # move from immutablemultidict -> multidict -> dict
     params = params.copy().to_dict()

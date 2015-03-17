@@ -42,13 +42,18 @@ module.exports = {
         committeeSuggestion,
         headerTpl,
         glossaryEngine,
-        glossarySuggestion;
-    
+        glossarySuggestion,
+        url = "/rest/names?q=%QUERY";
+
+    if (typeof API_LOCATION !== 'undefined') {
+        url = API_LOCATION.concat(url);
+    }
+
     // Creating a candidate suggestion engine
     candidateEngine = new Bloodhound({
       name: 'Candidates',
       remote: {
-        url: "/rest/names?q=%QUERY",
+        url: url,
         filter: function(response) {
           var results = $.map(response.results, function(result){
             if ( result.candidate_id !== null ) {
@@ -71,7 +76,7 @@ module.exports = {
     committeeEngine = new Bloodhound({
       name: 'Committees',
       remote: {
-        url: "/rest/names?q=%QUERY",
+        url: url,
         filter: function(response) {
           var results = $.map(response.results, function(result) {
             if ( result.committee_id !== null ) {
