@@ -1,5 +1,6 @@
 from openfecwebapp.config import port, debug, host
 from flask import Flask, render_template, request
+from flask.ext.basicauth import BasicAuth
 from openfecwebapp.views import (render_search_results, render_table,
     render_page)
 from openfecwebapp.api_caller import (load_search_results,
@@ -15,8 +16,14 @@ app = Flask(__name__)
 
 app.jinja_env.globals['api_location'] = api_location
 
+app.config['BASIC_AUTH_USERNAME'] = username
+app.config['BASIC_AUTH_PASSWORD'] = password
+app.config['BASIC_AUTH_FORCE'] = True
+
+basic_auth = BasicAuth(app)
+
 def _convert_to_dict(params):
-    # move from immutablemultidict -> multidict -> dict
+""" move from immutablemultidict -> multidict -> dict """
     params = params.copy().to_dict()
     params = {key: value for key, value in params.items() if value}
     return params
