@@ -18,6 +18,12 @@ fi
 
 echo "Building JS..."
 npm run build
+
+if [ $? -ne 0 ]; then
+  echo "JS build failed."
+  exit $?
+fi
+
 echo "Targeting Cloud Foundry space..."
 cf target -o fec -s "$1"
 echo " "
