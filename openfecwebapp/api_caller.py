@@ -1,6 +1,7 @@
 import requests
+from requests.auth import HTTPBasicAuth
 
-from openfecwebapp.local_config import api_location
+from openfecwebapp.local_config import api_location, username, password
 
 """
 It speeds up the API calls for totals if we specify
@@ -17,7 +18,8 @@ _totals_fields = [
 ]
 
 def _call_api(url, filters):
-    results = requests.get(url, params=filters)
+    results = requests.get(url, params=filters, auth=HTTPBasicAuth(username, password))
+    print(results.status_code)
 
     if results.status_code == requests.codes.ok:
         return results.json()
