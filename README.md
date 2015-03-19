@@ -40,6 +40,10 @@ To make the site fully functional, you will need to compile the client side JS:
 $ npm run build
 ```
 
+The app has HTTP auth enabled. You will need to set environment variables with your desired username and password.
+Those vars are `FEC_WEB_USERNAME` and `FEC_WEB_PASSWORD`. There are other config environment variables that you
+can set, but that have defaults. You can see those in `openfecwebapp/config.py`.
+
 Then start the server:
 
 ```
