@@ -22,7 +22,7 @@ app.config['BASIC_AUTH_FORCE'] = True
 basic_auth = BasicAuth(app)
 
 def _convert_to_dict(params):
-""" move from immutablemultidict -> multidict -> dict """
+    """ move from immutablemultidict -> multidict -> dict """
     params = params.copy().to_dict()
     params = {key: value for key, value in params.items() if value}
     return params
