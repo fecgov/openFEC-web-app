@@ -80,6 +80,14 @@ Or, if you want to get crazy, watch both Sass and JS changes: (hat tip [@ascott1
 $ npm run watch-all
 ```
 
+### Deployment
+##### Likely only useful for 18Fers
+If you want to deploy to one of our Cloud Foundry instances, use `deploy.sh`. It takes four arguments: the Cloud Foundry space, the Cloud Foundry app, HTTP username, HTTP password. Be sure to be in the root directory of the codebase you want to deploy. 
+
+`./deploy.sh cf-space cf-app http-user http-pass`
+
+Ask teammates for the username and password that should be used.
+
 ### Run Tests
 #### Unit Tests
 ```
