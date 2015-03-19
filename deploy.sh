@@ -10,10 +10,10 @@
 api_url=""
 debug=""
 
-if [ -z "$1" ] || [ -z "$2" ]; then
+if [ "$#" -ne 4 ]; then
   echo "Please pass in the name of the Cloud Foundry app you want,"
   echo "the space it is in, and the HTTP username and password"
-  echo "Example: './deploy.sh dev-web fec-web-dev'"
+  echo "Example: './deploy.sh dev-web fec-web-dev username password'"
   echo "Run 'cf spaces' to see possible spaces."
   echo "Run 'cf apps' to see possible apps within your current space."
   exit 1
