@@ -1,6 +1,6 @@
 import requests
 
-from openfecwebapp.local_config import api_location
+from openfecwebapp.config import api_location
 
 """
 It speeds up the API calls for totals if we specify

@@ -46,6 +46,7 @@ module.exports = {
         url = "/rest/names?q=%QUERY";
 
     if (typeof API_LOCATION !== 'undefined') {
+        url = "/names?q=%QUERY";
         url = API_LOCATION.concat(url);
     }
 

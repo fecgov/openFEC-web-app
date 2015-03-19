@@ -1,5 +1,5 @@
-from openfecwebapp.local_config import (port, debug, host, username,
-    api_location, password)
+from openfecwebapp.config import (port, debug, host, api_location,
+    username, password, debug)
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from openfecwebapp.views import (render_search_results, render_table,
@@ -8,6 +8,7 @@ from openfecwebapp.api_caller import (load_search_results,
     load_single_type, load_totals, load_single_type_summary,
     install_cache)
 
+import sys
 import locale
 locale.setlocale(locale.LC_ALL, '')
 
@@ -78,7 +79,6 @@ def currency_filter(num, grouping=True):
     return locale.currency(num, grouping=grouping)
 
 if __name__ == '__main__':
-    import sys
     if '--cached' in sys.argv:
         install_cache()
     app.run(host=host, port=int(port), debug=debug)
