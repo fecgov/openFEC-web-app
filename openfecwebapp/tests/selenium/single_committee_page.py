@@ -11,3 +11,17 @@ class SingleCommitteePageTests(BaseTest):
         self.assertEqual(
             self.driver.find_element_by_tag_name('h1').text,
             'COMMITTEE TO ELECT MARK ALLIEGRO')
+
+    def testCandidateLink(self):
+        self.driver.get(self.url)
+        self.assertEqual(
+            self.elementExistsByXPath(
+                '//a[contains(@href, "candidate/")]'),
+            True)
+        if self.elementExistsByXPath(
+                '//a[contains(@href, "candidate/")]'):
+            link = self.driver.find_element_by_xpath(
+                '//a[contains(@href, "candidate/")]')
+            self.assertEqual(
+                link.text,
+                'ALLIEGRO, MARK C')
