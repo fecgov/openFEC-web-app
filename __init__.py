@@ -5,7 +5,7 @@ from flask.ext.basicauth import BasicAuth
 from openfecwebapp.views import (render_search_results, render_table,
     render_page)
 from openfecwebapp.api_caller import (load_search_results,
-    load_single_type, load_totals, load_single_type_summary,
+    load_single_type, load_single_type_summary,
     install_cache)
 
 import sys

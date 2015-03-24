@@ -8,14 +8,14 @@
       <div class="page-subsection">
         <h3 class="term" data-term="Campaign Committee">Campaign Committees</h3>
         {% if primary_committee %}
-          {% with committee=primary_committee %}
-            {% include 'partials/committee-summary.html' %}
-          {% endwith %}
+            {% with committee=primary_committee[0] %}
+              {% include 'partials/committee-summary.html' %}
+            {% endwith %}
         {% endif %}
 
         {% if authorized_committees %}
           {% for c in authorized_committees %}
-              {% with committee=authorized_committees[c] %}
+              {% with committee=c %}
                   {% include 'partials/committee-summary.html' %}
               {% endwith %}
           {% endfor %}
@@ -30,8 +30,8 @@
         <h4>Leadership PACs</h4>
         <ul>
           {% for c in leadership_committees %}
-              {% with committee=leadership_committees[c] %}
-                <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.name }} &raquo;</a></li>
+              {% with committee=c %}
+                <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }} &raquo;</a></li>
               {% endwith %}
           {% endfor %}
         </ul>
@@ -41,8 +41,8 @@
         <h4>Joint Fundraising Committees</h4>
         <ul>
           {% for c in joint_committees %}
-              {% with committee=joint_committees[c] %}
-              <li><a href="{{ url_for('committee_page', c_id=committee.id) }}">{{ committee.name }} &raquo;</a></li>
+              {% with committee=c %}
+              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }} &raquo;</a></li>
               {% endwith %}
           {% endfor %}
         </ul>
