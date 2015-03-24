@@ -33,14 +33,14 @@
           {% if primary_committee %}
           <li class="entity__term--wide">
             <h5><span class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</span></h5>
-            <a href="{{ url_for('committee_page', c_id=primary_committee.id) }}">{{ primary_committee.name }}</a>
+            <a href="{{ url_for('committee_page', c_id=primary_committee[0].committee_id) }}">{{ primary_committee[0].committee_name }}</a>
           </li>
           {% endif %}
           {% if authorized_committees %}
           <li class="entity__term--wide">
             <h5 class="term" data-term="Authorized Committee">Authorized Committees</h5>
-            {% for c_id in authorized_committees %}
-            <p><a href="{{ url_for('committee_page', c_id=c_id) }}">{{ authorized_committees[c_id].name }}</a></p>
+            {% for c in authorized_committees %}
+            <p><a href="{{ url_for('committee_page', c_id=c.committee_id) }}">{{ c.committee_name }}</a></p>
             {% endfor %}
           </li>
           {% endif %}
