@@ -21,7 +21,7 @@
     "watch": "watchify static/js/init.js -o static/js/app.js --debug --verbose",
     "build": "browserify static/js/init.js > static/js/app.js",
     "sass-watch": "sass --watch static/styles/:static/styles/",
-    "sass-build": "sass static/styles/sass/:static/styles/",
+    "sass-build": "sass static/styles/styles.scss:static/styles/styles.css",
     "watch-all": "npm run watch & npm run sass-watch"
   },
   "repository": {
