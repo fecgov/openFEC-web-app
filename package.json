@@ -3,13 +3,6 @@
   "version": "0.0.0",
   "description": "Web application for the OpenFEC data search tool.",
   "main": "app.js",
-  "dpendencies": {
-    "browserify": "~6.1.0",
-    "eventemitter2": "~0.4.14",
-    "querystring": "^0.2.0",
-    "tablesort": "^2.0.1",
-    "underscore": "^1.7.0"
-  },
   "devDependencies": {
     "chai": "^1.10.0",
     "jquery-mockjax": "^1.6.1",
@@ -33,8 +26,12 @@
     "url": "https://github.com/theresaanna/openfec-web-app/issues"
   },
   "dependencies": {
+    "browserify": "~6.1.0",
     "d3": "^3.5.3",
+    "eventemitter2": "~0.4.14",
     "handlebars": "^2.0.0",
-    "tablesort": "^2.2.3"
+    "querystring": "^0.2.0",
+    "tablesort": "^2.2.3",
+    "underscore": "^1.7.0"
   }
 }
