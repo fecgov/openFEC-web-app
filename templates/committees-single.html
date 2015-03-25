@@ -87,35 +87,35 @@
 
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container">
-        {% if totals %}
+        {% if financial_summary %}
         <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
         <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-        <figure class="page-subsection table--simple totals-table">
-          <h5 class="figure__title">Totals for {{totals.years_totals}}</h5>
+        <figure class="page-subsection table--simple financial_summary-table">
+          <h5 class="figure__title">Totals for {{financial_summary.years_totals}}</h5>
           <div class="table__half">
             <div class="table__row">
               <div class="table__cell">Total receipts</div>
-              <div class="table__cell">{{totals.total_receipts}}</div>
+              <div class="table__cell">{{financial_summary.total_receipts}}</div>
             </div>
             <div class="table__row">
               <div class="table__cell">Total disbursements</div>
-                <div class="table__cell">{{totals.total_disbursements}}</div>
+                <div class="table__cell">{{financial_summary.total_disbursements}}</div>
             </div>
             <div class="table__row--note">
-              Calculated from reports filed {{totals.report_year}}
+              Calculated from reports filed {{financial_summary.report_year}}
             </div>
           </div>
           <div class="table__half">
             <div class="table__row">
               <div class="table__cell">Cash on hand</div>
-              <div class="table__cell">{{totals.total_cash}}</div>
+              <div class="table__cell">{{financial_summary.total_cash}}</div>
             </div>
             <div class="table__row">
               <div class="table__cell">Debt</div>
-              <div class="table__cell">{{totals.total_debt}}</div>
+              <div class="table__cell">{{financial_summary.total_debt}}</div>
             </div>
             <div class="table__row--note">
-              Source: {{totals.report_desc}}
+              Source: {{financial_summary.report_desc}}
             </div>
           </div>
         </figure>

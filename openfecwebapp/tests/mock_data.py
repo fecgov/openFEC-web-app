@@ -73,7 +73,7 @@ totals = {
             'cash_on_hand_end_period': 123.34,
             'debts_owed_by_committee': 45678.90,
             'report_year': 2010,
-            'election_cycle': 2010,
+            'cycle': 2010,
             'report_type_full': 'End Report {stuff}'
         }],
         'totals': [{
@@ -87,7 +87,7 @@ totals = {
             'cash_on_hand_end_period': 0,
             'debts_owed_by_committee': 0,
             'report_year': 2010,
-            'election_cycle': 2010,
+            'cycle': 2010,
             'report_type_full': 'End Report {stuff}'
         }],
         'totals': [{

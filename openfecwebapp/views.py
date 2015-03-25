@@ -2,7 +2,7 @@ from flask import render_template
 from openfecwebapp.data_prep.candidates import map_candidate_page_values
 from openfecwebapp.data_prep.committees import map_committee_page_values
 from openfecwebapp.data_prep.shared import generate_pagination_values
-from openfecwebapp.data_prep.financial_summaries import add_committee_financial_data
+from openfecwebapp.data_prep.financial_summaries import add_cmte_financial_data
 
 from werkzeug.exceptions import abort
 
@@ -60,6 +60,6 @@ def render_page(data_type, c_data):
 
     tmpl_vars = c_data['results'][0]
     tmpl_vars.update(type_map[data_type](c_data['results'][0]))
-    tmpl_vars.update(add_committee_financial_data(tmpl_vars, data_type))
+    tmpl_vars.update(add_cmte_financial_data(tmpl_vars, data_type))
 
     return render_template(data_type + 's-single.html', **tmpl_vars)
