@@ -1,8 +1,11 @@
 import requests
 
-from openfecwebapp.config import api_location
+from openfecwebapp.config import api_location, api_key
 
-def _call_api(url, filters):
+def _call_api(path, filters):
+    if api_key:
+        filters['api_key'] = api_key
+    url = api_location + path
     results = requests.get(url, params=filters)
 
     if results.status_code == requests.codes.ok:
@@ -22,19 +25,19 @@ def load_search_results(query):
     }
 
 def load_single_type_summary(data_type, filters):
-    url = api_location + '/' + data_type
+    url = '/' + data_type
 
     return _call_api(url, filters)
 
 def load_single_type(data_type, c_id):
-    url = api_location + '/' + data_type + '/' + c_id
+    url = '/' + data_type + '/' + c_id
     filters = {'year': '*'}
 
     return _call_api(url, filters)
 
 def load_cmte_financials(committee_id):
-    r_url = api_location + '/committee/' + committee_id + '/reports'
-    t_url = api_location + '/committee/' + committee_id + '/totals'
+    r_url = '/committee/' + committee_id + '/reports'
+    t_url = '/committee/' + committee_id + '/totals'
     reports = _call_api(r_url, {})
     totals = _call_api(t_url, {})
     cmte_financials = {}
