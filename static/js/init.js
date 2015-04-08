@@ -75,6 +75,16 @@ $(document).ready(function() {
         })
     }
 
+    // General reveal / disclosure 
+    $('.js-reveal').click(function(){
+        var revealElement = $(this).data('reveals');
+        $('#' + revealElement).attr('aria-hidden', false);
+    });
+
+    $('.js-hide').click(function(){
+        var hideElement = $(this).data('hides');
+        $('#' + hideElement).attr('aria-hidden', true);
+    })
     // unload overlay
     // CSS spinner courtesy of http://tobiasahlin.com/spinkit/
     var spinner = '<div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
