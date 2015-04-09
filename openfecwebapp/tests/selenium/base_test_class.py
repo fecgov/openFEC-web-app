@@ -16,7 +16,7 @@ class BaseTest(unittest.TestCase):
             raise ValueError('Could not find username or password. '
                              'Did you remember to source env variables?')
         cls.driver = webdriver.PhantomJS()
-        cls.driver.set_window_size(1600, 550)
+        cls.driver.set_window_size(2000, 2000)
         cls.base_url = 'http://' + cls.user + ':' + cls.pw + '@localhost:3000'
 
     @classmethod
