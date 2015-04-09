@@ -4,7 +4,7 @@ from .base_test_class import BaseTest
 class SingleCommitteePageTests(BaseTest):
 
     def setUp(self):
-        self.url = self.base_url + '/committees/C00550715'
+        self.url = self.base_url + '/committee/C00550715'
 
     def testSingleCommitteePageLoads(self):
         self.driver.get(self.url)

@@ -41,7 +41,7 @@ def candidate_page(c_id):
     data = load_single_type('candidate', c_id)
     return render_page('candidate', data)
 
-@app.route('/committees/<c_id>')
+@app.route('/committee/<c_id>')
 def committee_page(c_id):
     data = load_single_type('committee', c_id)
     return render_page('committee', data)
