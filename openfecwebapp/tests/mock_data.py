@@ -26,7 +26,7 @@ candidate = {
                 'committee_id': 'D1234',
                 'committee_name': 'Friends of McPersonson',
                 'committee_designation': 'A',
-                'committee_designation_full': 'Authorized committee' 
+                'committee_designation_full': 'Authorized committee'
             }
         ]
     }],
@@ -35,14 +35,14 @@ candidate = {
         'committee_id': 'D1234',
         'name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
-        'designation_code': 'PC' 
+        'designation_code': 'PC'
     },
     'affiliated_committees': {
         'D1234': {
             'id': 'D1234',
             'name': 'Friends of McPersonson',
             'designation_full': 'Authorized',
-            'designation_code': 'A' 
+            'designation_code': 'A'
         }
     }
 }
@@ -103,7 +103,7 @@ early_ac = [
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
-        'designation_code': 'A' 
+        'designation_code': 'A'
 
     }
 ]
@@ -113,7 +113,7 @@ late_ac = {
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
-        'designation_code': 'A' 
+        'designation_code': 'A'
     }
 }
 

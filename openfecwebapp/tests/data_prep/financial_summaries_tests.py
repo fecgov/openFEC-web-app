@@ -1,6 +1,9 @@
+import copy
 import unittest
+
 from openfecwebapp.data_prep.financial_summaries import  _map_committee_financials
 from openfecwebapp.tests.mock_data import *
+
 
 class TestFinancialSummaries(unittest.TestCase):
 
@@ -21,3 +24,17 @@ class TestFinancialSummaries(unittest.TestCase):
         self.assertEqual('$0.00', c['total_disbursements'])
         self.assertEqual('$0.00', c['total_cash'])
         self.assertEqual('$0.00', c['total_debt'])
+
+    def test_map_committee_financials_empty_reports(self):
+        result = copy.deepcopy(totals['results'][0])
+        result['reports'] = []
+        res = _map_committee_financials(result)
+        self.assertNotIn('total_cash', res)
+        self.assertNotIn('total_debt', res)
+
+    def test_map_committee_financials_empty_totals(self):
+        result = copy.deepcopy(totals['results'][0])
+        result['totals'] = []
+        res = _map_committee_financials(result)
+        self.assertNotIn('total_receipts', res)
+        self.assertNotIn('total_disbursements', res)
