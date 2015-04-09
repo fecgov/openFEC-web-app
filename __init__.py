@@ -1,5 +1,5 @@
 from openfecwebapp.config import (port, debug, host, api_location,
-    username, password, debug)
+    username, password, test)
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from openfecwebapp.views import (render_search_results, render_table,
@@ -16,9 +16,10 @@ app = Flask(__name__)
 
 app.jinja_env.globals['api_location'] = api_location
 
-app.config['BASIC_AUTH_USERNAME'] = username
-app.config['BASIC_AUTH_PASSWORD'] = password
-app.config['BASIC_AUTH_FORCE'] = True
+if not test:
+    app.config['BASIC_AUTH_USERNAME'] = username
+    app.config['BASIC_AUTH_PASSWORD'] = password
+    app.config['BASIC_AUTH_FORCE'] = True
 
 basic_auth = BasicAuth(app)
 
