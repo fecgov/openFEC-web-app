@@ -20,8 +20,7 @@ if not test:
     app.config['BASIC_AUTH_USERNAME'] = username
     app.config['BASIC_AUTH_PASSWORD'] = password
     app.config['BASIC_AUTH_FORCE'] = True
-
-basic_auth = BasicAuth(app)
+    basic_auth = BasicAuth(app)
 
 def _convert_to_dict(params):
     """ move from immutablemultidict -> multidict -> dict """
