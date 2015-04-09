@@ -13,7 +13,7 @@ class TestDataMappings(TestCase):
         def candidates():
             pass
 
-        @app.route('/committees/<c_id>')
+        @app.route('/committee/<c_id>')
         def committee_page():
             pass
 
@@ -29,7 +29,7 @@ class TestDataMappings(TestCase):
         self.assertEqual('D1234', vals['primary_committee']['id'])
         self.assertEqual('Friends of McPersonson', 
             vals['primary_committee']['name'])
-        self.assertEqual('/committees/D1234',
+        self.assertEqual('/committee/D1234',
             vals['primary_committee']['url'])
 
         self.assertEqual('D1234', vals['authorized_committees'][
@@ -38,5 +38,5 @@ class TestDataMappings(TestCase):
             vals['authorized_committees']['D1234']['name'])
         self.assertEqual('Authorized committee',
             vals['authorized_committees']['D1234']['designation'])
-        self.assertEqual('/committees/D1234',
+        self.assertEqual('/committee/D1234',
             vals['authorized_committees']['D1234']['url'])

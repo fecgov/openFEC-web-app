@@ -14,14 +14,6 @@ class SingleCandidatePageTests(BaseTest):
 
     def testCommitteeLink(self):
         self.driver.get(self.url)
-        self.assertEqual(
-            self.elementExistsByXPath(
-                '//a[contains(@href, "committees/")]'),
-            True)
-        if self.elementExistsByXPath(
-                '//a[contains(@href, "committees/")]'):
-            link = self.driver.find_element_by_xpath(
-                '//a[contains(@href, "committees/")]')
-            self.assertEqual(
-                link.text,
-                'COMMITTEE TO ELECT MARK ALLIEGRO')
+        self.assertTrue(self.elementExistsByXPath('//a[contains(@href, "committee/")]'))
+        link = self.driver.find_element_by_xpath('//a[contains(@href, "committees/")]')
+        self.assertEqual(link.text, 'COMMITTEE TO ELECT MARK ALLIEGRO')
