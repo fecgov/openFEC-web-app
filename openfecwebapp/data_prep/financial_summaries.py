@@ -697,6 +697,13 @@ def add_cmte_financial_data(context, data_type):
                     cmte['committee_designation']]
                 cmte.update(add_fake_chart_data())
                 full_cmtes[tmpl_group].append(cmte)
+
+                for report in cmte['reports']:
+                    report['receipts'] = report['total_receipts_period']
+                    report['disbursements'] = report['total_disbursements_period']
+                    report['cash'] = report['cash_on_hand_end_period']
+                    report['debt'] = report['debts_owed_by_committee']
+
             elif cmte['committee_designation'] is 'J':
                 full_cmtes['joint_committees'].append(cmte)
             else:
@@ -707,7 +714,7 @@ def add_cmte_financial_data(context, data_type):
             cmte.update(load_cmte_financials(cmte['committee_id']))
             cmte.update(_map_committee_financials(cmte))
             cmte.update(add_fake_chart_data())
-        full_cmtes = {'financial_summary': cmte}
+
     else:
         pass
     return full_cmtes
