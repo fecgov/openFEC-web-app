@@ -69,7 +69,8 @@
                   <li><span class="swatch data--disbursements"></span> Disbursements</li>
                 </ul>
               </div>
-              {{ charts.chart_series_grouped(committee.fake_data, ('receipts', 'disbursements'), label_key="date", tooltip=group_bar_tooltip) }}
+              {{ charts.chart_series_grouped(committee.reports,
+                ('total_receipts_period', 'total_disbursements_period'), label_key="date", tooltip=group_bar_tooltip) }}
             </figure>
           </div>
           <div class="row">
@@ -81,7 +82,8 @@
                   <li><span class="swatch data--debt"></span> Debt</li>
                 </ul>
               </div>
-              {{ charts.chart_series_grouped(committee.fake_data, ('cash_on_hand', 'debts_owed'), label_key="date", tooltip=group_bar_tooltip) }}
+                {{ charts.chart_series_grouped(committee.reports,
+                ('cash_on_hand_end_period', 'debts_owed_by_committee'), label_key="date", tooltip=group_bar_tooltip) }}
             </figure>
           </div>
         </div><!-- .hidden-container -->
