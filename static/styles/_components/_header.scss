@@ -12,6 +12,7 @@
 
   a {
   	color: #fff;
+    text-decoration: underline;
   }
 
  .side-toggle {
@@ -22,6 +23,7 @@
 }
 .header-nav {
   @include clearfix();
+  // border-bottom: 5px solid $red;
 }
 
 .header-nav__list {

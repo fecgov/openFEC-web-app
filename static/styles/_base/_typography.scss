@@ -73,7 +73,6 @@ a {
 
   &:active, &:focus {
     color: $hover-link-color;
-    outline: none;
   }
 
   &.link--delete {

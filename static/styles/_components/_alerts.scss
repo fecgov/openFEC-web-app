@@ -1,6 +1,5 @@
 #notice {
-  background-color: $blue;
-  color: #fff;
+  box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
   padding: 20px;
   padding: 2rem;
 
@@ -10,5 +9,9 @@
 
   .js-hide {
     float: right;
+  }
+
+  .link--icon {
+    text-decoration: none;
   }
 }
