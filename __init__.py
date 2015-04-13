@@ -1,5 +1,5 @@
 from openfecwebapp.config import (port, debug, host, api_location,
-    username, password, debug)
+    username, password, test)
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from openfecwebapp.views import (render_search_results, render_table,
@@ -16,11 +16,11 @@ app = Flask(__name__)
 
 app.jinja_env.globals['api_location'] = api_location
 
-app.config['BASIC_AUTH_USERNAME'] = username
-app.config['BASIC_AUTH_PASSWORD'] = password
-app.config['BASIC_AUTH_FORCE'] = True
-
-basic_auth = BasicAuth(app)
+if not test:
+    app.config['BASIC_AUTH_USERNAME'] = username
+    app.config['BASIC_AUTH_PASSWORD'] = password
+    app.config['BASIC_AUTH_FORCE'] = True
+    basic_auth = BasicAuth(app)
 
 def _convert_to_dict(params):
     """ move from immutablemultidict -> multidict -> dict """
@@ -51,7 +51,7 @@ def candidate_page(c_id):
     data = load_single_type('candidate', c_id, {})
     return render_page('candidate', data)
 
-@app.route('/committees/<c_id>')
+@app.route('/committee/<c_id>')
 def committee_page(c_id):
     data = load_single_type('committee', c_id, {})
     return render_page('committee', data)

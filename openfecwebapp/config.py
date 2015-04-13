@@ -14,3 +14,7 @@ password = os.getenv('FEC_WEB_PASSWORD', '')
 # you can only give a var a string using set-env with Cloud Foundry
 # set FEC_WEB_DEBUG to any string but an empty one if you want debug on
 debug = bool(os.getenv('FEC_WEB_DEBUG', ''))
+
+# used to turn auth off for testing
+# set to a non-empty string in your environment if you want auth off
+test = os.getenv('FEC_WEB_TEST')

@@ -12,8 +12,8 @@ def _map_committee_financials(vals):
     from the 'totals' endpoint for use on candidate
     and committee pages
     """
-    reports = vals['reports'][0]
-    totals = vals['totals'][0]
+    reports = vals['reports'][0] if vals['reports'] else {}
+    totals = vals['totals'][0] if vals['totals'] else {}
     totals_mapped = {}
     value_map = {
         'total_receipts': totals.get('receipts'),
