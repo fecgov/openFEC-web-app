@@ -30,7 +30,7 @@ def load_single_type_summary(data_type, filters):
     return _call_api(url, filters)
 
 def load_single_type(data_type, c_id, filters):
-    url = api_location + '/' + data_type + '/' + c_id
+    url = '/' + data_type + '/' + c_id
 
     return _call_api(url, filters)
 
