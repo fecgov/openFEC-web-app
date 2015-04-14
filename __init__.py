@@ -41,11 +41,6 @@ def candidate_page_with_cycle(c_id, cycle):
     data = load_single_type('candidate', c_id, {'year': cycle})
     return render_page('candidate', data)
 
-@app.route('/committees/<c_id>/<cycle>')
-def committee_page_with_cycle(c_id, cycle):
-    data = load_single_type('committee', c_id, {'year': cycle})
-    return render_page('committee', data)
-
 @app.route('/candidate/<c_id>')
 def candidate_page(c_id):
     data = load_single_type('candidate', c_id, {})
