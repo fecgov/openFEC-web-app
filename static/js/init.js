@@ -47,18 +47,6 @@ $(document).ready(function() {
         })
     }
 
-    // Forcing the .main-container to fit the entire height of the page
-    // var setMainSize = function() {
-    //     var headerHeight = $('.site-header').height(),
-    //         footerHeight = $('footer').height(),
-    //         pageHeight = $('.page-wrap').height(),
-    //         mainHeight = pageHeight - headerHeight;
-    //         $('.main-container').height(mainHeight);
-    // }
-
-    // setMainSize();
-
-
     // Reveal containers
     if ( $('.js-reveal-container').length > 0 ) {
         var $revealButton = $('.js-reveal-button');
@@ -85,6 +73,22 @@ $(document).ready(function() {
         var hideElement = $(this).data('hides');
         $('#' + hideElement).attr('aria-hidden', true);
     })
+
+    // Notice close-state persistence    
+    if (typeof window.sessionStorage !== 'undefined') {
+        if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
+            $('#notice').attr('aria-hidden', true);
+        } else {
+            $('#notice').attr('aria-hidden', false);
+        }
+    }
+
+    $("#notice-close").click(function(){
+        if (typeof window.sessionStorage !== 'undefined') {
+            window.sessionStorage.setItem('keep-banner-closed', '1');
+        }
+    });
+
     // unload overlay
     // CSS spinner courtesy of http://tobiasahlin.com/spinkit/
     var spinner = '<div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
