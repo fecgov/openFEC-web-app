@@ -32,7 +32,13 @@
     {% for key in value_keys %}
       {{ chart_bar(group[key], key, tooltip=tooltip, attr={}) }}
     {% endfor %}
-    <div class="chart-series__group__label">{{ group[label_key]|default('') }}</div>
+    <div class="chart-series__group__label">
+      {% if label_key is string %}
+        {{ group[label_key]|default('') }}
+      {% else %}
+        {{ group[label_key[0]]|default('') }} - {{ group[label_key[1]]|default('') }}
+      {% endif %}
+    </div>
   </div>
   {% endfor %}
 </div>

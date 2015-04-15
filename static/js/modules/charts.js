@@ -79,7 +79,7 @@ function chartSeries() {
           .attr('class', 'chart-series__axis'),
         property = dimension === 'width' ? 'right' : 'bottom';
     axis.selectAll('.tick')
-      .data(scale.ticks(4))
+      .data(scale.ticks(1))
       .enter()
       .append('div')
         .attr('class', 'chart-series__axis__tick')
