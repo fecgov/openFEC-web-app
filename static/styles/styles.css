@@ -638,24 +638,24 @@ input[type="submit"],
     background-color: #6B143B; }
 
 .color-receipt {
-  background-color: #2678BA; }
+  background-color: #6289A8; }
   .color-receipt:hover {
-    background-color: #1d5d90; }
+    background-color: #4d6f8a; }
 
 .color-disbursement {
-  background-color: #DB4857; }
+  background-color: #205683; }
   .color-disbursement:hover {
-    background-color: #c92738; }
+    background-color: #163b5a; }
 
 .color-cash {
-  background-color: #158552; }
+  background-color: #6289A8; }
   .color-cash:hover {
-    background-color: #0e5937; }
+    background-color: #4d6f8a; }
 
 .color-debt {
-  background-color: #323A45; }
+  background-color: #205683; }
   .color-debt:hover {
-    background-color: #1d2127; }
+    background-color: #163b5a; }
 
 .u-text-center {
   text-align: center; }
@@ -2064,29 +2064,29 @@ footer {
 
 .data--disbursement,
 .data--disbursements {
-  background: #DB4857; }
+  background: #205683; }
   .data--disbursement .chart-series__bar__tooltip,
   .data--disbursements .chart-series__bar__tooltip {
-    color: #DB4857; }
+    color: #205683; }
 
 .data--receipts {
-  background: #2678BA; }
+  background: #6289A8; }
   .data--receipts .chart-series__bar__tooltip {
-    color: #2678BA; }
+    color: #6289A8; }
 
 .data--cash,
 .data--cash_on_hand {
-  background: #158552; }
+  background: #6289A8; }
   .data--cash .chart-series__bar__tooltip,
   .data--cash_on_hand .chart-series__bar__tooltip {
-    color: #158552; }
+    color: #6289A8; }
 
 .data--debt,
 .data--debts_owed {
-  background: #323A45; }
+  background: #205683; }
   .data--debt .chart-series__bar__tooltip,
   .data--debts_owed .chart-series__bar__tooltip {
-    color: #323A45; }
+    color: #205683; }
 
 .data--support {
   background: #1B5585; }

@@ -39,14 +39,15 @@ $data-support: #1B5585; // Blue
 $data-support-2: #103552; // Darker blue
 $data-oppose: #A9205C; // Purple
 $data-oppose-2: #6B143B; // Darker purple
-// $data-receipt: #148552; // Green
-$data-receipt: $blue;
+$data-a: #6289A8;
+$data-b: #205683;
+$data-receipt: $data-a;
 $data-receipt-2: darken($data-receipt, 10%);
-$data-disbursement: #DB4857; // Salmon
+$data-disbursement: $data-b;
 $data-disbursement-2: darken($data-disbursement, 10%);
-$data-cash: #158552;
+$data-cash: $data-a;
 $data-cash-2: darken($data-cash, 10%);
-$data-debt: #323A45;
+$data-debt: $data-b;
 $data-debt-2: darken($data-debt, 10%);
 
 
