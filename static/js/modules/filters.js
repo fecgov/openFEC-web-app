@@ -32,7 +32,7 @@ var deactivateFilter = function() {
 };
 
 var bindFilters = function(e) {
-    $('#category-filters select').chosen({
+    $('#category-filters select, select[name=election_cycle]').chosen({
         width: "100%",
         allow_single_deselect: true
     });
@@ -65,6 +65,20 @@ var bindFilters = function(e) {
         else {
             $plusButton.removeClass('disabled');
         }
+    });
+
+    // election cycle dropdown functionality
+    $('select[name=election_cycle]').chosen().change(function(e, selected) {
+        var $e = $(e.target),
+            url = document.location.origin
+                + '/'
+                + $e.attr('data-type')
+                + '/'
+                + $e.attr('data-id')
+                + '/'
+                + selected.selected;
+
+        document.location = url;
     });
 
     // apply name filter

@@ -132,3 +132,12 @@ body {
   background-color: $lightest-gray;
   border-top: 1px solid $light-gray;
 }
+
+.section--blue {
+  background-color: $blue;
+  color: #fff;
+
+  a[href] {
+    text-decoration: underline;
+  }
+}

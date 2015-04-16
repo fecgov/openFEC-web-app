@@ -29,9 +29,8 @@ def load_single_type_summary(data_type, filters):
 
     return _call_api(url, filters)
 
-def load_single_type(data_type, c_id):
+def load_single_type(data_type, c_id, filters):
     url = '/' + data_type + '/' + c_id
-    filters = {'year': '*'}
 
     return _call_api(url, filters)
 
