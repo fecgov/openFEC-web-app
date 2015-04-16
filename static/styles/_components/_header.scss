@@ -11,7 +11,7 @@
   color: #fff;
 
   a {
-  	color: #fff;
+    color: #fff;
     text-decoration: underline;
   }
 
@@ -23,7 +23,6 @@
 }
 .header-nav {
   @include clearfix();
-  // border-bottom: 5px solid $red;
 }
 
 .header-nav__list {

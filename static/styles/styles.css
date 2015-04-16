@@ -1075,7 +1075,7 @@ input[type="submit"],
   .tt-cursor .tt-suggestion__office {
     color: #fff; }
 
-*[aria-hidden="true"],
+[aria-hidden="true"],
 .hidden {
   display: none; }
 
