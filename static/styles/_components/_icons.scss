@@ -4,6 +4,11 @@
   	vertical-align: top;
 }
 
+// Any link that has a js action should show a pointer cursor
+.js-action {
+  cursor: pointer;
+}
+
 // Spinner
 // Source: http://tobiasahlin.com/spinkit/
 .spinner {
