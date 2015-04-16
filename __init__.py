@@ -36,14 +36,19 @@ def search():
     else:
         return render_template('search.html');
 
+@app.route('/candidate/<c_id>/<cycle>')
+def candidate_page_with_cycle(c_id, cycle):
+    data = load_single_type('candidate', c_id, {'year': cycle})
+    return render_page('candidate', data)
+
 @app.route('/candidate/<c_id>')
 def candidate_page(c_id):
-    data = load_single_type('candidate', c_id)
+    data = load_single_type('candidate', c_id, {})
     return render_page('candidate', data)
 
 @app.route('/committee/<c_id>')
 def committee_page(c_id):
-    data = load_single_type('committee', c_id)
+    data = load_single_type('committee', c_id, {})
     return render_page('committee', data)
 
 @app.route('/candidates')
