@@ -7,6 +7,7 @@ from openfecwebapp.views import (render_search_results, render_table,
 from openfecwebapp.api_caller import (load_search_results,
     load_single_type, load_single_type_summary,
     install_cache)
+from newrelic import agent as nr_agent
 
 import sys
 import locale
@@ -84,6 +85,7 @@ def currency_filter(num, grouping=True):
     return locale.currency(num, grouping=grouping)
 
 if __name__ == '__main__':
+    nr_agent.initialize()
     if '--cached' in sys.argv:
         install_cache()
     app.run(host=host, port=int(port), debug=debug)
