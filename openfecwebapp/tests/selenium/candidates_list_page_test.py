@@ -1,8 +1,5 @@
 from .base_test_class import BaseTest
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 import time
 
 
@@ -41,7 +38,7 @@ class CandidatesPageTests(BaseTest):
         self.assertEqual(
             div.get_attribute('class'),
             'field active')
-        div.find_element_by_tag_name('input').send_keys(Keys.ENTER)
+        self.driver.find_element_by_id('category-filters').submit()
         results = (self.driver.find_elements_by_tag_name('tr'))
         col = [y.find_elements_by_tag_name('td')[index]
                 .text for y in results[1:]]

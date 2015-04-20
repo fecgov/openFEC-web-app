@@ -1,7 +1,16 @@
+import os
+import unittest
+
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-import unittest
 from nose.plugins.attrib import attr
+
+
+drivers = {
+    'phantomjs': lambda: webdriver.PhantomJS(service_args=['--ignore-ssl-errors=true']),
+    'firefox': lambda: webdriver.Firefox(),
+    'chrome': lambda: webdriver.Chrome(),
+}
 
 
 @attr('selenium')
@@ -9,7 +18,7 @@ class BaseTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.PhantomJS()
+        cls.driver = drivers[os.getenv('FEC_SELENIUM_DRIVER', 'phantomjs')]()
         cls.driver.set_window_size(2000, 2000)
         cls.base_url = 'http://localhost:3000'
 
