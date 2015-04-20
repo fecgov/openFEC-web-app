@@ -6,10 +6,29 @@ from selenium.common.exceptions import NoSuchElementException
 from nose.plugins.attrib import attr
 
 
+sauce_url = 'http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub'.format(
+    os.getenv('SAUCE_USERNAME'),
+    os.getenv('SAUCE_ACCESS_KEY'),
+)
+
+
 drivers = {
-    'phantomjs': lambda: webdriver.PhantomJS(service_args=['--ignore-ssl-errors=true']),
-    'firefox': lambda: webdriver.Firefox(),
-    'chrome': lambda: webdriver.Chrome(),
+    'chrome': lambda cls: webdriver.Chrome(),
+    'firefox': lambda cls: webdriver.Firefox(),
+    'phantomjs': lambda cls: webdriver.PhantomJS(
+        service_args=['--ignore-ssl-errors=true'],
+    ),
+    'remote': lambda cls: webdriver.Remote(
+        desired_capabilities={
+            'name': cls.__name__,
+            'build': os.getenv('TRAVIS_BUILD_NUMBER'),
+            'tunnel-identifier': os.getenv('TRAVIS_JOB_NUMBER'),
+            'platform': os.getenv('FEC_SAUCE_PLATFORM', 'Mac OS X 10.9'),
+            'browserName': os.getenv('FEC_SAUCE_BROWSER', 'chrome'),
+            'version': os.getenv('FEC_SAUCE_VERSION', ''),
+        },
+        command_executor=sauce_url,
+    ),
 }
 
 
@@ -18,8 +37,9 @@ class BaseTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = drivers[os.getenv('FEC_SELENIUM_DRIVER', 'phantomjs')]()
+        cls.driver = drivers[os.getenv('FEC_SELENIUM_DRIVER', 'phantomjs')](cls)
         cls.driver.set_window_size(2000, 2000)
+        cls.driver.implicitly_wait(30)
         cls.base_url = 'http://localhost:3000'
 
     @classmethod
