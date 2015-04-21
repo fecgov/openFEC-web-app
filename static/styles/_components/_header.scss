@@ -1,9 +1,33 @@
 // MODULE: Header
-.usa {
+.banner {
   @include font-size(1.2);
   text-align: center;
   padding: .5em;
   border-bottom: 1px solid $licorice;
+}
+
+.banner--left {
+  float: left;
+  display: none;
+
+  @include media($medium) {
+    display: block;
+  }
+}
+
+.banner--center {
+  display: none;
+
+  @include media($medium) {
+    display: inline;
+  }
+}
+
+.banner--right {
+  @include media($medium) {
+    float: right;
+    display: block;
+  }
 }
 
 .site-header {
@@ -14,15 +38,16 @@
     color: #fff;
     text-decoration: underline;
   }
-
- .side-toggle {
-    float: left;
-    border-right: none;
-    border-left:  1px solid $light-gray;
-  }
 }
+
 .header-nav {
   @include clearfix();
+  display: none;
+  float: left;
+
+  @include media($medium) {
+    display: block;
+  }
 }
 
 .header-nav__list {
@@ -48,56 +73,35 @@
 }
 
 
-.header-nav__brand {
-  @include rem(padding, 1rem 2rem);
+.header-brand {
+  padding: 1rem 2rem;
   display: block;
   text-align: center;
   position: relative;
-}
-
-// Uncomment to bring back the red arrow look
-// .header-nav__brand {
-// 	@include rem(padding, 1rem 2rem);
-// 	@include transition(background-color .1s);
-// 	background-color: $red;
-// 	display: block;
-// 	text-align: center;
-//   position: relative;
-
-//   &:after {
-//     content: '';
-//     @include transition(border-color .1s);
-//     display: block;
-//     position: absolute;
-//     right: -10px;
-//     top: 0;
-//     width: 0;
-//     height: 0;
-//     border-style: solid;
-//     border-width: 28px 0 28px 10px;
-//     border-color: transparent transparent transparent $red;
-//   }
-
-// 	&:hover,
-// 	&:active {
-// 		background: $red-2;
-
-//     &:after {
-//       border-color: transparent transparent transparent $red-2;
-//     }
-// 	}
-// }
-
-.header-nav__right {
-  @include clearfix();
-  float: right;
-}
-
-.header-nav__search {
-  @include clearfix();
-  @include rem(padding, 1rem 2rem);
-  margin-right: 0;
   float: left;
+  width: 70%;
+
+  @include media($medium) {
+    width: auto;
+  }
+}
+
+.site-header .side-toggle {
+  width: 15%;
+  padding: 1.6rem 0;
+
+  @include media($medium) {
+    width: auto;
+    padding: 1.6rem 2rem;
+  }
+}
+
+.header-search {
+  @include clearfix();
+  display: none; // Hiding on $small
+  padding: 1rem 2rem;
+  margin-right: 0;
+  float: right;
   width: 340px;
 
   input[type="text"],
@@ -116,34 +120,26 @@
   	width: 40px;
   	padding: 0;
   }
-}
 
-@include media($medium) {
-  .header-nav__link {
-    @include rem(padding, .5rem);
-
-    &:last-child {
-      border-right: none;
-    }
-  }
-
-  .header-nav__search {
-    @include rem(padding, .5rem);
+  @include media($medium) {
+    display: block;
   }
 }
 
-@include media($small) {
-  .header-nav__item {
-    @include span-columns(2, block-collapse);
-  }
+#site-menu-toggle {
+  float: left;
 
-  .header-nav__search {
-    @include span-columns(4);
-    @include rem(padding, .5rem 0 0 0);
-    border-right: none;
+  @include media($medium) {
+    display: none;
   }
 }
 
 .section-header {
   border-bottom: 2px solid $medium-gray;
+}
+
+#glossary-toggle {
+  border-left: 1px solid $light-gray;
+  border-right: none;
+  float: right;
 }

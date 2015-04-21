@@ -23,7 +23,6 @@ class CommitteesPageTests(BaseTest):
         self.driver.get(self.url)
         self.openFilters()
         cycle = self.getFilterDivByName(name)
-        time.sleep(1)
         cycle.find_element_by_xpath('./div/a/div/b').click()
         self.assertEqual(
             cycle.find_element_by_xpath('./div').get_attribute('class'),
@@ -38,7 +37,7 @@ class CommitteesPageTests(BaseTest):
         self.assertEqual(
             cycle.get_attribute('class'),
             'field active')
-        cycle.find_element_by_tag_name('input').send_keys(Keys.ENTER)
+        self.driver.find_element_by_id('category-filters').submit()
         results = (self.driver.find_elements_by_tag_name('tr'))
         col = [y.find_elements_by_tag_name('td')[index]
                 .text for y in results[1:]]
