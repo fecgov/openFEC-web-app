@@ -1,20 +1,20 @@
 // MODULE: Hero Unit
 .hero {
-  @include rem(padding, 6.0rem 0);
+  padding: 2rem 0;
   color: #fff;
   text-align: center;
   background-color: $licorice;
   background-image: url('../img/mesh@2x.png');
   background-size: contain;
+
+  @include media($large) {
+    padding: 6rem 0;
+  }
 }
 
 .hero__content {
-  @include span-columns(18);
-  @include shift(3);
-}
-
-@include media($small) {
-  .hero {
-    padding: 2em 0;
+  @include media($large) {
+    @include span-columns(18);
+    @include shift(3);    
   }
 }

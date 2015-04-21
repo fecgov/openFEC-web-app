@@ -1,0 +1,48 @@
+.modal {
+    position: fixed;
+    top: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    background: $licorice-2;
+    z-index: 999;
+    color: #fff;
+    border: 1px solid $modal-border;
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,.5);
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
+.modal__row {
+    border-bottom: 1px solid $modal-border;
+    padding: 1.5rem 1rem;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.modal__overlay {
+    position: fixed;
+    background-color: rgba($licorice-2, .9);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 998;
+}
+
+.modal__nav {
+    @include font-size(1.8);
+}
+
+.modal__close {
+    position: absolute;
+    width: 50%;
+    bottom: 1.5rem;
+    left: 25%;
+    background: none;
+    color: #fff;
+}
