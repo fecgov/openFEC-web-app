@@ -1,6 +1,1 @@
-*.swp
-*.pyc
-node_modules
-.sass-cache/
-static/styles/styles.css.map
-app/
+.gitignore
