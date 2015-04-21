@@ -100,34 +100,36 @@ select {
   @include clearfix();
 
   #{$all-text-inputs} {
-    width: 75%;
-    float: left;
-    border-radius: $base-border-radius 0 0 $base-border-radius;
-    margin: 0;
-    border-right: none;
+    border-radius: 4px;
+    width: 100%;
+    margin: 0 0 .5rem 0;
   }
 
   input[type="submit"],
   button,
   .button {
-    @include rem(height, 4.0rem);
-    width: 25%;
-    float: left;
-    border-radius: 0 $base-border-radius $base-border-radius 0;
+    border-radius: 4px;
+    width: 100%;
+    margin: 0;
   }
 
   @include media($medium) {
-    #{$all-text-inputs} {
-      width: 60%;
+   #{$all-text-inputs} {
+      width: 75%;
       float: left;
-      border-radius: $base-border-radius 0 0 $base-border-radius;
+      margin: 0;
+      border-radius: 4px 0 0 4px;
+      border-right: none;
     }
 
-    input[type="submit"] {
-      width: 40%;
+    input[type="submit"],
+    button,
+    .button {
+      @include rem(height, 4.0rem);
+      width: 25%;
       float: left;
-      border-radius: 0 $base-border-radius $base-border-radius 0;
-    }
+      border-radius: 0 4px 4px 0;
+    }    
   }
 }
 

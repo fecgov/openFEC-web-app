@@ -21,32 +21,32 @@ h1, h2, h3, h4, h5, h6 {
 
 h1,
 .h1 {
-  @include font-size(3.2);
+  @include font-size(2.6);
   font-weight: 600;
 }
 
 h2,
 .h2 {
-  @include font-size(2.8);
+  @include font-size(2.2);
   font-weight: 600;
-  margin-bottom: 1em;
+  margin-bottom: .5em;
 }
 
 h3,
 .h3 {
-  @include font-size(2.4);
+  @include font-size(2.0);
   font-weight: 600;
 }
 
 h4,
 .h4 {
-  @include font-size(2.0);
+  @include font-size(1.6);
   font-weight: 600;
 }
 
 h5,
 .h5 {
-  @include font-size(1.6);
+  @include font-size(1.4);
   font-weight: 600;
 }
 
@@ -54,6 +54,38 @@ h6,
 .h6 {
   @include font-size(1.4);
   font-weight: 600;
+}
+
+@include media($medium) {
+  h1,
+  .h1 {
+    @include font-size(3.2);
+  }
+
+  h2,
+  .h2 {
+    @include font-size(2.8);
+  }
+
+  h3,
+  .h3 {
+    @include font-size(2.4);
+  }
+
+  h4,
+  .h4 {
+    @include font-size(2.0);
+  }
+
+  h5,
+  .h5 {
+    @include font-size(1.6);
+  }
+
+  h6,
+  .h6 {
+    @include font-size(1.4);
+  }
 }
 
 p {
@@ -128,17 +160,29 @@ cite {
 // Universal text classes
 
 .text--display {
-  @include font-size(4.0);
+  @include font-size(2.6);
   margin-bottom: .5em;
+
+  @include media($medium) {
+    @include font-size(4.0);
+  }
 }
 
 .text--hero {
-  @include font-size(2.4);
+  @include font-size(1.8);
   margin-bottom: 1em;
+
+  @include media($medium) {
+    @include font-size(2.4);
+  }
 }
 
 .text--lead {
-  @include font-size(1.8);
+  @include font-size(1.6);
+
+  @include media($medium) {
+    @include font-size(1.8);
+  }
 }
 
 .text--query {
@@ -151,6 +195,15 @@ cite {
 
 .text--white {
   color: #fff;
+}
+
+.text--small {
+  @include font-size(1.0);
+  margin: 0;
+  
+  @include media($medium) {
+      @include font-size(1.0);
+  }
 }
 
 // Data styles
