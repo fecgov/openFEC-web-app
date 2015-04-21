@@ -1,26 +1,34 @@
 python: "3.4"
 
-sudo: false
-
 addons:
   sauce_connect: true
+  postgresql: "9.3"
 
 env:
   global:
+    - SQLA_CONN="postgresql://:@/cfdm_test"
     - FEC_WEB_TEST: true
     - FEC_SELENIUM_DRIVER: remote
-    - FEC_WEB_API_URL: http://fec-dev-api.cf.18f.us
     - secure: SQfanR6GI/1i4v7XPEKT26mKjd1BT/Qt1/5fjrhEIiA4PL2ZWnvArBmcKeq3q3CcVy2KQDTUr4vvPKbo4HGAw1EcUvnJ5lF6v3h0FmZ/bhMdkHk1e/UvfIVjOm0mEO80FDiXRcWEiYgY/Z4LwJ1l2iNC45j/1Odacj9I3fOdteY=
     - secure: aXkcjh6AHi1MnY1vZ5Nu8/8OexUZ4n8ul5hrM9iex0QdJAm4AoxF0idHybinTAAL7/gSEineX1to6GC3GVnAV/f/FU1mo8sjt0hvwTAx8b+ONR0M0sJW2KrPJRABQK4Dtxu+PQkE4Qim0GaJQ6LBJwTAB+HiegYymqrUFSV5tm0=
     - FEC_SAUCE_BROWSER: firefox
 
 before_script:
-  - apt-get install python-selenium
-  - pip install -r requirements.txt
+  - sudo pip install -r requirements.txt
   - npm install
   - npm install -g browserify
   - npm run build
   - python __init__.py &
+
+  - git clone git@github.com:18F/openFEC.git@master
+  - cd openFEC
+  - psql -c 'create database cfdm_test;' -U postgres
+  - md5sum data/cfdm_test.pgdump.sql
+  - psql -f data/cfdm_test.pgdump.sql -U postgres cfdm_test
+  - psql -c "SELECT count(*) FROM dimcand" -U postgres cfdm_test
+  - pip install -r requirements.txt
+  - python manage.py update_schemas
+  - python manage.py runserver &
 
 script:
   - nosetests openfecwebapp/tests -a "selenium"
