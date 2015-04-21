@@ -184,14 +184,25 @@ td {
   @include font-size(1.6);
 
   .table__cell {
-    width: 20%;
+    width: 40%;
 
     &:first-child {
-      width: 30%;
+      width: 60%;
       font-weight: bold;
     }
-    &:last-child {
-      width: 40%;
+  }
+
+  &.totals-table--charts {
+    .table__cell {
+      width: 20%;
+
+      &:first-child {
+        width: 30%;
+        font-weight: bold;
+      }
+      &:last-child {
+        width: 40%;
+      }
     }
   }
 }
