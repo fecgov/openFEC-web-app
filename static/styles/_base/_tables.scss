@@ -172,8 +172,10 @@ td {
   }
 
   .table__row--header {
-    border-bottom: 0;
+    border-top: 1px solid $light-gray;
     margin-left: -.75em;
+    padding-top: .5em;
+
   }
 
 }

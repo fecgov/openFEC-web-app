@@ -25,7 +25,8 @@
 </div>
 {% endmacro %}
 
-{% macro chart_series_grouped(groups, value_keys, label_key='label', orient='vertical', tooltip=default_tooltip, attr={}) %}
+{% macro chart_series_grouped(groups, value_keys,
+    label_key='label', orient='vertical', tooltip=default_tooltip, attr={}) %}
 <div class="js-chart-series chart-series chart-series--grouped chart-series--{{ orient }} {{ attr.class|default('') }}">
   {% for group in groups %}
   <div class="chart-series__group">
@@ -34,9 +35,9 @@
     {% endfor %}
     <div class="chart-series__group__label">
       {% if label_key is string %}
-        {{ group[label_key]|default('') }}
+        {{ group[label_key]|default('')|date_sm }}
       {% else %}
-        {{ group[label_key[0]]|default('') }} - {{ group[label_key[1]]|default('') }}
+        {{ group[label_key[0]]|default('')|date_sm }} - {{ group[label_key[1]]|default('')|date_sm }}
       {% endif %}
     </div>
   </div>

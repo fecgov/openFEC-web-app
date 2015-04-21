@@ -8,6 +8,7 @@ from openfecwebapp.api_caller import (load_search_results,
     load_single_type, load_single_type_summary,
     install_cache)
 
+import datetime
 import sys
 import locale
 import jinja2
@@ -89,6 +90,13 @@ def server_error(e):
 @app.template_filter('currency')
 def currency_filter(num, grouping=True):
     return locale.currency(num, grouping=grouping)
+
+@app.template_filter('date_sm')
+def date_filter_sm(date_str):
+    if date_str is None or date_str == '':
+        return ''
+    d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
+    return d.strftime('%m/%y')
 
 if __name__ == '__main__':
     if '--cached' in sys.argv:

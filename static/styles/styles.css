@@ -149,6 +149,9 @@ cite {
 .text--white {
   color: #fff; }
 
+.text--black {
+  color: #000; }
+
 .data, .data--label, .data--content,
 .data--link {
   font-size: 16px;
@@ -444,8 +447,9 @@ td {
   .table--simple .table:last-child {
     margin-left: 2%; }
   .table--simple .table__row--header {
-    border-bottom: 0;
-    margin-left: -.75em; }
+    border-top: 1px solid #D7D7D7;
+    margin-left: -.75em;
+    padding-top: .5em; }
 
 .totals-table {
   font-size: 16px;

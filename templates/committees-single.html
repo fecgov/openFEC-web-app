@@ -89,20 +89,22 @@
       </nav>
     </div>
 
-    {% macro totals_table_cell(name, pretty_name, totals) %}
+    {% macro totals_table_cell(name, pretty_name, totals, include_chart=True) %}
       {% import 'macros/charts.html' as charts %}
       <div class="table__row">
         <div class="table__cell">{{ pretty_name }} </div>
         <div class="table__cell">{{ totals[name]|default(0)|currency }}</div>
+        {% if include_chart %}
         <div class="table__cell table__cell--bar">
           {{ charts.chart_bar(totals[name]|default(0),
                               pretty_name,
                               tooltip=None) }}
         </div>
+        {% endif %}
       </div>
     {% endmacro %}
 
-    {% macro totals_table(key, pretty_name, committee, mapping) %}
+    {% macro totals_table(key, pretty_name, description, committee, mapping, include_chart=True) %}
       <figure class="table--simple totals-table">
         <div class="table js-chart-series chart-series--horizontal">
           <div class="table__row table__row--header">
@@ -112,9 +114,14 @@
             <div class="table__cell">
               <h4>{{ committee[key]|default("unavailable") }}</h4>
             </div>
+            {% if description %}
+            <div class="table__cell u-text-center">
+              <span class="text--black"><em>{{ description }}</em></span>
+            </div>
+            {% endif %}
           </div>
           {% for item in mapping[key] %}
-            {{ totals_table_cell(item[0], item[1], committee.totals.0) }}
+            {{ totals_table_cell(item[0], item[1], committee.totals.0, include_chart=include_chart) }}
           {% endfor %}
           <div class="table__row--note">
             Calculated from reports filed {{committee.report_year}}
@@ -155,9 +162,11 @@
                  ],
                }
             %}
-            {{ totals_table('total_receipts', 'Total receipts', committee, mapping) }}
-            {{ totals_table('total_disbursements', 'Total disbursements', committee, mapping) }}
-            {{ totals_table('total_cash', 'Total cash', committee, mapping) }}
+            {{ totals_table('total_receipts', 'Total receipts',
+              'Money received by the committee', committee, mapping) }}
+            {{ totals_table('total_disbursements', 'Total disbursements',
+              'Money spent by the committee', committee, mapping) }}
+            {{ totals_table('total_cash', 'Total cash', None, committee, mapping, include_chart=False) }}
             {% endwith %}
           </div>
           <div class="row">
