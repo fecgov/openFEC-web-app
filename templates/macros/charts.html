@@ -26,7 +26,7 @@
 {% endmacro %}
 
 {% macro chart_series_grouped(groups, value_keys, label_key='label', orient='vertical', tooltip=default_tooltip, attr={}) %}
-<div class="chart-series chart-series--grouped chart-series--{{ orient }} {{ attr.class|default('') }}">
+<div class="js-chart-series chart-series chart-series--grouped chart-series--{{ orient }} {{ attr.class|default('') }}">
   {% for group in groups %}
   <div class="chart-series__group">
     {% for key in value_keys %}

@@ -10,11 +10,18 @@ from openfecwebapp.api_caller import (load_search_results,
 
 import sys
 import locale
+import jinja2
 locale.setlocale(locale.LC_ALL, '')
 
 app = Flask(__name__)
 
+@jinja2.contextfunction
+def get_context(c):
+    return c
+
 app.jinja_env.globals['api_location'] = api_location
+app.jinja_env.globals['context'] = get_context
+app.jinja_env.globals['callable'] = callable
 
 if not test:
     app.config['BASIC_AUTH_USERNAME'] = username

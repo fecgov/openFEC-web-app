@@ -10,7 +10,11 @@
       <div class="container">
         <div class="entity__header--top row">
             <h1 class="entity__name">{{ name }}</h1>
-            <span class="entity__type"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committee - {{ designation }}</span>
+            <span class="entity__type">
+              <img class="category-icon"
+                   width="20" height="20"
+                   src="/static/img/icon-committee--white.svg"
+                   alt="Icon representing committees">Committee - {{ designation }}</span>
         </div>
         <div class="entity__header--bottom row">
           <ul class="entity__info">
@@ -85,40 +89,82 @@
       </nav>
     </div>
 
+    {% macro totals_table_cell(name, pretty_name, totals) %}
+      {% import 'macros/charts.html' as charts %}
+      <div class="table__row">
+        <div class="table__cell">{{ pretty_name }} </div>
+        <div class="table__cell">{{ totals[name]|default(0)|currency }}</div>
+        <div class="table__cell table__cell--bar">
+          {{ charts.chart_bar(totals[name]|default(0),
+                              pretty_name,
+                              tooltip=None) }}
+        </div>
+      </div>
+    {% endmacro %}
+
+    {% macro totals_table(key, pretty_name, committee, mapping) %}
+      <figure class="table--simple totals-table">
+        <div class="table js-chart-series chart-series--horizontal">
+          <div class="table__row table__row--header">
+            <div class="table__cell">
+              <h4>{{ pretty_name }}</h4>
+            </div>
+            <div class="table__cell">
+              <h4>{{ committee[key]|default("unavailable") }}</h4>
+            </div>
+          </div>
+          {% for item in mapping[key] %}
+            {{ totals_table_cell(item[0], item[1], committee.totals.0) }}
+          {% endfor %}
+          <div class="table__row--note">
+            Calculated from reports filed {{committee.report_year}}
+          </div>
+        </div>
+      </figure>
+    {% endmacro %}
+
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
-      <div class="container">
-        {% if financial_summary %}
-        <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-        <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-        <figure class="page-subsection table--simple financial_summary-table">
-          <h5 class="figure__title">Totals for {{financial_summary.years_totals}}</h5>
-          <div class="table__half">
-            <div class="table__row">
-              <div class="table__cell">Total receipts</div>
-              <div class="table__cell">{{financial_summary.total_receipts}}</div>
-            </div>
-            <div class="table__row">
-              <div class="table__cell">Total disbursements</div>
-                <div class="table__cell">{{financial_summary.total_disbursements}}</div>
-            </div>
-            <div class="table__row--note">
-              Calculated from reports filed {{financial_summary.report_year}}
-            </div>
+      <div class="container committee-summary">
+        {% if totals %}
+          <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+          <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
+          <div class="row">
+            <h3 class="section-header">Detailed Summary</h3>
+            {% with committee=context() %}
+            {% set mapping = {
+                 'total_receipts': [
+                   ('individual_itemized_contributions', 'Itemized Individual Contributions'),
+                   ('individual_unitemized_contributions', 'Unitemized Individual Contributions'),
+                   ('transfers_to_affiliated_committee', 'Transfer from a Committes'),
+                   ('all_loans_received', 'Loans'),
+                 ],
+                 'total_disbursements': [
+                   ('operating_expenditures', 'Operating expenditures'),
+                   ('transfers_to_affiliated_committee', 'Transfers to authorized committeess'),
+                   ('transfers_to_affiliated_committee', 'Fundraisings'),
+                   ('transfers_to_affiliated_committee', 'Exempt legal and accounting'),
+                   ('loan_repayments_made', 'Total loan repayments'),
+                   ('contribution_refunds', 'Contribution refunds'),
+                   ('other_disbursements', 'Other disbursementss'),
+                 ],
+                 'total_cash': [
+                   ('cash_on_hand_beginning_periods', 'Beginning cash on hand'),
+                   ('net_contributions', 'Net contributions'),
+                   ('net_operating_expenditures_period', 'Net operating expenditures'),
+                   ('debts_owed_to_committee', 'Debts / loans owed to'),
+                 ],
+               }
+            %}
+            {{ totals_table('total_receipts', 'Total receipts', committee, mapping) }}
+            {{ totals_table('total_disbursements', 'Total disbursements', committee, mapping) }}
+            {{ totals_table('total_cash', 'Total cash', committee, mapping) }}
+            {% endwith %}
           </div>
-          <div class="table__half">
-            <div class="table__row">
-              <div class="table__cell">Cash on hand</div>
-              <div class="table__cell">{{financial_summary.total_cash}}</div>
-            </div>
-            <div class="table__row">
-              <div class="table__cell">Debt</div>
-              <div class="table__cell">{{financial_summary.total_debt}}</div>
-            </div>
-            <div class="table__row--note">
-              Source: {{financial_summary.report_desc}}
-            </div>
+          <div class="row">
+            {% with committee=context() %}
+              {% include 'partials/committee-charts.html' %}
+            {% endwith %}
           </div>
-        </figure>
         {% else %}
         <div class="meta-box error-container">
           <h2 id="section-1-header" tabindex="0">No financial data</h2>

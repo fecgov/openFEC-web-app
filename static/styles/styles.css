@@ -405,8 +405,8 @@ td {
 .table__row--note {
   font-size: 14px;
   font-size: 1.4rem;
-  padding: 0 10px;
-  padding: 0 1rem;
+  padding: 0 5px;
+  padding: 0 0.5rem;
   width: 100%;
   padding: .5em 1em;
   font-style: italic;
@@ -432,6 +432,8 @@ td {
   .table--simple .table__cell {
     padding: .5em .5em;
     border-right: none; }
+  .table--simple .table__cell--bar .chart-series__bar {
+    background-color: #205683; }
   .table--simple th,
   .table--simple .table__header {
     font-weight: bold;
@@ -439,15 +441,22 @@ td {
   .table--simple td,
   .table--simple .table__row {
     border-bottom: 1px solid #D7D7D7; }
+  .table--simple .table:last-child {
+    margin-left: 2%; }
+  .table--simple .table__row--header {
+    border-bottom: 0;
+    margin-left: -.75em; }
 
 .totals-table {
   font-size: 16px;
   font-size: 1.6rem; }
   .totals-table .table__cell {
-    width: 40%; }
+    width: 20%; }
     .totals-table .table__cell:first-child {
-      width: 60%;
+      width: 30%;
       font-weight: bold; }
+    .totals-table .table__cell:last-child {
+      width: 40%; }
 
 ul, ol {
   margin: 0;
@@ -914,6 +923,9 @@ input[type="submit"],
     border-right: none; }
     .header-nav__search:last-child {
       margin-right: 0; } }
+.section-header {
+  border-bottom: 2px solid #b3b3b3; }
+
 .hero {
   padding: 60px 0;
   padding: 6rem 0;
@@ -2051,17 +2063,15 @@ footer {
   position: relative;
   margin: 1em 0; }
 
-.chart-series--horizontal {
-  color: #999; }
-  .chart-series--horizontal .chart-series__bar {
-    margin-bottom: .25em;
-    padding: .5em;
-    white-space: nowrap;
-    min-height: 1em; }
-  .chart-series--horizontal .chart-series__group {
-    margin-bottom: 2em; }
-  .chart-series--horizontal .chart-series__axis {
-    display: none; }
+.chart-series--horizontal .chart-series__bar {
+  margin-bottom: .25em;
+  padding: 1px;
+  white-space: nowrap;
+  min-height: 1.5em; }
+.chart-series--horizontal .chart-series__group {
+  margin-bottom: 2em; }
+.chart-series--horizontal .chart-series__axis {
+  display: none; }
 
 .chart-series--vertical {
   display: -webkit-box;

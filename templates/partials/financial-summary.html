@@ -9,14 +9,14 @@
         <h3 class="term" data-term="Campaign Committee">Campaign Committees</h3>
         {% if primary_committee %}
             {% with committee=primary_committee[0] %}
-              {% include 'partials/committee-summary.html' %}
+              {% include 'partials/committee-stats.html' %}
             {% endwith %}
         {% endif %}
 
         {% if authorized_committees %}
           {% for c in authorized_committees %}
               {% with committee=c %}
-                  {% include 'partials/committee-summary.html' %}
+                  {% include 'partials/committee-stats.html' %}
               {% endwith %}
           {% endfor %}
         {% endif %}

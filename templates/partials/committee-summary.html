@@ -1,99 +1,30 @@
-  <div class="figure-group committee-summary js-reveal-container">
-    <div class="figure-group__side">
-      <img class="category-icon"
-           width="20" height="20"
-           src="/static/img/icon-committee--white.svg" alt="Icon representing committees">
+<figure class="table--simple totals-table">
+  <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
+  <div class="table__half">
+    <div class="table__row">
+      <div class="table__cell">Total <span class="term" data-term="Receipts">receipts</span></div>
+      <div class="table__cell">{{committee.total_receipts|default("unavailable")}}</div>
     </div>
-    <div class="figure-group__main">
-      <div class="figure-group__header">
-        <h4 class="figure-group__title">
-          <a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }}</a>
-        </h4>
-        <span class="figure-group__description term" data-term="{{ committee.designation }}">
-          {{ committee.committee_designation_full }}</span>
-      </div>
-
-      <div class="figure-group__inner">
-        <div class="row">
-<!--           <div class="quick-links">
-            <h4 class="figure__title">Quick Links</h4>
-            <ul>
-              {% if committee %}
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">Committee Page &raquo;</a></li>
-              {% endif %}
-              <li><a>Mos\t recent report &raquo;</a></li>
-              <li><a>Contributions received &raquo;</a></li>
-            </ul>
-          </div> -->
-          <figure class="table--simple totals-table">
-            <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
-            <div class="table__half">
-              <div class="table__row">
-                <div class="table__cell">Total <span class="term" data-term="Receipts">receipts</span></div>
-                <div class="table__cell">{{committee.total_receipts|default("unavailable")}}</div>
-              </div>
-              <div class="table__row">
-                <div class="table__cell">Total <span class="term" data-term="Disbursements">disbursements</span></div>
-                <div class="table__cell">{{committee.total_disbursements|default("unavailable")}}</div>
-              </div>
-              <div class="table__row--note">
-                Calculated from reports filed {{committee.report_year}}
-              </div>
-            </div>
-            <div class="table__half">
-              <div class="table__row">
-                <div class="table__cell"><span class="term" data-term="Cash on Hand">Cash on hand</span></div>
-                <div class="table__cell">{{committee.total_cash|default("unavailable")}}</div>
-              </div>
-              <div class="table__row">
-                <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
-                <div class="table__cell">{{committee.total_debt|default("unavailable")}}</div>
-              </div>
-              <div class="table__row--note">
-                Source: {{committee.report_desc}}
-              </div>
-            </div>
-          </figure>
-        </div>
-        <div class="js-reveal-content u-hidden" aria-hidden="true">
-
-          {% import 'macros/charts.html' as charts %}
-          {% macro group_bar_tooltip(value, key) %}
-            <div class="chart-series__bar__tooltip">
-              <h5 class="chart-series__bar__tooltip__title">{{ key|replace('_', ' ')|title }}</h5>
-              <span class="chart-series__bar__tooltip__value">{{ value|currency }}</span>
-            </div>
-          {% endmacro %}
-
-          <div class="row">
-            <figure class="chart-container chart--r-d">
-              <div class="figure__title">
-                <h4>Receipts and Disbursements</h4>
-                <ul class="figure__key flat-list">
-                  <li><span class="swatch data--receipts"></span> Receipts</li>
-                  <li><span class="swatch data--disbursements"></span> Disbursements</li>
-                </ul>
-              </div>
-              {{ charts.chart_series_grouped(committee.reports,
-                ('receipts', 'disbursements'), label_key=('coverage_start_date', 'coverage_end_date'),
-                tooltip=group_bar_tooltip) }}
-            </figure>
-          </div>
-          <div class="row">
-            <figure class="chart-container chart--c-d">
-              <div class="figure__title">
-                <h4>Cash and Debt</h4>
-                <ul class="figure__key flat-list">
-                  <li><span class="swatch data--cash"></span> Cash</li>
-                  <li><span class="swatch data--debt"></span> Debt</li>
-                </ul>
-              </div>
-              {{ charts.chart_series_grouped(committee.reports,
-                ('cash', 'debt'), label_key=('coverage_start_date', 'coverage_end_date'), tooltip=group_bar_tooltip) }}
-            </figure>
-          </div>
-        </div><!-- .hidden-container -->
-      </div>
+    <div class="table__row">
+      <div class="table__cell">Total <span class="term" data-term="Disbursements">disbursements</span></div>
+      <div class="table__cell">{{committee.total_disbursements|default("unavailable")}}</div>
     </div>
-    <button class="js-reveal-button">View charts</button>
-  </div> <!-- .figure-group -->
+    <div class="table__row--note">
+      Calculated from reports filed {{committee.report_year}}
+    </div>
+  </div>
+  <div class="table__half">
+    <div class="table__row">
+      <div class="table__cell"><span class="term" data-term="Cash on Hand">Cash on hand</span></div>
+      <div class="table__cell">{{committee.total_cash|default("unavailable")}}</div>
+    </div>
+    <div class="table__row">
+      <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
+      <div class="table__cell">{{committee.total_debt|default("unavailable")}}</div>
+    </div>
+    <div class="table__row--note">
+      Source: {{committee.report_desc}}
+    </div>
+  </div>
+</figure>
+
