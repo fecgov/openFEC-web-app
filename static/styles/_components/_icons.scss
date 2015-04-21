@@ -1,7 +1,9 @@
 // category-icons are the candidate, committee or contribution icons
 .category-icon {
   	margin-right: 5px; margin-right: .5rem; 
-  	vertical-align: top;
+  	vertical-align: middle;
+    height: 1em;
+    width: 1em;
 }
 
 // Any link that has a js action should show a pointer cursor

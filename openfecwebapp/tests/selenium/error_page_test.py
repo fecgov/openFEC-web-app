@@ -10,7 +10,7 @@ class ErrorPageTests(BaseTest):
         self.driver.get(self.url)
         self.assertEqual(
             self.driver.find_element_by_tag_name('h1').text,
-            'Not Found')
+            'Oops!')
 
     def testErrorPageSearch(self):
         self.driver.get(self.url)

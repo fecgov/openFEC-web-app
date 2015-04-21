@@ -14,20 +14,36 @@ footer {
 }
 
 .footer__left {
-    @include span-columns(12);
     img {
         margin-right: 1.25em;
     }
 }
 
 .footer__right {
-    @include span-columns(12);
-    text-align: right;
+    margin-top: 1rem;
+
+    @include media($medium) {
+        margin-top: 0;
+        text-align: right;
+    }
+}
+
+.footer__left,
+.footer__right {
+    @include clearfix;
+
+    @include media($medium) {
+        @include span-columns(6);
+    }
 }
 
 .footer__nav {
     li {
         display: inline-block;
         padding: 0 .625em;
+
+        &:first-child {
+            padding-left: 0;
+        }
     }
 }

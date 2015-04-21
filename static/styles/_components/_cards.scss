@@ -2,29 +2,27 @@
 
 // If we're showing a grid of cards. Default is 2 across
 .card-grid {
-	@include clearfix();
-	@include rem(padding, 2.0rem 0);
-	clear: both;
+  @include clearfix();
+  padding: 2rem 0;
+  clear: both;
 
-	.card {
-		@include span-columns(12);
-		height: 230px;
-		margin-bottom: 10px;
-	}	
+  @include media($medium) {
+    .card {
+      @include span-columns(6);    
+    }
+  }
 }
 
 .card {
-	@include rem(padding, 2.0rem);
-	border: 1px solid $light-blue-gray;
-	background: $meta-box-color;
+  @include clearfix();
+  margin-bottom: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
-
-.card--icon {
-	.card__icon {
-		@include span-columns(2 of 12);
-	}
-
-	.card__content {
-		@include span-columns(10 of 12);
-	}
+.card {
+  @include rem(padding, 2.0rem);
+  border: 1px solid $light-blue-gray;
+  background: $meta-box-color;
 }
