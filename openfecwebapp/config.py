@@ -18,3 +18,7 @@ debug = bool(os.getenv('FEC_WEB_DEBUG', ''))
 # used to turn auth off for testing
 # set to a non-empty string in your environment if you want auth off
 test = os.getenv('FEC_WEB_TEST')
+
+# used to include the Google Analytics tracking script
+# set to a non-empty string in your environment if you want to use Analytics
+analytics = os.getenv('FEC_WEB_GOOGLE_ANALYTICS')
