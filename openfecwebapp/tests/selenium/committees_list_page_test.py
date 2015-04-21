@@ -1,49 +1,11 @@
-from .base_test_class import BaseTest
 from selenium.webdriver.common.keys import Keys
-import time
+from .base_test_class import SearchPageTestCase
 
 
-class CommitteesPageTests(BaseTest):
+class CommitteesPageTests(SearchPageTestCase):
 
     def setUp(self):
         self.url = self.base_url + '/committees'
-
-    def getFilterDivByName(self, name):
-        return self.driver.find_element_by_xpath('//*[@for="' + name + '"]/..')
-
-    def openFilters(self):
-        self.driver.find_element_by_id('filter-toggle').click()
-
-    def getColumn(self, index, data):
-        return [row.find_elements_by_tag_name('td')[index].text
-                for row in data.find_elements_by_tag_name('tr')]
-
-    def checkFilter(self, name, first_entry, second_entry,
-                    count, index, result):
-        self.driver.get(self.url)
-        self.openFilters()
-        cycle = self.getFilterDivByName(name)
-        cycle.find_element_by_xpath('./div/a/div/b').click()
-        self.assertEqual(
-            cycle.find_element_by_xpath('./div').get_attribute('class'),
-            ('chosen-container chosen-container-single '
-             'chosen-with-drop chosen-container-active'))
-        cycle.find_element_by_tag_name('input').send_keys(first_entry)
-        self.assertEqual(
-            len(cycle.find_elements_by_tag_name('li')),
-            count)
-        cycle.find_element_by_tag_name('input').send_keys(second_entry)
-        cycle.find_element_by_tag_name('input').send_keys(Keys.ENTER)
-        self.assertEqual(
-            cycle.get_attribute('class'),
-            'field active')
-        self.driver.find_element_by_id('category-filters').submit()
-        results = (self.driver.find_elements_by_tag_name('tr'))
-        col = [y.find_elements_by_tag_name('td')[index]
-                .text for y in results[1:]]
-        self.assertEqual(
-            set(col),
-            {result})
 
     def testCommitteesPageLoads(self):
         self.driver.get(self.url)
@@ -73,7 +35,6 @@ class CommitteesPageTests(BaseTest):
         self.driver.get(self.url)
         self.openFilters()
         name_div = self.getFilterDivByName('name')
-        time.sleep(1)
         name_div.find_element_by_tag_name('input').send_keys('pork')
         name_div.find_element_by_tag_name('input').send_keys(Keys.ENTER)
         self.assertEqual(
