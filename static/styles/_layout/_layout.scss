@@ -31,6 +31,12 @@ body {
 
 .container {
   @include outer-container();
+  padding-left: 2.0rem;
+  padding-right: 2.0rem;
+
+  @include media($large) {
+    padding: 0;
+  }
 }
 
 .row {
@@ -42,13 +48,6 @@ body {
   @include clearfix();
 }
 
-@include media($medium) {
-  .container {
-    padding-left: 1em;
-    padding-right: 1em;
-  }
-}
-
 .aside {
   @include span-columns(6);
 }
@@ -57,41 +56,44 @@ body {
 // These are common grouping sizes, described by their desktop size
 
 .chunk--half {
-  @include span-columns(12);
-
-  &:nth-child(even) {
-    @include omega();
-  }
-
-  @include media($medium) {
+  @include media($large) {
     @include span-columns(12);
+
+    &:nth-child(even) {
+      @include omega();
+    }
   }
 }
 
 .chunk--third {
-  @include span-columns(8);
-
-  @include media($medium) {
-    @include span-columns(12);
-    margin-top: 1em;
+  @include media($large) {
+    @include span-columns(8);    
   }
 }
 
 .chunk--two-thirds {
-  @include span-columns(16)
+  @include media($large) {
+    @include span-columns(16)
+  }
 }
 
 // Styles for big chunks of content
 // .page__section will often be a <section> element
 .page-section {
-  @include rem(padding, 4.0rem 0);
+  padding: 2rem 0;
+
+  @include media($large) {
+    padding: 4rem 0;
+  }
 }
 
 .page-section__intro {
   @include clearfix();
 
-  .text--lead {
+  @include media($large) {
+    .text--lead {
       @include span-columns(18);    
+    }
   }
 }
 
@@ -99,7 +101,7 @@ body {
 .page-subsection {
   @include primary-divider();
   @include clearfix();
-  @include rem(padding, 4.0rem 0);
+  padding: 2rem 0;
 
   &:last-of-type {
     padding-bottom: 0;
@@ -107,7 +109,11 @@ body {
   }
 
   &:first-of-type {
-    @include rem(padding-top, 2.0rem 0);
+    padding: 2rem 0;
+  }
+
+  @include media($large) {
+    padding: 4rem 0;
   }
 }
 
@@ -115,7 +121,7 @@ body {
   @include secondary-divider();
   @include span-columns(24);
   @include clearfix();
-  @include rem(padding, 2.0rem 0);
+  padding: 2rem 0;
 
   &:first-of-type {
     padding-top: 0;

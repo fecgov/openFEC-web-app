@@ -2,7 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Open FEC Beta</title>
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>{% block title %}{% endblock %} - OpenFEC</title>
+
     <link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
     <link href="/static/js/vendor/chosen/chosen.min.css" rel="stylesheet" type="text/css"/>
@@ -17,12 +24,46 @@
     {% endif %}
 </head>
 <body>
+<div id="site-menu" class="modal__overlay" aria-hidden="true">
+  <div class="modal">
+    <div class="modal__row">
+      <p class="text--small">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></p>
+      <p class="text--small">Looking for fec.gov? <a href="http://fec.gov">Click here.</a></p>
+    </div>
+    <div class="modal__row">
+      <h3>Search the Data</h3>
+      <form id="search" action="/" autocomplete="off" class="input-button-combo">
+        <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button class="search-submit primary">Search</button>
+      </form>
+    </div>
+    <div class="modal__row">
+      <h3>Browse the Data</h3>
+      <nav class="modal__nav">
+        <ul>
+          <li><a href="/candidates" name="candidates"><img class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
+          <li><a href="/committees" name="committees"><img class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="modal__row">
+      <h3>Additional Information</h3>
+      <nav class="modal__nav">
+        <ul>
+          <li><a href="https://github.com/18F/openFEC/">View project source code</a></li>
+          <li>Contact us</li>
+        </ul>
+      </nav>
+      <button class="js-hide modal__close" data-hides="site-menu"><i class="ti-close"></i> Close menu</button>
+    </div>
+  </div>
+</div>
 <div class="page-wrap">
   <header class="site-header">
-    <div class="usa">
-      <span class="u-float-left">Looking for fec.gov? <a href="http://fec.gov">Click here.</a></span>
-      An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website">
-      <span class="u-float-right">This site is in development. <a tabindex="0" id="notice-reveal" class="js-reveal js-action" data-reveals="notice">Learn more.</a></span>
+    <div class="banner">
+      <span class="banner--left">Looking for fec.gov? <a href="http://fec.gov">Click here.</a></span>
+      <span class="banner--center">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></span>
+      <span class="banner--right">This site is in development. <a tabindex="0" id="notice-reveal" class="js-reveal js-action" data-reveals="notice">Learn more.</a></span>
     </div>
     <div id="notice" aria-hidden="true" class="section--blue">
       <a id="notice-close" class="js-action js-hide link--icon" tabindex="0" data-hides="notice"><i class="ti-close"></i></a>
@@ -30,22 +71,21 @@
       <p>openFEC uses a snapshot of disclosure data taken in 2014. If you’re looking for current campaign finance data, please visit here the <a href="http://fec.gov/pindex.shtml">Campaign Finance Disclosure Portal</a>.</p>
       <p>We're working hard to make openFEC a useful addition to the resources available at FEC.gov. Your feedback is important to us as we build this site. Email [X] and let us know how it’s working for you.</p>
     </div>
-    <div class="header-nav">
-      <nav>
+    <div class="clearfix">
+      <button id="site-menu-toggle" class="header-nav__link side-toggle js-reveal" data-reveals="site-menu"><i class="ti ti-menu"></i></button>
+      <a class="header-brand" href="/" title="Home"><img width="140" src="/static/img/logo.svg" alt="OpenFEC Logo"></a>
+      <nav class="header-nav">
         <ul class="header-nav__list">
-          <li class="header-nav__item"><a class="header-nav__brand" href="/" title="Home"><img width="140" src="/static/img/logo.svg" alt="OpenFEC Logo"></a></li>
           <li class="header-nav__item"><a class="header-nav__link" href="/candidates" name="candidates"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
           <li class="header-nav__item"><a class="header-nav__link" href="/committees" name="committees"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
         </ul>
       </nav>
-      <div class="header-nav__right">
-        <div class="header-nav__search input-button-combo">
-          <form id="search" action="/" autocomplete="off">
-            <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-            <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
-          </form>
-        </div>
-        <button id="glossary-toggle" data-slide="right" class="header-nav__link side-toggle"><i class="ti ti-help-alt"></i></button>
+      <button id="glossary-toggle" data-slide="right" class="header-nav__link side-toggle"><i class="ti ti-help-alt"></i></button>
+      <div class="header-search">
+        <form id="search" action="/" autocomplete="off" class="input-button-combo">
+          <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
+        </form>
       </div>
     </div>
   </header>
@@ -80,5 +120,18 @@
 <script src="/static/js/vendor/chosen/chosen.jquery.min.js"></script>
 <script src="/static/js/vendor/typeahead.bundle.min.js"></script>
 <script src="/static/js/app.js"></script>
+
+{% if config.USE_ANALYTICS %}
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-48605964-22', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+{% endif %}
 </body>
 </html>

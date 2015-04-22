@@ -12,25 +12,29 @@
 }
 
 .search--large {
-  padding-bottom: 10px;
-  
-  .search-bar {
-    @include font-size(2.4);
-    @include rem(height, 6rem);
+  padding-bottom: 1rem;
 
-    @include placeholder {
-      font-weight: 300;
-    }
+  .search-bar {
+    @include font-size(1.6);
+    height: 4rem;
+    padding: 0 .5em;
   }
 
   button {
-    @include font-size(2.4);
-    @include rem(height, 6rem);
+    @include font-size(1.6);
+    height: 4rem;
     padding: .5em;
-    font-weight: 300;
 
     i {
       font-size: .75em;
+    }
+  }
+
+  @include media($medium) {
+    .search-bar,
+    button {
+      @include font-size(2.4);
+      height: 6rem;
     }
   }
 }
