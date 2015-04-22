@@ -160,11 +160,14 @@
                    ('other_disbursements', 'Other disbursementss'),
                  ],
                  'total_cash': [
-                   ('cash_on_hand_beginning_periods', 'Beginning cash on hand'),
-                   ('net_contributions', 'Net contributions'),
-                   ('net_operating_expenditures_period', 'Net operating expenditures'),
-                   ('debts_owed_to_committee', 'Debts / loans owed to'),
+                   ('cash_on_hand_beginning_period', 'Beginning cash on hand'),
+                   ('net_contribution_summary_period', 'Net contributions'),
+                   ('net_operating_expenses_summary_period', 'Net operating expenditures'),
+                   ('debts_owed_by_committee', 'Debts / loans owed by'),
                  ],
+                 'total_debt': [
+
+                 ]
                }
             %}
             {{ totals_table('total_receipts', 'Total receipts',

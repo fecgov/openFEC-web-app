@@ -2197,6 +2197,7 @@ footer {
     -moz-flex: 1;
     -ms-flex: 1;
     flex: 1;
+    padding-top: 1px;
     position: relative;
     height: 100%;
     margin-left: 2em; }

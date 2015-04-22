@@ -88,6 +88,7 @@ $tooltip-border-color: #999;
     @include flex(1);
 
     // for positioning labels
+    padding-top: 1px;
     position: relative;
     height: 100%;
     
