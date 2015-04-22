@@ -1,5 +1,9 @@
 {% extends 'layouts/main.html' %}
 
+{% block title %}
+    {{name | title}} - Candidate Overview
+{% endblock %}
+
 {% block header %}
     {% include 'partials/page-nav.html' %}
 {% endblock %}
