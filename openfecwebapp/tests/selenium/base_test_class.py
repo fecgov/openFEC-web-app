@@ -1,16 +1,24 @@
 import os
 import unittest
 
+import pytest
+from nose.plugins.attrib import attr
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
-from nose.plugins.attrib import attr
+from openfecwebapp.sauce import SauceClient
 
 
 sauce_url = 'http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub'.format(
     os.getenv('SAUCE_USERNAME'),
     os.getenv('SAUCE_ACCESS_KEY'),
+)
+
+sauce_client = SauceClient(
+    username=os.getenv('SAUCE_USERNAME'),
+    access_key=os.getenv('SAUCE_ACCESS_KEY'),
 )
 
 
@@ -35,6 +43,7 @@ drivers = {
 
 
 @attr('selenium')
+@pytest.mark.selenium
 class BaseTest(unittest.TestCase):
 
     @classmethod
@@ -46,6 +55,10 @@ class BaseTest(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
+        # Log suite status to Sauce if using remote tests
+        if os.getenv('FEC_SELENIUM_DRIVER', '') == 'remote':
+            failed = getattr(cls, '_fail', False)
+            sauce_client.update_job(cls.driver.session_id, passed=not failed)
         cls.driver.quit()
 
     def getHeader(self):
