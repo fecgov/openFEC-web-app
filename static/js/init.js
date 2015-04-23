@@ -64,14 +64,18 @@ $(document).ready(function() {
     }
 
     // General reveal / disclosure 
-    $('.js-reveal').click(function(){
-        var revealElement = $(this).data('reveals');
-        $('#' + revealElement).attr('aria-hidden', false);
+    $('.js-reveal').on('click keypress', function(e){
+        if (e.which === 13 || e.type === 'click') {
+            var revealElement = $(this).data('reveals');
+            $('#' + revealElement).attr('aria-hidden', false);
+        }
     });
 
-    $('.js-hide').click(function(){
-        var hideElement = $(this).data('hides');
-        $('#' + hideElement).attr('aria-hidden', true);
+    $('.js-hide').on('click keypress', function(e){
+        if (e.which === 13 || e.type === 'click') {
+            var hideElement = $(this).data('hides');
+            $('#' + hideElement).attr('aria-hidden', true);
+        }
     })
 
     // Notice close-state persistence    
@@ -83,9 +87,11 @@ $(document).ready(function() {
         }
     }
 
-    $("#notice-close").click(function(){
-        if (typeof window.sessionStorage !== 'undefined') {
-            window.sessionStorage.setItem('keep-banner-closed', '1');
+    $("#notice-close").on('click keypress', function(e){
+        if (e.which === 13 || e.type === 'click') {
+            if (typeof window.sessionStorage !== 'undefined') {
+                window.sessionStorage.setItem('keep-banner-closed', '1');
+            }            
         }
     });
 
