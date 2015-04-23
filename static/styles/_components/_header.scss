@@ -31,13 +31,9 @@
 }
 
 .site-header {
+  @include white-links();
   background: $licorice-2;
   color: #fff;
-
-  a {
-    color: #fff;
-    text-decoration: underline;
-  }
 }
 
 .header-nav {
@@ -55,23 +51,32 @@
   float: left;
 }
 
-.header-nav__link {
-  @include rem(padding, 1.6rem 2rem);	
-  @include font-size(1.8);
-  @include rem(line-height, 2.4rem);
-  @include transition(background-color .1s);
-  text-align: center;
-  display: block;
-  text-decoration: none;
-
-  &:hover,
-  &:active {
-    background: $licorice;
-    color: #fff;
+.site-header {
+  .header-nav__link {
+    @include rem(padding, 1.6rem 2rem); 
+    @include font-size(1.8);
+    @include rem(line-height, 2.4rem);
+    @include transition(background-color .1s);
+    text-align: center;
+    display: block;
     text-decoration: none;
-  }
-}
 
+    &:hover,
+    &:active {
+      background: $licorice;
+      color: #fff;
+      text-decoration: none;
+    }
+  } 
+
+  .header-nav__link:focus,
+  .header-brand:focus {
+    position: relative;
+    z-index: 9;
+    background: $licorice-2;
+    color: #fff;
+  }    
+}
 
 .header-brand {
   padding: 1rem 2rem;
@@ -96,12 +101,16 @@
   }
 }
 
+.header__right {
+  float: right;
+}
+
 .header-search {
   @include clearfix();
   display: none; // Hiding on $small
   padding: 1rem 2rem;
   margin-right: 0;
-  float: right;
+  float: left;
   width: 340px;
 
   input[type="text"],
@@ -137,5 +146,5 @@
 #glossary-toggle {
   border-left: 1px solid $light-gray;
   border-right: none;
-  float: right;
+  float: left;
 }
