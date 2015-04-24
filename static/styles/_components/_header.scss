@@ -78,21 +78,23 @@
   }    
 }
 
+.header__left {
+  @include span-columns(20, block-collapse);
+}
+
+.header__right {
+  @include span-columns(4, block-collapse);
+}
+
 .header-brand {
+  @include span-columns(15 of 20, block-collapse);
   padding: 1rem 2rem;
   display: block;
   text-align: center;
   position: relative;
-  float: left;
-  width: 70%;
-
-  @include media($medium) {
-    width: auto;
-  }
 }
 
 .site-header .side-toggle {
-  width: 15%;
   padding: 1.6rem 0;
 
   @include media($medium) {
@@ -101,41 +103,8 @@
   }
 }
 
-.header__right {
-  float: right;
-}
-
-.header-search {
-  @include clearfix();
-  display: none; // Hiding on $small
-  padding: 1rem 2rem;
-  margin-right: 0;
-  float: left;
-  width: 340px;
-
-  input[type="text"],
-  button {
-  	@include rem(height, 3.2rem);
-    margin-bottom: 0;
-    border: none;
-  }
-
-  input[type="text"],
-  .tt-dropdown-menu {
-  	width: 260px;
-  }
-
-  .search-submit {
-  	width: 40px;
-  	padding: 0;
-  }
-
-  @include media($medium) {
-    display: block;
-  }
-}
-
 #site-menu-toggle {
+  @include span-columns(4 of 20, block-collapse);
   float: left;
 
   @include media($medium) {
@@ -144,7 +113,57 @@
 }
 
 #glossary-toggle {
+  @include span-columns(8 of 8, block-collapse);
   border-left: 1px solid $light-gray;
   border-right: none;
+  float: right;
+}
+
+@include media($medium) {
+  .header__left {
+    @include span-columns(16 of 24, block-collapse);
+  }
+
+  .header__right {
+    @include span-columns(8 of 24, block-collapse);
+  }
+
+  .header-brand {
+    width: auto;
+    float: left;
+  }
+
+  #glossary-toggle {
+    @include span-columns(2 of 8, block-collapse);
+  }
+}
+
+.header-search {
+  @include clearfix();
+  display: none; // Hiding on $small
+  padding: 1rem 0;
+  margin-right: 0;
   float: left;
+
+  input[type="text"],
+  button {
+  	height: 3rem;
+    margin-bottom: 0;
+    border: none;
+  }
+
+  input[type="text"],
+  .tt-dropdown-menu {
+  	width: 80%;
+  }
+
+  .search-submit {
+  	width: 20%;
+  	padding: 0;
+  }
+
+  @include media($medium) {
+    @include span-columns(6 of 8);
+    display: block;
+  }
 }
