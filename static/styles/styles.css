@@ -500,7 +500,6 @@ td {
   .table--simple .table:last-child {
     margin-left: 2%; }
   .table--simple .table__row--header {
-    border-top: 1px solid #D7D7D7;
     margin-left: -.75em;
     padding-top: .5em; }
 
@@ -513,9 +512,11 @@ td {
       width: 60%;
       font-weight: bold; }
   .totals-table.totals-table--charts .table__cell {
+    height: 2.5em;
+    line-height: 1.5em;
     width: 20%; }
     .totals-table.totals-table--charts .table__cell:first-child {
-      width: 30%;
+      width: 40%;
       font-weight: bold; }
     .totals-table.totals-table--charts .table__cell:last-child {
       width: 40%; }
@@ -2150,7 +2151,6 @@ footer {
   margin: 1em 0; }
 
 .chart-series--horizontal .chart-series__bar {
-  margin-bottom: .25em;
   padding: 1px;
   white-space: nowrap;
   min-height: 1.5em; }
