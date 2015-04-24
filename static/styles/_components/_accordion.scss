@@ -1,0 +1,25 @@
+
+.accordion__header {
+  position: relative;
+}
+
+.accordion__expand {
+  display: block;
+  right: 5%;
+  position: absolute;
+
+  &.accordion--expanded {
+    .accordion__minus {
+      display: block;
+    }
+    .accordion__plus {
+      display: none;
+    }
+  }
+  .accordion__minus {
+    display: none;
+  }
+  .accordion__plus {
+    display: block;
+  }
+}
