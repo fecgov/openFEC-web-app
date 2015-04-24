@@ -43,7 +43,7 @@ var activateFilter = function() {
 
         $field = $('select[name=' + this.name + ']');
         addActiveStyle($field);
-        $field.val(this.value).trigger("chosen:updated");
+        $field.val(this.value);
     }
 };
 
@@ -66,19 +66,6 @@ var bindFilters = function(e) {
         selectedFilters['name'] = e.query;
     }
 
-    // make name filter work
-    $('#category-filters input').on('input', function() {
-        var $nameField = $(this),
-            $plusButton = $nameField.siblings('.add-filter__button');
-
-        if ($nameField.val() === "") {
-            $plusButton.addClass('disabled');
-        }
-        else {
-            $plusButton.removeClass('disabled');
-        }
-    });
-
     // election cycle dropdown functionality
     $('select[name=election_cycle]').change(function(e, selected) {
         var $e = $(e.target),
@@ -91,14 +78,6 @@ var bindFilters = function(e) {
                 + selected.selected;
 
         document.location = url;
-    });
-
-    // apply name filter
-    $('#category-filters').on('click', '.add-filter__button', function() {
-        var $plusButton = $(this);
-        if ($plusButton.hasClass('disabled') === false) {
-            activateFilter.call($plusButton.prev()[0]);
-        }
     });
 };
 
@@ -171,11 +150,6 @@ $('.field select').change(function(){
 
 module.exports = {
     init: function() {
-        // toggle filter drawer open/shut
-        $('#main').on('click', '.disclosure-toggle', function() {
-            $('.filter-field-container').slideToggle();
-            $(this).toggleClass('disclosure-toggle--closed')
-        });
 
         bindFilters();
 
