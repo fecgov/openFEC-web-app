@@ -2479,6 +2479,8 @@ footer {
   left: 25%;
   background: none;
   color: #fff; }
+  .modal__close:focus {
+    position: absolute; }
 
 .styleguide .site-header {
   padding: 2em 0;
