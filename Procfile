@@ -1,1 +1,1 @@
-web: newrelic-admin run-program python __init__.py --cached
+web: newrelic-admin run-program gunicorn __init__:app
