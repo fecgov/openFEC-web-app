@@ -8,6 +8,10 @@
   }
 }
 
+.entity__header {
+  @include white-links();
+}
+
 .entity__name {
   font-weight: bold;
 }

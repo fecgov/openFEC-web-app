@@ -45,4 +45,8 @@
     left: 25%;
     background: none;
     color: #fff;
+
+    &:focus {
+        position: absolute;
+    }
 }

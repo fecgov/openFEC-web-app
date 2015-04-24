@@ -30,7 +30,7 @@ indexToLowercase = function(arrayOfObjects, index){
 terms = indexToLowercase(terms, 'term');
 
 // Adding title to all terms
-$('.term').attr('title', 'Click to define');
+$('.term').attr('title', 'Click to define').attr('tabindex', 0);
 
 // Looks through the terms array to find the definition
 // Returnes a definedTerm object
@@ -97,11 +97,13 @@ clearTerm = function() {
 
 module.exports = {
   init: function(){
-    glossaryLink.click(function(){
-        var dataTerm = $(this).data('term'),
-            definedTerm = findDefinition(dataTerm);
-        showGlossary();
-        setDefinition(definedTerm);    
+    glossaryLink.on('click keypress', function(e){
+        if (e.which === 13 || e.type === 'click') {
+            var dataTerm = $(this).data('term'),
+                definedTerm = findDefinition(dataTerm);
+            showGlossary();
+            setDefinition(definedTerm); 
+        }
     })
 
     $('#glossary-toggle, #hide-glossary').click(function(){

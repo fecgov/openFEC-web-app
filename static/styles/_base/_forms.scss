@@ -64,9 +64,7 @@ select[multiple=multiple] {
   }
 
   &:focus {
-    border-color: $form-border-color-focus;
-    box-shadow: $form-box-shadow-focus;
-    outline: none;
+    outline: 3px solid $focus;
   }
 }
 
@@ -100,7 +98,7 @@ select {
   @include clearfix();
 
   #{$all-text-inputs} {
-    border-radius: 4px;
+    border-radius: $base-border-radius;
     width: 100%;
     margin: 0 0 .5rem 0;
   }
@@ -108,7 +106,7 @@ select {
   input[type="submit"],
   button,
   .button {
-    border-radius: 4px;
+    border-radius: $base-border-radius;
     width: 100%;
     margin: 0;
   }
@@ -118,7 +116,7 @@ select {
       width: 75%;
       float: left;
       margin: 0;
-      border-radius: 4px 0 0 4px;
+      border-radius: $base-border-radius 0 0 $base-border-radius;
       border-right: none;
     }
 
@@ -128,7 +126,7 @@ select {
       @include rem(height, 4.0rem);
       width: 25%;
       float: left;
-      border-radius: 0 4px 4px 0;
+      border-radius: 0 $base-border-radius $base-border-radius 0;
     }    
   }
 }
