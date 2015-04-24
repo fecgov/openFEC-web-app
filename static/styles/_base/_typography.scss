@@ -104,7 +104,11 @@ a {
   }
 
   &:active, &:focus {
-    color: $hover-link-color;
+    background: $focus;
+    color: #000;
+    // border-bottom: 2px solid $base-link-color;
+    // outline: none;
+    outline: 3px solid $focus;
   }
 
   &.link--delete {
@@ -122,7 +126,7 @@ a {
       color: $green-2;
     }
   }
-}
+} 
 
 .link--icon {
   text-decoration: none; // Don't underline if there's an icon in the link

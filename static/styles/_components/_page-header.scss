@@ -1,17 +1,12 @@
 .page-header {
 	@include rem(padding, 1rem 2rem);
-	background: $page-header;
+	@include white-links();
+  background: $page-header;
 	color: #fff;
 
 	h1 {
 		margin-bottom: 0;
 	}
-
-  a,
-  a:hover,
-  a:active {
-    color: #fff;
-  }
 }
 
 .page-controls {
