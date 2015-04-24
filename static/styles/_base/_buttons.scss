@@ -28,7 +28,9 @@
   &:active,
   &:focus {
     @include appearance(none);
-    outline: none;
+    outline: 3px solid $focus;
+    position: relative;
+    z-index: 10;
   }
 
   &.disabled {
