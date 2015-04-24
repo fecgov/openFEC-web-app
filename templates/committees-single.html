@@ -94,43 +94,47 @@
       </nav>
     </div>
 
-    {% macro totals_table_cell(name, pretty_name, totals, include_chart=True) %}
+    {% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
       <div class="table__row">
         <div class="table__cell">{{ pretty_name }} </div>
-        <div class="table__cell">{{ totals[name]|default(0)|currency }}</div>
-        {% if include_chart %}
+        <div class="table__cell">{{ value|default(0)|currency }}</div>
         <div class="table__cell table__cell--bar">
-          {{ charts.chart_bar(totals[name]|default(0),
+          {{ charts.chart_bar(value|default(0),
                               pretty_name,
                               tooltip=None) }}
+        </div>
+      </div>
+    {% endmacro %}
+
+    {% macro totals_table_row_header(pretty_name, value, description) %}
+      <div class="table__row table__row--header">
+        <div class="table__cell">
+          <h4>{{ pretty_name }}</h4>
+        </div>
+        <div class="table__cell">
+          <h4>{{ value|default(0)|currency }}</h4>
+        </div>
+        {% if description %}
+        <div class="table__cell u-text-center">
+          <span class="text--black"><em>{{ description }}</em></span>
         </div>
         {% endif %}
       </div>
     {% endmacro %}
 
-    {% macro totals_table(key, pretty_name, description, committee, mapping, include_chart=True) %}
+    {% macro totals_table(header_name, header_value, data, report_year, header_description='') %}
       <figure class="table--simple totals-table totals-table--charts">
         <div class="table js-chart-series chart-series--horizontal">
-          <div class="table__row table__row--header">
-            <div class="table__cell">
-              <h4>{{ pretty_name }}</h4>
-            </div>
-            <div class="table__cell">
-              <h4>{{ committee[key]|default("unavailable") }}</h4>
-            </div>
-            {% if description %}
-            <div class="table__cell u-text-center">
-              <span class="text--black"><em>{{ description }}</em></span>
-            </div>
-            {% endif %}
-          </div>
-          {% for item in mapping[key] %}
-            {{ totals_table_cell(item[0], item[1], committee.totals.0, include_chart=include_chart) }}
+          {{ totals_table_row_header(header_name, header_value, header_description) }}
+          {% for item in data %}
+            {{ totals_table_row(item[1], item[0]) }}
           {% endfor %}
-          <div class="table__row--note">
-            Calculated from reports filed {{committee.report_year}}
-          </div>
+          {% if report_year %}
+            <div class="table__row--note">
+              Calculated from reports filed {{ report_year }}
+            </div>
+          {% endif %}
         </div>
       </figure>
     {% endmacro %}
@@ -143,38 +147,35 @@
           <div class="row">
             <h3 class="section-header">Detailed Summary</h3>
             {% with committee=context() %}
-            {% set mapping = {
-                 'total_receipts': [
-                   ('individual_itemized_contributions', 'Itemized Individual Contributions'),
-                   ('individual_unitemized_contributions', 'Unitemized Individual Contributions'),
-                   ('transfers_to_affiliated_committee', 'Transfer from a Committes'),
-                   ('all_loans_received', 'Loans'),
-                 ],
-                 'total_disbursements': [
-                   ('operating_expenditures', 'Operating expenditures'),
-                   ('transfers_to_affiliated_committee', 'Transfers to authorized committeess'),
-                   ('transfers_to_affiliated_committee', 'Fundraisings'),
-                   ('transfers_to_affiliated_committee', 'Exempt legal and accounting'),
-                   ('loan_repayments_made', 'Total loan repayments'),
-                   ('contribution_refunds', 'Contribution refunds'),
-                   ('other_disbursements', 'Other disbursementss'),
-                 ],
-                 'total_cash': [
-                   ('cash_on_hand_beginning_period', 'Beginning cash on hand'),
-                   ('net_contribution_summary_period', 'Net contributions'),
-                   ('net_operating_expenses_summary_period', 'Net operating expenditures'),
-                   ('debts_owed_by_committee', 'Debts / loans owed by'),
-                 ],
-                 'total_debt': [
 
-                 ]
-               }
+            {% set table_data = [
+                 (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
+                 (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfer from a Committes'),
+                 (committee.totals.0.all_loans_received, 'Loans'),
+               ]
             %}
-            {{ totals_table('total_receipts', 'Total receipts',
-              'Money received by the committee', committee, mapping) }}
-            {{ totals_table('total_disbursements', 'Total disbursements',
-              'Money spent by the committee', committee, mapping) }}
-            {{ totals_table('total_cash', 'Total cash', None, committee, mapping, include_chart=False) }}
+            {{ totals_table('Total receipts', committee.totals.0.total_receipts, table_data,
+                committee.report_year, header_description='Money received by the committee' ) }}
+
+            {% set table_data = [
+                 (committee.totals.0.operating_expenditures, 'Operating expenditures'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committeess'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Fundraisings'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Exempt legal and accounting'),
+                 (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
+                 (committee.totals.0.contribution_refunds, 'Contribution refunds'),
+                 (committee.totals.0.other_disbursements, 'Other disbursementss'),
+               ]
+            %}
+            {{ totals_table('Total Disbursments', committee.totals.0.total_disbursments, table_data,
+                committee.report_year, header_description='Money spent by the committee' ) }}
+
+            {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
+            {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
+            {{ totals_table('Debts owed to committeed', committee.reports[0].debts_owed_to_committee) }}
+            {{ totals_table('Debts owed by committeed', committee.reports[0].debts_owed_by_committee) }}
+
             {% endwith %}
           </div>
           <div class="row">

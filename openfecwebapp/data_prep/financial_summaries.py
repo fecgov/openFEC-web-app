@@ -88,7 +88,7 @@ def add_cmte_financial_data(context, data_type):
         if cmte.get('committee_id'):
             cmte.update(load_cmte_financials(cmte['committee_id']))
             cmte.update(_map_committee_financials(cmte))
-            cmte['reports'] = map(_alias_report_fields, cmte['reports'])
+            cmte['reports'] = list(map(_alias_report_fields, cmte['reports']))
 
     else:
         pass
