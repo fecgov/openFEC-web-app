@@ -41,7 +41,7 @@ label + #{$all-text-inputs} {
 }
 
 #{$all-text-inputs} {
-  @include rem(height, 4.0rem);
+  height: 3rem;
 }
 
 textarea,
@@ -92,6 +92,7 @@ input[type="file"] {
 select {
   width: auto;
   max-width: 100%;
+  background: #fff;
 }
 
 
