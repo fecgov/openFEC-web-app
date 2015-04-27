@@ -3,23 +3,18 @@
   position: relative;
 }
 
-.accordion__expand {
+.accordion__button {
   display: block;
-  right: 5%;
+  right: 1%;
   position: absolute;
 
-  &.accordion--expanded {
-    .accordion__minus {
-      display: block;
-    }
-    .accordion__plus {
-      display: none;
-    }
+  .accordion__icon {
+    @include icon-after("\e622");
   }
-  .accordion__minus {
-    display: none;
-  }
-  .accordion__plus {
-    display: block;
+}
+
+.accordion--collapsed {
+  .accordion__icon {
+    @include icon-after("\e61a");
   }
 }

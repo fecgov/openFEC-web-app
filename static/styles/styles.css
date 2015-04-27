@@ -518,7 +518,7 @@ td {
     .totals-table.totals-table--charts .table__cell:first-child {
       width: 40%;
       font-weight: bold; }
-    .totals-table.totals-table--charts .table__cell:last-child {
+    .totals-table.totals-table--charts .table__cell:last-of-type {
       width: 40%; }
 
 ul, ol {
@@ -738,6 +738,45 @@ input[type="submit"],
 
 .u-hidden {
   display: none; }
+
+.accordion__header {
+  position: relative; }
+
+.accordion__button {
+  display: block;
+  right: 1%;
+  position: absolute; }
+  .accordion__button .accordion__icon:after {
+    font-family: 'themify';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "";
+    display: inline-block;
+    margin-left: 5px;
+    font-size: .8em; }
+
+.accordion--collapsed .accordion__icon:after {
+  font-family: 'themify';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "";
+  display: inline-block;
+  margin-left: 5px;
+  font-size: .8em; }
 
 #notice {
   box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
