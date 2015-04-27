@@ -22,12 +22,6 @@ $(document).ready(function() {
         new tablesort(this);
     });
 
-    $('#filter-toggle').click(function(){
-    	$('body').toggleClass('panel-active--left');
-        $('.side-panel--left').toggleClass('side-panel--open');
-        $(this).toggleClass('active');
-    })
-
     // Sticky page controls
     if ( $pageControls.length > 0 ) {
         var scrollPos,
