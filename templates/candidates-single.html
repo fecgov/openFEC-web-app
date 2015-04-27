@@ -34,7 +34,7 @@
             <span>{{ party_full }}</span>
           </li>
           <li class="entity__term">
-            <h5 class="term" data-term="Status">Status</h5>
+            <h5><a class="term" data-term="Status">Status</a></h5>
             <span>{% if incumbent_challenge %}{{ incumbent_challenge|title }}{% endif %}</span>
           </li>
           <li class="entity__term">
@@ -42,18 +42,18 @@
             <span>{{ state }} {% if district %}- {{district}} {% endif %}</span>
           </li>
           <li class="entity__term">
-            <h5 class="term" data-term="Candidate ID">Candidate ID</h5>
+            <h5><a class="term" data-term="Candidate ID">Candidate ID</a></h5>
             <span>{{ candidate_id }}</span>
           </li>
           {% if primary_committee %}
           <li class="entity__term--wide">
-            <h5><span class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</span></h5>
+            <h5><a class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</a></h5>
             <a href="{{ url_for('committee_page', c_id=primary_committee[0].committee_id) }}">{{ primary_committee[0].committee_name }}</a>
           </li>
           {% endif %}
           {% if authorized_committees %}
           <li class="entity__term--wide">
-            <h5 class="term" data-term="Authorized Committee">Authorized Committees</h5>
+            <h5><a class="term" data-term="Authorized Committee">Authorized Committees</a></h5>
             {% for c in authorized_committees %}
             <p><a href="{{ url_for('committee_page', c_id=c.committee_id) }}">{{ c.committee_name }}</a></p>
             {% endfor %}

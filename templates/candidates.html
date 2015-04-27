@@ -27,6 +27,7 @@
         <div class="field{% if filter_name %} active{% endif %}" id="name-field">
           <label for="name">Name</label>
           <input type="text" name="name"{% if filter_name %} value="{{filter_name}}" {% endif %} />
+          <button class="button--remove" data-removes="name"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
@@ -75,6 +76,7 @@
                 <option value="1974">1974</option>
                 <option value="1972">1972</option>
             </select>
+            <button class="button--remove" data-removes="year"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
@@ -127,6 +129,7 @@
                 <option value="TX">Taxpayers</option>
                 <option value="USP">U.S. People's Party</option>
             </select>
+            <button class="button--remove" data-removes="party"><i class="ti-close"></i></button>  
         </div>
 
         <div class="field">
@@ -185,6 +188,7 @@
                 <option value="WV">West Virginia</option>
                 <option value="WY">Wyoming</option>
            </select>
+           <button class="button--remove" data-removes="state"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
@@ -292,6 +296,7 @@
                 <option value="98">98</option>
                 <option value="99">99</option>
             </select>
+           <button class="button--remove" data-removes="district"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
@@ -302,6 +307,7 @@
                 <option value="P">Presidential</option>
                 <option value="S">Senate</option>
             </select>
+           <button class="button--remove" data-removes="office"><i class="ti-close"></i></button>            
         </div>
       <div class="field">
         <button class="primary">Apply filters</button>

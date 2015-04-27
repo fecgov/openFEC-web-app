@@ -8,6 +8,33 @@ var toTitleCase = function(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
+// are the panels open?
+var open = true;
+
+var openFilterPanel = function() {
+    $('body').addClass('panel-active--left');
+    $('.side-panel--left').addClass('side-panel--open');
+    $('#filter-toggle').addClass('active').html('Hide Filters');
+    open = true;
+}
+
+var closeFilterPanel = function() {
+    $('body').removeClass('panel-active--left');
+    $('.side-panel--left').removeClass('side-panel--open');
+    $('#filter-toggle').removeClass('active').html('Show Filters');    
+    open = false;
+}
+
+openFilterPanel();
+
+$('#filter-toggle').click(function(){
+    if ( open === true ) {
+        closeFilterPanel();
+    } else {
+        openFilterPanel();
+    }
+})
+
 var activateFilter = function() {
     var $field;
 
@@ -16,7 +43,7 @@ var activateFilter = function() {
 
         $field = $('select[name=' + this.name + ']');
         addActiveStyle($field);
-        $field.val(this.value).trigger("chosen:updated");
+        $field.val(this.value);
     }
 };
 
@@ -32,10 +59,6 @@ var deactivateFilter = function() {
 };
 
 var bindFilters = function(e) {
-    $('#category-filters select, select[name=election_cycle]').chosen({
-        width: "100%",
-        allow_single_deselect: true
-    });
 
     if (typeof e !== 'undefined' && typeof e.query !== 'undefined') {
         $('#category-filters').find('input[name=name]').val(e.query).parents('.field').addClass('active');
@@ -43,32 +66,8 @@ var bindFilters = function(e) {
         selectedFilters['name'] = e.query;
     }
 
-    // make select boxes work
-    $('#category-filters select').chosen().change(function(e, selected) {
-        // if there is no selected object, the user deselected the field
-        if (typeof selected === 'undefined') {
-            deactivateFilter.call(this);
-        }
-        else {
-            activateFilter.call(this);
-        }
-    });
-
-    // make name filter work
-    $('#category-filters input').on('input', function() {
-        var $nameField = $(this),
-            $plusButton = $nameField.siblings('.add-filter__button');
-
-        if ($nameField.val() === "") {
-            $plusButton.addClass('disabled');
-        }
-        else {
-            $plusButton.removeClass('disabled');
-        }
-    });
-
     // election cycle dropdown functionality
-    $('select[name=election_cycle]').chosen().change(function(e, selected) {
+    $('select[name=election_cycle]').change(function(e, selected) {
         var $e = $(e.target),
             url = document.location.origin
                 + '/'
@@ -79,14 +78,6 @@ var bindFilters = function(e) {
                 + selected.selected;
 
         document.location = url;
-    });
-
-    // apply name filter
-    $('#category-filters').on('click', '.add-filter__button', function() {
-        var $plusButton = $(this);
-        if ($plusButton.hasClass('disabled') === false) {
-            activateFilter.call($plusButton.prev()[0]);
-        }
     });
 };
 
@@ -134,17 +125,31 @@ var activateInitialFilters = function() {
     }
 
     if (open) {
-        $('#main').addClass('side--open');
+        $('body').addClass('panel-active--left');
     }
 }
 
+// Clearing the selects
+$('.button--remove').click(function(e){
+    e.preventDefault();
+    var removes = $(this).data('removes');
+    $('[name="' + removes + '"]').val('');
+    $(this).css('display', 'none');
+});
+
+$('.field select').change(function(){
+    var name = $(this).attr('name');
+    console.log(name);
+    if ( $(this).val() != '' ) {
+        $('[data-removes="' + name + '"]').css('display', 'block');
+    } else {
+        $('[data-removes="' + name + '"]').css('display', 'none');
+    }
+})
+
+
 module.exports = {
     init: function() {
-        // toggle filter drawer open/shut
-        $('#main').on('click', '.disclosure-toggle', function() {
-            $('.filter-field-container').slideToggle();
-            $(this).toggleClass('disclosure-toggle--closed')
-        });
 
         bindFilters();
 
