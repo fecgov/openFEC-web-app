@@ -167,3 +167,21 @@
     display: block;
   }
 }
+
+#site-menu-toggle {
+  float: left;
+
+  @include media($medium) {
+    display: none;
+  }
+}
+
+.section-header {
+  border-bottom: 2px solid $medium-gray;
+}
+
+#glossary-toggle {
+  border-left: 1px solid $light-gray;
+  border-right: none;
+  float: right;
+}

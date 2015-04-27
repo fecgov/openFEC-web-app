@@ -201,12 +201,16 @@ cite {
   color: #fff;
 }
 
+.text--black {
+  color: #000;
+}
+
 .text--small {
   @include font-size(1.0);
   margin: 0;
-  
+
   @include media($medium) {
-      @include font-size(1.0);
+    @include font-size(1.0);
   }
 }
 
