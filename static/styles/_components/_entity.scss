@@ -1,10 +1,18 @@
 // Header styles for candidate, committee and district pages
 
 .entity__header--top {
-  padding-top: 1rem;
+  padding: 1rem 0;
 
   @include media($large) {
-    padding-top: 2rem;
+    padding: 2rem 0;
+  }
+}
+
+.entity__header--bottom {
+  padding-bottom: 1rem;
+
+  @include media($large) {
+    padding-bottom: 2rem;
   }
 }
 

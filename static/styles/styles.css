@@ -1294,10 +1294,16 @@ input[type="submit"],
     margin-left: -40px; }
 
 .entity__header--top {
-  padding-top: 1rem; }
+  padding: 1rem 0; }
   @media screen and (min-width: 61.25em) {
     .entity__header--top {
-      padding-top: 2rem; } }
+      padding: 2rem 0; } }
+
+.entity__header--bottom {
+  padding-bottom: 1rem; }
+  @media screen and (min-width: 61.25em) {
+    .entity__header--bottom {
+      padding-bottom: 2rem; } }
 
 .entity__header a {
   color: #fff; }

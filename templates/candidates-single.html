@@ -33,7 +33,7 @@
           </li>
           {% if primary_committee %}
           <li class="entity__term">
-            <h5 class="entity__term__label"><a class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</a></h5>
+            <h5 class="entity__term__label"><a class="term" data-term="Principal Campaign Committee">Principal Committee</a></h5>
             <a href="{{ url_for('committee_page', c_id=primary_committee[0].committee_id) }}">{{ primary_committee[0].committee_name }}</a>
           </li>
           {% endif %}
