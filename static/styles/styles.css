@@ -193,6 +193,9 @@ cite {
 .text--white {
   color: #fff; }
 
+.text--black {
+  color: #000; }
+
 .text--small {
   font-size: 10px;
   font-size: 1rem;
@@ -458,8 +461,8 @@ td {
 .table__row--note {
   font-size: 14px;
   font-size: 1.4rem;
-  padding: 0 10px;
-  padding: 0 1rem;
+  padding: 0 5px;
+  padding: 0 0.5rem;
   width: 100%;
   padding: .5em 1em;
   font-style: italic;
@@ -485,6 +488,8 @@ td {
   .table--simple .table__cell {
     padding: .5em .5em;
     border-right: none; }
+  .table--simple .table__cell--bar .chart-series__bar {
+    background-color: #205683; }
   .table--simple th,
   .table--simple .table__header {
     font-weight: bold;
@@ -492,6 +497,11 @@ td {
   .table--simple td,
   .table--simple .table__row {
     border-bottom: 1px solid #D7D7D7; }
+  .table--simple .table:last-child {
+    margin-left: 2%; }
+  .table--simple .table__row--header {
+    margin-left: -.75em;
+    padding-top: .5em; }
 
 .totals-table {
   font-size: 16px;
@@ -501,6 +511,15 @@ td {
     .totals-table .table__cell:first-child {
       width: 60%;
       font-weight: bold; }
+  .totals-table.totals-table--charts .table__cell {
+    height: 2.5em;
+    line-height: 1.5em;
+    width: 20%; }
+    .totals-table.totals-table--charts .table__cell:first-child {
+      width: 40%;
+      font-weight: bold; }
+    .totals-table.totals-table--charts .table__cell:last-child {
+      width: 40%; }
 
 ul, ol {
   margin: 0;
@@ -687,24 +706,24 @@ input[type="submit"],
     background-color: #6B143B; }
 
 .color-receipt {
-  background-color: #2678BA; }
+  background-color: #6289A8; }
   .color-receipt:hover {
-    background-color: #1d5d90; }
+    background-color: #4d6f8a; }
 
 .color-disbursement {
-  background-color: #DB4857; }
+  background-color: #205683; }
   .color-disbursement:hover {
-    background-color: #c92738; }
+    background-color: #163b5a; }
 
 .color-cash {
-  background-color: #158552; }
+  background-color: #6289A8; }
   .color-cash:hover {
-    background-color: #0e5937; }
+    background-color: #4d6f8a; }
 
 .color-debt {
-  background-color: #323A45; }
+  background-color: #205683; }
   .color-debt:hover {
-    background-color: #1d2127; }
+    background-color: #163b5a; }
 
 .u-text-center {
   text-align: center; }
@@ -1060,6 +1079,20 @@ input[type="submit"],
       display: block; }
       .header-search:last-child {
         margin-right: 0; } }
+
+#site-menu-toggle {
+  float: left; }
+  @media screen and (min-width: 48em) {
+    #site-menu-toggle {
+      display: none; } }
+
+.section-header {
+  border-bottom: 2px solid #b3b3b3; }
+
+#glossary-toggle {
+  border-left: 1px solid #D7D7D7;
+  border-right: none;
+  float: right; }
 
 .hero {
   padding: 2rem 0;
@@ -1758,29 +1791,29 @@ footer {
 
 .data--disbursement,
 .data--disbursements {
-  background: #DB4857; }
+  background: #205683; }
   .data--disbursement .chart-series__bar__tooltip,
   .data--disbursements .chart-series__bar__tooltip {
-    color: #DB4857; }
+    color: #205683; }
 
 .data--receipts {
-  background: #2678BA; }
+  background: #6289A8; }
   .data--receipts .chart-series__bar__tooltip {
-    color: #2678BA; }
+    color: #6289A8; }
 
 .data--cash,
 .data--cash_on_hand {
-  background: #158552; }
+  background: #6289A8; }
   .data--cash .chart-series__bar__tooltip,
   .data--cash_on_hand .chart-series__bar__tooltip {
-    color: #158552; }
+    color: #6289A8; }
 
 .data--debt,
 .data--debts_owed {
-  background: #323A45; }
+  background: #205683; }
   .data--debt .chart-series__bar__tooltip,
   .data--debts_owed .chart-series__bar__tooltip {
-    color: #323A45; }
+    color: #205683; }
 
 .data--support {
   background: #1B5585; }
@@ -1792,17 +1825,14 @@ footer {
   position: relative;
   margin: 1em 0; }
 
-.chart-series--horizontal {
-  color: #999; }
-  .chart-series--horizontal .chart-series__bar {
-    margin-bottom: .25em;
-    padding: .5em;
-    white-space: nowrap;
-    min-height: 1em; }
-  .chart-series--horizontal .chart-series__group {
-    margin-bottom: 2em; }
-  .chart-series--horizontal .chart-series__axis {
-    display: none; }
+.chart-series--horizontal .chart-series__bar {
+  padding: 1px;
+  white-space: nowrap;
+  min-height: 1.5em; }
+.chart-series--horizontal .chart-series__group {
+  margin-bottom: 2em; }
+.chart-series--horizontal .chart-series__axis {
+  display: none; }
 
 .chart-series--vertical {
   display: -webkit-box;
@@ -1842,6 +1872,7 @@ footer {
     -moz-flex: 1;
     -ms-flex: 1;
     flex: 1;
+    padding-top: 1px;
     position: relative;
     height: 100%;
     margin-left: 2em; }

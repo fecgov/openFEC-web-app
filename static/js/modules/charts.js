@@ -22,7 +22,7 @@ module.exports = {
         adjustTooltips = tooltipAdjuster()
           .selector('.chart-series__bar__tooltip');
 
-    d3.selectAll('.chart-series')
+    d3.selectAll('.js-chart-series')
       .call(barChart)
       .selectAll('.chart-series__bar')
         .call(adjustTooltips);
@@ -79,7 +79,7 @@ function chartSeries() {
           .attr('class', 'chart-series__axis'),
         property = dimension === 'width' ? 'right' : 'bottom';
     axis.selectAll('.tick')
-      .data(scale.ticks(4))
+      .data(scale.ticks(2))
       .enter()
       .append('div')
         .attr('class', 'chart-series__axis__tick')

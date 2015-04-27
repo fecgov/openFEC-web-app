@@ -110,7 +110,7 @@ td {
 
 .table__row--note {
   @include font-size(1.4);
-  @include rem(padding, 0 1rem);
+  @include rem(padding, 0 .5rem);
   width: 100%;
   padding: .5em 1em;
   font-style: italic;
@@ -148,6 +148,12 @@ td {
     border-right: none;
   }
 
+  .table__cell--bar {
+    .chart-series__bar {
+      background-color: $data-b;
+    }
+  }
+
   th,
   .table__header {
     font-weight: bold;
@@ -157,6 +163,18 @@ td {
   td,
   .table__row {
     border-bottom: 1px solid $light-gray;
+  }
+
+  .table {
+    &:last-child {
+      margin-left: 2%;
+    }
+  }
+
+  .table__row--header {
+    margin-left: -.75em;
+    padding-top: .5em;
+
   }
 
 }
@@ -170,6 +188,22 @@ td {
     &:first-child {
       width: 60%;
       font-weight: bold;
+    }
+  }
+
+  &.totals-table--charts {
+    .table__cell {
+      height: 2.5em;
+      line-height: 1.5em;
+      width: 20%;
+
+      &:first-child {
+        width: 40%;
+        font-weight: bold;
+      }
+      &:last-child {
+        width: 40%;
+      }
     }
   }
 }

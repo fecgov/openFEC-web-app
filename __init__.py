@@ -8,13 +8,20 @@ from openfecwebapp.api_caller import (load_search_results,
     load_single_type, load_single_type_summary,
     install_cache)
 
+import datetime
 import sys
 import locale
+import jinja2
 locale.setlocale(locale.LC_ALL, '')
 
 app = Flask(__name__)
 
+@jinja2.contextfunction
+def get_context(c):
+    return c
+
 app.jinja_env.globals['api_location'] = api_location
+app.jinja_env.globals['context'] = get_context
 
 if not test:
     app.config['BASIC_AUTH_USERNAME'] = username
@@ -85,6 +92,13 @@ def server_error(e):
 @app.template_filter('currency')
 def currency_filter(num, grouping=True):
     return locale.currency(num, grouping=grouping)
+
+@app.template_filter('date_sm')
+def date_filter_sm(date_str):
+    if date_str is None or date_str == '':
+        return ''
+    d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
+    return d.strftime('%m/%y')
 
 if __name__ == '__main__':
     if '--cached' in sys.argv:

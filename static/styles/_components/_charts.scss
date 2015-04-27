@@ -52,14 +52,11 @@ $tooltip-border-color: #999;
 
 // horizontal bar charts
 .chart-series--horizontal {
-  // text is contained in the bar, so... gray?
-  color: #999;
 
   .chart-series__bar {
-    margin-bottom: .25em;
-    padding: .5em;
+    padding: 1px;
     white-space: nowrap;
-    min-height: 1em;
+    min-height: 1.5em;
   }
 
   .chart-series__group {
@@ -90,6 +87,7 @@ $tooltip-border-color: #999;
     @include flex(1);
 
     // for positioning labels
+    padding-top: 1px;
     position: relative;
     height: 100%;
     

@@ -45,8 +45,14 @@ def _map_committee_financials(vals):
 
     return totals_mapped
 
-def add_fake_chart_data():
-    return {'fake_data': [{"cash_on_hand": 217341.3, "debts_owed": 30000, "disbursements": 78988.83, "receipts": 110402.55, "date": "Q1 - 2012"}, {"cash_on_hand": 208841.3, "debts_owed": 30000, "disbursements": 78988.83, "receipts": 101902.55, "date": "Q1 - 2012"}, {"cash_on_hand": 185927.58, "debts_owed": 30000, "disbursements": 10926.53, "receipts": 8555.0, "date": "Q1 - 2012"}, {"cash_on_hand": 232215.95, "debts_owed": 30000, "disbursements": 28688.71, "receipts": 45715.0, "date": "Q1 - 2012"}, {"cash_on_hand": 188299.11, "debts_owed": 30000, "disbursements": 87884.86, "receipts": 55309.91, "date": "Q1 - 2012"}, {"cash_on_hand": 216189.66, "debts_owed": 30000, "disbursements": 172159.64, "receipts": 179508.0, "date": "Q1 - 2012"}, {"cash_on_hand": 215189.66, "debts_owed": 30000, "disbursements": 172159.64, "receipts": 178508.0, "date": "Q1 - 2012"}, {"cash_on_hand": 204669.17, "debts_owed": 520.18, "disbursements": 58153.97, "receipts": 62568.4, "date": "Q1 - 2012"}]}
+
+def _alias_report_fields(report):
+    report['receipts'] = report['total_receipts_period']
+    report['disbursements'] = report['total_disbursements_period']
+    report['cash'] = report['cash_on_hand_end_period']
+    report['debt'] = report['debts_owed_by_committee']
+    return report
+
 
 def add_cmte_financial_data(context, data_type):
     full_cmtes = {}
@@ -68,10 +74,11 @@ def add_cmte_financial_data(context, data_type):
             if cmte.get('committee_designation') in ['P', 'A', 'D']:
                 cmte.update(load_cmte_financials(cmte['committee_id']))
                 cmte.update(_map_committee_financials(cmte))
+                cmte['reports'] = map(_alias_report_fields, cmte['reports'])
                 tmpl_group = cmte_designation_map[
                     cmte['committee_designation']]
-                cmte.update(add_fake_chart_data())
                 full_cmtes[tmpl_group].append(cmte)
+
             elif cmte['committee_designation'] is 'J':
                 full_cmtes['joint_committees'].append(cmte)
             else:
@@ -81,8 +88,8 @@ def add_cmte_financial_data(context, data_type):
         if cmte.get('committee_id'):
             cmte.update(load_cmte_financials(cmte['committee_id']))
             cmte.update(_map_committee_financials(cmte))
-            cmte.update(add_fake_chart_data())
-        full_cmtes = {'financial_summary': cmte}
+            cmte['reports'] = list(map(_alias_report_fields, cmte['reports']))
+
     else:
         pass
     return full_cmtes
