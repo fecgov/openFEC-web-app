@@ -13,61 +13,43 @@
     <header class="entity__header page-header">
       <div class="container">
         <div class="entity__header--top row">
+            <span class="entity__id">ID: {{ committee_id }}</span>
             <h1 class="entity__name">{{ name }}</h1>
-            <span class="entity__type"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committee - {{ designation }}</span>
+            <span class="entity__type">
+              <img class="category-icon"
+                   width="20" height="20"
+                   src="/static/img/icon-committee--white.svg"
+                   alt="Icon representing committees">
+               Committee - {{ designation }} 
+               - {{ type }}
+               {% if organization %} - {{ organization }}{% endif %}
+            </span>
         </div>
         <div class="entity__header--bottom row">
           <ul class="entity__info">
-            <li class="entity__term--wide">
-              <h5>Designation</h5>
-              <span>{{ designation }}</span>
-            </li>
-            <li class="entity__term">
-                <h5>Type</h5>
-                <span>{{ type }}</span>
-            </li>
-            {% if organization %}
-            <li class="entity__term">
-              <h5>Organization Type</h5>
-              <span>{{ organization }}</span>
-            </li>
-            {% endif %}
             {% if party %}
             <li class="entity__term">
-              <h5>Political Party</h5>
-              <span>{{ party }}</span>
+              <h5 class="entity__term__label">Political Party</h5>
+              <span class="entity__term__data">{{ party }}</span>
             </li>
             {% endif %}
             <li class="entity__term">
-              <h5>Committee ID</h5>
-              <span>{{ committee_id }}</span>
+              <h5 class="entity__term__label">Treasurer</h5>
+              <span class="entity__term__data">{{ treasurer }}</span>
             </li>
-            <li class="entity__term--wide">
-              <h5>Treasurer</h5>
-              <span>{{ treasurer }}</span>
-            </li>
-          </ul>
-          <ul class="entity__info">
             {% if candidates %}
-            <li class="entity__term--wide">
-              <h5>Related Candidates</h5>
-              <ul>
+            <li class="entity__term">
+              <h5 class="entity__term__label">Related Candidates</h5>
+              <ul class="entity__term__data">
               {% for c in candidates %}
                 <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{ c.name }}</a></li>
               {% endfor %}
               </ul>
             </li>
-            <li class="entity__term--wide">
-              <h5>Address</h5>
-              <span>{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
+            <li class="entity__term">
+              <h5 class="entity__term__label">Address</h5>
+              <span class="entity__term__data">{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
             </li>
-<!--           <li class="entity__term--wide">
-            <h5>Most Recent Filings</h5>
-            <ul>
-              <li><a href="">Filing 1</a></li>
-              <li><a href="">Filing 2</a></li>
-            </ul>
-          </li> -->
           {% endif %}
         </ul>
       </div>
@@ -89,40 +71,95 @@
       </nav>
     </div>
 
+    {% macro totals_table_row(pretty_name, value) %}
+      {% import 'macros/charts.html' as charts %}
+      <div class="table__row">
+        <div class="table__cell">{{ pretty_name }} </div>
+        <div class="table__cell">{{ value|default(0)|currency }}</div>
+        <div class="table__cell table__cell--bar">
+          {{ charts.chart_bar(value|default(0),
+                              pretty_name,
+                              tooltip=None) }}
+        </div>
+      </div>
+    {% endmacro %}
+
+    {% macro totals_table_row_header(pretty_name, value, description) %}
+      <div class="table__row table__row--header">
+        <div class="table__cell">
+          <h4>{{ pretty_name }}</h4>
+        </div>
+        <div class="table__cell">
+          <h4>{{ value|default(0)|currency }}</h4>
+        </div>
+        {% if description %}
+        <div class="table__cell u-text-center">
+          <span class="text--black"><em>{{ description }}</em></span>
+        </div>
+        {% endif %}
+      </div>
+    {% endmacro %}
+
+    {% macro totals_table(header_name, header_value, data, report_year, header_description='') %}
+      <figure class="table--simple totals-table totals-table--charts">
+        <div class="table js-chart-series chart-series--horizontal">
+          {{ totals_table_row_header(header_name, header_value, header_description) }}
+          {% for item in data %}
+            {{ totals_table_row(item[1], item[0]) }}
+          {% endfor %}
+          {% if report_year %}
+            <div class="table__row--note">
+              Calculated from reports filed {{ report_year }}
+            </div>
+          {% endif %}
+        </div>
+      </figure>
+    {% endmacro %}
+
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
-      <div class="container">
-        {% if financial_summary %}
-        <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-        <p class="text--lead">Get the full picture of all the money this committee received and spent during the timeframe listed.</p>
-        <figure class="page-subsection table--simple financial_summary-table">
-          <h5 class="figure__title">Totals for {{financial_summary.years_totals}}</h5>
-          <div class="table__half">
-            <div class="table__row">
-              <div class="table__cell">Total receipts</div>
-              <div class="table__cell">{{financial_summary.total_receipts}}</div>
-            </div>
-            <div class="table__row">
-              <div class="table__cell">Total disbursements</div>
-                <div class="table__cell">{{financial_summary.total_disbursements}}</div>
-            </div>
-            <div class="table__row--note">
-              Calculated from reports filed {{financial_summary.report_year}}
-            </div>
+      <div class="container committee-summary">
+        {% if totals %}
+          <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+          <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
+          <div class="row">
+            <h3 class="section-header">Detailed Summary</h3>
+            {% with committee=context() %}
+
+            {% set table_data = [
+                 (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
+                 (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfer from a Committes'),
+                 (committee.totals.0.all_loans_received, 'Loans'),
+               ]
+            %}
+            {{ totals_table('Total receipts', committee.totals.0.total_receipts, table_data,
+                committee.report_year, header_description='Money received by the committee' ) }}
+
+            {% set table_data = [
+                 (committee.totals.0.operating_expenditures, 'Operating expenditures'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committeess'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Fundraisings'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Exempt legal and accounting'),
+                 (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
+                 (committee.totals.0.contribution_refunds, 'Contribution refunds'),
+                 (committee.totals.0.other_disbursements, 'Other disbursementss'),
+               ]
+            %}
+            {{ totals_table('Total Disbursments', committee.totals.0.total_disbursments, table_data,
+                committee.report_year, header_description='Money spent by the committee' ) }}
+
+            {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
+            {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
+            {{ totals_table('Debts owed to committeed', committee.reports[0].debts_owed_to_committee) }}
+            {{ totals_table('Debts owed by committeed', committee.reports[0].debts_owed_by_committee) }}
+
+            {% endwith %}
           </div>
-          <div class="table__half">
-            <div class="table__row">
-              <div class="table__cell">Cash on hand</div>
-              <div class="table__cell">{{financial_summary.total_cash}}</div>
-            </div>
-            <div class="table__row">
-              <div class="table__cell">Debt</div>
-              <div class="table__cell">{{financial_summary.total_debt}}</div>
-            </div>
-            <div class="table__row--note">
-              Source: {{financial_summary.report_desc}}
-            </div>
+          <div class="row">
+            {% with committee=context() %}
+              {% include 'partials/committee-charts.html' %}
+            {% endwith %}
           </div>
-        </figure>
         {% else %}
         <div class="meta-box error-container">
           <h2 id="section-1-header" tabindex="0">No financial data</h2>
