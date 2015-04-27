@@ -1297,8 +1297,16 @@ input[type="submit"],
     margin-left: -40px; }
 
 .entity__header--top {
-  padding-top: 20px;
-  padding-top: 2rem; }
+  padding: 1rem 0; }
+  @media screen and (min-width: 61.25em) {
+    .entity__header--top {
+      padding: 2rem 0; } }
+
+.entity__header--bottom {
+  padding-bottom: 1rem; }
+  @media screen and (min-width: 61.25em) {
+    .entity__header--bottom {
+      padding-bottom: 2rem; } }
 
 .entity__header a {
   color: #fff; }
@@ -1310,80 +1318,86 @@ input[type="submit"],
   text-decoration: underline; }
 
 .entity__name {
-  font-size: 31px;
-  font-size: 3.1rem;
   font-weight: bold; }
 
+.entity__id {
+  color: #dde7f4; }
+
 .entity__type {
-  font-size: 20px;
-  font-size: 2rem;
-  line-height: 24px;
-  line-height: 2.4rem;
-  display: block;
-  padding: .5em 0; }
-
-.time-period {
-  float: right; }
-  .time-period label {
-    display: inline-block; }
-  .time-period .chosen-container {
-    width: auto; }
-  .time-period .chosen-container-single .chosen-single {
-    font-size: 14px;
-    font-size: 1.4rem;
-    display: inline-block;
-    width: 150px;
-    height: 32px;
-    line-height: 32px; }
-
-.entity__info {
   font-size: 16px;
   font-size: 1.6rem;
-  margin: 1.25em 0;
+  line-height: 1.2;
+  display: block;
+  padding: .5rem 0;
+  float: left; }
+  @media screen and (min-width: 48em) {
+    .entity__type {
+      font-size: 20px;
+      font-size: 2rem; } }
+
+.entity__info {
+  font-size: 14px;
+  font-size: 1.4rem;
+  margin: 1rem 0;
   width: 100%; }
   .entity__info:after {
     content: "";
     display: table;
     clear: both; }
-  .entity__info h5 {
-    color: #fff;
-    font-weight: bold;
-    border-bottom: 1px solid #3E4957; }
-  .entity__info dl {
-    margin: 0; }
+  @media screen and (min-width: 48em) {
+    .entity__info {
+      font-size: 16px;
+      font-size: 1.6rem; } }
 
 .entity__term {
-  float: left;
-  display: block;
-  width: 16.86085%; }
-  .entity__term:last-child {
-    width: 15.69576%; }
+  margin-bottom: 1rem; }
+  .entity__term:after {
+    content: "";
+    display: table;
+    clear: both; }
+  @media screen and (min-width: 48em) {
+    .entity__term {
+      float: left;
+      display: block;
+      width: 25.58941%;
+      margin-bottom: 0; }
+      .entity__term:last-child {
+        width: 23.23176%; } }
 
-.entity__term--wide {
+.entity__term__label {
+  width: 50%;
   float: left;
-  display: block;
-  width: 33.7217%; }
-  .entity__term--wide:last-child {
-    width: 32.55661%; }
+  color: #fff;
+  font-weight: bold; }
+  @media screen and (min-width: 48em) {
+    .entity__term__label {
+      width: 100%;
+      border-bottom: 1px solid #3E4957; } }
 
-.entity__term--extra-wide {
-  float: left;
-  display: block;
-  margin-right: 1.16509%;
-  width: 66.2783%; }
-  .entity__term--extra-wide:last-child {
-    margin-right: 0; }
+.entity__term__data {
+  width: 50%;
+  float: left; }
+  @media screen and (min-width: 48em) {
+    .entity__term__data {
+      width: 100%; } }
 
-.entity__related-entities dl {
+.time-period {
+  width: 100%;
   float: left;
-  display: block;
-  margin-right: 1.75788%;
-  width: 49.12106%; }
-  .entity__related-entities dl:last-child {
-    margin-right: 0; }
-.entity__related-entities dd {
-  font-size: 14px;
-  font-size: 1.4rem; }
+  padding: 1rem 0; }
+  .time-period label {
+    width: 50%;
+    margin-right: 1rem;
+    display: inline-block; }
+  .time-period select {
+    display: inline-block;
+    width: 50% !important;
+    height: 3rem;
+    margin-bottom: .5rem;
+    max-width: 150px; }
+  @media screen and (min-width: 48em) {
+    .time-period label {
+      width: auto; } }
 
 .committee-summary:after {
   content: "";
@@ -1590,8 +1604,7 @@ figure {
     margin-right: 0; }
 
 .page-header {
-  padding: 10px 20px;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   background: #505E70;
   color: #fff; }
   .page-header a {
@@ -1610,6 +1623,10 @@ figure {
   border-top: 1px solid #BDC4CD;
   width: 100%;
   color: #fff; }
+  .page-controls:after {
+    content: "";
+    display: table;
+    clear: both; }
 
 .controls--fixed .page-controls {
   position: fixed;
@@ -1618,6 +1635,9 @@ figure {
   z-index: 999; }
 .controls--fixed .page-controls__top {
   display: block; }
+
+.page-controls__bottom {
+  width: 100%; }
 
 .page-controls__top {
   padding: 10px;
