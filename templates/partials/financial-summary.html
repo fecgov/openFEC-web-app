@@ -1,9 +1,8 @@
   {% if related_committees %}
       <div class="page-section__intro">
         <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-        <p class="text--lead">This page provides an overview of all the money received and spent by the committees associated with this candidate.</p>
-        <p class="text--lead">Candidates are directly responsible for their <strong>principal campaign committees</strong> and <strong>authorized campaign committees</strong>. Candidates are associated with other types like <strong>joint fundraising committees</strong>, but because those committees are not exclusively for the candidate's campaign activity, this page will not include their information.</p>
-        <p class="text--lead">For more information about an individual committee — the types of funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
+        <p class="text--lead">This page provides an overview of all the money received and spent by  committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees.</p>
+        <p class="text--lead">For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
       </div>
 
       {% if primary_committee or authorized_committees %}
@@ -28,6 +27,8 @@
     {% if leadership_committees or joint_committees %}
       <div class="page-subsection other-committees">
       <h3>Other Committees</h3>
+      <p class="text--lead">This candidate has additional committees, but because those committees are not exclusively for the candidate's campaign activity, this page does not include their information.</p>
+
         {% if leadership_committees %}
         <h4>Leadership PACs</h4>
         <ul>

@@ -89,12 +89,6 @@ body {
 
 .page-section__intro {
   @include clearfix();
-
-  @include media($large) {
-    .text--lead {
-      @include span-columns(18);    
-    }
-  }
 }
 
 // This is a grouping of content withinin a section, labeled by a h3
@@ -106,14 +100,6 @@ body {
   &:last-of-type {
     padding-bottom: 0;
     border-bottom: none;
-  }
-
-  &:first-of-type {
-    padding: 2rem 0;
-  }
-
-  @include media($large) {
-    padding: 4rem 0;
   }
 }
 

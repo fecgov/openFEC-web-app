@@ -743,6 +743,9 @@ input[type="submit"],
 .u-hidden {
   display: none; }
 
+.u-not-responsive {
+  max-width: auto; }
+
 #notice {
   box-shadow: inset 0 -1px 1px 1px rgba(0, 0, 0, 0.5);
   padding: 20px;
@@ -2273,14 +2276,6 @@ body {
   content: "";
   display: table;
   clear: both; }
-@media screen and (min-width: 61.25em) {
-  .page-section__intro .text--lead {
-    float: left;
-    display: block;
-    margin-right: 1.16509%;
-    width: 74.70873%; }
-    .page-section__intro .text--lead:last-child {
-      margin-right: 0; } }
 
 .page-subsection {
   border-bottom: 1px solid #515A61;
@@ -2292,11 +2287,6 @@ body {
   .page-subsection:last-of-type {
     padding-bottom: 0;
     border-bottom: none; }
-  .page-subsection:first-of-type {
-    padding: 2rem 0; }
-  @media screen and (min-width: 61.25em) {
-    .page-subsection {
-      padding: 4rem 0; } }
 
 .page-sub-subsection {
   border-bottom: 1px dashed #b3b3b3;
