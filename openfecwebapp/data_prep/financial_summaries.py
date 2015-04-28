@@ -43,12 +43,11 @@ def _map_committee_financials(vals):
         totals_mapped['report_desc'] = re.sub('{.+}',
             '', reports['report_type_full'])
 
+
     return totals_mapped
 
 
 def _alias_report_fields(report):
-    report['receipts'] = report['total_receipts_period']
-    report['disbursements'] = report['total_disbursements_period']
     report['cash'] = report['cash_on_hand_end_period']
     report['debt'] = report['debts_owed_by_committee']
     return report

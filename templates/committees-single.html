@@ -20,7 +20,7 @@
                    width="20" height="20"
                    src="/static/img/icon-committee--white.svg"
                    alt="Icon representing committees">
-               Committee - {{ designation }} 
+               Committee - {{ designation }}
                - {{ type }}
                {% if organization %} - {{ organization }}{% endif %}
             </span>
@@ -71,9 +71,9 @@
             {% endfor %}
             </select>
           </div>
-          {% endif %}         
+          {% endif %}
         </div>
-      </div>      
+      </div>
      <!-- <nav class="page-tabs">
         <div class="container">
           <ul role="tablist">
@@ -87,7 +87,7 @@
 
     {% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
-      <div class="table__row">
+      <div class="table__row js-accordion_item">
         <div class="table__cell">{{ pretty_name }} </div>
         <div class="table__cell">{{ value|default(0)|currency }}</div>
         <div class="table__cell table__cell--bar">
@@ -98,8 +98,8 @@
       </div>
     {% endmacro %}
 
-    {% macro totals_table_row_header(pretty_name, value, description) %}
-      <div class="table__row table__row--header">
+    {% macro totals_table_row_header(pretty_name, value, description, accordion=True) %}
+      <div class="table__row table__row--header js-accordion_header accordion__header">
         <div class="table__cell">
           <h4>{{ pretty_name }}</h4>
         </div>
@@ -111,18 +111,23 @@
           <span class="text--black"><em>{{ description }}</em></span>
         </div>
         {% endif %}
+        {% if accordion %}
+          <a href="#" class="accordion__button js-accordion_button">
+            <i class="accordion__icon"></i>
+          </a>
+        {% endif %}
       </div>
     {% endmacro %}
 
     {% macro totals_table(header_name, header_value, data, report_year, header_description='') %}
       <figure class="table--simple totals-table totals-table--charts">
         <div class="table js-chart-series chart-series--horizontal">
-          {{ totals_table_row_header(header_name, header_value, header_description) }}
+          {{ totals_table_row_header(header_name, header_value, header_description, accordion=data|length) }}
           {% for item in data %}
             {{ totals_table_row(item[1], item[0]) }}
           {% endfor %}
           {% if report_year %}
-            <div class="table__row--note">
+            <div class="table__row--note js-accordion_item">
               Calculated from reports filed {{ report_year }}
             </div>
           {% endif %}
@@ -135,31 +140,31 @@
         {% if totals %}
           <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-          <div class="row">
+          <div class="row js-accordion">
             <h3 class="section-header">Detailed Summary</h3>
             {% with committee=context() %}
 
             {% set table_data = [
                  (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
                  (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfer from a Committes'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfer from a Committee'),
                  (committee.totals.0.all_loans_received, 'Loans'),
                ]
             %}
-            {{ totals_table('Total receipts', committee.totals.0.total_receipts, table_data,
+            {{ totals_table('Total receipts', committee.totals.0.receipts, table_data,
                 committee.report_year, header_description='Money received by the committee' ) }}
 
             {% set table_data = [
                  (committee.totals.0.operating_expenditures, 'Operating expenditures'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committeess'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
                  (committee.totals.0.transfers_to_affiliated_committee, 'Fundraisings'),
                  (committee.totals.0.transfers_to_affiliated_committee, 'Exempt legal and accounting'),
                  (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
                  (committee.totals.0.contribution_refunds, 'Contribution refunds'),
-                 (committee.totals.0.other_disbursements, 'Other disbursementss'),
+                 (committee.totals.0.other_disbursements, 'Other disbursements'),
                ]
             %}
-            {{ totals_table('Total Disbursments', committee.totals.0.total_disbursments, table_data,
+            {{ totals_table('Total Disbursments', committee.totals.0.disbursements, table_data,
                 committee.report_year, header_description='Money spent by the committee' ) }}
 
             {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}

@@ -3,7 +3,6 @@ def map_committee_page_values(c):
     returns template vars for rendering a single committee page
     """
     committee = {}
-
     committee['name'] = c.get('name', '')
     committee['type'] = c.get('type_full', '')
     committee['designation'] = c.get(
@@ -24,10 +23,15 @@ def map_committee_page_values(c):
         'zip' : c.get('zip', '')
     }
     committee['candidates'] = []
+    # we should get rid of this after the refactor
+    cands = []
     for cand in c['candidates']:
         candidate = {}
         candidate['candidate_id'] = cand['candidate_id']
         candidate['name'] = cand['candidate_name']
-        committee['candidates'].append(candidate)
+        if cand['candidate_id'] not in cands:
+            committee['candidates'].append(candidate)
+            # we should get rid of this after the refactor
+            cands.append(cand['candidate_id'])
 
     return committee

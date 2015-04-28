@@ -46,7 +46,7 @@ module.exports = {
         url = "/rest/names?q=%QUERY";
 
     if (typeof API_LOCATION !== 'undefined') {
-        url = "/names?q=%QUERY";
+        url = "/names?q=%QUERY&api_key=6wpqET5GjxCwAyBqXjc4dWrfMdshFE6wu3txb6yZ"; // Replace with the correct api key
         url = API_LOCATION.concat(url);
     }
 
@@ -69,7 +69,7 @@ module.exports = {
         return tokens;
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 3
+      limit: 5
     });
     candidateEngine.initialize();
 
@@ -95,7 +95,7 @@ module.exports = {
       dupDetector: function(remoteMatch, localMatch) {
         return remoteMatch.name === localMatch.name;
       },
-      limit: 3
+      limit: 5
     });
 
     committeeEngine.initialize();
