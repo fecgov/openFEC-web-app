@@ -77,6 +77,7 @@ module.exports = {
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit: 5
     });
+    candidateEngine.initialize();
 
     // Committee Engine
     committeeEngine = new Bloodhound({
