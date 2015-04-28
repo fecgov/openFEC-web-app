@@ -2299,7 +2299,7 @@ body {
 
 .page-subsection {
   border-bottom: 1px solid #515A61;
-  padding: 2rem 0; }
+  padding: 2rem 0 4rem; }
   .page-subsection:after {
     content: "";
     display: table;

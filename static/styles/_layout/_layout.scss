@@ -95,7 +95,7 @@ body {
 .page-subsection {
   @include primary-divider();
   @include clearfix();
-  padding: 2rem 0;
+  padding: 2rem 0 4rem;
 
   &:last-of-type {
     padding-bottom: 0;
