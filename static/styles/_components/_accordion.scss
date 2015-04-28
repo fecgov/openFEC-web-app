@@ -1,0 +1,22 @@
+
+.accordion__header {
+  position: relative;
+}
+
+.accordion__button {
+  display: block;
+  right: 1%;
+  position: absolute;
+  top: 25%;
+
+  .accordion__icon {
+    @include icon-after("\e622");
+    @include icon-circle;
+  }
+}
+
+.accordion--collapsed {
+  .accordion__icon {
+    @include icon-after("\e61a");
+  }
+}

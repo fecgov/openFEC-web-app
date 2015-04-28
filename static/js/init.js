@@ -1,5 +1,6 @@
 'use strict';
 
+var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
 var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
@@ -10,6 +11,8 @@ filters.init();
 typeahead.init();
 glossary.init();
 charts.init();
+
+var SLT_ACCORDION = '.js-accordion';
 
 $(document).ready(function() {
     var $body,
@@ -92,6 +95,12 @@ $(document).ready(function() {
             }            
         }
     });
+
+    // Initialize accordions
+    $(SLT_ACCORDION).each(function() {
+      accordion.init($(this));
+    });
+
 
     // unload overlay
     // CSS spinner courtesy of http://tobiasahlin.com/spinkit/
