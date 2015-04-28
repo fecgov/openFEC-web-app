@@ -15,7 +15,7 @@
         <li><span class="swatch data--disbursements"></span> Disbursements</li>
       </ul>
     </div>
-    {{ charts.chart_series_grouped(committee.reports, ('receipts', 'disbursements'),
+    {{ charts.chart_series_grouped(committee.totals, ('receipts', 'disbursements'),
        label_key=('coverage_start_date', 'coverage_end_date'), tooltip=group_bar_tooltip) }}
   </figure>
 </div>
@@ -29,6 +29,6 @@
       </ul>
     </div>
     {{ charts.chart_series_grouped(committee.reports, ('cash', 'debt'),
-       label_key=('coverage_start_date', 'coverage_end_date'), tooltip=group_bar_tooltip) }}
+       label_key=('coverage_end_date'), tooltip=group_bar_tooltip) }}
   </figure>
 </div>
