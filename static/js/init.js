@@ -4,7 +4,6 @@ var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
 var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
-var tablesort = require('tablesort');
 var glossary = require('./modules/glossary.js');
 
 filters.init();
@@ -20,10 +19,6 @@ $(document).ready(function() {
     $body = $('body');
     $pageControls = $('.page-controls');
     $body.addClass('js-initialized');
-
-    $('.table--sortable').each(function(){
-        new tablesort(this);
-    });
 
     // Sticky page controls
     if ( $pageControls.length > 0 ) {
