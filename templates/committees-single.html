@@ -107,7 +107,7 @@
       </div>
     {% endmacro %}
 
-    {% macro totals_table_row_header(pretty_name, value, description) %}
+    {% macro totals_table_row_header(pretty_name, value, description, accordion=True) %}
       <div class="table__row table__row--header js-accordion_header accordion__header">
         <div class="table__cell">
           <h4>{{ pretty_name }}</h4>
@@ -120,21 +120,23 @@
           <span class="text--black"><em>{{ description }}</em></span>
         </div>
         {% endif %}
+        {% if accordion %}
           <a href="#" class="accordion__button js-accordion_button">
             <i class="accordion__icon"></i>
           </a>
+        {% endif %}
       </div>
     {% endmacro %}
 
     {% macro totals_table(header_name, header_value, data, report_year, header_description='') %}
       <figure class="table--simple totals-table totals-table--charts">
         <div class="table js-chart-series chart-series--horizontal">
-          {{ totals_table_row_header(header_name, header_value, header_description) }}
+          {{ totals_table_row_header(header_name, header_value, header_description, accordion=data|length) }}
           {% for item in data %}
             {{ totals_table_row(item[1], item[0]) }}
           {% endfor %}
           {% if report_year %}
-            <div class="table__row--note">
+            <div class="table__row--note js-accordion_item">
               Calculated from reports filed {{ report_year }}
             </div>
           {% endif %}

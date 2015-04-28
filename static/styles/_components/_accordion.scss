@@ -7,9 +7,11 @@
   display: block;
   right: 1%;
   position: absolute;
+  top: 25%;
 
   .accordion__icon {
     @include icon-after("\e622");
+    @include icon-circle;
   }
 }
 
