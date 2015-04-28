@@ -1,5 +1,6 @@
 // MODULE: Hero Unit
 .hero {
+  @include white-links();
   padding: 2rem 0;
   color: #fff;
   text-align: center;

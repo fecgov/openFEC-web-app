@@ -1,20 +1,16 @@
 .page-header {
-	@include rem(padding, 1rem 2rem);
+  @include white-links();
+  padding: 1rem 0;	
 	background: $page-header;
 	color: #fff;
 
 	h1 {
 		margin-bottom: 0;
 	}
-
-  a,
-  a:hover,
-  a:active {
-    color: #fff;
-  }
 }
 
 .page-controls {
+  @include clearfix();
 	background: $page-header;
 	border-top: 1px solid $filter-bg;
   width: 100%;
@@ -33,6 +29,10 @@
   .page-controls__top {
     display: block;
   }
+}
+
+.page-controls__bottom {
+  width: 100%;
 }
 
 .page-controls__top {

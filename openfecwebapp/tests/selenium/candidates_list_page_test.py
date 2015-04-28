@@ -11,9 +11,6 @@ class CandidatesPageTests(BaseTest):
     def getFilterDivByName(self, name):
         return self.driver.find_element_by_xpath('//*[@for="' + name + '"]/..')
 
-    def openFilters(self):
-        self.driver.find_element_by_id('filter-toggle').click()
-
     def getColumn(self, index, data):
         return [row.find_elements_by_tag_name('td')[index].text
                 for row in data.find_elements_by_tag_name('tr')]
@@ -21,23 +18,14 @@ class CandidatesPageTests(BaseTest):
     def checkFilter(self, name, first_entry, second_entry,
                     count, index, result):
         self.driver.get(self.url)
-        self.openFilters()
         div = self.getFilterDivByName(name)
-        time.sleep(1)
-        div.find_element_by_xpath('./div/a/div/b').click()
-        self.assertEqual(
-            div.find_element_by_xpath('./div').get_attribute('class'),
-            ('chosen-container chosen-container-single '
-             'chosen-with-drop chosen-container-active'))
-        div.find_element_by_tag_name('input').send_keys(first_entry)
-        self.assertEqual(
-            len(div.find_elements_by_tag_name('li')),
-            count)
-        div.find_element_by_tag_name('input').send_keys(second_entry)
-        div.find_element_by_tag_name('input').send_keys(Keys.ENTER)
-        self.assertEqual(
-            div.get_attribute('class'),
-            'field active')
+        div.find_element_by_tag_name('select').send_keys(first_entry)
+        div.find_element_by_tag_name('select').send_keys(second_entry)
+        div.find_element_by_tag_name('select').send_keys(Keys.ENTER)
+        close_buttons = div.find_elements_by_xpath(
+            './/button[contains(@class, "button--remove")]'
+        )
+        self.assertEqual(len(close_buttons), 1)
         self.driver.find_element_by_id('category-filters').submit()
         results = (self.driver.find_elements_by_tag_name('tr'))
         col = [y.find_elements_by_tag_name('td')[index]
@@ -66,17 +54,14 @@ class CandidatesPageTests(BaseTest):
 
     def testCandidatesFilterSideBar(self):
         self.driver.get(self.url)
-        self.openFilters()
         filters = self.driver.find_element_by_id('filters')
         self.assertIn('side-panel--open', filters.get_attribute('class'))
 
     def testCandidateNameFilter(self):
         self.driver.get(self.url)
-        self.openFilters()
         name_div = self.getFilterDivByName('name')
-        time.sleep(1)
         name_div.find_element_by_tag_name('input').send_keys('Alliegro')
-        name_div.find_element_by_tag_name('input').send_keys(Keys.ENTER)
+        self.driver.find_element_by_id('category-filters').submit()
         self.assertEqual(
             len(self.driver.find_element_by_tag_name('tbody')
                 .find_elements_by_tag_name('tr')),

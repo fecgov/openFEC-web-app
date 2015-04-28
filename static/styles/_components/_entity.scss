@@ -1,80 +1,111 @@
 // Header styles for candidate, committee and district pages
 
 .entity__header--top {
-  @include rem(padding-top, 2.0rem);
+  padding: 1rem 0;
+
+  @include media($large) {
+    padding: 2rem 0;
+  }
+}
+
+.entity__header--bottom {
+  padding-bottom: 1rem;
+
+  @include media($large) {
+    padding-bottom: 2rem;
+  }
+}
+
+.entity__header {
+  @include white-links();
 }
 
 .entity__name {
-  @include font-size(3.1);
   font-weight: bold;
 }
 
-.entity__type {
-  @include font-size(2.0);
-  @include rem(line-height, 2.4rem);
-  display: block;
-  padding: .5em 0;
+.entity__id {
+    color: #dde7f4;
 }
 
-.time-period {
-  float: right;
+.entity__type {
+  @include font-size(1.6);
+  line-height: 1.2;
+  display: block;
+  padding: .5rem 0;
+  float: left;
 
-  label {
-    display: inline-block;
-  }
-
-  .chosen-container {
-    width: auto;
-  }
-
-  .chosen-container-single .chosen-single  {
-    @include font-size(1.4);
-    display: inline-block;
-    width: 150px;
-    height: 32px;
-    line-height: 32px;
+  @include media($medium) {
+    @include font-size(2.0);
   }
 }
 
 .entity__info {
   @include clearfix(); 
-  @include font-size(1.6); 
-  margin: 1.25em 0;
+  @include font-size(1.4); 
+  margin: 1rem 0;
   width: 100%;
 
-  h5 {
-    color: #fff;
-    font-weight: bold;
-    border-bottom: 1px solid $licorice;
-  }
-
-  dl {
-    margin: 0;
+  @include media($medium) {
+    @include font-size(1.6);
   }
 }
 
 .entity__term {
-  @include span-columns(4, block-collapse);
-}
+  @include clearfix();
+  margin-bottom: 1rem;
 
-.entity__term--wide {
-  @include span-columns(8, block-collapse);
-}
-
-.entity__term--extra-wide {
-  @include span-columns(16);
-}
-
-.entity__related-entities {
-  dl {
-    @include span-columns(8 of 16);
-  }
-
-  dd {
-    @include font-size(1.4);
+  @include media($medium) {
+    @include span-columns(3, block-collapse);
+    margin-bottom: 0;
   }
 }
 
+.entity__term__label {
+  width: 50%;
+  float: left;
+  color: #fff;
+  font-weight: bold;
+
+  @include media($medium) {
+    width: 100%;
+    border-bottom: 1px solid $licorice;
+  }
+}
+
+.entity__term__data {
+  width: 50%;
+  float: left;
+
+  @include media($medium) {
+    width: 100%;
+  }
+}
+
+.time-period {
+  width: 100%;
+  float: left;
+  padding: 1rem 0;
+  label {
+    width: 50%;
+    margin-right: 1rem;
+    display: inline-block;
+  }
+
+  select {
+    display: inline-block;
+    width: 50% !important;
+    height: 3rem;
+    margin-bottom: .5rem;
+    max-width: 150px;
+  }
+
+  @include media($medium) {
+    label {
+      width: auto;
+    }
+  }
+}
 
 // Candidate-specific styles
 

@@ -25,12 +25,6 @@ $(document).ready(function() {
         new tablesort(this);
     });
 
-    $('#filter-toggle').click(function(){
-    	$('body').toggleClass('panel-active--left');
-        $('.side-panel--left').toggleClass('side-panel--open');
-        $(this).toggleClass('active');
-    })
-
     // Sticky page controls
     if ( $pageControls.length > 0 ) {
         var scrollPos,
@@ -67,14 +61,22 @@ $(document).ready(function() {
     }
 
     // General reveal / disclosure 
-    $('.js-reveal').click(function(){
-        var revealElement = $(this).data('reveals');
-        $('#' + revealElement).attr('aria-hidden', false);
+    $('.js-reveal').on('click keypress', function(e){
+        if (e.which === 13 || e.type === 'click') {
+            var revealElement = $(this).data('reveals');
+            $('#' + revealElement).attr('aria-hidden', false);
+            // Set focus to the first input
+            $('#' + revealElement + ' input:first-of-type').focus();
+        }
     });
 
-    $('.js-hide').click(function(){
-        var hideElement = $(this).data('hides');
-        $('#' + hideElement).attr('aria-hidden', true);
+    $('.js-hide').on('click keypress', function(e){
+        if (e.which === 13 || e.type === 'click') {
+            var hideElement = $(this).data('hides');
+            $('#' + hideElement).attr('aria-hidden', true);
+            // Set focus back on the original triggering element
+            $('.js-reveal[data-reveals="' + hideElement + '"]').focus();
+        }
     })
 
     // Notice close-state persistence    
@@ -86,9 +88,11 @@ $(document).ready(function() {
         }
     }
 
-    $("#notice-close").click(function(){
-        if (typeof window.sessionStorage !== 'undefined') {
-            window.sessionStorage.setItem('keep-banner-closed', '1');
+    $("#notice-close").on('click keypress', function(e){
+        if (e.which === 13 || e.type === 'click') {
+            if (typeof window.sessionStorage !== 'undefined') {
+                window.sessionStorage.setItem('keep-banner-closed', '1');
+            }            
         }
     });
 

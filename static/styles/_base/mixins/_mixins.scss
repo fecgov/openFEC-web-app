@@ -151,3 +151,24 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+// White links
+// This is how to style links on dark backgrounds
+// Just @include this mixin in the parent element
+
+@mixin white-links() {
+
+  a {
+    color: #fff;
+  }
+
+  a:active,
+  a:focus {
+    color: #000;
+    outline: 3px solid $focus;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

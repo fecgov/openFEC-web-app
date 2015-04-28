@@ -31,13 +31,9 @@
 }
 
 .site-header {
+  @include white-links();
   background: $licorice-2;
   color: #fff;
-
-  a {
-    color: #fff;
-    text-decoration: underline;
-  }
 }
 
 .header-nav {
@@ -55,39 +51,50 @@
   float: left;
 }
 
-.header-nav__link {
-  @include rem(padding, 1.6rem 2rem);	
-  @include font-size(1.8);
-  @include rem(line-height, 2.4rem);
-  @include transition(background-color .1s);
-  text-align: center;
-  display: block;
-  text-decoration: none;
-
-  &:hover,
-  &:active {
-    background: $licorice;
-    color: #fff;
+.site-header {
+  .header-nav__link {
+    @include rem(padding, 1.6rem 2rem); 
+    @include font-size(1.8);
+    @include rem(line-height, 2.4rem);
+    @include transition(background-color .1s);
+    text-align: center;
+    display: block;
     text-decoration: none;
-  }
+
+    &:hover,
+    &:active {
+      background: $licorice;
+      color: #fff;
+      text-decoration: none;
+    }
+  } 
+
+  .header-nav__link:focus,
+  .header-brand:focus {
+    position: relative;
+    z-index: 9;
+    background: $licorice-2;
+    color: #fff;
+  }    
 }
 
+.header__left {
+  @include span-columns(20, block-collapse);
+}
+
+.header__right {
+  @include span-columns(4, block-collapse);
+}
 
 .header-brand {
+  @include span-columns(15 of 20, block-collapse);
   padding: 1rem 2rem;
   display: block;
   text-align: center;
   position: relative;
-  float: left;
-  width: 70%;
-
-  @include media($medium) {
-    width: auto;
-  }
 }
 
 .site-header .side-toggle {
-  width: 15%;
   padding: 1.6rem 0;
 
   @include media($medium) {
@@ -96,32 +103,67 @@
   }
 }
 
+#site-menu-toggle {
+  @include span-columns(4 of 20, block-collapse);
+  float: left;
+
+  @include media($medium) {
+    display: none;
+  }
+}
+
+#glossary-toggle {
+  @include span-columns(8 of 8, block-collapse);
+  border-left: 1px solid $light-gray;
+  border-right: none;
+  float: right;
+}
+
+@include media($medium) {
+  .header__left {
+    @include span-columns(16 of 24, block-collapse);
+  }
+
+  .header__right {
+    @include span-columns(8 of 24, block-collapse);
+  }
+
+  .header-brand {
+    width: auto;
+    float: left;
+  }
+
+  #glossary-toggle {
+    @include span-columns(2 of 8, block-collapse);
+  }
+}
+
 .header-search {
   @include clearfix();
   display: none; // Hiding on $small
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   margin-right: 0;
-  float: right;
-  width: 340px;
+  float: left;
 
   input[type="text"],
   button {
-  	@include rem(height, 3.2rem);
+  	height: 3rem;
     margin-bottom: 0;
     border: none;
   }
 
   input[type="text"],
   .tt-dropdown-menu {
-  	width: 260px;
+  	width: 80%;
   }
 
   .search-submit {
-  	width: 40px;
+  	width: 20%;
   	padding: 0;
   }
 
   @include media($medium) {
+    @include span-columns(6 of 8);
     display: block;
   }
 }

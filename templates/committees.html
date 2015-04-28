@@ -27,6 +27,7 @@
         <div class="field" id="name-field">
             <label for="name">Name</label>
             <input type="text" name="name" />
+            <button class="button--remove" data-removes="name"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
@@ -79,6 +80,7 @@
                 <option value="TX">Taxpayers</option>
                 <option value="USP">U.S. People's Party</option>
             </select>
+            <button class="button--remove" data-removes="party"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
@@ -137,10 +139,11 @@
                 <option value="WV">West Virginia</option>
                 <option value="WY">Wyoming</option>
            </select>
+           <button class="button--remove" data-removes="state"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
-            <label for="committee_type">Type</label>
+            <label for="committee_type">Committee Type</label>
             <select name="committee_type" data-placeholder="Select a type">
                 <option></option>
                 <option value="P">Presidential</option>
@@ -160,6 +163,7 @@
                 <option value="Y">Party - Qualified</option>
                 <option value="Z">National Party Nonfederal Account</option>
             </select>
+            <button class="button--remove" data-removes="committee_type"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
@@ -173,6 +177,7 @@
                 <option value="B">Lobbyist/Registrant PAC</option>
                 <option value="D">Leadership PAC</option>
             </select>
+            <button class="button--remove" data-removes="designation"><i class="ti-close"></i></button>
         </div>
 
         <div class="field">
@@ -186,6 +191,7 @@
                 <option value="V">Cooperative</option>
                 <option value="W">Corporation Without Capital Stock</option>
             </select>
+            <button class="button--remove" data-removes="organization_type"><i class="ti-close"></i></button>
         </div>
         <div class="field">
           <button class="primary">Apply filters</button>

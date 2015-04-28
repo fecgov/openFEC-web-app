@@ -13,66 +13,43 @@
     <header class="entity__header page-header">
       <div class="container">
         <div class="entity__header--top row">
+            <span class="entity__id">ID: {{ committee_id }}</span>
             <h1 class="entity__name">{{ name }}</h1>
             <span class="entity__type">
               <img class="category-icon"
                    width="20" height="20"
                    src="/static/img/icon-committee--white.svg"
                    alt="Icon representing committees">
-            Committee - {{ designation }} - {{ type }}</span>
+               Committee - {{ designation }}
+               - {{ type }}
+               {% if organization %} - {{ organization }}{% endif %}
+            </span>
         </div>
         <div class="entity__header--bottom row">
           <ul class="entity__info">
-            <li class="entity__term--wide">
-              <h5>Designation</h5>
-              <span>{{ designation }}</span>
-            </li>
-            <li class="entity__term">
-                <h5>Type</h5>
-                <span>{{ type }}</span>
-            </li>
-            {% if organization %}
-            <li class="entity__term">
-              <h5>Organization Type</h5>
-              <span>{{ organization }}</span>
-            </li>
-            {% endif %}
             {% if party %}
             <li class="entity__term">
-              <h5>Political Party</h5>
-              <span>{{ party }}</span>
+              <h5 class="entity__term__label">Political Party</h5>
+              <span class="entity__term__data">{{ party }}</span>
             </li>
             {% endif %}
             <li class="entity__term">
-              <h5>Committee ID</h5>
-              <span>{{ committee_id }}</span>
+              <h5 class="entity__term__label">Treasurer</h5>
+              <span class="entity__term__data">{{ treasurer }}</span>
             </li>
-            <li class="entity__term--wide">
-              <h5>Treasurer</h5>
-              <span>{{ treasurer }}</span>
-            </li>
-          </ul>
-          <ul class="entity__info">
             {% if candidates %}
-            <li class="entity__term--wide">
-              <h5>Related Candidates</h5>
-              <ul>
+            <li class="entity__term">
+              <h5 class="entity__term__label">Related Candidates</h5>
+              <ul class="entity__term__data">
               {% for c in candidates %}
                 <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{ c.name }}</a></li>
               {% endfor %}
               </ul>
             </li>
-            <li class="entity__term--wide">
-              <h5>Address</h5>
-              <span>{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
+            <li class="entity__term">
+              <h5 class="entity__term__label">Address</h5>
+              <span class="entity__term__data">{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
             </li>
-<!--           <li class="entity__term--wide">
-            <h5>Most Recent Filings</h5>
-            <ul>
-              <li><a href="">Filing 1</a></li>
-              <li><a href="">Filing 2</a></li>
-            </ul>
-          </li> -->
           {% endif %}
         </ul>
       </div>
@@ -83,15 +60,29 @@
           <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> {{ name }}</span>
         </div>
       </div>
-      <nav class="page-tabs">
+      <div class="page-controls__bottom">
+        <div class="container">
+          {% if election_years %}
+          <div class="time-period">
+            <label for="election_cycle">Two-Year Period</label>
+            <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate">
+            {% for year in election_years|sort(reverse=True) %}
+              <option value="{{ year }}">{{ year|int - 1 }} - {{ year }}</option>
+            {% endfor %}
+            </select>
+          </div>
+          {% endif %}         
+        </div>
+      </div>      
+     <!-- <nav class="page-tabs">
         <div class="container">
           <ul role="tablist">
             <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Overview</a></li>
-            <!-- <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Report Summaries</a></li>
-            <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Browse All Filings</a></li> -->
+            <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Report Summaries</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Browse All Filings</a></li>
           </ul>
         </div>
-      </nav>
+      </nav> -->
     </div>
 
     {% macro totals_table_row(pretty_name, value) %}
