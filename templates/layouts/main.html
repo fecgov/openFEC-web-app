@@ -14,7 +14,6 @@
     <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
     <link rel="stylesheet" href="/static/styles/themify-icons.css">
     <link href="/static/styles/styles.css" rel="stylesheet" type="text/css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     {% if api_location %}
     <script>
         API_LOCATION = "{{api_location}}"
@@ -119,8 +118,8 @@
 
 {% include './partials/glossary.html' %}
 
-<script src="/static/js/vendor/typeahead.bundle.min.js"></script>
 <script src="/static/js/app.js"></script>
+{% block scripts %}{% endblock %}
 
 {% if config.USE_ANALYTICS %}
     <script>
