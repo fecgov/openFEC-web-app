@@ -1,5 +1,7 @@
 'use strict';
 
+var $ = require('jquery');
+
 var events = require('./events.js');
 
 var accordion = {

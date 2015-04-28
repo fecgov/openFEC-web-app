@@ -1,5 +1,10 @@
 'use strict';
 
+var $ = require('jquery');
+
+// Hack: Append jQuery to `window` for use by legacy libraries
+window.$ = window.jQuery = $;
+
 var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
 var typeahead = require('./modules/typeahead.js');
