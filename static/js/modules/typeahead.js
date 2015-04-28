@@ -1,5 +1,11 @@
 'use strict';
+
+/* global require, Bloodhound */
+
+var $ = require('jquery');
+require('typeahead.js/dist/typeahead.bundle.js');
 var Handlebars = require('handlebars');
+
 var events = require('./events.js');
 var terms = require('./terms');
 var glossary = require('./glossary.js');
@@ -71,7 +77,6 @@ module.exports = {
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit: 5
     });
-    candidateEngine.initialize();
 
     // Committee Engine
     committeeEngine = new Bloodhound({
