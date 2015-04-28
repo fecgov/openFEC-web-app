@@ -19,7 +19,7 @@ def _map_committee_financials(vals):
         'total_receipts': totals.get('receipts'),
         'total_disbursements': totals.get('disbursements'),
         'total_cash': reports.get('cash_on_hand_end_period'),
-        'total_debt': reports.get('debts_owed_by_committee')
+        'total_debt': reports.get('debts_owed_by_committee'),
     }
 
     # format totals data in US dollars
@@ -43,12 +43,13 @@ def _map_committee_financials(vals):
         totals_mapped['report_desc'] = re.sub('{.+}',
             '', reports['report_type_full'])
 
+
     return totals_mapped
 
 
 def _alias_report_fields(report):
-    report['receipts'] = report['total_receipts_period']
-    report['disbursements'] = report['total_disbursements_period']
+    # report['receipts'] = report['total_receipts_period']
+    # report['disbursements'] = report['total_disbursements_period']
     report['cash'] = report['cash_on_hand_end_period']
     report['debt'] = report['debts_owed_by_committee']
     return report

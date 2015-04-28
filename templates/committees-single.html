@@ -71,9 +71,9 @@
             {% endfor %}
             </select>
           </div>
-          {% endif %}         
+          {% endif %}
         </div>
-      </div>      
+      </div>
      <!-- <nav class="page-tabs">
         <div class="container">
           <ul role="tablist">
@@ -147,24 +147,24 @@
             {% set table_data = [
                  (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
                  (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfer from a Committes'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfer from a Committee'),
                  (committee.totals.0.all_loans_received, 'Loans'),
                ]
             %}
-            {{ totals_table('Total receipts', committee.totals.0.total_receipts, table_data,
+            {{ totals_table('Total receipts', committee.totals.0.receipts, table_data,
                 committee.report_year, header_description='Money received by the committee' ) }}
 
             {% set table_data = [
                  (committee.totals.0.operating_expenditures, 'Operating expenditures'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committeess'),
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
                  (committee.totals.0.transfers_to_affiliated_committee, 'Fundraisings'),
                  (committee.totals.0.transfers_to_affiliated_committee, 'Exempt legal and accounting'),
                  (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
                  (committee.totals.0.contribution_refunds, 'Contribution refunds'),
-                 (committee.totals.0.other_disbursements, 'Other disbursementss'),
+                 (committee.totals.0.other_disbursements, 'Other disbursements'),
                ]
             %}
-            {{ totals_table('Total Disbursments', committee.totals.0.total_disbursments, table_data,
+            {{ totals_table('Total Disbursments', committee.totals.0.disbursements, table_data,
                 committee.report_year, header_description='Money spent by the committee' ) }}
 
             {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
