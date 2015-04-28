@@ -3,7 +3,7 @@
 /* global require, Bloodhound */
 
 var $ = require('jquery');
-require('typeahead.js/dist/typeahead.bundle.js');
+require('typeahead.js');
 var Handlebars = require('handlebars');
 
 var events = require('./events.js');
