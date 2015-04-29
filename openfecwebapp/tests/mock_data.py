@@ -9,26 +9,15 @@ candidate = {
         'candidate_id': 'A12345',
         'name': 'Person McPersonson',
         'active_through': '2012',
+        'party': 'C',
         'party_full': 'Cool People',
         'state': 'TN',
         'election_year': '2012',
+        'office': 'SR',
         'office_full': 'Supreme Ruler',
         'district': '11',
+        'incumbent_challenge': 'C',
         'incumbent_challenge_full': 'challenger',
-        'committees': [
-            {
-                'committee_id': 'D1234',
-                'committee_name': 'Friends of McPersonson',
-                'designation': 'P',
-                'designation_full': 'Principal campaign committee'
-            },
-            {
-                'committee_id': 'D1234',
-                'committee_name': 'Friends of McPersonson',
-                'designation': 'A',
-                'designation_full': 'Authorized committee' 
-            }
-        ]
     }],
     # gets generated later, manually inserted for sake of testing
     'primary_committee': {
