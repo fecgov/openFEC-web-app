@@ -1,10 +1,42 @@
 import re
 import locale
 
+from marshmallow import Schema, fields, pre_load
+
 from openfecwebapp.api_caller import load_cmte_financials
 from openfecwebapp.data_prep.shared import committee_type_map
 
+
 locale.setlocale(locale.LC_ALL, '')
+
+class Currency(fields.Decimal):
+    def _serialize(self, value, attr, obj):
+        if value is None:
+            return fields.Decimal('0')
+
+        return locale.currency(value, grouping=True)
+
+class CommitteeFinancials(Schema):
+    total_receipts = Currency(attribute='receipts')
+    total_disbursements = Currency(attribute='disbursements')
+    total_cash = Currency(attribute='cash_on_hand_end_period')
+    total_debt = Currency(attribute='debts_owed_by_committee')
+    report_year = fields.Integer()
+    years_totals = fields.Method("format_years_totals")
+
+    def format_years_totals(self, obj):
+        return "{} - {}".format(obj.cycle - 1, obj.cycle)
+
+    @pre_load
+    def map_totals_and_reports(self, data, many):
+        input_data_old = data
+        data = {}
+
+        data['reports'] = input_data_old['reports'][0]
+        data['totals'] = input_data_old['totals'][0]
+
+        return data
+
 
 def _map_committee_financials(vals):
     """
@@ -70,25 +102,24 @@ def add_cmte_financial_data(context, data_type):
         candidate = context
         cmtes = candidate.get('committees', [])
         for cmte in cmtes:
-            if cmte.get('committee_designation') in ['P', 'A', 'D']:
-                cmte.update(load_cmte_financials(cmte['committee_id']))
-                cmte.update(_map_committee_financials(cmte))
+            if cmte.get('designation') in ['P', 'A', 'D']:
+                cmte_financials = load_cmte_financials(cmte['committee_id'])
+                cmte.update(_map_committee_financials(cmte_financials))
                 cmte['reports'] = map(_alias_report_fields, cmte['reports'])
                 tmpl_group = cmte_designation_map[
-                    cmte['committee_designation']]
+                    cmte['designation']]
                 full_cmtes[tmpl_group].append(cmte)
-
-            elif cmte['committee_designation'] is 'J':
+            elif cmte['designation'] is 'J':
                 full_cmtes['joint_committees'].append(cmte)
             else:
                 pass
     elif data_type == 'committee':
         cmte = context
         if cmte.get('committee_id'):
-            cmte.update(load_cmte_financials(cmte['committee_id']))
-            cmte.update(_map_committee_financials(cmte))
+            cmte_financials = load_cmte_financials(cmte['committee_id'])
+            cmte.update(_map_committee_financials(cmte_financials))
             cmte['reports'] = list(map(_alias_report_fields, cmte['reports']))
-
+        full_cmtes = {'financial_summary': cmte}
     else:
         pass
     return full_cmtes

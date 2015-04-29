@@ -1,6 +1,7 @@
 from flask import render_template
-from openfecwebapp.data_prep.candidates import map_candidate_page_values
-from openfecwebapp.data_prep.committees import map_committee_page_values
+from marshmallow import pprint
+from openfecwebapp.data_prep.candidates import CandidateSchema
+from openfecwebapp.data_prep.committees import CommitteeSchema
 from openfecwebapp.data_prep.shared import generate_pagination_values
 from openfecwebapp.data_prep.financial_summaries import add_cmte_financial_data
 
@@ -47,19 +48,45 @@ def render_table(data_type, results, params):
 
 type_map = {
     'candidates': lambda x: x,
-    'candidate': map_candidate_page_values,
+    'candidate': lambda x: CandidateSchema().dump(x).data,
     'committees': lambda x: x,
-    'committee': map_committee_page_values
+    'committee': lambda x: CommitteeSchema().dump(x).data
 }
 
-def render_page(data_type, c_data):
+def render_page(data_type, *args, **kwargs):
+    c_data = args[0]
     # not handling error at api module because sometimes its ok to 
     # not get data back - like with search results
     if not 'results' in c_data or not c_data['results']:
         abort(500)
 
-    tmpl_vars = c_data['results'][0]
-    tmpl_vars.update(type_map[data_type](c_data['results'][0]))
-    tmpl_vars.update(add_cmte_financial_data(tmpl_vars, data_type))
+    data = c_data['results'][0]
+    #data.update(kwargs)
+
+    if data_type == 'candidate': 
+        candidate_schema = CandidateSchema()
+        tmpl_vars = candidate_schema.load(data).data
+        committees = CommitteeSchema(
+                only=['committee_id', 'name', 'designation_full', 'designation', 'committee_type_full', 'committee_type', 'url', 'is_primary', 'is_authorized'],
+                many=True, 
+                skip_missing=True
+            ).dump(kwargs['committees']).data
+        tmpl_vars['has_authorized'] = bool([x for x in committees if x['is_authorized']])
+        tmpl_vars['committees'] = committees
+        pprint(tmpl_vars)
+    elif data_type == 'committee':
+        committee_schema = CommitteeSchema()
+        tmpl_vars = committee_schema.load(data).data
+        tmpl_vars['candidates'] = CandidateSchema(
+                only=['candidate_id', 'name'], 
+                many=True, 
+                skip_missing=True
+            ).dump(kwargs['candidates']).data
+        pprint(tmpl_vars)
+    else:
+        tmpl_vars = data
+    #print("Final:")
+    #pprint(tmpl_vars)
+    #tmpl_vars.update(add_cmte_financial_data(data, data_type))
 
     return render_template(data_type + 's-single.html', **tmpl_vars)

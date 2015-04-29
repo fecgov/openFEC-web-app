@@ -19,14 +19,14 @@ candidate = {
             {
                 'committee_id': 'D1234',
                 'committee_name': 'Friends of McPersonson',
-                'committee_designation': 'P',
-                "committee_designation_full": "Principal campaign committee"
+                'designation': 'P',
+                'designation_full': 'Principal campaign committee'
             },
             {
                 'committee_id': 'D1234',
                 'committee_name': 'Friends of McPersonson',
-                'committee_designation': 'A',
-                'committee_designation_full': 'Authorized committee'
+                'designation': 'A',
+                'designation_full': 'Authorized committee' 
             }
         ]
     }],
@@ -50,7 +50,6 @@ candidate = {
 committee = {
     'results': [{
         'name': 'Friends of McPersonson',
-        'organization_type_full': 'Secret Club',
         'treasurer_name': 'Money McMaster',
         'street_1': '123 Boulevard St.',
         'street_2': '#595',
@@ -103,7 +102,7 @@ early_ac = [
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
-        'designation_code': 'A'
+        'designation': 'A' 
 
     }
 ]
@@ -113,7 +112,7 @@ late_ac = {
         'committee_id': 'D1234',
         'committee_name': 'Friends of McPersonson',
         'designation_full': 'Authorized',
-        'designation_code': 'A'
+        'designation': 'A' 
     }
 }
 

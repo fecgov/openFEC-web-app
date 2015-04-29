@@ -5,7 +5,7 @@ from flask.ext.basicauth import BasicAuth
 from openfecwebapp.views import (render_search_results, render_table,
     render_page)
 from openfecwebapp.api_caller import (load_search_results,
-    load_single_type, load_single_type_summary,
+    load_single_type, load_single_type_summary, load_nested_type,
     install_cache)
 
 import datetime
@@ -54,12 +54,14 @@ def candidate_page_with_cycle(c_id, cycle):
 @app.route('/candidate/<c_id>')
 def candidate_page(c_id):
     data = load_single_type('candidate', c_id, {})
-    return render_page('candidate', data)
+    committee_data = load_nested_type('candidate', c_id, 'committees')['results']
+    return render_page('candidate', data, committees=committee_data)
 
 @app.route('/committee/<c_id>')
 def committee_page(c_id):
     data = load_single_type('committee', c_id, {})
-    return render_page('committee', data)
+    candidate_data = load_nested_type('committee', c_id, 'candidates')['results']
+    return render_page('committee', data, candidates=candidate_data)
 
 @app.route('/candidates')
 def candidates():
