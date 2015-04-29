@@ -1,6 +1,9 @@
 'use strict';
-var terms = require('./terms');
+
+var $ = require('jquery');
 var _ = require('underscore');
+
+var terms = require('./terms');
 
 var glossaryLink = $('.term'),
     glossaryIsOpen = false,
@@ -13,7 +16,7 @@ var glossaryLink = $('.term'),
 
 // Indexing the terms and then lowercasing the indices
 indexToLowercase = function(arrayOfObjects, index){
-    var key, 
+    var key,
         newKey,
         indexedTerms = _.indexBy(arrayOfObjects, index),
         keys = Object.keys(indexedTerms),
@@ -22,9 +25,9 @@ indexToLowercase = function(arrayOfObjects, index){
     for ( var i = 0; i < n; i++ ) {
       key = keys[i];
       newKey = keys[i].toLowerCase();
-      indexedLowercaseTerms[newKey] = indexedTerms[key];    
+      indexedLowercaseTerms[newKey] = indexedTerms[key];
     }
-    return indexedLowercaseTerms;    
+    return indexedLowercaseTerms;
 }
 
 terms = indexToLowercase(terms, 'term');
@@ -59,7 +62,7 @@ showGlossary = function() {
 // Hides the glossary
 hideGlossary = function() {
     $('.side-panel--right').removeClass('side-panel--open');
-    $('.term--highlight').removeClass('term--highlight');   
+    $('.term--highlight').removeClass('term--highlight');
     $('body').removeClass('panel-active--right');
     $('#glossary-toggle').removeClass('active');
     glossaryIsOpen = false;
@@ -76,9 +79,9 @@ setDefinition = function(definedTerm) {
     if ( definedTerm !== null ) {
         term = definedTerm.term;
         definition = definedTerm.definition;
-        $('#glossary-term').html(term);  
+        $('#glossary-term').html(term);
         $('#glossary-definition').html(definition);
-    } 
+    }
     else {
         $('#glossary-definition').html('Sorry, there are no definitions for this term. Please try again.');
         $('#glossary-term').html('');
@@ -102,7 +105,7 @@ module.exports = {
             var dataTerm = $(this).data('term'),
                 definedTerm = findDefinition(dataTerm);
             showGlossary();
-            setDefinition(definedTerm); 
+            setDefinition(definedTerm);
         }
     })
 

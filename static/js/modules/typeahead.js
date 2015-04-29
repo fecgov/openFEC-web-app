@@ -1,5 +1,11 @@
 'use strict';
+
+/* global require, Bloodhound */
+
+var $ = require('jquery');
+require('typeahead.js');
 var Handlebars = require('handlebars');
+
 var events = require('./events.js');
 var terms = require('./terms');
 var glossary = require('./glossary.js');
