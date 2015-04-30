@@ -1602,40 +1602,60 @@ body {
     clear: both; }
   @media screen and (min-width: 48em) {
     .entity__info {
+      display: -webkit-box;
+      display: -moz-box;
+      display: box;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -moz-box-orient: horizontal;
+      box-orient: horizontal;
+      -webkit-flex-direction: row;
+      -moz-flex-direction: row;
+      flex-direction: row;
+      -ms-flex-direction: row;
+      -webkit-box-pack: start;
+      -moz-box-pack: start;
+      box-pack: start;
+      -webkit-justify-content: flex-start;
+      -moz-justify-content: flex-start;
+      -ms-justify-content: flex-start;
+      -o-justify-content: flex-start;
+      justify-content: flex-start;
+      -ms-flex-pack: start;
       font-size: 16px;
       font-size: 1.6rem; } }
 
 .entity__term {
-  margin-bottom: 1rem; }
+  width: 100%;
+  margin-bottom: 2rem; }
   .entity__term:after {
     content: "";
     display: table;
     clear: both; }
   @media screen and (min-width: 48em) {
     .entity__term {
-      float: left;
-      display: block;
-      width: 25.58941%;
-      margin-bottom: 0; }
-      .entity__term:last-child {
-        width: 23.23176%; } }
+      -webkit-flex-basis: 25%;
+      -moz-flex-basis: 25%;
+      flex-basis: 25%;
+      -ms-flex-preferred-size: 25%;
+      margin-bottom: 0; } }
 
 .entity__term__label {
-  width: 40%;
-  float: left;
   color: #fff;
   font-weight: bold; }
   @media screen and (min-width: 48em) {
     .entity__term__label {
+      display: block;
       width: 100%;
       border-bottom: 1px solid #3E4957; } }
 
-.entity__term__data {
-  width: 60%;
-  float: left; }
-  @media screen and (min-width: 48em) {
-    .entity__term__data {
-      width: 100%; } }
+@media screen and (min-width: 48em) {
+  .entity__term__data {
+    display: block;
+    width: 100%; } }
 
 .time-period {
   width: 100%;
@@ -1843,16 +1863,19 @@ figure {
   padding: 2rem 0; }
 
 .error-container {
-  float: left;
-  display: block;
-  margin-right: 1.16509%;
-  width: 74.70873%;
-  margin-left: 12.64564%;
-  padding: 2.5em;
+  padding: 2rem;
   margin-bottom: 0;
   text-align: center; }
-  .error-container:last-child {
-    margin-right: 0; }
+  @media screen and (min-width: 48em) {
+    .error-container {
+      float: left;
+      display: block;
+      margin-right: 2.35765%;
+      width: 82.94039%;
+      margin-left: 8.5298%;
+      padding: 3rem; }
+      .error-container:last-child {
+        margin-right: 0; } }
 
 .error-container__bottom {
   margin-top: 1.25em;
