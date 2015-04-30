@@ -47,9 +47,7 @@
   width: 100%;
 
   @include media($medium) {
-    @include display(flex);
-    @include flex-direction(row);
-    @include justify-content(flex-start);
+    display: table;
     @include font-size(1.6);
   }
 }
@@ -64,7 +62,8 @@
   }
   
   @include media($medium) {
-    @include flex-basis(25%);
+    display: table-cell;
+    width: auto;
     margin-bottom: 0;
   }
 }
