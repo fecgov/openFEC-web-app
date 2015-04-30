@@ -22,6 +22,7 @@ def get_context(c):
 
 app.jinja_env.globals['api_location'] = api_location
 app.jinja_env.globals['context'] = get_context
+app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 
 if not test:
     app.config['BASIC_AUTH_USERNAME'] = username
