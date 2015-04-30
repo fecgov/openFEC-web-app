@@ -503,11 +503,15 @@ td {
   .table--simple td,
   .table--simple .table__row {
     border-bottom: 1px solid #D7D7D7; }
-  .table--simple .table:last-child {
-    margin-left: 2%; }
   .table--simple .table__row--header {
-    margin-left: -.75em;
     padding-top: .5em; }
+  .table--simple .table__row--nested {
+    background: #F8F8F8;
+    border-bottom: 1px solid #fff;
+    padding: 0 2rem; }
+    .table--simple .table__row--nested.table__row--note {
+      text-align: left;
+      padding: 1rem 2rem; }
 
 .totals-table {
   font-size: 14px;
@@ -519,22 +523,41 @@ td {
       padding: 1rem 0 0 0;
       font-weight: bold; }
   .totals-table.totals-table--charts .table__cell {
-    height: 2.5em;
     line-height: 1.5em;
-    width: 20%; }
+    padding: 0;
+    width: 50%; }
     .totals-table.totals-table--charts .table__cell:first-child {
-      width: 40%;
-      font-weight: bold; }
-    .totals-table.totals-table--charts .table__cell:last-of-type {
-      width: 40%; }
+      width: 50%;
+      padding: .5rem 1rem 0 0; }
+  .totals-table.totals-table--charts .table__row--nested .table__cell,
+  .totals-table.totals-table--charts .table__row--nested .table__cell:first-child {
+    width: 100%; }
+  .totals-table.totals-table--charts .table__cell--bar {
+    width: 100%;
+    padding-bottom: 1rem; }
   .totals-table .table__cell {
     width: 40%; }
     .totals-table .table__cell:first-child {
       width: 60%; }
+  .totals-table .table__cell--header-description {
+    display: none; }
   @media screen and (min-width: 48em) {
     .totals-table {
       font-size: 16px;
       font-size: 1.6rem; }
+      .totals-table.totals-table--charts .table__row .table__cell,
+      .totals-table.totals-table--charts .table__row--nested .table__cell {
+        width: 20%;
+        padding: 1rem 0; }
+        .totals-table.totals-table--charts .table__row .table__cell:first-child,
+        .totals-table.totals-table--charts .table__row--nested .table__cell:first-child {
+          width: 40%;
+          padding: 1rem 0; }
+        .totals-table.totals-table--charts .table__row .table__cell:last-of-type,
+        .totals-table.totals-table--charts .table__row--nested .table__cell:last-of-type {
+          width: 40%; }
+      .totals-table .table__cell--header-description {
+        display: block; }
       .totals-table .table__cell {
         width: 40%; }
         .totals-table .table__cell:first-child {
