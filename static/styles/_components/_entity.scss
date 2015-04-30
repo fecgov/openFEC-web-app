@@ -47,37 +47,42 @@
   width: 100%;
 
   @include media($medium) {
+    display: table;
     @include font-size(1.6);
   }
 }
 
 .entity__term {
   @include clearfix();
-  margin-bottom: 1rem;
+  width: 100%;
+  margin-bottom: 2rem;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
   @include media($medium) {
-    @include span-columns(3, block-collapse);
+    display: table-cell;
+    width: auto;
     margin-bottom: 0;
   }
 }
 
 .entity__term__label {
-  width: 50%;
-  float: left;
   color: #fff;
   font-weight: bold;
 
   @include media($medium) {
+    display: block;
     width: 100%;
     border-bottom: 1px solid $licorice;
   }
 }
 
 .entity__term__data {
-  width: 50%;
-  float: left;
 
   @include media($medium) {
+    display: block;
     width: 100%;
   }
 }
@@ -86,8 +91,10 @@
   width: 100%;
   float: left;
   padding: 1rem 0;
+  
   label {
-    width: 50%;
+    @include font-size(1.4);
+    width: 40%;
     margin-right: 1rem;
     display: inline-block;
   }
@@ -102,6 +109,7 @@
 
   @include media($medium) {
     label {
+      @include font-size(1.6);
       width: auto;
     }
   }
@@ -141,7 +149,7 @@
     border-color: $light-blue-gray;
   }
   
-  .figure-group__side {
+  .figure-group__bar {
     background-color: $light-blue-gray;
   }
 }

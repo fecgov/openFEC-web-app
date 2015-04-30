@@ -87,7 +87,7 @@
 
     {% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
-      <div class="table__row js-accordion_item">
+      <div class="table__row table__row--nested js-accordion_item">
         <div class="table__cell">{{ pretty_name }} </div>
         <div class="table__cell">{{ value|default(0)|currency }}</div>
         <div class="table__cell table__cell--bar">
@@ -104,10 +104,10 @@
           <h4>{{ pretty_name }}</h4>
         </div>
         <div class="table__cell">
-          <h4>{{ value|default(0)|currency }}</h4>
+          <span>{{ value|default(0)|currency }}</span>
         </div>
         {% if description %}
-        <div class="table__cell u-text-center">
+        <div class="table__cell table__cell--header-description">
           <span class="text--black"><em>{{ description }}</em></span>
         </div>
         {% endif %}
@@ -127,7 +127,7 @@
             {{ totals_table_row(item[1], item[0]) }}
           {% endfor %}
           {% if report_year %}
-            <div class="table__row--note js-accordion_item">
+            <div class="table__row--note table__row--nested js-accordion_item">
               Calculated from reports filed {{ report_year }}
             </div>
           {% endif %}
