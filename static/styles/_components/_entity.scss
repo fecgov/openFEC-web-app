@@ -47,37 +47,43 @@
   width: 100%;
 
   @include media($medium) {
+    @include display(flex);
+    @include flex-direction(row);
+    @include justify-content(flex-start);
     @include font-size(1.6);
   }
 }
 
 .entity__term {
   @include clearfix();
-  margin-bottom: 1rem;
+  width: 100%;
+  margin-bottom: 2rem;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
   @include media($medium) {
-    @include span-columns(3, block-collapse);
+    @include flex-basis(25%);
     margin-bottom: 0;
   }
 }
 
 .entity__term__label {
-  width: 40%;
-  float: left;
   color: #fff;
   font-weight: bold;
 
   @include media($medium) {
+    display: block;
     width: 100%;
     border-bottom: 1px solid $licorice;
   }
 }
 
 .entity__term__data {
-  width: 60%;
-  float: left;
 
   @include media($medium) {
+    display: block;
     width: 100%;
   }
 }

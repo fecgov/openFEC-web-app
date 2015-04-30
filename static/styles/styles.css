@@ -1635,6 +1635,8 @@ body {
     content: "";
     display: table;
     clear: both; }
+  .entity__term:last-child {
+    margin-bottom: 0; }
   @media screen and (min-width: 48em) {
     .entity__term {
       -webkit-flex-basis: 25%;
