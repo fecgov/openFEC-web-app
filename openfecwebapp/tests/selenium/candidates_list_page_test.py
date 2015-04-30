@@ -36,7 +36,7 @@ class CandidatesPageTests(SearchPageTestCase):
 
     def testCandidatePartyFilter(self):
         self.checkFilter(
-            'party', 'democratic party', 5, 3, 'Democratic Party')
+            'party', 'republican party', 5, 3, 'Republican Party')
 
     def testCandidateStateFilter(self):
         self.checkFilter('state', 'west', 4, 4, 'WV')

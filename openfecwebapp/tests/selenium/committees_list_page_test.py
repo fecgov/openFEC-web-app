@@ -32,7 +32,7 @@ class CommitteesPageTests(SearchPageTestCase):
 
     def testCommitteePartyFilter(self):
         self.checkFilter(
-            'party', 'democratic party', 5, 3, 'Democratic Party')
+            'party', 'republican party', 5, 3, 'Republican Party')
 
     def testCommitteeStateFilter(self):
         self.checkFilter('state', 'oregon', 4, 2, 'OR')
