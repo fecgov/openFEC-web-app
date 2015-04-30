@@ -1,13 +1,16 @@
-import requests
-from urllib.parse import urlencode
+import os
+from urllib import parse
 
-from openfecwebapp.config import api_location, api_key
+import requests
+
+from openfecwebapp.config import api_location, api_version, api_key
 
 
 def _call_api(path, filters):
     if api_key:
         filters['api_key'] = api_key
-    url = api_location + path
+    path = os.path.join(api_version, path.strip('/'))
+    url = parse.urljoin(api_location, path)
     results = requests.get(url, params=filters)
 
     if results.status_code == requests.codes.ok:
@@ -52,5 +55,5 @@ def install_cache():
     requests_cache.install_cache()
 
 def limit_by_amount(curr_url, amount):
-    query = urlencode({'page': 1, 'per_page': amount})
+    query = parse.urlencode({'page': 1, 'per_page': amount})
     return '{0}?{1}'.format(curr_url, query)

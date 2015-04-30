@@ -2,6 +2,7 @@ import os
 
 # no trailing slash
 api_location = os.getenv('FEC_WEB_API_URL', 'http://localhost:5000')
+api_version = os.getenv('FEC_WEB_API_VERSION', 'v1')
 host = os.getenv('FEC_WEB_HOST', '0.0.0.0')
 port = os.getenv('VCAP_APP_PORT', '3000')
 api_key = os.getenv('FEC_WEB_API_KEY', '')
