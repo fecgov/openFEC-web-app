@@ -4,6 +4,9 @@ from urllib.parse import urlencode
 from openfecwebapp.config import api_location, api_key
 
 
+MAX_FINANCIALS_COUNT = 4
+
+
 def _call_api(path, filters):
     if api_key:
         filters['api_key'] = api_key
@@ -38,10 +41,11 @@ def load_single_type(data_type, c_id, filters):
 
 def load_cmte_financials(committee_id):
     r_url = '/committee/' + committee_id + '/reports'
-    limited_r_url = limit_by_amount(r_url, 4)
+    limited_r_url = limit_by_amount(r_url, MAX_FINANCIALS_COUNT)
     t_url = '/committee/' + committee_id + '/totals'
+    limited_t_url = limit_by_amount(t_url, MAX_FINANCIALS_COUNT)
     reports = _call_api(limited_r_url, {})
-    totals = _call_api(t_url, {})
+    totals = _call_api(limited_t_url, {})
     cmte_financials = {}
     cmte_financials['reports'] = reports['results']
     cmte_financials['totals'] = totals['results']
