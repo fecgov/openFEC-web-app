@@ -28,22 +28,20 @@ figure {
   }
 }
 
-.figure-group__side {
+.figure-group__bar {
+  @include white-links();
   background-color: $licorice-3;
-  width: 1.875em;
   padding: .3125em;
-  position: absolute;
-  height: 100%;
-}
-
-.figure-group__main {
-  padding-left: 1.875em;
 }
 
 .figure-group__header {
   @include clearfix();
-  @include rem(padding, 2rem 2rem);
+  padding: 1rem;
   border-bottom: 1px solid $light-gray;
+
+  @include media($medium) {
+    padding: 2rem;
+  }
 }
 
 .figure-group__title {
@@ -55,7 +53,11 @@ figure {
 }
 
 .figure-group__inner {
-  @include rem(padding, 2rem 2rem);
+  padding: 1rem;
+
+  @include media($medium) {
+    padding: 2rem;
+  }
 }
 
 .figure-group__graphic {

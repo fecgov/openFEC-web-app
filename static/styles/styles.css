@@ -450,7 +450,6 @@ td {
     clear: both; }
 
 .table__cell {
-  padding: 0 10px;
   padding: 0 1rem;
   float: left;
   line-height: 1; }
@@ -459,24 +458,31 @@ td {
   font-weight: bold; }
 
 .table__row--note {
-  font-size: 14px;
-  font-size: 1.4rem;
-  padding: 0 5px;
-  padding: 0 0.5rem;
+  font-size: 10px;
+  font-size: 1rem;
+  padding: 0 .5rem;
   width: 100%;
-  padding: .5em 1em;
+  padding: .5rem 0 1rem 0;
+  text-align: right;
   font-style: italic;
   display: block; }
+  @media screen and (min-width: 48em) {
+    .table__row--note {
+      font-size: 14px;
+      font-size: 1.4rem; } }
 
 .table__row--total {
   font-weight: bold;
   margin-top: 1em; }
 
 .table__half {
-  width: 48%;
-  float: left; }
-  .table__half:last-child {
-    margin-left: 2%; }
+  width: 100%; }
+  @media screen and (min-width: 48em) {
+    .table__half {
+      width: 48%;
+      float: left; }
+      .table__half:last-child {
+        margin-left: 2%; } }
 
 .table--simple {
   width: 100%;
@@ -504,12 +510,13 @@ td {
     padding-top: .5em; }
 
 .totals-table {
-  font-size: 16px;
-  font-size: 1.6rem; }
+  font-size: 14px;
+  font-size: 1.4rem; }
   .totals-table .table__cell {
-    width: 40%; }
+    width: 100%;
+    padding: 1rem 0; }
     .totals-table .table__cell:first-child {
-      width: 60%;
+      padding: 1rem 0 0 0;
       font-weight: bold; }
   .totals-table.totals-table--charts .table__cell {
     height: 2.5em;
@@ -520,6 +527,18 @@ td {
       font-weight: bold; }
     .totals-table.totals-table--charts .table__cell:last-of-type {
       width: 40%; }
+  .totals-table .table__cell {
+    width: 40%; }
+    .totals-table .table__cell:first-child {
+      width: 60%; }
+  @media screen and (min-width: 48em) {
+    .totals-table {
+      font-size: 16px;
+      font-size: 1.6rem; }
+      .totals-table .table__cell {
+        width: 40%; }
+        .totals-table .table__cell:first-child {
+          width: 60%; } }
 
 ul, ol {
   margin: 0;
@@ -1439,10 +1458,12 @@ body {
   font-size: 1.4rem;
   background: #fff;
   top: 32px !important;
-  width: 75%;
   text-align: left;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid #D7D7D7; }
+  @media screen and (min-width: 48em) {
+    .tt-dropdown-menu {
+      width: 75%; } }
 
 #large-search .tt-dropdown-menu {
   font-size: 16px;
@@ -1600,7 +1621,7 @@ body {
         width: 23.23176%; } }
 
 .entity__term__label {
-  width: 50%;
+  width: 40%;
   float: left;
   color: #fff;
   font-weight: bold; }
@@ -1610,7 +1631,7 @@ body {
       border-bottom: 1px solid #3E4957; } }
 
 .entity__term__data {
-  width: 50%;
+  width: 60%;
   float: left; }
   @media screen and (min-width: 48em) {
     .entity__term__data {
@@ -1621,7 +1642,9 @@ body {
   float: left;
   padding: 1rem 0; }
   .time-period label {
-    width: 50%;
+    font-size: 14px;
+    font-size: 1.4rem;
+    width: 40%;
     margin-right: 1rem;
     display: inline-block; }
   .time-period select {
@@ -1632,6 +1655,8 @@ body {
     max-width: 150px; }
   @media screen and (min-width: 48em) {
     .time-period label {
+      font-size: 16px;
+      font-size: 1.6rem;
       width: auto; } }
 
 .committee-summary:after {
@@ -1667,7 +1692,7 @@ body {
 
 .other-committees .figure-group {
   border-color: #BDC4CD; }
-.other-committees .figure-group__side {
+.other-committees .figure-group__bar {
   background-color: #BDC4CD; }
 
 .page-tabs {
@@ -1725,24 +1750,28 @@ figure {
   .figure-group:last-of-type {
     margin-bottom: 0; }
 
-.figure-group__side {
+.figure-group__bar {
   background-color: #505E70;
-  width: 1.875em;
-  padding: .3125em;
-  position: absolute;
-  height: 100%; }
-
-.figure-group__main {
-  padding-left: 1.875em; }
+  padding: .3125em; }
+  .figure-group__bar a {
+    color: #fff; }
+  .figure-group__bar a:active,
+  .figure-group__bar a:focus {
+    color: #000;
+    outline: 3px solid #0DD16E; }
+  .figure-group__bar a:hover {
+    text-decoration: underline; }
 
 .figure-group__header {
-  padding: 20px 20px;
-  padding: 2rem 2rem;
+  padding: 1rem;
   border-bottom: 1px solid #D7D7D7; }
   .figure-group__header:after {
     content: "";
     display: table;
     clear: both; }
+  @media screen and (min-width: 48em) {
+    .figure-group__header {
+      padding: 2rem; } }
 
 .figure-group__title {
   margin: 0; }
@@ -1752,8 +1781,10 @@ figure {
   font-size: 1.4rem; }
 
 .figure-group__inner {
-  padding: 20px 20px;
-  padding: 2rem 2rem; }
+  padding: 1rem; }
+  @media screen and (min-width: 48em) {
+    .figure-group__inner {
+      padding: 2rem; } }
 
 .figure-group__graphic {
   float: left;
