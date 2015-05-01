@@ -22,7 +22,7 @@ $(document).ready(function() {
     var $body,
         $pageControls;
     $body = $('body');
-    $pageControls = $('.page-controls');
+    $pageControls = $('.page-controls.sticky');
     $body.addClass('js-initialized');
 
     // Sticky page controls
