@@ -459,7 +459,6 @@ td {
 .table__row--note {
   font-size: 10px;
   font-size: 1rem;
-  padding: 0 .5rem;
   width: 100%;
   padding: .5rem 0 1rem 0;
   text-align: right;
@@ -2191,7 +2190,7 @@ footer {
     padding-top: 1px;
     position: relative;
     height: 100%;
-    margin-left: 2em; }
+    margin-left: 10%; }
     .chart-series--vertical .chart-series__bar:first-of-type,
     .chart-series--vertical .chart-series__group:first-of-type {
       margin-left: 0; }
@@ -2218,7 +2217,8 @@ footer {
     -ms-align-items: flex-end;
     -o-align-items: flex-end;
     align-items: flex-end;
-    -ms-flex-align: end; }
+    -ms-flex-align: end;
+    max-width: 100px; }
     .chart-series--vertical .chart-series__group .chart-series__bar + .chart-series__bar {
       margin-left: .5em; }
   .chart-series--vertical .chart-series__axis {
