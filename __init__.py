@@ -1,5 +1,5 @@
 from openfecwebapp.config import (port, debug, host, api_location,
-    username, password, test, analytics)
+    api_version, api_key_public, username, password, test, analytics)
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from openfecwebapp.views import (render_search_results, render_table,
@@ -21,7 +21,10 @@ def get_context(c):
     return c
 
 app.jinja_env.globals['api_location'] = api_location
+app.jinja_env.globals['api_version'] = api_version
+app.jinja_env.globals['api_key'] = api_key_public
 app.jinja_env.globals['context'] = get_context
+app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 
 if not test:
     app.config['BASIC_AUTH_USERNAME'] = username

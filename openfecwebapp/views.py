@@ -33,7 +33,6 @@ def render_table(data_type, results, params):
 
     results_table = {}
     results_table[data_type] = []
-    heading = "Browse " + data_type
 
     results_table['pagination'] = generate_pagination_values(
         results, params, data_type)

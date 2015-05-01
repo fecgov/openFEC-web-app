@@ -1,9 +1,10 @@
 'use strict';
 
-/* global require, Bloodhound */
+/* global require, module, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 require('typeahead.js');
+var URI = require('URIjs');
 var Handlebars = require('handlebars');
 
 var events = require('./events.js');
@@ -52,8 +53,13 @@ module.exports = {
         url = "/rest/names?q=%QUERY";
 
     if (typeof API_LOCATION !== 'undefined') {
-        url = "/names?q=%QUERY&api_key=6wpqET5GjxCwAyBqXjc4dWrfMdshFE6wu3txb6yZ"; // Replace with the correct api key
-        url = API_LOCATION.concat(url);
+        url = URI(API_LOCATION)
+          .path([API_VERSION, 'names'].join('/'))
+          .query({
+            q: '%QUERY',
+            api_key: API_KEY
+          })
+          .readable();
     }
 
     // Creating a candidate suggestion engine

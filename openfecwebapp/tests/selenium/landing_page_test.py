@@ -48,7 +48,7 @@ class LandingPageTests(BaseTest):
         self.driver.get(self.url)
         self.driver.find_element_by_id('glossary-toggle').click()
         glossary = self.getGlossary()
-        glossary.find_element_by_id('glossary-search').send_keys('can')
+        glossary.find_element_by_id('glossary-search').send_keys('candidate id')
         glossary.find_element_by_id('glossary-search').send_keys(K.ARROW_DOWN)
         glossary.find_element_by_id('glossary-search').send_keys(K.ENTER)
         self.assertIn('Can', glossary.find_element_by_id('glossary-term').text)
