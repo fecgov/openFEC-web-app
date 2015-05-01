@@ -52,40 +52,39 @@
             </li>
           {% endif %}
         </ul>
-      </div>
-      <div class="page-controls">
-        <div class="page-controls__top">
-          <div class="container">
-            <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> {{ name }}</span>
-          </div>
-        </div>
-        <div class="page-controls__bottom">
-          <div class="container">
-            {% if election_years %}
-            <div class="time-period">
-              <label for="election_cycle">Two-Year Period</label>
-              <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate">
-              {% for year in election_years|sort(reverse=True) %}
-                <option value="{{ year }}">{{ year|int - 1 }} - {{ year }}</option>
-              {% endfor %}
-              </select>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-       <!-- <nav class="page-tabs">
-          <div class="container">
-            <ul role="tablist">
-              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Overview</a></li>
-              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Report Summaries</a></li>
-              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Browse All Filings</a></li>
-            </ul>
-          </div>
-        </nav> -->
-      </div>      
+      </div>  
     </header>
-
-    {% macro totals_table_row(pretty_name, value) %}
+    <div class="page-controls page-controls--dark">
+      <div class="page-controls__top">
+        <div class="container">
+          <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> {{ name }}</span>
+        </div>
+      </div>
+      <div class="page-controls__bottom">
+        <div class="container">
+          {% if election_years %}
+          <div class="time-period">
+            <label for="election_cycle">Two-Year Period</label>
+            <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate">
+            {% for year in election_years|sort(reverse=True) %}
+              <option value="{{ year }}">{{ year|int - 1 }} - {{ year }}</option>
+            {% endfor %}
+            </select>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+     <!-- <nav class="page-tabs">
+        <div class="container">
+          <ul role="tablist">
+            <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Overview</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Report Summaries</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Browse All Filings</a></li>
+          </ul>
+        </div>
+      </nav> -->
+    </div>    
+{% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
       <div class="table__row table__row--nested js-accordion_item">
         <div class="table__cell">{{ pretty_name }} </div>

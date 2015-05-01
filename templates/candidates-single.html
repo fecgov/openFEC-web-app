@@ -47,28 +47,28 @@
           {% endif %} -->
       </div>
     </div>
-    <div class="page-controls">
-      <div class="page-controls__top">
-        <div class="container">
-          <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates"> {{ name }}</span>
-        </div>
-      </div>
-      <div class="page-controls__bottom">
-        <div class="container">
-          {% if election_years %}
-          <div class="time-period">
-            <label for="election_cycle">Two-Year Period</label>
-            <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate" disabled>
-            {% for year in election_years|sort(reverse=True) %}
-              <option value="{{ year }}">{{ year|int - 1 }} - {{ year }}</option>
-            {% endfor %}
-            </select>
-          </div>
-          {% endif %}         
-        </div>
+  </header>
+  <div class="page-controls page-controls--dark">
+    <div class="page-controls__top">
+      <div class="container">
+        <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates"> {{ name }}</span>
       </div>
     </div>
-  </header>
+    <div class="page-controls__bottom">
+      <div class="container">
+        {% if election_years %}
+        <div class="time-period">
+          <label for="election_cycle">Two-Year Period</label>
+          <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate" disabled>
+          {% for year in election_years|sort(reverse=True) %}
+            <option value="{{ year }}">{{ year|int - 1 }} - {{ year }}</option>
+          {% endfor %}
+          </select>
+        </div>
+        {% endif %}         
+      </div>
+    </div>
+  </div>
 
   <section class="page-section" id="section-1" aria-labelledby="section-1-header">
     <div class="container">
