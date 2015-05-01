@@ -10,8 +10,8 @@
 
 {% block body %}
 
-<header class="page-header">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee.svg" alt="Icon representing committees"> Browse committee records</h1>
+<header class="page-header page-header--dark">
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Committees</h1>
 </header>
 
 <div class="page-controls">
@@ -23,6 +23,7 @@
 
 <section class="results-content">
   <div id="filters" class="side-panel side-panel--left">
+    <h4>Filter Committees</h4>
     <form id="category-filters">
         <div class="field" id="name-field">
             <label for="name">Name</label>
@@ -199,7 +200,18 @@
     </form>
   </div>
   <div id="committees" class="results-container">
+    {% if committees %}
       {% include 'partials/committees-table.html' %}
+    {% else %}
+      <div class="meta-box error-container">
+        <h2 id="section-1-header" tabindex="0">No committees matched your filters</h2>
+        <p class="text--lead">Try adjusting your filters or searching by name.</p>
+        <div class="error-container__bottom">
+            <h5>Is this information incorrect? Let us know.</h5>
+            <a class="button" href="mailto:{{ contact_email }}">Contact support <i class="ti-email"></i></a>
+       </div>
+      </div>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

@@ -10,8 +10,8 @@
 
 {% block body %}
 
-<header class="page-header">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-candidate.svg" alt="Icon representing committees"> Candidates</h1>
+<header class="page-header page-header--dark">
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing committees"> Candidates</h1>
 </header>
 
 <div class="page-controls">
@@ -317,7 +317,18 @@
   </div>
 
   <div id="candidates" class="results-container">
-      {% include 'partials/candidates-table.html' %}
+    {% if candidates %}
+        {% include 'partials/candidates-table.html' %}
+    {% else %}
+      <div class="meta-box error-container">
+        <h2 id="section-1-header" tabindex="0">No candidates matched your filters</h2>
+        <p class="text--lead">Try adjusting your filters or searching by name.</p>
+        <div class="error-container__bottom">
+            <h5>Is this information incorrect? Let us know.</h5>
+            <a class="button" href="mailto:{{ contact_email }}">Contact support <i class="ti-email"></i></a>
+       </div>
+      </div>
+    {% endif %}
   </div>
 </section>
 {% endblock %} 
