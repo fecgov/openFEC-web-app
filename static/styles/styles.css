@@ -131,6 +131,8 @@ a {
     color: #148552; }
     a.link--learn:hover {
       color: #0F5E3B; }
+  a img {
+    border: 0; }
 
 .link--icon {
   text-decoration: none; }
