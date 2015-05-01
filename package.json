@@ -26,12 +26,15 @@
     "url": "https://github.com/theresaanna/openfec-web-app/issues"
   },
   "dependencies": {
+    "URIjs": "^1.15.0",
     "browserify": "~6.1.0",
     "d3": "^3.5.3",
     "eventemitter2": "~0.4.14",
     "handlebars": "^2.0.0",
+    "jquery": "^2.1.4",
     "querystring": "^0.2.0",
     "tablesort": "^2.2.3",
+    "typeahead.js": "^0.10.5",
     "underscore": "^1.7.0"
   }
 }

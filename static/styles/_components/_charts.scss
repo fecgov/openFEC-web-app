@@ -91,7 +91,7 @@ $tooltip-border-color: #999;
     position: relative;
     height: 100%;
     
-    margin-left: 2em;
+    margin-left: 10%;
 
     &:first-of-type {
       margin-left: 0;
@@ -106,6 +106,7 @@ $tooltip-border-color: #999;
     @include display(flex);
     @include flex-direction(row);
     @include align-items(flex-end);
+    max-width: 90px;
 
     .chart-series__bar + .chart-series__bar {
       margin-left: .5em;

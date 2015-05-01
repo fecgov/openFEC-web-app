@@ -14,10 +14,11 @@
     <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
     <link rel="stylesheet" href="/static/styles/themify-icons.css">
     <link href="/static/styles/styles.css" rel="stylesheet" type="text/css"/>
-    <script src="/static/js/vendor/jquery.min.js"></script>
     {% if api_location %}
     <script>
         API_LOCATION = "{{api_location}}"
+        API_VERSION = "{{api_version}}"
+        API_KEY = "{{api_key}}"
     </script>
     {% endif %}
 </head>
@@ -63,7 +64,7 @@
       <h3>This site is in development. Tell us what you think!</h3>
       <p>openFEC uses a snapshot of disclosure data taken in 2014. If you’re looking for current campaign finance data, please visit here the <a href="http://fec.gov/pindex.shtml">Campaign Finance Disclosure Portal</a>.</p>
       <p>We're working hard to make openFEC a useful addition to the resources available at FEC.gov. Your feedback is important to us as we build this site. Email [X] and let us know how it’s working for you.</p>
-    </div>
+    </div>    
     <div class="banner">
       <span class="banner--left">Looking for fec.gov? <a href="http://www.fec.gov">Click here.</a></span>
       <span class="banner--center">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></span>
@@ -119,8 +120,8 @@
 
 {% include './partials/glossary.html' %}
 
-<script src="/static/js/vendor/typeahead.bundle.min.js"></script>
 <script src="/static/js/app.js"></script>
+{% block scripts %}{% endblock %}
 
 {% if config.USE_ANALYTICS %}
     <script>

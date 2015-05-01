@@ -1,16 +1,16 @@
 <div class="figure-group committee-summary js-reveal-container">
-  <div class="figure-group__side">
+  <div class="figure-group__bar">
     <img class="category-icon"
          width="20" height="20"
          src="/static/img/icon-committee--white.svg" alt="Icon representing committees">
+    <a class="figure-group__description term" data-term="{{ committee.designation }}">
+              {{ committee.committee_designation_full }}</a>         
   </div>
   <div class="figure-group__main">
     <div class="figure-group__header">
       <h4 class="figure-group__title">
         <a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }}</a>
       </h4>
-        <span class="figure-group__description term" data-term="{{ committee.designation }}">
-          {{ committee.committee_designation_full }}</span>
     </div>
 
     <div class="figure-group__inner">

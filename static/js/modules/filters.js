@@ -1,5 +1,7 @@
 'use strict';
 
+var $ = require('jquery');
+
 var events = require('./events.js');
 var queryString = require('querystring');
 
@@ -21,7 +23,7 @@ var openFilterPanel = function() {
 var closeFilterPanel = function() {
     $('body').removeClass('panel-active--left');
     $('.side-panel--left').removeClass('side-panel--open');
-    $('#filter-toggle').removeClass('active').html('Show Filters');    
+    $('#filter-toggle').removeClass('active').html('Show Filters');
     open = false;
 }
 
