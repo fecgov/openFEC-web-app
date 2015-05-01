@@ -2218,7 +2218,7 @@ footer {
     -o-align-items: flex-end;
     align-items: flex-end;
     -ms-flex-align: end;
-    max-width: 100px; }
+    max-width: 80px; }
     .chart-series--vertical .chart-series__group .chart-series__bar + .chart-series__bar {
       margin-left: .5em; }
   .chart-series--vertical .chart-series__axis {
