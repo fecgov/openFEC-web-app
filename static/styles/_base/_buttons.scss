@@ -49,7 +49,7 @@
 
 button,
 .button {
-  @include button($lightest-gray, $dark-gray, $medium-gray, #dark-gray);
+  @include button($lightest-gray, $dark-gray, $medium-gray, $dark-gray);
   border: 1px solid $medium-gray;
 }
 
