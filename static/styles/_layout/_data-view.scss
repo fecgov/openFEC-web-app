@@ -17,32 +17,34 @@
 .results-content {
   @include clearfix();
   width: 100%;
-  height: 100%;
-  overflow: hidden;
   position: relative;
 }
 
 .results-container {
   background: #fff;
-  position: relative;
   width: 100%;
-  left: 0;
-  height: 100%;
-  float: left;
+  border-top: 1px solid $light-gray;
   border-left: 1px solid $light-gray;
+
+  .error-container {
+    margin: 2rem 5%;
+  }
 }
 
-.panel-active--left {
-  @include media($large) {
+@include media($large) {
+  .panel-active--left {
     .results-container {
       width: 80%;
+      float: left;
       margin-left: 20%;
+      min-height: 700px;
     }
   }
 }
 
 #filter-toggle {
-
+  margin-left: 2rem;
+  
   @include media($medium) {
     float: left;
   }
@@ -50,13 +52,14 @@
 
 .results-count {
   @include font-size(1.6);
-  width: 100%;
   clear: both;
+  margin: 0 2rem 1rem 2rem;
 
   li {
     width: 50%;
     float: left;
     padding: 0 0 1rem 0;
+    line-height: 1;
   }
 
   p {
@@ -64,6 +67,7 @@
   }
   .pagination {
     width: 100%;
+    padding-bottom: 0;
   }
 
   .pagination__link {
@@ -76,6 +80,7 @@
     padding: 1rem 0;
     width: auto;
     clear: none;
+    margin-bottom: 0;
 
     li,
     .pagination {
@@ -89,5 +94,10 @@
       width: auto;
       float: none;
     }
+  }
+
+  @include media($large) {
+    width: 79%;
+    margin: 0 1% 0 0;
   }
 }

@@ -33,7 +33,6 @@
   display: none;
   background: $lightest-gray;
   width: 100%;
-  border-bottom: 1px solid $light-gray;
 
   &.side-panel--open {
     display: block;
@@ -44,7 +43,6 @@
     position: absolute; // Doing this so it takes the full height of the parent div
     top: 0;
     bottom: 0;
-    border-bottom: none;
   }
 }
 

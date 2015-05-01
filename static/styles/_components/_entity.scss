@@ -18,6 +18,8 @@
 
 .entity__header {
   @include white-links();
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .entity__name {

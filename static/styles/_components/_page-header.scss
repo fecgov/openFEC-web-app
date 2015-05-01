@@ -10,15 +10,13 @@
   @include white-links();
   background: $page-header;
   color: #fff;
-  padding: 1rem 0;
 }
 
 .page-controls {
   @include clearfix();
-  border-bottom: 1px solid $light-gray;
-  background: #fff;
+  background: $lightest-gray;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
 }
 
 .page-controls--dark {
@@ -35,7 +33,6 @@
     top: 0;
     left: 0;
     z-index: 999;
-    border-bottom: 1px solid $light-gray
   }
 
   .page-controls--dark {

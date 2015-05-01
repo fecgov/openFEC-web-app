@@ -14,15 +14,9 @@ table {
 
   th {
     padding: 1rem;
-    height: 4rem;
-    border-right: 1px solid $light-gray;
+    height: 4rem; 
     border-bottom: 1px solid $light-gray;
     text-align: left;
-    font-weight: normal;
-
-    &:last-child {
-      border-right: none;
-    }
   }
 
   tr, td, th {
@@ -47,6 +41,10 @@ table {
     padding: .5em;
     border: none;
   }
+}
+
+.flex-cell {
+  width: 30%;
 }
 
 .sort-header {
