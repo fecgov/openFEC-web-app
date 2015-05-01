@@ -11,14 +11,15 @@
 {% block body %}
 
 <header class="page-header">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing committees"> Browse candidate records</h1>
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-candidate.svg" alt="Icon representing committees"> Candidates</h1>
 </header>
 
 <div class="page-controls">
-  <button id="filter-toggle" class="side-toggle" data-slide="left">Filter Results</button>
   {% if pagination %}
     {% include 'partials/pagination.html' %}
   {% endif %}
+  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
+
 </div>
 
 <section class="results-content">

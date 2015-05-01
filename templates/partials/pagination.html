@@ -5,7 +5,7 @@
             <li>Viewing: {{pagination.current_results_start}} - {{pagination.current_results_end}}</li>
         {% endif %}
         {% if pagination.pagination_links %}
-            <li>
+            <li class="pagination">
             {% if pagination.prev_url %}
                 <a href="{{pagination.prev_url}}" id="prev" class="pagination__link">&laquo; Previous {{pagination.per_page}}</a>
             {% endif %}

@@ -40,3 +40,54 @@
     }
   }
 }
+
+#filter-toggle {
+
+  @include media($medium) {
+    float: left;
+  }
+}
+
+.results-count {
+  @include font-size(1.6);
+  width: 100%;
+  clear: both;
+
+  li {
+    width: 50%;
+    float: left;
+    padding: 0 0 1rem 0;
+  }
+
+  p {
+    margin: 0;
+  }
+  .pagination {
+    width: 100%;
+  }
+
+  .pagination__link {
+    width: 50%;
+    float: left;
+  }
+
+  @include media($medium) {
+    float: right;
+    padding: 1rem 0;
+    width: auto;
+    clear: none;
+
+    li,
+    .pagination {
+      width: auto;
+      float: none;
+      display: inline-block;
+      padding: 0 2rem;
+    }
+
+    .pagination__link {
+      width: auto;
+      float: none;
+    }
+  }
+}

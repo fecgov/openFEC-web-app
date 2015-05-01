@@ -16,14 +16,14 @@ var open = true;
 var openFilterPanel = function() {
     $('body').addClass('panel-active--left');
     $('.side-panel--left').addClass('side-panel--open');
-    $('#filter-toggle').addClass('active').html('Hide Filters');
+    $('#filter-toggle').addClass('active').html('<i class="ti-minus"></i> Hide Filters');
     open = true;
 }
 
 var closeFilterPanel = function() {
     $('body').removeClass('panel-active--left');
     $('.side-panel--left').removeClass('side-panel--open');
-    $('#filter-toggle').removeClass('active').html('Show Filters');
+    $('#filter-toggle').removeClass('active').html('<i class="ti-plus"></i>Show Filters');
     open = false;
 }
 

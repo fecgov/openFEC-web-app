@@ -1,5 +1,5 @@
 .page-header {
-  padding: 1rem 0;	
+  padding: 1rem 2rem;	
 
 	h1 {
 		margin-bottom: 0;
@@ -10,16 +10,22 @@
   @include white-links();
   background: $page-header;
   color: #fff;
-
-  .page-controls {
-    background: $page-header;
-    border-top: 1px solid $filter-bg;
-    color: #fff;
-  }
+  padding: 1rem 0;
 }
+
 .page-controls {
   @include clearfix();
+  border-bottom: 1px solid $light-gray;
+  background: #fff;
   width: 100%;
+  padding: 1rem 2rem;
+}
+
+.page-controls--dark {
+  background: $page-header;
+  border-top: 1px solid $filter-bg;
+  color: #fff;
+  padding: 0;
 }
 
 // Fixing posiiton of page controls
@@ -29,6 +35,11 @@
     top: 0;
     left: 0;
     z-index: 999;
+    border-bottom: 1px solid $light-gray
+  }
+
+  .page-controls--dark {
+    border-bottom: none;
   }
 
   .page-controls__top {
@@ -48,33 +59,4 @@
 
 .page-controls__title {
   @include font-size(1.6);
-}
-
-.results-count {
-  @extend .flat-list;
-  float: right;
-
-  li {
-    @include rem(padding, 1.0rem 2.0rem); 
-    line-height: 1.14;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  a {
-    color: #fff;
-  }
-}
-
-.pagination {
-  text-align: right;
-  float: right;
-}
-
-.pagination__link {
-  &:nth-child(2) {
-    margin-left: 1em;
-  }
 }
