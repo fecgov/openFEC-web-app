@@ -8,6 +8,7 @@
 
 .field {
   @include clearfix();
+  @include span-columns(12);
   margin-bottom: 1.25em;
 
   input,
@@ -15,7 +16,15 @@
     margin: 0 5% 0 0;
     float: left;
     height: 3rem;
-    width: 80%;
+    width: 100%;
+  }
+
+  &:nth-child(even) {
+    margin-right: 0;
+  }
+
+  @include media($large) {
+    width: 100%;
   }
 }
 
