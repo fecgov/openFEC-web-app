@@ -31,12 +31,12 @@
             <h5 class="entity__term__label">District</h5>
             <span class="entity__term__data">{{ state }} {% if district %}- {{district}} {% endif %}</span>
           </li>
-          {% for committee in committees if committee.is_primary %}
           <li class="entity__term">
             <h5 class="entity__term__label"><a class="term" data-term="Principal Campaign Committee">Principal Committee</a></h5>
-            <a href="{{ committee.url }}">{{ committee.name }}</a>
+            {% for c in committees if c.is_primary %}
+            <p class="entity__term__data"><a href="{{ c.url }}">{{ c.name }}</a></p>
+            {% endfor %}
           </li>
-          {% endfor %}
           <!--{% if has_authorized %}
           <li class="entity__term--wide">
             <h5 class="entity__term__label"><a class="term" data-term="Authorized Committee">Authorized Committees</a></h5>
