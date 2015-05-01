@@ -91,12 +91,12 @@ Ask teammates for the username and password that should be used.
 ### Run Tests
 #### Unit Tests
 ```
-$ nosetests openfecwebapp/tests
+$ py.test openfecwebapp/tests
 ```
 #### Browser Tests
 First, install [PhantomJS](http://phantomjs.org/).
 
 Then:
 ```
-$ nosetests openfecwebapp/tests -a 'selenium'
+$ py.test openfecwebapp/tests --selenium
 ``` 
