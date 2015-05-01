@@ -8,12 +8,17 @@ class CommitteeSchema(Schema):
     url = fields.Function(lambda x: url_for('committee_page', c_id=x['committee_id']))
     is_primary = fields.Function(lambda x: x['designation'] == 'P')
     is_authorized = fields.Function(lambda x: x['designation'] == 'A')
+    street_2 = fields.Str(allow_none=True)
+    organization_type = fields.Str(allow_none=True)
+    organization_type_full = fields.Str(allow_none=True)
+    party = fields.Str(allow_none=True)
+    party_full = fields.Str(allow_none=True)
 
     class Meta:
         additional = (
-            'name', 'committee_type', 'committee_type_full', 'treasurer_name',
-            'designation', 'designation_full', 'organization_type_full', 'organization_type',
-            'party', 'party_full', 'treasurer_name', 'street_1', 'street_2', 'city', 'state', 'zip'
+            'committee_id', 'name', 'committee_type', 'committee_type_full', 
+            'treasurer_name', 'designation', 'designation_full',
+            'treasurer_name', 'street_1', 'city', 'state', 'zip'
         )
 
 
