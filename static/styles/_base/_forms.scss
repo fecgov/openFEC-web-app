@@ -41,7 +41,6 @@ label + #{$all-text-inputs} {
 }
 
 #{$all-text-inputs} {
-  height: 3rem;
 }
 
 textarea,
@@ -56,7 +55,7 @@ select[multiple=multiple] {
   border: 1px solid $form-border-color;
   box-shadow: $form-box-shadow;
   font-family: $form-font-family;
-  padding: 1em 1em;
+  padding: 1rem;
   width: 100%;
 
   &:hover {
@@ -114,6 +113,7 @@ select {
 
   @include media($medium) {
    #{$all-text-inputs} {
+      height: 4rem;
       width: 75%;
       float: left;
       margin: 0;
@@ -124,7 +124,7 @@ select {
     input[type="submit"],
     button,
     .button {
-      @include rem(height, 4.0rem);
+      height: 4rem;
       width: 25%;
       float: left;
       border-radius: 0 $base-border-radius $base-border-radius 0;

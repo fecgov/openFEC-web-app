@@ -24,6 +24,7 @@ app.jinja_env.globals['api_location'] = api_location
 app.jinja_env.globals['api_version'] = api_version
 app.jinja_env.globals['api_key'] = api_key_public
 app.jinja_env.globals['context'] = get_context
+app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 
 if not test:
     app.config['BASIC_AUTH_USERNAME'] = username
