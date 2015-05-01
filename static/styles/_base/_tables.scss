@@ -5,51 +5,48 @@ table {
   table-layout: fixed;
   width: 100%;
   overflow-x: scroll; // scroll horizontally on smaller viewports
-}
-
-thead {
-  tr:hover {
-    background-color: #fff;
-  }
-}
-
-th {
-  padding: .5em;
-  border-right: 1px solid $light-gray;
-  border-bottom: 1px solid $light-gray;
-  text-align: left;
-  font-weight: normal;
-
-  &:last-child {
-    border-right: none;
-  }
-}
-
-tr, td, th {
-  vertical-align: middle;
-}
-
-tr {
-  @include font-size(1.4);
-  border: none;
-
-  &:nth-child(even) {
-    background-color: $lightest-gray;
+  
+  thead {
+    tr:hover {
+      background-color: #fff;
+    }
   }
 
-  &:hover {
-    background: rgba($blue, .1);
+  th {
+    padding: 1rem;
+    height: 4rem;
+    border-right: 1px solid $light-gray;
+    border-bottom: 1px solid $light-gray;
+    text-align: left;
+    font-weight: normal;
+
+    &:last-child {
+      border-right: none;
+    }
   }
-}
 
-td {
-  @include truncate();
-  padding: .5em;
-  border: none;
-}
+  tr, td, th {
+    vertical-align: middle;
+  }
 
-.flex-cell {
-  width: 30%;
+  tr {
+    @include font-size(1.4);
+    border: none;
+
+    &:nth-child(even) {
+      background-color: $lightest-gray;
+    }
+
+    &:hover {
+      background: rgba($blue, .1);
+    }
+  }
+
+  td {
+    @include truncate();
+    padding: .5em;
+    border: none;
+  }
 }
 
 .sort-header {
@@ -274,6 +271,28 @@ td {
   }
 }
 
-.js-accordion__item {
+/* All the fancy responsive styles are handled in 
+* /static/styles/responsive-tables.css
+* This is just further customization
+*/
 
+table.responsive {
+  width: auto;
+
+  @include media($medium) {
+    width: 100%;
+  }
+}
+
+.pinned {
+  width: 40%;
+  box-shadow: 1px 0 1px 0 rgba(0,0,0,.2);
+
+  th {
+    border-right: none;
+  }
+}
+
+div.table-wrapper div.scrollable { // This naming is necessary to override
+  margin-left: 40%;
 }
