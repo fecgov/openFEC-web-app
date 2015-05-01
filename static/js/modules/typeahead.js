@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, Bloodhound, API_LOCATION, API_VERSION */
+/* global require, module, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 require('typeahead.js');
@@ -57,7 +57,7 @@ module.exports = {
           .path([API_VERSION, 'names'].join('/'))
           .query({
             q: '%QUERY',
-            api_key: '6wpqET5GjxCwAyBqXjc4dWrfMdshFE6wu3txb6yZ'
+            api_key: API_KEY
           })
           .readable();
     }
