@@ -13,7 +13,7 @@ env:
   global:
     - FEC_WEB_TEST: true
     - FEC_SELENIUM_DRIVER: remote
-    - secure: EsK60GFZL8nLhQ/0a+0SVkgNCEecl52wxbj70WOwysGA6e75D8TnokUKj2kRjsOYF2RU3AzBiY+cOoQo5U4uAMAYwTN1W2l+HnDX8njTPnuLdAhZNdLgupvEXqWzHRFONM7A55LqR5dB0kzfi4OrSbkRcAklmfRPJdfbCv05TSU=
+    - secure: SKKeJG+Pc0xFyq0++/Cf0fMO4fZlK1H3CgedSGiQhwl3Rsh8QgXBhH+/YwWYAozmUNPkJCEuDdB2A1trBEPqkghAnjNdOXu2mwo5ANweu8M/HdafeeDP2klHB7bIieJ5GhUfrZ1/D/nVcE86mePFlx6Ymjdg2DtNUYBIWFs2xPs=
     - secure: UK4kK8mrj0AsYqL7ohK9wKMCTVSK0phyNw7sW2BynRJYTU3Xi073+m8mGiCvHGEULvriCtuysCsbh5iNUz5VQ/4RBQVOJdugzbWjbwEUzb6w1W5pXvwCRUufhGcr98odfNE09pZicfL0YjH84w/dqrlC3leeyaoF7bFqpaKWwqs=
   matrix:
     - FEC_SAUCE_BROWSER: "false"
