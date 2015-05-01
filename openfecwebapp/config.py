@@ -15,6 +15,9 @@ password = os.getenv('FEC_WEB_PASSWORD', '')
 # set FEC_WEB_DEBUG to any string but an empty one if you want debug on
 debug = bool(os.getenv('FEC_WEB_DEBUG', ''))
 
+# Whether the app should force HTTPS/HSTS.
+force_https = bool(os.getenv('FEC_FORCE_HTTPS', ''))
+
 # used to turn auth off for testing
 # set to a non-empty string in your environment if you want auth off
 test = os.getenv('FEC_WEB_TEST')

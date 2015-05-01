@@ -1,7 +1,8 @@
 from openfecwebapp.config import (port, debug, host, api_location,
-    username, password, test, analytics)
+    username, password, test, analytics, force_https)
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
+from flask_sslify import SSLify
 from openfecwebapp.views import (render_search_results, render_table,
     render_page)
 from openfecwebapp.api_caller import (load_search_results,
@@ -99,6 +100,11 @@ def date_filter_sm(date_str):
         return ''
     d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
     return d.strftime('%m/%y')
+
+# If HTTPS is on, apply full HSTS as well, to all subdomains.
+# Only use when you're sure. 31536000 = 1 year.
+if force_https:
+    sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
 
 if __name__ == '__main__':
     if '--cached' in sys.argv:
