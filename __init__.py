@@ -1,3 +1,9 @@
+import sys
+import json
+import locale
+import logging
+import datetime
+
 from openfecwebapp.config import (port, debug, host, api_location,
     api_version, api_key_public, username, password, test, analytics)
 from flask import Flask, render_template, request
@@ -8,13 +14,12 @@ from openfecwebapp.api_caller import (load_search_results,
     load_single_type, load_single_type_summary,
     install_cache)
 
-import datetime
-import sys
-import locale
 import jinja2
 locale.setlocale(locale.LC_ALL, '')
 
 app = Flask(__name__)
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 @jinja2.contextfunction
 def get_context(c):
@@ -25,6 +30,15 @@ app.jinja_env.globals['api_version'] = api_version
 app.jinja_env.globals['api_key'] = api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
+
+try:
+    app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
+except OSError:
+    logger.error(
+        'Manifest "rev-manifest.json" not found. Did you remember to run '
+        '"gulp build"?'
+    )
+    raise
 
 if not test:
     app.config['BASIC_AUTH_USERNAME'] = username
@@ -106,4 +120,5 @@ def date_filter_sm(date_str):
 if __name__ == '__main__':
     if '--cached' in sys.argv:
         install_cache()
-    app.run(host=host, port=int(port), debug=debug)
+    files = ['./rev-manifest.json']
+    app.run(host=host, port=int(port), debug=debug, extra_files=files)
