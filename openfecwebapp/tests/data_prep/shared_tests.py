@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.testing import TestCase
-from openfecwebapp.data_prep.shared import *
+from openfecwebapp.models.shared import *
 from openfecwebapp.tests.mock_data import candidate
 
 class TestShared(TestCase):

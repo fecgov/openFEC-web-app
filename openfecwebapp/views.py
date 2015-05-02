@@ -1,9 +1,9 @@
 from flask import render_template
 from marshmallow import pprint
-from openfecwebapp.data_prep.candidates import CandidateSchema
-from openfecwebapp.data_prep.committees import CommitteeSchema
-from openfecwebapp.data_prep.shared import generate_pagination_values
-from openfecwebapp.data_prep.financial_summaries import add_cmte_financial_data
+from openfecwebapp.models.candidates import CandidateSchema
+from openfecwebapp.models.committees import CommitteeSchema
+from openfecwebapp.models.shared import generate_pagination_values
+from openfecwebapp.models.financial_summaries import add_cmte_financial_data
 
 from werkzeug.exceptions import abort
 

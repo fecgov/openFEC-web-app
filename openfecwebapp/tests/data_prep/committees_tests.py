@@ -1,5 +1,5 @@
 import unittest
-from openfecwebapp.data_prep.committees import CommitteeSchema
+from openfecwebapp.models.committees import CommitteeSchema
 from openfecwebapp.tests.mock_data import committee
 
 

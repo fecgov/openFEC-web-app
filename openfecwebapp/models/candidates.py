@@ -1,4 +1,4 @@
-from openfecwebapp.data_prep.shared import committee_type_map
+from openfecwebapp.models.shared import committee_type_map
 from marshmallow import Schema, fields, pprint, pre_load
 
 

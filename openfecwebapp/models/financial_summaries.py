@@ -4,7 +4,7 @@ import locale
 from marshmallow import Schema, fields, pre_load
 
 from openfecwebapp.api_caller import load_cmte_financials
-from openfecwebapp.data_prep.shared import committee_type_map
+from openfecwebapp.models.shared import committee_type_map
 
 
 locale.setlocale(locale.LC_ALL, '')

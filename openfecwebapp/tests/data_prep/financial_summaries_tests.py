@@ -1,7 +1,7 @@
 import copy
 import unittest
 
-from openfecwebapp.data_prep.financial_summaries import  _map_committee_financials
+from openfecwebapp.models.financial_summaries import  _map_committee_financials
 from openfecwebapp.tests.mock_data import *
 
 

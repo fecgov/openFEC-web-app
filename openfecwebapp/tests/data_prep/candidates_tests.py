@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.testing import TestCase
-from openfecwebapp.data_prep.candidates import CandidateSchema
+from openfecwebapp.models.candidates import CandidateSchema
 from openfecwebapp.tests.mock_data import candidate
 
 class TestDataMappings(TestCase):
