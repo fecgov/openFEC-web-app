@@ -101,6 +101,10 @@ body {
     padding-bottom: 0;
     border-bottom: none;
   }
+
+  &.page-subsection--noline {
+    border-bottom: 0;
+  }
 }
 
 .page-sub-subsection {
