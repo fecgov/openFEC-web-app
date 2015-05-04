@@ -273,8 +273,8 @@ select[multiple=multiple] {
   transition: border-color;
   font-size: 14px;
   font-size: 1.4rem;
-  padding: 10px;
-  padding: 1rem;
+  padding: 0 10px;
+  padding: 0 1rem;
   margin: 1em 0;
   background-color: white;
   border-radius: 0;
