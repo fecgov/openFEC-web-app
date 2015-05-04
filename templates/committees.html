@@ -214,4 +214,9 @@
     {% endif %}
   </div>
 </section>
+<div class="page-controls">
+  {% if pagination %}
+    {% include 'partials/pagination.html' %}
+  {% endif %}
+</div>
 {% endblock %}
