@@ -835,21 +835,25 @@ input[type="submit"],
 .results-container {
   background: #fff;
   width: 100%;
-  border-top: 1px solid #D7D7D7;
-  border-left: 1px solid #D7D7D7; }
+  border: 1px solid #D7D7D7; }
   .results-container .error-container {
     margin: 2rem 5%; }
 
 @media screen and (min-width: 61.25em) {
+  .results-container {
+    width: 98%;
+    margin: 0 1%; }
+
   .panel-active--left .results-container {
-    width: 80%;
+    width: 79%;
     float: left;
-    margin-left: 20%;
+    margin: 0 1% 0 20%;
     min-height: 700px; } }
 #filter-toggle {
   margin-left: 2rem; }
   @media screen and (min-width: 48em) {
     #filter-toggle {
+      margin-left: 1%;
       float: left; } }
 
 .results-count {

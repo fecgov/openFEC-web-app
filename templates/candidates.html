@@ -19,7 +19,6 @@
     {% include 'partials/pagination.html' %}
   {% endif %}
   <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
-
 </div>
 
 <section class="results-content">
@@ -319,7 +318,7 @@
   <div id="candidates" class="results-container">
     {% if candidates %}
         {% include 'partials/candidates-table.html' %}
-    {% else %}
+    {% else %}    
       <div class="meta-box error-container">
         <h2 id="section-1-header" tabindex="0">No candidates matched your filters</h2>
         <p class="text--lead">Try adjusting your filters or searching by name.</p>
@@ -331,4 +330,9 @@
     {% endif %}
   </div>
 </section>
+  <div class="page-controls">
+    {% if pagination %}
+      {% include 'partials/pagination.html' %}
+    {% endif %}
+  </div>  
 {% endblock %} 

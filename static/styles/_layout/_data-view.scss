@@ -23,8 +23,7 @@
 .results-container {
   background: #fff;
   width: 100%;
-  border-top: 1px solid $light-gray;
-  border-left: 1px solid $light-gray;
+  border: 1px solid $light-gray;
 
   .error-container {
     margin: 2rem 5%;
@@ -32,11 +31,16 @@
 }
 
 @include media($large) {
+  .results-container {
+    width: 98%;
+    margin: 0 1%;
+  }
+
   .panel-active--left {
     .results-container {
-      width: 80%;
+      width: 79%;
       float: left;
-      margin-left: 20%;
+      margin: 0 1% 0 20%;
       min-height: 700px;
     }
   }
@@ -46,6 +50,7 @@
   margin-left: 2rem;
   
   @include media($medium) {
+    margin-left: 1%;
     float: left;
   }
 }
