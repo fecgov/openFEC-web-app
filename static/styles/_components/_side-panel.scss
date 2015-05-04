@@ -40,9 +40,7 @@
 
   @include media($large) {
     width: 20%;
-    position: absolute; // Doing this so it takes the full height of the parent div
-    top: 0;
-    bottom: 0;
+    float: left;
   }
 }
 

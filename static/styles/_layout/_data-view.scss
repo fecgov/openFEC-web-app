@@ -18,9 +18,11 @@
   @include clearfix();
   width: 100%;
   position: relative;
+  background: $lightest-gray;
 }
 
 .results-container {
+  @include clearfix();
   background: #fff;
   width: 100%;
   border: 1px solid $light-gray;
@@ -40,8 +42,7 @@
     .results-container {
       width: 79%;
       float: left;
-      margin: 0 1% 0 20%;
-      min-height: 700px;
+      margin: 0 1% 0 0;
     }
   }
 }

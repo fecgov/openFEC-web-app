@@ -826,7 +826,8 @@ input[type="submit"],
 
 .results-content {
   width: 100%;
-  position: relative; }
+  position: relative;
+  background: #F8F8F8; }
   .results-content:after {
     content: "";
     display: table;
@@ -836,6 +837,10 @@ input[type="submit"],
   background: #fff;
   width: 100%;
   border: 1px solid #D7D7D7; }
+  .results-container:after {
+    content: "";
+    display: table;
+    clear: both; }
   .results-container .error-container {
     margin: 2rem 5%; }
 
@@ -847,8 +852,7 @@ input[type="submit"],
   .panel-active--left .results-container {
     width: 79%;
     float: left;
-    margin: 0 1% 0 20%;
-    min-height: 700px; } }
+    margin: 0 1% 0 0; } }
 #filter-toggle {
   margin-left: 2rem; }
   @media screen and (min-width: 48em) {
@@ -1249,9 +1253,7 @@ body {
   @media screen and (min-width: 61.25em) {
     .side-panel--left {
       width: 20%;
-      position: absolute;
-      top: 0;
-      bottom: 0; } }
+      float: left; } }
 
 .side-panel--right {
   -webkit-transition: right 0.2s;
