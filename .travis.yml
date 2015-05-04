@@ -27,8 +27,8 @@ before_script:
   - npm install -g browserify
   - npm run build
   - python __init__.py &
-  - if [[ $TRAVIS_BRANCH = 'master' ]]; then export FEC_WEB_API_URL="https://api.open.fec.gov"; fi
-  - if [[ $TRAVIS_BRANCH = 'develop' ]]; then export FEC_WEB_API_URL="http://fec-dev-api.cf.18f.us/"; unset FEC_WEB_API_KEY; fi
+  - if [[ $TRAVIS_BRANCH = 'master' ]]; then export FEC_WEB_API_URL="http://fec-stage-api.cf.18f.us/"; fi
+  - if [[ $TRAVIS_BRANCH != 'master' ]]; then export FEC_WEB_API_URL="http://fec-dev-api.cf.18f.us/"; fi
 
 script:
   # Run unit tests
