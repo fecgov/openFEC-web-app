@@ -1400,8 +1400,8 @@ body {
     float: left;
     display: block;
     margin-right: 1.16509%;
-    width: 74.70873%;
-    margin-left: 12.64564%; }
+    width: 91.56958%;
+    margin-left: 4.21521%; }
     .hero__content:last-child {
       margin-right: 0; } }
 
@@ -1447,6 +1447,15 @@ body {
 
 #large-search label {
   margin-bottom: 30px; }
+@media screen and (min-width: 61.25em) {
+  #large-search {
+    float: left;
+    display: block;
+    margin-right: 1.27236%;
+    width: 81.58684%;
+    margin-left: 9.20658%; }
+    #large-search:last-child {
+      margin-right: 0; } }
 
 .input-button-combo.search--large {
   padding-bottom: 1rem; }
