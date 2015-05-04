@@ -1,5 +1,9 @@
 'use strict';
 
+/* global require, window */
+
+var $ = require('jquery');
+
 var events = require('./events.js');
 var queryString = require('querystring');
 
@@ -21,7 +25,7 @@ var openFilterPanel = function() {
 var closeFilterPanel = function() {
     $('body').removeClass('panel-active--left');
     $('.side-panel--left').removeClass('side-panel--open');
-    $('#filter-toggle').removeClass('active').html('Show Filters');    
+    $('#filter-toggle').removeClass('active').html('Show Filters');
     open = false;
 }
 
@@ -67,17 +71,15 @@ var bindFilters = function(e) {
     }
 
     // election cycle dropdown functionality
-    $('select[name=election_cycle]').change(function(e, selected) {
-        var $e = $(e.target),
-            url = document.location.origin
-                + '/'
-                + $e.attr('data-type')
-                + '/'
-                + $e.attr('data-id')
-                + '/'
-                + selected.selected;
-
-        document.location = url;
+    $('select[name=election_cycle]').change(function() {
+        var $this = $(this);
+        var url = [
+            '',
+            $this.attr('data-type'),
+            $this.attr('data-id'),
+            $this.val()
+        ].join('/');
+        window.location = url;
     });
 };
 

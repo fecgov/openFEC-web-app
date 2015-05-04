@@ -8,3 +8,4 @@ static/js/app.js
 openfecwebapp/local_config.py
 static/styles/styles.css.map
 app/
+/.env
