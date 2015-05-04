@@ -1,0 +1,10 @@
+<div class="field">
+    <label for="year">Election Cycle</label>
+    <select name="year" data-placeholder="Select an election cycle">
+        <option></option>
+        {% for year in range(2014, 1979, -1) %}
+        <option value={{ year }}>{{ year }}</option>
+        {% endfor %}
+    </select>
+    <button class="button--remove" data-removes="year"><i class="ti-close"></i></button>
+</div>

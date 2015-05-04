@@ -1,5 +1,7 @@
 'use strict';
 
+/* global require, window */
+
 var $ = require('jquery');
 
 var events = require('./events.js');
@@ -69,17 +71,15 @@ var bindFilters = function(e) {
     }
 
     // election cycle dropdown functionality
-    $('select[name=election_cycle]').change(function(e, selected) {
-        var $e = $(e.target),
-            url = document.location.origin
-                + '/'
-                + $e.attr('data-type')
-                + '/'
-                + $e.attr('data-id')
-                + '/'
-                + selected.selected;
-
-        document.location = url;
+    $('select[name=election_cycle]').change(function() {
+        var $this = $(this);
+        var url = [
+            '',
+            $this.attr('data-type'),
+            $this.attr('data-id'),
+            $this.val()
+        ].join('/');
+        window.location = url;
     });
 };
 

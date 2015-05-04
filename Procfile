@@ -1,1 +1,1 @@
-web: newrelic-admin run-program gunicorn __init__:app
+web: npm run build && newrelic-admin run-program gunicorn __init__:app

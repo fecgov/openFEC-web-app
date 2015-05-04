@@ -59,7 +59,7 @@
         {% if election_years %}
         <div class="time-period">
           <label for="election_cycle">Two-Year Period</label>
-          <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate" disabled>
+          <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate">
           {% for year in election_years|sort(reverse=True) %}
             <option value="{{ year }}">{{ year|int - 1 }} - {{ year }}</option>
           {% endfor %}
