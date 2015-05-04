@@ -279,7 +279,7 @@ select[multiple=multiple] {
   border: 1px solid #b3b3b3;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
   font-family: Helvetica, arial, sans-serif;
-  padding: 1rem;
+  padding: 0 1rem;
   width: 100%; }
   textarea:hover,
   input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover,

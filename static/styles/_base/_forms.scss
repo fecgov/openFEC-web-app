@@ -55,7 +55,7 @@ select[multiple=multiple] {
   border: 1px solid $form-border-color;
   box-shadow: $form-box-shadow;
   font-family: $form-font-family;
-  padding: 1rem;
+  padding: 0 1rem;
   width: 100%;
 
   &:hover {
