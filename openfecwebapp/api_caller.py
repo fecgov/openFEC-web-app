@@ -33,7 +33,9 @@ def load_search_results(query):
     }
 
 def load_single_type_summary(data_type, filters):
-    return _call_api(data_type, filters)
+    url = '/' + data_type
+    filters['per_page'] = 30
+    return _call_api(url, filters)
 
 def load_single_type(data_type, c_id, filters):
     return _call_api(os.path.join(data_type, c_id), filters)

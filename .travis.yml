@@ -13,8 +13,8 @@ env:
   global:
     - FEC_WEB_TEST: true
     - FEC_SELENIUM_DRIVER: remote
-    - secure: SQfanR6GI/1i4v7XPEKT26mKjd1BT/Qt1/5fjrhEIiA4PL2ZWnvArBmcKeq3q3CcVy2KQDTUr4vvPKbo4HGAw1EcUvnJ5lF6v3h0FmZ/bhMdkHk1e/UvfIVjOm0mEO80FDiXRcWEiYgY/Z4LwJ1l2iNC45j/1Odacj9I3fOdteY=
-    - secure: aXkcjh6AHi1MnY1vZ5Nu8/8OexUZ4n8ul5hrM9iex0QdJAm4AoxF0idHybinTAAL7/gSEineX1to6GC3GVnAV/f/FU1mo8sjt0hvwTAx8b+ONR0M0sJW2KrPJRABQK4Dtxu+PQkE4Qim0GaJQ6LBJwTAB+HiegYymqrUFSV5tm0=
+    - secure: SKKeJG+Pc0xFyq0++/Cf0fMO4fZlK1H3CgedSGiQhwl3Rsh8QgXBhH+/YwWYAozmUNPkJCEuDdB2A1trBEPqkghAnjNdOXu2mwo5ANweu8M/HdafeeDP2klHB7bIieJ5GhUfrZ1/D/nVcE86mePFlx6Ymjdg2DtNUYBIWFs2xPs=
+    - secure: UK4kK8mrj0AsYqL7ohK9wKMCTVSK0phyNw7sW2BynRJYTU3Xi073+m8mGiCvHGEULvriCtuysCsbh5iNUz5VQ/4RBQVOJdugzbWjbwEUzb6w1W5pXvwCRUufhGcr98odfNE09pZicfL0YjH84w/dqrlC3leeyaoF7bFqpaKWwqs=
   matrix:
     - FEC_SAUCE_BROWSER: "false"
     - FEC_SAUCE_BROWSER: "chrome"
