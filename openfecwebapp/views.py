@@ -6,20 +6,9 @@ from openfecwebapp.api_caller import load_cmte_financials
 from werkzeug.exceptions import abort
 
 
-def render_search_results(results, query):
-    candidates = []
-    committees = []
-
-    if results.get('candidates'):
-        for c in results['candidates'].get('results', []):
-            candidates.append(c)
-
-    if results.get('committees'):
-        for c in results['committees'].get('results', []):
-            committees.append(c)
-
+def render_search_results(candidates, committees, query):
     # if true will show "no results" message
-    no_results = True if not len(candidates) and not len(committees) else False
+    no_results = not len(candidates) and not len(committees)
 
     return render_template('search-results.html', candidates=candidates,
                            committees=committees, query=query, no_results=no_results)

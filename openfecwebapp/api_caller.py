@@ -12,8 +12,10 @@ MAX_FINANCIALS_COUNT = 4
 def _call_api(path, filters={}):
     if api_key:
         filters['api_key'] = api_key
+
     path = os.path.join(api_version, path.strip('/'))
     url = parse.urljoin(api_location, path)
+
     results = requests.get(url, params=filters)
 
     if results.status_code == requests.codes.ok:
@@ -28,10 +30,8 @@ def load_search_results(query):
     if query:
         filters['q'] = query
 
-    return {
-        'candidates': load_single_type_summary('candidates', filters),
-        'committees': load_single_type_summary('committees', filters)
-    }
+    return load_single_type_summary('candidates', filters).get('results', []), \
+        load_single_type_summary('committees', filters).get('results', [])
 
 
 def load_single_type_summary(data_type, filters):

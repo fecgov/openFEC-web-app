@@ -47,7 +47,8 @@ def _convert_to_dict(params):
 def search():
     query = request.args.get('search')
     if query:
-        return render_search_results(load_search_results(query), query)
+        candidates, committees = load_search_results(query)
+        return render_search_results(candidates, committees, query)
     else:
         return render_template('search.html');
 
