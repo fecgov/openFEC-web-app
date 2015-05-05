@@ -7,6 +7,7 @@
 body,
 html {
   height: 100%;
+  background: $licorice-2;
 }
 
 body {
@@ -16,8 +17,8 @@ body {
 }
 
 .page-wrap {
-  min-height: 90%;
-
+  background: #fff;
+  
   &:after {
     content: "";
     display: block;
