@@ -66,6 +66,11 @@ def load_cmte_financials(committee_id):
     }
 
 
+def load_election_years(candidate_id):
+    history = _call_api('/candidate/' + candidate_id + '/history')
+    return [x['two_year_period'] for x in history['results']]
+
+
 def install_cache():
     import requests_cache
     requests_cache.install_cache()

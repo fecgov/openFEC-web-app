@@ -2,7 +2,7 @@ from flask import render_template
 from openfecwebapp.models.candidates import CandidateSchema
 from openfecwebapp.models.committees import CommitteeSchema
 from openfecwebapp.models.shared import generate_pagination_values
-from openfecwebapp.api_caller import load_cmte_financials
+from openfecwebapp.api_caller import load_cmte_financials, load_election_years
 from werkzeug.exceptions import abort
 
 
@@ -55,6 +55,7 @@ def render_page(data_type, *args, **kwargs):
         candidate_schema = CandidateSchema()
         # candidate fields will be top-level in the template
         tmpl_vars = candidate_schema.dump(data).data
+        tmpl_vars['election_years'] = load_election_years(data['candidate_id'])
 
         # process related committees
         committee_fields = ['committee_id', 'name', 'designation_full', 'designation',
