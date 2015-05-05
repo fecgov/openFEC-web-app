@@ -3,8 +3,8 @@ from marshmallow import pprint
 from openfecwebapp.models.candidates import CandidateSchema
 from openfecwebapp.models.committees import CommitteeSchema
 from openfecwebapp.models.shared import generate_pagination_values
-from openfecwebapp.models.financial_summaries import add_cmte_financial_data
-
+from openfecwebapp.models.financial_summaries import CommitteeFinancials
+from openfecwebapp.api_caller import load_cmte_financials
 from werkzeug.exceptions import abort
 
 def render_search_results(results, query):
@@ -60,32 +60,50 @@ def render_page(data_type, *args, **kwargs):
         abort(500)
 
     data = c_data['results'][0]
-    #data.update(kwargs)
 
     if data_type == 'candidate': 
         candidate_schema = CandidateSchema()
-        tmpl_vars = candidate_schema.load(data).data
-        committees = CommitteeSchema(
-                only=['committee_id', 'name', 'designation_full', 'designation', 'committee_type_full', 'committee_type', 'url', 'is_primary', 'is_authorized'],
-                many=True, 
-                skip_missing=True
-            ).dump(kwargs['committees']).data
+        # candidate fields will be top-level in the template
+        tmpl_vars = candidate_schema.dump(data).data
+
+        # process related committees
+        committee_fields = ['committee_id', 'name', 'designation_full', 'designation', 'committee_type_full', 'committee_type', 'url', 'is_primary', 'is_authorized']
+        committees = CommitteeSchema(only=committee_fields, many=True, skip_missing=True, strict=True) \
+            .dump(kwargs['committees']).data
+
         tmpl_vars['has_authorized'] = bool([x for x in committees if x['is_authorized']])
+
+        # add 'committees' level to template
+        for committee in committees:
+            committee['financials'] = load_and_format_cmte_financials(committee.committee_id)
+
         tmpl_vars['committees'] = committees
-        pprint(tmpl_vars)
+
+        # add financial data
+
     elif data_type == 'committee':
         committee_schema = CommitteeSchema()
-        tmpl_vars = committee_schema.load(data).data
-        tmpl_vars['candidates'] = CandidateSchema(
-                only=['candidate_id', 'name'], 
-                many=True, 
-                skip_missing=True
-            ).dump(kwargs['candidates']).data
-        pprint(tmpl_vars)
+        committee = committee_schema.dump(data).data
+        # committee fields will be top-level in the template
+        tmpl_vars = committee
+        # process and add related candidates a level below
+        tmpl_vars['candidates'] = CandidateSchema(only=['candidate_id', 'name'], many=True, skip_missing=True, strict=True) \
+            .dump(kwargs['candidates']).data
+
+        financials_schema = CommitteeFinancials(skip_missing=True, strict=True)
+        results, errors = financials_schema.dump(load_cmte_financials(committee['committee_id']))
+        pprint(errors)
+
+        tmpl_vars.update(results)
     else:
         tmpl_vars = data
-    #print("Final:")
-    #pprint(tmpl_vars)
-    #tmpl_vars.update(add_cmte_financial_data(data, data_type))
 
+    pprint(tmpl_vars)
     return render_template(data_type + 's-single.html', **tmpl_vars)
+
+def load_and_format_cmte_financials(committee_id):
+    fin_data = load_cmte_financials(committee_id)
+    schema = CommitteeFinancials()
+    data = schema.dump(fin_data).data
+    return data
+    
