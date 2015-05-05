@@ -83,6 +83,7 @@ $(document).ready(function() {
     if (typeof window.sessionStorage !== 'undefined') {
         if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
             $('#notice').attr('aria-hidden', true);
+            $('#notice-reveal').addClass('visible');
         } else {
             $('#notice').attr('aria-hidden', false);
         }
@@ -90,10 +91,16 @@ $(document).ready(function() {
 
     $("#notice-close").on('click keypress', function(e){
         if (e.which === 13 || e.type === 'click') {
+            $('#notice-reveal').addClass('visible');
             if (typeof window.sessionStorage !== 'undefined') {
                 window.sessionStorage.setItem('keep-banner-closed', '1');
             }            
         }
+    });
+
+    // Hide the notice reveal link if you open it 
+    $('#notice-reveal').click(function(){
+      $(this).removeClass('visible');
     });
 
     // Initialize accordions

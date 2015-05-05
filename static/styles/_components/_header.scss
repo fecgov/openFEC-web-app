@@ -1,4 +1,12 @@
 // MODULE: Header
+#notice-reveal {
+  display: none;
+
+  &.visible {
+    display: inline;
+  }
+}
+
 .banner {
   @include font-size(1.2);
   text-align: center;

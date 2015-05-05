@@ -1289,6 +1289,11 @@ body {
     .side-panel--right {
       width: 20%; } }
 
+#notice-reveal {
+  display: none; }
+  #notice-reveal.visible {
+    display: inline; }
+
 .banner {
   font-size: 12px;
   font-size: 1.2rem;
@@ -1662,6 +1667,9 @@ body {
 [aria-hidden="true"],
 .hidden {
   display: none; }
+
+.visible {
+  display: block; }
 
 @-webkit-keyframes fadeIn {
   from {

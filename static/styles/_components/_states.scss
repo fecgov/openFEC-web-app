@@ -3,6 +3,10 @@
   display: none;
 }
 
+.visible {
+  display: block;
+}
+
 @include keyframes(fadeIn) {
   from {
     opacity: 0;
