@@ -313,8 +313,23 @@ input[type="file"] {
 select {
   width: auto;
   max-width: 100%;
-  background: #fff;
-  border: 1px solid #D7D7D7; }
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("../img/angle-down.png");
+  background-image: url("../img/angle-down.svg");
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+  background-size: 2rem;
+  background-color: #fff;
+  border: 1px solid #b3b3b3;
+  border-radius: 0;
+  color: #515A61;
+  padding: 0 4rem 0 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+  select:focus {
+    outline: 3px solid #0DD16E; }
 
 .input-button-combo:after {
   content: "";
