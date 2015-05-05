@@ -64,7 +64,7 @@ def render_page(data_type, *args, **kwargs):
         committees = CommitteeSchema(only=committee_fields, many=True, skip_missing=True, strict=True) \
             .dump(kwargs['committees']).data
 
-        tmpl_vars['has_authorized'] = bool([x for x in committees if x['is_authorized']])
+        tmpl_vars['has_authorized'] = bool([x for x in committees if x['is_authorized'] or x['is_primary']])
 
         # add 'committees' level to template
         for committee in committees:
