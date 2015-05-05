@@ -10,7 +10,7 @@
 
 {% block body %}
   <div id="main" class="entity committee tab-interface">
-    <header class="entity__header page-header">
+    <header class="entity__header page-header page-header--dark">
       <div class="container">
         <div class="entity__header--top row">
             <span class="entity__id">ID: {{ committee_id }}</span>
@@ -52,9 +52,9 @@
             </li>
           {% endif %}
         </ul>
-      </div>
+      </div>  
     </header>
-    <div class="page-controls">
+    <div class="page-controls page-controls--dark">
       <div class="page-controls__top">
         <div class="container">
           <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> {{ name }}</span>
@@ -83,9 +83,8 @@
           </ul>
         </div>
       </nav> -->
-    </div>
-
-    {% macro totals_table_row(pretty_name, value) %}
+    </div>    
+{% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
       <div class="table__row table__row--nested js-accordion_item">
         <div class="table__cell">{{ pretty_name }} </div>

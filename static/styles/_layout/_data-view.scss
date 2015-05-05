@@ -16,18 +16,104 @@
 
 .results-content {
   @include clearfix();
-  background-color: $filter-bg;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
   position: relative;
+  background: $lightest-gray;
 }
 
 .results-container {
+  @include clearfix();
   background: #fff;
-  position: relative;
   width: 100%;
-  left: 0;
-  height: 100%;
-  float: left;
+  border: 1px solid $light-gray;
+
+  .error-container {
+    margin: 2rem 5%;
+  }
+}
+
+@include media($large) {
+  .results-container {
+    width: 98%;
+    margin: 0 1%;
+  }
+
+  .panel-active--left {
+    .results-container {
+      width: 79%;
+      float: left;
+      margin: 0 1% 0 0;
+    }
+  }
+}
+
+#filter-toggle {
+  margin-left: 2rem;
+  
+  @include media($medium) {
+    margin-left: 1%;
+    float: left;
+  }
+}
+
+.results-info {
+  @include font-size(1.6);
+  clear: both;
+  margin: 0 2rem 1rem 2rem;
+
+  li {
+    line-height: 1;
+  }
+
+  @include media($medium) {
+    float: right;
+    padding: 1rem 0;
+    width: auto;
+    clear: none;
+    margin-bottom: 0;
+  }
+
+  @include media($large) {
+    width: 79%;
+    margin: 0 1% 0 0;
+  }
+}
+
+.results-count {
+  li {
+    padding-bottom: 1rem;
+    display: inline-block;
+
+    &:first-child {
+      padding-right: 2rem;
+    }
+  }
+
+  @include media($medium) {
+    width: auto;
+    float: left;
+    li {
+      padding-bottom: 0;
+    }
+  }
+}
+
+
+.pagination {
+  width: 100%;
+  padding: 1rem 0 0 0;
+  text-align: center;
+  border-top: 1px solid $light-gray;
+  
+  @include media($medium) {
+    width: auto;
+    float: right;
+    padding: 0;
+    border-top: 0;
+  }
+}
+
+.pagination__link {
+  display: inline-block;
+  padding: 0 1rem;
 }
