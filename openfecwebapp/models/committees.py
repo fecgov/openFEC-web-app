@@ -8,6 +8,8 @@ class CommitteeSchema(Schema):
     url = fields.Function(lambda x: url_for('committee_page', c_id=x['committee_id']))
     is_primary = fields.Function(lambda x: x['designation'] == 'P')
     is_authorized = fields.Function(lambda x: x['designation'] == 'A')
+    is_joint = fields.Function(lambda x: x['designation'] == 'J')
+    is_leadership = fields.Function(lambda x: x['designation'] == 'D')
     street_2 = fields.Str(allow_none=True)
     organization_type = fields.Str(allow_none=True)
     organization_type_full = fields.Str(allow_none=True)

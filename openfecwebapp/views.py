@@ -60,16 +60,26 @@ def render_page(data_type, *args, **kwargs):
 
         # process related committees
         committee_fields = ['committee_id', 'name', 'designation_full', 'designation',
-                            'committee_type_full', 'committee_type', 'url', 'is_primary', 'is_authorized']
+                            'committee_type_full', 'committee_type', 'url',
+                            'is_primary', 'is_authorized', 'is_joint', 'is_leadership']
         committees = CommitteeSchema(only=committee_fields, many=True, skip_missing=True, strict=True) \
             .dump(kwargs['committees']).data
 
-        tmpl_vars['has_authorized'] = bool([x for x in committees if x['is_authorized'] or x['is_primary']])
-
         # add 'committees' level to template
+        tmpl_vars['has_authorized_cmtes'] = False
+        tmpl_vars['has_joint_cmtes'] = False
+        tmpl_vars['has_leadership_cmtes'] = False
+
         for committee in committees:
             if committee['is_primary'] or committee['is_authorized']:
                 committee['financials'] = load_cmte_financials(committee['committee_id'])
+                tmpl_vars['has_authorized_cmtes'] = True
+
+            elif committee['is_joint']:
+                tmpl_vars['has_joint_cmtes'] = True
+
+            elif committee['is_leadership']:
+                tmpl_vars['has_leadership_cmtes'] = True
 
         tmpl_vars['committees'] = committees
 

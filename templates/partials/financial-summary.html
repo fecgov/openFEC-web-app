@@ -5,7 +5,7 @@
         <p class="text--lead">For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
       </div>
 
-      {% if has_authorized %}
+      {% if has_authorized_cmtes %}
       <div class="page-subsection">
         <h3 class="term" data-term="Campaign Committee">Campaign Committees</h3>
         {% for committee in committees if committee.is_primary %}
@@ -18,29 +18,25 @@
       </div>
     {% endif %}
 
-    {% if leadership_committees or joint_committees %}
+    {% if has_joint_cmtes or has_leadership_cmtes %}
       <div class="page-subsection other-committees">
       <h3>Other Committees</h3>
       <p class="text--lead">This candidate has additional committees, but because those committees are not exclusively for the candidate's campaign activity, this page does not include their information.</p>
 
-        {% if leadership_committees %}
+        {% if has_leadership_cmtes %}
         <h4>Leadership PACs</h4>
         <ul>
-          {% for c in leadership_committees %}
-              {% with committee=c %}
-                <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }} &raquo;</a></li>
-              {% endwith %}
+          {% for committee in committees if committee.is_leadership %}
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }} &raquo;</a></li>
           {% endfor %}
         </ul>
         {% endif %}
 
-        {% if joint_committees %}
+        {% if has_joint_cmtes %}
         <h4>Joint Fundraising Committees</h4>
         <ul>
-          {% for c in joint_committees %}
-              {% with committee=c %}
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }} &raquo;</a></li>
-              {% endwith %}
+          {% for committee in committees if committee.is_joint %}
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }} &raquo;</a></li>
           {% endfor %}
         </ul>
         {% endif %}
