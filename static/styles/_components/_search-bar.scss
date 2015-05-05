@@ -9,6 +9,11 @@
   label {
     margin-bottom: 30px;
   }
+
+  @include media($large) {
+    @include span-columns(18 of 22);
+    @include shift(2 of 22);
+  }
 }
 
 .input-button-combo.search--large {
