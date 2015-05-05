@@ -1,30 +1,33 @@
-<figure class="table--simple totals-table">
+{% with %}
+{% set reports = committee.financials.reports.0  %}
+{% set totals = committee.financials.totals.0  %}
+<figure class="table--simple reports-table">
   <h4 class="figure__title">Totals for {{committee.financials.totals.0.cycle|fmt_year_range}}</h4>
   <div class="table__half">
     <div class="table__row">
       <div class="table__cell">Total <span class="term" data-term="Receipts">receipts</span></div>
-      <div class="table__cell">{{committee.financials.totals.0.receipts|default("unavailable")|currency}}</div>
+      <div class="table__cell">{{totals.receipts|default("unavailable")|currency}}</div>
     </div>
     <div class="table__row">
       <div class="table__cell">Total <span class="term" data-term="Disbursements">disbursements</span></div>
-      <div class="table__cell">{{committee.financials.totals.0.disbursements|default("unavailable")|currency}}</div>
+      <div class="table__cell">{{totals.disbursements|default("unavailable")|currency}}</div>
     </div>
     <div class="table__row--note">
-      Calculated from reports filed {{committee.financials.totals.0.cycle}}
+      Calculated from reports filed {{totals.cycle}}
     </div>
   </div>
   <div class="table__half">
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Cash on Hand">Cash on hand</span></div>
-      <div class="table__cell">{{committee.financials.reports.0.cash_on_hand_end_period|default("unavailable")|currency}}</div>
+      <div class="table__cell">{{reports.cash_on_hand_end_period|default("unavailable")|currency}}</div>
     </div>
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
-      <div class="table__cell">{{committee.financials.reports.0.debts_owed_by_committee|default("unavailable")|currency}}</div>
+      <div class="table__cell">{{reports.debts_owed_by_committee|default("unavailable")|currency}}</div>
     </div>
     <div class="table__row--note">
-      Source: {{committee.financials.reports.0.report_type_full|fmt_report_desc}}
+      Source: {{reports.report_type_full|fmt_report_desc}}
     </div>
   </div>
 </figure>
-
+{% endwith %}
