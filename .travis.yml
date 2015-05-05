@@ -11,24 +11,26 @@ addons:
 
 env:
   global:
-    - FEC_WEB_TEST: true
-    - FEC_SELENIUM_DRIVER: remote
-    - secure: SKKeJG+Pc0xFyq0++/Cf0fMO4fZlK1H3CgedSGiQhwl3Rsh8QgXBhH+/YwWYAozmUNPkJCEuDdB2A1trBEPqkghAnjNdOXu2mwo5ANweu8M/HdafeeDP2klHB7bIieJ5GhUfrZ1/D/nVcE86mePFlx6Ymjdg2DtNUYBIWFs2xPs=
-    - secure: UK4kK8mrj0AsYqL7ohK9wKMCTVSK0phyNw7sW2BynRJYTU3Xi073+m8mGiCvHGEULvriCtuysCsbh5iNUz5VQ/4RBQVOJdugzbWjbwEUzb6w1W5pXvwCRUufhGcr98odfNE09pZicfL0YjH84w/dqrlC3leeyaoF7bFqpaKWwqs=
+    - FEC_WEB_TEST: "true"
+    - FEC_SELENIUM_DRIVER: "remote"
+    - secure: "SKKeJG+Pc0xFyq0++/Cf0fMO4fZlK1H3CgedSGiQhwl3Rsh8QgXBhH+/YwWYAozmUNPkJCEuDdB2A1trBEPqkghAnjNdOXu2mwo5ANweu8M/HdafeeDP2klHB7bIieJ5GhUfrZ1/D/nVcE86mePFlx6Ymjdg2DtNUYBIWFs2xPs="
+    - secure: "UK4kK8mrj0AsYqL7ohK9wKMCTVSK0phyNw7sW2BynRJYTU3Xi073+m8mGiCvHGEULvriCtuysCsbh5iNUz5VQ/4RBQVOJdugzbWjbwEUzb6w1W5pXvwCRUufhGcr98odfNE09pZicfL0YjH84w/dqrlC3leeyaoF7bFqpaKWwqs="
   matrix:
     - FEC_SAUCE_BROWSER: "false"
     - FEC_SAUCE_BROWSER: "chrome"
     - FEC_SAUCE_BROWSER: "firefox"
 
 before_script:
+  # Set up environment
+  - if [[ $TRAVIS_BRANCH = 'master' ]]; then export FEC_WEB_API_URL="http://fec-stage-api.cf.18f.us"; fi
+  - if [[ $TRAVIS_BRANCH != 'master' ]]; then export FEC_WEB_API_URL="http://fec-dev-api.cf.18f.us"; fi
+
   # Install web app and run in background
   - pip install -r requirements.txt
   - npm install
   - npm install -g browserify
   - npm run build
   - python __init__.py &
-  - if [[ $TRAVIS_BRANCH = 'master' ]]; then export FEC_WEB_API_URL="https://api.open.fec.gov"; fi
-  - if [[ $TRAVIS_BRANCH = 'develop' ]]; then export FEC_WEB_API_URL="http://fec-dev-api.cf.18f.us/"; unset FEC_WEB_API_KEY; fi
 
 script:
   # Run unit tests
