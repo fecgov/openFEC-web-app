@@ -1,13 +1,12 @@
   {% if committees %}
       <div class="page-section__intro">
         <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-        <p class="text--lead">This page provides an overview of all the money received and spent by  committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees.</p>
-        <p class="text--lead">For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
+        <p class="text--lead">This page provides an overview of all the money received and spent by committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees, but not joint fundraising committees authorized by the candidate.  For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
       </div>
 
       {% if has_authorized_cmtes %}
       <div class="page-subsection">
-        <h3 class="term" data-term="Campaign Committee">Campaign Committees</h3>
+        <h3 class="term" data-term="Authorized Committee">Authorized Committees</h3>
         {% for committee in committees if committee.is_primary %}
           {% include 'partials/committee-stats.html' %}
         {% endfor %}
@@ -18,28 +17,15 @@
       </div>
     {% endif %}
 
-    {% if has_joint_cmtes or has_leadership_cmtes %}
+    {% if has_joint_cmtes %}
       <div class="page-subsection other-committees">
-      <h3>Other Committees</h3>
-      <p class="text--lead">This candidate has additional committees, but because those committees are not exclusively for the candidate's campaign activity, this page does not include their information.</p>
-
-        {% if has_leadership_cmtes %}
-        <h4>Leadership PACs</h4>
-        <ul>
-          {% for committee in committees if committee.is_leadership %}
-            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }} &raquo;</a></li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-
-        {% if has_joint_cmtes %}
-        <h4>Joint Fundraising Committees</h4>
+      <h3><span class="term" data-term="Joint Fundraising Committee">Joint Fundraising Committees</span></h3>
+      <p class="text--lead">Below, is a list of the candidate’s joint fundraising committees—in joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed. Click the links to see more information about a particular committee.</p>
         <ul>
           {% for committee in committees if committee.is_joint %}
             <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }} &raquo;</a></li>
           {% endfor %}
         </ul>
-        {% endif %}
       </div>
     {% endif %}
 
@@ -47,7 +33,7 @@
 
   <div class="meta-box error-container">
     <h2 id="section-1-header" tabindex="0">No results</h2>
-    <p class="text--lead">This candidate is not associated with any committees, which means there is no financial data to show.</p>
+    <p class="text--lead">This candidate is not associated with any <a class="term" data-term="Committee">committees</a>, which means there is no financial data to show.</p>
     <div class="error-container__bottom">
         <h4>Is this information incorrect? Let us know.</h4>
         <a class="button" href="mailto:{{ contact_email }}">Contact support <i class="ti-email"></i></a>
