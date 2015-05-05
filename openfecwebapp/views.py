@@ -68,7 +68,8 @@ def render_page(data_type, *args, **kwargs):
 
         # add 'committees' level to template
         for committee in committees:
-            committee['financials'] = load_cmte_financials(committee['committee_id'])
+            if committee['is_primary'] or committee['is_authorized']:
+                committee['financials'] = load_cmte_financials(committee['committee_id'])
 
         tmpl_vars['committees'] = committees
 
