@@ -2176,9 +2176,12 @@ footer {
   -o-align-items: flex-end;
   align-items: flex-end;
   -ms-flex-align: end;
-  padding-left: 100px;
   padding-bottom: 30px;
+  padding-left: 0;
   height: 200px; }
+  @media screen and (min-width: 48em) {
+    .chart-series--vertical {
+      padding-left: 100px; } }
   .chart-series--vertical.chart-series--short {
     height: 100px; }
   .chart-series--vertical .chart-series__bar,
@@ -2227,10 +2230,13 @@ footer {
   .chart-series--vertical .chart-series__axis {
     position: absolute;
     top: 0;
-    left: 100px;
+    left: 0;
     right: 0;
     bottom: 30px;
     z-index: -10; }
+    @media screen and (min-width: 48em) {
+      .chart-series--vertical .chart-series__axis {
+        left: 100px; } }
   .chart-series--vertical .chart-series__axis__tick {
     position: absolute;
     text-align: right;
@@ -2239,10 +2245,14 @@ footer {
     width: 100%;
     height: 1em; }
     .chart-series--vertical .chart-series__axis__tick .chart-series__axis__tick__text {
+      display: none;
       position: absolute;
       right: 100%;
       top: .2em;
       padding-right: 1em; }
+      @media screen and (min-width: 48em) {
+        .chart-series--vertical .chart-series__axis__tick .chart-series__axis__tick__text {
+          display: block; } }
     .chart-series--vertical .chart-series__axis__tick:after {
       content: " ";
       display: block;
