@@ -169,9 +169,9 @@
                 report_year, header_description='Money spent by the committee' ) }}
 
             {{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
-            {{ totals_table('End cash on hand', reports.0.cash) }}
+            {{ totals_table('End cash on hand', reports.0.cash_on_hand_end_period) }}
             {{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
-            {{ totals_table('Debts owed by committee', reports.0.debt) }}
+            {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
           </div>
           <div class="row">
             {% include 'partials/committee-charts.html' %}
