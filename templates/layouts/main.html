@@ -24,6 +24,7 @@
     {% endif %}
 </head>
 <body>
+<a href="#main-content" class="u-visually_hidden">skip navigation</a>
 <div id="site-menu" class="modal__overlay" aria-hidden="true">
   <div class="modal">
     <div class="modal__row">
@@ -95,7 +96,7 @@
   </header>
 
   {% block header %}{% endblock %}
-  <div class="main-container">
+  <div class="main-container" id="main-content">
     <main id="main"{% if section %} data-section="{{section}}"{% endif %}>
         {% block body %}{% endblock %}
     </main>
