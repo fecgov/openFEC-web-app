@@ -5,6 +5,7 @@ from openfecwebapp.models.shared import generate_pagination_values
 from openfecwebapp.api_caller import load_cmte_financials, load_election_years
 from werkzeug.exceptions import abort
 
+import re
 
 def render_search_results(candidates, committees, query):
     # if true will show "no results" message
@@ -91,5 +92,9 @@ def render_page(data_type, *args, **kwargs):
     return render_template(data_type + 's-single.html', **tmpl_vars)
 
 
-def election_year_str(year):
+def fmt_year_range(year):
     return "{} - {}".format(year - 1, year)
+
+
+def fmt_report_desc(report_full_description):
+    return re.sub('{.+}', '', report_full_description)
