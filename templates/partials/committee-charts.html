@@ -1,3 +1,6 @@
+{% with %}
+{% set reports = committee.financials.reports  %}
+{% set totals = committee.financials.totals  %}
 {% import 'macros/charts.html' as charts %}
 {% macro group_bar_tooltip(value, key) %}
 <div class="chart-series__bar__tooltip">
@@ -32,3 +35,4 @@
        label_key=('coverage_end_date'), tooltip=group_bar_tooltip) }}
   </figure>
 </div>
+{% endwith %}
