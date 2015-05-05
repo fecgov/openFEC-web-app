@@ -49,13 +49,13 @@ select[multiple=multiple] {
   @include box-sizing(border-box);
   @include transition(border-color);
   @include font-size($form-font-size);
+  @include rem(padding, 0 1rem);
   margin: 1em 0;
   background-color: white;
   border-radius: $form-border-radius;
   border: 1px solid $form-border-color;
   box-shadow: $form-box-shadow;
   font-family: $form-font-family;
-  padding: 1rem;
   width: 100%;
 
   &:hover {

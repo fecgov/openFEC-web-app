@@ -273,13 +273,14 @@ select[multiple=multiple] {
   transition: border-color;
   font-size: 14px;
   font-size: 1.4rem;
+  padding: 0 10px;
+  padding: 0 1rem;
   margin: 1em 0;
   background-color: white;
   border-radius: 0;
   border: 1px solid #b3b3b3;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
   font-family: Helvetica, arial, sans-serif;
-  padding: 1rem;
   width: 100%; }
   textarea:hover,
   input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover,
@@ -941,6 +942,8 @@ body {
   .page-subsection:last-of-type {
     padding-bottom: 0;
     border-bottom: none; }
+  .page-subsection.page-subsection--noline {
+    border-bottom: 0; }
 
 .page-sub-subsection {
   border-bottom: 1px dashed #b3b3b3;
@@ -983,10 +986,11 @@ body {
     background: #2678BA;
     color: #fff;
     display: inline-block;
-    width: 1.4em;
+    border-radius: 10px;
+    height: 16px;
+    padding: 0 1px 20px 2px;
     text-align: center;
-    line-height: 1.3em;
-    border-radius: 50%; }
+    width: 20px; }
     .accordion__button .accordion__icon:after {
       font-family: 'themify';
       speak: none;
@@ -1005,9 +1009,8 @@ body {
     .accordion__button .accordion__icon:hover {
       background: #1B5585; }
     .accordion__button .accordion__icon:after {
-      line-height: 1.4em !important;
-      margin-left: 0 !important;
-      padding-top: .2em; }
+      font-size: 14px !important;
+      margin-left: 0 !important; }
 
 .accordion--collapsed .accordion__icon:after {
   font-family: 'themify';
