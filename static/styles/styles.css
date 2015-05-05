@@ -820,6 +820,11 @@ input[type="submit"],
 .u-hidden {
   display: none; }
 
+.u-visually_hidden {
+  left: -9999px;
+  position: absolute;
+  top: -9999px; }
+
 .u-not-responsive {
   max-width: auto; }
 
