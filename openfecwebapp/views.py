@@ -89,3 +89,7 @@ def render_page(data_type, *args, **kwargs):
         tmpl_vars = data
 
     return render_template(data_type + 's-single.html', **tmpl_vars)
+
+
+def election_year_str(year):
+    return "{} - {}".format(year - 1, year)

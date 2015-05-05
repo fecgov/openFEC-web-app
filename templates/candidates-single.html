@@ -62,7 +62,7 @@
           <label for="election_cycle">Two-Year Period</label>
           <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate">
           {% for year in election_years|sort(reverse=True) %}
-            <option value="{{ year }}">{{ year|int - 1 }} - {{ year }}</option>
+            <option value="{{ year }}">{{ year|election_year_str }}</option>
           {% endfor %}
           </select>
         </div>
