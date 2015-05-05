@@ -313,7 +313,8 @@ input[type="file"] {
 select {
   width: auto;
   max-width: 100%;
-  background: #fff; }
+  background: #fff;
+  border: 1px solid #D7D7D7; }
 
 .input-button-combo:after {
   content: "";
