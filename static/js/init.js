@@ -108,13 +108,4 @@ $(document).ready(function() {
       accordion.init($(this));
     });
 
-
-    // unload overlay
-    // CSS spinner courtesy of http://tobiasahlin.com/spinkit/
-    var spinner = '<div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
-    $(window).on("beforeunload", function(e){
-       var fullHeight = $(document).height();
-       $('body').prepend('<div class="unloading">' + spinner + '</div>'); 
-       $('.unloading').height(fullHeight);
-    });
 });
