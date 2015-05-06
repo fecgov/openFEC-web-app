@@ -35,10 +35,10 @@ function bundle(watch) {
 wb.on('update', bundle);
 wb.on('log', gutil.log);
 
-gulp.task('build', bundle.bind(this, false));
-gulp.task('watch', bundle.bind(this, true));
+gulp.task('build-js', bundle.bind(this, false));
+gulp.task('watch-js', bundle.bind(this, true));
 
-gulp.task('sass-build', function() {
+gulp.task('build-sass', function() {
   return sass('./static/styles/styles.scss')
     .pipe(rename('static/styles/styles.css'))
     .pipe(rev())
@@ -47,6 +47,6 @@ gulp.task('sass-build', function() {
     .pipe(gulp.dest('.'));
 });
 
-gulp.task('sass-watch', function() {
+gulp.task('watch-sass', function() {
   gulp.watch('./static/styles/**/*.scss', ['sass-build']);
 });
