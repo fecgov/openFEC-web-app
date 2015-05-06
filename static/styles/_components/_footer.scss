@@ -20,10 +20,10 @@ footer {
 }
 
 .footer__right {
-    margin-top: 1rem;
+    margin: 2rem 0;
 
     @include media($medium) {
-        margin-top: 0;
+        margin: 0;
         text-align: right;
     }
 }
@@ -40,7 +40,7 @@ footer {
 .footer__nav {
     li {
         display: inline-block;
-        padding: 0 .625em;
+        padding: 0 2rem;
 
         &:first-child {
             padding-left: 0;

@@ -154,13 +154,13 @@ module.exports = {
           return tokens;
         },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 3
+      limit: 5
     })
 
     glossaryEngine.initialize();
     glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
     $('#glossary-search').typeahead({
-            minLength: 3,
+            minLength: 1,
             highlight: true,
             hint: false
         },
@@ -181,7 +181,11 @@ module.exports = {
     // Open single entity pages when selected
     $(document).on('typeahead:selected', function(e, suggestion, datasetName) {
         if ( datasetName === 'Definitions' ) {
-          glossary.setDefinition(suggestion.term, suggestion.definition);
+          var term = {
+            term: suggestion.term,
+            definition: suggestion.definition
+          }
+          glossary.setDefinition(term);
         } 
         else {
           document.location = document.location.origin + '/' + datasetName + '/' + suggestion.id;
