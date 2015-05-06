@@ -83,6 +83,7 @@ $(document).ready(function() {
     if (typeof window.sessionStorage !== 'undefined') {
         if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
             $('#notice').attr('aria-hidden', true);
+            $('#notice-reveal').addClass('u-visible');
         } else {
             $('#notice').attr('aria-hidden', false);
         }
@@ -90,10 +91,16 @@ $(document).ready(function() {
 
     $("#notice-close").on('click keypress', function(e){
         if (e.which === 13 || e.type === 'click') {
+            $('#notice-reveal').addClass('u-visible');
             if (typeof window.sessionStorage !== 'undefined') {
                 window.sessionStorage.setItem('keep-banner-closed', '1');
             }            
         }
+    });
+
+    // Hide the notice reveal link if you open it 
+    $('#notice-reveal').click(function(){
+      $(this).removeClass('u-visible');
     });
 
     // Initialize accordions
@@ -101,13 +108,4 @@ $(document).ready(function() {
       accordion.init($(this));
     });
 
-
-    // unload overlay
-    // CSS spinner courtesy of http://tobiasahlin.com/spinkit/
-    var spinner = '<div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
-    $(window).on("beforeunload", function(e){
-       var fullHeight = $(document).height();
-       $('body').prepend('<div class="unloading">' + spinner + '</div>'); 
-       $('.unloading').height(fullHeight);
-    });
 });
