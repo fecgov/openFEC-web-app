@@ -55,15 +55,20 @@ select[multiple=multiple] {
   border: 1px solid $form-border-color;
   box-shadow: $form-box-shadow;
   font-family: $form-font-family;
-  padding: 1rem;
+  padding: 0 1rem;
   width: 100%;
-
+  height: 3rem;
+  
   &:hover {
     border-color: $form-border-color-hover;
   }
 
   &:focus {
     outline: 3px solid $focus;
+  }
+
+  @include placeholder {
+    color: $dark-gray;
   }
 }
 
@@ -87,9 +92,25 @@ input[type="file"] {
 }
 
 select {
+  @include appearance(none);
   width: auto;
   max-width: 100%;
-  background: #fff;
+  background-image: url('../img/angle-down.png'); // Fallback incase no svg background
+  background-image: url('../img/angle-down.svg');
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+  background-size: 2rem;
+  background-color: #fff;
+  border: 1px solid $form-border-color;
+  border-radius: 0;
+  color: $dark-gray;
+  padding: 0 4rem 0 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:focus {
+    outline: 3px solid $focus;
+  }
 }
 
 

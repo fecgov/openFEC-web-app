@@ -1,0 +1,12 @@
+<div class="field">
+    <label for="district">District</label>
+    <select name="district" id="district" data-placeholder="Select a district">
+        <option></option>
+        {% for district in range(100) %}
+        {% with formatted = '{0:02d}'.format(district) %}
+        <option value={{ formatted }}>{{ formatted }}</option>
+        {% endwith %}
+        {% endfor %}
+    </select>
+    <button class="button--remove" data-removes="district"><i class="ti-close"></i></button>
+</div>

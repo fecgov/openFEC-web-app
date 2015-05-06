@@ -81,12 +81,8 @@ $ npm run watch-all
 ```
 
 ### Deployment
-##### Likely only useful for 18Fers
-If you want to deploy to one of our Cloud Foundry instances, use `deploy.sh`. It takes four arguments: the Cloud Foundry space, the Cloud Foundry app, HTTP username, HTTP password. Be sure to be in the root directory of the codebase you want to deploy. 
 
-`./deploy.sh cf-space cf-app http-user http-pass`
-
-Ask teammates for the username and password that should be used.
+See directions in the 18F/openFEC repo.
 
 ### Run Tests
 #### Unit Tests
@@ -96,7 +92,21 @@ $ py.test openfecwebapp/tests
 #### Browser Tests
 First, install [PhantomJS](http://phantomjs.org/).
 
-Then:
-```
-$ py.test openfecwebapp/tests --selenium
-``` 
+Configure development environment:
+
+    $ unset FEC_WEB_API_KEY
+    $ export FEC_WEB_API_URL=http://fec-dev-api.cf.18f.us
+    $ export FEC_WEB_TEST=true
+
+Run development app server:
+
+    $ python __init__.py
+
+While app is running, run tests:
+
+    $ py.test openfecwebapp/tests --selenium
+
+If the development API is down or for testing with feature branches of the API,
+a local API server can be used:
+
+    $ unset FEC_WEB_API_URL

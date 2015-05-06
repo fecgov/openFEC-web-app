@@ -2,15 +2,15 @@
   <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
   <div class="table__half">
     <div class="table__row">
-      <div class="table__cell">Total <span class="term" data-term="Receipts">receipts</span></div>
+      <div class="table__cell"><span class="term" data-term="Total Receipts">Total receipts</span></div>
       <div class="table__cell">{{committee.total_receipts|default("unavailable")}}</div>
     </div>
     <div class="table__row">
-      <div class="table__cell">Total <span class="term" data-term="Disbursements">disbursements</span></div>
+      <div class="table__cell"><span class="term" data-term="Total Disbursements">Total disbursements</span></div>
       <div class="table__cell">{{committee.total_disbursements|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      Calculated from reports filed {{committee.report_year}}
+      Calculated from <a class="term" data-term="Reports and Statements">reports</a> filed {{committee.report_year}}
     </div>
   </div>
   <div class="table__half">

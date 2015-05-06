@@ -26,27 +26,21 @@
   padding: 1.25em;
   top: 0;
   bottom: 0;
-  width: 80%;
-  height: 100%;
-  z-index: 999;
+}
 
-  @include media($medium) {
-    width: 30%;
+.side-panel--left {
+  @include clearfix();
+  display: none;
+  background: $lightest-gray;
+  width: 100%;
+
+  &.side-panel--open {
+    display: block;
   }
 
   @include media($large) {
     width: 20%;
-  }
-}
-
-.side-panel--left {
-  display: none;
-  background: $filter-bg;
-  float: left;
-  position: relative;
-
-  &.side-panel--open {
-    display: block;
+    float: left;
   }
 }
 
@@ -55,18 +49,23 @@
   display: block;
   background: rgba($licorice-2, .95);  
   position: fixed;
+  z-index: 999;
   top: 0;
   right: -100%;
   box-shadow: -1px 0 1px 1px rgba(0,0,0,.2);
-
+  width: 80%;
+  height: 100%;
+  
   &.side-panel--open {
     right: 0;
   }
-}
+  
+  @include media($medium) {
+    width: 30%;
+  }
 
-.panel-active--left {
-  .results-container {
-      width: 80%;
+  @include media($large) {
+    width: 20%;
   }
 }
 

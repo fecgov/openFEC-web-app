@@ -10,7 +10,7 @@ class CommitteesPageTests(SearchPageTestCase):
         self.driver.get(self.url)
         self.assertEqual(
             self.driver.find_element_by_tag_name('h1').text,
-            'Browse committee records')
+            'Committees')
 
     def testCommitteesFilterSideBar(self):
         self.driver.get(self.url)
@@ -22,13 +22,10 @@ class CommitteesPageTests(SearchPageTestCase):
         name_div = self.getFilterDivByName('name')
         name_div.find_element_by_tag_name('input').send_keys('pork')
         self.driver.find_element_by_id('category-filters').submit()
-        self.assertEqual(
-            len(self.driver.find_element_by_tag_name('tbody')
-                .find_elements_by_tag_name('tr')),
-            8)
-        self.assertIn(
-            'PORK',
-            self.driver.find_element_by_class_name('single-link').text)
+        rows = self.driver.find_elements_by_css_selector('tbody tr')
+        self.assertGreater(len(rows), 0)
+        for row in rows:
+            self.assertIn('pork', row.text.lower())
 
     def testCommitteePartyFilter(self):
         self.checkFilter(

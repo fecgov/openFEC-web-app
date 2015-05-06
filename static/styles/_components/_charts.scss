@@ -74,9 +74,13 @@ $tooltip-border-color: #999;
   @include display(flex);
   @include flex-direction(row);
   @include align-items(flex-end);
-  padding-left: $chart-axis-width;
   padding-bottom: $chart-bottom;
+  padding-left: 0;
   height: 200px;
+
+  @include media($medium) {
+    padding-left: $chart-axis-width;
+  }
 
   &.chart-series--short {
     height: 100px;
@@ -107,7 +111,8 @@ $tooltip-border-color: #999;
     @include flex-direction(row);
     @include align-items(flex-end);
     max-width: 90px;
-
+    z-index: 9;
+    
     .chart-series__bar + .chart-series__bar {
       margin-left: .5em;
     }
@@ -116,10 +121,13 @@ $tooltip-border-color: #999;
   .chart-series__axis {
     position: absolute;
     top: 0;
-    left: $chart-axis-width;
+    left: 0;
     right: 0;
     bottom: $chart-bottom;
-    z-index: -10;
+
+    @include media($medium) {
+      left: $chart-axis-width;
+    }
   }
 
   .chart-series__axis__tick {
@@ -131,10 +139,15 @@ $tooltip-border-color: #999;
     height: 1em;
 
     .chart-series__axis__tick__text {
+      display: none;
       position: absolute;
       right: 100%;
       top: .2em;
       padding-right: 1em;
+
+      @include media($medium) {
+        display: block;
+      }
     }
 
     &:after {

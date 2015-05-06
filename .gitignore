@@ -10,3 +10,4 @@ static/styles/styles-*.css
 openfecwebapp/local_config.py
 static/styles/styles.css.map
 app/
+/.env
