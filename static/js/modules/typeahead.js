@@ -155,7 +155,7 @@ module.exports = {
         },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit: 3
-    })
+    });
 
     glossaryEngine.initialize();
     glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
@@ -172,7 +172,11 @@ module.exports = {
               suggestion: glossarySuggestion,
             }
         }
-    );  
+    );
+    $('#glossary-search').on('typeahead:selected', function(event, datum) {
+        var definition = glossary.findDefinition(datum.term);
+        glossary.setDefinition(definition);
+    });
 
     $('.twitter-typeahead').css({
       display: 'block',

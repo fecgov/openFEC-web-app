@@ -1,5 +1,7 @@
 'use strict';
 
+/* global require */
+
 var $ = require('jquery');
 var _ = require('underscore');
 
@@ -96,28 +98,28 @@ clearTerm = function() {
     $('#glossary-term').html('');
     $('#glossary-definition').html('');
     $("#glossary-search").val('');
-}
+};
 
 module.exports = {
-  init: function(){
-    glossaryLink.on('click keypress', function(e){
-        if (e.which === 13 || e.type === 'click') {
-            var dataTerm = $(this).data('term'),
-                definedTerm = findDefinition(dataTerm);
-            showGlossary();
-            setDefinition(definedTerm);
-        }
-    })
+    init: function() {
+        glossaryLink.on('click keypress', function(e){
+            if (e.which === 13 || e.type === 'click') {
+                var dataTerm = $(this).data('term'),
+                    definedTerm = findDefinition(dataTerm);
+                showGlossary();
+                setDefinition(definedTerm);
+            }
+        });
 
-    $('#glossary-toggle, #hide-glossary').click(function(){
-        if (glossaryIsOpen) {
-            hideGlossary();
-        } else {
-            showGlossary();
-        }
-    });
+        $('#glossary-toggle, #hide-glossary').click(function(){
+            if (glossaryIsOpen) {
+                hideGlossary();
+            } else {
+                showGlossary();
+            }
+        });
 
- },
-
+    },
+    findDefinition: findDefinition,
     setDefinition: setDefinition
-}
+};
