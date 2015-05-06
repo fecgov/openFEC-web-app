@@ -125,11 +125,14 @@
           {% for item in data %}
             {{ totals_table_row(item[1], item[0]) }}
           {% endfor %}
-          {% if report_year %}
+          <!-- This should produce "Calculated from reports filed cycle - 1 - cycle",  but I could not get that to work. Maybe it is not necessary with the dates in the subheadings? -->
+          <!-- {% if report_year %}
+
             <div class="table__row--note table__row--nested js-accordion_item">
-              Calculated from reports filed {{ cycle }}
+               Calculated from reports filed {{ report_year }}
+
             </div>
-          {% endif %}
+          {% endif %} -->
         </div>
       </figure>
     {% endmacro %}
