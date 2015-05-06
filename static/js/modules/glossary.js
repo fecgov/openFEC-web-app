@@ -117,13 +117,6 @@ module.exports = {
         }
     });
 
-    $("#glossary-search").keyup(function(event){
-        if(event.keyCode == 13){
-            var value = $(this).val(),
-                definedTerm = findDefinition(value);
-            setDefinition(definedTerm);
-        }
-    });
  },
 
     setDefinition: setDefinition

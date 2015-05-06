@@ -92,7 +92,21 @@ $ py.test openfecwebapp/tests
 #### Browser Tests
 First, install [PhantomJS](http://phantomjs.org/).
 
-Then:
-```
-$ py.test openfecwebapp/tests --selenium
-``` 
+Configure development environment:
+
+    $ unset FEC_WEB_API_KEY
+    $ export FEC_WEB_API_URL=http://fec-dev-api.cf.18f.us
+    $ export FEC_WEB_TEST=true
+
+Run development app server:
+
+    $ python __init__.py
+
+While app is running, run tests:
+
+    $ py.test openfecwebapp/tests --selenium
+
+If the development API is down or for testing with feature branches of the API,
+a local API server can be used:
+
+    $ unset FEC_WEB_API_URL
