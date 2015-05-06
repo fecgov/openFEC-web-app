@@ -141,8 +141,10 @@
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
           <div class="row js-accordion">
 
-            <h3 class="section-header">Detailed Summary</h3>
             {% with committee=context() %}
+            <h3 class="section-header">Detailed Summary
+                {{ committee.totals.0.cycle - 1 }} - {{ committee.totals.0.cycle }}
+            </h3>
 
             {% set table_data = [
                  (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
@@ -165,6 +167,10 @@
             {{ totals_table('Total Disbursements', committee.totals.0.disbursements, table_data,
                 committee.report_year, header_description='Money spent by the committee' ) }}
 
+            <h3 class="section-header">Recent Stats from {{ committee.reports[0].report_year }}
+                {{committee.report_desc}} Filing
+            </h3>
+
             {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
             {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
             {{ totals_table('Debts owed to committee', committee.reports[0].debts_owed_to_committee) }}
@@ -173,6 +179,7 @@
             {% endwith %}
           </div>
           <div class="row">
+            <h3 class="section-header">Key figures from recent reports</h3>
             {% with committee=context() %}
               {% include 'partials/committee-charts.html' %}
             {% endwith %}

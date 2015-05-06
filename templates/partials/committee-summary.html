@@ -10,7 +10,7 @@
       <div class="table__cell">{{committee.total_disbursements|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      Calculated from <a class="term" data-term="Reports and Statements">reports</a> filed {{committee.report_year}}
+      Calculated from <a class="term" data-term="Reports and Statements">reports</a> filed {{ committee.totals.0.cycle - 1 }} - {{ committee.totals.0.cycle }}
     </div>
   </div>
   <div class="table__half">
