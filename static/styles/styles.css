@@ -2330,7 +2330,8 @@ footer {
     -o-align-items: flex-end;
     align-items: flex-end;
     -ms-flex-align: end;
-    max-width: 90px; }
+    max-width: 90px;
+    z-index: 9; }
     .chart-series--vertical .chart-series__group .chart-series__bar + .chart-series__bar {
       margin-left: .5em; }
   .chart-series--vertical .chart-series__axis {
@@ -2338,8 +2339,7 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 30px;
-    z-index: -10; }
+    bottom: 30px; }
     @media screen and (min-width: 48em) {
       .chart-series--vertical .chart-series__axis {
         left: 100px; } }
