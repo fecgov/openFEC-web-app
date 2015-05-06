@@ -1,6 +1,7 @@
 <div class="field">
     <label for="year">Election Cycle</label>
     <select name="year" id="year" data-placeholder="Select an election cycle">
+    <select multiple name="year" data-placeholder="Select an election cycle">
         <option></option>
         {% for year in range(2014, 1979, -1) %}
         <option value={{ year }}>{{ year }}</option>
