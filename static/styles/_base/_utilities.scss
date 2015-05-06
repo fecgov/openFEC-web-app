@@ -20,6 +20,11 @@
 	position: fixed;
 }
 
+.u-visible {
+  display: block;
+}
+
+[aria-hidden="true"],
 .u-hidden {
 	display: none;
 }

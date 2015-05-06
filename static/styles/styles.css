@@ -798,6 +798,10 @@ input[type="submit"],
 .u-fixed {
   position: fixed; }
 
+.u-visible {
+  display: block; }
+
+[aria-hidden="true"],
 .u-hidden {
   display: none; }
 
@@ -1291,7 +1295,7 @@ body {
 
 #notice-reveal {
   display: none; }
-  #notice-reveal.visible {
+  #notice-reveal.u-visible {
     display: inline; }
 
 .banner {
@@ -1663,43 +1667,6 @@ body {
   color: #fff; }
   .tt-cursor .tt-suggestion__office {
     color: #fff; }
-
-[aria-hidden="true"],
-.hidden {
-  display: none; }
-
-.visible {
-  display: block; }
-
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-@-moz-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-@keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-.unloading {
-  -webkit-animation: fadeIn 0.2s ease-in;
-  -moz-animation: fadeIn 0.2s ease-in;
-  animation: fadeIn 0.2s ease-in;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.4);
-  z-index: 10000; }
-  .unloading .spinner {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    margin-left: -40px; }
 
 .entity__header--top {
   padding: 1rem 0; }
