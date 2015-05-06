@@ -5,7 +5,7 @@ table {
   table-layout: fixed;
   width: 100%;
   overflow-x: scroll; // scroll horizontally on smaller viewports
-  
+
   thead {
     tr:hover {
       background-color: #fff;
@@ -25,11 +25,13 @@ table {
 
   tr {
     @include font-size(1.4);
+    box-sizing: content-box; // Necessary to get the responsive rows to line up
     border: none;
+    border-bottom: 1px dotted $light-gray;
 
-    &:nth-child(even) {
-      background-color: $lightest-gray;
-    }
+//    &:nth-child(even) {
+  //    background-color: #fdfdfd;
+    //}
 
     &:hover {
       background: rgba($blue, .1);
