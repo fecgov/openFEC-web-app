@@ -66,6 +66,10 @@ select[multiple=multiple] {
   &:focus {
     outline: 3px solid $focus;
   }
+
+  @include placeholder {
+    color: $dark-gray;
+  }
 }
 
 textarea {
