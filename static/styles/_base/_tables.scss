@@ -207,14 +207,18 @@ table {
     
       &:first-child {
         width: 50%;
-        padding: .5rem 1rem 0 0;
       }
     }
-
+    
+    .table__row--header {
+      padding: .5em 0;
+    }
+    
     .table__row--nested {
       .table__cell,
       .table__cell:first-child {
         width: 100%;
+        padding-top: .5rem;
       }
     }
 
