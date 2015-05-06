@@ -13,8 +13,8 @@
     <link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
     <link rel="stylesheet" href="/static/styles/themify-icons.css">
+    <link rel="stylesheet" href="/{{ assets['static/styles/styles.css'] }}" />
     <link rel="stylesheet" href="/static/styles/responsive-tables.css">
-    <link href="/static/styles/styles.css" rel="stylesheet" type="text/css"/>
     {% if api_location %}
     <script>
         API_LOCATION = "{{api_location}}"
@@ -122,7 +122,7 @@
 
 {% include './partials/glossary.html' %}
 
-<script src="/static/js/app.js"></script>
+<script src="/{{ assets['static/js/app.js'] }}"></script>
 <script src="/static/js/vendor/responsive-tables.js"></script>
 
 {% block scripts %}{% endblock %}
