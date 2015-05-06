@@ -101,7 +101,6 @@ clearTerm = function() {
 module.exports = {
   init: function(){
     glossaryLink.on('click keypress', function(e){
-        console.log('here1');
         if (e.which === 13 || e.type === 'click') {
             var dataTerm = $(this).data('term'),
                 definedTerm = findDefinition(dataTerm);
