@@ -39,7 +39,6 @@
     "gulp-util": "^3.0.4",
     "handlebars": "^2.0.0",
     "jquery": "^2.1.4",
-    "querystring": "^0.2.0",
     "typeahead.js": "^0.10.5",
     "underscore": "^1.7.0",
     "vinyl-buffer": "^1.0.0",

@@ -23,15 +23,23 @@ app = Flask(__name__)
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+
 @jinja2.contextfunction
 def get_context(c):
     return c
+
+
+def _get_default_years():
+    now = datetime.datetime.now().year
+    return range(now - 3, now + 1)
+
 
 app.jinja_env.globals['api_location'] = api_location
 app.jinja_env.globals['api_version'] = api_version
 app.jinja_env.globals['api_key'] = api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
+app.jinja_env.globals['default_years'] = _get_default_years()
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
@@ -51,11 +59,22 @@ if not test:
 if analytics:
     app.config['USE_ANALYTICS'] = True
 
+
+# TODO(jmcarp) Remove after openFEC/#706 is resolved
+def _prepare_query(value):
+    return value if not isinstance(value, list) else ','.join(value)
+
+
 def _convert_to_dict(params):
     """ move from immutablemultidict -> multidict -> dict """
-    params = params.copy().to_dict()
-    params = {key: value for key, value in params.items() if value}
+    params = params.copy().to_dict(flat=False)
+    params = {
+        key: _prepare_query(value)
+        for key, value in params.items()
+        if value
+    }
     return params
+
 
 @app.route('/')
 def search():
