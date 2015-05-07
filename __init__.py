@@ -38,7 +38,7 @@ try:
 except OSError:
     logger.error(
         'Manifest "rev-manifest.json" not found. Did you remember to run '
-        '"gulp build"?'
+        '"npm run build"?'
     )
     raise
 

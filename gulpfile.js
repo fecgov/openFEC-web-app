@@ -48,5 +48,5 @@ gulp.task('build-sass', function() {
 });
 
 gulp.task('watch-sass', function() {
-  gulp.watch('./static/styles/**/*.scss', ['sass-build']);
+  gulp.watch('./static/styles/**/*.scss', ['build-sass']);
 });
