@@ -1,0 +1,30 @@
+<figure class="table--simple totals-table">
+  <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
+  <div class="table__half">
+    <div class="table__row">
+      <div class="table__cell"><span class="term" data-term="Total Receipts">Total receipts</span></div>
+      <div class="table__cell">{{committee.total_receipts|default("unavailable")}}</div>
+    </div>
+    <div class="table__row">
+      <div class="table__cell"><span class="term" data-term="Total Disbursements">Total disbursements</span></div>
+      <div class="table__cell">{{committee.total_disbursements|default("unavailable")}}</div>
+    </div>
+    <div class="table__row--note">
+      Calculated from <a class="term" data-term="Reports and Statements">reports</a> filed {{committee.report_year}}
+    </div>
+  </div>
+  <div class="table__half">
+    <div class="table__row">
+      <div class="table__cell"><span class="term" data-term="Cash on Hand">Cash on hand</span></div>
+      <div class="table__cell">{{committee.total_cash|default("unavailable")}}</div>
+    </div>
+    <div class="table__row">
+      <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
+      <div class="table__cell">{{committee.total_debt|default("unavailable")}}</div>
+    </div>
+    <div class="table__row--note">
+      Source: {{committee.report_desc}}
+    </div>
+  </div>
+</figure>
+
