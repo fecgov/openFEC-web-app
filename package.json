@@ -11,11 +11,12 @@
   },
   "scripts": {
     "test": "mocha --reporter nyan tests/unit",
+    "build": "gulp build-js && gulp build-sass",
+    "build-js": "gulp build-js",
+    "build-sass": "gulp build-sass",
     "watch": "gulp watch",
-    "build": "gulp build",
-    "sass-watch": "gulp sass-watch",
-    "sass-build": "gulp sass-build",
-    "watch-all": "gulp watch & gulp sass-watch"
+    "watch-js": "gulp watch-js",
+    "watch-sass": "gulp watch-sass"
   },
   "repository": {
     "type": "git",

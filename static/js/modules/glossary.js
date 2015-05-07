@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require */
+/* global require, module */
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -120,6 +120,5 @@ module.exports = {
         });
 
     },
-    findDefinition: findDefinition,
     setDefinition: setDefinition
 };
