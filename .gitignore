@@ -4,7 +4,9 @@
 *.pyc
 node_modules
 .sass-cache/
-static/js/app.js
+rev-manifest.json
+static/js/app-*.js
+static/styles/styles-*.css
 openfecwebapp/local_config.py
 static/styles/styles.css.map
 app/

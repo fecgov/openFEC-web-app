@@ -36,49 +36,34 @@ Those vars are `FEC_WEB_USERNAME` and `FEC_WEB_PASSWORD`. There are other config
 can set, but that have defaults. You can see those in `openfecwebapp/config.py`.
 
 ### Run server
-To make the site fully functional, you will need to compile the client side JS:
+To make the site fully functional, you will need to compile the client side JS and CSS:
 
-```
-$ npm run build
-```
+    $ npm run build
 
 Then start the server:
 
-```
-$ python __init__.py
-```
+    $ python __init__.py
 
 If you'd like the app to cache API requests it makes, use the `--cached` flag:
 
-```
-$ python __init__.py --cached
-```
+    $ python __init__.py --cached
 
 ### Development
-To compile client side JS changes once:
-```
-$ npm run build
-```
+To compile client side JS once:
 
-To compile whenever changes are made to the client side JS:
-```
-$ npm run watch
-```
+    $ npm run build-js
 
 Compile Sass once:
-```
-$ npm run sass-build
-```
+
+    $ npm run build-sass
+
+Compile JS as changes are made:
+
+    $ npm run watch-js
 
 Compile Sass as changes are made:
-```
-$ npm run sass-watch
-```
 
-Or, if you want to get crazy, watch both Sass and JS changes: (hat tip [@ascott1](http://github.com/ascott1))
-```
-$ npm run watch-all
-```
+    $ npm run watch-sass
 
 ### Deployment
 
@@ -86,9 +71,9 @@ See directions in the 18F/openFEC repo.
 
 ### Run Tests
 #### Unit Tests
-```
-$ py.test openfecwebapp/tests
-```
+
+    $ py.test openfecwebapp/tests
+
 #### Browser Tests
 First, install [PhantomJS](http://phantomjs.org/).
 

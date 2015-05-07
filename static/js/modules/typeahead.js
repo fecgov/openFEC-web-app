@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 require('typeahead.js');
@@ -16,7 +16,7 @@ var filterCandidates = function(result) {
   var officeFull,
       officeMap,
       filteredResults;
-  
+
   officeMap = {
     "H": "House of Representatives",
     "S": "Senate",
@@ -71,7 +71,7 @@ module.exports = {
           var results = $.map(response.results, function(result){
             if ( result.candidate_id !== null ) {
               return filterCandidates(result);
-            }            
+            }
           });
           return results;
         }
@@ -93,7 +93,7 @@ module.exports = {
         filter: function(response) {
           var results = $.map(response.results, function(result) {
             if ( result.committee_id !== null ) {
-              return filterCommittees(result);              
+              return filterCommittees(result);
             }
           });
           return results;
@@ -144,6 +144,10 @@ module.exports = {
       }
     }
     );
+    // Open single entity pages when selected
+    $('.search-bar').on('typeahead:selected', function(event, datum, datasetName) {
+        window.location = window.location.origin + '/' + datasetName + '/' + datum.id;
+    });
 
     // Glossary typeahead
     glossaryEngine = new Bloodhound({
@@ -154,13 +158,13 @@ module.exports = {
           return tokens;
         },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 3
-    })
+      limit: 5
+    });
 
     glossaryEngine.initialize();
     glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
     $('#glossary-search').typeahead({
-            minLength: 3,
+            minLength: 1,
             highlight: true,
             hint: false
         },
@@ -172,20 +176,17 @@ module.exports = {
               suggestion: glossarySuggestion,
             }
         }
-    );  
+    );
+    $('#glossary-search').on('typeahead:selected', function(event, datum) {
+        glossary.setDefinition({
+            term: datum.term,
+            definition: datum.definition
+        });
+    });
 
     $('.twitter-typeahead').css({
-      display: 'block',
-    })
+        display: 'block',
+    });
 
-    // Open single entity pages when selected
-    $(document).on('typeahead:selected', function(e, suggestion, datasetName) {
-        if ( datasetName === 'Definitions' ) {
-          glossary.setDefinition(suggestion.term, suggestion.definition);
-        } 
-        else {
-          document.location = document.location.origin + '/' + datasetName + '/' + suggestion.id;
-        }
-    })
   }
-}
+};
