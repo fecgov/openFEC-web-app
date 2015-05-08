@@ -10,17 +10,13 @@ This application is in [Flask](http://flask.pocoo.org/). Client side features ar
 It uses Python version 3.4. Its recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies.
 
 Install Python dependencies:
-```
-$ pip install -r requirements.txt
-```
+
+    $ pip install -r requirements.txt
 
 Install client side dependencies:
-```
-$ npm install -g browserify
-$ npm install
-```
 
-If you plan to do CSS development, you will want to install [Sass](http://sass-lang.com/). 
+    $ npm install -g browserify
+    $ npm install
 
 If you plan to do client side JS developent, you will want to install [Watchify](https://github.com/substack/watchify):
 ```
