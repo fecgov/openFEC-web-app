@@ -47,7 +47,7 @@ gulp.task('build-sass', function() {
         require('node-bourbon').includePaths,
         require('node-neat').includePaths
       )
-    }))
+    }).on('error', sass.logError))
     .pipe(rev())
     .pipe(gulp.dest('.'))
     .pipe(rev.manifest({merge: true}))
