@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "URIjs": "^1.15.0",
-    "browserify": "~6.1.0",
+    "browserify": ">= 10.1.2",
     "d3": "^3.5.3",
     "eventemitter2": "~0.4.14",
     "gulp": "^3.8.11",
