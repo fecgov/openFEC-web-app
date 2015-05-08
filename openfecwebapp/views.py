@@ -62,8 +62,7 @@ def render_page(data_type, *args, **kwargs):
         committee_fields = ['committee_id', 'name', 'designation_full', 'designation',
                             'committee_type_full', 'committee_type', 'url',
                             'is_primary', 'is_authorized', 'is_joint', 'is_leadership']
-        committees = CommitteeSchema(only=committee_fields, many=True, skip_missing=True, strict=True) \
-            .dump(kwargs['committees']).data
+        committees = CommitteeSchema(many=True, skip_missing=True, strict=True).dump(kwargs['committees']).data
 
         # add 'committees' level to template
         tmpl_vars['has_authorized_cmtes'] = False
@@ -92,8 +91,7 @@ def render_page(data_type, *args, **kwargs):
         # committee fields will be top-level in the template
         tmpl_vars = committee
         # process and add related candidates a level below
-        tmpl_vars['candidates'] = CandidateSchema(only=['candidate_id', 'name'], many=True, skip_missing=True, strict=True) \
-            .dump(kwargs['candidates']).data
+        tmpl_vars['candidates'] = CandidateSchema(many=True, skip_missing=True, strict=True).dump(kwargs['candidates']).data
 
         financials = load_cmte_financials(committee['committee_id'])
         tmpl_vars['reports'] = financials['reports']
