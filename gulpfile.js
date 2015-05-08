@@ -11,7 +11,7 @@ var gulp = require('gulp');
 var rev = require('gulp-rev');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 
 var opts = {
   entries: ['./static/js/init.js'],
@@ -39,8 +39,15 @@ gulp.task('build-js', bundle.bind(this, false));
 gulp.task('watch-js', bundle.bind(this, true));
 
 gulp.task('build-sass', function() {
-  return sass('./static/styles/styles.scss')
+  return gulp.src('./static/styles/styles.scss')
     .pipe(rename('static/styles/styles.css'))
+    .pipe(sass({
+      includePaths: Array.prototype.concat(
+        './static/styles',
+        require('node-bourbon').includePaths,
+        require('node-neat').includePaths
+      )
+    }))
     .pipe(rev())
     .pipe(gulp.dest('.'))
     .pipe(rev.manifest({merge: true}))
