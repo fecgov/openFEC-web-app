@@ -13,3 +13,5 @@ static/styles/styles.css
 static/js/app.js
 app/
 /.env
+
+static/styles/styles.css

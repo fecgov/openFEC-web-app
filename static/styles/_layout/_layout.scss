@@ -57,12 +57,12 @@ body {
 // These are common grouping sizes, described by their desktop size
 
 .chunk--half {
+  @include media($medium) {
+    @include span-columns(6);
+  }
+
   @include media($large) {
     @include span-columns(12);
-
-    &:nth-child(even) {
-      @include omega();
-    }
   }
 }
 
