@@ -11,3 +11,18 @@
 .meta-box--bottom {
   margin-top: 2em;
 }
+
+.recent-report {
+  padding: 6rem 2rem 2rem 2rem;
+  position: relative;
+
+  h4 {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $licorice;
+    color: $meta-box-color;
+    padding: 1rem 2rem;
+  }
+}

@@ -100,7 +100,7 @@
     {% macro totals_table_row_header(pretty_name, value, description, accordion=True) %}
       <div class="table__row table__row--header js-accordion_header accordion__header">
         <div class="table__cell">
-          <h4>{{ pretty_name }}</h4>
+          <h5>{{ pretty_name }}</h5>
         </div>
         <div class="table__cell">
           <span>{{ value|default(0)|currency }}</span>
@@ -125,14 +125,6 @@
           {% for item in data %}
             {{ totals_table_row(item[1], item[0]) }}
           {% endfor %}
-          <!-- This should produce "Calculated from reports filed cycle - 1 - cycle",  but I could not get that to work. Maybe it is not necessary with the dates in the subheadings? -->
-          <!-- {% if report_year %}
-
-            <div class="table__row--note table__row--nested js-accordion_item">
-               Calculated from reports filed {{ report_year }}
-
-            </div>
-          {% endif %} -->
         </div>
       </figure>
     {% endmacro %}
@@ -142,52 +134,76 @@
         {% if totals %}
           <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-          <div class="row js-accordion">
+          <div class="page-subsection page-subsection--noline">
+            <div class="row js-accordion meta-box recent-report">
+              {% with committee=context() %}
+              <h4>Most Recent Report: {{ committee.reports[0].report_year }}
+                  {{committee.report_desc}}
+              </h4>
+               {% set table_data = [
+                   (committee.reports[0].individual_itemized_contributions, 'Itemized Individual Contributions'),
+                   (committee.reports[0].individual_unitemized_contributions, 'Unitemized Individual Contributions'),
+                   (committee.reports[0].transfers_from_affiliated_committee, 'Transfer from authorized committees'),
+                   (committee.reports[0].all_loans_received, 'Loans'),
+                 ]
+              %}
+              {{ totals_table('Total Receipts', committee.reports[0].receipts, table_data,
+                  committee.report_year, header_description='' ) }}
 
-            {% with committee=context() %}
-            <h3 class="section-header">Detailed Summary
-                {{ committee.totals.0.cycle - 1 }} - {{ committee.totals.0.cycle }}
-            </h3>
+              {% set table_data = [
+                   (committee.reports[0].operating_expenditures, 'Operating expenditures'),
+                   (committee.reports[0].transfers_to_affiliated_committee, 'Transfers to authorized committees'),
+                   (committee.reports[0].loan_repayments_made, 'Total loan repayments'),
+                   (committee.reports[0].contribution_refunds, 'Contribution refunds'),
+                   (committee.reports[0].other_disbursements, 'Other disbursements'),
+                 ]
+              %}
+              {{ totals_table('Total Disbursements', committee.reports[0].disbursements, table_data,
+                  committee.report_year, header_description='' ) }}
 
-            {% set table_data = [
-                 (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
-                 (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-                 (committee.totals.0.transfers_from_affiliated_committee, 'Transfer from authorized committees'),
-                 (committee.totals.0.all_loans_received, 'Loans'),
-               ]
-            %}
-            {{ totals_table('Total receipts', committee.totals.0.receipts, table_data,
-                committee.report_year, header_description='Money received by the committee' ) }}
+              {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
+              {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
+              {{ totals_table('Debts owed to committee', committee.reports[0].debts_owed_to_committee) }}
+              {{ totals_table('Debts owed by committee', committee.reports[0].debts_owed_by_committee) }}
 
-            {% set table_data = [
-                 (committee.totals.0.operating_expenditures, 'Operating expenditures'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
-                 (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
-                 (committee.totals.0.contribution_refunds, 'Contribution refunds'),
-                 (committee.totals.0.other_disbursements, 'Other disbursements'),
-               ]
-            %}
-            {{ totals_table('Total Disbursements', committee.totals.0.disbursements, table_data,
-                committee.report_year, header_description='Money spent by the committee' ) }}
-
-            <h3 class="section-header">Recent Stats from {{ committee.reports[0].report_year }}
-                {{committee.report_desc}} Filing
-            </h3>
-
-            {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
-            {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
-            {{ totals_table('Debts owed to committee', committee.reports[0].debts_owed_to_committee) }}
-            {{ totals_table('Debts owed by committee', committee.reports[0].debts_owed_by_committee) }}
-
-            {% endwith %}
+              {% endwith %}
+            </div>
           </div>
-          <div class="row">
-            <h3 class="section-header">Key figures from recent reports</h3>
-            {% with committee=context() %}
-              {% include 'partials/committee-charts.html' %}
-            {% endwith %}
-          </div>
-        {% else %}
+          <div class="page-subsection page-subsection--noline">
+            <div class="row js-accordion">
+              {% with committee=context() %}
+              <h3 class="section-header">Two-Year Totals:
+                  {{ committee.totals.0.cycle - 1 }} - {{ committee.totals.0.cycle }}
+              </h3>
+
+              {% set table_data = [
+                   (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
+                   (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
+                   (committee.totals.0.transfers_from_affiliated_committee, 'Transfer from authorized committees'),
+                   (committee.totals.0.all_loans_received, 'Loans'),
+                 ]
+              %}
+              {{ totals_table('Total receipts', committee.totals.0.receipts, table_data,
+                  committee.report_year, header_description='' ) }}
+
+              {% set table_data = [
+                   (committee.totals.0.operating_expenditures, 'Operating expenditures'),
+                   (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
+                   (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
+                   (committee.totals.0.contribution_refunds, 'Contribution refunds'),
+                   (committee.totals.0.other_disbursements, 'Other disbursements'),
+                 ]
+              %}
+              {{ totals_table('Total Disbursements', committee.totals.0.disbursements, table_data,
+                  committee.report_year, header_description='' ) }}
+
+              {% endwith %}
+            </div>
+              {% with committee=context() %}
+                {% include 'partials/committee-charts.html' %}
+              {% endwith %}
+          {% else %}
+        </div>
         <div class="meta-box error-container">
           <h2 id="section-1-header" tabindex="0">No financial data</h2>
           <p class="text--lead">This committee has not filed any <a class="term" data-term="Reports and Summaries">reports</a> for the time period selected. Right now, OpenFEC provides provides summary information using Forms 3, 3P and 3X. For complete data, search the <a href="http://www.fec.gov/finance/disclosure/candcmte_info.shtml">FEC Candidate and Committee Viewer</a>.</p>
