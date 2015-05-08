@@ -1,8 +1,8 @@
 {% with %}
-{% set reports = committee.financials.reports.0  %}
-{% set totals = committee.financials.totals.0  %}
+{% set reports = committee.reports.0  %}
+{% set totals = committee.totals.0  %}
 <figure class="table--simple reports-table">
-  <h4 class="figure__title">Totals for {{committee.financials.totals.0.cycle|fmt_year_range}}</h4>
+  <h4 class="figure__title">Totals for {{totals.cycle|fmt_year_range}}</h4>
   <div class="table__half">
     <div class="table__row">
       <div class="table__cell">Total <span class="term" data-term="Receipts">receipts</span></div>

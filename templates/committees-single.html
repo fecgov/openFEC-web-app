@@ -173,7 +173,9 @@
             {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
           </div>
           <div class="row">
+            {% with committee=context() %}
             {% include 'partials/committee-charts.html' %}
+            {% endwith %}
           </div>
         {% else %}
         <div class="meta-box error-container">

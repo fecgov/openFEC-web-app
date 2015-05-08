@@ -72,7 +72,8 @@ def render_page(data_type, *args, **kwargs):
 
         for committee in committees:
             if committee['is_primary'] or committee['is_authorized']:
-                committee['financials'] = load_cmte_financials(committee['committee_id'])
+                # this adds committee['reports'] and committee['totals']
+                committee.update(load_cmte_financials(committee['committee_id']))
                 tmpl_vars['has_authorized_cmtes'] = True
 
             elif committee['is_joint']:

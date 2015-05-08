@@ -1,6 +1,6 @@
 {% with %}
-{% set reports = committee.financials.reports  %}
-{% set totals = committee.financials.totals  %}
+{% set reports = committee.reports  %}
+{% set totals = committee.totals  %}
 {% import 'macros/charts.html' as charts %}
 {% macro group_bar_tooltip(value, key) %}
 <div class="chart-series__bar__tooltip">
