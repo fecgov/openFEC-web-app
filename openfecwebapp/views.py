@@ -1,5 +1,4 @@
 from flask import render_template
-from openfecwebapp.models.candidates import CandidateSchema
 from openfecwebapp.models.committees import CommitteeSchema
 from openfecwebapp.models.shared import generate_pagination_values
 from openfecwebapp.api_caller import load_cmte_financials, load_election_years
@@ -37,7 +36,7 @@ def render_table(data_type, results, params):
 
 type_map = {
     'candidates': lambda x: x,
-    'candidate': lambda x: CandidateSchema().dump(x).data,
+    'candidate': lambda x: x,
     'committees': lambda x: x,
     'committee': lambda x: CommitteeSchema().dump(x).data
 }
@@ -47,10 +46,12 @@ def render_committee(data, candidates=None):
     results = get_results_or_raise_500(data)
 
     committee = CommitteeSchema().dump(results).data
+
     # committee fields will be top-level in the template
     tmpl_vars = committee
-    # process and add related candidates a level below
-    tmpl_vars['candidates'] = CandidateSchema(many=True, skip_missing=True, strict=True).dump(candidates).data
+
+    # add related candidates a level below
+    tmpl_vars['candidates'] = candidates
 
     financials = load_cmte_financials(committee['committee_id'])
     tmpl_vars['reports'] = financials['reports']
@@ -63,7 +64,7 @@ def render_candidate(data, committees=None):
     results = get_results_or_raise_500(data)
 
     # candidate fields will be top-level in the template
-    tmpl_vars = CandidateSchema().dump(results).data
+    tmpl_vars = results
     tmpl_vars['election_years'] = load_election_years(results['candidate_id'])
 
     # process related committees

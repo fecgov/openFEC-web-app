@@ -1,6 +1,5 @@
 from flask import Flask
 from flask.ext.testing import TestCase
-from openfecwebapp.models.candidates import CandidateSchema
 from openfecwebapp.tests.mock_data import candidate
 
 class TestDataMappings(TestCase):
@@ -20,7 +19,7 @@ class TestDataMappings(TestCase):
         return app
 
     def test_map_candidate_page_values(self):
-        vals = CandidateSchema().dump(candidate['results'][0]).data
+        vals = candidate['results'][0]
 
         self.assertEqual(vals['state'], 'TN')
         self.assertEqual(vals['name'], 'Person McPersonson')
