@@ -14,6 +14,10 @@ $tooltip-border-color: #999;
     background: $lightest-gray;
     padding: .5rem 1rem;
   }
+
+  .chart-series {
+    margin: 1rem;
+  }
 }
 
 .chart-series__bar {
@@ -175,12 +179,17 @@ $tooltip-border-color: #999;
 }
 
 .chart-series__group__label {
+  font-size: 1rem;
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
   padding-top: .25em;
   text-align: center;
+
+  @include media($medium) {
+    font-size: 1.4rem;
+  }
 }
 
 .chart-series__bar__tooltip {

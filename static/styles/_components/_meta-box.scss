@@ -13,16 +13,24 @@
 }
 
 .recent-report {
-  padding: 6rem 2rem 2rem 2rem;
+  padding: 0;
   position: relative;
 
   h4 {
     width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
     background: $licorice;
     color: $meta-box-color;
     padding: 1rem 2rem;
+    margin-bottom: 0;
+  }
+
+  .totals-table .table__row {
+    padding: .5rem 1rem;
+  }
+
+  @include media($medium) {
+    .totals-table .table__row {
+      padding: .5rem 2rem;
+    }
   }
 }
