@@ -33,7 +33,7 @@ def get_context(c):
 def _get_default_cycles():
     now = datetime.datetime.now().year
     cycle = now + now % 2
-    return range(cycle - 4, cycle + 2, 2)
+    return list(range(cycle - 4, cycle + 2, 2))
 
 
 app.jinja_env.globals['api_location'] = api_location
