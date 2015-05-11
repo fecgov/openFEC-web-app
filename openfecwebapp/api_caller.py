@@ -1,9 +1,8 @@
-import os
+from openfecwebapp.config import api_location, api_version, api_key
 from urllib import parse
 
+import os
 import requests
-
-from openfecwebapp.config import api_location, api_version, api_key
 
 
 MAX_FINANCIALS_COUNT = 4
