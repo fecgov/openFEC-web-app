@@ -41,26 +41,12 @@ $('#filter-toggle').click(function(){
 });
 
 var activateFilter = function(opts) {
-    var $field;
-
-    if (opts.value !== '') {
-        selectedFilters[opts.name] = opts.value;
-
-        $field = $('select[name=' + opts.name + ']');
-        addActiveStyle($field);
+    var $field = $('select[name=' + opts.name + ']');
+    if (opts.value) {
         $field.val(opts.value);
+        $field.parent().addClass('active');
+        selectedFilters[opts.name] = opts.value;
     }
-};
-
-var deactivateFilter = function() {
-    delete selectedFilters[this.name];
-
-    events.emit('deselected:filter', {
-        category: $('#main').data('section'),
-        filters: selectedFilters
-    });
-
-    removeActiveStyle(this);
 };
 
 var bindFilters = function(e) {
@@ -86,14 +72,6 @@ var bindFilters = function(e) {
 
 var selectedFilters = {};
 
-var addActiveStyle = function(field) {
-    $(field).parent().addClass('active');
-};
-
-var removeActiveStyle = function(field) {
-    $(field).parent().removeClass('active');
-};
-
 // all of the filters we use on candidates and committees
 var fieldMap = [
     'name',
@@ -112,16 +90,11 @@ var activateInitialFilters = function() {
     var open;
     var qs = URI.parseQuery(window.location.search);
     _.each(fieldMap, function(key) {
-        if (qs[key]) {
-            activateFilter(
-                {
-                    name: key,
-                    value: qs[key]
-                },
-                false
-            );
-            open = true;
-        }
+          activateFilter({
+              name: key,
+              value: qs[key]
+          });
+          open = open || qs[key];
     });
 
     if (open) {
@@ -139,7 +112,7 @@ $('.button--remove').click(function(e){
 
 $('.field select').change(function(){
     var name = $(this).attr('name');
-    if ( $(this).val() != '' ) {
+    if ( $(this).val() !== '' ) {
         $('[data-removes="' + name + '"]').css('display', 'block');
     } else {
         $('[data-removes="' + name + '"]').css('display', 'none');
