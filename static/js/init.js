@@ -105,7 +105,7 @@ $(document).ready(function() {
 
     // Initialize accordions
     $(SLT_ACCORDION).each(function() {
-      accordion.init($(this));
+      Object.create(accordion).init($(this));
     });
 
 });
