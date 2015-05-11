@@ -1,0 +1,97 @@
+<section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
+      <div class="container committee-summary">
+        {% if totals %}
+          <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+          <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
+          <div class="row js-accordion">
+
+            <h3 class="section-header">Detailed Summary</h3>
+            {% with committee=context() %}
+
+            <!-- Receipts -->
+            {% set table_data = [
+                 (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
+                 (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
+                 (committee.totals.0.political_party_committee_contributions, 'Party Committees Contributions'),
+                 (committee.totals.0.other_political_committee_contributions, 'Other Committees Contributions')
+                 <!-- Total Contributions is the sum of the previous 4 items-->
+                 (committee.totals.0.contributions, 'Total Contributions'),
+                 (committee.totals.0.contributions,net_contributions, 'Net Contributions'),
+
+                 (committee.totals.0.other_pol_cmte_contb_per_i, 'Transfers from Affiliated Committees'),
+                 (committee.totals.0.all_loans_received, 'Loans Received'),
+                 (committee.totals.0.loan_repayments_received. , 'Loan Repayments Received'),
+                 (committee.totals.0.offsets_to_operating_expenditures, 'Offsets to operating Expenditures'),
+                 (committee.totals.0.contribution_refunds , 'Refunds'),
+                 (committee.totals.0.other_fed_receipts_per , 'Other Receipts'),
+
+                 (committee.totals.0.transfers_from_nonfed_account , 'Non-Federal Transfers'),
+                 (committee.totals.0.transfers_from_nonfed_levin, 'Levin Funds'),
+                 <!-- this is the subtotal of Non-Federal Transfers and Levin Funds -->
+                 (committee.totals.0.transfers_from_nonfed_account, 'Total Non-Federal Transfers'),
+                 <!-- Receipts minus Non-Federal Transfers-->
+                 (committee.totals.0.fed_receipts, 'Total Federal Receipts'),
+               ]
+            %}
+            {{ totals_table('Total receipts', committee.totals.0.receipts, table_data,
+                committee.report_year, header_description='Money received by the committee' ) }}
+
+            <!-- Disbursements -->
+            {% set table_data = [
+                 (committee.totals.0.shared_fed_operating_expenditures, 'Federal Allocated Operating Expenditures'),
+                 (committee.totals.0.shared_nonfed_operating_expenditures, 'Non-Federal Operating Expenditures'),
+                 <!-- sum of fed and non-fed operating expenditures -->
+                 (committee.totals.0.operating_expenditures, 'Total Operating Expenditures'),
+                 <!-- Missing in the API right now -->
+                 (committee.totals.0.net_operating_expenditures, 'Net Operating Expenditures'),
+
+                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
+                 (committee.totals.0.other_political_committee_contributions, 'Contributions to Committees'),
+                 (committee.totals.0.independent_expenditures, 'Independent Expenditures'),
+                 (committee.totals.0.coordinated_expenditures_by_party_committee', Coordinated Party Expenditures'),
+                 (committee.totals.0.loans_made, 'Loans Made'),
+                 (committee.totals.0.loan_repayments_made, 'Loan Repayments Made'),
+
+                 (committee.totals.0.individual_contribution_refunds, 'Individual Refunds'),
+                 <!-- Missing in the API right now -->
+                 (committee.totals.0.political_party_committee_contribution_refunds, 'Politial Party Refunds'),
+                 <!-- Missing in the API right now -->
+                 (committee.totals.0.other_political_committee_contribution_refunds, 'Other Committee Refunds'),
+                 <!-- Sum total of the previous 3  -->
+                 (committee.totals.0.contribution_refunds, 'Total Contribution refunds'),
+
+                 (committee.totals.0.other_disbursements, 'Other disbursements'),
+                 (committee.totals.0.shared_fed_activity, 'Federal Allocated Election Activity'),
+                 (committee.totals.0.non_allocated_fed_election_activity, 'Non-Federal Allocated Election Activity'),
+                 <!-- Sum of the previous 3  -->
+                 (committee.totals.0.fed_election_activity, 'Total Federal Election Activity'),
+                 <!-- Total Disbursements - (Federal Operating Expenses + Non-Federal Allocated Election Activity) -->
+                 (committee.totals.0.fed_disbursements, 'Total Federal Disbursements'),
+               ]
+            %}
+            {{ totals_table('Total Disbursements', committee.totals.0.disbursements, table_data,
+                committee.report_year, header_description='Money spent by the committee' ) }}
+
+            <!-- Numbers that don't make sense to add so we grab the most recent -->
+            {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
+            {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
+            {{ totals_table('Debts owed to committee', committee.reports[0].debts_owed_to_committee) }}
+            {{ totals_table('Debts owed by committee', committee.reports[0].debts_owed_by_committee) }}
+
+            {% endwith %}
+          </div>
+          <div class="row">
+            {% with committee=context() %}
+              {% include 'partials/committee-charts.html' %}
+            {% endwith %}
+          </div>
+        {% else %}
+        <div class="meta-box error-container">
+          <h2 id="section-1-header" tabindex="0">No financial data</h2>
+          <p class="text--lead">This committee has not filed any <a class="term" data-term="Reports and Summaries">reports</a> for the time period selected. Right now, OpenFEC provides provides summary information using Forms 3, 3P and 3X. For complete data, search the <a href="http://www.fec.gov/finance/disclosure/candcmte_info.shtml">FEC Candidate and Committee Viewer</a>.</p>
+          <div class="error-container__bottom">
+              <h5>Is this information incorrect? Let us know.</h5>
+              <a class="button" href="mailto:{{ contact_email }}">Contact support <i class="ti-email"></i></a>
+         </div>
+        </div>
+        {% endif %}
