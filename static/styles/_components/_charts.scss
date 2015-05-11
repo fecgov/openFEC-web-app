@@ -26,7 +26,7 @@ $tooltip-border-color: #999;
 }
 
 .data--cash,
-.data--cash_on_hand { 
+.data--cash_on_hand_end_period { 
   background: $data-cash; 
   .chart-series__bar__tooltip {
     color: $data-cash;
@@ -35,7 +35,7 @@ $tooltip-border-color: #999;
 }
 
 .data--debt,
-.data--debts_owed { 
+.data--debts_owed_by_committee { 
   background: $data-debt; 
   .chart-series__bar__tooltip {
     color: $data-debt;
