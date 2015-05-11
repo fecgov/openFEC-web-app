@@ -97,7 +97,7 @@ var removeActiveStyle = function(field) {
 // all of the filters we use on candidates and committees
 var fieldMap = [
     'name',
-    'year',
+    'cycle',
     'party',
     'state',
     'district',
