@@ -145,6 +145,14 @@ def date_filter_sm(date_str):
     d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
     return d.strftime('%b %Y')
 
+@app.template_filter('last_3_characters')
+def last_3_characters(int):
+    string = str(int)
+    if string is None or string == '':
+        return ''
+    s = string[-3:]
+    return s
+
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
 if force_https:
