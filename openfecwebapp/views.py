@@ -1,5 +1,4 @@
 from flask import render_template
-from openfecwebapp.models.committees import CommitteeSchema
 from openfecwebapp.models.shared import generate_pagination_values
 from openfecwebapp.api_caller import load_cmte_financials, load_election_years
 from werkzeug.exceptions import abort
@@ -23,29 +22,17 @@ def render_table(data_type, results, params):
     results_table = {}
     results_table[data_type] = []
 
-    results_table['pagination'] = generate_pagination_values(
-        results, params, data_type)
-
-    for r in results['results']:
-        results_table[data_type].append(type_map[data_type](r))
+    results_table['pagination'] = generate_pagination_values(results, params, data_type)
+    results_table[data_type] = results['results']
 
     if params.get('name'):
         results_table['filter_name'] = params['name']
 
     return render_template(data_type + '.html', **results_table)
 
-type_map = {
-    'candidates': lambda x: x,
-    'candidate': lambda x: x,
-    'committees': lambda x: x,
-    'committee': lambda x: CommitteeSchema().dump(x).data
-}
-
 
 def render_committee(data, candidates=None):
-    results = get_results_or_raise_500(data)
-
-    committee = CommitteeSchema().dump(results).data
+    committee = get_first_result_or_raise_500(data)
 
     # committee fields will be top-level in the template
     tmpl_vars = committee
@@ -61,14 +48,11 @@ def render_committee(data, candidates=None):
 
 
 def render_candidate(data, committees=None):
-    results = get_results_or_raise_500(data)
+    results = get_first_result_or_raise_500(data)
 
     # candidate fields will be top-level in the template
     tmpl_vars = results
     tmpl_vars['election_years'] = load_election_years(results['candidate_id'])
-
-    # process related committees
-    committees = CommitteeSchema(many=True, skip_missing=True, strict=True).dump(committees).data
 
     # add 'committees' level to template
     tmpl_vars['has_authorized_cmtes'] = False
@@ -88,11 +72,12 @@ def render_candidate(data, committees=None):
             tmpl_vars['has_leadership_cmtes'] = True
 
     tmpl_vars['committees'] = committees
+    from marshmallow import pprint; pprint(tmpl_vars)
 
     return render_template('candidates-single.html', **tmpl_vars)
 
 
-def get_results_or_raise_500(data):
+def get_first_result_or_raise_500(data):
     # not handling error at api module because sometimes its ok to
     # not get data back - like with search results
     if not data.get('results'):
