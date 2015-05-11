@@ -18,6 +18,8 @@
                  (committee.totals.0.candidate_contribution, 'Candidate Contributions'),
                  <!--Sum of individual, party, committee, and candidate contributions -->
                  (committee.totals.0.contributions, 'Total Contributions'),
+                 <!-- Missing in the API right now -->
+                 (committee.totals.0.net_contributions'Net Contributions'),
 
                  (committee.totals.0.transfers_from_other_authorized_committee, 'Transfer from Authorized Committees'),
 
@@ -35,17 +37,22 @@
             <!-- Disbursements -->
             {% set table_data = [
                  (committee.totals.0.operating_expenditures, 'Operating expenditures'),
+                 <!-- Missing in the API right now -->
+                 (committee.totals.0.net_operating_expenditures'Operating Expenditures'),
+
                  (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
 
                  (committee.totals.0.loan_repayments_candidate_loans, 'Candidate Loan Repayments'),
                  (committee.totals.0.loan_repayments_other_loans, 'Other Loan Repayments'),
-                 <!-- -->
-                 (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
+                 <!-- Candidate + Other loans-->
+                 (committee.totals.0.loan_repayments_made, 'Total Loan Repayments'),
 
-                 'Individual Refunds'
-                 'Offsets to Operating Expenditures'
-                 'Other Receipts'
-                 (committee.totals.0.contribution_refunds, 'Contribution refunds'),
+                 (committee.totals.0.refunds_individual_contributions, 'Individual Refunds'),
+                 'Political Party Refunds'
+                 'Other Committee Refunds'
+                 <!-- Individual + Party + Committee Refunds-->
+                 (committee.totals.0.contribution_refunds, 'Total Contribution refunds'),
+
                  (committee.totals.0.other_disbursements, 'Other disbursements'),
                ]
             %}
@@ -53,7 +60,7 @@
                 committee.report_year, header_description='Money spent by the committee' ) }}
 
             {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
-            {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
+            {{ totals_table('Ending cash on hand', committee.reports[0].cash_on_hand_end_period) }}
             {{ totals_table('Debts owed to committee', committee.reports[0].debts_owed_to_committee) }}
             {{ totals_table('Debts owed by committee', committee.reports[0].debts_owed_by_committee) }}
 
