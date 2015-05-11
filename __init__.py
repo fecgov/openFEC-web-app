@@ -18,8 +18,11 @@ import sys
 locale.setlocale(locale.LC_ALL, '')
 
 app = Flask(__name__)
+
+# ===== configure logging =====
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+log_level = logging.DEBUG if debug else logging.WARN
+logging.basicConfig(level=log_level)
 
 
 @jinja2.contextfunction

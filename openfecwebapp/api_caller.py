@@ -15,9 +15,6 @@ def _call_api(*path_parts, **filters):
     path = os.path.join(api_version, *[x.strip('/') for x in path_parts])
     url = parse.urljoin(api_location, path)
 
-    print(url)
-    print(filters)
-
     results = requests.get(url, params=filters)
 
     if results.status_code == requests.codes.ok:

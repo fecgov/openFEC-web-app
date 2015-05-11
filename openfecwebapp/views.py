@@ -72,7 +72,6 @@ def render_candidate(data, committees=None):
             tmpl_vars['has_leadership_cmtes'] = True
 
     tmpl_vars['committees'] = committees
-    from marshmallow import pprint; pprint(tmpl_vars)
 
     return render_template('candidates-single.html', **tmpl_vars)
 
