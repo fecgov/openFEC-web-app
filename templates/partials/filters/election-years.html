@@ -2,10 +2,7 @@
     <label for="cycle">Election Cycle</label>
     <select multiple name="cycle" data-placeholder="Select an election cycle">
         {% for year in range(2016, 1978, -2) %}
-        <option
-                value={{ year }}
-                {% if year in default_cycles %} selected {% endif %}
-            >{{ year }}</option>
+        <option value={{ year }}>{{ year }}</option>
         {% endfor %}
     </select>
     <button class="button--remove" data-removes="cycle"><i class="ti-close"></i></button>
