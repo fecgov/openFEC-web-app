@@ -1,6 +1,6 @@
 {% with %}
-{% set reports = committee.reports.0  %}
-{% set totals = committee.totals.0  %}
+{% set reports = committee.reports.0 if committee.reports else {} %}
+{% set totals = committee.totals.0 if committee.totals else {} %}
 <figure class="table--simple reports-table">
   <h4 class="figure__title">Totals for {{totals.cycle|fmt_year_range|default("unavailable")}}</h4>
   <div class="table__half">

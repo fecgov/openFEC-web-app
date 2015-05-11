@@ -12,7 +12,7 @@ from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
 from openfecwebapp.views import (render_search_results, render_table,
-    render_page, fmt_year_range, fmt_report_desc)
+    render_candidate, render_committee)
 from openfecwebapp.api_caller import (load_search_results,
     load_single_type, load_single_type_summary, load_nested_type,
     install_cache)
@@ -89,19 +89,19 @@ def search():
 @app.route('/candidate/<c_id>/<cycle>')
 def candidate_page_with_cycle(c_id, cycle):
     data = load_single_type('candidate', c_id, {'year': cycle})
-    return render_page('candidate', data)
+    return render_candidate(data)
 
 @app.route('/candidate/<c_id>')
 def candidate_page(c_id):
     data = load_single_type('candidate', c_id, {})
     committee_data = load_nested_type('candidate', c_id, 'committees')['results']
-    return render_page('candidate', data, committees=committee_data)
+    return render_candidate(data, committees=committee_data)
 
 @app.route('/committee/<c_id>')
 def committee_page(c_id):
     data = load_single_type('committee', c_id, {})
     candidate_data = load_nested_type('committee', c_id, 'candidates')['results']
-    return render_page('committee', data, candidates=candidate_data)
+    return render_committee(data, candidates=candidate_data)
 
 @app.route('/candidates')
 def candidates():

@@ -43,64 +43,58 @@ type_map = {
 }
 
 
-def render_page(data_type, *args, **kwargs):
-    c_data = args[0]
+def render_committee(data, candidates=None):
+    results = get_results_or_raise_500(data)
+
+    committee = CommitteeSchema().dump(results).data
+    # committee fields will be top-level in the template
+    tmpl_vars = committee
+    # process and add related candidates a level below
+    tmpl_vars['candidates'] = CandidateSchema(many=True, skip_missing=True, strict=True).dump(candidates).data
+
+    financials = load_cmte_financials(committee['committee_id'])
+    tmpl_vars['reports'] = financials['reports']
+    tmpl_vars['totals'] = financials['totals']
+
+    return render_template('committees-single.html', **tmpl_vars)
+
+
+def render_candidate(data, committees=None):
+    results = get_results_or_raise_500(data)
+
+    # candidate fields will be top-level in the template
+    tmpl_vars = CandidateSchema().dump(results).data
+    tmpl_vars['election_years'] = load_election_years(results['candidate_id'])
+
+    # process related committees
+    committees = CommitteeSchema(many=True, skip_missing=True, strict=True).dump(committees).data
+
+    # add 'committees' level to template
+    tmpl_vars['has_authorized_cmtes'] = False
+    tmpl_vars['has_joint_cmtes'] = False
+    tmpl_vars['has_leadership_cmtes'] = False
+
+    for committee in committees:
+        if committee['designation'] in ('P', 'A'):  # (P)rimary or (A)uthorized
+            # this adds committee['reports'] and committee['totals']
+            committee.update(load_cmte_financials(committee['committee_id']))
+            tmpl_vars['has_authorized_cmtes'] = True
+
+        elif committee['designation'] == 'J':  # (J)oint
+            tmpl_vars['has_joint_cmtes'] = True
+
+        elif committee['designation'] == 'D':  # Leadership
+            tmpl_vars['has_leadership_cmtes'] = True
+
+    tmpl_vars['committees'] = committees
+
+    return render_template('candidates-single.html', **tmpl_vars)
+
+
+def get_results_or_raise_500(data):
     # not handling error at api module because sometimes its ok to
     # not get data back - like with search results
-    if 'results' not in c_data or not c_data['results']:
+    if not data.get('results'):
         abort(500)
-
-    data = c_data['results'][0]
-
-    if data_type == 'candidate':
-        candidate_schema = CandidateSchema()
-        # candidate fields will be top-level in the template
-        tmpl_vars = candidate_schema.dump(data).data
-        tmpl_vars['election_years'] = load_election_years(data['candidate_id'])
-
-        # process related committees
-        committee_fields = ['committee_id', 'name', 'designation_full', 'designation',
-                            'committee_type_full', 'committee_type', 'url',
-                            'is_primary', 'is_authorized', 'is_joint', 'is_leadership']
-        committees = CommitteeSchema(many=True, skip_missing=True, strict=True).dump(kwargs['committees']).data
-
-        # add 'committees' level to template
-        tmpl_vars['has_authorized_cmtes'] = False
-        tmpl_vars['has_joint_cmtes'] = False
-        tmpl_vars['has_leadership_cmtes'] = False
-
-        for committee in committees:
-            if committee['is_primary'] or committee['is_authorized']:
-                # this adds committee['reports'] and committee['totals']
-                committee.update(load_cmte_financials(committee['committee_id']))
-                tmpl_vars['has_authorized_cmtes'] = True
-
-            elif committee['is_joint']:
-                tmpl_vars['has_joint_cmtes'] = True
-
-            elif committee['is_leadership']:
-                tmpl_vars['has_leadership_cmtes'] = True
-
-        tmpl_vars['committees'] = committees
-
-        # add financial data
-
-    elif data_type == 'committee':
-        committee_schema = CommitteeSchema()
-        committee = committee_schema.dump(data).data
-        # committee fields will be top-level in the template
-        tmpl_vars = committee
-        # process and add related candidates a level below
-        tmpl_vars['candidates'] = CandidateSchema(many=True, skip_missing=True, strict=True).dump(kwargs['candidates']).data
-
-        financials = load_cmte_financials(committee['committee_id'])
-        tmpl_vars['reports'] = financials['reports']
-        tmpl_vars['totals'] = financials['totals']
     else:
-        tmpl_vars = data
-
-    return render_template(data_type + 's-single.html', **tmpl_vars)
-
-
-
-
+        return data['results'][0]
