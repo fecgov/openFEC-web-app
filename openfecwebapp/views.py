@@ -102,9 +102,5 @@ def render_page(data_type, *args, **kwargs):
     return render_template(data_type + 's-single.html', **tmpl_vars)
 
 
-def fmt_year_range(year):
-    return "{} - {}".format(year - 1, year)
 
 
-def fmt_report_desc(report_full_description):
-    return re.sub('{.+}', '', report_full_description)

@@ -1,3 +1,4 @@
+import re
 import sys
 import json
 import locale
@@ -39,8 +40,6 @@ app.jinja_env.globals['api_version'] = api_version
 app.jinja_env.globals['api_key'] = api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
-app.jinja_env.filters['fmt_year_range'] = fmt_year_range
-app.jinja_env.filters['fmt_report_desc'] = fmt_report_desc
 app.jinja_env.globals['default_years'] = _get_default_years()
 
 try:
@@ -134,7 +133,8 @@ def server_error(e):
 
 @app.template_filter('currency')
 def currency_filter(num, grouping=True):
-    return locale.currency(num, grouping=grouping)
+    if num is not None:
+        return locale.currency(num, grouping=grouping)
 
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
@@ -142,6 +142,16 @@ def date_filter_sm(date_str):
         return ''
     d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
     return d.strftime('%m/%y')
+
+@app.template_filter()
+def fmt_year_range(year):
+    if year is not None and type(year) == 'int':
+        return "{} - {}".format(year - 1, year)
+
+@app.template_filter()
+def fmt_report_desc(report_full_description):
+    if report_full_description is not None:
+        return re.sub('{.+}', '', report_full_description)
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
