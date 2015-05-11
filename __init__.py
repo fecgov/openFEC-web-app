@@ -138,6 +138,13 @@ def date_filter_sm(date_str):
     d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
     return d.strftime('%m/%y')
 
+@app.template_filter('date_md')
+def date_filter_sm(date_str):
+    if date_str is None or date_str == '':
+        return ''
+    d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
+    return d.strftime('%b %Y')
+
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
 if force_https:

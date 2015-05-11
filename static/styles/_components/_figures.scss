@@ -30,6 +30,7 @@ figure {
 
 .figure-group__bar {
   @include white-links();
+  color: #fff;
   background-color: $licorice-3;
   padding: .3125em;
 }

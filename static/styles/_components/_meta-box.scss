@@ -16,14 +16,6 @@
   padding: 0;
   position: relative;
 
-  h4 {
-    width: 100%;
-    background: $licorice;
-    color: $meta-box-color;
-    padding: 1rem 2rem;
-    margin-bottom: 0;
-  }
-
   .totals-table .table__row {
     padding: .5rem 1rem;
   }
@@ -32,5 +24,16 @@
     .totals-table .table__row {
       padding: .5rem 2rem;
     }
+  }
+}
+
+.meta-box__bar {
+  @include white-links();
+  color: #fff;
+  background-color: $licorice-3;
+  padding: .5rem 1rem;
+
+  @include media($medium) {
+    padding: 1rem 2rem;
   }
 }

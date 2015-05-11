@@ -137,9 +137,12 @@
           <div class="page-subsection page-subsection--noline">
             <div class="row js-accordion meta-box recent-report">
               {% with committee=context() %}
-              <h4>Most Recent Report: {{ committee.reports[0].report_year }}
-                  {{committee.report_desc}}
-              </h4>
+              <div class="meta-box__bar">
+                <h4>Most Recent Report: {{ committee.reports[0].report_year }}
+                    {{committee.report_desc}}
+                </h4>
+                <span class="coverage-dates">Report coverage: {{ committee.reports[0].coverage_start_date|date_md }} - {{ committee.reports[0].coverage_end_date|date_md }}</span>
+              </div>
                {% set table_data = [
                    (committee.reports[0].individual_itemized_contributions, 'Itemized Individual Contributions'),
                    (committee.reports[0].individual_unitemized_contributions, 'Unitemized Individual Contributions'),
@@ -147,7 +150,7 @@
                    (committee.reports[0].all_loans_received, 'Loans'),
                  ]
               %}
-              {{ totals_table('Total Receipts', committee.reports[0].receipts, table_data,
+              {{ totals_table('Total Receipts', committee.reports[0].total_receipts_period, table_data,
                   committee.report_year, header_description='' ) }}
 
               {% set table_data = [
@@ -158,7 +161,7 @@
                    (committee.reports[0].other_disbursements, 'Other disbursements'),
                  ]
               %}
-              {{ totals_table('Total Disbursements', committee.reports[0].disbursements, table_data,
+              {{ totals_table('Total Disbursements', committee.reports[0].total_disbursements_period, table_data,
                   committee.report_year, header_description='' ) }}
 
               {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
