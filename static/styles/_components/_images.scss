@@ -1,7 +1,6 @@
 // Styles for various images
-
-.image--framed__container {
-	padding: 10px;
-	background-color: #fff;
-	border: 1px solid $light-blue-gray;
+.image--framed {
+  display: inline-block;
+  border: 10px solid #fff;
+  box-shadow: 0 0 0 1px #d8d8d8;
 }

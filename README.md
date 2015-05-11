@@ -10,17 +10,13 @@ This application is in [Flask](http://flask.pocoo.org/). Client side features ar
 It uses Python version 3.4. Its recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies.
 
 Install Python dependencies:
-```
-$ pip install -r requirements.txt
-```
+
+    $ pip install -r requirements.txt
 
 Install client side dependencies:
-```
-$ npm install -g browserify
-$ npm install
-```
 
-If you plan to do CSS development, you will want to install [Sass](http://sass-lang.com/). 
+    $ npm install -g browserify
+    $ npm install
 
 If you plan to do client side JS developent, you will want to install [Watchify](https://github.com/substack/watchify):
 ```
@@ -95,3 +91,17 @@ If the development API is down or for testing with feature branches of the API,
 a local API server can be used:
 
     $ unset FEC_WEB_API_URL
+
+#### Git Hooks
+
+This repo includes optional post-merge and post-checkout hooks to ensure that
+dependencies and compiled assets are up to date. If enabled, these hooks will
+update Python and Node dependencies, and rebuild compiled JS and CSS files,
+on checking out or merging changes to `requirements.txt`, `package.json`,
+or source JS or SCSS files. To enable the hooks, run
+
+    $ invoke add_hooks
+
+To disable, run
+
+    $ invoke remove_hooks
