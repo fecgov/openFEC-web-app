@@ -1,39 +1,29 @@
-
-  {% if primary_committee or authorized_committee or joint_committees %}
+  {% if has_authorized_cmtes or has_joint_cmtes %}
       <div class="page-section__intro">
         <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
         <p class="text--lead">This page provides an overview of all the money received and spent by committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees, but not joint fundraising committees authorized by the candidate.  For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
       </div>
 
-      {% if primary_committee or authorized_committees %}
+      {% if has_authorized_cmtes %}
       <div class="page-subsection">
         <h3 class="term" data-term="Authorized Committee">Authorized Committees</h3>
-        {% if primary_committee %}
-            {% with committee=primary_committee[0] %}
-              {% include 'partials/committee-stats.html' %}
-            {% endwith %}
-        {% endif %}
+        {% for committee in committees if committee.designation == 'P' %}
+          {% include 'partials/committee-stats.html' %}
+        {% endfor %}
 
-        {% if authorized_committees %}
-          {% for c in authorized_committees %}
-              {% with committee=c %}
-                  {% include 'partials/committee-stats.html' %}
-              {% endwith %}
-          {% endfor %}
-        {% endif %}
+        {% for committee in committees if committee.designation == 'A' %}
+          {% include 'partials/committee-stats.html' %}
+        {% endfor %}
       </div>
     {% endif %}
 
-    {% if joint_committees %}
+    {% if has_joint_cmtes %}
       <div class="page-subsection other-committees">
       <h3><span class="term" data-term="Joint Fundraising Committee">Joint Fundraising Committees</span></h3>
-      <p class="text--lead">Below, is a list of the candidate’s joint fundraising committees—in joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed. Click the links to see more information about a particular committee.
-</p>
+      <p class="text--lead">Below, is a list of the candidate’s joint fundraising committees—in joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed. Click the links to see more information about a particular committee.</p>
         <ul>
-          {% for c in joint_committees %}
-              {% with committee=c %}
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }} &raquo;</a></li>
-              {% endwith %}
+          {% for committee in committees if committee.designation == 'J' %}
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }} &raquo;</a></li>
           {% endfor %}
         </ul>
       </div>
