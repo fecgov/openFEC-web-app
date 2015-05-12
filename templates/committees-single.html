@@ -135,51 +135,20 @@
 
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container committee-summary">
+
         {% if totals %}
-          <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-          <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-          <div class="row js-accordion">
-
-            <h3 class="section-header">Detailed Summary</h3>
-            <!-- TODO: 'Transfer from a Committee' needs to reference a field available for all committee types (PacOrParty does not have it) -->
-            {% set table_data = [
-                 (totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
-                 (totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-                 (totals.0.transfers_to_affiliated_committee, 'Transfer to a Committee'),
-                 (totals.0.all_loans_received, 'Loans'),
-               ]
-            %}
-            {{ totals_table('Total receipts', totals.0.receipts, table_data,
-                report_year, header_description='Money received by the committee' ) }}
-
-                <!-- TODO: These are not valid field names, figure out what they should be
-                 (totals.0.transfers_to_affiliated_committee, 'Fundraisings'),
-                 (totals.0.transfers_to_affiliated_committee, 'Exempt legal and accounting'),
-                -->
-            {% set table_data = [
-                 (totals.0.operating_expenditures, 'Operating expenditures'),
-                 (totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
-                 (totals.0.loan_repayments_made, 'Total loan repayments'),
-                 (totals.0.contribution_refunds, 'Contribution refunds'),
-                 (totals.0.other_disbursements, 'Other disbursements'),
-               ]
-            %}
-            {{ totals_table('Total Disbursments', totals.0.disbursements, table_data,
-                report_year, header_description='Money spent by the committee' ) }}
-            {{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
-            {{ totals_table('End cash on hand', reports.0.cash_on_hand_end_period) }}
-            {{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
-            {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
-          </div>
-          <div class="row">
-            {% with committee=context() %}
-            {% include 'partials/committee-charts.html' %}
-            {% endwith %}
-          </div>
+          {% if committee_type == 'P' %}
+            {% include 'partials/committee-totals-presidential.html' %}
+          {% elif committee_type == 'H' or committee_type == 'S' %}
+            {% include 'partials/committee-totals-house-senate.html' %}
+          {% else %}
+            {% include 'partials/committee-totals-pac-party.html' %}
+          {% endif %}
         {% else %}
         <div class="meta-box error-container">
           <h2 id="section-1-header" tabindex="0">No financial data</h2>
-          <p class="text--lead">This committee has not filed any <a class="term" data-term="Reports and Summaries">reports</a> for the time period selected. Right now, OpenFEC provides provides summary information using Forms 3, 3P and 3X. For complete data, search the <a href="http://www.fec.gov/finance/disclosure/candcmte_info.shtml">FEC Candidate and Committee Viewer</a>.</p>
+          <p class="text--lead">This committee has not filed any <a class="term" data-term="Reports and Summaries">reports</a> for the time period selected. Right now, OpenFEC provides provides summary information using Forms 3, 3P and 3X.</p>
+          <p class="text--lead">For complete data, search the <a href="http://www.fec.gov/finance/disclosure/candcmte_info.shtml">FEC Candidate and Committee Viewer</a>.</p>
           <div class="error-container__bottom">
               <h5>Is this information incorrect? Let us know.</h5>
               <a class="button" href="mailto:{{ contact_email }}">Contact support <i class="ti-email"></i></a>

@@ -5,13 +5,13 @@
 <h3 class="section-header">Detailed Summary</h3>
 {% with committee=context() %}
 
-<!-- Receipts -->
+{# Receipts #}
 {% set table_data = [
      (totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
      (totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
      (totals.0.political_party_committee_contributions, 'Party Committees Contributions'),
-     (totals.0.other_political_committee_contributions, 'Other Committees Contributions')
-     <!-- Total Contributions is the sum of the previous 4 items-->
+     (totals.0.other_political_committee_contributions, 'Other Committees Contributions'),
+        {# Total Contributions is the sum of the previous 4 items #}
      (totals.0.contributions, 'Total Contributions'),
      (totals.0.contributions,net_contributions, 'Net Contributions'),
 
@@ -24,22 +24,21 @@
 
      (totals.0.transfers_from_nonfed_account, 'Non-Federal Transfers'),
      (totals.0.transfers_from_nonfed_levin, 'Levin Funds'),
-     <!-- this is the subtotal of Non-Federal Transfers and Levin Funds -->
+        {# this is the subtotal of Non-Federal Transfers and Levin Funds #}
      (totals.0.transfers_from_nonfed_account, 'Total Non-Federal Transfers'),
-     <!-- Receipts minus Non-Federal Transfers-->
+        {# Receipts minus Non-Federal Transfers #}
      (totals.0.fed_receipts, 'Total Federal Receipts'),
    ]
 %}
 {{ totals_table('Total receipts', totals.0.receipts, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
 
-<!-- Disbursements -->
+{# Disbursements #}
 {% set table_data = [
      (totals.0.shared_fed_operating_expenditures, 'Federal Allocated Operating Expenditures'),
      (totals.0.shared_nonfed_operating_expenditures, 'Non-Federal Operating Expenditures'),
-     <!-- sum of fed and non-fed operating expenditures -->
+        {# sum of fed and non-fed operating expenditures #}
      (totals.0.operating_expenditures, 'Total Operating Expenditures'),
-     <!-- Missing in the API right now -->
      (totals.0.net_operating_expenditures, 'Net Operating Expenditures'),
 
      (totals.0.transfers_to_other_authorized_committee, 'Transfers to Authorized Committees'),
@@ -50,26 +49,24 @@
      (totals.0.loan_repayments_made, 'Loan Repayments Made'),
 
      (totals.0.individual_contribution_refunds, 'Individual Refunds'),
-     <!-- Missing in the API right now -->
      (totals.0.political_party_committee_contribution_refunds, 'Politial Party Refunds'),
-     <!-- Missing in the API right now -->
      (totals.0.other_political_committee_contribution_refunds, 'Other Committee Refunds'),
-     <!-- Sum total of the previous 3  -->
+        {# Sum total of the previous 3 #}
      (totals.0.contribution_refunds, 'Total Contribution refunds'),
 
      (totals.0.other_disbursements, 'Other disbursements'),
      (totals.0.shared_fed_activity, 'Federal Allocated Election Activity'),
      (totals.0.non_allocated_fed_election_activity, 'Non-Federal Allocated Election Activity'),
-     <!-- Sum of the previous 3  -->
+        {# Sum of the previous 3 #}
      (totals.0.fed_election_activity, 'Total Federal Election Activity'),
-     <!-- Total Disbursements - (Federal Operating Expenses + Non-Federal Allocated Election Activity) -->
+        {# Total Disbursements - (Federal Operating Expenses + Non-Federal Allocated Election Activity) #}
      (totals.0.fed_disbursements, 'Total Federal Disbursements'),
    ]
 %}
 {{ totals_table('Total Disbursements', totals.0.disbursements, table_data,
     committee.report_year, header_description='Money spent by the committee' ) }}
 
-<!-- Numbers that don't make sense to add so we grab the most recent -->
+{# Numbers that don't make sense to add so we grab the most recent #}
 {{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
 {{ totals_table('Ending cash on hand', reports.0.cash_on_hand_end_period) }}
 {{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
