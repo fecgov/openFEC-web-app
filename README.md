@@ -1,6 +1,8 @@
 openfec-web-app
 ===============
 [![Build Status](https://travis-ci.org/18F/openFEC-web-app.svg?branch=master)](https://travis-ci.org/18F/openFEC-web-app)
+[![Code Climate](https://codeclimate.com/github/18F/openFEC-web-app/badges/gpa.svg)](https://codeclimate.com/github/18F/openFEC-web-app)
+[![Test Coverage](https://codeclimate.com/github/18F/openFEC-web-app/badges/coverage.svg)](https://codeclimate.com/github/18F/openFEC-web-app/coverage)
 
 See also http://github.com/18F/openFEC.
 
@@ -91,3 +93,17 @@ If the development API is down or for testing with feature branches of the API,
 a local API server can be used:
 
     $ unset FEC_WEB_API_URL
+
+#### Git Hooks
+
+This repo includes optional post-merge and post-checkout hooks to ensure that
+dependencies and compiled assets are up to date. If enabled, these hooks will
+update Python and Node dependencies, and rebuild compiled JS and CSS files,
+on checking out or merging changes to `requirements.txt`, `package.json`,
+or source JS or SCSS files. To enable the hooks, run
+
+    $ invoke add_hooks
+
+To disable, run
+
+    $ invoke remove_hooks

@@ -28,7 +28,7 @@
         <div class="field" id="name-field">
             <label for="name">Name</label>
             <input type="text" name="name" id="name" />
-            <button class="button--remove" data-removes="name"><i class="ti-close"></i></button>
+            <button type="button" class="button--remove" data-removes="name"><i class="ti-close"></i></button>
         </div>
 
         {% include 'partials/filters/election-years.html' %}
@@ -39,7 +39,7 @@
         {% include 'partials/filters/organization-types.html' %}
 
         <div class="field">
-          <button class="primary">Apply filters</button>
+          <button type="submit" class="primary">Apply filters</button>
         </div>
     </form>
   </div>

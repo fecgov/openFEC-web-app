@@ -20,8 +20,8 @@
                    width="20" height="20"
                    src="/static/img/icon-committee--white.svg"
                    alt="Icon representing committees">
-               Committee - {{ designation }}
-               - {{ type }}
+               Committee - {{ designation_full }}
+               - {{ committee_type_full }}
                {% if organization %} - {{ organization }}{% endif %}
             </span>
         </div>
@@ -35,7 +35,7 @@
             {% endif %}
             <li class="entity__term">
               <h5 class="entity__term__label">Treasurer</h5>
-              <span class="entity__term__data">{{ treasurer }}</span>
+              <span class="entity__term__data">{{ treasurer_name }}</span>
             </li>
             {% if candidates %}
             <li class="entity__term">
@@ -48,7 +48,7 @@
             </li>
             <li class="entity__term">
               <h5 class="entity__term__label">Address</h5>
-              <span class="entity__term__data">{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
+              <span class="entity__term__data">{{ street_1 }}{% if street_2 %}<br>{{ street_2 }}{% endif %} <br> {{city}}, {{state}} {{zipcode}}</span>
             </li>
           {% endif %}
         </ul>
@@ -112,7 +112,6 @@
         {% endif %}
         {% if accordion %}
           <a href="#" class="accordion__button js-accordion_button">
-            <i class="accordion__icon"></i>
           </a>
         {% endif %}
       </div>
@@ -152,7 +151,6 @@
               %}
               {{ totals_table('Total Receipts', committee.reports[0].total_receipts_period, table_data,
                   committee.report_year, header_description='' ) }}
-
               {% set table_data = [
                    (committee.reports[0].operating_expenditures, 'Operating expenditures'),
                    (committee.reports[0].transfers_to_affiliated_committee, 'Transfers to authorized committees'),

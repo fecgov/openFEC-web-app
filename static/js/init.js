@@ -1,9 +1,15 @@
 'use strict';
 
+/* global require, window */
+
 var $ = require('jquery');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
+
+// Include vendor scripts
+require('./vendor/tablist');
+require('./vendor/responsive-tables');
 
 var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
@@ -60,7 +66,7 @@ $(document).ready(function() {
         })
     }
 
-    // General reveal / disclosure 
+    // General reveal / disclosure
     $('.js-reveal').on('click keypress', function(e){
         if (e.which === 13 || e.type === 'click') {
             var revealElement = $(this).data('reveals');
@@ -79,7 +85,7 @@ $(document).ready(function() {
         }
     })
 
-    // Notice close-state persistence    
+    // Notice close-state persistence
     if (typeof window.sessionStorage !== 'undefined') {
         if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
             $('#notice').attr('aria-hidden', true);
@@ -94,11 +100,11 @@ $(document).ready(function() {
             $('#notice-reveal').addClass('u-visible');
             if (typeof window.sessionStorage !== 'undefined') {
                 window.sessionStorage.setItem('keep-banner-closed', '1');
-            }            
+            }
         }
     });
 
-    // Hide the notice reveal link if you open it 
+    // Hide the notice reveal link if you open it
     $('#notice-reveal').click(function(){
       $(this).removeClass('u-visible');
     });

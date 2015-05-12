@@ -1,30 +1,33 @@
-<figure class="table--simple totals-table">
-  <h4 class="figure__title">Totals for {{committee.years_totals}}</h4>
+{% with %}
+{% set reports = committee.reports.0 if committee.reports else {} %}
+{% set totals = committee.totals.0 if committee.totals else {} %}
+<figure class="table--simple reports-table">
+  <h4 class="figure__title">Totals for {{totals.cycle|fmt_year_range|default("unavailable")}}</h4>
   <div class="table__half">
     <div class="table__row">
-      <div class="table__cell"><span class="term" data-term="Total Receipts">Total receipts</span></div>
-      <div class="table__cell">{{committee.total_receipts|default("unavailable")}}</div>
+      <div class="table__cell">Total <span class="term" data-term="Receipts">receipts</span></div>
+      <div class="table__cell">{{totals.receipts|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row">
-      <div class="table__cell"><span class="term" data-term="Total Disbursements">Total disbursements</span></div>
-      <div class="table__cell">{{committee.total_disbursements|default("unavailable")}}</div>
+      <div class="table__cell">Total <span class="term" data-term="Disbursements">disbursements</span></div>
+      <div class="table__cell">{{totals.disbursements|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      Calculated from <a class="term" data-term="Reports and Statements">reports</a> filed {{committee.report_year}}
+      Calculated from reports filed {{totals.cycle|default("unknown")}}
     </div>
   </div>
   <div class="table__half">
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Cash on Hand">Cash on hand</span></div>
-      <div class="table__cell">{{committee.total_cash|default("unavailable")}}</div>
+      <div class="table__cell">{{reports.cash_on_hand_end_period|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
-      <div class="table__cell">{{committee.total_debt|default("unavailable")}}</div>
+      <div class="table__cell">{{reports.debts_owed_by_committee|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      Source: {{committee.report_desc}}
+      Source: {{reports.report_type_full|fmt_report_desc|default("unavailable")}}
     </div>
   </div>
 </figure>
-
+{% endwith %}

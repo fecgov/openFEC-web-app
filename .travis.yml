@@ -7,6 +7,7 @@ python:
 sudo: false
 
 addons:
+  postgresql: "9.4"
   sauce_connect: true
 
 env:
@@ -22,8 +23,8 @@ env:
 
 before_script:
   # Set up environment
-  - if [[ $TRAVIS_BRANCH = 'master' ]]; then export FEC_WEB_API_URL="http://fec-stage-api.cf.18f.us"; fi
-  - if [[ $TRAVIS_BRANCH != 'master' ]]; then export FEC_WEB_API_URL="http://fec-dev-api.cf.18f.us"; fi
+  - if [[ $TRAVIS_BRANCH = 'master' ]]; then export FEC_BRANCH=master; fi
+  - if [[ $TRAVIS_BRANCH != 'master' ]]; then export FEC_BRANCH=develop; fi
 
   # Install web app and run in background
   - pip install -r requirements.txt
@@ -31,6 +32,17 @@ before_script:
   - npm install -g browserify
   - npm run build
   - python __init__.py &
+
+  # Install API and run in background
+  - git clone https://github.com/18F/openFEC
+  - cd openFEC
+  - git checkout $FEC_BRANCH
+  - psql -c 'create database cfdm_test' -U postgres
+  - psql -f data/subset.sql cfdm_test -U postgres
+  - pip install -r requirements.txt
+  - python manage.py update_schemas
+  - python manage.py runserver &
+  - cd ..
 
 script:
   # Run unit tests
