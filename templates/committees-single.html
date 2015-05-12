@@ -52,7 +52,7 @@
             </li>
           {% endif %}
         </ul>
-      </div>  
+      </div>
     </header>
     <div class="page-controls page-controls--dark">
       <div class="page-controls__top">
@@ -83,7 +83,7 @@
           </ul>
         </div>
       </nav> -->
-    </div>    
+    </div>
 {% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
       <div class="table__row table__row--nested js-accordion_item">
@@ -124,11 +124,14 @@
           {% for item in data %}
             {{ totals_table_row(item[1], item[0]) }}
           {% endfor %}
-          {% if report_year %}
+          <!-- This should produce "Calculated from reports filed cycle - 1 - cycle",  but I could not get that to work. Maybe it is not necessary with the dates in the subheadings? -->
+          <!-- {% if report_year %}
+
             <div class="table__row--note table__row--nested js-accordion_item">
-              Calculated from reports filed {{ report_year }}
+               Calculated from reports filed {{ report_year }}
+
             </div>
-          {% endif %}
+          {% endif %} -->
         </div>
       </figure>
     {% endmacro %}
@@ -140,13 +143,17 @@
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
           <div class="row js-accordion">
 
-            <h3 class="section-header">Detailed Summary</h3>
-            <!-- TODO: 'Transfer from a Committee' needs to reference a field available for all committee types (PacOrParty does not have it) -->
+
+            {% with committee=context() %}
+            <h3 class="section-header">Detailed Summary
+                {{ committee.totals.0.cycle - 1 }} - {{ committee.totals.0.cycle }}
+            </h3>
+
             {% set table_data = [
-                 (totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
-                 (totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-                 (totals.0.transfers_to_affiliated_committee, 'Transfer to a Committee'),
-                 (totals.0.all_loans_received, 'Loans'),
+                 (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
+                 (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
+                 (committee.totals.0.transfers_from_affiliated_committee, 'Transfer from authorized committees'),
+                 (committee.totals.0.all_loans_received, 'Loans'),
                ]
             %}
             {{ totals_table('Total receipts', totals.0.receipts, table_data,
@@ -164,14 +171,23 @@
                  (totals.0.other_disbursements, 'Other disbursements'),
                ]
             %}
-            {{ totals_table('Total Disbursments', totals.0.disbursements, table_data,
-                report_year, header_description='Money spent by the committee' ) }}
-            {{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
-            {{ totals_table('End cash on hand', reports.0.cash_on_hand_end_period) }}
-            {{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
-            {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
+
+            {{ totals_table('Total Disbursements', committee.totals.0.disbursements, table_data,
+                committee.report_year, header_description='Money spent by the committee' ) }}
+
+            <h3 class="section-header">Recent Stats from {{ committee.reports[0].report_year }}
+                {{committee.report_desc}} Filing
+            </h3>
+
+            {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
+            {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
+            {{ totals_table('Debts owed to committee', committee.reports[0].debts_owed_to_committee) }}
+            {{ totals_table('Debts owed by committee', committee.reports[0].debts_owed_by_committee) }}
+
+            {% endwith %}
           </div>
           <div class="row">
+            <h3 class="section-header">Key figures from recent reports</h3>
             {% with committee=context() %}
             {% include 'partials/committee-charts.html' %}
             {% endwith %}

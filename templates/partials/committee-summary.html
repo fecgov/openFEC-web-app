@@ -12,8 +12,9 @@
       <div class="table__cell">Total <span class="term" data-term="Disbursements">disbursements</span></div>
       <div class="table__cell">{{totals.disbursements|currency|default("unavailable")}}</div>
     </div>
+
     <div class="table__row--note">
-      Calculated from reports filed {{totals.cycle|default("unknown")}}
+      Calculated from <a class="term" data-term="Reports and Statements">reports</a> filed {{ committee.totals.0.cycle -1 }} - {{ committee.totals.0.cycle }}
     </div>
   </div>
   <div class="table__half">
@@ -26,7 +27,7 @@
       <div class="table__cell">{{reports.debts_owed_by_committee|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      Source: {{reports.report_type_full|fmt_report_desc|default("unavailable")}}
+      Source: {{committee.report_desc}} {{committee.report_year}}
     </div>
   </div>
 </figure>
