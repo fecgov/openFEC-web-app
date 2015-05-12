@@ -14,17 +14,17 @@
     "build": "gulp build-js && gulp build-sass",
     "build-js": "gulp build-js",
     "build-sass": "gulp build-sass",
-    "watch": "gulp watch",
+    "watch": "gulp watch-js & gulp watch-sass",
     "watch-js": "gulp watch-js",
     "watch-sass": "gulp watch-sass"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/theresaanna/openfec-web-app.git"
+    "url": "git://github.com/18F/openfec-web-app.git"
   },
   "author": "",
   "bugs": {
-    "url": "https://github.com/theresaanna/openfec-web-app/issues"
+    "url": "https://github.com/18F/openfec-web-app/issues"
   },
   "dependencies": {
     "URIjs": "^1.15.0",
@@ -39,7 +39,6 @@
     "gulp-util": "^3.0.4",
     "handlebars": "^2.0.0",
     "jquery": "^2.1.4",
-    "querystring": "^0.2.0",
     "typeahead.js": "^0.10.5",
     "underscore": "^1.7.0",
     "vinyl-buffer": "^1.0.0",
