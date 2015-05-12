@@ -140,7 +140,7 @@
                 <h4>Most Recent Report:
                   <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_3_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">{{ committee.reports[0].report_year }} {{committee.report_desc}}</a>
                 </h4>
-                <span>Report coverage: {{ committee.reports[0].coverage_start_date|date_md }} - {{ committee.reports[0].coverage_end_date|date_md }} | <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_3_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">View PDF</a></span>
+               <span>Report coverage: {{ committee.reports.0.coverage_start_date|date_md }} - {{ committee.reports.0.coverage_end_date|date_md }} | <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_3_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">View PDF</a></span> -->
               </div>
                {% set table_data = [
                    (committee.reports[0].individual_itemized_contributions, 'Itemized Individual Contributions'),
@@ -194,7 +194,6 @@
             {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
           </div>
           <div class="row">
-            {% with committee=context() %}
             {% include 'partials/committee-charts.html' %}
             {% endwith %}
           </div>

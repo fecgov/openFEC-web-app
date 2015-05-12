@@ -139,8 +139,7 @@ def date_filter_sm(date_str):
 def date_filter_sm(date_str):
     if date_str is None or date_str == '':
         return ''
-    d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
-    return d.strftime('%b %Y')
+    return parse_date(date_str).strftime('%b %Y')
 
 @app.template_filter('last_3_characters')
 def last_3_characters(int):
