@@ -1,82 +1,66 @@
-<h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+  <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
   <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-<div class="row js-accordion">
+  <div class="row js-accordion">
 
-<h3 class="section-header">Detailed Summary</h3>
-{% with committee=context() %}
+    <h3 class="section-header">Detailed Summary</h3>
+    {% with committee=context() %}
 
-{# Receipts #}
-{% set table_data = [
-     (totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
-     (totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-     (totals.0.political_party_committee_contributions, 'Party Committees Contributions'),
-     (totals.0.other_political_committee_contributions, 'Other Committees Contributions'),
-        {# Total Contributions is the sum of the previous 4 items #}
-     (totals.0.contributions, 'Total Contributions'),
-     (totals.0.contributions,net_contributions, 'Net Contributions'),
+    {% set table_data = [
+         (totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
+         (totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
+         (totals.0.political_party_committee_contributions, 'Party Committees Contributions'),
+         (totals.0.other_political_committee_contributions, 'Other Committees Contributions'),
+         (totals.0.contributions, 'Total Contributions'),
+         (totals.0.net_contributions, 'Net Contributions'),
+         (totals.0.other_pol_cmte_contb_per_i, 'Transfers from Affiliated Committees'),
+         (totals.0.all_loans_received, 'Loans Received'),
+         (totals.0.loan_repayments_received, 'Loan Repayments Received'),
+         (totals.0.offsets_to_operating_expenditures, 'Offsets to operating Expenditures'),
+         (totals.0.fed_candidate_contribution_refunds_period, 'Candidate Refunds'),
+         (totals.0.other_fed_receipts_per, 'Other Receipts'),
+         (totals.0.transfers_from_nonfed_account, 'Non-Federal Transfers'),
+         (totals.0.transfers_from_nonfed_levin, 'Levin Funds'),
+         (totals.0.transfers_from_nonfed_account, 'Total Non-Federal Transfers'),
+         (totals.0.fed_receipts, 'Total Federal Receipts'),
+       ]
+    %}
+    {{ totals_table('Total receipts', totals.0.receipts, table_data,
+        committee.report_year, header_description='Money received by the committee' ) }}
 
-     (totals.0.other_pol_cmte_contb_per_i, 'Transfers from Affiliated Committees'),
-     (totals.0.all_loans_received, 'Loans Received'),
-     (totals.0.loan_repayments_received, 'Loan Repayments Received'),
-     (totals.0.offsets_to_operating_expenditures, 'Offsets to operating Expenditures'),
-     (totals.0.fed_candidate_contribution_refunds_period, 'Candidate Refunds'),
-     (totals.0.other_fed_receipts_per, 'Other Receipts'),
+    {% set table_data = [
+         (totals.0.shared_fed_operating_expenditures, 'Federal Allocated Operating Expenditures'),
+         (totals.0.shared_nonfed_operating_expenditures, 'Non-Federal Operating Expenditures'),
+         (totals.0.operating_expenditures, 'Total Operating Expenditures'),
+         (totals.0.net_operating_expenditures, 'Net Operating Expenditures'),
+         (totals.0.transfers_to_other_authorized_committee, 'Transfers to Authorized Committees'),
+         (totals.0.other_political_committee_contributions, 'Contributions to Other Committees'),
+         (totals.0.independent_expenditures, 'Independent Expenditures'),
+         (totals.0.coordinated_expenditures_by_party_committee, 'Coordinated Party Expenditures'),
+         (totals.0.loans_made, 'Loans Made'),
+         (totals.0.loan_repayments_made, 'Loan Repayments Made'),
+         (totals.0.individual_contribution_refunds, 'Individual Refunds'),
+         (totals.0.political_party_committee_contribution_refunds, 'Politial Party Refunds'),
+         (totals.0.other_political_committee_contribution_refunds, 'Other Committee Refunds'),
+         (totals.0.contribution_refunds, 'Total Contribution refunds'),
+         (totals.0.other_disbursements, 'Other disbursements'),
+         (totals.0.shared_fed_activity, 'Federal Allocated Election Activity'),
+         (totals.0.non_allocated_fed_election_activity, 'Non-Federal Allocated Election Activity'),
+         (totals.0.fed_election_activity, 'Total Federal Election Activity'),
+         (totals.0.fed_disbursements, 'Total Federal Disbursements'),
+       ]
+    %}
+    {{ totals_table('Total Disbursements', totals.0.disbursements, table_data,
+        committee.report_year, header_description='Money spent by the committee' ) }}
 
-     (totals.0.transfers_from_nonfed_account, 'Non-Federal Transfers'),
-     (totals.0.transfers_from_nonfed_levin, 'Levin Funds'),
-        {# this is the subtotal of Non-Federal Transfers and Levin Funds #}
-     (totals.0.transfers_from_nonfed_account, 'Total Non-Federal Transfers'),
-        {# Receipts minus Non-Federal Transfers #}
-     (totals.0.fed_receipts, 'Total Federal Receipts'),
-   ]
-%}
-{{ totals_table('Total receipts', totals.0.receipts, table_data,
-    committee.report_year, header_description='Money received by the committee' ) }}
+    {{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
+    {{ totals_table('Ending cash on hand', reports.0.cash_on_hand_end_period) }}
+    {{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
+    {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
 
-{# Disbursements #}
-{% set table_data = [
-     (totals.0.shared_fed_operating_expenditures, 'Federal Allocated Operating Expenditures'),
-     (totals.0.shared_nonfed_operating_expenditures, 'Non-Federal Operating Expenditures'),
-        {# sum of fed and non-fed operating expenditures #}
-     (totals.0.operating_expenditures, 'Total Operating Expenditures'),
-     (totals.0.net_operating_expenditures, 'Net Operating Expenditures'),
-
-     (totals.0.transfers_to_other_authorized_committee, 'Transfers to Authorized Committees'),
-     (totals.0.other_political_committee_contributions, 'Contributions to Other Committees'),
-     (totals.0.independent_expenditures, 'Independent Expenditures'),
-     (totals.0.coordinated_expenditures_by_party_committee', Coordinated Party Expenditures'),
-     (totals.0.loans_made, 'Loans Made'),
-     (totals.0.loan_repayments_made, 'Loan Repayments Made'),
-
-     (totals.0.individual_contribution_refunds, 'Individual Refunds'),
-     (totals.0.political_party_committee_contribution_refunds, 'Politial Party Refunds'),
-     (totals.0.other_political_committee_contribution_refunds, 'Other Committee Refunds'),
-        {# Sum total of the previous 3 #}
-     (totals.0.contribution_refunds, 'Total Contribution refunds'),
-
-     (totals.0.other_disbursements, 'Other disbursements'),
-     (totals.0.shared_fed_activity, 'Federal Allocated Election Activity'),
-     (totals.0.non_allocated_fed_election_activity, 'Non-Federal Allocated Election Activity'),
-        {# Sum of the previous 3 #}
-     (totals.0.fed_election_activity, 'Total Federal Election Activity'),
-        {# Total Disbursements - (Federal Operating Expenses + Non-Federal Allocated Election Activity) #}
-     (totals.0.fed_disbursements, 'Total Federal Disbursements'),
-   ]
-%}
-{{ totals_table('Total Disbursements', totals.0.disbursements, table_data,
-    committee.report_year, header_description='Money spent by the committee' ) }}
-
-{# Numbers that don't make sense to add so we grab the most recent #}
-{{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
-{{ totals_table('Ending cash on hand', reports.0.cash_on_hand_end_period) }}
-{{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
-{{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
-
-{% endwith %}
-</div>
-
-<div class="row">
-{% with committee=context() %}
-  {% include 'partials/committee-charts.html' %}
-{% endwith %}
-</div>
+    {% endwith %}
+  </div>
+  <div class="row">
+    {% with committee=context() %}
+      {% include 'partials/committee-charts.html' %}
+    {% endwith %}
+  </div>
