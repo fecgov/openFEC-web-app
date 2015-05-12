@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
+from dateutil.parser import parse as parse_date
 from openfecwebapp.config import (port, debug, host, api_location, api_version, api_key_public,
                                   username, password, test, force_https, analytics)
 from openfecwebapp.views import render_search_results, render_table, render_candidate, render_committee
@@ -130,10 +131,9 @@ def currency_filter(num, grouping=True):
 
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
-    if date_str is None or date_str == '':
+    if not date_str:
         return ''
-    d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
-    return d.strftime('%m/%y')
+    return parse_date(date_str).strftime('%m%y')
 
 
 @app.template_filter()
