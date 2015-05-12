@@ -136,8 +136,8 @@ def date_filter_sm(date_str):
     return parse_date(date_str).strftime('%m%y')
 
 @app.template_filter('date_md')
-def date_filter_sm(date_str):
-    if date_str is None or date_str == '':
+def date_filter_md(date_str):
+    if not date_str:
         return ''
     return parse_date(date_str).strftime('%b %Y')
 
