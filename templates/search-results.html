@@ -11,29 +11,30 @@
 {% block body %}
 <div class="container">
   <section class="data page-section">
-    <h2>Search results{% if query %} <span class="text--query">{{query}}</span>{% endif %}</h2>
+    <h2 class="tst-search_results">Search results
+      {% if query %}
+        <span class="text--query">{{query}}</span>
+      {% endif %}
+    </h2>
 
     {% if no_results %}
       <h4>Sorry, no results</h4>
     {% else %}
       <div class="page-subsection">
-        {%if results %}
-          <div class="results-header">
-            <h3>{{ result_type[:-1]|capitalize }} Results</h3>
-            <a href="{{ result_type }}?q={{query}}" 
-                class="button" 
-                data-category="candidates" data-query="{{query}}">View all</a>
-          </div>
-          {% if result_type == 'committees' %}
-            {% with committees=results %}
-              {% include "partials/committees-table.html" %}
-            {% endwith %}
-          {% else %}
-            {% with candidates=results %}
-              {% include "partials/candidates-table.html" %}
-            {% endwith %}
-          {% endif %}
-
+        <div class="results-header">
+          <h3>{{ result_type[:-1]|capitalize }} Results</h3>
+          <a href="{{ result_type }}?q={{query}}"
+              class="button"
+              data-category="candidates" data-query="{{query}}">View all</a>
+        </div>
+        {% if result_type == 'committees' %}
+          {% with committees=results %}
+            {% include "partials/committees-table.html" %}
+          {% endwith %}
+        {% else %}
+          {% with candidates=results %}
+            {% include "partials/candidates-search-results.html" %}
+          {% endwith %}
         {% endif %}
       </div>
     {% endif %}

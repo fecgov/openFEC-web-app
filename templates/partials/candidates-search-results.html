@@ -1,0 +1,65 @@
+{% for c in candidates %}
+<div class="figure-group">
+  <div class="figure-group__header">
+    <span>Active: {{ c.active_through }}</span>
+  </div>
+  <div class="figure-group__main">
+    <h3 class="figure-group__title">
+      <a title="{{ c.name }}"
+          href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">
+        {{ c.name }}
+      </a>
+    </h3>
+    <ul class="entity__info">
+      <li class="entity__term">
+        <span class="entity__type">
+          <img class="category-icon" width="20" height="20"
+               src="/static/img/icon-candidate.svg"
+               alt="Icon representing candidates">
+        </span>
+      </li>
+      <li class="entity__term">
+        <span class="entity__term__data">Office Sought: {{ c.office_full }}</span>
+        <span class="entity__term__data">Party: {{ c.party_full }}</span>
+      </li>
+      <li class="entity__term">
+        <span class="entity__term__data">
+          State: {{ c.state|default('N/A') }}
+        </span>
+        <span class="entity__term__data">
+          District: {{ c.district|default('N/A') }}
+        </span>
+      </li>
+      <li class="entity__term">
+        <h4>
+          <a title="{{ c.name }}"
+              href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">
+            View Candidate Page
+          </a>
+        </h4>
+      </li>
+    </ul>
+  </div>
+  {% if c.committee %}
+  {% with cm=c.committee %}
+    <div class="figure-group__main">
+      <span class="entity__type">
+        <img class="category-icon" width="20" height="20"
+             src="/static/img/icon-committee.svg"
+             alt="Icon representing committees">
+      </span>
+      <h5 class="entity__term__data">{{ cm.name }}</h5>
+      <span class="entity__term__data">{{ cm.committee_type_full}}</span>
+      <span class="entity__term__data">
+        <a title="{{ cm.name }} most recent report"
+            href="{{ url_for('committee_page', c_id=cm.committee_id) }}">
+          Most recent report</a>
+        <a title="{{ cm.name }}"
+            href="{{ url_for('committee_page', c_id=cm.committee_id) }}">
+          View committee page</a>
+      </span>
+    </div>
+  {% endwith %}
+  {% endif %}
+</div>
+{% endfor %}

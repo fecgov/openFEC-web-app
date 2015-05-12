@@ -71,7 +71,7 @@ def _convert_to_dict(params):
 def search():
     query = request.args.get('search')
     if query:
-        result_type = request.args.get('search_type') or None
+        result_type = request.args.get('search_type') or 'candidates'
         results = fake_load_search_results(query, result_type)
         return render_search_results(results, query, result_type)
     else:
