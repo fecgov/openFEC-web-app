@@ -30,6 +30,7 @@ figure {
 
 .figure-group__bar {
   @include white-links();
+  color: #fff;
   background-color: $licorice-3;
   padding: .3125em;
 }
@@ -86,12 +87,14 @@ figure {
 
   h4 {
     float: left;
+    margin-bottom: 0;
   }
 }
 
 .figure__key {
   float: right;
-
+  margin-top: 2px;
+  
   li {
     @include rem(margin-right, 2.0rem);
   }

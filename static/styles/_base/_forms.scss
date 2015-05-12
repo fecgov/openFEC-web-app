@@ -41,14 +41,15 @@ label + #{$all-text-inputs} {
 }
 
 #{$all-text-inputs} {
+  height: 3rem;
 }
 
 textarea,
 #{$all-text-inputs},
 select[multiple=multiple] {
-  @include box-sizing(border-box);
   @include transition(border-color);
   @include font-size($form-font-size);
+  box-sizing: border-box;
   margin: 1em 0;
   background-color: white;
   border-radius: $form-border-radius;
@@ -57,7 +58,6 @@ select[multiple=multiple] {
   font-family: $form-font-family;
   padding: 0 1rem;
   width: 100%;
-  height: 3rem;
   
   &:hover {
     border-color: $form-border-color-hover;
@@ -108,11 +108,17 @@ select {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 3rem;
   &:focus {
     outline: 3px solid $focus;
   }
 }
 
+select[multiple] {
+  height: 10rem;
+  overflow: scroll;
+  background-image: none;
+}
 
 // Custom form elements
 .input-button-combo {
