@@ -24,10 +24,10 @@
 <section class="results-content">
   <div id="filters" class="side-panel side-panel--left">
     <form id="category-filters">
-        <div class="field{% if filter_name %} active{% endif %}" id="name-field">
+        <div class="field" id="name-field">
           <label for="name">Name</label>
-          <input type="text" name="name"{% if filter_name %} value="{{filter_name}}" {% endif %} />
-          <button class="button--remove" data-removes="name"><i class="ti-close"></i></button>
+          <input type="text" name="name" />
+          <button type="button" class="button--remove" data-removes="name"><i class="ti-close"></i></button>
         </div>
 
         {% include 'partials/filters/election-years.html' %}
@@ -37,7 +37,7 @@
         {% include 'partials/filters/office-sought.html' %}
 
       <div class="field">
-        <button class="primary">Apply filters</button>
+        <button type="submit" class="primary">Apply filters</button>
       </div>
     </form>
   </div>
