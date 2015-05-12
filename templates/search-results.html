@@ -11,27 +11,29 @@
 {% block body %}
 <div class="container">
   <section class="data page-section">
-      <h2>Search results{% if query %} <span class="text--query">{{query}}</span>{% endif %}</h2>
+    <h2>Search results{% if query %} <span class="text--query">{{query}}</span>{% endif %}</h2>
 
     {% if no_results %}
-        Sorry, no results
+      <h4>Sorry, no results</h4>
     {% else %}
       <div class="page-subsection">
-        {%if candidates %}
-            <div class="results-header">
-                <h3>Candidate Results</h3>
-                <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">View all</a>
-            </div>
-            {% include "partials/candidates-table.html" %}
-        {% endif %}
-      </div>
-      <div class="page-subsection">
-        {% if committees %}
-            <div class="results-header">
-                <h3>Committees Results</h3>
-                <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">View all</a>
-            </div>
-            {% include "partials/committees-table.html" %}
+        {%if results %}
+          <div class="results-header">
+            <h3>{{ result_type[:-1]|capitalize }} Results</h3>
+            <a href="{{ result_type }}?q={{query}}" 
+                class="button" 
+                data-category="candidates" data-query="{{query}}">View all</a>
+          </div>
+          {% if result_type == 'committees' %}
+            {% with committees=results %}
+              {% include "partials/committees-table.html" %}
+            {% endwith %}
+          {% else %}
+            {% with candidates=results %}
+              {% include "partials/candidates-table.html" %}
+            {% endwith %}
+          {% endif %}
+
         {% endif %}
       </div>
     {% endif %}

@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
-from openfecwebapp.config import (port, debug, host, api_location, api_version, api_key_public,
-                                  username, password, test, force_https, analytics)
+from openfecwebapp.config import (port, debug, host, api_location, api_version, api_key_public, username, password, test, force_https, analytics)
 from openfecwebapp.views import render_search_results, render_table, render_candidate, render_committee
-from openfecwebapp.api_caller import load_search_results, load_single_type, load_single_type_summary, load_nested_type, install_cache
+from openfecwebapp.api_caller import load_search_results, load_single_type, load_single_type_summary, load_nested_type, install_cache, fake_load_search_results
 
 import datetime
 import jinja2
@@ -72,8 +71,9 @@ def _convert_to_dict(params):
 def search():
     query = request.args.get('search')
     if query:
-        candidates, committees = load_search_results(query)
-        return render_search_results(candidates, committees, query)
+        result_type = request.args.get('search_type') or None
+        results = fake_load_search_results(query, result_type)
+        return render_search_results(results, query, result_type)
     else:
         return render_template('search.html')
 

@@ -32,6 +32,22 @@ def load_search_results(query):
     return load_single_type_summary('candidates', filters).get('results', []), \
         load_single_type_summary('committees', filters).get('results', [])
 
+def fake_load_search_results(query, query_type):
+    filters = {'per_page': '5'}
+
+    if query:
+        filters['q'] = query
+
+    results = load_single_type_summary(query_type, filters).get('results', [])
+    for result in results:
+        opposite_type = 'committees' if query_type == 'candidates' else \
+            'candidates'
+        opposite_result = load_nested_type(query_type[:-1], 
+                result[query_type[:-1] + '_id'], opposite_type)['results'][0]
+        result[opposite_type[:-1]] = opposite_result
+
+    return results
+
 
 def load_single_type_summary(data_type, filters):
     url = '/' + data_type
