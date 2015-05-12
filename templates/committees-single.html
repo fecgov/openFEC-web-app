@@ -20,8 +20,8 @@
                    width="20" height="20"
                    src="/static/img/icon-committee--white.svg"
                    alt="Icon representing committees">
-               Committee - {{ designation }}
-               - {{ type }}
+               Committee - {{ designation_full }}
+               - {{ committee_type_full }}
                {% if organization %} - {{ organization }}{% endif %}
             </span>
         </div>
@@ -35,7 +35,7 @@
             {% endif %}
             <li class="entity__term">
               <h5 class="entity__term__label">Treasurer</h5>
-              <span class="entity__term__data">{{ treasurer }}</span>
+              <span class="entity__term__data">{{ treasurer_name }}</span>
             </li>
             {% if candidates %}
             <li class="entity__term">
@@ -48,11 +48,11 @@
             </li>
             <li class="entity__term">
               <h5 class="entity__term__label">Address</h5>
-              <span class="entity__term__data">{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
+              <span class="entity__term__data">{{ street_1 }}{% if street_2 %}<br>{{ street_2 }}{% endif %} <br> {{city}}, {{state}} {{zipcode}}</span>
             </li>
           {% endif %}
         </ul>
-      </div>  
+      </div>
     </header>
     <div class="page-controls page-controls--dark">
       <div class="page-controls__top">
@@ -83,7 +83,7 @@
           </ul>
         </div>
       </nav> -->
-    </div>    
+    </div>
 {% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
       <div class="table__row table__row--nested js-accordion_item">
@@ -112,7 +112,6 @@
         {% endif %}
         {% if accordion %}
           <a href="#" class="accordion__button js-accordion_button">
-            <i class="accordion__icon"></i>
           </a>
         {% endif %}
       </div>
@@ -144,6 +143,7 @@
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
           <div class="row js-accordion">
 
+
             {% with committee=context() %}
             <h3 class="section-header">Detailed Summary
                 {{ committee.totals.0.cycle - 1 }} - {{ committee.totals.0.cycle }}
@@ -156,17 +156,22 @@
                  (committee.totals.0.all_loans_received, 'Loans'),
                ]
             %}
-            {{ totals_table('Total receipts', committee.totals.0.receipts, table_data,
-                committee.report_year, header_description='Money received by the committee' ) }}
+            {{ totals_table('Total receipts', totals.0.receipts, table_data,
+                report_year, header_description='Money received by the committee' ) }}
 
+                <!-- TODO: These are not valid field names, figure out what they should be
+                 (totals.0.transfers_to_affiliated_committee, 'Fundraisings'),
+                 (totals.0.transfers_to_affiliated_committee, 'Exempt legal and accounting'),
+                -->
             {% set table_data = [
-                 (committee.totals.0.operating_expenditures, 'Operating expenditures'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
-                 (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
-                 (committee.totals.0.contribution_refunds, 'Contribution refunds'),
-                 (committee.totals.0.other_disbursements, 'Other disbursements'),
+                 (totals.0.operating_expenditures, 'Operating expenditures'),
+                 (totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
+                 (totals.0.loan_repayments_made, 'Total loan repayments'),
+                 (totals.0.contribution_refunds, 'Contribution refunds'),
+                 (totals.0.other_disbursements, 'Other disbursements'),
                ]
             %}
+
             {{ totals_table('Total Disbursements', committee.totals.0.disbursements, table_data,
                 committee.report_year, header_description='Money spent by the committee' ) }}
 
@@ -184,7 +189,7 @@
           <div class="row">
             <h3 class="section-header">Key figures from recent reports</h3>
             {% with committee=context() %}
-              {% include 'partials/committee-charts.html' %}
+            {% include 'partials/committee-charts.html' %}
             {% endwith %}
           </div>
         {% else %}
