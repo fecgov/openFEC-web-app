@@ -133,7 +133,7 @@ def currency_filter(num, grouping=True):
 def date_filter_sm(date_str):
     if not date_str:
         return ''
-    return parse_date(date_str).strftime('%m%y')
+    return parse_date(date_str).strftime('%m/%y')
 
 @app.template_filter('date_md')
 def date_filter_md(date_str):
