@@ -108,8 +108,8 @@ table {
 .table__row--note {
   @include font-size(1.0);
   width: 100%;
-  padding: .5rem 0 1rem 0;
-  text-align: right;
+  padding: .5em;
+  text-align: left;
   font-style: italic;
   display: block;
 
