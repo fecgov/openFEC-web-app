@@ -5,58 +5,41 @@
 
 <h3 class="section-header">Detailed Summary</h3>
 {% with committee=context() %}
-<!-- Receipts -->
 {% set table_data = [
-     'Federal Funds'
+     (totals.0.federal_funds,'Federal Funds'),
      (totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
      (totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-     <!-- Itemized + Unitemized Contributions -->
      (totals.0.individual_contributions, 'Total Individual Contributions'),
      (totals.0.political_party_committee_contributions,'Party Committee Contributions'),
      (totals.0.other_political_committee_contributions,'Other Committee Contributions'),
      (totals.0.candidate_contribution, 'Candidate Contributions'),
-     <!--Sum of individual, party, committee, and candidate contributions -->
      (totals.0.contributions, 'Total Contributions'),
-     <!-- Missing in the API right now -->
-     (totals.0.net_contributions'Net Contributions'),
-
+     (totals.0.net_contributions, 'Net Contributions'),
      (totals.0.transfers_from_other_authorized_committee, 'Transfer from Authorized Committees'),
-
-     (totals.0.loans_made_by_candidate 'Loans Made by Candidate'),
+     (totals.0.loans_made_by_candidate, 'Loans Made by Candidate'),
      (totals.0.all_other_loans, 'Other Loans'),
-     <!-- candidate and all other loans -->
      (totals.0.all_loans_received, 'Total Loans Received'),
-
      (totals.0.offsets_to_operating_expenditures, 'Offsets to Operating Expenditures'),
-     'Fundraising Offsets'
-     'Legal and Accounting Offsets'
-     <!--  -->
-     'Total Offsets'
-
+     (totals.0.offsets_to_fundraising_expenditures, 'Fundraising Offsets'),
+     (totals.0.offsets_to_legal_accounting, 'Legal and Accounting Offsets'),
+     (totals.0.total_offsets_to_operating_expenditures, 'Total Offsets'),
      (totals.0.other_receipts, 'Other Receipts'),
    ]
 %}
 {{ totals_table('Total receipts', totals.0.receipts, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
-<!-- Disbursements -->
+
 {% set table_data = [
      (totals.0.operating_expenditures, 'Operating expenditures'),
-     <!-- Missing in the API right now -->
-     (totals.0.net_operating_expenditures'Operating Expenditures'),
-
+     (totals.0.net_operating_expenditures, 'Operating Expenditures'),
      (totals.0.transfer_to_other_authorized_committee, 'Transfers to Authorized Committees'),
-     <!-- Missing in the API right now -->
      (totals.0.repayments_loans_made_by_candidate, 'Candidate Loan Repayments'),
      (totals.0.loan_repayments_other_loans, 'Other Loan Repayments'),
-     <!-- Candidate + Other loans-->
      (totals.0.loan_repayments_made, 'Total Loan Repayments'),
-
      (totals.0.refunded_individual_contributions, 'Individual Refunds'),
      (totals.0.refunded_political_party_committee_contribution, 'Political Party Refunds'),
      (totals.0.refunded_other_political_committee_contributions, 'Other Committee Refunds'),
-     <!-- Individual + Party + Committee Refunds-->
      (totals.0.contribution_refunds, 'Total Contribution refunds'),
-
      (totals.0.other_disbursements, 'Other disbursements'),
    ]
 %}
