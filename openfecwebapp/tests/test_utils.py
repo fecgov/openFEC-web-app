@@ -40,5 +40,5 @@ def test_fmt_year_range_not_int():
 
 
 def test_fmt_first_last_year():
-    assert app.fmt_first_last_year(1986, 2015) == '1986 - 2015'
-    assert app.fmt_first_last_year(2015, 2015) == '2015'
+    assert app.fmt_first_last_year(self, 1986, 2015) == '1986 - 2015'
+    assert app.fmt_first_last_year(self, 2015, 2015) == '2015'
