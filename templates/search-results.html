@@ -29,11 +29,36 @@
         </div>
         {% if result_type == 'committees' %}
           {% with committees=results %}
-            {% include "partials/committees-table.html" %}
+            {% for committee in committees %}
+              {% include 'partials/search-results-committee.html' %}
+              <div class="figure-group">
+                {% if committee.candidate %}
+                {% with candidate = committe.candidate %}
+                  {% include "partials/search-results-candidate.html" %}
+                {% endwith %}
+                {% endif %}
+              </div>
+            {% endfor %}
+
+
           {% endwith %}
         {% else %}
           {% with candidates=results %}
-            {% include "partials/candidates-search-results.html" %}
+            {% for candidate in candidates %}
+              <div class="figure-group__header--short">
+                <span>Active: {{ candidate.active_through }}</span>
+                <span class="u-float-right color-activity">
+                  Currently active (TODO)</span>
+              </div>
+              {% include 'partials/search-results-candidate.html' %}
+              <div class="figure-group">
+                {% if candidate.committee %}
+                {% with committee=candidate.committee %}
+                  {% include "partials/search-results-committee.html" %}
+                {% endwith %}
+                {% endif %}
+              </div>
+            {% endfor %}
           {% endwith %}
         {% endif %}
       </div>
