@@ -159,6 +159,11 @@ def fmt_report_desc(report_full_description):
     if report_full_description:
         return re.sub('{.+}', '', report_full_description)
 
+@app.template_filter()
+def fmt_first_last_year(self, first_year, last_year):
+    if first_year != last_year:
+        return "{} - {}".format(first_year, last_year)
+    return last_year
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
