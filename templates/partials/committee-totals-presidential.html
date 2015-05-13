@@ -8,10 +8,9 @@
      (totals.0.other_political_committee_contributions,'Other Committee Contributions'),
      (totals.0.candidate_contribution, 'Candidate Contributions'),
      (totals.0.contributions, 'Total Contributions'),
-     (totals.0.net_contributions, 'Net Contributions'),
-     (totals.0.transfers_from_other_authorized_committee, 'Transfer from Authorized Committees'),
-     (totals.0.loans_made_by_candidate, 'Loans Made by Candidate'),
-     (totals.0.all_other_loans, 'Other Loans'),
+     (totals.0.transfers_from_affiliated_committee, 'Transfer from Affiliated Committees'),
+     (totals.0.loans_received_from_candidate, 'Loans Made by Candidate'),
+     (totals.0.other_loans_received, 'Other Loans'),
      (totals.0.all_loans_received, 'Total Loans Received'),
      (totals.0.offsets_to_operating_expenditures, 'Offsets to Operating Expenditures'),
      (totals.0.offsets_to_fundraising_expenditures, 'Fundraising Offsets'),
@@ -25,13 +24,12 @@
 
 {% set table_data = [
      (totals.0.operating_expenditures, 'Operating expenditures'),
-     (totals.0.net_operating_expenditures, 'Operating Expenditures'),
-     (totals.0.transfer_to_other_authorized_committee, 'Transfers to Authorized Committees'),
+     (totals.0.transfers_to_other_authorized_committee, 'Transfers to Authorized Committees'),
      (totals.0.repayments_loans_made_by_candidate, 'Candidate Loan Repayments'),
-     (totals.0.loan_repayments_other_loans, 'Other Loan Repayments'),
+     (totals.0.repayments_other_loans, 'Other Loan Repayments'),
      (totals.0.loan_repayments_made, 'Total Loan Repayments'),
      (totals.0.refunded_individual_contributions, 'Individual Refunds'),
-     (totals.0.refunded_political_party_committee_contribution, 'Political Party Refunds'),
+     (totals.0.refunded_political_party_committee_contributions, 'Political Party Refunds'),
      (totals.0.refunded_other_political_committee_contributions, 'Other Committee Refunds'),
      (totals.0.contribution_refunds, 'Total Contribution refunds'),
      (totals.0.other_disbursements, 'Other disbursements'),
@@ -42,6 +40,8 @@
 
 {{ totals_table('Beginning cash on hand', committee.reports.0.cash_on_hand_beginning_period) }}
 {{ totals_table('Ending cash on hand', committee.reports.0.cash_on_hand_end_period) }}
+{{ totals_table('Net Contributions', totals.0.net_contributions) }}
+{{ totals_table('Operating Expenditures', totals.0.net_operating_expenditures) }}
 {{ totals_table('Debts owed to committee', committee.reports.0.debts_owed_to_committee) }}
 {{ totals_table('Debts owed by committee', committee.reports.0.debts_owed_by_committee) }}
 
