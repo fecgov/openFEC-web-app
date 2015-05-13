@@ -1,6 +1,8 @@
 openfec-web-app
 ===============
 [![Build Status](https://travis-ci.org/18F/openFEC-web-app.svg?branch=master)](https://travis-ci.org/18F/openFEC-web-app)
+[![Code Climate](https://codeclimate.com/github/18F/openFEC-web-app/badges/gpa.svg)](https://codeclimate.com/github/18F/openFEC-web-app)
+[![Test Coverage](https://codeclimate.com/github/18F/openFEC-web-app/badges/coverage.svg)](https://codeclimate.com/github/18F/openFEC-web-app/coverage)
 
 See also http://github.com/18F/openFEC.
 
