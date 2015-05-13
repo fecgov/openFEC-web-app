@@ -49,3 +49,8 @@ script:
   - if [[ $FEC_SAUCE_BROWSER = 'false' ]]; then py.test openfecwebapp/tests; fi
   # Run Selenium tests if not pull request
   - if [[ $TRAVIS_PULL_REQUEST = 'false' && $FEC_SAUCE_BROWSER != 'false' ]]; then py.test openfecwebapp/tests --selenium; fi
+
+after_success:
+  # Deploy to appropriate Cloud Foundry space on success
+  # See `tasks.deploy` for details
+  - if [[ $TRAVIS_PULL_REQUEST = 'false' ]]; then invoke deploy; fi
