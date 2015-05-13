@@ -11,3 +11,29 @@
 .meta-box--bottom {
   margin-top: 2em;
 }
+
+.recent-report {
+  padding: 0;
+  position: relative;
+
+  .totals-table .table__row {
+    padding: .5rem 1rem;
+  }
+
+  @include media($medium) {
+    .totals-table .table__row {
+      padding: .5rem 2rem;
+    }
+  }
+}
+
+.meta-box__bar {
+  @include white-links();
+  color: #fff;
+  background-color: $licorice-3;
+  padding: .5rem 1rem;
+
+  @include media($medium) {
+    padding: 1rem 2rem;
+  }
+}

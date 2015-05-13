@@ -16,11 +16,18 @@ def test_currency_filter_none():
 def test_date_filter_iso():
     date = datetime.datetime.now()
     assert app.date_filter_sm(date.isoformat()) == date.strftime('%m/%y')
+    assert app.date_filter_md(date.isoformat()) == date.strftime('%b %Y')
 
 
 def test_date_filter_empty():
     assert app.date_filter_sm('') == ''
     assert app.date_filter_sm(None) == ''
+    assert app.date_filter_md(None) == ''
+
+
+def test_last_n_characters():
+    value = 123456789
+    assert app.last_n_characters(value) == 789
 
 
 def test_fmt_year_range_int():
