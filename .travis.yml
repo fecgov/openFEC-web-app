@@ -21,6 +21,7 @@ env:
     - FEC_SAUCE_BROWSER: "firefox"
 
 before_install:
+  - curl -o travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
   - curl -L -o cf.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel"
   - sudo dpkg -i cf.deb
 
@@ -54,6 +55,16 @@ script:
   - if [[ $TRAVIS_PULL_REQUEST = 'false' && $FEC_SAUCE_BROWSER != 'false' ]]; then py.test openfecwebapp/tests --selenium; fi
 
 after_success:
-  # Deploy to appropriate Cloud Foundry space on success
+  # Deploy to appropriate Cloud Foundry space after all builds succeed
   # See `tasks.deploy` for details
-  - if [[ $TRAVIS_PULL_REQUEST = 'false' ]]; then invoke deploy --branch $TRAVIS_BRANCH --yes; fi
+  - python travis_after_all.py
+  - export $(cat .to_export_back)
+  - |
+      if [[ $BUILD_LEADER = 'YES' && $TRAVIS_PULL_REQUEST = 'false' ]]; then
+        if [[ $BUILD_AGGREGATE_STATUS = 'others_succeeded' ]]; then
+          echo "All builds passed; deploying..."
+          invoke deploy --branch $TRAVIS_BRANCH --yes
+        else
+          echo "One or more builds failed; skipping deploy"
+        fi
+      fi
