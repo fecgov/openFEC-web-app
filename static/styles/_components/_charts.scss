@@ -1,10 +1,24 @@
 // the amount of padding at the bottom of vertical bar charts
 $chart-bottom: 30px;
 // the width of the axis for vertical bar charts
-$chart-axis-width: 100px;
+$chart-axis-width: 120px;
 
 $tooltip-arrow-size: 8px;
 $tooltip-border-color: #999;
+
+.chart-container {
+  border: 1px solid $light-gray;
+
+  .figure__title {
+    border-bottom: 1px solid $light-gray;
+    background: $lightest-gray;
+    padding: .5rem 1rem;
+  }
+
+  .chart-series {
+    margin: 1rem;
+  }
+}
 
 .chart-series__bar {
   background: #ccc;
@@ -127,6 +141,7 @@ $tooltip-border-color: #999;
 
     @include media($medium) {
       left: $chart-axis-width;
+      right: 20px;
     }
   }
 
@@ -164,12 +179,17 @@ $tooltip-border-color: #999;
 }
 
 .chart-series__group__label {
+  font-size: 1rem;
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
   padding-top: .25em;
   text-align: center;
+
+  @include media($medium) {
+    font-size: 1.4rem;
+  }
 }
 
 .chart-series__bar__tooltip {

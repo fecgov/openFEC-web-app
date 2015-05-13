@@ -35,7 +35,7 @@ class CandidatesPageTests(SearchPageTestCase):
             'ALLIEGRO, MARK C')
 
     def testCandidateCycleFilter(self):
-        self.checkFilter('year', '2014', 5, 2, '2014')
+        self.checkFilter('cycle', '2014', 5, 2, '2014')
 
     def testCandidatePartyFilter(self):
         self.checkFilter(

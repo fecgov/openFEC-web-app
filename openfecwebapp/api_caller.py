@@ -60,7 +60,7 @@ def load_single_type(data_type, c_id, filters):
 
 
 def load_nested_type(parent_type, c_id, nested_type):
-    return _call_api(parent_type, c_id, nested_type, year='*', per_page=100)
+    return _call_api(parent_type, c_id, nested_type, per_page=100)
 
 
 def load_cmte_financials(committee_id):
