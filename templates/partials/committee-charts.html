@@ -1,3 +1,6 @@
+{% with %}
+{% set reports = committee.reports  %}
+{% set totals = committee.totals  %}
 {% import 'macros/charts.html' as charts %}
 {% macro group_bar_tooltip(value, key) %}
 <div class="chart-series__bar__tooltip">
@@ -15,7 +18,7 @@
         <li><span class="swatch data--disbursements"></span> Disbursements</li>
       </ul>
     </div>
-    {{ charts.chart_series_grouped(committee.totals|reverse, ('receipts', 'disbursements'),
+    {{ charts.chart_series_grouped(totals|reverse, ('receipts', 'disbursements'),
        label_key=('coverage_start_date', 'coverage_end_date'), tooltip=group_bar_tooltip) }}
   </figure>
 </div>
@@ -28,7 +31,8 @@
         <li><span class="swatch data--debt"></span> Debt</li>
       </ul>
     </div>
-    {{ charts.chart_series_grouped(committee.reports|reverse, ('cash', 'debt'),
+    {{ charts.chart_series_grouped(reports|reverse, ('cash_on_hand_end_period', 'debts_owed_by_committee'),
        label_key=('coverage_end_date'), tooltip=group_bar_tooltip) }}
   </figure>
 </div>
+{% endwith %}
