@@ -1,8 +1,3 @@
-<h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-  <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-<div class="row js-accordion">
-
-<h3 class="section-header">Detailed Summary</h3>
 {% with committee=context() %}
 
 {% set table_data = [
@@ -49,10 +44,3 @@
 {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
 
 {% endwith %}
-</div>
-
-<div class="row">
-  {% with committee=context() %}
-    {% include 'partials/committee-charts.html' %}
-  {% endwith %}
-</div>
