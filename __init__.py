@@ -141,13 +141,11 @@ def date_filter_md(date_str):
         return ''
     return parse_date(date_str).strftime('%b %Y')
 
-@app.template_filter('last_3_characters')
-def last_3_characters(int):
-    string = str(int)
-    if string is None or string == '':
-        return ''
-    s = string[-3:]
-    return s
+@app.template_filter('last_n_characters')
+def last_n_characters(value, nchar=3):
+    if type(value) == int:
+        return value % (10 ** nchar)
+    return ''    
 
 @app.template_filter()
 def fmt_year_range(year):
