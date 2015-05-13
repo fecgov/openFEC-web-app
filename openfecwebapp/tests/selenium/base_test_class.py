@@ -101,6 +101,8 @@ class SearchPageTestCase(BaseTest):
         div = self.getFilterDivByName(name)
         div.find_element_by_tag_name('select').send_keys(entry)
         div.find_element_by_tag_name('select').send_keys(Keys.ENTER)
+        # Refresh containing div to avoid stale reference error
+        div = self.getFilterDivByName(name)
         close_buttons = div.find_elements_by_xpath(
             './/button[contains(@class, "button--remove")]'
         )
