@@ -1,0 +1,58 @@
+
+{% with committee=context() %}
+
+{% set table_data = [
+     (reports.0.individual_itemized_contributions_period, 'Itemized Individual Contributions'),
+     (reports.0.individual_unitemized_contributions_period, 'Unitemized Individual Contributions'),
+     (reports.0.political_party_committee_contributions_period, 'Party Committees Contributions'),
+     (reports.0.other_political_committee_contributions_period, 'Other Committees Contributions'),
+     (reports.0.total_contributions_period, 'Total Contributions'),
+     (reports.0.other_political_committee_contributions_period, 'Transfers from Affiliated Committees'),
+     (reports.0.all_loans_received_period, 'Loans Received'),
+     (reports.0.loan_repayments_received_period, 'Loan Repayments Received'),
+     (reports.0.offsets_to_operating_expenditures_period, 'Offsets to operating Expenditures'),
+     (reports.0.fed_candidate_contribution_refunds_period, 'Candidate Refunds'),
+     (reports.0.other_fed_receipts_period, 'Other Receipts'),
+     (reports.0.transfers_from_nonfed_account_period, 'Non-Federal Transfers'),
+     (reports.0.transfers_from_nonfed_levin_period, 'Levin Funds'),
+     (reports.0.transfers_from_nonfed_account_period, 'Total Non-Federal Transfers'),
+     (reports.0.total_fed_receipts_period, 'Total Federal Receipts'),
+   ]
+%}
+{{ totals_table('Total receipts', reports.0.receipts, table_data,
+    committee.report_year, header_description='Money received by the committee' ) }}
+
+{% set table_data = [
+     (reports.0.shared_fed_operating_expenditures_period, 'Federal Allocated Operating Expenditures'),
+     (reports.0.shared_nonfed_operating_expenditures_period, 'Non-Federal Operating Expenditures'),
+     (reports.0.total_operating_expenditures_period, 'Total Operating Expenditures'),
+     (reports.0.transfers_to_affiliated_committee_period, 'Transfers to Affiliated Committees'),
+     (reports.0.other_political_committee_contributions_period, 'Contributions to Other Committees'),
+     (reports.0.independent_expenditures_period, 'Independent Expenditures'),
+     (reports.0.coordinated_expenditures_by_party_committee_period, 'Coordinated Party Expenditures'),
+     (reports.0.loans_made_period, 'Loans Made'),
+     (reports.0.loan_repayments_made_period, 'Loan Repayments Made'),
+     (reports.0.individual_contribution_refunds_period, 'Individual Refunds'),
+     (reports.0.political_party_committee_contribution_refunds_period, 'Politial Party Refunds'),
+     (reports.0.other_political_committee_contribution_refunds_period, 'Other Committee Refunds'),
+     (reports.0.total_contribution_refunds_period, 'Total Contribution Refunds'),
+     (reports.0.other_disbursements_period, 'Other disbursements'),
+     (reports.0.shared_fed_activity_period, 'Federal Allocated Election Activity'),
+     (reports.0.non_allocated_fed_election_activity_period, 'Non-Federal Allocated Election Activity'),
+     (reports.0.fed_election_activity_period, 'Total Federal Election Activity'),
+     (reports.0.total_fed_disbursements_period, 'Total Federal Disbursements'),
+   ]
+%}
+{{ totals_table('Total Disbursements', reports.0.disbursements, table_data,
+    committee.report_year, header_description='Money spent by the committee' ) }}
+
+{{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
+{{ totals_table('Ending cash on hand', reports.0.cash_on_hand_end_period) }}
+
+{{ totals_table('Net Contributions', reports.0.net_contributions) }}
+{{ totals_table('Net Operating Expenditures', reports.0.net_operating_expenditures_period) }}
+{{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
+{{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
+
+{% endwith %}
+
