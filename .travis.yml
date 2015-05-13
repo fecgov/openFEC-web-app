@@ -14,6 +14,8 @@ env:
   global:
     - FEC_WEB_TEST: "true"
     - FEC_SELENIUM_DRIVER: "remote"
+    - secure: "Wvz5f/GyjVSooTCDtuTCgrBaiUR/idB0ikdDXWIAL02xpPaVMD0YQTVAE4WYJFEfX25APm79Bs+KHf2vKvUm/HGXfmGsRMb09dy8lVyCzdLuu9ISIH+0Udxj2qH1xdjZAqv8zuouc8N5aq24uMxFCqgxPi2kWnkieqbIw10HhQE="
+    - secure: "QMVCi+DS1BSdaWCmEQXurFDCWAijxJBEswY7s9RaGcTZRBmSsP5VR8uKDSANeRLZ509x3tXcw1X2OeqBFcyIzFi5WvF6oPcKahLrA6XrtjDYsMOBy9a2VDDqFH7ROI6G+99XTDNWoKmbjaO3AGhTGhIJWSf9T400T5imK0KMJB8="
     - secure: "SKKeJG+Pc0xFyq0++/Cf0fMO4fZlK1H3CgedSGiQhwl3Rsh8QgXBhH+/YwWYAozmUNPkJCEuDdB2A1trBEPqkghAnjNdOXu2mwo5ANweu8M/HdafeeDP2klHB7bIieJ5GhUfrZ1/D/nVcE86mePFlx6Ymjdg2DtNUYBIWFs2xPs="
     - secure: "UK4kK8mrj0AsYqL7ohK9wKMCTVSK0phyNw7sW2BynRJYTU3Xi073+m8mGiCvHGEULvriCtuysCsbh5iNUz5VQ/4RBQVOJdugzbWjbwEUzb6w1W5pXvwCRUufhGcr98odfNE09pZicfL0YjH84w/dqrlC3leeyaoF7bFqpaKWwqs="
   matrix:
@@ -49,3 +51,8 @@ script:
   - if [[ $FEC_SAUCE_BROWSER = 'false' ]]; then py.test openfecwebapp/tests; fi
   # Run Selenium tests if not pull request
   - if [[ $TRAVIS_PULL_REQUEST = 'false' && $FEC_SAUCE_BROWSER != 'false' ]]; then py.test openfecwebapp/tests --selenium; fi
+
+after_success:
+  # Deploy to appropriate Cloud Foundry space on success
+  # See `tasks.deploy` for details
+  - if [[ $TRAVIS_PULL_REQUEST = 'false' ]]; then invoke deploy; fi
