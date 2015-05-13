@@ -19,7 +19,7 @@
      (reports.0.total_fed_receipts_period, 'Total Federal Receipts'),
    ]
 %}
-{{ totals_table('Total receipts', reports.0.receipts, table_data,
+{{ totals_table('Total receipts', reports.0.total_receipts_period, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
 
 {% set table_data = [
@@ -43,7 +43,7 @@
      (reports.0.total_fed_disbursements_period, 'Total Federal Disbursements'),
    ]
 %}
-{{ totals_table('Total Disbursements', reports.0.disbursements, table_data,
+{{ totals_table('Total Disbursements', reports.0.total_disbursements_period, table_data,
     committee.report_year, header_description='Money spent by the committee' ) }}
 
 {{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
