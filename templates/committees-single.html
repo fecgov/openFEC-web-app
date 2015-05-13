@@ -138,25 +138,25 @@
               {% with committee=context() %}
               <div class="meta-box__bar">
                 <h4>Most Recent Report:
-                  <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_3_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">{{ committee.reports[0].report_year }} {{committee.report_desc}}</a>
+                  <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_3_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">{{ committee.reports[0].report_year }} {{committee.reports[0].report_type_full|fmt_report_desc}}</a>
                 </h4>
                <span>Report coverage: {{ committee.reports.0.coverage_start_date|date_md }} - {{ committee.reports.0.coverage_end_date|date_md }} | <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_3_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">View PDF &raquo;</a></span>
               </div>
                {% set table_data = [
-                   (committee.reports.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
-                   (committee.reports.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-                   (committee.reports.0.transfers_from_affiliated_committee, 'Transfer from authorized committees'),
-                   (committee.reports.0.all_loans_received, 'Loans'),
+                   (committee.reports.0.individual_itemized_contributions_period, 'Itemized Individual Contributions'),
+                   (committee.reports.0.individual_unitemized_contributions_period, 'Unitemized Individual Contributions'),
+                   (committee.reports.0.transfers_to_affiliated_committee_period, 'Transfer from authorized committees'),
+                   (committee.reports.0.all_loans_received_period, 'Loans'),
                  ]
               %}
               {{ totals_table('Total Receipts', committee.reports.0.total_receipts_period, table_data,
                   committee.report_year, header_description='' ) }}
               {% set table_data = [
-                   (committee.reports.0.operating_expenditures, 'Operating expenditures'),
-                   (committee.reports.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
-                   (committee.reports.0.loan_repayments_made, 'Total loan repayments'),
-                   (committee.reports.0.contribution_refunds, 'Contribution refunds'),
-                   (committee.reports.0.other_disbursements, 'Other disbursements'),
+                   (committee.reports.0.total_operating_expenditures_period, 'Operating expenditures'),
+                   (committee.reports.0.transfers_to_affiliated_committee_period, 'Transfers to affiliated committees'),
+                   (committee.reports.0.loan_repayments_made_period, 'Total loan repayments'),
+                   (committee.reports.0.total_contribution_refunds_period, 'Contribution refunds'),
+                   (committee.reports.0.other_disbursements_period, 'Other disbursements'),
                  ]
               %}
               {{ totals_table('Total Disbursements', committee.reports[0].total_disbursements_period, table_data,
@@ -164,7 +164,7 @@
               {{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
               {{ totals_table('End cash on hand', reports.0.cash_on_hand_end_period) }}
               {{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
-              {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}                  
+              {{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
             </div>
             <h3 class="section-header">Detailed Summary</h3>
             <!-- TODO: 'Transfer from a Committee' needs to reference a field available for all committee types (PacOrParty does not have it) -->
