@@ -3,9 +3,6 @@ language: python
 python:
   - "3.4"
 
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
-
 addons:
   postgresql: "9.4"
   sauce_connect: true
@@ -22,6 +19,10 @@ env:
     - FEC_SAUCE_BROWSER: "false"
     - FEC_SAUCE_BROWSER: "chrome"
     - FEC_SAUCE_BROWSER: "firefox"
+
+before_install:
+  - curl -L -o cf.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel"
+  - sudo dpkg -i cf.deb
 
 before_script:
   # Set up environment
