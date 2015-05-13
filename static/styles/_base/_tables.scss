@@ -189,7 +189,7 @@ table {
 }
 
 .totals-table {
-  @include font-size(1.4);
+
   .table__cell {
     width: 100%;
     padding: 1rem 0;
@@ -285,14 +285,39 @@ table {
   }
 }
 
-.meta-box {
-  .table--simple {
-    .table__row--nested {
+.recent-report.meta-box {
+  padding: 0;
+  position: relative;
+
+  .totals-table .table__row {
+    padding: .5rem 1rem;
+
+    &.table__row--nested {
+      padding: 0 1rem;
       background: darken($meta-box-color, 2%);
+    }
+  }
+
+  @include media($medium) {
+    .totals-table .table__row {
+      padding: .5rem 2rem;
+
+      &.table__row--nested {
+        padding: 0 2rem;
+      }
     }
   }
 }
 
+.reports-table {
+  font-size: 1.6rem;
+
+  @include media($medium) {
+    .table__cell:first-child {
+      width: 50%;
+    }    
+  }
+}
 /* All the fancy responsive styles are handled in 
 * /static/styles/responsive-tables.css
 * This is just further customization

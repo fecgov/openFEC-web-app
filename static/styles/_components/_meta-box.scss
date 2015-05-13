@@ -12,29 +12,6 @@
   margin-top: 2em;
 }
 
-.recent-report {
-  padding: 0;
-  position: relative;
-
-  .totals-table .table__row {
-    padding: .5rem 1rem;
-
-    &.table__row--nested {
-      padding: 0 1rem;
-    }
-  }
-
-  @include media($medium) {
-    .totals-table .table__row {
-      padding: .5rem 2rem;
-
-      &.table__row--nested {
-        padding: 0 2rem;
-      }
-    }
-  }
-}
-
 .meta-box__bar {
   @include white-links();
   color: #fff;
