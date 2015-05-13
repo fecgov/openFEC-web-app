@@ -133,19 +133,21 @@ def currency_filter(num, grouping=True):
 def date_filter_sm(date_str):
     if not date_str:
         return ''
-    return parse_date(date_str).strftime('%m%y')
+    return parse_date(date_str).strftime('%m/%y')
 
 
 @app.template_filter()
 def fmt_year_range(year):
-    if year is not None and type(year) == 'int':
+    if type(year) == int:
         return "{} - {}".format(year - 1, year)
+    return None
 
 
 @app.template_filter()
 def fmt_report_desc(report_full_description):
     if report_full_description is not None:
         return re.sub('{.+}', '', report_full_description)
+
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
