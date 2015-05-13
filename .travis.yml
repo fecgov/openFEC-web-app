@@ -21,6 +21,12 @@ env:
     - FEC_SAUCE_BROWSER: "chrome"
     - FEC_SAUCE_BROWSER: "firefox"
 
+before_install:
+    pip install codecov
+
+after_success:
+    codecov
+
 before_script:
   # Set up environment
   - if [[ $TRAVIS_BRANCH = 'master' ]]; then export FEC_BRANCH=master; fi
