@@ -125,7 +125,7 @@ def server_error(e):
 
 @app.template_filter('currency')
 def currency_filter(num, grouping=True):
-    if num is not None:
+    if isinstance(num, (int, float)):
         return locale.currency(num, grouping=grouping)
 
 
@@ -145,7 +145,7 @@ def fmt_year_range(year):
 
 @app.template_filter()
 def fmt_report_desc(report_full_description):
-    if report_full_description is not None:
+    if report_full_description:
         return re.sub('{.+}', '', report_full_description)
 
 
