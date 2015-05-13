@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
 from dateutil.parser import parse as parse_date
+from openfecwebapp.config import (port, debug, host, api_location, api_version, api_key_public, username, password, test, force_https, analytics) 
 from openfecwebapp.views import render_search_results, render_table, render_candidate, render_committee
 from openfecwebapp.api_caller import load_search_results, load_single_type, load_single_type_summary, load_nested_type, install_cache, fake_load_search_results
 

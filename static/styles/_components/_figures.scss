@@ -28,6 +28,19 @@ figure {
   }
 }
 
+.figure-group__block {
+  border-top: 1px solid $light-gray;
+  padding: .5rem;
+
+  @include media($medium) {
+    padding: 1rem 2rem;
+  }
+}
+
+.figure-group__block--dark {
+  background-color: $lightest-gray;
+}
+
 .figure-group__bar {
   @include white-links();
   color: #fff;
@@ -44,8 +57,15 @@ figure {
     padding: 2rem;
   }
 }
+.figure-group__header--short {
+  padding: 0 1rem;
+}
 
 .figure-group__title {
+  margin: 0;
+}
+
+h3.figure-group__title {
   margin: 0;
 }
 

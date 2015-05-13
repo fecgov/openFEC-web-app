@@ -70,6 +70,18 @@
   }
 }
 
+.entity__term--aligned {
+  @include media($medium) {
+    min-width: 20rem;
+    vertical-align: top;
+  }
+}
+
+.entity__term--icon {
+  min-width: 3.4rem;
+  width: 3.4rem;
+}
+
 .entity__term__label {
   color: #fff;
   font-weight: bold;
