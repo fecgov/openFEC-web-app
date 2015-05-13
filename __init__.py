@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
+from dateutil.parser import parse as parse_date
 from openfecwebapp.config import (port, debug, host, api_location, api_version, api_key_public,
                                   username, password, test, force_https, analytics)
 from openfecwebapp.views import render_search_results, render_table, render_candidate, render_committee
@@ -124,28 +125,29 @@ def server_error(e):
 
 @app.template_filter('currency')
 def currency_filter(num, grouping=True):
-    if num is not None:
+    if isinstance(num, (int, float)):
         return locale.currency(num, grouping=grouping)
 
 
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
-    if date_str is None or date_str == '':
+    if not date_str:
         return ''
-    d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
-    return d.strftime('%m/%y')
+    return parse_date(date_str).strftime('%m/%y')
 
 
 @app.template_filter()
 def fmt_year_range(year):
-    if year is not None and type(year) == 'int':
+    if type(year) == int:
         return "{} - {}".format(year - 1, year)
+    return None
 
 
 @app.template_filter()
 def fmt_report_desc(report_full_description):
-    if report_full_description is not None:
+    if report_full_description:
         return re.sub('{.+}', '', report_full_description)
+
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
