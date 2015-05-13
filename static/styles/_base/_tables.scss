@@ -177,7 +177,8 @@ table {
   .table__row--nested {
     background: $lightest-gray;
     border-bottom: 1px solid #fff;
-    padding: 0 2rem;
+    padding: 0 1rem;
+    font-size: 14px;
 
     &.table__row--note {
       text-align: left;
@@ -208,6 +209,11 @@ table {
       &:first-child {
         width: 50%;
       }
+
+      h5 {
+        line-height: 1.5em;
+        margin-bottom: 0;
+      }
     }
     
     .table__row--header {
@@ -219,6 +225,10 @@ table {
       .table__cell:first-child {
         width: 100%;
         padding-top: .5rem;
+      }
+
+      .table__cell:first-child {
+        font-weight: normal;
       }
     }
 
@@ -248,11 +258,11 @@ table {
       .table__row--nested {
         .table__cell {
           width: 20%;
-          padding: 1rem 0;
+          padding: .5em 0;
 
           &:first-child {
             width: 40%;
-            padding: 1rem 0;
+            padding: .5em 0;
           }
 
           &:last-of-type {
