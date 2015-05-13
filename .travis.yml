@@ -22,7 +22,7 @@ env:
     - FEC_SAUCE_BROWSER: "firefox"
 
 before_install:
-    pip install codecov
+    pip install codecov pytest_cov
 
 after_success:
     codecov
