@@ -30,13 +30,8 @@
         {% if result_type == 'committees' %}
           {% with committees=results %}
             {% for committee in committees %}
-              {% include 'partials/search-results-committee.html' %}
               <div class="figure-group">
-                {% if committee.candidate %}
-                {% with candidate = committe.candidate %}
-                  {% include "partials/search-results-candidate.html" %}
-                {% endwith %}
-                {% endif %}
+                {% include 'partials/search-results-committee.html' %}
               </div>
             {% endfor %}
 
@@ -45,13 +40,13 @@
         {% else %}
           {% with candidates=results %}
             {% for candidate in candidates %}
-              <div class="figure-group__header--short">
-                <span>Active: {{ candidate.active_through }}</span>
-                <span class="u-float-right color-activity">
-                  Currently active (TODO)</span>
-              </div>
-              {% include 'partials/search-results-candidate.html' %}
-              <div class="figure-group">
+              <div class="figure-group--blank">
+                <div class="figure-group__header figure-group__header--short">
+                  <span>Active: {{ candidate.active_through }}</span>
+                  <span class="u-float-right color-activity">
+                    Currently active (TODO)</span>
+                </div>
+                {% include 'partials/search-results-candidate.html' %}
                 {% if candidate.committee %}
                 {% with committee=candidate.committee %}
                   {% include "partials/search-results-committee.html" %}

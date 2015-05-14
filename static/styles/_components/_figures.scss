@@ -28,12 +28,22 @@ figure {
   }
 }
 
+.figure-group--blank {
+  @include clearfix();
+  @include rem(margin-bottom, 5.0rem);
+  clear: both;
+}
+
 .figure-group__block {
-  border-top: 1px solid $light-gray;
+  border: 1px solid $light-gray;
   padding: .5rem;
 
   @include media($medium) {
     padding: 1rem 2rem;
+  }
+
+  & + .figure-group__block {
+    border-top: 0;
   }
 }
 
@@ -51,10 +61,14 @@ figure {
 .figure-group__header {
   @include clearfix();
   padding: 1rem;
-  border-bottom: 1px solid $light-gray;
+  border: 1px solid $light-gray;
 
   @include media($medium) {
     padding: 2rem;
+  }
+
+  & + .figure-group__block {
+    border-top: 0;
   }
 }
 .figure-group__header--short {
