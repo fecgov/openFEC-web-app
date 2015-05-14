@@ -13,7 +13,7 @@
       <div class="table__cell">{{totals.disbursements|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      Calculated from reports filed {{ totals.cycle - 1 }} - {{totals.cycle|default("unknown")}}
+      Calculated from reports filed {{ totals.cycle|fmt_year_range|default("unknown") }}
     </div>
   </div>
   <div class="table__half">
