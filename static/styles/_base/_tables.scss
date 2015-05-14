@@ -108,8 +108,8 @@ table {
 .table__row--note {
   @include font-size(1.0);
   width: 100%;
-  padding: .5rem 0 1rem 0;
-  text-align: right;
+  padding: .5em;
+  text-align: left;
   font-style: italic;
   display: block;
 
@@ -177,7 +177,8 @@ table {
   .table__row--nested {
     background: $lightest-gray;
     border-bottom: 1px solid #fff;
-    padding: 0 2rem;
+    padding: 0 1rem;
+    font-size: 1.4rem;
 
     &.table__row--note {
       text-align: left;
@@ -188,7 +189,7 @@ table {
 }
 
 .totals-table {
-  @include font-size(1.4);
+
   .table__cell {
     width: 100%;
     padding: 1rem 0;
@@ -208,6 +209,11 @@ table {
       &:first-child {
         width: 50%;
       }
+
+      h5 {
+        line-height: 1.5em;
+        margin-bottom: 0;
+      }
     }
     
     .table__row--header {
@@ -219,6 +225,10 @@ table {
       .table__cell:first-child {
         width: 100%;
         padding-top: .5rem;
+      }
+
+      .table__cell:first-child {
+        font-weight: normal;
       }
     }
 
@@ -248,11 +258,11 @@ table {
       .table__row--nested {
         .table__cell {
           width: 20%;
-          padding: 1rem 0;
+          padding: .5em 0;
 
           &:first-child {
             width: 40%;
-            padding: 1rem 0;
+            padding: .5em 0;
           }
 
           &:last-of-type {
@@ -275,14 +285,39 @@ table {
   }
 }
 
-.meta-box {
-  .table--simple {
-    .table__row--nested {
+.recent-report.meta-box {
+  padding: 0;
+  position: relative;
+
+  .totals-table .table__row {
+    padding: .5rem 1rem;
+
+    &.table__row--nested {
+      padding: 0 1rem;
       background: darken($meta-box-color, 2%);
+    }
+  }
+
+  @include media($medium) {
+    .totals-table .table__row {
+      padding: .5rem 2rem;
+
+      &.table__row--nested {
+        padding: 0 2rem;
+      }
     }
   }
 }
 
+.reports-table {
+  font-size: 1.6rem;
+
+  @include media($medium) {
+    .table__cell:first-child {
+      width: 50%;
+    }    
+  }
+}
 /* All the fancy responsive styles are handled in 
 * /static/styles/responsive-tables.css
 * This is just further customization
