@@ -21,7 +21,7 @@ env:
     - FEC_SAUCE_BROWSER: "firefox"
 
 before_install:
-  - curl -L -o travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+  - curl -L -o travis_after_all.py https://raw.github.com/jmcarp/travis_after_all/master/travis_after_all.py
   - curl -L -o cf.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel"
   - sudo dpkg -i cf.deb
 
