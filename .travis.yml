@@ -22,7 +22,7 @@ env:
     - FEC_SAUCE_BROWSER: "firefox"
 
 before_install:
-    pip install codecov pytest_cov
+    pip install codecov
 
 after_success:
     codecov
@@ -52,6 +52,6 @@ before_script:
 
 script:
   # Run unit tests
-  - if [[ $FEC_SAUCE_BROWSER = 'false' ]]; then py.test openfecwebapp/tests; fi
+  - if [[ $FEC_SAUCE_BROWSER = 'false' ]]; then py.test; fi
   # Run Selenium tests if not pull request
-  - if [[ $TRAVIS_PULL_REQUEST = 'false' && $FEC_SAUCE_BROWSER != 'false' ]]; then py.test openfecwebapp/tests --selenium; fi
+  - if [[ $TRAVIS_PULL_REQUEST = 'false' && $FEC_SAUCE_BROWSER != 'false' ]]; then py.test --selenium; fi
