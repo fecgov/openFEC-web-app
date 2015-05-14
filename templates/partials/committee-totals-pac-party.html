@@ -5,7 +5,6 @@
      (totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
      (totals.0.political_party_committee_contributions, 'Party Committees Contributions'),
      (totals.0.other_political_committee_contributions, 'Other Committees Contributions'),
-     (totals.0.contributions, 'Total Contributions'),
      (totals.0.net_contributions, 'Net Contributions'),
      (totals.0.other_political_committee_contributions, 'Transfers from Affiliated Committees'),
      (totals.0.all_loans_received, 'Loans Received'),
@@ -15,8 +14,6 @@
      (totals.0.other_fed_receipts, 'Other Receipts'),
      (totals.0.transfers_from_nonfed_account, 'Non-Federal Transfers'),
      (totals.0.transfers_from_nonfed_levin, 'Levin Funds'),
-     (totals.0.transfers_from_nonfed_account, 'Total Non-Federal Transfers'),
-     (totals.0.fed_receipts, 'Total Federal Receipts'),
    ]
 %}
 {{ totals_table('Total receipts', totals.0.receipts, table_data,
@@ -25,7 +22,6 @@
 {% set table_data = [
      (totals.0.shared_fed_operating_expenditures, 'Federal Allocated Operating Expenditures'),
      (totals.0.shared_nonfed_operating_expenditures, 'Non-Federal Operating Expenditures'),
-     (totals.0.operating_expenditures, 'Total Operating Expenditures'),
      (totals.0.net_operating_expenditures, 'Net Operating Expenditures'),
      (totals.0.transfers_to_affiliated_committee, 'Transfers to Affiliated Committees'),
      (totals.0.other_political_committee_contributions, 'Contributions to Other Committees'),
@@ -36,12 +32,9 @@
      (totals.0.individual_contribution_refunds, 'Individual Refunds'),
      (totals.0.political_party_committee_contribution_refunds, 'Politial Party Refunds'),
      (totals.0.other_political_committee_contribution_refunds, 'Other Committee Refunds'),
-     (totals.0.contribution_refunds, 'Total Contribution refunds'),
      (totals.0.other_disbursements, 'Other disbursements'),
      (totals.0.shared_fed_activity, 'Federal Allocated Election Activity'),
      (totals.0.non_allocated_fed_election_activity, 'Non-Federal Allocated Election Activity'),
-     (totals.0.fed_election_activity, 'Total Federal Election Activity'),
-     (totals.0.fed_disbursements, 'Total Federal Disbursements'),
    ]
 %}
 {{ totals_table('Total Disbursements', totals.0.disbursements, table_data,
