@@ -1,5 +1,5 @@
-<div class="figure-group__block figure-group__block--dark">
-  <h3 class="figure-group__title">
+<div class="box__portion box__portion--dark">
+  <h3 class="box__title">
     <a title="{{ candidate.name }}"
         href="{{ url_for('candidate_page', c_id=candidate.candidate_id) }}">
       {{ candidate.name }}
@@ -8,7 +8,7 @@
   <ul class="entity__info">
     <li class="entity__term entity__term--aligned entity__term--icon">
       <span class="entity__type">
-        <img class="category-icon category-icon--lg" width="20" height="20"
+        <img class="category-icon" width="20" height="20"
              src="/static/img/icon-candidate.svg"
              alt="Icon representing candidates">
       </span>
@@ -31,12 +31,12 @@
       </span>
     </li>
     <li class="entity__term entity__term--aligned">
-      <h4>
+      <h5 class="u-text-right">
         <a title="{{ candidate.name }}"
             href="{{ url_for('candidate_page', c_id=candidate.candidate_id) }}">
           View Candidate Page <span>&twoheadrightarrow;</span>
         </a>
-      </h4>
+      </h5>
     </li>
   </ul>
 </div>

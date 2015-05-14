@@ -72,14 +72,13 @@
 
 .entity__term--aligned {
   @include media($medium) {
-    min-width: 20rem;
     vertical-align: top;
   }
 }
 
 .entity__term--icon {
-  min-width: 3.4rem;
-  width: 3.4rem;
+  min-width: 3rem;
+  width: 3rem;
 }
 
 .entity__term__label {
