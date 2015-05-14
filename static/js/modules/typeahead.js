@@ -3,6 +3,7 @@
 /* global require, module, window, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
+var _ = require('underscore');
 require('typeahead.js');
 var URI = require('URIjs');
 var Handlebars = require('handlebars');
@@ -11,35 +12,27 @@ var events = require('./events.js');
 var terms = require('./terms');
 var glossary = require('./glossary.js');
 
+
+var officeMap = {
+  H: 'House of Representatives',
+  S: 'Senate',
+  P: 'President'
+};
+
 var filterCandidates = function(result) {
-
-  var officeFull,
-      officeMap,
-      filteredResults;
-
-  officeMap = {
-    "H": "House of Representatives",
-    "S": "Senate",
-    "P": "President"
-  }
-
-  officeFull = officeMap[result.office_sought];
-
-  filteredResults =   {
+  return {
     name: result.name,
     id: result.candidate_id,
-    office: officeFull
-  }
-  return filteredResults;
-}
+    office: officeMap[result.office_sought]
+  };
+};
 
 var filterCommittees = function(result) {
-  var filteredResults =   {
+  return {
     name: result.name,
     id: result.committee_id
-  }
-  return filteredResults;
-}
+  };
+};
 
 module.exports = {
   init: function(){
@@ -68,12 +61,14 @@ module.exports = {
       remote: {
         url: url,
         filter: function(response) {
-          var results = $.map(response.results, function(result){
-            if ( result.candidate_id !== null ) {
+          return _.chain(response.results)
+            .filter(function(result) {
+              return result.candidate_id;
+            })
+            .map(function(result) {
               return filterCandidates(result);
-            }
-          });
-          return results;
+            })
+            .value();
         }
       },
       datumTokenizer: function(d) {
@@ -91,12 +86,14 @@ module.exports = {
       remote: {
         url: url,
         filter: function(response) {
-          var results = $.map(response.results, function(result) {
-            if ( result.committee_id !== null ) {
+          return _.chain(response.results)
+            .filter(function(result) {
+              return result.committee_id;
+            })
+            .map(function(result) {
               return filterCommittees(result);
-            }
-          });
-          return results;
+            })
+            .value();
         }
       },
       datumTokenizer: function(d) {
@@ -117,7 +114,7 @@ module.exports = {
     committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
     headerTpl = function(label) {
       return Handlebars.compile('<span class="tt-dropdown-title">' + label + '</span>');
-    }
+    };
 
     // Setting up main search typehead
     $('.search-bar').typeahead({
