@@ -21,8 +21,9 @@ env:
     - FEC_SAUCE_BROWSER: "firefox"
 
 before_install:
-  - curl -L -o travis_after_all.py https://raw.github.com/jmcarp/travis_after_all/master/travis_after_all.py
-  - curl -L -o cf.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel"
+  - travis_retry pip install codecov
+  - travis_retry curl -L -o travis_after_all.py https://raw.github.com/jmcarp/travis_after_all/master/travis_after_all.py
+  - travis_retry curl -L -o cf.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel"
   - sudo dpkg -i cf.deb
 
 before_script:
@@ -50,9 +51,9 @@ before_script:
 
 script:
   # Run unit tests
-  - if [[ $FEC_SAUCE_BROWSER = 'false' ]]; then py.test openfecwebapp/tests; fi
+  - if [[ $FEC_SAUCE_BROWSER = 'false' ]]; then py.test; fi
   # Run Selenium tests if not pull request
-  - if [[ $TRAVIS_PULL_REQUEST = 'false' && $FEC_SAUCE_BROWSER != 'false' ]]; then py.test openfecwebapp/tests --selenium; fi
+  - if [[ $TRAVIS_PULL_REQUEST = 'false' && $FEC_SAUCE_BROWSER != 'false' ]]; then py.test --selenium; fi
 
 after_success:
   # Deploy to appropriate Cloud Foundry space after all builds succeed
@@ -68,3 +69,4 @@ after_success:
           echo "One or more builds failed; skipping deploy"
         fi
       fi
+  - if [[ $BUILD_LEADER = 'YES' ]]; then codecov; fi
