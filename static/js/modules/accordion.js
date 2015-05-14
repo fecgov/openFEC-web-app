@@ -29,7 +29,6 @@ var accordion = {
     this.$buttons = this.findButtons(this.$headers);
 
     this.hideAll();
-    this.showHeader($(this.$headers.get(0)));
 
     this.$buttons.on('click', $.proxy(self.itemClickHandler, this));
 
