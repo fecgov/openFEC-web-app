@@ -1,4 +1,5 @@
 import os
+import logging
 import unittest
 
 import pytest
@@ -9,6 +10,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
 from openfecwebapp.sauce import SauceClient
+
+# Silence Selenium logs
+remote_logger = logging.getLogger('selenium.webdriver.remote.remote_connection')
+remote_logger.setLevel(logging.WARN)
 
 
 sauce_url = 'http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub'.format(
