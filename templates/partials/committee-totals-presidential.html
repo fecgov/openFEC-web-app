@@ -32,11 +32,4 @@
 {{ totals_table('Total Disbursements', totals.0.disbursements, table_data,
     committee.report_year, header_description='Money spent by the committee' ) }}
 
-{{ totals_table('Beginning cash on hand', committee.reports.0.cash_on_hand_beginning_period) }}
-{{ totals_table('Ending cash on hand', committee.reports.0.cash_on_hand_end_period) }}
-{{ totals_table('Net Contributions', totals.0.net_contributions) }}
-{{ totals_table('Operating Expenditures', totals.0.net_operating_expenditures) }}
-{{ totals_table('Debts owed to committee', committee.reports.0.debts_owed_to_committee) }}
-{{ totals_table('Debts owed by committee', committee.reports.0.debts_owed_by_committee) }}
-
 {% endwith %}
