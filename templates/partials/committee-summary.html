@@ -26,7 +26,7 @@
       <div class="table__cell">{{reports.debts_owed_by_committee|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      Source: <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_n_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">{{reports.report_type_full|fmt_report_desc|default("unavailable")}} {{ reports.report_year }}</a>
+      Source: <a href="http://docquery.fec.gov/pdf/{{ reports.beginning_image_number|last_n_characters }}/{{ reports.beginning_image_number }}/{{ reports.beginning_image_number }}.pdf">{{reports.report_type_full|fmt_report_desc|default("unavailable")}} {{ reports.report_year }}</a>
     </div>
   </div>
 </figure>
