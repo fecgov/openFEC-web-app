@@ -37,3 +37,15 @@ def test_fmt_year_range_int():
 def test_fmt_year_range_not_int():
     assert app.fmt_year_range('1985') is None
     assert app.fmt_year_range(None) is None
+
+
+def test_fmt_cycles_range_one_cycle():
+    assert app.fmt_cycles_range([2012]) == '2012'
+
+
+def test_fmt_cycles_range_multiple_cycles():
+    assert app.fmt_cycles_range([1998, 1996, 2002]) == '1996 - 2002'
+
+
+def test_fmt_cycles_none():
+    assert app.fmt_cycles_range(None) is None
