@@ -51,6 +51,7 @@
     background-color: $light-gray;
     float: left;
     font-size: 1.6rem;
+    font-weight: bold;
     height: 6rem;
 
     option {
@@ -80,7 +81,7 @@
 .tt-dropdown-menu {
   @include font-size(1.4);
   background: #fff;
-  top: 32px !important;
+  top: 22px !important;
   text-align: left;
   box-shadow: 0 1px 1px rgba(0,0,0,.3);
   border: 1px solid $light-gray;
@@ -93,7 +94,7 @@
 #large-search {
   .tt-dropdown-menu {
     @include font-size(1.6);
-    top: 70px !important;
+    top: 60px !important;
   }
 }
 
