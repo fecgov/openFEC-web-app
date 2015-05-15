@@ -38,9 +38,9 @@
             {% endfor %}
           </li>
           <li class="entity__term">
-            <h5 class="entity__term__label">Election Cycles</h5>
+            <h5 class="entity__term__label">Election Years</h5>
             <ul class="entity__term__data">
-            {% for year in cycles %}
+            {% for year in election_years %}
               <span value="{{ year }}">{{ year }}{% if loop.last == false %},{% endif %}</span>
             {% endfor %}
             </ul>
