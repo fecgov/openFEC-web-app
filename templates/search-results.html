@@ -49,8 +49,8 @@
                     Currently active (TODO)</span>
                 </div>
                 {% include 'partials/search-results-candidate.html' %}
-                {% if candidate.committee %}
-                {% with committee=candidate.committee %}
+                {% if candidate.principal_committees %}
+                {% with committee=candidate.principal_committees[0] %}
                   {% include "partials/search-results-committee.html" %}
                 {% endwith %}
                 {% endif %}

@@ -36,9 +36,24 @@ class SearchResultsPageTests(SearchPageTestCase):
       self.assertIsNotNone(self.driver.find_elements_by_link_text(
         'View Candidate Page'))
 
+    def testSearchResultsPageLinkOnCommittee(self):
+      test_query = 'obama'
+      expected = 'committees'
+      self.driver.get('/?' + urllib.parse.urlencode(
+        {'search': test_query, 'search_type': expected}))
+      self.assertIsNotNone(self.driver.find_elements_by_link_text(
+        'View Committee Page'))
+
     def testSearchResultsPageLoadsOneResult(self):
       test_query = 'obama'
       test_type = 'candidates'
+      self.driver.get('/?' + urllib.parse.urlencode(
+        {'search': test_query, 'search_type': test_type}))
+      self.elementExistsByClassName('tst-search_result')
+
+    def testSearchResultsPageLoadsOneResultCommittee(self):
+      test_query = 'obama'
+      test_type = 'committees'
       self.driver.get('/?' + urllib.parse.urlencode(
         {'search': test_query, 'search_type': test_type}))
       self.elementExistsByClassName('tst-search_result')
