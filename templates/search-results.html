@@ -35,8 +35,6 @@
                 {% include 'partials/search-results-committee.html' %}
               </div>
             {% endfor %}
-
-
           {% endwith %}
         {% else %}
           {% with candidates=results %}
@@ -44,9 +42,13 @@
               <div class="box">
                 <div class="box__header">
                   <span class="text--medium">
-                    Active: {{ candidate.active_through }}</span>
-                  <span class="text--medium color-activity box__right">
-                    Currently active (TODO)</span>
+                    Election years: {{ candidate.election_years[0] }} -
+                    {{ candidate.election_years[-1] }}
+                  </span>
+                  {% if current_cycle in candidate.election_years %}
+                    <span class="text--medium color-activity box__right">
+                      Currently active (TODO)</span>
+                  {% endif %}
                 </div>
                 {% include 'partials/search-results-candidate.html' %}
                 {% if candidate.principal_committees %}

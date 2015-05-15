@@ -30,11 +30,13 @@ def get_context(c):
     return c
 
 
-def _get_default_cycles():
+def _get_current_cycle():
     now = datetime.datetime.now().year
-    cycle = now + now % 2
-    return list(range(cycle - 4, cycle + 2, 2))
+    return now + now % 2
 
+def _get_default_cycles():
+    cycle = _get_current_cycle()
+    return list(range(cycle - 4, cycle + 2, 2))
 
 app.jinja_env.globals['api_location'] = api_location
 app.jinja_env.globals['api_version'] = api_version
@@ -42,6 +44,7 @@ app.jinja_env.globals['api_key'] = api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
+app.jinja_env.globals['current_cycle'] = _get_current_cycle()
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
