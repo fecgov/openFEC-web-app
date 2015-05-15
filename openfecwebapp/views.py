@@ -52,7 +52,6 @@ def render_candidate(data, committees=None):
 
     # candidate fields will be top-level in the template
     tmpl_vars = results
-    tmpl_vars['election_years'] = load_election_years(results['candidate_id'])
 
     # add 'committees' level to template
     tmpl_vars['has_authorized_cmtes'] = False
