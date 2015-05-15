@@ -59,11 +59,6 @@ def load_cmte_financials(committee_id):
     }
 
 
-def load_election_years(candidate_id):
-    candidate = _call_api('/candidate/', candidate_id)
-    return candidate.get('election_years', [])
-
-
 def install_cache():
     import requests_cache
     requests_cache.install_cache()
