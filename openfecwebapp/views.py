@@ -1,9 +1,8 @@
 from flask import render_template
 from openfecwebapp.models.shared import generate_pagination_values
-from openfecwebapp.api_caller import load_cmte_financials, load_election_years
+from openfecwebapp.api_caller import load_cmte_financials
 from werkzeug.exceptions import abort
 
-import re
 
 def render_search_results(candidates, committees, query):
     # if true will show "no results" message
@@ -52,7 +51,6 @@ def render_candidate(data, committees=None):
 
     # candidate fields will be top-level in the template
     tmpl_vars = results
-    tmpl_vars['election_years'] = load_election_years(results['candidate_id'])
 
     # add 'committees' level to template
     tmpl_vars['has_authorized_cmtes'] = False
