@@ -19,10 +19,9 @@
 .input-button-combo.search--large {
   padding-bottom: 1rem;
 
-  .search-bar {
-    @include font-size(1.6);
-    height: 4rem;
-    padding: 0 .5em;
+  input {
+    clear: both;
+    float: left;
   }
 
   button {
@@ -35,6 +34,31 @@
     }
   }
 
+  .search-bar {
+    @include font-size(1.6);
+    float: left;
+    height: 4rem;
+    padding: 0 .5em;
+    width: 100%;
+  }
+
+  .twitter-typeahead {
+    float: left;
+    width: 50%;
+  }
+
+  .search__select {
+    background-color: $light-gray;
+    float: left;
+    font-size: 1.6rem;
+    height: 6rem;
+
+    option {
+      // TODO not working.
+      padding: 1rem 0;
+    }
+  }
+
   @include media($medium) {
     .search-bar,
     button {
@@ -42,6 +66,7 @@
       height: 6rem;
     }
   }
+
 }
 
 @include media($medium) {
