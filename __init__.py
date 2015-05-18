@@ -135,11 +135,13 @@ def date_filter_sm(date_str):
         return ''
     return parse_date(date_str).strftime('%m/%y')
 
+
 @app.template_filter('date_md')
 def date_filter_md(date_str):
     if not date_str:
         return ''
     return parse_date(date_str).strftime('%b %Y')
+
 
 @app.template_filter('last_n_characters')
 def last_n_characters(value, nchar=3):
@@ -147,11 +149,21 @@ def last_n_characters(value, nchar=3):
         return value % (10 ** nchar)
     return ''
 
+
 @app.template_filter()
 def fmt_year_range(year):
     if type(year) == int:
         return "{} - {}".format(year - 1, year)
     return None
+
+
+@app.template_filter()
+def fmt_cycles_range(cycles):
+    if not cycles:
+        return None
+    if len(cycles) > 1:
+        return '{} - {}'.format(min(cycles), max(cycles))
+    return '{}'.format(cycles[0])
 
 
 @app.template_filter()
