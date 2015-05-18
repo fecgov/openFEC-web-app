@@ -27,7 +27,8 @@ def test_date_filter_empty():
 
 def test_last_n_characters():
     value = 123456789
-    assert app.last_n_characters(value) == 789
+    assert app.last_n_characters(value) == '789'
+    assert app.last_n_characters(5) == '005'
 
 
 def test_fmt_year_range_int():
