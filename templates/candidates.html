@@ -1,7 +1,7 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-   Browse Candidates 
+   Browse Candidates
 {% endblock %}
 
 {% block header %}
@@ -24,10 +24,10 @@
 <section class="results-content">
   <div id="filters" class="side-panel side-panel--left">
     <form id="category-filters">
-        <div class="field" id="name-field">
-          <label for="name">Name</label>
-          <input type="text" name="name" />
-          <button type="button" class="button--remove" data-removes="name"><i class="ti-close"></i></button>
+        <div class="field" id="q-field">
+          <label for="q">Name</label>
+          <input type="text" name="q" />
+          <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
         </div>
 
         {% include 'partials/filters/election-years.html' %}
@@ -45,7 +45,7 @@
   <div id="candidates" class="results-container">
     {% if candidates %}
         {% include 'partials/candidates-table.html' %}
-    {% else %}    
+    {% else %}
       <div class="meta-box error-container">
         <h2 id="section-1-header" tabindex="0">No candidates matched your filters</h2>
         <p class="text--lead">Try adjusting your filters or searching by name.</p>
@@ -61,5 +61,5 @@
     {% if pagination %}
       {% include 'partials/pagination.html' %}
     {% endif %}
-  </div>  
-{% endblock %} 
+  </div>
+{% endblock %}
