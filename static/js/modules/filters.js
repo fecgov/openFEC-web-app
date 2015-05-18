@@ -69,7 +69,7 @@ var selectedFilters = {};
 
 // all of the filters we use on candidates and committees
 var fieldMap = [
-    'name',
+    'q',
     'cycle',
     'party',
     'state',
