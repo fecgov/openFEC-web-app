@@ -15,11 +15,11 @@
      (reports.0.other_receipts_period, 'Other Receipts'),
    ]
 %}
-{{ totals_table('Total receipts', reports.0.total_receipts_period, table_data,
+{{ totals_table('Total Receipts', reports.0.total_receipts_period, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
 
 {% set table_data = [
-     (reports.0.operating_expenditures_period, 'Operating expenditures'),
+     (reports.0.operating_expenditures_period, 'Operating Expenditures'),
      (reports.0.transfer_to_other_authorized_committee_period, 'Transfers to Authorized Committees'),
      (reports.0.repayments_loans_made_by_candidate_period, 'Candidate Loan Repayments'),
      (reports.0.repayments_other_loans_period, 'Other Loan Repayments'),
@@ -27,17 +27,17 @@
      (reports.0.refunds_individual_contributions_period, 'Individual Refunds'),
      (reports.0.refunded_political_party_committee_contributions_period, 'Political Party Refunds'),
      (reports.0.refunded_other_political_committee_contributions_period, 'Other Committee Refunds'),
-     (reports.0.other_disbursements_period, 'Other disbursements'),
+     (reports.0.other_disbursements_period, 'Other Disbursements'),
    ]
 %}
 {{ totals_table('Total Disbursements', reports.0.total_disbursements_period, table_data,
     committee.report_year, header_description='Money spent by the committee' ) }}
 
-{{ totals_table('Beginning cash on hand', committee.reports.0.cash_on_hand_beginning_period) }}
-{{ totals_table('Ending cash on hand', committee.reports.0.cash_on_hand_end_period) }}
-{{ totals_table('Net Contributions', reports.0.net_contribution_summary_period) }}
-{{ totals_table('Operating Expenditures', reports.0.net_operating_expenditures_summary_period) }}
-{{ totals_table('Debts owed to committee', committee.reports.0.debts_owed_to_committee) }}
-{{ totals_table('Debts owed by committee', committee.reports.0.debts_owed_by_committee) }}
+{{ totals_table('Beginning Cash on Hand', committee.reports.0.cash_on_hand_beginning_period) }}
+{{ totals_table('Ending Cash on Hand', committee.reports.0.cash_on_hand_end_period) }}
+{{ totals_table('Net Contributions', reports.0.net_contributions_period) }}
+{{ totals_table('Net Operating Expenditures', reports.0.net_operating_expenditures_period) }}
+{{ totals_table('Debts Owed to Committee', committee.reports.0.debts_owed_to_committee) }}
+{{ totals_table('Debts Owed by Committee', committee.reports.0.debts_owed_by_committee) }}
 
 {% endwith %}

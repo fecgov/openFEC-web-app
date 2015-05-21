@@ -1,4 +1,3 @@
-
 {% with committee=context() %}
 
 {% set table_data = [
@@ -6,7 +5,6 @@
      (reports.0.individual_unitemized_contributions_period, 'Unitemized Individual Contributions'),
      (reports.0.political_party_committee_contributions_period, 'Party Committees Contributions'),
      (reports.0.other_political_committee_contributions_period, 'Other Committees Contributions'),
-     (reports.0.other_political_committee_contributions_period, 'Transfers from Affiliated Committees'),
      (reports.0.all_loans_received_period, 'Loans Received'),
      (reports.0.loan_repayments_received_period, 'Loan Repayments Received'),
      (reports.0.offsets_to_operating_expenditures_period, 'Offsets to operating Expenditures'),
@@ -16,7 +14,7 @@
      (reports.0.transfers_from_nonfed_levin_period, 'Levin Funds'),
    ]
 %}
-{{ totals_table('Total receipts', reports.0.total_receipts_period, table_data,
+{{ totals_table('Total Receipts', reports.0.total_receipts_period, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
 
 {% set table_data = [
@@ -31,7 +29,7 @@
      (reports.0.individual_contribution_refunds_period, 'Individual Refunds'),
      (reports.0.political_party_committee_contribution_refunds_period, 'Politial Party Refunds'),
      (reports.0.other_political_committee_contribution_refunds_period, 'Other Committee Refunds'),
-     (reports.0.other_disbursements_period, 'Other disbursements'),
+     (reports.0.other_disbursements_period, 'Other Disbursements'),
      (reports.0.shared_fed_activity_period, 'Federal Allocated Election Activity'),
      (reports.0.non_allocated_fed_election_activity_period, 'Non-Federal Allocated Election Activity'),
    ]
@@ -39,12 +37,11 @@
 {{ totals_table('Total Disbursements', reports.0.total_disbursements_period, table_data,
     committee.report_year, header_description='Money spent by the committee' ) }}
 
-{{ totals_table('Beginning cash on hand', reports.0.cash_on_hand_beginning_period) }}
-{{ totals_table('Ending cash on hand', reports.0.cash_on_hand_end_period) }}
-{{ totals_table('Net Contributions', reports.0.net_contributions) }}
+{{ totals_table('Beginning Cash on Hand', reports.0.cash_on_hand_beginning_period) }}
+{{ totals_table('Ending Cash on Hand', reports.0.cash_on_hand_end_period) }}
+{{ totals_table('Net Contributions', reports.0.net_contributions_period) }}
 {{ totals_table('Net Operating Expenditures', reports.0.net_operating_expenditures_period) }}
-{{ totals_table('Debts owed to committee', reports.0.debts_owed_to_committee) }}
-{{ totals_table('Debts owed by committee', reports.0.debts_owed_by_committee) }}
+{{ totals_table('Debts Owed to Committee', reports.0.debts_owed_to_committee) }}
+{{ totals_table('Debts Owed by Committee', reports.0.debts_owed_by_committee) }}
 
 {% endwith %}
-

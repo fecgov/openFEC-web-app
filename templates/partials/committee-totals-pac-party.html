@@ -9,14 +9,14 @@
      (totals.0.other_political_committee_contributions, 'Transfers from Affiliated Committees'),
      (totals.0.all_loans_received, 'Loans Received'),
      (totals.0.loan_repayments_received, 'Loan Repayments Received'),
-     (totals.0.offsets_to_operating_expenditures, 'Offsets to operating Expenditures'),
+     (totals.0.offsets_to_operating_expenditures, 'Offsets to Operating Expenditures'),
      (totals.0.fed_candidate_contribution_refunds, 'Candidate Refunds'),
      (totals.0.other_fed_receipts, 'Other Receipts'),
      (totals.0.transfers_from_nonfed_account, 'Non-Federal Transfers'),
      (totals.0.transfers_from_nonfed_levin, 'Levin Funds'),
    ]
 %}
-{{ totals_table('Total receipts', totals.0.receipts, table_data,
+{{ totals_table('Total Receipts', totals.0.receipts, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
 
 {% set table_data = [
@@ -32,7 +32,7 @@
      (totals.0.individual_contribution_refunds, 'Individual Refunds'),
      (totals.0.political_party_committee_contribution_refunds, 'Politial Party Refunds'),
      (totals.0.other_political_committee_contribution_refunds, 'Other Committee Refunds'),
-     (totals.0.other_disbursements, 'Other disbursements'),
+     (totals.0.other_disbursements, 'Other Disbursements'),
      (totals.0.shared_fed_activity, 'Federal Allocated Election Activity'),
      (totals.0.non_allocated_fed_election_activity, 'Non-Federal Allocated Election Activity'),
    ]
@@ -41,5 +41,3 @@
     committee.report_year, header_description='Money spent by the committee' ) }}
 
 {% endwith %}
-
-
