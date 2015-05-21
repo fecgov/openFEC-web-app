@@ -30,29 +30,29 @@ def render_table(data_type, results, params):
     return render_template(data_type + '.html', **results_table)
 
 
-def render_committee(data, candidates=None):
+def render_committee(data, candidates=None, cycle=None):
     committee = get_first_result_or_raise_500(data)
 
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
+    tmpl_vars['cycle'] = cycle
+
     # add related candidates a level below
     tmpl_vars['candidates'] = candidates
 
-    financials = load_cmte_financials(committee['committee_id'])
+    financials = load_cmte_financials(committee['committee_id'], cycle=cycle)
     tmpl_vars['reports'] = financials['reports']
     tmpl_vars['totals'] = financials['totals']
 
     return render_template('committees-single.html', **tmpl_vars)
 
 
-def render_candidate(data, committees=None, cycle=None):
+def render_candidate(data, committees=None):
     results = get_first_result_or_raise_500(data)
 
     # candidate fields will be top-level in the template
     tmpl_vars = results
-
-    tmpl_vars['cycle'] = cycle
 
     # add 'committees' level to template
     tmpl_vars['has_authorized_cmtes'] = False
@@ -62,7 +62,7 @@ def render_candidate(data, committees=None, cycle=None):
     for committee in committees:
         if committee['designation'] in ('P', 'A'):  # (P)rimary or (A)uthorized
             # this adds committee['reports'] and committee['totals']
-            committee.update(load_cmte_financials(committee['committee_id'], cycle=cycle))
+            committee.update(load_cmte_financials(committee['committee_id']))
             tmpl_vars['has_authorized_cmtes'] = True
 
         elif committee['designation'] == 'J':  # (J)oint

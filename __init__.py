@@ -104,10 +104,14 @@ def candidate_page(c_id, cycle=None):
 
 
 @app.route('/committee/<c_id>')
-def committee_page(c_id):
+@use_kwargs({
+    'cycle': Arg(int),
+})
+def committee_page(c_id, cycle=None):
     data = load_single_type('committee', c_id)
-    candidate_data = load_nested_type('committee', c_id, 'candidates')['results']
-    return render_committee(data, candidates=candidate_data)
+    cycle = cycle or max(data['results'][0]['cycles'])
+    candidate_data = load_nested_type('committee', c_id, 'candidates', cycle=cycle)['results']
+    return render_committee(data, candidates=candidate_data, cycle=cycle)
 
 
 @app.route('/candidates')

@@ -64,9 +64,9 @@
               <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
               {% for each in cycles | sort(reverse=True) %}
                 <option
-                        value="{{ each }}"
-                        {% if each == cycle %}selected{% endif %}
-                    >{{ each | fmt_year_range }}</option>
+                    value="{{ each }}"
+                    {% if each == cycle %}selected{% endif %}
+                  >{{ each | fmt_year_range }}</option>
               {% endfor %}
               </select>
             </form>
