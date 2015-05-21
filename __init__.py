@@ -160,6 +160,13 @@ def fmt_report_desc(report_full_description):
         return re.sub('{.+}', '', report_full_description)
 
 
+@app.template_filter()
+def url_to_fec_pdf(report):
+    beg_img_num = report['beginning_image_number']
+    beg_img_num_last_n = last_n_characters(beg_img_num)
+    return "http://docquery.fec.gov/pdf/{0}/{1}/{1}.pdf".format(beg_img_num_last_n, beg_img_num)
+
+
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
 if force_https:
