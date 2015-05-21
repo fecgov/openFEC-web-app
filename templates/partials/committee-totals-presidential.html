@@ -15,18 +15,18 @@
      (totals.0.other_receipts, 'Other Receipts'),
    ]
 %}
-{{ totals_table('Total receipts', totals.0.receipts, table_data,
+{{ totals_table('Total Receipts', totals.0.receipts, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
 
 {% set table_data = [
-     (totals.0.operating_expenditures, 'Operating expenditures'),
+     (totals.0.operating_expenditures, 'Operating Expenditures'),
      (totals.0.transfer_to_other_authorized_committee, 'Transfers to Authorized Committees'),
      (totals.0.repayments_loans_made_by_candidate, 'Candidate Loan Repayments'),
      (totals.0.repayments_other_loans, 'Other Loan Repayments'),
      (totals.0.refunded_individual_contributions, 'Individual Refunds'),
      (totals.0.refunded_political_party_committee_contributions, 'Political Party Refunds'),
      (totals.0.refunded_other_political_committee_contributions, 'Other Committee Refunds'),
-     (totals.0.other_disbursements, 'Other disbursements'),
+     (totals.0.other_disbursements, 'Other Disbursements'),
    ]
 %}
 {{ totals_table('Total Disbursements', totals.0.disbursements, table_data,
