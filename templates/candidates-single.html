@@ -37,14 +37,15 @@
             <p class="entity__term__data"><a href="{{ url_for('committee_page', c_id=c.committee_id) }}">{{ c.name }}</a></p>
             {% endfor %}
           </li>
-          <!-- {% if has_authorized_cmtes %}
-          <li class="entity__term--wide">
-            <h5 class="entity__term__label"><a class="term" data-term="Authorized Committee">Authorized Committees</a></h5>
-            {% for c in committees if c.designation == 'A' %}
-            <p class="entity__term__data"><a href="{{ url_for('committee_page', c_id=c.committee_id) }}">{{ c.name }}</a></p>
+          <li class="entity__term">
+            <h5 class="entity__term__label">Elections</h5>
+            <ul class="entity__term__data">
+            {% for year in election_years %}
+              <span value="{{ year }}">{{ year }}{% if loop.last == false %},{% endif %}</span>
             {% endfor %}
+            </ul>
           </li>
-          {% endif %} -->
+        </ul>
       </div>
     </div>
   </header>
@@ -53,21 +54,7 @@
       <div class="container">
         <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates"> {{ name }}</span>
       </div>
-    </div>
-    <div class="page-controls__bottom">
-      <div class="container">
-        {% if election_years %}
-        <div class="time-period">
-          <label for="election_cycle">Two-Year Period</label>
-          <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate">
-          {% for year in election_years|sort(reverse=True) %}
-            <option value="{{ year }}">{{ year|fmt_year_range }}</option>
-          {% endfor %}
-          </select>
-        </div>
-        {% endif %}         
-      </div>
-    </div>
+    </div>      
   </div>
 
   <section class="page-section" id="section-1" aria-labelledby="section-1-header">

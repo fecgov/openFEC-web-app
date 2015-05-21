@@ -25,14 +25,16 @@ $tooltip-border-color: #999;
 }
 
 .data--disbursement,
-.data--disbursements { 
+.data--disbursements,
+.data--total_disbursements_period { 
   background: $data-disbursement; 
   .chart-series__bar__tooltip {
     color: $data-disbursement;
   }
 }
 
-.data--receipts { 
+.data--receipts,
+.data--total_receipts_period { 
   background: $data-receipt; 
   .chart-series__bar__tooltip {
     color: $data-receipt;

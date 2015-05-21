@@ -144,8 +144,8 @@ def date_filter_md(date_str):
 @app.template_filter('last_n_characters')
 def last_n_characters(value, nchar=3):
     if type(value) == int:
-        return value % (10 ** nchar)
-    return ''    
+        return str(value % (10 ** nchar)).rjust(nchar, '0')
+    return ''
 
 @app.template_filter()
 def fmt_year_range(year):
