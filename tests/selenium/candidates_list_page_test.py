@@ -1,4 +1,5 @@
 import unittest
+import functools
 
 from selenium.webdriver.common.keys import Keys
 from .base_test_class import SearchPageTestCase
@@ -35,7 +36,15 @@ class CandidatesPageTests(SearchPageTestCase):
             'ALLIEGRO, MARK C')
 
     def testCandidateCycleFilter(self):
-        self.checkFilter('cycle', '2014', 5, 2, '2014')
+        def checker(entry, result):
+            parts = [int(part) for part in result.split(' - ')]
+            if len(parts) == 1:
+                return parts[0] in [entry, entry + 1]
+            if len(parts) == 2:
+                lower, upper = parts
+                return (lower <= entry <= upper) or (lower <= entry + 1 <= upper)
+            return False
+        self.checkFilter('cycle', '2013', 5, 2, functools.partial(checker, 2013))
 
     def testCandidatePartyFilter(self):
         self.checkFilter(
