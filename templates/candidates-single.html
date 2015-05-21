@@ -54,7 +54,26 @@
       <div class="container">
         <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates"> {{ name }}</span>
       </div>
-    </div>      
+    </div>
+    <div class="page-controls__bottom">
+      <div class="container">
+        {% if cycles %}
+          <div class="time-period">
+            <form id="cycle_form">
+              <label for="cycle">Election Cycle</label>
+              <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
+              {% for each in cycles | sort(reverse=True) %}
+                <option
+                        value="{{ each }}"
+                        {% if each == cycle %}selected{% endif %}
+                    >{{ each | fmt_year_range }}</option>
+              {% endfor %}
+              </select>
+            </form>
+        </div>
+        {% endif %}
+      </div>
+    </div>
   </div>
 
   <section class="page-section" id="section-1" aria-labelledby="section-1-header">
