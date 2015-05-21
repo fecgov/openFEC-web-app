@@ -76,6 +76,7 @@ var fieldMap = [
     'district',
     'office',
     'designation',
+    'committee_type',
     'organization_type'
 ];
 
