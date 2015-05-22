@@ -1,5 +1,9 @@
 {% extends "layouts/main.html" %}
 
+{% block title %}
+    Home 
+{% endblock %}
+
 {% block body %}
 {% include "partials/search-bar.html" %}
 <section class="page-section" aria-labelledby="browse-heading">
@@ -12,7 +16,7 @@
         <div class="card-grid">
             <div class="card">
                 <h3><img src="/static/img/icon-candidate.svg" class="category-icon"  alt="Icon representing candidates">Candidates</h3>
-                <p>Candidates are people who are running or have run for office. Active candidates have at least one committee they have authorized to raise and spend money in elections. If a person has been a candidate for multiple offices (for example, they ran for senate one year and president another year), they will have a candidate page for each office sought.</p>
+                <p>Candidates are people who are running or have run for office. Active candidates have at least one committee they have authorized to raise and spend money on their behalf in elections. If a person has been a candidate for multiple offices (for example, they ran for the Senate one year and President another year), they will have a candidate page for each office sought.</p>
                 <p><a href="/candidates">Browse all candidates &raquo;</a></p>
             </div>
             <div class="card card--icon">

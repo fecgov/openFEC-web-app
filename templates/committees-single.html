@@ -20,8 +20,8 @@
                    width="20" height="20"
                    src="/static/img/icon-committee--white.svg"
                    alt="Icon representing committees">
-               Committee - {{ designation_full }}
-               - {{ committee_type_full }}
+               Committee - {{ committee_type_full }}
+               - {{ designation_full }}
                {% if organization %} - {{ organization }}{% endif %}
             </span>
         </div>
@@ -39,7 +39,13 @@
             </li>
             {% if candidates %}
             <li class="entity__term">
-              <h5 class="entity__term__label">Related Candidates</h5>
+              <h5 class="entity__term__label">Related 
+                {% if candidates|length > 1 %}
+                  Candidates
+                {% else %}
+                  Candidate
+                {% endif %}
+              </h5>
               <ul class="entity__term__data">
               {% for c in candidates %}
                 <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{ c.name }}</a></li>

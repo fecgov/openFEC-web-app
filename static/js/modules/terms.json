@@ -13,15 +13,15 @@
   },
   {
     "term": "District",
-    "definition": "A U.S. House District. Because Senators represent an entire state, Senate races do not have districts associated with them."
+    "definition": "A U.S. House of Representatives District. Because Senators represent an entire state, Senate races do not have districts associated with them."
   },  
   {
     "term": "Organization Type",
-    "definition": "Certain filers, like Separate Segregated Funds, certain types of PACs, and Communication Cost filers identify the types of organizations they are associated with.  These entities can be associated with corporations, trade associations, labor organizations, cooperatives, membership organizations, corporations without capital stock or have no association."
+    "definition": "Certain filers, like Separate Segregated Funds, certain types of PACs, and Communication Cost filers identify the types of organizations they are associated with.  These entities can be associated with corporations, trade associations, labor organizations, cooperatives, membership organizations, or corporations without capital stock, or have no association."
   },
   {
     "term": "Committee Type",
-    "definition": "A legal definition that categorizes groups organized to raise and spend money in federal elections. The basic committee types are principal campaign committee, political party committee, and political action committee (PAC)."
+    "definition": "A definition that categorizes groups organized to raise and spend money in federal elections. The basic committee types are principal campaign committee, political party committee, and political action committee (PAC)."
   },  
   {
     "term": "Total Receipts",
@@ -29,11 +29,11 @@
   },
   {
     "term": "Total Disbursements",
-    "definition": "The sum of all money spent by a committee as reported to the FEC, during a filing period."
+    "definition": "The sum of all money spent by a committee as reported to the FEC during a filing period."
   },  
   {
     "term": "Cash on Hand",
-    "definition": "The ending cash balance on a report for a particular time period. Cash on hand includes funds held in checking and savings accounts, certificates of deposit, petty cash funds, traveler’s checks, treasury bills and other investments valued at cost."
+    "definition": "The ending cash balance on a report for a particular time period. Cash on hand includes funds held in checking and savings accounts, certificates of deposit, petty cash funds, traveler’s checks, treasury bills, and other investments valued at cost."
   },
   {
     "term": "Debt",
@@ -41,11 +41,11 @@
   }, 
   {
     "term": "Joint Fundraising",
-    "definition": "Joint fundraising is fundraising conducted jointly by a political committee and one or more other political committees or unregistered organizations.  Joint fundraising is often conducted between a principal campaign committee and a political party committee."
+    "definition": "Fundraising conducted jointly by a political committee and one or more other political committees or unregistered organizations.  Joint fundraising is often conducted between a principal campaign committee and a political party committee."
   }, 
   {
     "term": "Joint Fundraising Committee",
-    "definition": "A committee that has been set up for the purposes fundraising for multiple committees at the same time."
+    "definition": "A committee that has been set up for the purposes of fundraising for multiple committees at the same time, or an existing committee that has been authorized to serve that purpose."
   }, 
   {
     "term": "Reports and Statements",
@@ -53,7 +53,7 @@
   }, 
   {
     "term": "Filing",
-    "definition": "A report or statement submitted to the FEC by a candidate, committee or other filing entity. Entities are required to file to declare their status as a candidate or committee and to report the money they raise and spend."
+    "definition": "A report or statement submitted to the FEC by a candidate, committee, or other filing entity. Entities are required to file to declare their status as a candidate or committee and to report the money they raise and spend."
   }, 
   {
     "term": "Authorized Committee",
@@ -61,7 +61,7 @@
   }, 
   {
     "term": "Committee",
-    "definition": "Committees are legal entities created to raise and spend money in federal elections. There are many different types of committees involved in federal elections, and different types of committees have different fundraising and spending limitations and different requirements for reporting their activity."
+    "definition": "There are many different types of committees involved in federal elections, and different types of committees have different fundraising and spending limitations and different requirements for reporting their activity."
   },
   {
     "term": "Principal Campaign Committee",

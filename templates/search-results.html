@@ -20,7 +20,7 @@
         {%if candidates %}
             <div class="results-header">
                 <h3>Candidate Results</h3>
-                <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">View all</a>
+                <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">View all candidate results</a>
             </div>
             {% include "partials/candidates-table.html" %}
         {% endif %}
@@ -29,7 +29,7 @@
         {% if committees %}
             <div class="results-header">
                 <h3>Committees Results</h3>
-                <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">View all</a>
+                <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">View all committee results</a>
             </div>
             {% include "partials/committees-table.html" %}
         {% endif %}
