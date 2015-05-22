@@ -140,6 +140,29 @@ def currency_filter(num, grouping=True):
         return locale.currency(num, grouping=grouping)
 
 
+def _unique(values):
+    ret = []
+    for value in values:
+        if value not in ret:
+            ret.append(value)
+    return ret
+
+
+def _fmt_chart_tick(value):
+    return parse_date(value).strftime('%m/%y')
+
+
+@app.template_filter('fmt_chart_ticks')
+def fmt_chart_ticks(group, keys):
+    if not group or not keys:
+        return ''
+    if isinstance(keys, (list, tuple)):
+        values = [_fmt_chart_tick(group[key]) for key in keys]
+        values = _unique(values)
+        return ' - '.join(values)
+    return _fmt_chart_tick(group[keys])
+
+
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
     if not date_str:
