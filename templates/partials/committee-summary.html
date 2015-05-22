@@ -28,7 +28,7 @@
     </div>
     <div class="table__row--note">
       {% if report %}
-      Source: <a href="{{ report|url_to_fec_pdf }}">{{report.report_type_full|fmt_report_desc|default("unavailable")}} {{ report.report_year }}</a>
+      Source: <a href="{{ report|url_to_fec_pdf }}">{{report.report_type_full|fmt_report_desc|default("Report")}} {{ report.report_year }}</a>
       {% else %}
       Source: None
       {% endif %}
