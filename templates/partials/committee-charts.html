@@ -14,8 +14,8 @@
     <div class="figure__title">
       <h4>Receipts and Disbursements</h4>
       <ul class="figure__key flat-list">
-        <li><span class="swatch data--receipts"></span> Receipts</li>
-        <li><span class="swatch data--disbursements"></span> Disbursements</li>
+        <li><span class="swatch data--receipts"></span> Total Receipts</li>
+        <li><span class="swatch data--disbursements"></span> Total Disbursements</li>
       </ul>
     </div>
     {{ charts.chart_series_grouped(reports|reverse, ('total_receipts_period', 'total_disbursements_period'),
@@ -27,7 +27,7 @@
     <div class="figure__title">
       <h4>Cash and Debt</h4>
       <ul class="figure__key flat-list">
-        <li><span class="swatch data--cash"></span> Cash</li>
+        <li><span class="swatch data--cash"></span> Ending Cash on Hand</li>
         <li><span class="swatch data--debt"></span> Debt</li>
       </ul>
     </div>
