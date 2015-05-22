@@ -59,17 +59,16 @@
       <div class="container">
         {% if cycles %}
           <div class="time-period">
-            <form id="cycle_form">
-              <label for="cycle">Election Cycle</label>
-              <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
-              {% for each in cycles | sort(reverse=True) %}
-                <option
-                    value="{{ each }}"
-                    {% if each == cycle %}selected{% endif %}
-                  >{{ each | fmt_year_range }}</option>
-              {% endfor %}
-              </select>
-            </form>
+            <label for="cycle">Two-Year Period</label>
+            <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
+            {% for each in range(max(cycles), min(cycles) - 2, -2) %}
+              <option
+                  value="{{ each }}"
+                  data-history="{{ each | next_cycle(cycles) }}"
+                  {% if each == cycle %}selected{% endif %}
+                >{{ each | fmt_year_range }}</option>
+            {% endfor %}
+            </select>
         </div>
         {% endif %}
       </div>

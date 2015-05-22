@@ -65,7 +65,6 @@
         <div class="container">
           {% if cycles %}
             <div class="time-period">
-            <form id="cycle_form">
               <label for="election_cycle">Two-Year Period</label>
               <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
               {% for each in cycles | sort(reverse=True) %}
@@ -75,8 +74,7 @@
                   >{{ each | fmt_year_range }}</option>
               {% endfor %}
               </select>
-            </form>
-          </div>
+            </div>
           {% endif %}
         </div>
       </div>
