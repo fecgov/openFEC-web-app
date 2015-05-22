@@ -48,11 +48,13 @@ def render_committee(data, candidates=None, cycle=None):
     return render_template('committees-single.html', **tmpl_vars)
 
 
-def render_candidate(data, committees=None):
+def render_candidate(data, committees=None, cycle=None):
     results = get_first_result_or_raise_500(data)
 
     # candidate fields will be top-level in the template
     tmpl_vars = results
+
+    tmpl_vars['cycle'] = cycle
 
     # add 'committees' level to template
     tmpl_vars['has_authorized_cmtes'] = False
