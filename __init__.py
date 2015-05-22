@@ -1,3 +1,6 @@
+from webargs import Arg
+from webargs.flaskparser import use_kwargs
+
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
@@ -31,6 +34,14 @@ def get_context(c):
     return c
 
 
+def resolve_cycle(candidate):
+    if 'cycle' in request.args:
+        cycles = set(candidate['cycles'])
+        cycles = cycles.intersection(int(each) for each in request.args.getlist('cycle'))
+        return max(cycles)
+    return None
+
+
 def _get_default_cycles():
     now = datetime.datetime.now().year
     cycle = now + now % 2
@@ -43,6 +54,7 @@ app.jinja_env.globals['api_key'] = api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
+app.jinja_env.globals['resolve_cycle'] = resolve_cycle
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
@@ -79,22 +91,21 @@ def search():
         return render_template('search.html')
 
 
-@app.route('/candidate/<c_id>/<cycle>')
-def candidate_page_with_cycle(c_id, cycle):
-    data = load_single_type('candidate', c_id, {'year': cycle})
-    return render_candidate(data)
-
-
 @app.route('/candidate/<c_id>')
-def candidate_page(c_id):
-    data = load_single_type('candidate', c_id, {})
-    committee_data = load_nested_type('candidate', c_id, 'committees')['results']
-    return render_candidate(data, committees=committee_data)
+@use_kwargs({
+    'cycle': Arg(int),
+})
+def candidate_page(c_id, cycle=None):
+    path = ('history', str(cycle)) if cycle else ()
+    data = load_single_type('candidate', c_id, *path)
+    cycle = cycle or max(data['results'][0]['cycles'])
+    committee_data = load_nested_type('candidate', c_id, 'committees', cycle=cycle)['results']
+    return render_candidate(data, committees=committee_data, cycle=cycle)
 
 
 @app.route('/committee/<c_id>')
 def committee_page(c_id):
-    data = load_single_type('committee', c_id, {})
+    data = load_single_type('committee', c_id)
     candidate_data = load_nested_type('committee', c_id, 'candidates')['results']
     return render_committee(data, candidates=candidate_data)
 
@@ -102,14 +113,14 @@ def committee_page(c_id):
 @app.route('/candidates')
 def candidates():
     params = _convert_to_dict(request.args)
-    results = load_single_type_summary('candidates', params)
+    results = load_single_type_summary('candidates', **params)
     return render_table('candidates', results, params)
 
 
 @app.route('/committees')
 def committees():
     params = _convert_to_dict(request.args)
-    results = load_single_type_summary('committees', params)
+    results = load_single_type_summary('committees', **params)
     return render_table('committees', results, params)
 
 

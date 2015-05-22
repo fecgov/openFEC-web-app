@@ -13,7 +13,15 @@
     <tbody>
         {% for c in candidates %}
             <tr>
-                <td class="flex-cell" scope="row"><a class="single-link" title="{{c.name}}" data-id="{{ c.candidate_id }}" data-category="candidate" href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{c.name}}</a></td>
+                <td class="flex-cell" scope="row">
+                  <a
+                          class="single-link"
+                          title="{{c.name}}"
+                          data-id="{{ c.candidate_id }}"
+                          data-category="candidate"
+                          href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=resolve_cycle(c)) }}"
+                      >{{c.name}}</a>
+                </td>
                 <td>{{c.office_full}}</td>
                 <td>{{ years.fmt_first_last_year(c.election_years[0], c.active_through)}}</td>
                 <td>{{c.party_full}}</td>

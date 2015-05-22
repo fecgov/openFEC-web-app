@@ -13,4 +13,5 @@ requests-cache==0.4.9
 selenium>=2.45.0
 newrelic==2.50.0.39
 gunicorn
+webargs>=0.13.0
 Flask-SSLify
