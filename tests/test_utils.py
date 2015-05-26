@@ -38,3 +38,10 @@ def test_fmt_year_range_int():
 def test_fmt_year_range_not_int():
     assert app.fmt_year_range('1985') is None
     assert app.fmt_year_range(None) is None
+
+
+def test_restrict_cycles():
+    year = datetime.datetime.now().year
+    cycle = year + year % 2
+    cycles = [cycle - 2, cycle, cycle + 2]
+    assert app.restrict_cycles(cycles) == [cycle - 2, cycle]

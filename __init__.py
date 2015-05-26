@@ -191,6 +191,13 @@ def fmt_report_desc(report_full_description):
 
 
 @app.template_filter()
+def restrict_cycles(value):
+    year = datetime.datetime.now().year
+    cycle = year + year % 2
+    return [each for each in value if each <= cycle]
+
+
+@app.template_filter()
 def next_cycle(value, cycles):
     """Get the earliest election cycle greater than or equal to `value`."""
     return next(

@@ -67,7 +67,7 @@
             <div class="time-period">
               <label for="election_cycle">Two-Year Period</label>
               <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
-              {% for each in cycles | sort(reverse=True) %}
+              {% for each in cycles | restrict_cycles | sort(reverse=True) %}
                 <option
                     value="{{ each }}"
                     {% if each == cycle %}selected{% endif %}

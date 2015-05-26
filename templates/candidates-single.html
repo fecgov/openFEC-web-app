@@ -61,7 +61,7 @@
           <div class="time-period">
             <label for="cycle">Two-Year Period</label>
             <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
-            {% for each in range(max(cycles), min(cycles) - 2, -2) %}
+            {% for each in range(max(cycles), min(cycles) - 2, -2) | restrict_cycles %}
               <option
                   value="{{ each }}"
                   data-history="{{ each | next_cycle(cycles) }}"
