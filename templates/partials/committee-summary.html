@@ -1,5 +1,5 @@
 {% with %}
-{% set reports = committee.reports.0 if committee.reports else {} %}
+{% set report = committee.reports.0 if committee.reports else {} %}
 {% set totals = committee.totals.0 if committee.totals else {} %}
 
 <figure class="table--simple reports-table">
@@ -20,14 +20,18 @@
   <div class="table__half">
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Ending Cash on Hand">Ending cash on hand</span></div>
-      <div class="table__cell">{{reports.cash_on_hand_end_period|currency|default("unavailable")}}</div>
+      <div class="table__cell">{{report.cash_on_hand_end_period|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
-      <div class="table__cell">{{reports.debts_owed_by_committee|currency|default("unavailable")}}</div>
+      <div class="table__cell">{{report.debts_owed_by_committee|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      Source: <a href="http://docquery.fec.gov/pdf/{{ reports.beginning_image_number|last_n_characters }}/{{ reports.beginning_image_number }}/{{ reports.beginning_image_number }}.pdf">{{reports.report_type_full|fmt_report_desc|default("unavailable")}} {{ reports.report_year }}</a>
+      {% if report %}
+      Source: <a href="{{ report|url_to_fec_pdf }}">{{report.report_type_full|fmt_report_desc|default("Report")}} {{ report.report_year }}</a>
+      {% else %}
+      Source: None
+      {% endif %}
     </div>
   </div>
 </figure>
