@@ -9,6 +9,8 @@ applications:
   path: .
   buildpack: "https://github.com/ddollar/heroku-buildpack-multi.git"
   host: fec-stage-web
+  services:
+    - fec-creds-stage
   env:
     NEW_RELIC_APP_NAME: OpenFEC Web (staging)
     FEC_WEB_API_URL: http://fec-stage-api.cf.18f.us
@@ -20,6 +22,8 @@ applications:
   path: .
   buildpack: "https://github.com/ddollar/heroku-buildpack-multi.git"
   host: fec-stage-web
+  services:
+    - fec-creds-stage
   env:
     NEW_RELIC_APP_NAME: OpenFEC Web (staging)
     FEC_WEB_API_URL: http://fec-stage-api.cf.18f.us
