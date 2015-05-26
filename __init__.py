@@ -162,7 +162,7 @@ def _unique(values):
 
 
 def _fmt_chart_tick(value):
-    return parse_date(value).strftime('%m/%y')
+    return parse_date(value).strftime('%m/%d/%y')
 
 
 @app.template_filter('fmt_chart_ticks')
@@ -172,7 +172,7 @@ def fmt_chart_ticks(group, keys):
     if isinstance(keys, (list, tuple)):
         values = [_fmt_chart_tick(group[key]) for key in keys]
         values = _unique(values)
-        return ' - '.join(values)
+        return ' – '.join(values)
     return _fmt_chart_tick(group[keys])
 
 

@@ -126,7 +126,6 @@ $tooltip-border-color: #999;
     @include display(flex);
     @include flex-direction(row);
     @include align-items(flex-end);
-    max-width: 90px;
     z-index: 9;
     
     .chart-series__bar + .chart-series__bar {
@@ -190,7 +189,7 @@ $tooltip-border-color: #999;
   text-align: center;
 
   @include media($medium) {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 }
 
