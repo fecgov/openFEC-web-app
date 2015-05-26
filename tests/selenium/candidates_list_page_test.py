@@ -44,17 +44,17 @@ class CandidatesPageTests(SearchPageTestCase):
                 lower, upper = parts
                 return (lower <= entry <= upper) or (lower <= entry + 1 <= upper)
             return False
-        self.checkFilter('cycle', '2013', 5, 2, functools.partial(checker, 2013))
+        self.checkFilter('cycle', '2013', 2, functools.partial(checker, 2013))
 
     def testCandidatePartyFilter(self):
         self.checkFilter(
-            'party', 'republican party', 5, 3, 'Republican Party')
+            'party', 'republican party', 3, 'Republican Party')
 
     def testCandidateStateFilter(self):
-        self.checkFilter('state', 'west', 4, 4, 'WV')
+        self.checkFilter('state', 'penn', 4, 'PA')
 
     def testCandidateDistrictFilter(self):
-        self.checkFilter('district', '10', 10, 5, '10')
+        self.checkFilter('district', '10', 5, '10')
 
     def testCandidateOfficeFilter(self):
-        self.checkFilter('office', 'P', 1, 1, 'President')
+        self.checkFilter('office', 'P', 1, 'President')

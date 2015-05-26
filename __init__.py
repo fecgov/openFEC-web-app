@@ -67,12 +67,6 @@ except OSError:
     )
     raise
 
-if not test:
-    app.config['BASIC_AUTH_USERNAME'] = username
-    app.config['BASIC_AUTH_PASSWORD'] = password
-    app.config['BASIC_AUTH_FORCE'] = True
-    basic_auth = BasicAuth(app)
-
 if analytics:
     app.config['USE_ANALYTICS'] = True
 
@@ -159,6 +153,29 @@ def currency_filter(num, grouping=True):
         return locale.currency(num, grouping=grouping)
 
 
+def _unique(values):
+    ret = []
+    for value in values:
+        if value not in ret:
+            ret.append(value)
+    return ret
+
+
+def _fmt_chart_tick(value):
+    return parse_date(value).strftime('%m/%y')
+
+
+@app.template_filter('fmt_chart_ticks')
+def fmt_chart_ticks(group, keys):
+    if not group or not keys:
+        return ''
+    if isinstance(keys, (list, tuple)):
+        values = [_fmt_chart_tick(group[key]) for key in keys]
+        values = _unique(values)
+        return ' - '.join(values)
+    return _fmt_chart_tick(group[keys])
+
+
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
     if not date_str:
@@ -206,10 +223,27 @@ def next_cycle(value, cycles):
     )
 
 
+@app.template_filter()
+def url_to_fec_pdf(report):
+    beg_img_num = report['beginning_image_number']
+    beg_img_num_last_n = last_n_characters(beg_img_num)
+    return "http://docquery.fec.gov/pdf/{0}/{1}/{1}.pdf".format(beg_img_num_last_n, beg_img_num)
+
+
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
 if force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
+
+
+# Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
+# for credentials over HTTP; h/t @noahkunin.
+if not test:
+    app.config['BASIC_AUTH_USERNAME'] = username
+    app.config['BASIC_AUTH_PASSWORD'] = password
+    app.config['BASIC_AUTH_FORCE'] = True
+    basic_auth = BasicAuth(app)
+
 
 if __name__ == '__main__':
     if '--cached' in sys.argv:

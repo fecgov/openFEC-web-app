@@ -86,18 +86,25 @@ figure {
   border-bottom: 1px solid $medium-gray;
 
   h4 {
-    float: left;
     margin-bottom: 0;
+  }
+
+  @include media($medium) {
+    h4 {
+      float: left
+    }
   }
 }
 
 .figure__key {
-  float: right;
+  float: left;
   margin-top: 2px;
   
   li {
     @include rem(margin-right, 2.0rem);
+    float: none;
   }
+
   .swatch {
     @include rem(margin-right, 1.0rem);
     height: 20px;
@@ -105,6 +112,14 @@ figure {
     border-radius: 20px;
     padding: 0;
     display: inline-block;
+  }
+
+  @include media($medium) {
+    float: right;
+
+    li {
+      float: left;
+    }
   }
 }
 

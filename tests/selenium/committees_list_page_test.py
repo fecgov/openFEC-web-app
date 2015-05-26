@@ -32,17 +32,17 @@ class CommitteesPageTests(SearchPageTestCase):
 
     def testCommitteePartyFilter(self):
         self.checkFilter(
-            'party', 'republican party', 5, 3, 'Republican Party')
+            'party', 'republican party', 3, 'Republican Party')
 
     def testCommitteeStateFilter(self):
-        self.checkFilter('state', 'oregon', 4, 2, 'OR')
+        self.checkFilter('state', 'oregon', 2, 'OR')
 
     def testCommitteeTypeFilter(self):
-        self.checkFilter('committee_type', 'pr', 9, 5, 'Presidential')
+        self.checkFilter('committee_type', 'pr', 5, 'Presidential')
 
     def testCommitteeDesignationFilter(self):
         self.checkFilter(
-            'designation', 'a', 1, 6, 'Authorized by a candidate')
+            'designation', 'a', 6, 'Authorized by a candidate')
 
     def testCommitteeOrgTypeFilter(self):
-        self.checkFilter('organization_type', 'corp', 3, 4, 'Corporation')
+        self.checkFilter('organization_type', 'corp', 4, 'Corporation')
