@@ -101,7 +101,7 @@ class SearchPageTestCase(BaseTest):
         return [row.find_elements_by_tag_name('td')[index].text
                 for row in data.find_elements_by_tag_name('tr')]
 
-    def checkFilter(self, name, entry, count, index, result):
+    def checkFilter(self, name, entry, index, result):
         self.driver.get(self.url)
         div = self.getFilterDivByName(name)
         div.find_element_by_tag_name('select').send_keys(entry)
@@ -113,7 +113,13 @@ class SearchPageTestCase(BaseTest):
         )
         self.assertEqual(len(close_buttons), 1)
         self.driver.find_element_by_id('category-filters').submit()
-        results = (self.driver.find_elements_by_tag_name('tr'))
-        col = [y.find_elements_by_tag_name('td')[index]
-                .text for y in results[1:]]
-        self.assertFalse({result}.difference(col))
+        rows = (self.driver.find_elements_by_tag_name('tr'))
+        values = [
+            row.find_elements_by_tag_name('td')[index].text
+            for row in rows[1:]
+        ]
+        if callable(result):
+            for value in values:
+                self.assertTrue(result(value))
+        else:
+            self.assertFalse({result}.difference(values))

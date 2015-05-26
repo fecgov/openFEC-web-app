@@ -10,7 +10,8 @@ pytest-cov>=1.8.1
 python-dateutil>=2.4.2
 requests==2.5.1
 requests-cache==0.4.9
-selenium==2.44.0
+selenium>=2.45.0
 newrelic==2.50.0.39
 gunicorn
+webargs>=0.13.0
 Flask-SSLify

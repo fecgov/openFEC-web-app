@@ -54,7 +54,25 @@
       <div class="container">
         <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates"> {{ name }}</span>
       </div>
-    </div>      
+    </div>
+    <div class="page-controls__bottom">
+      <div class="container">
+        {% if cycles %}
+          <div class="time-period">
+            <label for="cycle">Two-Year Period</label>
+            <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
+            {% for each in range(max(cycles), min(cycles) - 2, -2) | restrict_cycles %}
+              <option
+                  value="{{ each }}"
+                  data-history="{{ each | next_cycle(cycles) }}"
+                  {% if each == cycle %}selected{% endif %}
+                >{{ each | fmt_year_range }}</option>
+            {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+      </div>
+    </div>
   </div>
 
   <section class="page-section" id="section-1" aria-labelledby="section-1-header">

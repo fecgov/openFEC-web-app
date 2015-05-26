@@ -1,3 +1,6 @@
+from webargs import Arg
+from webargs.flaskparser import use_kwargs
+
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
@@ -31,18 +34,29 @@ def get_context(c):
     return c
 
 
+def resolve_cycle(candidate):
+    if 'cycle' in request.args:
+        cycles = set(candidate['cycles'])
+        cycles = cycles.intersection(int(each) for each in request.args.getlist('cycle'))
+        return max(cycles)
+    return None
+
+
 def _get_default_cycles():
     now = datetime.datetime.now().year
     cycle = now + now % 2
     return list(range(cycle - 4, cycle + 2, 2))
 
 
+app.jinja_env.globals['min'] = min
+app.jinja_env.globals['max'] = max
 app.jinja_env.globals['api_location'] = api_location
 app.jinja_env.globals['api_version'] = api_version
 app.jinja_env.globals['api_key'] = api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
+app.jinja_env.globals['resolve_cycle'] = resolve_cycle
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
@@ -52,12 +66,6 @@ except OSError:
         '"npm run build"?'
     )
     raise
-
-if not test:
-    app.config['BASIC_AUTH_USERNAME'] = username
-    app.config['BASIC_AUTH_PASSWORD'] = password
-    app.config['BASIC_AUTH_FORCE'] = True
-    basic_auth = BasicAuth(app)
 
 if analytics:
     app.config['USE_ANALYTICS'] = True
@@ -79,37 +87,53 @@ def search():
         return render_template('search.html')
 
 
-@app.route('/candidate/<c_id>/<cycle>')
-def candidate_page_with_cycle(c_id, cycle):
-    data = load_single_type('candidate', c_id, {'year': cycle})
-    return render_candidate(data)
-
-
 @app.route('/candidate/<c_id>')
-def candidate_page(c_id):
-    data = load_single_type('candidate', c_id, {})
-    committee_data = load_nested_type('candidate', c_id, 'committees')['results']
-    return render_candidate(data, committees=committee_data)
+@use_kwargs({
+    'cycle': Arg(int),
+    'history': Arg(int),
+})
+def candidate_page(c_id, cycle=None, history=None):
+    """Fetch and render data for candidate detail page.
+
+    :param int cycle: Optional cycle for associated committees and financials.
+    :param int history: Optional cycle for candidate history; default to `cycle`
+        if not specified.
+    """
+    history = history or cycle
+    path = ('history', str(history)) if history else ()
+    data = load_single_type('candidate', c_id, *path)
+    cycle = cycle or max(data['results'][0]['cycles'])
+    committee_data = load_nested_type('candidate', c_id, 'committees', cycle=cycle)['results']
+    return render_candidate(data, committees=committee_data, cycle=cycle)
 
 
 @app.route('/committee/<c_id>')
-def committee_page(c_id):
-    data = load_single_type('committee', c_id, {})
-    candidate_data = load_nested_type('committee', c_id, 'candidates')['results']
-    return render_committee(data, candidates=candidate_data)
+@use_kwargs({
+    'cycle': Arg(int),
+})
+def committee_page(c_id, cycle=None):
+    """Fetch and render data for committee detail page.
+
+    :param int cycle: Optional cycle for financials.
+    """
+    path = ('history', str(cycle)) if cycle else ()
+    data = load_single_type('committee', c_id, *path)
+    cycle = cycle or max(data['results'][0]['cycles'])
+    candidate_data = load_nested_type('committee', c_id, 'candidates', cycle=cycle)['results']
+    return render_committee(data, candidates=candidate_data, cycle=cycle)
 
 
 @app.route('/candidates')
 def candidates():
     params = _convert_to_dict(request.args)
-    results = load_single_type_summary('candidates', params)
+    results = load_single_type_summary('candidates', **params)
     return render_table('candidates', results, params)
 
 
 @app.route('/committees')
 def committees():
     params = _convert_to_dict(request.args)
-    results = load_single_type_summary('committees', params)
+    results = load_single_type_summary('committees', **params)
     return render_table('committees', results, params)
 
 
@@ -129,6 +153,29 @@ def currency_filter(num, grouping=True):
         return locale.currency(num, grouping=grouping)
 
 
+def _unique(values):
+    ret = []
+    for value in values:
+        if value not in ret:
+            ret.append(value)
+    return ret
+
+
+def _fmt_chart_tick(value):
+    return parse_date(value).strftime('%m/%y')
+
+
+@app.template_filter('fmt_chart_ticks')
+def fmt_chart_ticks(group, keys):
+    if not group or not keys:
+        return ''
+    if isinstance(keys, (list, tuple)):
+        values = [_fmt_chart_tick(group[key]) for key in keys]
+        values = _unique(values)
+        return ' - '.join(values)
+    return _fmt_chart_tick(group[keys])
+
+
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
     if not date_str:
@@ -144,7 +191,7 @@ def date_filter_md(date_str):
 @app.template_filter('last_n_characters')
 def last_n_characters(value, nchar=3):
     if type(value) == int:
-        return value % (10 ** nchar)
+        return str(value % (10 ** nchar)).rjust(nchar, '0')
     return ''
 
 @app.template_filter()
@@ -160,10 +207,43 @@ def fmt_report_desc(report_full_description):
         return re.sub('{.+}', '', report_full_description)
 
 
+@app.template_filter()
+def restrict_cycles(value):
+    year = datetime.datetime.now().year
+    cycle = year + year % 2
+    return [each for each in value if each <= cycle]
+
+
+@app.template_filter()
+def next_cycle(value, cycles):
+    """Get the earliest election cycle greater than or equal to `value`."""
+    return next(
+        (each for each in sorted(cycles) if value <= each),
+        value
+    )
+
+
+@app.template_filter()
+def url_to_fec_pdf(report):
+    beg_img_num = report['beginning_image_number']
+    beg_img_num_last_n = last_n_characters(beg_img_num)
+    return "http://docquery.fec.gov/pdf/{0}/{1}/{1}.pdf".format(beg_img_num_last_n, beg_img_num)
+
+
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
 if force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
+
+
+# Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
+# for credentials over HTTP; h/t @noahkunin.
+if not test:
+    app.config['BASIC_AUTH_USERNAME'] = username
+    app.config['BASIC_AUTH_PASSWORD'] = password
+    app.config['BASIC_AUTH_FORCE'] = True
+    basic_auth = BasicAuth(app)
+
 
 if __name__ == '__main__':
     if '--cached' in sys.argv:
