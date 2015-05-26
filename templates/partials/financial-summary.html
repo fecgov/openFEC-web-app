@@ -1,44 +1,38 @@
-  {% if has_authorized_cmtes or has_joint_cmtes %}
-      <div class="page-section__intro">
-        <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-        <p class="text--lead">This page provides an overview of all the money received and spent by committees authorized by this candidate, including the candidate's principal campaign committees and authorized campaign committees, but not including joint fundraising committees authorized by the candidate.  For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
-      </div>
+{% import 'macros/missing.html' as missing %}
 
-      {% if has_authorized_cmtes %}
-      <div class="page-subsection">
-        <h3 class="term" data-term="Authorized Committee">Authorized Committees</h3>
-        {% for committee in committees if committee.designation == 'P' %}
-          {% include 'partials/committee-stats.html' %}
-        {% endfor %}
+{% if has_authorized_cmtes or has_joint_cmtes %}
+    <div class="page-section__intro">
+      <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+      <p class="text--lead">This page provides an overview of all the money received and spent by committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees, but not joint fundraising committees authorized by the candidate.  For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
+    </div>
 
-        {% for committee in committees if committee.designation == 'A' %}
-          {% include 'partials/committee-stats.html' %}
-        {% endfor %}
-      </div>
-    {% endif %}
+    {% if has_authorized_cmtes %}
+    <div class="page-subsection">
+      <h3 class="term" data-term="Authorized Committee">Authorized Committees</h3>
+      {% for committee in committees if committee.designation == 'P' %}
+        {% include 'partials/committee-stats.html' %}
+      {% endfor %}
 
-    {% if has_joint_cmtes %}
-      <div class="page-subsection other-committees">
-      <h3><span class="term" data-term="Joint Fundraising Committee">Joint Fundraising Committees</span></h3>
-      <p class="text--lead">Below, is a list of the candidate’s joint fundraising committees—in joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed. Click the links to see more information about a particular committee.</p>
-        <ul>
-          {% for committee in committees if committee.designation == 'J' %}
-            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }} &raquo;</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
-
-  {% else %}
-
-  <div class="meta-box error-container">
-    <h2 id="section-1-header" tabindex="0">No results</h2>
-    <p class="text--lead">This candidate has no financial data in for the {{ cycle | fmt_year_range }} election cycle in OpenFEC. For complete data, search the <a href="http://www.fec.gov/finance/disclosure/candcmte_info.shtml">FEC Candidate and Committee Viewer</a>.</p>
-    <p class="text--lead">
-    <div class="error-container__bottom">
-        <h4>Is this information incorrect? Let us know.</h4>
-        <a class="button" href="mailto:{{ contact_email }}">Contact support <i class="ti-email"></i></a>
-   </div>
-  </div>
-
+      {% for committee in committees if committee.designation == 'A' %}
+        {% include 'partials/committee-stats.html' %}
+      {% endfor %}
+    </div>
   {% endif %}
+
+  {% if has_joint_cmtes %}
+    <div class="page-subsection other-committees">
+    <h3><span class="term" data-term="Joint Fundraising Committee">Joint Fundraising Committees</span></h3>
+    <p class="text--lead">Below, is a list of the candidate’s joint fundraising committees—in joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed. Click the links to see more information about a particular committee.</p>
+      <ul>
+        {% for committee in committees if committee.designation == 'J' %}
+          <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }} &raquo;</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+{% else %}
+
+  {{ missing.missing_financials('candidate', cycle) }}
+
+{% endif %}

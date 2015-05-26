@@ -3,6 +3,7 @@
 *.swo
 *.pyc
 node_modules
+.coverage
 .sass-cache/
 rev-manifest.json
 static/js/app-*.js

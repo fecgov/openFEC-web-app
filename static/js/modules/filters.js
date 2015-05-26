@@ -45,10 +45,15 @@ var activateFilter = function(opts) {
 };
 
 var bindFilters = function() {
-    var cycleForm = $('#cycle_form');
     var cycleSelect = $('#cycle');
     cycleSelect.change(function() {
-        cycleForm.submit();
+        var query = {cycle: cycleSelect.val()};
+        var selected = cycleSelect.find('option:selected');
+        var history = selected.attr('data-history');
+        if (history) {
+            query.history = history;
+        }
+        window.location.href = URI(window.location.href).query(query).toString();
     });
 };
 
