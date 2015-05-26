@@ -65,12 +65,6 @@ except OSError:
     )
     raise
 
-if not test:
-    app.config['BASIC_AUTH_USERNAME'] = username
-    app.config['BASIC_AUTH_PASSWORD'] = password
-    app.config['BASIC_AUTH_FORCE'] = True
-    basic_auth = BasicAuth(app)
-
 if analytics:
     app.config['USE_ANALYTICS'] = True
 
@@ -205,6 +199,16 @@ def url_to_fec_pdf(report):
 # Only use when you're sure. 31536000 = 1 year.
 if force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
+
+
+# Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
+# for credentials over HTTP; h/t @noahkunin.
+if not test:
+    app.config['BASIC_AUTH_USERNAME'] = username
+    app.config['BASIC_AUTH_PASSWORD'] = password
+    app.config['BASIC_AUTH_FORCE'] = True
+    basic_auth = BasicAuth(app)
+
 
 if __name__ == '__main__':
     if '--cached' in sys.argv:
