@@ -58,7 +58,7 @@
               similar candidates? Try exploring all candidates.
             </p>
             <p>
-              <a href="{{ url_for('candidates', name=query) }}">
+              <a href="{{ url_for('candidates', q=query) }}">
                 Refine search&amp;  filter results &raquo;
               </a>
             </p>
@@ -77,7 +77,8 @@
               Super PACs? Try exploring committees.
             </p>
             <p>
-              <a href="{{ url_for('committees', name=query) }}">
+              <a href="{{ url_for('search', search=query,
+                  search_type='committees') }}">
                 Search for committees named "{{ query }}"
               </a>
             </p>

@@ -24,7 +24,7 @@ def _call_api(*path_parts, **filters):
 
 
 def load_search_results(query, query_type='candidates'):
-    filters = {'per_page': '5'}
+    filters = {}
 
     if query:
         filters['q'] = query

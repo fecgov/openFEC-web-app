@@ -82,6 +82,8 @@
         </nav>
       </div>
       <div class="header__right">
+
+        {% if not page or page != 'home' %}
         <div class="header-search">
           <form id="search" action="/" autocomplete="off"
             class="input-button-combo js-search">
@@ -93,6 +95,8 @@
             <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
           </form>
         </div>
+        {% endif %}
+
         <button id="glossary-toggle" title="View site glossary" data-slide="right" class="header-nav__link side-toggle"><i class="ti ti-help-alt"></i></button>
       </div>
     </div>

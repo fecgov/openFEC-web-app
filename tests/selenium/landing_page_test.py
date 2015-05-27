@@ -17,13 +17,6 @@ class LandingPageTests(BaseTest):
             self.driver.find_element_by_tag_name('h1').text,
             'Explore Campaign Finance Data')
 
-    def testHeaderSearch(self):
-        self.driver.get(self.url)
-        header = self.getHeader()
-        header.find_element_by_class_name('search-bar').send_keys('obama')
-        header.find_element_by_class_name('search-submit').click()
-        self.elementExistsByClassName('tst-search_results')
-
     def testMainSearch(self):
         self.driver.get(self.url)
         main = self.getMain()
