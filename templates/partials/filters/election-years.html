@@ -1,8 +1,8 @@
 <div class="field">
-    <label for="cycle">Election Cycle</label>
+    <label for="cycle">Election Years</label>
     <select multiple name="cycle" data-placeholder="Select an election cycle">
         {% for year in range(2016, 1978, -2) %}
-        <option value={{ year }}>{{ year }}</option>
+        <option value={{ year }}>{{ year | fmt_year_range }}</option>
         {% endfor %}
     </select>
     <button type="button" class="button--remove" data-removes="cycle"><i class="ti-close"></i></button>

@@ -34,11 +34,7 @@
       {{ chart_bar(group[key], key, tooltip=tooltip, attr={}) }}
     {% endfor %}
     <div class="chart-series__group__label">
-      {% if label_key is string %}
-        {{ group[label_key]|default('')|date_sm }}
-      {% else %}
-        {{ group[label_key[0]]|default('')|date_sm }} - {{ group[label_key[1]]|default('')|date_sm }}
-      {% endif %}
+      {{ group | fmt_chart_ticks(label_key) }}
     </div>
   </div>
   {% endfor %}

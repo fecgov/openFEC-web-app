@@ -67,6 +67,7 @@
     display: table-cell;
     width: auto;
     margin-bottom: 0;
+    max-width: 200px;
   }
 }
 
@@ -84,6 +85,7 @@
 .entity__term__label {
   color: #fff;
   font-weight: bold;
+  padding: 0 1rem;
 
   @include media($medium) {
     display: block;
@@ -93,6 +95,7 @@
 }
 
 .entity__term__data {
+  padding: 0 1rem;
 
   @include media($medium) {
     display: block;

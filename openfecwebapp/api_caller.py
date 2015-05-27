@@ -36,23 +36,24 @@ def load_search_results(query, query_type='candidates'):
 
     return results['results'] if len(results) else []
 
-
-def load_single_type_summary(data_type, filters):
+def load_single_type_summary(data_type, *path, **filters):
     url = '/' + data_type
     filters['per_page'] = 30
-    return _call_api(url, **filters)
+    return _call_api(url, *path, **filters)
 
 
-def load_single_type(data_type, c_id, filters):
-    return _call_api(data_type, c_id, **filters)
+def load_single_type(data_type, c_id, *path, **filters):
+    return _call_api(data_type, c_id, *path, **filters)
 
 
-def load_nested_type(parent_type, c_id, nested_type):
-    return _call_api(parent_type, c_id, nested_type, per_page=100)
+def load_nested_type(parent_type, c_id, nested_type, **filters):
+    return _call_api(parent_type, c_id, nested_type, per_page=100, **filters)
 
 
-def load_cmte_financials(committee_id):
-    filters = {'per_page': MAX_FINANCIALS_COUNT}
+def load_cmte_financials(committee_id, **filters):
+    filters.update({
+        'per_page': MAX_FINANCIALS_COUNT,
+    })
 
     reports = _call_api('committee', committee_id, 'reports', **filters)
     totals = _call_api('committee', committee_id, 'totals', **filters)
@@ -61,11 +62,6 @@ def load_cmte_financials(committee_id):
         'reports': reports['results'],
         'totals': totals['results'],
     }
-
-
-def load_election_years(candidate_id):
-    candidate = _call_api('/candidate/', candidate_id)
-    return candidate.get('election_years', [])
 
 
 def install_cache():

@@ -79,13 +79,14 @@
 
 // Typeahead
 .tt-dropdown-menu {
-  @include font-size(1.4);
+  @include font-size(1.2);
   background: #fff;
   top: 22px !important;
   text-align: left;
   box-shadow: 0 1px 1px rgba(0,0,0,.3);
   border: 1px solid $light-gray;
-
+  width: 100%;
+  
   @include media($medium) {
     width: 75%;
   }
@@ -95,6 +96,12 @@
   .tt-dropdown-menu {
     @include font-size(1.6);
     top: 60px !important;
+  }
+
+  @include media($medium) {
+    .tt-dropdown-menu {
+      top: 60px !important;
+    }
   }
 }
 
@@ -127,7 +134,7 @@
 
 .tt-suggestion__office {
   @include truncate();
-  @include font-size(1.4);
+  @include font-size(1.2);
   text-align: right;
   display: block;
   width: 35%;

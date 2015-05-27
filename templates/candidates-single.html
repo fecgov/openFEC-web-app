@@ -37,14 +37,15 @@
             <p class="entity__term__data"><a href="{{ url_for('committee_page', c_id=c.committee_id) }}">{{ c.name }}</a></p>
             {% endfor %}
           </li>
-          <!-- {% if has_authorized_cmtes %}
-          <li class="entity__term--wide">
-            <h5 class="entity__term__label"><a class="term" data-term="Authorized Committee">Authorized Committees</a></h5>
-            {% for c in committees if c.designation == 'A' %}
-            <p class="entity__term__data"><a href="{{ url_for('committee_page', c_id=c.committee_id) }}">{{ c.name }}</a></p>
+          <li class="entity__term">
+            <h5 class="entity__term__label">Elections</h5>
+            <ul class="entity__term__data">
+            {% for year in election_years %}
+              <span value="{{ year }}">{{ year }}{% if loop.last == false %},{% endif %}</span>
             {% endfor %}
+            </ul>
           </li>
-          {% endif %} -->
+        </ul>
       </div>
     </div>
   </header>
@@ -56,16 +57,20 @@
     </div>
     <div class="page-controls__bottom">
       <div class="container">
-        {% if election_years %}
-        <div class="time-period">
-          <label for="election_cycle">Two-Year Period</label>
-          <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate">
-          {% for year in election_years|sort(reverse=True) %}
-            <option value="{{ year }}">{{ year|fmt_year_range }}</option>
-          {% endfor %}
-          </select>
+        {% if cycles %}
+          <div class="time-period">
+            <label for="cycle">Two-Year Period</label>
+            <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
+            {% for each in range(max(cycles), min(cycles) - 2, -2) | restrict_cycles %}
+              <option
+                  value="{{ each }}"
+                  data-history="{{ each | next_cycle(cycles) }}"
+                  {% if each == cycle %}selected{% endif %}
+                >{{ each | fmt_year_range }}</option>
+            {% endfor %}
+            </select>
         </div>
-        {% endif %}         
+        {% endif %}
       </div>
     </div>
   </div>

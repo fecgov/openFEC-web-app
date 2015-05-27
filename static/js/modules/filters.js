@@ -44,24 +44,16 @@ var activateFilter = function(opts) {
     }
 };
 
-var bindFilters = function(e) {
-
-    if (typeof e !== 'undefined' && typeof e.query !== 'undefined') {
-        $('#category-filters').find('input[name=name]').val(e.query).parents('.field').addClass('active');
-
-        selectedFilters.name = e.query;
-    }
-
-    // election cycle dropdown functionality
-    $('select[name=election_cycle]').change(function() {
-        var $this = $(this);
-        var url = [
-            '',
-            $this.attr('data-type'),
-            $this.attr('data-id'),
-            $this.val()
-        ].join('/');
-        window.location = url;
+var bindFilters = function() {
+    var cycleSelect = $('#cycle');
+    cycleSelect.change(function() {
+        var query = {cycle: cycleSelect.val()};
+        var selected = cycleSelect.find('option:selected');
+        var history = selected.attr('data-history');
+        if (history) {
+            query.history = history;
+        }
+        window.location.href = URI(window.location.href).query(query).toString();
     });
 };
 
@@ -69,13 +61,14 @@ var selectedFilters = {};
 
 // all of the filters we use on candidates and committees
 var fieldMap = [
-    'name',
+    'q',
     'cycle',
     'party',
     'state',
     'district',
     'office',
     'designation',
+    'committee_type',
     'organization_type'
 ];
 
