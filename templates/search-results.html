@@ -11,22 +11,9 @@
 {% block body %}
 <div class="container">
   <section class="data page-section">
-    <h2 class="tst-search_results">Search results
-      {% if query %}
-        <span class="text--query">{{query}}</span>
-      {% endif %}
-    </h2>
-
     {% if no_results %}
       <h4>Sorry, no results</h4>
     {% else %}
-<<<<<<< HEAD
-      <div class="results-header">
-        <h3>{{ result_type[:-1]|capitalize }} Results</h3>
-        <a href="{{ result_type }}?q={{query}}"
-            class="button"
-            data-category="candidates" data-query="{{query}}">View all</a>
-      </div>
       <div class="page-subsection chunk--two-thirds">
 
         {% if result_type == 'committees' %}
@@ -41,6 +28,7 @@
           {% with candidates=results %}
             {% for candidate in candidates %}
               <div class="box">
+                {{ candidate }}
                 <div class="box__header">
                   <span class="text--medium">
                     Election years: {{ candidate.election_years[0] }} -
@@ -72,12 +60,12 @@
             </p>
             <p>
               <a href="{{ url_for('candidates', name=query) }}">
-                Refine search&amp;  filter results &twoheadrightarrow;
+                Refine search&amp;  filter results &raquo;
               </a>
             </p>
             <p>
-              <a href="{{ url_for('committees') }}">
-                View all current candidates &twoheadrightarrow;
+              <a href="{{ url_for('candidates') }}">
+                View all current candidates &raquo;
               </a>
             </p>
           </div>

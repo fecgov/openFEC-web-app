@@ -43,10 +43,7 @@ def resolve_cycle(candidate):
 
 def _get_default_cycles():
     now = datetime.datetime.now().year
-    return now + now % 2
-
-def _get_default_cycles():
-    cycle = _get_current_cycle()
+    cycle = now + now % 2
     return list(range(cycle - 4, cycle + 2, 2))
 
 app.jinja_env.globals['min'] = min
