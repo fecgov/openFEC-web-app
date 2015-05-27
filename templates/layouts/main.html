@@ -89,9 +89,18 @@
             class="input-button-combo js-search">
             <select name="search_type" class="search__select">
               <option value="candidates">Candidates</option>
-              <option value="committees">Committees</option>
+              <option
+              {% if result_type == 'committees' %}
+                selected="selected"
+              {% endif %}
+              value="committees">
+              Committees</option>
             </select>
-            <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search for candidates" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <input class="search-bar" type="text" name="search"
+            aria-label="Search for candidates and committees"
+            placeholder="Search for candidates" autocomplete="off"
+            autocorrect="off" autocapitalize="off" spellcheck="false"
+            value="{{ query or '' }}">
             <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
           </form>
         </div>

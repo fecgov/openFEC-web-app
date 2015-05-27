@@ -15,6 +15,13 @@
       <h4>Sorry, no results</h4>
     {% else %}
       <div class="page-subsection chunk--two-thirds tst-search_results">
+        {% if results|length >= 20 %}
+          <p class="u-text-center"> Showing first 20 results, <a
+              href="{{ url_for(result_type, q=query) }}">
+              view all
+              </a>
+          </p>
+        {% endif %}
 
         {% if result_type == 'committees' %}
           {% with committees=results %}
@@ -49,6 +56,13 @@
           {% endwith %}
         {% endif %}
 
+        {% if results|length >= 20 %}
+          <p class="u-text-center"> Showing first 20 results, <a
+              href="{{ url_for(result_type, q=query) }}">
+              view all
+              </a>
+          </p>
+        {% endif %}
       </div>
       <div class="page-subsection chunk--third">
         <div class="box">
