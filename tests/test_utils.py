@@ -53,7 +53,7 @@ def test_fmt_chart_ticks_single_key():
         'coverage_end_date': datetime.datetime(2015, 1, 1).isoformat(),
     }
     keys = 'coverage_start_date'
-    assert app.fmt_chart_ticks(group, keys) == '01/01/2015'
+    assert app.fmt_chart_ticks(group, keys) == '01/01/15'
 
 
 def test_fmt_chart_ticks_two_keys():
