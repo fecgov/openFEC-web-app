@@ -50,10 +50,10 @@ def test_restrict_cycles():
 def test_fmt_chart_ticks_single_key():
     group = {
         'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
-        'coverage_end_date': datetime.datetime(2015, 2, 1).isoformat(),
+        'coverage_end_date': datetime.datetime(2015, 1, 1).isoformat(),
     }
     keys = 'coverage_start_date'
-    assert app.fmt_chart_ticks(group, keys) == '01/15'
+    assert app.fmt_chart_ticks(group, keys) == '01/01/2015'
 
 
 def test_fmt_chart_ticks_two_keys():
@@ -62,7 +62,7 @@ def test_fmt_chart_ticks_two_keys():
         'coverage_end_date': datetime.datetime(2015, 2, 1).isoformat(),
     }
     keys = ('coverage_start_date', 'coverage_end_date')
-    assert app.fmt_chart_ticks(group, keys) == '01/15 - 02/15'
+    assert app.fmt_chart_ticks(group, keys) == '01/01/15 – 02/01/15'
 
 
 def test_fmt_chart_ticks_two_keys_repeated_value():
@@ -71,4 +71,4 @@ def test_fmt_chart_ticks_two_keys_repeated_value():
         'coverage_end_date': datetime.datetime(2015, 1, 15).isoformat(),
     }
     keys = ('coverage_start_date', 'coverage_end_date')
-    assert app.fmt_chart_ticks(group, keys) == '01/15'
+    assert app.fmt_chart_ticks(group, keys) == '01/01/15 – 01/15/15'
