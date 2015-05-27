@@ -216,10 +216,14 @@ def restrict_cycles(value):
 
 @app.template_filter()
 def next_cycle(value, cycles):
-    """Get the earliest election cycle greater than or equal to `value`."""
+    """Get the earliest election cycle greater than or equal to `value`. If no
+    cycles match, use the most recent cycle to avoid empty results from the
+    history endpoint.
+    """
+    cycles = sorted(restrict_cycles(cycles))
     return next(
-        (each for each in sorted(cycles) if value <= each),
-        value
+        (each for each in cycles if value <= each),
+        max(cycles),
     )
 
 
