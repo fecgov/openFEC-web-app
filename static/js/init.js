@@ -115,5 +115,8 @@ $(document).ready(function() {
       Object.create(accordion).init($(this));
     });
 
-    var search = Search($('.js-search'));
+    var $search = $('.js-search');
+    $search.each(function() {
+      Search($(this));
+    });
 });

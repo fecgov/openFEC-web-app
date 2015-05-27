@@ -1,6 +1,7 @@
 // MODULE: Search bar
 
 .search-bar {
+  float: left;
   margin: 0;
   border: 0;
 }
@@ -36,7 +37,7 @@
 
   .search-bar {
     @include font-size(1.6);
-    float: left;
+    font-weight: bold;
     height: 4rem;
     padding: 0 .5em;
     width: 100%;
@@ -48,10 +49,7 @@
   }
 
   .search__select {
-    background-color: $light-gray;
-    float: left;
     font-size: 1.6rem;
-    font-weight: bold;
     height: 6rem;
 
     option {
@@ -68,6 +66,11 @@
     }
   }
 
+}
+
+.search__select {
+  background-color: $light-gray;
+  float: left;
 }
 
 @include media($medium) {
