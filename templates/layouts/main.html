@@ -31,9 +31,8 @@
     </div>
     <div class="modal__row">
       <h3>Search the Data</h3>
-      <form id="modal-search" action="/" autocomplete="off" class="input-button-combo">
-        <input id="modal-search-input" class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search for candidates and committees" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-        <button class="search-submit primary">Search</button>
+      <form id="modal-search" action="/" autocomplete="off">
+        {% include 'partials/search-bar.html' %}
       </form>
     </div>
     <div class="modal__row">
@@ -86,22 +85,8 @@
         {% if not page or page != 'home' %}
         <div class="header-search">
           <form id="search" action="/" autocomplete="off"
-            class="input-button-combo js-search">
-            <select name="search_type" class="search__select">
-              <option value="candidates">Candidates</option>
-              <option
-              {% if result_type == 'committees' %}
-                selected="selected"
-              {% endif %}
-              value="committees">
-              Committees</option>
-            </select>
-            <input class="search-bar" type="text" name="search"
-            aria-label="Search for candidates and committees"
-            placeholder="Search for candidates" autocomplete="off"
-            autocorrect="off" autocapitalize="off" spellcheck="false"
-            value="{{ query or '' }}">
-            <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
+            class="js-search">
+            {% include 'partials/search-bar.html' %}
           </form>
         </div>
         {% endif %}
