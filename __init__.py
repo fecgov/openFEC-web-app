@@ -1,12 +1,14 @@
+import http
+
+import furl
 from webargs import Arg
 from webargs.flaskparser import use_kwargs
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
 from dateutil.parser import parse as parse_date
-from openfecwebapp.config import (port, debug, host, api_location, api_version, api_key_public,
-                                  username, password, test, force_https, analytics)
+from openfecwebapp import config
 from openfecwebapp.views import render_search_results, render_table, render_candidate, render_committee
 from openfecwebapp.api_caller import load_search_results, load_single_type, load_single_type_summary, load_nested_type, install_cache
 
@@ -25,7 +27,7 @@ app = Flask(__name__)
 
 # ===== configure logging =====
 logger = logging.getLogger(__name__)
-log_level = logging.DEBUG if debug else logging.WARN
+log_level = logging.DEBUG if config.debug else logging.WARN
 logging.basicConfig(level=log_level)
 
 
@@ -50,9 +52,9 @@ def _get_default_cycles():
 
 app.jinja_env.globals['min'] = min
 app.jinja_env.globals['max'] = max
-app.jinja_env.globals['api_location'] = api_location
-app.jinja_env.globals['api_version'] = api_version
-app.jinja_env.globals['api_key'] = api_key_public
+app.jinja_env.globals['api_location'] = config.api_location
+app.jinja_env.globals['api_version'] = config.api_version
+app.jinja_env.globals['api_key'] = config.api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
@@ -67,7 +69,7 @@ except OSError:
     )
     raise
 
-if analytics:
+if config.analytics:
     app.config['USE_ANALYTICS'] = True
 
 
@@ -85,6 +87,24 @@ def search():
         return render_search_results(candidates, committees, query)
     else:
         return render_template('search.html')
+
+
+@app.route('/api')
+def api():
+    """Redirect to API as described at
+    https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
+    """
+    return redirect(config.api_location, http.client.MOVED_PERMANENTLY)
+
+
+@app.route('/developers')
+def developers():
+    """Redirect to developer portal as described at
+    https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
+    """
+    url = furl.furl(config.api_location)
+    url.path.add('developers')
+    return redirect(url.url, http.client.MOVED_PERMANENTLY)
 
 
 @app.route('/candidate/<c_id>')
@@ -232,15 +252,15 @@ def url_to_fec_pdf(report):
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
-if force_https:
+if config.force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
 
 
 # Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
 # for credentials over HTTP; h/t @noahkunin.
-if not test:
-    app.config['BASIC_AUTH_USERNAME'] = username
-    app.config['BASIC_AUTH_PASSWORD'] = password
+if not config.test:
+    app.config['BASIC_AUTH_USERNAME'] = config.username
+    app.config['BASIC_AUTH_PASSWORD'] = config.password
     app.config['BASIC_AUTH_FORCE'] = True
     basic_auth = BasicAuth(app)
 
@@ -249,4 +269,4 @@ if __name__ == '__main__':
     if '--cached' in sys.argv:
         install_cache()
     files = ['./rev-manifest.json']
-    app.run(host=host, port=int(port), debug=debug, extra_files=files)
+    app.run(host=config.host, port=int(config.port), debug=config.debug, extra_files=files)
