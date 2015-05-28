@@ -25,7 +25,7 @@
     <p class="text--lead">Below, is a list of the candidate’s joint fundraising committees—in joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed. Click the links to see more information about a particular committee.</p>
       <ul>
         {% for committee in committees if committee.designation == 'J' %}
-          <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }} &raquo;</a></li>
+          <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }} &raquo;</a></li>
         {% endfor %}
       </ul>
     </div>
