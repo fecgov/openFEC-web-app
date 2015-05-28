@@ -14,14 +14,9 @@
     {% if no_results %}
       <h4>Sorry, no results</h4>
     {% else %}
-      <div class="page-subsection chunk--two-thirds tst-search_results">
-        {% if results|length >= 20 %}
-          <p class="u-text-center"> Showing first 20 results, <a
-              href="{{ url_for(result_type, q=query) }}">
-              view all
-              </a>
-          </p>
-        {% endif %}
+    <h1>Search Results</h1>
+    <div class="page-subsection chunk--two-thirds tst-search_results">
+      {% include 'partials/search-results-controls.html' %}
 
         {% if result_type == 'committees' %}
           {% with committees=results %}
@@ -56,16 +51,11 @@
           {% endwith %}
         {% endif %}
 
-        {% if results|length >= 20 %}
-          <p class="u-text-center"> Showing first 20 results, <a
-              href="{{ url_for(result_type, q=query) }}">
-              view all
-              </a>
-          </p>
-        {% endif %}
+        {% include 'partials/search-results-controls.html' %}
+
       </div>
       <div class="page-subsection chunk--third">
-        <div class="box">
+        <div class="box meta-box">
           <div class="box__portion">
             <h5 class="box__title">Explore Candidates</h5>
             <p>Trying to sort through a lot of results? Or want to explore
@@ -84,7 +74,7 @@
           </div>
         </div>
 
-        <div class="box">
+        <div class="box meta-box">
           <div class="box__portion">
             <h5 class="box__title">Explore Committees</h5>
             <p>Looking for campaign organizations like campaign committees or
