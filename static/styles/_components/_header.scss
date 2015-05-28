@@ -153,23 +153,6 @@
   margin-right: 0;
   float: left;
 
-  input[type="text"],
-  button {
-  	height: 3rem;
-    margin-bottom: 0;
-    border: none;
-  }
-
-  input[type="text"],
-  .tt-dropdown-menu {
-  	width: 50%;
-  }
-
-  .search-submit {
-  	width: 20%;
-  	padding: 0;
-  }
-
   @include media($medium) {
     @include span-columns(6 of 8);
     display: block;
