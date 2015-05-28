@@ -7,15 +7,14 @@
     </span>
   </div>
   <div class="entity__term entity__term--aligned">
-    <h5 class="entity__term__data">{{ committee.name }}</h5>
-    <span class="entity__term__data">
-      <em>{{ committee.committee_type_full}}</em>
-    </span>
-    <span class="entity__term__data">
+    <h5 class="entity__term__data">
       <a title="{{ committee.name }}"
           href="{{ url_for('committee_page', c_id=committee.committee_id) }}">
-        View committee page
-        <span>&raquo;</span></a>
+          {{ committee.name }}
+      </a>
+    </h5>
+    <span class="entity__term__data">
+      <em>{{ committee.committee_type_full}} | {{ committee.designation_full}}</em>
     </span>
   </div>
 </div>

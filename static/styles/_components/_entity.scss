@@ -67,7 +67,14 @@
     display: table-cell;
     width: auto;
     margin-bottom: 0;
-    max-width: 200px;
+  }
+}
+
+.entity__header {
+  @include media($medium) {
+    .entity__term {
+      max-width: 200px;
+    }
   }
 }
 

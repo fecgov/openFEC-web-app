@@ -2,7 +2,7 @@
 // A sectioned off and bordered box with portions.
 .box {
   @include clearfix();
-  @include rem(margin-bottom, 2.0rem);
+  @include rem(margin-bottom, 3.0rem);
   border: 1px solid $light-gray;
   clear: both;
 }
@@ -26,7 +26,9 @@
 
 .box__header {
   line-height: 1.6rem;
-  padding: 0 2rem;
+  padding: .5rem 2rem;
+  background: $licorice;
+  color: #fff;
 }
 
 .box__right {
@@ -36,5 +38,9 @@
 }
 
 .box__title {
+  margin: 0;
+}
+
+h3.box__title {
   margin: 0;
 }
