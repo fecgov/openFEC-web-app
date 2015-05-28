@@ -26,24 +26,24 @@ $tooltip-border-color: #999;
 
 .data--disbursement,
 .data--disbursements,
-.data--total_disbursements_period { 
-  background: $data-disbursement; 
+.data--total_disbursements_period {
+  background: $data-disbursement;
   .chart-series__bar__tooltip {
     color: $data-disbursement;
   }
 }
 
 .data--receipts,
-.data--total_receipts_period { 
-  background: $data-receipt; 
+.data--total_receipts_period {
+  background: $data-receipt;
   .chart-series__bar__tooltip {
     color: $data-receipt;
   }
 }
 
 .data--cash,
-.data--cash_on_hand_end_period { 
-  background: $data-cash; 
+.data--cash_on_hand_end_period {
+  background: $data-cash;
   .chart-series__bar__tooltip {
     color: $data-cash;
   }
@@ -51,8 +51,8 @@ $tooltip-border-color: #999;
 }
 
 .data--debt,
-.data--debts_owed_by_committee { 
-  background: $data-debt; 
+.data--debts_owed_by_committee {
+  background: $data-debt;
   .chart-series__bar__tooltip {
     color: $data-debt;
   }
@@ -110,7 +110,7 @@ $tooltip-border-color: #999;
     padding-top: 1px;
     position: relative;
     height: 100%;
-    
+
     margin-left: 10%;
 
     &:first-of-type {
@@ -126,8 +126,9 @@ $tooltip-border-color: #999;
     @include display(flex);
     @include flex-direction(row);
     @include align-items(flex-end);
+    max-width: 90px;
     z-index: 9;
-    
+
     .chart-series__bar + .chart-series__bar {
       margin-left: .5em;
     }
