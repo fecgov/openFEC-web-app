@@ -1,29 +1,17 @@
-<section class="hero" aria-labelledby="hero-heading">
-  <div class="container">
-    <div class="hero__content">
-      <h1 id="hero-heading" class="text--display">Explore Campaign Finance Data</h1>
-      <p class="text--hero">OpenFEC lets you see how money is raised and spent in federal elections.</p>
-      <form id="large-search" action="/" autocomplete="off">
-        <label for="main-search" class="text--hero">
-          To get started, search for a federal
-          <a tabindex="0" class="term term--underlined" data-term="Candidate">
-            candidate</a> or
-          <a tabindex="0" class="term term--underlined" data-term="Committee">
-            committee</a>.</label>
-          <div class="input-button-combo search--large js-search">
-            <select name="search_type" class="search__select">
-              <option value="candidates">Candidates</option>
-              <option value="committees">Committees</option>
-            </select>
-            <input id="main-search" tabindex="0" type="text" name="search"
-            class="search-bar" placeholder="Enter a candidate name"
-            autocomplete="off" autocorrect="off" autocapitalize="off"
-            spellcheck="false">
-            <button class="primary" id="submit-search" tab-index="0">
-              <i class="ti-search"></i> Search
-            </button>
-          </div>
-      </form>
-    </div>
-  </div>
-</section>
+<div class="input-button-combo">
+  <select name="search_type" class="search__select">
+    <option value="candidates">Candidates</option>
+    <option
+    {% if result_type == 'committees' %}
+      selected="selected"
+    {% endif %}
+    value="committees">
+    Committees</option>
+  </select>
+  <input class="search-bar" type="text" name="search"
+  aria-label="Search for candidates and committees"
+  placeholder="Search for candidates by name" autocomplete="off"
+  autocorrect="off" autocapitalize="off" spellcheck="false"
+  value="{{ query or '' }}">
+  <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
+</div>

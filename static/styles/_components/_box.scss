@@ -3,21 +3,13 @@
 .box {
   @include clearfix();
   @include rem(margin-bottom, 2.0rem);
-  border: 1px solid $light-gray;
   clear: both;
 }
 
 .box__portion {
-  border-top: 1px solid $light-gray;
-  padding: .5rem;
-
-  &:first-of-type {
-    border-top: 0;
-  }
-
-  @include media($medium) {
-    padding: 1rem 1.5rem;
-  }
+  border: 1px solid $light-gray;
+  border-top: none;
+  padding: 1rem 1.5rem;
 }
 
 .box__portion--dark {
@@ -26,7 +18,9 @@
 
 .box__header {
   line-height: 1.6rem;
-  padding: 0 2rem;
+  padding: .5rem 2rem;
+  background: $licorice-3;
+  color: #fff;
 }
 
 .box__right {
@@ -37,4 +31,15 @@
 
 .box__title {
   margin: 0;
+}
+
+h3.box__title {
+  margin: 0;
+}
+
+.meta-box {
+  .box__portion {
+    border: none;
+    padding: 0;
+  }
 }

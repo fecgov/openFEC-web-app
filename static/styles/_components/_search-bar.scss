@@ -10,89 +10,49 @@
   label {
     margin-bottom: 30px;
   }
-
+  
+  @include media($medium) {
+    .input-button-combo {
+      height: 6rem;
+      font-size: 2.0rem;
+    }
+  }
+  
   @include media($large) {
     @include span-columns(18 of 22);
     @include shift(2 of 22);
-  }
-}
 
-.input-button-combo.search--large {
-  padding-bottom: 1rem;
+    .search__select {
+      min-width: 160px;
+    }
 
-  input {
-    clear: both;
-    float: left;
-  }
-
-  button {
-    @include font-size(1.6);
-    height: 4rem;
-    padding: .5em;
-
-    i {
-      font-size: .75em;
+    .search-submit {
+      min-width: 60px;
     }
   }
-
-  .search-bar {
-    @include font-size(1.6);
-    font-weight: bold;
-    height: 4rem;
-    padding: 0 .5em;
-    width: 100%;
-  }
-
-  .twitter-typeahead {
-    float: left;
-    width: 50%;
-  }
-
-  .search__select {
-    font-size: 1.6rem;
-    height: 6rem;
-
-    option {
-      // TODO not working.
-      padding: 1rem 0;
-    }
-  }
-
-  @include media($medium) {
-    .search-bar,
-    button {
-      @include font-size(2.4);
-      height: 6rem;
-    }
-  }
-
 }
 
 .search__select {
-  background-color: $light-gray;
-  float: left;
+  min-width: 140px;
 }
 
-@include media($medium) {
-  .search--large {
-    @include span-columns(12);
-    @include shift(0);
-  }
+.search-submit {
+  min-width: 40px;
 }
 
 // Typeahead
+.twitter-typeahead {
+  @include display(flex);
+  width: 100%;
+}
+
 .tt-dropdown-menu {
   @include font-size(1.2);
   background: #fff;
-  top: 22px !important;
   text-align: left;
   box-shadow: 0 1px 1px rgba(0,0,0,.3);
   border: 1px solid $light-gray;
   width: 100%;
-  
-  @include media($medium) {
-    width: 75%;
-  }
 }
 
 #large-search {

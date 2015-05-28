@@ -14,14 +14,9 @@
     {% if no_results %}
       <h4>Sorry, no results</h4>
     {% else %}
-      <div class="page-subsection chunk--two-thirds tst-search_results">
-        {% if results|length >= 20 %}
-          <p class="u-text-center"> Showing first 20 results, <a
-              href="{{ url_for(result_type, q=query) }}">
-              view all
-              </a>
-          </p>
-        {% endif %}
+    <h1>Search Results</h1>
+    <div class="chunk--two-thirds tst-search_results">
+      {% include 'partials/search-results-controls.html' %}
 
         {% if result_type == 'committees' %}
           {% with committees=results %}
@@ -56,51 +51,51 @@
           {% endwith %}
         {% endif %}
 
-        {% if results|length >= 20 %}
-          <p class="u-text-center"> Showing first 20 results, <a
-              href="{{ url_for(result_type, q=query) }}">
-              view all
-              </a>
-          </p>
-        {% endif %}
+        {% include 'partials/search-results-controls.html' %}
+
       </div>
-      <div class="page-subsection chunk--third">
-        <div class="box">
+      <div class="chunk--third">
+        <div class="box meta-box">
           <div class="box__portion">
-            <h5 class="box__title">Explore Candidates</h5>
+            <h5 class="box__title">Explore {{ result_type | title }}</h5>
             <p>Trying to sort through a lot of results? Or want to explore
-              similar candidates? Try exploring all candidates.
+              similar {{ result_type }}? Try exploring all {{ result_type }}.
             </p>
             <p>
-              <a href="{{ url_for('candidates', q=query) }}">
-                Refine search&amp;  filter results &raquo;
+              <a href="{{ url_for(result_type, q=query) }}">
+                Filter results &raquo;
               </a>
             </p>
             <p>
-              <a href="{{ url_for('candidates') }}">
-                View all current candidates &raquo;
+              <a href="{{ url_for( result_type ) }}">
+                View all {{ result_type }} &raquo;
               </a>
             </p>
           </div>
         </div>
 
-        <div class="box">
+        <div class="box meta-box">
           <div class="box__portion">
-            <h5 class="box__title">Explore Committees</h5>
-            <p>Looking for campaign organizations like campaign committees or
-              Super PACs? Try exploring committees.
+            {% if result_type == 'candidates' %} 
+              {% set other_type = 'committees' %}
+            {% else %}  
+              {% set other_type = 'candidates' %}
+            {% endif %}
+            <h5 class="box__title">Explore {{ other_type | title }}</h5>
+            <p>Not finding what you're looking for? Try searching through 
+              {{ other_type }}.
             </p>
             <p>
               <a href="{{ url_for('search', search=query,
-                  search_type='committees') }}">
-                Search for committees named "{{ query }}"
+                  search_type=other_type) }}">
+                Search for {{ other_type }} named "{{ query }}"
               </a>
             </p>
             <hr></hr>
-            <p><em>
-              Looking for committees related to a certain candidate? View the
+            <p class="text--note u-no-margin">
+              Looking for all committees authorized to a certain candidate? View the
               candidate's page to see them all.
-            </em></p>
+            </p>
           </div>
         </div>
       </div>
