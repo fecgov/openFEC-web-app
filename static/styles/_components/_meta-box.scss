@@ -29,8 +29,8 @@
   .input-button-combo {
     @include justify-content(left);
   }
-}
 
-.results-count {
-  padding-top: 1rem;
+  .results-count {
+    padding-top: 1rem;
+  }
 }

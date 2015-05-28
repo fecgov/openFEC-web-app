@@ -87,6 +87,7 @@
 .entity__term--icon {
   min-width: 3rem;
   width: 3rem;
+  text-align: center;
 }
 
 .entity__term__label {
@@ -107,6 +108,38 @@
   @include media($medium) {
     display: block;
     width: 100%;
+  }
+}
+
+.entity__info--search {
+  @include clearfix();
+
+  .entity__term {
+    width: 100%;
+    vertical-align: top;
+    float: left;
+    margin-bottom: 0;
+  }
+
+  .entity__term__data {
+    padding-left: 0;
+  }
+
+  .entity__term--icon {
+    display: none;
+  }
+
+  .entity__type {
+    float: none;
+    padding: 0;
+  }
+
+  @include media($medium) {
+    .entity__term,
+    .entity__term--icon {
+      width: auto;
+      display: block;
+    }
   }
 }
 

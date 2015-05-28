@@ -1,4 +1,13 @@
-<div class="box__portion">
+{% if result_type == 'committees' %}
+<div class="box__header">
+  <span class="text--medium">
+    Election years: {{ committee.cycles[0] }} -
+    {{ committee.cycles[-1] }}
+  </span>
+</div>
+{% endif %}
+
+<div class="box__portion entity__info--search">
   <div class="entity__term entity__term--aligned entity__term--icon">
     <span class="entity__type">
       <img class="category-icon" width="20" height="20"
@@ -14,7 +23,10 @@
       </a>
     </h5>
     <span class="entity__term__data">
-      <em>{{ committee.committee_type_full}} | {{ committee.designation_full}}</em>
+      {{ committee.committee_type_full}} &bull; {{ committee.designation_full}} 
+      {% if committee.organization_type %}
+        &bull; {{ committee.organization_type_full }}
+      {% endif %}
     </span>
   </div>
 </div>

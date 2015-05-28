@@ -143,11 +143,6 @@ select[multiple] {
   button {
     padding: 0 1rem;
   }
-
-  .twitter-typeahead {
-    @include display(flex);
-    min-width: 50%;
-  }
 }
 
 // If you want some styling on the forms

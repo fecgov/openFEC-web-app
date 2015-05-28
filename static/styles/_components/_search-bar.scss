@@ -21,10 +21,31 @@
   @include media($large) {
     @include span-columns(18 of 22);
     @include shift(2 of 22);
+
+    .search__select {
+      min-width: 160px;
+    }
+
+    .search-submit {
+      min-width: 60px;
+    }
   }
 }
 
+.search__select {
+  min-width: 140px;
+}
+
+.search-submit {
+  min-width: 40px;
+}
+
 // Typeahead
+.twitter-typeahead {
+  @include display(flex);
+  width: 100%;
+}
+
 .tt-dropdown-menu {
   @include font-size(1.2);
   background: #fff;
