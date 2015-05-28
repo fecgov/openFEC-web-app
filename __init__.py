@@ -103,7 +103,8 @@ def candidate_page(c_id, cycle=None, history=None):
     path = ('history', str(history)) if history else ()
     data = load_single_type('candidate', c_id, *path)
     cycle = cycle or max(data['results'][0]['cycles'])
-    committee_data = load_nested_type('candidate', c_id, 'committees', cycle=cycle)['results']
+    path = ('history', str(cycle))
+    committee_data = load_nested_type('candidate', c_id, 'committees', *path)['results']
     return render_candidate(data, committees=committee_data, cycle=cycle)
 
 

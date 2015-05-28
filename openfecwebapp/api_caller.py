@@ -45,8 +45,8 @@ def load_single_type(data_type, c_id, *path, **filters):
     return _call_api(data_type, c_id, *path, **filters)
 
 
-def load_nested_type(parent_type, c_id, nested_type, **filters):
-    return _call_api(parent_type, c_id, nested_type, per_page=100, **filters)
+def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
+    return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
 
 
 def load_cmte_financials(committee_id, **filters):
