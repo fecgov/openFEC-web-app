@@ -126,6 +126,7 @@ $tooltip-border-color: #999;
     @include display(flex);
     @include flex-direction(row);
     @include align-items(flex-end);
+    max-width: 90px;
     z-index: 9;
 
     .chart-series__bar + .chart-series__bar {
