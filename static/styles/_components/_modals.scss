@@ -13,6 +13,10 @@
     color: #fff;
     text-decoration: underline;
   }
+
+  .input-button-combo {
+    @include justify-content(flex-start);
+  }
 }
 
 .modal__row {

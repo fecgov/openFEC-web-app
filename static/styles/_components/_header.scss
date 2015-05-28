@@ -49,7 +49,7 @@
   display: none;
   float: left;
 
-  @include media($medium) {
+  @include media($large) {
     display: block;
   }
 }
@@ -105,7 +105,7 @@
 .site-header .side-toggle {
   padding: 1.6rem 0;
 
-  @include media($medium) {
+  @include media($large) {
     width: auto;
     padding: 1.6rem 2rem;
   }
@@ -115,7 +115,7 @@
   @include span-columns(4 of 20, block-collapse);
   float: left;
 
-  @include media($medium) {
+  @include media($large) {
     display: none;
   }
 }
@@ -127,13 +127,13 @@
   float: right;
 }
 
-@include media($medium) {
+@include media($large) {
   .header__left {
-    @include span-columns(16 of 24, block-collapse);
+    @include span-columns(12 of 24, block-collapse);
   }
 
   .header__right {
-    @include span-columns(8 of 24, block-collapse);
+    @include span-columns(12 of 24, block-collapse);
   }
 
   .header-brand {
@@ -142,7 +142,7 @@
   }
 
   #glossary-toggle {
-    @include span-columns(2 of 8, block-collapse);
+    @include span-columns(2 of 12, block-collapse);
   }
 }
 
@@ -153,8 +153,12 @@
   margin-right: 0;
   float: left;
 
-  @include media($medium) {
-    @include span-columns(6 of 8);
+  .input-button-combo {
+    @include justify-content(flex-end);
+  }
+
+  @include media($large) {
+    @include span-columns(10 of 12);
     display: block;
   }
 }
@@ -162,7 +166,7 @@
 #site-menu-toggle {
   float: left;
 
-  @include media($medium) {
+  @include media($large) {
     display: none;
   }
 }
