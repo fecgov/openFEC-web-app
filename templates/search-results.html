@@ -11,49 +11,43 @@
 {% block body %}
 <div class="container">
   <section class="data page-section">
-    <h2 class="tst-search_results">Search results
-      {% if query %}
-        <span class="text--query">{{query}}</span>
-      {% endif %}
-    </h2>
-
     {% if no_results %}
       <h4>Sorry, no results</h4>
     {% else %}
-      <div class="page-subsection">
-        <div class="results-header">
-          <h3>{{ result_type[:-1]|capitalize }} Results</h3>
-          <a href="{{ result_type }}?q={{query}}"
-              class="button"
-              data-category="candidates" data-query="{{query}}">View all</a>
-        </div>
+      <div class="page-subsection chunk--two-thirds tst-search_results">
+        {% if results|length >= 20 %}
+          <p class="u-text-center"> Showing first 20 results, <a
+              href="{{ url_for(result_type, q=query) }}">
+              view all
+              </a>
+          </p>
+        {% endif %}
+
         {% if result_type == 'committees' %}
           {% with committees=results %}
             {% for committee in committees %}
-              {% include 'partials/search-results-committee.html' %}
-              <div class="figure-group">
-                {% if committee.candidate %}
-                {% with candidate = committe.candidate %}
-                  {% include "partials/search-results-candidate.html" %}
-                {% endwith %}
-                {% endif %}
+              <div class="box">
+                {% include 'partials/search-results-committee.html' %}
               </div>
             {% endfor %}
-
-
           {% endwith %}
         {% else %}
           {% with candidates=results %}
             {% for candidate in candidates %}
-              <div class="figure-group__header--short">
-                <span>Active: {{ candidate.active_through }}</span>
-                <span class="u-float-right color-activity">
-                  Currently active (TODO)</span>
-              </div>
-              {% include 'partials/search-results-candidate.html' %}
-              <div class="figure-group">
-                {% if candidate.committee %}
-                {% with committee=candidate.committee %}
+              <div class="box">
+                <div class="box__header">
+                  <span class="text--medium">
+                    Election years: {{ candidate.election_years[0] }} -
+                    {{ candidate.election_years[-1] }}
+                  </span>
+                  {% if current_cycle in candidate.election_years %}
+                    <span class="text--medium color-activity box__right">
+                      Currently active (TODO)</span>
+                  {% endif %}
+                </div>
+                {% include 'partials/search-results-candidate.html' %}
+                {% if candidate.principal_committees %}
+                {% with committee=candidate.principal_committees[0] %}
                   {% include "partials/search-results-committee.html" %}
                 {% endwith %}
                 {% endif %}
@@ -61,6 +55,54 @@
             {% endfor %}
           {% endwith %}
         {% endif %}
+
+        {% if results|length >= 20 %}
+          <p class="u-text-center"> Showing first 20 results, <a
+              href="{{ url_for(result_type, q=query) }}">
+              view all
+              </a>
+          </p>
+        {% endif %}
+      </div>
+      <div class="page-subsection chunk--third">
+        <div class="box">
+          <div class="box__portion">
+            <h5 class="box__title">Explore Candidates</h5>
+            <p>Trying to sort through a lot of results? Or want to explore
+              similar candidates? Try exploring all candidates.
+            </p>
+            <p>
+              <a href="{{ url_for('candidates', q=query) }}">
+                Refine search&amp;  filter results &raquo;
+              </a>
+            </p>
+            <p>
+              <a href="{{ url_for('candidates') }}">
+                View all current candidates &raquo;
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box__portion">
+            <h5 class="box__title">Explore Committees</h5>
+            <p>Looking for campaign organizations like campaign committees or
+              Super PACs? Try exploring committees.
+            </p>
+            <p>
+              <a href="{{ url_for('search', search=query,
+                  search_type='committees') }}">
+                Search for committees named "{{ query }}"
+              </a>
+            </p>
+            <hr></hr>
+            <p><em>
+              Looking for committees related to a certain candidate? View the
+              candidate's page to see them all.
+            </em></p>
+          </div>
+        </div>
       </div>
     {% endif %}
   </section>

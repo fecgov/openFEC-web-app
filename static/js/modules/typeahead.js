@@ -14,7 +14,7 @@ var glossary = require('./glossary.js');
 
 
 var officeMap = {
-  H: 'House of Representatives',
+  H: 'House',
   S: 'Senate',
   P: 'President'
 };

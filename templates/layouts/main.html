@@ -62,8 +62,8 @@
     <div id="notice" aria-hidden="true" class="section--blue">
       <a id="notice-close" class="js-action js-hide link--icon" tabindex="0" data-hides="notice"><i class="ti-close"></i></a>
       <h3>This site is in alpha. Tell us what you think!</h3>
-      <p>This is the first public release of openFEC, a new app for exploring the FEC's disclosure data. OpenFEC uses current campaign finance disclosure data but is not inclusive of all data made available by the FEC and things may not work as expected. Please continue your regular work on the <a href="http://fec.gov/pindex.shtml">Campaign Finance Disclosure Portal</a>.</p>
-      <p>We're working hard to make openFEC a useful addition to the resources available at FEC.gov. Your feedback is important to us as we build this site. <a href="mailto:18F-FEC@gsa.gov">Email us</a> and let us know how it’s working for you.</p>
+      <p>This is the first public release of OpenFEC, a new app for exploring the FEC's disclosure data. OpenFEC uses current campaign finance disclosure data but <em>does not include</em> all data made available by the FEC and things may not work as expected. Please continue your regular work on the <a href="http://www.fec.gov/pindex.shtml">Campaign Finance Disclosure Portal</a>.</p>
+      <p>We're working hard to make OpenFEC a useful addition to the resources available at FEC.gov. Your feedback is important to us as we build this site. <a href="mailto:18F-FEC@gsa.gov">Email us</a> and let us know how it’s working for you.</p>
     </div>
     <div class="banner">
       <span class="banner--left">Looking for fec.gov? <a href="http://www.fec.gov">Click here.</a></span>
@@ -82,12 +82,30 @@
         </nav>
       </div>
       <div class="header__right">
+
+        {% if not page or page != 'home' %}
         <div class="header-search">
-          <form id="search" action="/" autocomplete="off" class="input-button-combo">
-            <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search for candidates and committees" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <form id="search" action="/" autocomplete="off"
+            class="input-button-combo js-search">
+            <select name="search_type" class="search__select">
+              <option value="candidates">Candidates</option>
+              <option
+              {% if result_type == 'committees' %}
+                selected="selected"
+              {% endif %}
+              value="committees">
+              Committees</option>
+            </select>
+            <input class="search-bar" type="text" name="search"
+            aria-label="Search for candidates and committees"
+            placeholder="Search for candidates" autocomplete="off"
+            autocorrect="off" autocapitalize="off" spellcheck="false"
+            value="{{ query or '' }}">
             <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
           </form>
         </div>
+        {% endif %}
+
         <button id="glossary-toggle" title="View site glossary" data-slide="right" class="header-nav__link side-toggle"><i class="ti ti-help-alt"></i></button>
       </div>
     </div>

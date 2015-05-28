@@ -38,3 +38,37 @@ def test_fmt_year_range_int():
 def test_fmt_year_range_not_int():
     assert app.fmt_year_range('1985') is None
     assert app.fmt_year_range(None) is None
+
+
+def test_restrict_cycles():
+    year = datetime.datetime.now().year
+    cycle = year + year % 2
+    cycles = [cycle - 2, cycle, cycle + 2]
+    assert app.restrict_cycles(cycles) == [cycle - 2, cycle]
+
+
+def test_fmt_chart_ticks_single_key():
+    group = {
+        'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
+        'coverage_end_date': datetime.datetime(2015, 1, 1).isoformat(),
+    }
+    keys = 'coverage_start_date'
+    assert app.fmt_chart_ticks(group, keys) == '01/01/15'
+
+
+def test_fmt_chart_ticks_two_keys():
+    group = {
+        'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
+        'coverage_end_date': datetime.datetime(2015, 2, 1).isoformat(),
+    }
+    keys = ('coverage_start_date', 'coverage_end_date')
+    assert app.fmt_chart_ticks(group, keys) == '01/01/15 – 02/01/15'
+
+
+def test_fmt_chart_ticks_two_keys_repeated_value():
+    group = {
+        'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
+        'coverage_end_date': datetime.datetime(2015, 1, 15).isoformat(),
+    }
+    keys = ('coverage_start_date', 'coverage_end_date')
+    assert app.fmt_chart_ticks(group, keys) == '01/01/15 – 01/15/15'

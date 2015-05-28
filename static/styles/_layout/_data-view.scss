@@ -6,11 +6,11 @@
   padding-bottom: 1em;
 
   h3 {
-    @include span-columns(20)
+    float: left;
   }
 
   .button {
-    @include span-columns(4);
+    float: right;
   }
 }
 

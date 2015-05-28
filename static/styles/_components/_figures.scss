@@ -28,19 +28,6 @@ figure {
   }
 }
 
-.figure-group__block {
-  border-top: 1px solid $light-gray;
-  padding: .5rem;
-
-  @include media($medium) {
-    padding: 1rem 2rem;
-  }
-}
-
-.figure-group__block--dark {
-  background-color: $lightest-gray;
-}
-
 .figure-group__bar {
   @include white-links();
   color: #fff;
@@ -51,21 +38,18 @@ figure {
 .figure-group__header {
   @include clearfix();
   padding: 1rem;
-  border-bottom: 1px solid $light-gray;
+  border: 1px solid $light-gray;
 
   @include media($medium) {
     padding: 2rem;
   }
-}
-.figure-group__header--short {
-  padding: 0 1rem;
+
+  & + .figure-group__block {
+    border-top: 0;
+  }
 }
 
 .figure-group__title {
-  margin: 0;
-}
-
-h3.figure-group__title {
   margin: 0;
 }
 
@@ -106,18 +90,25 @@ h3.figure-group__title {
   border-bottom: 1px solid $medium-gray;
 
   h4 {
-    float: left;
     margin-bottom: 0;
+  }
+
+  @include media($medium) {
+    h4 {
+      float: left
+    }
   }
 }
 
 .figure__key {
-  float: right;
+  float: left;
   margin-top: 2px;
   
   li {
     @include rem(margin-right, 2.0rem);
+    float: none;
   }
+
   .swatch {
     @include rem(margin-right, 1.0rem);
     height: 20px;
@@ -125,6 +116,14 @@ h3.figure-group__title {
     border-radius: 20px;
     padding: 0;
     display: inline-block;
+  }
+
+  @include media($medium) {
+    float: right;
+
+    li {
+      float: left;
+    }
   }
 }
 
