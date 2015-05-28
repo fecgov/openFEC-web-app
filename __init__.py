@@ -42,9 +42,13 @@ def resolve_cycle(candidate):
     return None
 
 
+def current_cycle():
+    year = datetime.datetime.now().year
+    return year + year % 2
+
+
 def _get_default_cycles():
-    now = datetime.datetime.now().year
-    cycle = now + now % 2
+    cycle = current_cycle()
     return list(range(cycle - 4, cycle + 2, 2))
 
 
@@ -102,7 +106,7 @@ def candidate_page(c_id, cycle=None, history=None):
     history = history or cycle
     path = ('history', str(history)) if history else ()
     data = load_single_type('candidate', c_id, *path)
-    cycle = cycle or max(data['results'][0]['cycles'])
+    cycle = cycle or min(current_cycle(), max(data['results'][0]['cycles']))
     path = ('history', str(cycle))
     committee_data = load_nested_type('candidate', c_id, 'committees', *path)['results']
     return render_candidate(data, committees=committee_data, cycle=cycle)
@@ -119,7 +123,7 @@ def committee_page(c_id, cycle=None):
     """
     path = ('history', str(cycle)) if cycle else ()
     data = load_single_type('committee', c_id, *path)
-    cycle = cycle or max(data['results'][0]['cycles'])
+    cycle = cycle or min(current_cycle(), max(data['results'][0]['cycles']))
     candidate_data = load_nested_type('committee', c_id, 'candidates', cycle=cycle)['results']
     return render_committee(data, candidates=candidate_data, cycle=cycle)
 
@@ -210,17 +214,19 @@ def fmt_report_desc(report_full_description):
 
 @app.template_filter()
 def restrict_cycles(value):
-    year = datetime.datetime.now().year
-    cycle = year + year % 2
-    return [each for each in value if each <= cycle]
+    return [each for each in value if each <= current_cycle()]
 
 
 @app.template_filter()
 def next_cycle(value, cycles):
-    """Get the earliest election cycle greater than or equal to `value`."""
+    """Get the earliest election cycle greater than or equal to `value`. If no
+    cycles match, use the most recent cycle to avoid empty results from the
+    history endpoint.
+    """
+    cycles = sorted(restrict_cycles(cycles))
     return next(
-        (each for each in sorted(cycles) if value <= each),
-        value
+        (each for each in cycles if value <= each),
+        max(cycles),
     )
 
 
