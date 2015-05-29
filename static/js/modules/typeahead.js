@@ -75,6 +75,9 @@ module.exports = {
       name: name,
       datumTokenizer: function(d) {
         var tokens = Bloodhound.tokenizers.whitespace(d.name);
+        if (name === 'Glossary') {
+          tokens = Bloodhound.tokenizers.whitespace(d.term);
+        }
         return tokens;
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -208,6 +211,7 @@ module.exports = {
 
     // Glossary typeahead
     glossaryEngine = this.createEngine('Glossary', terms);
+    console.log(glossaryEngine);
     glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
 
     $('#glossary-search').typeahead({
@@ -230,10 +234,13 @@ module.exports = {
             definition: datum.definition
         });
     });
+    $('#glossary-search').on('typeahead:opened', function(event, datum) {
+      console.log(event);
+      console.log(datum);
+    });
 
     $('.twitter-typeahead').css({
         display: 'flex',
     });
-
   }
 };
