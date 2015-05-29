@@ -1,37 +1,45 @@
-import unittest
-import urllib
+import re
+
+import furl
 
 from .base_test_class import SearchPageTestCase
+
+
+candidate_url_re = re.compile('\/candidate\/\w+$')
+committee_url_re = re.compile('\/committee\/\w+$')
+
 
 class SearchResultsPageTests(SearchPageTestCase):
 
     def setUp(self):
-        self.url = self.base_url + '/?search='
+        self.url = furl.furl(self.base_url)
 
-    def testSearchResultsPageLoad(self):
-        self.driver.get(self.url + 'obama')
+    def test_search_results_page_load(self):
+        self.url.args.update({'search': 'obama'})
+        self.driver.get(self.url.url)
         self.assertIn('Search results', self.driver.title)
 
-    def testSearchResultsPageType(self):
-      test_query = 'obama'
-      expected = 'candidates'
-      self.driver.get('/?' + urllib.parse.urlencode(
-        {'search': test_query, 'search_type': expected}))
-      self.assertIn('Search results', self.driver.title)
+    def test_search_results_page_type(self):
+        self.url.args.update({'search': 'obama', 'result_type': 'candidates'})
+        self.driver.get(self.url.url)
+        self.assertIn('Search results', self.driver.title)
 
-    def testSearchResultsPageLinkOnType(self):
-      test_query = 'obama'
-      expected = 'candidates'
-      self.driver.get('/?' + urllib.parse.urlencode(
-        {'search': test_query, 'search_type': expected}))
-      self.assertIsNotNone(self.driver.find_elements_by_link_text(
-        'View Candidate Page'))
+    def test_search_results_page_link_candidates(self):
+        self.url.args.update({'search': 'obama', 'result_type': 'candidates'})
+        self.driver.get(self.url.url)
+        elms = self.driver.find_elements_by_css_selector('.tst-search_results h5 a')
+        self.assertTrue(elms)
+        self.assertTrue(all([
+            committee_url_re.search(elm.get_attribute('href'))
+            for elm in elms
+        ]))
 
-    def testSearchResultsPageLinkOnCommittee(self):
-      test_query = 'obama'
-      expected = 'committees'
-      self.driver.get('/?' + urllib.parse.urlencode(
-        {'search': test_query, 'search_type': expected}))
-      self.assertIsNotNone(self.driver.find_elements_by_link_text(
-        'View Committee Page'))
-
+    def test_search_results_page_link_committees(self):
+        self.url.args.update({'search': 'obama', 'result_type': 'committees'})
+        self.driver.get(self.url.url)
+        elms = self.driver.find_elements_by_css_selector('.tst-search_results h5 a')
+        self.assertTrue(elms)
+        self.assertTrue(all([
+            committee_url_re.search(elm.get_attribute('href'))
+            for elm in elms
+        ]))
