@@ -12,6 +12,7 @@ var events = require('./events.js');
 var terms = require('./terms');
 var glossary = require('./glossary.js');
 
+var SUGGESTION_LIMIT = 10;
 
 var officeMap = {
   H: 'House',
@@ -77,7 +78,7 @@ module.exports = {
         return tokens;
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 5
+      limit: SUGGESTION_LIMIT
     };
 
     if (_.isString(dataSource)) {
@@ -113,7 +114,7 @@ module.exports = {
     });
 
     $('.twitter-typeahead').css({
-        display: 'block',
+        display: 'flex',
     });
   },
 
