@@ -10,14 +10,14 @@
   label {
     margin-bottom: 30px;
   }
-  
+
   @include media($medium) {
     .input-button-combo {
       height: 6rem;
       font-size: 2.0rem;
     }
   }
-  
+
   @include media($large) {
     @include span-columns(18 of 22);
     @include shift(2 of 22);
@@ -46,7 +46,7 @@
   width: 100%;
 }
 
-.tt-dropdown-menu {
+.tt-menu {
   @include font-size(1.2);
   background: #fff;
   text-align: left;
@@ -56,36 +56,33 @@
 }
 
 #large-search {
-  .tt-dropdown-menu {
+  .tt-menu {
     @include font-size(1.6);
     top: 60px !important;
   }
 
   @include media($medium) {
-    .tt-dropdown-menu {
+    .tt-menu {
       top: 60px !important;
     }
   }
 }
 
-.tt-dropdown-title {
-  display: block;
-  color: #fff;
-  padding: 5px 20px;
-  background: $dark-gray;
-}
-
-.tt-suggestions {
-  color: #000;
-}
+// .tt-menu:hover {
+//   display: block;
+//   color: #fff;
+//   padding: 5px 20px;
+//   background: $dark-gray;
+// }
 
 .tt-suggestion {
-  @include clearfix();
+  // @include clearfix();
   position: relative;
   padding: 10px 20px;
   margin-bottom: 0;
   line-height: 1;
   border-bottom: 1px solid $light-gray;
+  color: #000;
 }
 
 .tt-suggestion__name {
@@ -106,7 +103,7 @@
   font-style: italic;
 }
 
-.tt-cursor {
+.tt-suggestion:hover, .tt-suggestion.tt-cursor {
   cursor: pointer;
   background: $blue;
   color: #fff;
