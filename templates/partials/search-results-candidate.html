@@ -1,0 +1,38 @@
+<div class="box__portion box__portion--dark">
+  <h3 class="box__title">
+    <a title="{{ candidate.name }}"
+        href="{{ url_for('candidate_page', c_id=candidate.candidate_id) }}">
+      {{ candidate.name }}
+    </a>
+  </h3>
+  <ul class="entity__info entity__info--search">
+    <li class="entity__term entity__term--aligned entity__term--icon">
+      <span class="entity__type">
+        <img class="category-icon" width="20" height="20"
+             src="/static/img/icon-candidate.svg"
+             alt="Icon representing candidates">
+      </span>
+    </li>
+    <li class="entity__term entity__term--aligned">
+      <span class="entity__term__data">
+        Office Sought: {{ candidate.office_full }}</span>
+      <span class="entity__term__data">Party: {{ candidate.party_full }}</span>
+    </li>
+    <li class="entity__term entity__term--aligned entity__term--icon"
+        style="vertical-align: middle">
+      <span class="ti-location-pin category-icon category-icon--lg"></span>
+    </li>
+    <li class="entity__term entity__term--aligned">
+      <span class="entity__term__data">
+        State: {{ candidate.state or 'N/A' }}
+      </span>
+      <span class="entity__term__data">
+        {% if candidate.office == 'P' %}
+          District: Nationwide
+        {% else %}
+          District: {{ candidate.district or 'N/A' }}
+        {% endif %}
+      </span>
+    </li>
+  </ul>
+</div>
