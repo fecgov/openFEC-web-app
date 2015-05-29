@@ -1,17 +1,17 @@
 'use strict';
 
-/* global require, module, window, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var _ = require('underscore');
 require('typeahead.js');
+var Bloodhound = require('typeahead.js/dist/bloodhound.js');
 var URI = require('URIjs');
 var Handlebars = require('handlebars');
 
 var events = require('./events.js');
 var terms = require('./terms');
 var glossary = require('./glossary.js');
-
 
 var officeMap = {
   H: 'House',
@@ -23,14 +23,16 @@ var filterCandidates = function(result) {
   return {
     name: result.name,
     id: result.candidate_id,
-    office: officeMap[result.office_sought]
+    office: officeMap[result.office_sought],
+    type: 'candidate'
   };
 };
 
 var filterCommittees = function(result) {
   return {
     name: result.name,
-    id: result.committee_id
+    id: result.committee_id,
+    type: 'committee'
   };
 };
 
@@ -60,6 +62,7 @@ module.exports = {
       name: 'Candidates',
       remote: {
         url: url,
+        wildcard: '%QUERY',
         filter: function(response) {
           return _.chain(response.results)
             .filter(function(result) {
@@ -85,6 +88,7 @@ module.exports = {
       name: 'Committees',
       remote: {
         url: url,
+        wildcard: '%QUERY',
         filter: function(response) {
           return _.chain(response.results)
             .filter(function(result) {
@@ -119,13 +123,12 @@ module.exports = {
     // Setting up main search typehead
     $('.search-bar').typeahead({
       minLength: 3,
-      highlight: true,
-      hint: false
+      highlight: true
     },
     {
       name: 'candidate',
       displayKey: 'name',
-      source: candidateEngine.ttAdapter(),
+      source: candidateEngine,
       templates: {
         suggestion: candidateSuggestion,
         header: headerTpl('Candidates'),
@@ -134,7 +137,7 @@ module.exports = {
     {
       name: 'committee',
       displayKey: 'name',
-      source: committeeEngine.ttAdapter(),
+      source: committeeEngine,
       templates: {
         suggestion: committeeSuggestion,
         header: headerTpl('Committees'),
@@ -142,8 +145,8 @@ module.exports = {
     }
     );
     // Open single entity pages when selected
-    $('.search-bar').on('typeahead:selected', function(event, datum, datasetName) {
-        window.location = window.location.origin + '/' + datasetName + '/' + datum.id;
+    $('.search-bar').on('typeahead:select', function(event, datum) {
+        window.location = window.location.origin + '/' + datum.type + '/' + datum.id;
     });
 
     // Glossary typeahead
@@ -155,22 +158,24 @@ module.exports = {
           return tokens;
         },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 5
+      limit: 10
     });
-
     glossaryEngine.initialize();
-    glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
-    $('#glossary-search').typeahead({
-            minLength: 1,
-            highlight: true,
-            hint: false
+
+    $('#glossary-search').typeahead(
+        {
+            minLength: 0,
+            highlight: true
         },
         {
             name: 'Definitions',
             displayKey: 'term',
-            source: glossaryEngine.ttAdapter(),
-            templates: {
-              suggestion: glossarySuggestion,
+            source: function(q, sync) {
+                if (q === '') {
+                    sync(terms);
+                } else {
+                    glossaryEngine.search(q, sync);
+                }
             }
         }
     );
