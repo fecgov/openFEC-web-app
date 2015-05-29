@@ -16,6 +16,7 @@ var filters = require('./modules/filters.js');
 var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
 var glossary = require('./modules/glossary.js');
+var Search = require('./modules/search');
 
 filters.init();
 typeahead.init();
@@ -114,4 +115,8 @@ $(document).ready(function() {
       Object.create(accordion).init($(this));
     });
 
+    var $search = $('.js-search');
+    $search.each(function() {
+      Search($(this));
+    });
 });

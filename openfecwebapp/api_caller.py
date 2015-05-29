@@ -23,17 +23,18 @@ def _call_api(*path_parts, **filters):
         return {}
 
 
-def load_search_results(query):
-    filters = {'per_page': '5'}
+def load_search_results(query, query_type='candidates'):
+    filters = {}
 
     if query:
         filters['q'] = query
 
-    return (
-        load_single_type_summary('candidates', **filters).get('results', []),
-        load_single_type_summary('committees', **filters).get('results', [])
-    )
+    url = '/' + query_type
+    if query_type == 'candidates':
+      url += '/search'
+    results = _call_api(url, **filters)
 
+    return results['results'] if len(results) else []
 
 def load_single_type_summary(data_type, *path, **filters):
     url = '/' + data_type

@@ -182,7 +182,7 @@ module.exports = {
     });
 
     $('.twitter-typeahead').css({
-        display: 'block',
+        display: 'flex',
     });
 
   }

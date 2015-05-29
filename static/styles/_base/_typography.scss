@@ -144,6 +144,10 @@ hr {
   margin: $base-line-height 0;
 }
 
+hr + p {
+  margin-top: 1rem;
+}
+
 img {
   margin: 0;
   max-width: 100%;
@@ -198,6 +202,7 @@ cite {
 }
 
 .text--note {
+  @include font-size(1.4);
   font-style: italic;
 }
 
@@ -216,6 +221,10 @@ cite {
   @include media($medium) {
     @include font-size(1.0);
   }
+}
+
+.text--medium {
+  @include font-size(1.2);
 }
 
 // Data styles

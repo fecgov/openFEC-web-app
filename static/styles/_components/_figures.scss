@@ -38,10 +38,14 @@ figure {
 .figure-group__header {
   @include clearfix();
   padding: 1rem;
-  border-bottom: 1px solid $light-gray;
+  border: 1px solid $light-gray;
 
   @include media($medium) {
     padding: 2rem;
+  }
+
+  & + .figure-group__block {
+    border-top: 0;
   }
 }
 

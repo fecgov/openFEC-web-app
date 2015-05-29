@@ -44,11 +44,14 @@ def resolve_cycle(candidate):
     return None
 
 
-def _get_default_cycles():
-    now = datetime.datetime.now().year
-    cycle = now + now % 2
-    return list(range(cycle - 4, cycle + 2, 2))
+def current_cycle():
+    year = datetime.datetime.now().year
+    return year + year % 2
 
+
+def _get_default_cycles():
+    cycle = current_cycle()
+    return list(range(cycle - 4, cycle + 2, 2))
 
 app.jinja_env.globals['min'] = min
 app.jinja_env.globals['max'] = max
@@ -83,10 +86,11 @@ def _convert_to_dict(params):
 def search():
     query = request.args.get('search')
     if query:
-        candidates, committees = load_search_results(query)
-        return render_search_results(candidates, committees, query)
+        result_type = request.args.get('search_type') or 'candidates'
+        results = load_search_results(query, result_type)
+        return render_search_results(results, query, result_type)
     else:
-        return render_template('search.html')
+        return render_template('search.html', page='home')
 
 
 @app.route('/api')
@@ -122,7 +126,7 @@ def candidate_page(c_id, cycle=None, history=None):
     history = history or cycle
     path = ('history', str(history)) if history else ()
     data = load_single_type('candidate', c_id, *path)
-    cycle = cycle or max(data['results'][0]['cycles'])
+    cycle = cycle or min(current_cycle(), max(data['results'][0]['cycles']))
     committee_data = load_nested_type('candidate', c_id, 'committees', cycle=cycle)['results']
     return render_candidate(data, committees=committee_data, cycle=cycle)
 
@@ -138,7 +142,7 @@ def committee_page(c_id, cycle=None):
     """
     path = ('history', str(cycle)) if cycle else ()
     data = load_single_type('committee', c_id, *path)
-    cycle = cycle or max(data['results'][0]['cycles'])
+    cycle = cycle or min(current_cycle(), max(data['results'][0]['cycles']))
     candidate_data = load_nested_type('committee', c_id, 'candidates', cycle=cycle)['results']
     return render_committee(data, candidates=candidate_data, cycle=cycle)
 
@@ -229,17 +233,19 @@ def fmt_report_desc(report_full_description):
 
 @app.template_filter()
 def restrict_cycles(value):
-    year = datetime.datetime.now().year
-    cycle = year + year % 2
-    return [each for each in value if each <= cycle]
+    return [each for each in value if each <= current_cycle()]
 
 
 @app.template_filter()
 def next_cycle(value, cycles):
-    """Get the earliest election cycle greater than or equal to `value`."""
+    """Get the earliest election cycle greater than or equal to `value`. If no
+    cycles match, use the most recent cycle to avoid empty results from the
+    history endpoint.
+    """
+    cycles = sorted(restrict_cycles(cycles))
     return next(
-        (each for each in sorted(cycles) if value <= each),
-        value
+        (each for each in cycles if value <= each),
+        max(cycles),
     )
 
 

@@ -4,12 +4,15 @@ from openfecwebapp.api_caller import load_cmte_financials
 from werkzeug.exceptions import abort
 
 
-def render_search_results(candidates, committees, query):
+def render_search_results(results, query, result_type):
     # if true will show "no results" message
-    no_results = not len(candidates) and not len(committees)
+    no_results = not len(results)
 
-    return render_template('search-results.html', candidates=candidates,
-                           committees=committees, query=query, no_results=no_results)
+    return render_template('search-results.html', 
+            results=results,
+            result_type=result_type,
+            query=query,
+            no_results=no_results)
 
 
 # loads browse tabular views

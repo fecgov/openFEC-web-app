@@ -17,6 +17,5 @@ class ErrorPageTests(BaseTest):
         main = self.driver.find_element_by_tag_name('main')
         main.find_element_by_class_name('search-bar').send_keys('obama')
         main.find_element_by_class_name('search-submit').click()
-        self.assertEqual(
-            self.driver.find_element_by_tag_name('h2').text,
-            'Search results obama')
+
+        self.elementExistsByClassName('tst-search_results') 
