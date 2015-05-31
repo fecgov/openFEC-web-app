@@ -36,9 +36,9 @@
               <a class="term" data-term="Principal Campaign Committee">Principal Committee</a>
             </h5>
             {% for c in committees if c.designation == 'P' %}
-            <p class="entity__term__data">
+            <span class="entity__term__data">
               <a href="{{ url_for('committee_page', c_id=c.committee_id, cycle=cycle) }}">{{ c.name }}</a>
-            </p>
+            </span>
             {% endfor %}
           </li>
           <li class="entity__term">
@@ -75,16 +75,24 @@
             </select>
         </div>
         {% endif %}
+         <nav class="page-tabs">
+            <ul role="tablist">
+              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
+              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Filings</a></li>
+            </ul>
+        </nav>
       </div>
     </div>
   </div>
 
-  <section class="page-section" id="section-1" aria-labelledby="section-1-header">
+  <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
     <div class="container">
       {% include 'partials/financial-summary.html' %}
     </div>
   </section>
 </div>
+
+{% include 'partials/filings-tab.html' %}
 
 {% endblock %}
 
