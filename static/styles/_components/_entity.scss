@@ -144,9 +144,10 @@
 }
 
 .time-period {
-  width: 100%;
-  float: left;
+  width: 50%;
+  float: right;
   padding: 1rem 0 0 0;
+  text-align: right;
   
   label {
     @include font-size(1.4);

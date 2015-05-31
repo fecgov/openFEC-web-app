@@ -4,6 +4,10 @@
   @include clearfix();
   @include rem(margin-bottom, 2.0rem);
   clear: both;
+
+  p {
+    margin-bottom: 0;
+  }
 }
 
 .box__portion {
@@ -48,4 +52,11 @@ h3.box__title {
   .box {
     clear: none;
   }
+}
+
+// Different styles of boxes
+.warning {
+  background-color: $light-yellow;
+  border: 1px solid $light-yellow-2;
+  padding: 2rem;
 }
