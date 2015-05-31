@@ -84,6 +84,10 @@ $(document).ready(function() {
             // Set focus back on the original triggering element
             $('.js-reveal[data-reveals="' + hideElement + '"]').focus();
         }
+
+        if ( $('.modal__overlay').length > 0 ) {
+            $('.modal__overlay').css('display','none');
+        }
     })
 
     // Notice close-state persistence
