@@ -94,9 +94,13 @@ function initTable(table, form, baseUrl, columns) {
     serverSide: true,
     searching: false,
     pageLength: 30,
-    lengthChange: false,
+    lengthChange: true,
     columns: columns,
-    dom: 'lfriptip',
+    lengthMenu: [30,50,100],
+    language: {
+      lengthMenu: 'Results per page: _MENU_'
+    },
+    dom: '<"results-info meta-box results-info--top"lfrip>t<"results-info meta-box"ip>',
     ajax: function(data, callback, settings) {
       var api = this.api();
       var filters = form.serializeArray();
@@ -147,5 +151,12 @@ module.exports = {
     } else {
       initTable(table, form, 'committees', committeeColumns);
     }
+
+  // Move the filter button into the results-info div
+  var filterToggle = $('#filter-toggle');
+  $('.results-info--top').prepend(filterToggle);    
+
+  // Make the table responsive
+  // $table.addClass('responsive');
   }
 };

@@ -23,10 +23,8 @@
 
 .results-container {
   @include clearfix();
-  background: #fff;
   width: 100%;
-  border: 1px solid $light-gray;
-
+  padding-top: 2rem;
   .error-container {
     margin: 2rem 5%;
   }
@@ -47,19 +45,10 @@
   }
 }
 
-#filter-toggle {
-  margin-left: 2rem;
-  
-  @include media($medium) {
-    margin-left: 1%;
-    float: left;
-  }
-}
-
 .results-info {
   @include font-size(1.6);
   clear: both;
-  margin: 0 2rem 1rem 2rem;
+  margin: 0 1rem 1rem 1rem;
 
   li {
     line-height: 1;
@@ -68,52 +57,97 @@
   @include media($medium) {
     float: right;
     padding: 1rem 0;
-    width: auto;
     clear: none;
     margin-bottom: 0;
   }
 
   @include media($large) {
-    width: 79%;
-    margin: 0 1% 0 0;
+    margin: 2rem 0;
   }
 }
 
-.results-count {
-  li {
-    padding-bottom: 1rem;
-    display: inline-block;
-
-    &:first-child {
-      padding-right: 2rem;
-    }
-  }
-
-  @include media($medium) {
-    width: auto;
-    float: left;
-    li {
-      padding-bottom: 0;
-    }
-  }
+.results-info--top {
+  margin-top: 0;
 }
 
-
-.pagination {
+#filter-toggle {
   width: 100%;
-  padding: 1rem 0 0 0;
-  text-align: center;
-  border-top: 1px solid $light-gray;
-  
+
   @include media($medium) {
+    float: left;
     width: auto;
-    float: right;
-    padding: 0;
-    border-top: 0;
   }
 }
 
-.pagination__link {
-  display: inline-block;
-  padding: 0 1rem;
+// DataTables plugin style overrides
+.dataTables_wrapper {
+  .results-info {
+
+    .dataTables_length {
+      padding: 1rem 0 0 0;
+
+      select {
+        display: inline;
+      }
+    }
+
+    .dataTables_info {
+      padding-top: 0;
+    }
+
+    .dataTables_paginate {
+      padding-top: 0;
+
+      .paginate_button.disabled {
+        border: none;
+        color: $medium-gray;
+        display: none;
+        
+        &:hover {
+          border: none;
+        }
+      }
+
+      .paginate_button.current {
+        background: $blue;
+        border: none;
+        color: #fff !important;
+
+        &:hover {
+          background: $blue-2 !important;
+          border: none;
+          color: #fff !important;
+        }
+      }
+      .paginate_button {
+        padding: 0 .5rem;
+        color: $blue !important;
+        border: none;
+
+        &:hover {
+          background: none !important;
+          border: none;
+          color: $blue-2 !important;
+          text-decoration: underline;
+        }
+      }      
+    }
+  }
+
+  .results-info--top {
+    .dataTables_paginate,
+    .dataTables_info {
+      padding-top: 1rem;
+    }
+  }
+  @include media($medium) {
+    .results-info {
+      width: 100%;
+
+      .dataTables_length {
+        float: right;
+        padding: .5rem 0;
+      }
+    }
+  }
 }

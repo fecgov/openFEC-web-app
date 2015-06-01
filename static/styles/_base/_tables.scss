@@ -1,10 +1,12 @@
-table {
+table,
+table.dataTable {
   background-color: #fff;
   border-collapse: collapse;
   margin: 0;
   table-layout: fixed;
   width: 100%;
   overflow-x: scroll; // scroll horizontally on smaller viewports
+  border: 1px solid $light-gray;
 
   thead {
     tr:hover {
@@ -13,9 +15,8 @@ table {
   }
 
   th {
-    padding: 1rem;
-    height: 4rem; 
-    border-bottom: 1px solid $light-gray;
+    padding: 1rem !important;
+    border-bottom: 1px solid $light-gray !important;
     text-align: left;
   }
 
@@ -27,11 +28,6 @@ table {
     @include font-size(1.4);
     box-sizing: content-box; // Necessary to get the responsive rows to line up
     border: none;
-    border-bottom: 1px dotted $light-gray;
-
-//    &:nth-child(even) {
-  //    background-color: #fdfdfd;
-    //}
 
     &:hover {
       background: rgba($blue, .1);
@@ -41,7 +37,11 @@ table {
   td {
     @include truncate();
     padding: .5em;
-    border: none;
+    border-bottom: 1px dotted $light-gray;
+  }
+
+  &.no-footer {
+    border-bottom: 1px solid $light-gray !important;
   }
 }
 
