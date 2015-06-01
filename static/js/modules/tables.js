@@ -93,8 +93,10 @@ function initTable(table, form, baseUrl, columns) {
   var api = table.DataTable({
     serverSide: true,
     searching: false,
+    pageLength: 30,
     lengthChange: false,
     columns: columns,
+    dom: 'lfriptip',
     ajax: function(data, callback, settings) {
       var api = this.api();
       var filters = form.serializeArray();
