@@ -211,7 +211,6 @@ module.exports = {
 
     // Glossary typeahead
     glossaryEngine = this.createEngine('Glossary', terms);
-    console.log(glossaryEngine);
     glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
 
     $('#glossary-search').typeahead({
@@ -233,10 +232,6 @@ module.exports = {
             term: datum.term,
             definition: datum.definition
         });
-    });
-    $('#glossary-search').on('typeahead:opened', function(event, datum) {
-      console.log(event);
-      console.log(datum);
     });
 
     $('.twitter-typeahead').css({
