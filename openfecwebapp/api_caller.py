@@ -31,15 +31,10 @@ def load_search_results(query, query_type='candidates'):
 
     url = '/' + query_type
     if query_type == 'candidates':
-      url += '/search'
+        url += '/search'
     results = _call_api(url, **filters)
 
     return results['results'] if len(results) else []
-
-def load_single_type_summary(data_type, *path, **filters):
-    url = '/' + data_type
-    filters['per_page'] = 30
-    return _call_api(url, *path, **filters)
 
 
 def load_single_type(data_type, c_id, *path, **filters):

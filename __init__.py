@@ -9,8 +9,8 @@ from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
 from dateutil.parser import parse as parse_date
 from openfecwebapp import config
-from openfecwebapp.views import render_search_results, render_table, render_candidate, render_committee
-from openfecwebapp.api_caller import load_search_results, load_single_type, load_single_type_summary, load_nested_type, install_cache
+from openfecwebapp.views import render_search_results, render_candidate, render_committee
+from openfecwebapp.api_caller import load_search_results, load_single_type, load_nested_type, install_cache
 
 import datetime
 import jinja2
@@ -65,12 +65,6 @@ except OSError:
 
 if config.analytics:
     app.config['USE_ANALYTICS'] = True
-
-
-def _convert_to_dict(params):
-    """ move from immutablemultidict -> multidict -> dict """
-    params = params.copy().to_dict(flat=False)
-    return {key: value for key, value in params.items() if value and value != ['']}
 
 
 @app.route('/')
@@ -141,16 +135,12 @@ def committee_page(c_id, cycle=None):
 
 @app.route('/candidates')
 def candidates():
-    params = _convert_to_dict(request.args)
-    results = load_single_type_summary('candidates', **params)
-    return render_table('candidates', results, params)
+    return render_template('candidates.html')
 
 
 @app.route('/committees')
 def committees():
-    params = _convert_to_dict(request.args)
-    results = load_single_type_summary('committees', **params)
-    return render_table('committees', results, params)
+    return render_template('committees.html')
 
 
 @app.errorhandler(404)

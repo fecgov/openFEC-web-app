@@ -1,5 +1,4 @@
 from flask import render_template
-from openfecwebapp.models.shared import generate_pagination_values
 from openfecwebapp.api_caller import load_cmte_financials
 from werkzeug.exceptions import abort
 
@@ -8,29 +7,11 @@ def render_search_results(results, query, result_type):
     # if true will show "no results" message
     no_results = not len(results)
 
-    return render_template('search-results.html', 
+    return render_template('search-results.html',
             results=results,
             result_type=result_type,
             query=query,
             no_results=no_results)
-
-
-# loads browse tabular views
-def render_table(data_type, results, params):
-    # if we didn't get data back from the API
-    if not results:
-        abort(500)
-
-    results_table = {}
-    results_table[data_type] = []
-
-    results_table['pagination'] = generate_pagination_values(results, params, data_type)
-    results_table[data_type] = results['results']
-
-    if params.get('name'):
-        results_table['filter_name'] = params['name']
-
-    return render_template(data_type + '.html', **results_table)
 
 
 def render_committee(data, candidates=None, cycle=None):

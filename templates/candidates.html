@@ -40,18 +40,7 @@
   </div>
 
   <div id="candidates" class="results-container">
-    {% if candidates %}
-        {% include 'partials/candidates-table.html' %}
-    {% else %}
-      <div class="meta-box error-container">
-        <h2 id="section-1-header" tabindex="0">No candidates matched your filters</h2>
-        <p class="text--lead">Try adjusting your filters or searching by name.</p>
-        <div class="error-container__bottom">
-            <h5>Is this information incorrect? Let us know.</h5>
-            <a class="button" href="mailto:{{ contact_email }}">Contact support <i class="ti-email"></i></a>
-       </div>
-      </div>
-    {% endif %}
+      {% include 'partials/candidates-table.html' %}
   </div>
 </section>
 {% endblock %}
