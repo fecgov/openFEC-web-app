@@ -15,9 +15,6 @@
 </header>
 
 <div class="page-controls">
-  {% if pagination %}
-    {% include 'partials/pagination.html' %}
-  {% endif %}
   <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
 </div>
 
@@ -57,9 +54,8 @@
     {% endif %}
   </div>
 </section>
-  <div class="page-controls">
-    {% if pagination %}
-      {% include 'partials/pagination.html' %}
-    {% endif %}
-  </div>
+{% endblock %}
+
+{% block scripts %}
+<link src="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" />
 {% endblock %}
