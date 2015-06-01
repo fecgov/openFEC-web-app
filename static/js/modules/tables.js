@@ -7,6 +7,14 @@ var _ = require('underscore');
 var URI = require('URIjs');
 require('datatables');
 
+function yearRange(first, last) {
+  if (first === last) {
+    return first;
+  } else {
+    return first.toString() + ' - ' + last.toString();
+  }
+}
+
 module.exports = {
   init: function() {
     var draw;
@@ -14,6 +22,30 @@ module.exports = {
       serverSide: true,
       searching: false,
       lengthChange: false,
+      columns: [
+        {
+          data: 'name',
+          render: function(data, type, row, meta) {
+            var anchor = $('<a>');
+            anchor.addClass('single-link');
+            anchor.attr('title', data);
+            anchor.attr('data-category', 'candidate');
+            anchor.attr('href', '/candidate' + row.candidate_id);
+            anchor.text(data);
+            return anchor[0].outerHTML;
+          }
+        },
+        {data: 'office_full'},
+        {
+          data: 'election_years',
+          render: function(data, type, row, meta) {
+            return yearRange(data[0], row.active_through);
+          }
+        },
+        {data: 'party'},
+        {data: 'state'},
+        {data: 'district'},
+      ],
       ajax: function(data, callback, settings) {
         $.getJSON(
           URI('http://localhost:5000/v1/candidates')
@@ -26,16 +58,7 @@ module.exports = {
           callback({
             recordsTotal: response.pagination.count,
             recordsFiltered: response.pagination.count,
-            data: response.results.map(function(result) {
-              return [
-                result.name,
-                result.office_full,
-                result.election_years,
-                result.party_full,
-                result.state,
-                result.district
-              ];
-            })
+            data: response.results
           });
         });
       }
