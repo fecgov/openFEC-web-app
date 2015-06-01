@@ -62,7 +62,7 @@ var candidateColumns = [
       return yearRange(data[0], row.active_through);
     }
   },
-  {data: 'party'},
+  {data: 'party_full'},
   {data: 'state'},
   {data: 'district'},
 ];

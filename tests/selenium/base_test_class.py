@@ -1,4 +1,5 @@
 import os
+import time
 import logging
 import unittest
 
@@ -10,6 +11,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
 from openfecwebapp.sauce import SauceClient
+
 
 # Silence Selenium logs
 remote_logger = logging.getLogger('selenium.webdriver.remote.remote_connection')
@@ -45,6 +47,16 @@ drivers = {
         command_executor=sauce_url,
     ),
 }
+
+
+def wait_for_ajax(driver, timeout=10, interval=0.1):
+    elapsed = 0
+    while True:
+        active = driver.execute_script('return $.active === 0')
+        if active or elapsed > timeout:
+            break
+        time.sleep(interval)
+        elapsed += interval
 
 
 @attr('selenium')
@@ -113,10 +125,10 @@ class SearchPageTestCase(BaseTest):
         )
         self.assertEqual(len(close_buttons), 1)
         self.driver.find_element_by_id('category-filters').submit()
-        rows = (self.driver.find_elements_by_tag_name('tr'))
+        wait_for_ajax(self.driver)
         values = [
             row.find_elements_by_tag_name('td')[index].text
-            for row in rows[1:]
+            for row in self.driver.find_elements_by_css_selector('tbody tr')
         ]
         if callable(result):
             for value in values:
