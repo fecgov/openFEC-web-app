@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module */
+/* global require, module, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -28,64 +28,86 @@ function prepareQuery(query) {
   }, {});
 }
 
-module.exports = {
-  init: function() {
-    var draw;
-    var table = $('#results').DataTable({
-      serverSide: true,
-      searching: false,
-      lengthChange: false,
-      columns: [
+var candidateColumns = [
+  {
+    data: 'name',
+    render: function(data, type, row, meta) {
+      var anchor = $('<a>');
+      anchor.addClass('single-link');
+      anchor.attr('title', data);
+      anchor.attr('data-category', 'candidate');
+      anchor.attr('href', '/candidate' + row.candidate_id);
+      anchor.text(data);
+      return anchor[0].outerHTML;
+    }
+  },
+  {data: 'office_full'},
+  {
+    data: 'election_years',
+    render: function(data, type, row, meta) {
+      return yearRange(data[0], row.active_through);
+    }
+  },
+  {data: 'party'},
+  {data: 'state'},
+  {data: 'district'},
+];
+
+function initTable(table, form, baseUrl, columns) {
+  var draw;
+  var api = table.DataTable({
+    serverSide: true,
+    searching: false,
+    lengthChange: false,
+    columns: columns,
+    ajax: function(data, callback, settings) {
+      var api = this.api();
+      var filters = form.serializeArray();
+      var query = $.extend(
         {
-          data: 'name',
-          render: function(data, type, row, meta) {
-            var anchor = $('<a>');
-            anchor.addClass('single-link');
-            anchor.attr('title', data);
-            anchor.attr('data-category', 'candidate');
-            anchor.attr('href', '/candidate' + row.candidate_id);
-            anchor.text(data);
-            return anchor[0].outerHTML;
-          }
+          per_page: data.length,
+          page: Math.floor(data.start / data.length) + 1,
+          api_key: API_KEY
         },
-        {data: 'office_full'},
-        {
-          data: 'election_years',
-          render: function(data, type, row, meta) {
-            return yearRange(data[0], row.active_through);
+        prepareQuery(filters)
+      );
+      if (data.order.length) {
+        query.sort = _.map(data.order, function(order) {
+          var name = columns[order.column].data;
+          if (order.dir === 'desc') {
+            name = '-' + name;
           }
-        },
-        {data: 'party'},
-        {data: 'state'},
-        {data: 'district'},
-      ],
-      ajax: function(data, callback, settings) {
-        var api = this.api();
-        var filters = $('#category-filters').serializeArray();
-        $.getJSON(
-          URI('http://localhost:5000/v1/candidates')
-          .query(
-            $.extend(
-              {
-                per_page: data.length,
-                page: Math.floor(data.start / data.length) + 1
-              },
-              prepareQuery(filters)
-            )
-          )
-          .toString()
-        ).done(function(response) {
-          callback({
-            recordsTotal: response.pagination.count,
-            recordsFiltered: response.pagination.count,
-            data: response.results
-          });
+          return name;
         });
       }
-    });
-    $('#category-filters').submit(function(event) {
-      event.preventDefault();
-      table.ajax.reload();
-    })
+      $.getJSON(
+        URI(API_LOCATION)
+        .path([API_VERSION, baseUrl].join('/'))
+        .query(query)
+        .toString()
+      ).done(function(response) {
+        callback({
+          recordsTotal: response.pagination.count,
+          recordsFiltered: response.pagination.count,
+          data: response.results
+        });
+      });
+    }
+  });
+  form.submit(function(event) {
+    event.preventDefault();
+    api.ajax.reload();
+  });
+}
+
+module.exports = {
+  init: function() {
+    var table = $('#results');
+    var form = $('#category-filters');
+    if (table.attr('data-type') === 'candidate') {
+      initTable(table, form, 'candidates', candidateColumns);
+    } else {
+      initTable(table, form, 'committees', committeeColumns);
+    }
   }
 };
