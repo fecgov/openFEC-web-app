@@ -36,14 +36,6 @@ def get_context(c):
     return c
 
 
-def resolve_cycle(candidate):
-    if 'cycle' in request.args:
-        cycles = set(candidate['cycles'])
-        cycles = cycles.intersection(int(each) for each in request.args.getlist('cycle'))
-        return max(cycles)
-    return None
-
-
 def current_cycle():
     year = datetime.datetime.now().year
     return year + year % 2
@@ -61,7 +53,6 @@ app.jinja_env.globals['api_key'] = config.api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
-app.jinja_env.globals['resolve_cycle'] = resolve_cycle
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))

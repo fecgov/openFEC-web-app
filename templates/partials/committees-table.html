@@ -1,4 +1,4 @@
-<table id="results" class="responsive">
+<table id="results" data-type="committee">
     <thead>
         <tr>
             <th class="flex-cell" scope="col">Name</th>
@@ -10,24 +10,4 @@
             <th scope="col">Designation</th>
         </tr>
     </thead>
-    <tbody>
-        {% for c in committees %}
-            <tr>
-              <td class="flex-cell" scope="row">
-                <a
-                        class="single-link" 
-                        title="{{c.name}}" 
-                        data-id="{{ c.committee_id }}" 
-                        data-category="committee" href="{{ url_for('committee_page', c_id=c.committee_id, cycle=resolve_cycle(c)) }}"
-                    >{{c.name}}</a>
-              </td>
-                <td>{{c.treasurer_name}}</td>
-                <td>{{c.state}}</td>
-                <td>{{c.party_full}}</td>
-                <td>{{c.organization_type_full}}</td>
-                <td>{{c.committee_type_full}}</td>
-                <td>{{c.designation_full}}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
 </table>

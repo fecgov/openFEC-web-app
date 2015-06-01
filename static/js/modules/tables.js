@@ -28,6 +28,20 @@ function prepareQuery(query) {
   }, {});
 }
 
+var parsedFilters;
+
+function buildCycle(datum) {
+  if (parsedFilters.cycle) {
+    var cycles = _.intersection(
+      _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
+      datum.cycles
+    );
+    return '?cycle=' + _.max(cycles);
+  } else {
+    return '';
+  }
+}
+
 var candidateColumns = [
   {
     data: 'name',
@@ -36,7 +50,7 @@ var candidateColumns = [
       anchor.addClass('single-link');
       anchor.attr('title', data);
       anchor.attr('data-category', 'candidate');
-      anchor.attr('href', '/candidate' + row.candidate_id);
+      anchor.attr('href', '/candidate/' + row.candidate_id + buildCycle(row));
       anchor.text(data);
       return anchor[0].outerHTML;
     }
@@ -53,6 +67,27 @@ var candidateColumns = [
   {data: 'district'},
 ];
 
+var committeeColumns = [
+  {
+    data: 'name',
+    render: function(data, type, row, meta) {
+      var anchor = $('<a>');
+      anchor.addClass('single-link');
+      anchor.attr('title', data);
+      anchor.attr('data-category', 'committee');
+      anchor.attr('href', '/committee/' + row.committee_id + buildCycle(row));
+      anchor.text(data);
+      return anchor[0].outerHTML;
+    }
+  },
+  {data: 'treasurer_name'},
+  {data: 'state'},
+  {data: 'party_full'},
+  {data: 'organization_type_full'},
+  {data: 'committee_type_full'},
+  {data: 'designation_full'}
+];
+
 function initTable(table, form, baseUrl, columns) {
   var draw;
   var api = table.DataTable({
@@ -63,13 +98,14 @@ function initTable(table, form, baseUrl, columns) {
     ajax: function(data, callback, settings) {
       var api = this.api();
       var filters = form.serializeArray();
+      parsedFilters = prepareQuery(filters);
       var query = $.extend(
         {
           per_page: data.length,
           page: Math.floor(data.start / data.length) + 1,
           api_key: API_KEY
         },
-        prepareQuery(filters)
+        parsedFilters
       );
       if (data.order.length) {
         query.sort = _.map(data.order, function(order) {
