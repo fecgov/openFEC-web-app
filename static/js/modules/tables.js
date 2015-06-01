@@ -15,10 +15,23 @@ function yearRange(first, last) {
   }
 }
 
+function prepareQuery(query) {
+  return _.reduce(query, function(acc, val) {
+    if (val.value) {
+      if (acc[val.name]) {
+        acc[val.name].push(val.value);
+      } else {
+        acc[val.name] = [val.value];
+      }
+    }
+    return acc;
+  }, {});
+}
+
 module.exports = {
   init: function() {
     var draw;
-    $('#results').dataTable({
+    var table = $('#results').DataTable({
       serverSide: true,
       searching: false,
       lengthChange: false,
@@ -47,12 +60,19 @@ module.exports = {
         {data: 'district'},
       ],
       ajax: function(data, callback, settings) {
+        var api = this.api();
+        var filters = $('#category-filters').serializeArray();
         $.getJSON(
           URI('http://localhost:5000/v1/candidates')
-          .query({
-            per_page: data.length,
-            page: Math.floor(data.start / data.length) + 1
-          })
+          .query(
+            $.extend(
+              {
+                per_page: data.length,
+                page: Math.floor(data.start / data.length) + 1
+              },
+              prepareQuery(filters)
+            )
+          )
           .toString()
         ).done(function(response) {
           callback({
@@ -63,5 +83,9 @@ module.exports = {
         });
       }
     });
+    $('#category-filters').submit(function(event) {
+      event.preventDefault();
+      table.ajax.reload();
+    })
   }
 };
