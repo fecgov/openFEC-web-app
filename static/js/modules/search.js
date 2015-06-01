@@ -11,7 +11,7 @@ var defaultOpts = {
 };
 
 function onSelectChange($input, updatedText) {
-  $input.attr('placeholder', updatedText);
+  $input.attr('placeholder', updatedText).attr('aria-label', updatedText);
 };
 
 var Search = function($el, opts) {
