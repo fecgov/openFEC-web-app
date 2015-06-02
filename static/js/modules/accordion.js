@@ -4,6 +4,10 @@ var $ = require('jquery');
 
 var events = require('./events.js');
 
+var defaultOpts = {
+  closeAll: false
+};
+
 var accordion = {
   SLT_HEADER: '.js-accordion_header',
   SLT_ITEM: '.js-accordion_item',
@@ -19,11 +23,13 @@ var accordion = {
    * Events
    *   accordion:active
    *   @param header {jQuery} The accordion header that is activated to be expanded.
+   *   @param opts {Object} A hash of options to use.
    *
    * @param $base {jQuery} The container of the accordion.
    */
-  init: function($base) {
+  init: function($base, opts) {
     var self = this;
+    this.options = $.extend({}, defaultOpts, opts);
     this.$headers = this.findHeaders($base);
     this.$items = this.findItems($base);
     this.$buttons = this.findButtons(this.$headers);
@@ -34,6 +40,9 @@ var accordion = {
 
     events.on(this.EV_EXPAND, function(props) {
       var $header = $(props.header);
+      if (self.options.closeAll) {
+        self.hideAll();
+      }
       if ($.inArray($header, self.$headers)) {
         self.showHeader($header);
       }
@@ -41,7 +50,11 @@ var accordion = {
     events.on(this.EV_COLLAPSE, function(props) {
       var $header = $(props.header);
       if ($.inArray($header, self.$headers)) {
-        self.hideHeader($header);
+        if (self.options.closeAll) {
+          self.hideAll();
+        } else {
+          self.hideHeader($header);
+        }
       }
     });
   },
