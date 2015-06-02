@@ -15,8 +15,8 @@ function yearRange(first, last) {
   }
 }
 
-function prepareQuery(query) {
-  return _.reduce(query, function(acc, val) {
+function mapFilters(filters) {
+  return _.reduce(filters, function(acc, val) {
     if (val.value) {
       if (acc[val.name]) {
         acc[val.name].push(val.value);
@@ -88,15 +88,31 @@ var committeeColumns = [
   {data: 'designation_full'}
 ];
 
+function mapSort(order, columns) {
+  return _.map(order, function(item) {
+    var name = columns[item.column].data;
+    if (item.dir === 'desc') {
+      name = '-' + name;
+    }
+    return name;
+  });
+}
+
+function mapResponse(response) {
+  return {
+    recordsTotal: response.pagination.count,
+    recordsFiltered: response.pagination.count,
+    data: response.results
+  };
+}
+
 function initTable(table, form, baseUrl, columns) {
   var draw;
   var api = table.DataTable({
     serverSide: true,
     searching: false,
-    pageLength: 30,
-    lengthChange: true,
     columns: columns,
-    lengthMenu: [30,50,100],
+    lengthMenu: [30, 50, 100],
     language: {
       lengthMenu: 'Results per page: _MENU_'
     },
@@ -104,7 +120,7 @@ function initTable(table, form, baseUrl, columns) {
     ajax: function(data, callback, settings) {
       var api = this.api();
       var filters = form.serializeArray();
-      parsedFilters = prepareQuery(filters);
+      parsedFilters = mapFilters(filters);
       var query = $.extend(
         {
           per_page: data.length,
@@ -113,26 +129,14 @@ function initTable(table, form, baseUrl, columns) {
         },
         parsedFilters
       );
-      if (data.order.length) {
-        query.sort = _.map(data.order, function(order) {
-          var name = columns[order.column].data;
-          if (order.dir === 'desc') {
-            name = '-' + name;
-          }
-          return name;
-        });
-      }
+      query.sort = mapSort(data.order, columns);
       $.getJSON(
         URI(API_LOCATION)
         .path([API_VERSION, baseUrl].join('/'))
         .query(query)
         .toString()
       ).done(function(response) {
-        callback({
-          recordsTotal: response.pagination.count,
-          recordsFiltered: response.pagination.count,
-          data: response.results
-        });
+        callback(mapResponse(response));
       });
     }
   });
