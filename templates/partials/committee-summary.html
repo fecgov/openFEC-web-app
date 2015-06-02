@@ -27,10 +27,12 @@
       <div class="table__cell">{{report.debts_owed_by_committee|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row--note">
-      {% if report %}
-      Source: <a href="{{ report|url_to_fec_pdf }}">{{report.report_type_full|fmt_report_desc|default("Report")}} {{ report.report_year }}</a>
+      {% if report.pdf_url %}
+        Source: <a href="{{ report.pdf_url }}">{{report.report_type_full|fmt_report_desc|default("Report")}} {{ report.report_year }}</a>
+      {% elif report %}
+        Source: {{report.report_type_full|fmt_report_desc|default("Report")}} {{ report.report_year }}
       {% else %}
-      Source: None
+        Source: Unknown
       {% endif %}
     </div>
   </div>
