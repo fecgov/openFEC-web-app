@@ -213,11 +213,6 @@ def date_filter_md(date_str):
         return ''
     return parse_date(date_str).strftime('%b %Y')
 
-@app.template_filter('last_n_characters')
-def last_n_characters(value, nchar=3):
-    if type(value) == int:
-        return str(value % (10 ** nchar)).rjust(nchar, '0')
-    return ''
 
 @app.template_filter()
 def fmt_year_range(year):
@@ -248,13 +243,6 @@ def next_cycle(value, cycles):
         (each for each in cycles if value <= each),
         max(cycles),
     )
-
-
-@app.template_filter()
-def url_to_fec_pdf(report):
-    beg_img_num = report['beginning_image_number']
-    beg_img_num_last_n = last_n_characters(beg_img_num)
-    return "http://docquery.fec.gov/pdf/{0}/{1}/{1}.pdf".format(beg_img_num_last_n, beg_img_num)
 
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
