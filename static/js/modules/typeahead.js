@@ -23,41 +23,20 @@ var officeMap = {
 var filterCandidates = function(result) {
   return {
     name: result.name,
-    id: result.candidate_id,
+    id: result.id,
     office: officeMap[result.office_sought]
   };
 };
 
-var filterCommittees = function(result) {
-  return {
-    name: result.name,
-    id: result.committee_id
-  };
-};
-
 module.exports = {
-  getUrl: function() {
-    var url;
-    if (typeof API_LOCATION !== 'undefined') {
-        url = URI(API_LOCATION)
-          .path([API_VERSION, 'names'].join('/'))
-          .query({
-            q: '%QUERY',
-            api_key: API_KEY
-          })
-          .readable();
-    } else {
-      url = "/rest/names?q=%QUERY";
-    }
-    return url;
-  },
-
-  getCandidateUrl: function(url) {
-    return URI(url).addSearch('type', 'candidate').readable();
-  },
-
-  getCommitteeUrl: function(url) {
-    return URI(url).addSearch('type', 'committee').readable();
+  getUrl: function(resource) {
+    return URI(API_LOCATION)
+      .path([API_VERSION, 'names', resource].join('/'))
+      .query({
+        q: '%QUERY',
+        api_key: API_KEY
+      })
+      .readable();
   },
 
   /**
@@ -126,50 +105,29 @@ module.exports = {
         committeeEngine,
         candidateSuggestion,
         committeeSuggestion,
-        headerTpl,
         glossaryEngine,
         glossarySuggestion,
         options,
         candidateDataSet,
         committeeDataSet,
-        url,
         self = this;
 
-    url = this.getUrl();
-
     // Creating a candidate suggestion engine
-    candidateEngine = this.createEngine('Candidates', this.getCandidateUrl(url),
-      function(response) {
-          return _.chain(response.results)
-            .filter(function(result) {
-              return result.candidate_id;
-            })
-            .map(function(result) {
-              return filterCandidates(result);
-            })
-            .value();
-        });
-    committeeEngine = this.createEngine('Committees', this.getCommitteeUrl(url),
-      function(response) {
-          return _.chain(response.results)
-            .filter(function(result) {
-              return result.committee_id;
-            })
-            .map(function(result) {
-              return filterCommittees(result);
-            })
-            .value();
-        });
+    candidateEngine = this.createEngine('Candidates', this.getUrl('candidates'), function(response) {
+      return _.map(response.results, function(result) {
+        return filterCandidates(result);
+      });
+    });
+
+    committeeEngine = this.createEngine('Committees', this.getUrl('committees'), function(response) {
+      return response.results;
+    });
 
     // Templates for results
     candidateSuggestion = Handlebars.compile(
       '<span><span class="tt-suggestion__name">{{ name }}</span>' +
       '<span class="tt-suggestion__office">{{ office }}</span></span>');
     committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
-    headerTpl = function(label) {
-      return Handlebars.compile('<span class="tt-dropdown-title">' + label +
-          '</span>');
-    };
 
     options = {
       minLength: 3,
@@ -182,8 +140,7 @@ module.exports = {
       displayKey: 'name',
       source: candidateEngine.ttAdapter(),
       templates: {
-        suggestion: candidateSuggestion,
-        header: headerTpl('Candidates'),
+        suggestion: candidateSuggestion
       }
     };
 
@@ -192,8 +149,7 @@ module.exports = {
       displayKey: 'name',
       source: committeeEngine.ttAdapter(),
       templates: {
-        suggestion: committeeSuggestion,
-        header: headerTpl('Committees'),
+        suggestion: committeeSuggestion
       }
     };
 
