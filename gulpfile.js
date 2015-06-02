@@ -38,14 +38,21 @@ wb.on('log', gutil.log);
 gulp.task('build-js', bundle.bind(this, false));
 gulp.task('watch-js', bundle.bind(this, true));
 
-gulp.task('build-sass', function() {
+gulp.task('copy-static', function() {
+  return gulp.src([
+    './node_modules/datatables/media/images/*'
+  ]).pipe(gulp.dest('./static/images'));
+});
+
+gulp.task('build-sass', ['copy-static'], function() {
   return gulp.src('./static/styles/styles.scss')
     .pipe(rename('static/styles/styles.css'))
     .pipe(sass({
       includePaths: Array.prototype.concat(
         './static/styles',
         require('node-bourbon').includePaths,
-        require('node-neat').includePaths
+        require('node-neat').includePaths,
+        'node_modules'
       )
     }).on('error', sass.logError))
     .pipe(rev())
