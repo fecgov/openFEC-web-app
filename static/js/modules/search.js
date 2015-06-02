@@ -2,6 +2,8 @@
 
 var $ = require('jquery');
 
+var events = require('./events.js');
+
 var defaultOpts = {
   placeHolderOptions: {
     'candidates': 'Enter a candidate name',
@@ -9,7 +11,7 @@ var defaultOpts = {
 };
 
 function onSelectChange($input, updatedText) {
-  $input.attr('placeholder', updatedText);
+  $input.attr('placeholder', updatedText).attr('aria-label', updatedText);
 };
 
 var Search = function($el, opts) {
@@ -21,10 +23,10 @@ var Search = function($el, opts) {
     $select.on('change', function(ev) {
       ev.preventDefault();
       var value = $(this).val();
-      onSelectChange($input, settings.placeHolderOptions[value])
+      events.emit('searchTypeChanged', {type: value});
+      onSelectChange($input, settings.placeHolderOptions[value]);
     });
   }
-
-}
+};
 
 module.exports = Search;
