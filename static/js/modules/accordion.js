@@ -34,7 +34,6 @@ var accordion = {
 
     events.on(this.EV_EXPAND, function(props) {
       var $header = $(props.header);
-      self.hideAll();
       if ($.inArray($header, self.$headers)) {
         self.showHeader($header);
       }
@@ -42,7 +41,7 @@ var accordion = {
     events.on(this.EV_COLLAPSE, function(props) {
       var $header = $(props.header);
       if ($.inArray($header, self.$headers)) {
-        self.hideAll();
+        self.hideHeader($header);
       }
     });
   },
@@ -106,6 +105,20 @@ var accordion = {
     });
     this.$headers.toggleClass(this.CLS_COLLAPSED, true);
   },
+
+  /**
+   * Hide all items under the accordion header passed in.
+   * @param $header {jQuery} The header to hide items under.
+   */
+  hideHeader: function($header) {
+    var $items = this.findItemsFromHeader($header),
+        self = this;
+    $items.each(function() {
+      self.hide($(this));
+    });
+    $header.toggleClass(this.CLS_COLLAPSED, true);
+  },
+
   /**
    * Show all items under the accordion header passed in.
    * @param $header {jQuery} The header to show items under.
