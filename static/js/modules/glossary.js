@@ -4,52 +4,49 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-
 var terms = require('./terms');
+
+require('../vendor/list.min.js');
 
 var glossaryLink = $('.term'),
     glossaryIsOpen = false,
-    indexToLowercase,
-    findDefinition,
-    setDefinition,
+    glossaryList,
+    populateList,
+    findTerm,
     showGlossary,
     hideGlossary,
     clearTerm;
 
-// Indexing the terms and then lowercasing the indices
-indexToLowercase = function(arrayOfObjects, index){
-    var key,
-        newKey,
-        indexedTerms = _.indexBy(arrayOfObjects, index),
-        keys = Object.keys(indexedTerms),
-        n = keys.length,
-        indexedLowercaseTerms = {};
-    for ( var i = 0; i < n; i++ ) {
-      key = keys[i];
-      newKey = keys[i].toLowerCase();
-      indexedLowercaseTerms[newKey] = indexedTerms[key];
-    }
-    return indexedLowercaseTerms;
+// Builds the List in the glossary slide panel
+populateList = function(terms) {
+    var itemTemplate = '<li id="glossary-list-item">'
+                        + '<div class="js-accordion_header accordion__header">'
+                        + '<h4 class="glossary-term"></h4>'
+                        + '<a href="#" class="accordion__button js-accordion_button"></a>'
+                        + '</div>'
+                        + '<p class="glossary-definition js-accordion_item"></p>'
+                        + '</li>';
+    var options = {
+        item: itemTemplate,
+        valueNames: ['glossary-term','glossary-definition'],
+        listClass: 'glossary__list',
+        searchClass: 'glossary__search',
+    };
+    glossaryList = new List('glossary',options,terms);
+    glossaryList.sort('glossary-term', {order: 'asc'});
 }
 
-terms = indexToLowercase(terms, 'term');
+populateList(terms);
 
 // Adding title to all terms
 $('.term').attr('title', 'Click to define').attr('tabindex', 0);
 
-// Looks through the terms array to find the definition
-// Returnes a definedTerm object
-findDefinition = function(term){
-    var term = term.toLowerCase(),
-        definition,
-        definedTerm = {};
-    if ( terms.hasOwnProperty(term) ) {
-        definedTerm.term = terms[term].term;
-        definedTerm.definition = terms[term].definition;
-    } else {
-        definedTerm = null;
-    }
-    return definedTerm;
+findTerm = function(term){
+    glossaryList.search(term, ['glossary-term']);
+    $('.glossary__search').val(term);
+    // Highlight the term and remove other highlights
+    $('.term--highlight').removeClass('term--highlight');
+    $('span[data-term="' + term + '"]').addClass('term--highlight');
 }
 
 // Opens the glossary
@@ -71,29 +68,6 @@ hideGlossary = function() {
     clearTerm();
 }
 
-// Sets the values in the glossary and highlights the defined terms
-// Takes a definedTerm object like {term: 'string', definition: 'string'}
-setDefinition = function(definedTerm) {
-    var term,
-        definition;
-
-    // Set the values of everything
-    if ( definedTerm !== null ) {
-        term = definedTerm.term;
-        definition = definedTerm.definition;
-        $('#glossary-term').html(term);
-        $('#glossary-definition').html(definition);
-    }
-    else {
-        $('#glossary-definition').html('Sorry, there are no definitions for this term. Please try again.');
-        $('#glossary-term').html('');
-    }
-
-    // Highlight the term and remove other highlights
-    $('.term--highlight').removeClass('term--highlight');
-    $('span[data-term="' + term + '"]').addClass('term--highlight');
-}
-
 clearTerm = function() {
     $('#glossary-term').html('');
     $('#glossary-definition').html('');
@@ -104,10 +78,9 @@ module.exports = {
     init: function() {
         glossaryLink.on('click keypress', function(e){
             if (e.which === 13 || e.type === 'click') {
-                var dataTerm = $(this).data('term'),
-                    definedTerm = findDefinition(dataTerm);
+                var dataTerm = $(this).data('term');
                 showGlossary();
-                setDefinition(definedTerm);
+                findTerm(dataTerm);
             }
         });
 
@@ -118,7 +91,5 @@ module.exports = {
                 showGlossary();
             }
         });
-
-    },
-    setDefinition: setDefinition
+    }
 };
