@@ -48,6 +48,7 @@ def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
 def load_cmte_financials(committee_id, **filters):
     filters.update({
         'per_page': MAX_FINANCIALS_COUNT,
+        'report_type': filters.get('report_type', []) + ['-TER']
     })
 
     reports = _call_api('committee', committee_id, 'reports', **filters)
