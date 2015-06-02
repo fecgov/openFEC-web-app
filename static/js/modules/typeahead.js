@@ -116,9 +116,8 @@ module.exports = {
       window.location = window.location.origin + '/' + datasetName + '/' + datum.id;
     });
 
-    $('.twitter-typeahead').css({
-        display: 'flex',
-    });
+    $('.twitter-typeahead').addClass('flex-container');
+    $('.twitter-typeahead').css('display','');
   },
 
   init: function(){
@@ -232,10 +231,6 @@ module.exports = {
             term: datum.term,
             definition: datum.definition
         });
-    });
-
-    $('.twitter-typeahead').css({
-        display: 'flex',
     });
   }
 };

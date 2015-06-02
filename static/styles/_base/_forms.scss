@@ -112,6 +112,10 @@ select {
   &:focus {
     outline: 3px solid $focus;
   }
+
+  &::-ms-expand {
+    display: none;
+  }
 }
 
 select[multiple] {
@@ -123,6 +127,8 @@ select[multiple] {
 
 .input-button-combo {
   @include display(flex);
+  @include align-items(stretch);
+  @include flex-direction(row);
   @include justify-content(center);
   height: 4rem;
 
