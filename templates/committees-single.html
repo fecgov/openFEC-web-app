@@ -40,7 +40,7 @@
             </li>
             {% if candidates %}
             <li class="entity__term">
-              <h5 class="entity__term__label">Related 
+              <h5 class="entity__term__label">Related
                 {% if candidates|length > 1 %}
                   Candidates
                 {% else %}
@@ -148,9 +148,16 @@
               {% with committee=context() %}
               <div class="meta-box__bar">
                 <h4>Most Recent Report:
-                    <a href="{{ committee.reports.0|url_to_fec_pdf }}">{{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}</a>
+                    {% if committee.reports.0.pdf_url %}
+                      <a href="{{ committee.reports.0.pdf_url }}">{{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}</a>
+                    {% else %}
+                      {{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}
+                    {% endif %}
                 </h4>
-               <span>Report coverage: {{ committee.reports.0.coverage_start_date|date_md }} - {{ committee.reports.0.coverage_end_date|date_md }} | <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_n_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">View PDF &raquo;</a></span>
+               <span>Report coverage: {{ committee.reports.0.coverage_start_date|date_md }} - {{ committee.reports.0.coverage_end_date|date_md }}
+               {% if committee.reports.0.pdf_url %}
+                 | <a href="{{ committee.reports.0.pdf_url }}">View PDF &raquo;</a></span>
+               {% endif %}
               </div>
 
                 {% if committee_type == 'P' %}
