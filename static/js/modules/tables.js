@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, document, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -42,17 +42,21 @@ function buildCycle(datum) {
   }
 }
 
+function buildEntityLink(data, url, category) {
+  var anchor = document.createElement('a');
+  anchor.innerText = data;
+  anchor.setAttribute('href', url);
+  anchor.setAttribute('title', data);
+  anchor.setAttribute('data-category', category);
+  anchor.classList.add('single-link');
+  return anchor.outerHTML;
+}
+
 var candidateColumns = [
   {
     data: 'name',
     render: function(data, type, row, meta) {
-      var anchor = $('<a>');
-      anchor.addClass('single-link');
-      anchor.attr('title', data);
-      anchor.attr('data-category', 'candidate');
-      anchor.attr('href', '/candidate/' + row.candidate_id + buildCycle(row));
-      anchor.text(data);
-      return anchor[0].outerHTML;
+      return buildEntityLink(data, '/candidate/' + row.candidate_id + buildCycle(row), 'candidate');
     }
   },
   {data: 'office_full'},
@@ -71,13 +75,7 @@ var committeeColumns = [
   {
     data: 'name',
     render: function(data, type, row, meta) {
-      var anchor = $('<a>');
-      anchor.addClass('single-link');
-      anchor.attr('title', data);
-      anchor.attr('data-category', 'committee');
-      anchor.attr('href', '/committee/' + row.committee_id + buildCycle(row));
-      anchor.text(data);
-      return anchor[0].outerHTML;
+      return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'committee');
     }
   },
   {data: 'treasurer_name'},
@@ -106,9 +104,9 @@ function mapResponse(response) {
   };
 }
 
-function initTable(table, form, baseUrl, columns) {
+function initTable($table, $form, baseUrl, columns) {
   var draw;
-  var api = table.DataTable({
+  var api = $table.DataTable({
     serverSide: true,
     searching: false,
     columns: columns,
@@ -119,7 +117,7 @@ function initTable(table, form, baseUrl, columns) {
     dom: '<"results-info meta-box results-info--top"lfrip>t<"results-info meta-box"ip>',
     ajax: function(data, callback, settings) {
       var api = this.api();
-      var filters = form.serializeArray();
+      var filters = $form.serializeArray();
       parsedFilters = mapFilters(filters);
       var query = $.extend(
         {
@@ -140,7 +138,7 @@ function initTable(table, form, baseUrl, columns) {
       });
     }
   });
-  form.submit(function(event) {
+  $form.submit(function(event) {
     event.preventDefault();
     api.ajax.reload();
   });
@@ -148,16 +146,16 @@ function initTable(table, form, baseUrl, columns) {
 
 module.exports = {
   init: function() {
-    var table = $('#results');
-    var form = $('#category-filters');
-    if (table.attr('data-type') === 'candidate') {
-      initTable(table, form, 'candidates', candidateColumns);
+    var $table = $('#results');
+    var $form = $('#category-filters');
+    if ($table.attr('data-type') === 'candidate') {
+      initTable($table, $form, 'candidates', candidateColumns);
     } else {
-      initTable(table, form, 'committees', committeeColumns);
+      initTable($table, $form, 'committees', committeeColumns);
     }
 
     // Move the filter button into the results-info div
-    var filterToggle = $('#filter-toggle');
-    $('.results-info--top').prepend(filterToggle);
+    var $filterToggle = $('#filter-toggle');
+    $('.results-info--top').prepend($filterToggle);
   }
 };
