@@ -152,11 +152,8 @@ module.exports = {
       initTable(table, form, 'committees', committeeColumns);
     }
 
-  // Move the filter button into the results-info div
-  var filterToggle = $('#filter-toggle');
-  $('.results-info--top').prepend(filterToggle);    
-
-  // Make the table responsive
-  // $table.addClass('responsive');
+    // Move the filter button into the results-info div
+    var filterToggle = $('#filter-toggle');
+    $('.results-info--top').prepend(filterToggle);
   }
 };
