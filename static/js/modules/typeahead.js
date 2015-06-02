@@ -116,8 +116,7 @@ module.exports = {
       window.location = window.location.origin + '/' + datasetName + '/' + datum.id;
     });
 
-    $('.twitter-typeahead').addClass('flex-container');
-    $('.twitter-typeahead').css('display','');
+    $('.twitter-typeahead').addClass('flex-container').css('display','');
   },
 
   init: function(){
