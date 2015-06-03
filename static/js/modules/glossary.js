@@ -41,7 +41,7 @@ populateList(terms);
 // Adding title to all terms
 $('.term').attr('title', 'Click to define').attr('tabindex', 0);
 
-findTerm = function(term){
+findTerm = function(term) {
     $('.glossary__search').val(term);
     // Highlight the term and remove other highlights
     $('.term--highlight').removeClass('term--highlight');
@@ -50,8 +50,12 @@ findTerm = function(term){
       return item._values['glossary-term'] === term;
     });
     // Hack: Expand text for selected item
+    glossaryList.search();
     _.each(glossaryList.visibleItems, function(item) {
-      $(item.elm).find('.accordion__button').click();
+      var $elm = $(item.elm).find('div');
+      if ($elm.hasClass('accordion--collapsed')) {
+        $elm.find('.accordion__button').click();
+      }
     });
 };
 
