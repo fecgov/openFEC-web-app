@@ -44,7 +44,7 @@ function buildCycle(datum) {
 
 function buildEntityLink(data, url, category) {
   var anchor = document.createElement('a');
-  anchor.innerText = data;
+  anchor.textContent = data;
   anchor.setAttribute('href', url);
   anchor.setAttribute('title', data);
   anchor.setAttribute('data-category', category);
