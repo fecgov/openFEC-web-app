@@ -28,7 +28,7 @@ populateList = function(terms) {
                         '</li>';
     var options = {
         item: itemTemplate,
-        valueNames: ['glossary-term', 'glossary-definition'],
+        valueNames: ['glossary-term'],
         listClass: 'glossary__list',
         searchClass: 'glossary__search'
     };
