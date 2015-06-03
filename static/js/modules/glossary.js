@@ -6,7 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var terms = require('./terms');
 
-require('../vendor/list.min.js');
+var List = require('list.js');
 
 var glossaryLink = $('.term'),
     glossaryIsOpen = false,
@@ -19,13 +19,13 @@ var glossaryLink = $('.term'),
 
 // Builds the List in the glossary slide panel
 populateList = function(terms) {
-    var itemTemplate = '<li id="glossary-list-item">'
-                        + '<div class="js-accordion_header accordion__header">'
-                        + '<h4 class="glossary-term"></h4>'
-                        + '<a href="#" class="accordion__button js-accordion_button"></a>'
-                        + '</div>'
-                        + '<p class="glossary-definition js-accordion_item"></p>'
-                        + '</li>';
+    var itemTemplate = '<li id="glossary-list-item">' +
+                        '<div class="js-accordion_header accordion__header">' +
+                        '<h4 class="glossary-term"></h4>' +
+                        '<a href="#" class="accordion__button js-accordion_button"></a>' +
+                        '</div>' +
+                        '<p class="glossary-definition js-accordion_item"></p>' +
+                        '</li>';
     var options = {
         item: itemTemplate,
         valueNames: ['glossary-term', 'glossary-definition'],
@@ -72,7 +72,7 @@ hideGlossary = function() {
     $('#glossary-toggle').removeClass('active');
     glossaryIsOpen = false;
     clearTerm();
-}
+};
 
 clearTerm = function() {
     $('#glossary-term').html('');
