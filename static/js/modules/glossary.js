@@ -28,13 +28,13 @@ populateList = function(terms) {
                         + '</li>';
     var options = {
         item: itemTemplate,
-        valueNames: ['glossary-term','glossary-definition'],
+        valueNames: ['glossary-term', 'glossary-definition'],
         listClass: 'glossary__list',
-        searchClass: 'glossary__search',
+        searchClass: 'glossary__search'
     };
-    glossaryList = new List('glossary',options,terms);
+    glossaryList = new List('glossary', options, terms);
     glossaryList.sort('glossary-term', {order: 'asc'});
-}
+};
 
 populateList(terms);
 
@@ -42,12 +42,18 @@ populateList(terms);
 $('.term').attr('title', 'Click to define').attr('tabindex', 0);
 
 findTerm = function(term){
-    glossaryList.search(term, ['glossary-term']);
     $('.glossary__search').val(term);
     // Highlight the term and remove other highlights
     $('.term--highlight').removeClass('term--highlight');
     $('span[data-term="' + term + '"]').addClass('term--highlight');
-}
+    glossaryList.filter(function(item) {
+      return item._values['glossary-term'] === term;
+    });
+    // Hack: Expand text for selected item
+    _.each(glossaryList.visibleItems, function(item) {
+      $(item.elm).find('.accordion__button').click();
+    });
+};
 
 // Opens the glossary
 showGlossary = function() {
@@ -56,7 +62,7 @@ showGlossary = function() {
     $('#glossary-toggle').addClass('active');
     $('#glossary-search').focus();
     glossaryIsOpen = true;
-}
+};
 
 // Hides the glossary
 hideGlossary = function() {
@@ -90,6 +96,13 @@ module.exports = {
             } else {
                 showGlossary();
             }
+        });
+
+        // Hack: Remove filters applied by clicking a term on new user input
+        $('#glossary-search').keyup(function() {
+          if (glossaryList.filtered) {
+            glossaryList.filter();
+          }
         });
     }
 };
