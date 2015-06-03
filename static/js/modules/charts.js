@@ -53,8 +53,11 @@ function chartSeries() {
         .call(drawScale, scale, dim);
 
       bars.each(function(d) {
-        d.size = scale(d.value);
-        // console.log(d.value, '->', d.height);
+        if (d.value < 0) {
+          d.size = 0;
+        } else {
+          d.size = scale(d.value);
+        }
       })
       .style(dim, function(d) {
         return d.size + '%';
