@@ -53,18 +53,20 @@ var candidateColumns = [
       anchor.attr('href', '/candidate/' + row.candidate_id + buildCycle(row));
       anchor.text(data);
       return anchor[0].outerHTML;
-    }
+    },
+    className: 'all',
   },
-  {data: 'office_full'},
+  {data: 'office_full', className: 'min-tablet'},
   {
     data: 'election_years',
+    className: 'min-tablet',
     render: function(data, type, row, meta) {
       return yearRange(data[0], row.active_through);
     }
   },
-  {data: 'party_full'},
-  {data: 'state'},
-  {data: 'district'},
+  {data: 'party_full', className: 'min-tablet'},
+  {data: 'state', className: 'min-desktop'},
+  {data: 'district', className: 'min-desktop'},
 ];
 
 var committeeColumns = [
@@ -81,10 +83,10 @@ var committeeColumns = [
     },
     className: 'all',
   },
-  {data: 'treasurer_name', className: 'min-tablet'},
-  {data: 'state', className: 'min-tablet'},
-  {data: 'party_full', className: 'min-tablet'},
-  {data: 'organization_type_full', className: 'min-tablet'},
+  {data: 'treasurer_name', className: 'min-desktop'},
+  {data: 'state', className: 'min-desktop'},
+  {data: 'party_full', className: 'min-desktop'},
+  {data: 'organization_type_full', className: 'min-desktop'},
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
 ];
