@@ -1,18 +1,18 @@
 <figure class="table--simple reports-table">
-  <h3 class="figure__title">Combined totals for {{cycle|fmt_year_range|default("unavailable")}}</h3>
+  <h3 class="figure__title">Combined Totals for {{cycle|fmt_year_range|default("unavailable")}}</h3>
   <div class="table__half">
     <div class="table__row">
-      <div class="table__cell">Total <span class="term" data-term="Total Receipts">receipts</span></div>
+      <div class="table__cell">Total <span class="term" data-term="Total Receipts">Receipts</span></div>
       <div class="table__cell">{{aggregate.receipts|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row">
-      <div class="table__cell">Total <span class="term" data-term="Total Disbursements">disbursements</span></div>
+      <div class="table__cell">Total <span class="term" data-term="Total Disbursements">Disbursements</span></div>
       <div class="table__cell">{{aggregate.disbursements|currency|default("unavailable")}}</div>
     </div>
   </div>
   <div class="table__half">
     <div class="table__row">
-      <div class="table__cell"><span class="term" data-term="Ending Cash on Hand">Ending cash on hand</span></div>
+      <div class="table__cell"><span class="term" data-term="Ending Cash on Hand">Ending Cash on Hand</span></div>
       <div class="table__cell">{{aggregate.cash|currency|default("unavailable")}}</div>
     </div>
     <div class="table__row">
