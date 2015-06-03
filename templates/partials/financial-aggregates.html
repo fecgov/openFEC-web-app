@@ -1,23 +1,25 @@
+{% import 'macros/null.html' as null %}
+
 <figure class="table--simple reports-table">
   <h3 class="figure__title">Combined Totals for {{cycle|fmt_year_range|default("unavailable")}}</h3>
   <div class="table__half">
     <div class="table__row">
       <div class="table__cell">Total <span class="term" data-term="Total Receipts">Receipts</span></div>
-      <div class="table__cell">{{aggregate.receipts|currency|default("unavailable")}}</div>
+      <div class="table__cell">{{ null.null( aggregate.receipts | currency ) }}</div>
     </div>
     <div class="table__row">
       <div class="table__cell">Total <span class="term" data-term="Total Disbursements">Disbursements</span></div>
-      <div class="table__cell">{{aggregate.disbursements|currency|default("unavailable")}}</div>
+      <div class="table__cell">{{ null.null( aggregate.disbursements | currency ) }}</div>
     </div>
   </div>
   <div class="table__half">
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Ending Cash on Hand">Ending Cash on Hand</span></div>
-      <div class="table__cell">{{aggregate.cash|currency|default("unavailable")}}</div>
+      <div class="table__cell">{{ null.null( aggregate.cash | currency ) }}</div>
     </div>
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
-      <div class="table__cell">{{aggregate.debt|currency|default("unavailable")}}</div>
+      <div class="table__cell">{{ null.null( aggregate.debt | currency ) }}</div>
     </div>
   </div>
   <div class="table__row--note">

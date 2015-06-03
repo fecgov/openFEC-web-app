@@ -176,8 +176,7 @@ def server_error(e):
 def currency_filter(num, grouping=True):
     if isinstance(num, (int, float)):
         return locale.currency(num, grouping=grouping)
-    else:
-        return "<a class='term' data-term='None'>None</a>"
+    return None
 
 
 def _unique(values):
