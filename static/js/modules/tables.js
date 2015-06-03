@@ -78,14 +78,15 @@ var committeeColumns = [
       anchor.attr('href', '/committee/' + row.committee_id + buildCycle(row));
       anchor.text(data);
       return anchor[0].outerHTML;
-    }
+    },
+    className: 'all',
   },
-  {data: 'treasurer_name'},
-  {data: 'state'},
-  {data: 'party_full'},
-  {data: 'organization_type_full'},
-  {data: 'committee_type_full'},
-  {data: 'designation_full'}
+  {data: 'treasurer_name', className: 'min-tablet'},
+  {data: 'state', className: 'min-tablet'},
+  {data: 'party_full', className: 'min-tablet'},
+  {data: 'organization_type_full', className: 'min-tablet'},
+  {data: 'committee_type_full', className: 'min-tablet'},
+  {data: 'designation_full', className: 'min-tablet'},
 ];
 
 function initTable(table, form, baseUrl, columns) {
@@ -97,6 +98,7 @@ function initTable(table, form, baseUrl, columns) {
     lengthChange: true,
     columns: columns,
     lengthMenu: [30,50,100],
+    responsive: true,
     language: {
       lengthMenu: 'Results per page: _MENU_'
     },
