@@ -67,8 +67,7 @@ class BaseTest(unittest.TestCase):
     def setUpClass(cls):
         driver = os.getenv('FEC_SELENIUM_DRIVER', 'phantomjs')
         cls.driver = drivers[driver](cls)
-        if driver == 'phantomjs':
-            cls.driver.set_window_size(2000, 2000)
+        cls.driver.maximize_window()
         cls.driver.implicitly_wait(5)
         cls.base_url = 'http://localhost:3000'
 

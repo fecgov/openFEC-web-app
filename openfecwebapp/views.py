@@ -1,6 +1,9 @@
+import collections
+
 from flask import render_template
-from openfecwebapp.api_caller import load_cmte_financials
 from werkzeug.exceptions import abort
+
+from openfecwebapp.api_caller import load_cmte_financials
 
 
 def render_search_results(results, query, result_type):
@@ -32,6 +35,26 @@ def render_committee(data, candidates=None, cycle=None):
     return render_template('committees-single.html', **tmpl_vars)
 
 
+def groupby(values, keygetter):
+    ret = {}
+    for value in values:
+        key = keygetter(value)
+        ret.setdefault(key, []).append(value)
+    return ret
+
+
+def aggregate_committees(committees):
+    ret = collections.defaultdict(int)
+    for each in committees:
+        totals = each['totals'][0] if each['totals'] else {}
+        reports = each['reports'][0] if each['reports'] else {}
+        ret['receipts'] += totals.get('receipts', 0)
+        ret['disbursements'] += totals.get('disbursements', 0)
+        ret['cash'] += reports.get('cash_on_hand_end_period', 0)
+        ret['debt'] += reports.get('debts_owed_by_committee', 0)
+    return ret
+
+
 def render_candidate(data, committees, cycle):
     results = get_first_result_or_raise_500(data)
 
@@ -40,24 +63,14 @@ def render_candidate(data, committees, cycle):
 
     tmpl_vars['cycle'] = cycle
 
-    # add 'committees' level to template
-    tmpl_vars['has_authorized_cmtes'] = False
-    tmpl_vars['has_joint_cmtes'] = False
-    tmpl_vars['has_leadership_cmtes'] = False
+    committee_groups = groupby(committees, lambda each: each['designation'])
+    committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
+    for committee in committees_authorized:
+        committee.update(load_cmte_financials(committee['committee_id'], cycle=cycle))
 
-    for committee in committees:
-        if committee['designation'] in ('P', 'A'):  # (P)rimary or (A)uthorized
-            # this adds committee['reports'] and committee['totals']
-            committee.update(load_cmte_financials(committee['committee_id'], cycle=cycle))
-            tmpl_vars['has_authorized_cmtes'] = True
-
-        elif committee['designation'] == 'J':  # (J)oint
-            tmpl_vars['has_joint_cmtes'] = True
-
-        elif committee['designation'] == 'D':  # Leadership
-            tmpl_vars['has_leadership_cmtes'] = True
-
-    tmpl_vars['committees'] = committees
+    tmpl_vars['committee_groups'] = committee_groups
+    tmpl_vars['committees_authorized'] = committees_authorized
+    tmpl_vars['aggregate'] = aggregate_committees(committees_authorized)
 
     return render_template('candidates-single.html', **tmpl_vars)
 
