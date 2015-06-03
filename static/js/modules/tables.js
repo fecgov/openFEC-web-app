@@ -55,35 +55,38 @@ function buildEntityLink(data, url, category) {
 var candidateColumns = [
   {
     data: 'name',
+    className: 'all',
     render: function(data, type, row, meta) {
       return buildEntityLink(data, '/candidate/' + row.candidate_id + buildCycle(row), 'candidate');
     }
   },
-  {data: 'office_full'},
+  {data: 'office_full', className: 'min-tablet'},
   {
     data: 'election_years',
+    className: 'min-tablet',
     render: function(data, type, row, meta) {
       return yearRange(data[0], row.active_through);
     }
   },
-  {data: 'party_full'},
-  {data: 'state'},
-  {data: 'district'},
+  {data: 'party_full', className: 'min-tablet'},
+  {data: 'state', className: 'min-desktop'},
+  {data: 'district', className: 'min-desktop'},
 ];
 
 var committeeColumns = [
   {
     data: 'name',
+    className: 'all',
     render: function(data, type, row, meta) {
       return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'committee');
     }
   },
-  {data: 'treasurer_name'},
-  {data: 'state'},
-  {data: 'party_full'},
-  {data: 'organization_type_full'},
-  {data: 'committee_type_full'},
-  {data: 'designation_full'}
+  {data: 'treasurer_name', className: 'min-desktop'},
+  {data: 'state', className: 'min-desktop'},
+  {data: 'party_full', className: 'min-desktop'},
+  {data: 'organization_type_full', className: 'min-desktop'},
+  {data: 'committee_type_full', className: 'min-tablet'},
+  {data: 'designation_full', className: 'min-tablet'},
 ];
 
 function mapSort(order, columns) {
@@ -111,6 +114,7 @@ function initTable($table, $form, baseUrl, columns) {
     searching: false,
     columns: columns,
     lengthMenu: [30, 50, 100],
+    responsive: true,
     language: {
       lengthMenu: 'Results per page: _MENU_'
     },

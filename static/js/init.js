@@ -9,7 +9,6 @@ window.$ = window.jQuery = $;
 
 // Include vendor scripts
 require('./vendor/tablist');
-require('./vendor/responsive-tables');
 
 var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
