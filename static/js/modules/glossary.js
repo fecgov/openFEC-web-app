@@ -99,7 +99,7 @@ module.exports = {
         });
 
         // Hack: Remove filters applied by clicking a term on new user input
-        $('#glossary-search').keyup(function() {
+        $('#glossary-search').on('input', function() {
           if (glossaryList.filtered) {
             glossaryList.filter();
           }
