@@ -103,7 +103,7 @@ table.dataTable {
 
 .table__cell--heading {
   font-weight: bold;
-}    
+}
 
 .table__row--note {
   @include font-size(1.0);
@@ -205,7 +205,7 @@ table.dataTable {
       line-height: 1.5em;
       padding: 0;
       width: 50%;
-    
+
       &:first-child {
         width: 50%;
       }
@@ -215,11 +215,11 @@ table.dataTable {
         margin-bottom: 0;
       }
     }
-    
+
     .table__row--header {
       padding: .5em 0;
     }
-    
+
     .table__row--nested {
       .table__cell,
       .table__cell:first-child {
@@ -315,18 +315,18 @@ table.dataTable {
   @include media($medium) {
     .table__cell:first-child {
       width: 50%;
-    }    
+    }
   }
 }
 
 // Style overrides to the datatables defaults
 
-table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before, 
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before,
 table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before {
   background-color: $blue;
 }
 
-table.dataTable.dtr-inline.collapsed > tbody > tr.child > td:first-child:before, 
+table.dataTable.dtr-inline.collapsed > tbody > tr.child > td:first-child:before,
 table.dataTable.dtr-inline.collapsed > tbody > tr.child > th:first-child:before {
   display: none;
 }
@@ -353,7 +353,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
 table.dataTable tbody tr.child {
   background-color: $lightest-gray;
   padding: 0 30px;
-  
+
   ul {
     width: 100%;
   }

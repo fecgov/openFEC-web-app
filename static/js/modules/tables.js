@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
 require('datatables');
+require('drmonty-datatables-responsive');
 
 function yearRange(first, last) {
   if (first === last) {
