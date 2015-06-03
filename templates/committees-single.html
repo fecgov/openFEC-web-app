@@ -98,7 +98,7 @@
       {% import 'macros/charts.html' as charts %}
       <div class="table__row table__row--nested js-accordion_item">
         <div class="table__cell">{{ pretty_name }} </div>
-        <div class="table__cell">{{ value|default(0)|currency }}</div>
+        <div class="table__cell">{{ value|currency|safe }}</div>
         <div class="table__cell table__cell--bar">
           {% if value %}
             {{ charts.chart_bar(value|default(0),
@@ -115,7 +115,7 @@
           <h5>{{ pretty_name }}</h5>
         </div>
         <div class="table__cell">
-          <span>{{ value|default(0)|currency }}</span>
+          <span>{{ value|currency|safe }}</span>
         </div>
         {% if description %}
         <div class="table__cell table__cell--header-description">
