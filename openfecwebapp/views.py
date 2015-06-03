@@ -1,14 +1,17 @@
+import collections
+
 from flask import render_template
+from werkzeug.exceptions import abort
+
 from openfecwebapp.models.shared import generate_pagination_values
 from openfecwebapp.api_caller import load_cmte_financials
-from werkzeug.exceptions import abort
 
 
 def render_search_results(results, query, result_type):
     # if true will show "no results" message
     no_results = not len(results)
 
-    return render_template('search-results.html', 
+    return render_template('search-results.html',
             results=results,
             result_type=result_type,
             query=query,
@@ -60,12 +63,15 @@ def groupby(values, keygetter):
 
 
 def aggregate_committees(committees):
-    return {
-        'receipts': sum(each['totals'][0]['receipts'] for each in committees),
-        'disbursements': sum(each['totals'][0]['disbursements'] for each in committees),
-        'cash': sum(each['reports'][0]['cash_on_hand_end_period'] for each in committees),
-        'debt': sum(each['reports'][0]['debts_owed_by_committee'] for each in committees),
-    }
+    ret = collections.defaultdict(int)
+    for each in committees:
+        totals = each['totals'][0] if each['totals'] else {}
+        reports = each['reports'][0] if each['reports'] else {}
+        ret['receipts'] += totals.get('receipts', 0)
+        ret['disbursements'] += totals.get('disbursements', 0)
+        ret['cash'] += reports.get('cash_on_hand_end_period', 0)
+        ret['debt'] += reports.get('debts_owed_by_committee', 0)
+    return ret
 
 
 def render_candidate(data, committees, cycle):
