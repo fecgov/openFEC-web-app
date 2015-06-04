@@ -9,8 +9,8 @@ from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
 from dateutil.parser import parse as parse_date
 from openfecwebapp import config
-from openfecwebapp.views import render_search_results, render_table, render_candidate, render_committee
-from openfecwebapp.api_caller import load_search_results, load_single_type, load_single_type_summary, load_nested_type, install_cache
+from openfecwebapp.views import render_search_results, render_candidate, render_committee
+from openfecwebapp.api_caller import load_search_results, load_single_type, load_nested_type, install_cache
 
 import datetime
 import jinja2
@@ -36,14 +36,6 @@ def get_context(c):
     return c
 
 
-def resolve_cycle(candidate):
-    if 'cycle' in request.args:
-        cycles = set(candidate['cycles'])
-        cycles = cycles.intersection(int(each) for each in request.args.getlist('cycle'))
-        return max(cycles)
-    return None
-
-
 def current_cycle():
     year = datetime.datetime.now().year
     return year + year % 2
@@ -61,7 +53,6 @@ app.jinja_env.globals['api_key'] = config.api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
-app.jinja_env.globals['resolve_cycle'] = resolve_cycle
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
@@ -74,12 +65,6 @@ except OSError:
 
 if config.analytics:
     app.config['USE_ANALYTICS'] = True
-
-
-def _convert_to_dict(params):
-    """ move from immutablemultidict -> multidict -> dict """
-    params = params.copy().to_dict(flat=False)
-    return {key: value for key, value in params.items() if value and value != ['']}
 
 
 @app.route('/')
@@ -150,16 +135,12 @@ def committee_page(c_id, cycle=None):
 
 @app.route('/candidates')
 def candidates():
-    params = _convert_to_dict(request.args)
-    results = load_single_type_summary('candidates', **params)
-    return render_table('candidates', results, params)
+    return render_template('candidates.html')
 
 
 @app.route('/committees')
 def committees():
-    params = _convert_to_dict(request.args)
-    results = load_single_type_summary('committees', **params)
-    return render_table('committees', results, params)
+    return render_template('committees.html')
 
 
 @app.errorhandler(404)

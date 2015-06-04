@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, window */
+/* global require, window, document */
 
 var $ = require('jquery');
 
@@ -9,7 +9,6 @@ window.$ = window.jQuery = $;
 
 // Include vendor scripts
 require('./vendor/tablist');
-require('./vendor/responsive-tables');
 
 var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
@@ -17,11 +16,13 @@ var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
 var glossary = require('./modules/glossary.js');
 var Search = require('./modules/search');
+var tables = require('./modules/tables');
 
 filters.init();
 typeahead.init();
 glossary.init();
 charts.init();
+tables.init();
 
 var SLT_ACCORDION = '.js-accordion';
 
