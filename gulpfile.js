@@ -9,9 +9,14 @@ var browserify = require('browserify');
 
 var gulp = require('gulp');
 var rev = require('gulp-rev');
+var gulpif = require('gulp-if');
+var sass = require('gulp-sass');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
-var sass = require('gulp-sass');
+var uglify = require('gulp-uglify');
+var minifyCss = require('gulp-minify-css');
+
+var production = !!process.env.PRODUCTION;
 
 var opts = {
   entries: ['./static/js/init.js'],
@@ -27,6 +32,7 @@ function bundle(watch) {
     .pipe(buffer())
     .pipe(rename('./static/js/app.js'))
     .pipe(rev())
+    .pipe(gulpif(production, uglify()))
     .pipe(gulp.dest('.'))
     .pipe(rev.manifest({merge: true}))
     .pipe(gulp.dest('.'));
@@ -49,6 +55,7 @@ gulp.task('build-sass', function() {
       )
     }).on('error', sass.logError))
     .pipe(rev())
+    .pipe(gulpif(production, minifyCss()))
     .pipe(gulp.dest('.'))
     .pipe(rev.manifest({merge: true}))
     .pipe(gulp.dest('.'));
