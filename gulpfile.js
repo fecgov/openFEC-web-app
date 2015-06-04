@@ -16,7 +16,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 
-var production = !!process.env.PRODUCTION;
+var production = !!process.env.FEC_WEB_PRODUCTION;
 
 var opts = {
   entries: ['./static/js/init.js'],

@@ -11,6 +11,7 @@ applications:
   buildpack: "https://github.com/ddollar/heroku-buildpack-multi.git"
   host: fec-prod-web
   env:
+    FEC_WEB_PRODUCTION: True
     NEW_RELIC_APP_NAME: OpenFEC Web (production)
     FEC_WEB_API_URL: https://api.open.fec.gov/
     FEC_FORCE_HTTPS: true
