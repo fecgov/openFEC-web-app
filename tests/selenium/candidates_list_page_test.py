@@ -1,7 +1,6 @@
 import unittest
 import functools
 
-from selenium.webdriver.common.keys import Keys
 from .base_test_class import SearchPageTestCase
 
 

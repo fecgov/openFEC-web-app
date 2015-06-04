@@ -1,8 +1,7 @@
-{% import 'macros/years.html' as years %}
-<table id="results" class="responsive">
+<table id="results" data-type="candidate">
     <thead>
         <tr>
-            <th class="flex-cell" scope="col">Name</th>
+            <th scope="col">Name</th>
             <th scope="col">Office</th>
             <th scope="col">Election Years</th>
             <th scope="col">Party</th>
@@ -10,24 +9,4 @@
             <th scope="col">District</th>
         </tr>
     </thead>
-    <tbody>
-        {% for c in candidates %}
-            <tr>
-                <td class="flex-cell" scope="row">
-                  <a
-                          class="single-link"
-                          title="{{c.name}}"
-                          data-id="{{ c.candidate_id }}"
-                          data-category="candidate"
-                          href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=resolve_cycle(c)) }}"
-                      >{{c.name}}</a>
-                </td>
-                <td>{{c.office_full}}</td>
-                <td>{{ years.fmt_first_last_year(c.election_years[0], c.active_through)}}</td>
-                <td>{{c.party_full}}</td>
-                <td>{{c.state}}</td>
-                <td>{{c.district}}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
 </table>

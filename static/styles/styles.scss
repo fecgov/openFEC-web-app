@@ -1,3 +1,8 @@
+// Include vendor styles
+@import "themify-icons";
+@import "datatables/media/css/jquery.dataTables";
+@import "drmonty-datatables-responsive/css/dataTables.responsive";
+
 @import "bourbon";
 @import "neat";
 
@@ -7,7 +12,3 @@
 @import "_base/base";
 @import "_layout/layout";
 @import "_components/components";
-
-// Include vendor styles
-@import "themify-icons";
-@import "responsive-tables";

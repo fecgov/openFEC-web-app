@@ -1,10 +1,12 @@
-table {
+table,
+table.dataTable {
   background-color: #fff;
   border-collapse: collapse;
   margin: 0;
   table-layout: fixed;
   width: 100%;
   overflow-x: scroll; // scroll horizontally on smaller viewports
+  border: 1px solid $light-gray;
 
   thead {
     tr:hover {
@@ -13,9 +15,8 @@ table {
   }
 
   th {
-    padding: 1rem;
-    height: 4rem; 
-    border-bottom: 1px solid $light-gray;
+    padding: 1rem !important;
+    border-bottom: 1px solid $light-gray !important;
     text-align: left;
   }
 
@@ -27,11 +28,6 @@ table {
     @include font-size(1.4);
     box-sizing: content-box; // Necessary to get the responsive rows to line up
     border: none;
-    border-bottom: 1px dotted $light-gray;
-
-//    &:nth-child(even) {
-  //    background-color: #fdfdfd;
-    //}
 
     &:hover {
       background: rgba($blue, .1);
@@ -41,7 +37,11 @@ table {
   td {
     @include truncate();
     padding: .5em;
-    border: none;
+    border-bottom: 1px dotted $light-gray;
+  }
+
+  &.no-footer {
+    border-bottom: 1px solid $light-gray !important;
   }
 }
 
@@ -103,7 +103,7 @@ table {
 
 .table__cell--heading {
   font-weight: bold;
-}    
+}
 
 .table__row--note {
   @include font-size(1.0);
@@ -205,7 +205,7 @@ table {
       line-height: 1.5em;
       padding: 0;
       width: 50%;
-    
+
       &:first-child {
         width: 50%;
       }
@@ -215,11 +215,11 @@ table {
         margin-bottom: 0;
       }
     }
-    
+
     .table__row--header {
       padding: .5em 0;
     }
-    
+
     .table__row--nested {
       .table__cell,
       .table__cell:first-child {
@@ -322,31 +322,46 @@ table {
   @include media($medium) {
     .table__cell:first-child {
       width: 50%;
-    }    
+    }
   }
 }
-/* All the fancy responsive styles are handled in 
-* /static/styles/responsive-tables.css
-* This is just further customization
-*/
 
-table.responsive {
-  width: auto;
+// Style overrides to the datatables defaults
 
-  @include media($medium) {
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before {
+  background-color: $blue;
+}
+
+table.dataTable.dtr-inline.collapsed > tbody > tr.child > td:first-child:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr.child > th:first-child:before {
+  display: none;
+}
+
+table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
+  top: 8px;
+  left: 4px;
+  height: 16px;
+  width: 16px;
+  display: block;
+  position: absolute;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  text-align: center;
+  line-height: 14px;
+  box-shadow: none;
+  box-sizing: content-box;
+  content: '+';
+  background-color: $blue;
+}
+
+table.dataTable tbody tr.child {
+  background-color: $lightest-gray;
+  padding: 0 30px;
+
+  ul {
     width: 100%;
   }
-}
-
-.pinned {
-  width: 40%;
-  box-shadow: 1px 0 1px 0 rgba(0,0,0,.2);
-
-  th {
-    border-right: none;
-  }
-}
-
-div.table-wrapper div.scrollable { // This naming is necessary to override
-  margin-left: 40%;
 }
