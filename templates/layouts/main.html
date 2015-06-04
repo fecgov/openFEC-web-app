@@ -18,6 +18,20 @@
         API_LOCATION = "{{api_location}}"
         API_VERSION = "{{api_version}}"
         API_KEY = "{{api_key}}"
+
+        function trackMetric(name, imagesSelector) {
+          if (imagesSelector) {
+            var images = document.querySelectorAll(imagesSelector);
+            if (images && images.length) {
+              for (var i = 0, ilen = images.length; i < ilen; i++) {
+                images[i].addEventListener('load', function() {
+                  window.performance.mark(name);
+                });
+              }
+            }
+          }
+          window.performance.mark(name);
+        }
     </script>
     {% endif %}
 </head>
