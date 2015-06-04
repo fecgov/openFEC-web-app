@@ -125,8 +125,8 @@ $(document).ready(function() {
       Search($(this));
     });
 
-    if (DEBUG) {
-      var perf = require('./modules/performance');
-      perf.bar();
-    }
+    // @if W_DEBUG
+    var perf = require('./modules/performance');
+    perf.bar();
+    // @endif
 });

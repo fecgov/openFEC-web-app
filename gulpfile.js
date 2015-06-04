@@ -13,14 +13,16 @@ var gulpif = require('gulp-if');
 var sass = require('gulp-sass');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
+var preprocess = require('gulp-preprocess');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 
-var production = !!process.env.PRODUCTION;
+var production = !!process.env.PRODUCTION,
+    debug = !!process.env.FEC_WEB_DEBUG;
 
 var opts = {
   entries: ['./static/js/init.js'],
-  debug: true
+  debug: false
 };
 var watchOpts = _.assign({}, watchify.args, opts);
 var b = browserify(opts);
@@ -31,6 +33,7 @@ function bundle(watch) {
     .pipe(source('static/js/init.js'))
     .pipe(buffer())
     .pipe(rename('./static/js/app.js'))
+    .pipe(preprocess({context: {W_DEBUG: debug}}))
     .pipe(rev())
     .pipe(gulpif(production, uglify()))
     .pipe(gulp.dest('.'))
