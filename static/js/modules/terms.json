@@ -70,5 +70,9 @@
   {
     "term":"Candidate",
     "definition":"An individual seeking nomination for election, or election, to a federal office becomes a candidate when he or she (or agents working on his or her behalf) raises contributions or makes expenditures that exceed $5,000."
-  }
+  },
+  {
+    "term": "None",
+    "definition":" If data appears as 'None', it is best to check the source document. Common reasons that the data appears as 'None' are:<ul class='default-ul'><li>Data is not processed yet; often, paper filings cause delays and inconsistent upload times.</li><li>Data is from an amendment that did not properly identify the form it was amending.</li><li>The filer did not fill out the information on the form.</li></ul>If you think there is an error, you can report that via <a href='mailto:18F-FEC@gsa.gov'>email</a>."
+   }       
 ]

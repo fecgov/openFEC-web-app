@@ -53,6 +53,10 @@ body {
   @include span-columns(6);
 }
 
+.flex-container {
+  @include display(flex);
+}
+
 // Chunks
 // These are common grouping sizes, described by their desktop size
 

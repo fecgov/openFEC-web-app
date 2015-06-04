@@ -9,8 +9,8 @@ from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
 from dateutil.parser import parse as parse_date
 from openfecwebapp import config
-from openfecwebapp.views import render_search_results, render_table, render_candidate, render_committee
-from openfecwebapp.api_caller import load_search_results, load_single_type, load_single_type_summary, load_nested_type, install_cache
+from openfecwebapp.views import render_search_results, render_candidate, render_committee
+from openfecwebapp.api_caller import load_search_results, load_single_type, load_nested_type, install_cache
 
 import datetime
 import jinja2
@@ -36,14 +36,6 @@ def get_context(c):
     return c
 
 
-def resolve_cycle(candidate):
-    if 'cycle' in request.args:
-        cycles = set(candidate['cycles'])
-        cycles = cycles.intersection(int(each) for each in request.args.getlist('cycle'))
-        return max(cycles)
-    return None
-
-
 def current_cycle():
     year = datetime.datetime.now().year
     return year + year % 2
@@ -61,7 +53,6 @@ app.jinja_env.globals['api_key'] = config.api_key_public
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
-app.jinja_env.globals['resolve_cycle'] = resolve_cycle
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
@@ -74,12 +65,6 @@ except OSError:
 
 if config.analytics:
     app.config['USE_ANALYTICS'] = True
-
-
-def _convert_to_dict(params):
-    """ move from immutablemultidict -> multidict -> dict """
-    params = params.copy().to_dict(flat=False)
-    return {key: value for key, value in params.items() if value and value != ['']}
 
 
 @app.route('/')
@@ -150,16 +135,12 @@ def committee_page(c_id, cycle=None):
 
 @app.route('/candidates')
 def candidates():
-    params = _convert_to_dict(request.args)
-    results = load_single_type_summary('candidates', **params)
-    return render_table('candidates', results, params)
+    return render_template('candidates.html')
 
 
 @app.route('/committees')
 def committees():
-    params = _convert_to_dict(request.args)
-    results = load_single_type_summary('committees', **params)
-    return render_table('committees', results, params)
+    return render_template('committees.html')
 
 
 @app.errorhandler(404)
@@ -176,6 +157,7 @@ def server_error(e):
 def currency_filter(num, grouping=True):
     if isinstance(num, (int, float)):
         return locale.currency(num, grouping=grouping)
+    return None
 
 
 def _unique(values):
@@ -213,11 +195,6 @@ def date_filter_md(date_str):
         return ''
     return parse_date(date_str).strftime('%b %Y')
 
-@app.template_filter('last_n_characters')
-def last_n_characters(value, nchar=3):
-    if type(value) == int:
-        return str(value % (10 ** nchar)).rjust(nchar, '0')
-    return ''
 
 @app.template_filter()
 def fmt_year_range(year):
@@ -248,13 +225,6 @@ def next_cycle(value, cycles):
         (each for each in cycles if value <= each),
         max(cycles),
     )
-
-
-@app.template_filter()
-def url_to_fec_pdf(report):
-    beg_img_num = report['beginning_image_number']
-    beg_img_num_last_n = last_n_characters(beg_img_num)
-    return "http://docquery.fec.gov/pdf/{0}/{1}/{1}.pdf".format(beg_img_num_last_n, beg_img_num)
 
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.

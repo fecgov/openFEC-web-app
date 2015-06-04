@@ -1,3 +1,5 @@
+{% import 'macros/null.html' as null %}
+
 {% with %}
 {% set report = committee.reports.0 if committee.reports else {} %}
 {% set totals = committee.totals.0 if committee.totals else {} %}
@@ -6,12 +8,12 @@
   <h4 class="figure__title">Totals for {{totals.cycle|fmt_year_range|default("unavailable")}}</h4>
   <div class="table__half">
     <div class="table__row">
-      <div class="table__cell">Total <span class="term" data-term="Total Receipts">receipts</span></div>
-      <div class="table__cell">{{totals.receipts|currency|default("unavailable")}}</div>
+      <div class="table__cell">Total <span class="term" data-term="Total Receipts">Receipts</span></div>
+      <div class="table__cell">{{ null.null( totals.receipts | currency ) }}</div>
     </div>
     <div class="table__row">
-      <div class="table__cell">Total <span class="term" data-term="Total Disbursements">disbursements</span></div>
-      <div class="table__cell">{{totals.disbursements|currency|default("unavailable")}}</div>
+      <div class="table__cell">Total <span class="term" data-term="Total Disbursements">Disbursements</span></div>
+      <div class="table__cell">{{ null.null( totals.disbursements | currency ) }}</div>
     </div>
     <div class="table__row--note">
       Calculated from reports filed {{ totals.cycle|fmt_year_range|default("unknown") }}
@@ -19,18 +21,20 @@
   </div>
   <div class="table__half">
     <div class="table__row">
-      <div class="table__cell"><span class="term" data-term="Ending Cash on Hand">Ending cash on hand</span></div>
-      <div class="table__cell">{{report.cash_on_hand_end_period|currency|default("unavailable")}}</div>
+      <div class="table__cell"><span class="term" data-term="Ending Cash on Hand">Ending Cash on Hand</span></div>
+      <div class="table__cell">{{ null.null( report.cash_on_hand_end_period | currency ) }}</div>
     </div>
     <div class="table__row">
       <div class="table__cell"><span class="term" data-term="Debt">Debt</span></div>
-      <div class="table__cell">{{report.debts_owed_by_committee|currency|default("unavailable")}}</div>
+      <div class="table__cell">{{ null.null( report.debts_owed_by_committee | currency ) }}</div>
     </div>
     <div class="table__row--note">
-      {% if report %}
-      Source: <a href="{{ report|url_to_fec_pdf }}">{{report.report_type_full|fmt_report_desc|default("Report")}} {{ report.report_year }}</a>
+      {% if report.pdf_url %}
+        Source: <a href="{{ report.pdf_url }}">{{report.report_type_full|fmt_report_desc|default("Report")}} {{ report.report_year }}</a>
+      {% elif report %}
+        Source: {{report.report_type_full|fmt_report_desc|default("Report")}} {{ report.report_year }}
       {% else %}
-      Source: None
+        Source: Unknown
       {% endif %}
     </div>
   </div>

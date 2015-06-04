@@ -1,5 +1,6 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/missing.html' as missing %}
+{% import 'macros/null.html' as null %}
 
 {% block title %}
     {{ name }} - Committee Overview
@@ -40,7 +41,7 @@
             </li>
             {% if candidates %}
             <li class="entity__term">
-              <h5 class="entity__term__label">Related 
+              <h5 class="entity__term__label">Related
                 {% if candidates|length > 1 %}
                   Candidates
                 {% else %}
@@ -53,11 +54,11 @@
               {% endfor %}
               </ul>
             </li>
+            {% endif %}
             <li class="entity__term">
               <h5 class="entity__term__label">Address</h5>
               <span class="entity__term__data">{{ street_1 }}{% if street_2 %}<br>{{ street_2 }}{% endif %} <br> {{city}}, {{state}} {{zip}}</span>
             </li>
-          {% endif %}
         </ul>
       </div>
     </header>
@@ -95,11 +96,13 @@
       {% import 'macros/charts.html' as charts %}
       <div class="table__row table__row--nested js-accordion_item">
         <div class="table__cell">{{ pretty_name }} </div>
-        <div class="table__cell">{{ value|default(0)|currency }}</div>
+        <div class="table__cell">{{ null.null(value | currency) }}</div>
         <div class="table__cell table__cell--bar">
-          {{ charts.chart_bar(value|default(0),
-                              pretty_name,
-                              tooltip=None) }}
+          {% if value %}
+            {{ charts.chart_bar(value|default(0),
+                                pretty_name,
+                                tooltip=None) }}
+          {% endif %}
         </div>
       </div>
     {% endmacro %}
@@ -110,7 +113,7 @@
           <h5>{{ pretty_name }}</h5>
         </div>
         <div class="table__cell">
-          <span>{{ value|default(0)|currency }}</span>
+          <span>{{ null.null( value | currency ) }}</span>
         </div>
         {% if description %}
         <div class="table__cell table__cell--header-description">
@@ -137,7 +140,7 @@
 
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container committee-summary">
-        {% if totals %}
+        {% if reports and totals %}
           <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
           <div class="page-subsection page-subsection--noline">
@@ -145,9 +148,16 @@
               {% with committee=context() %}
               <div class="meta-box__bar">
                 <h4>Most Recent Report:
-                    <a href="{{ committee.reports.0|url_to_fec_pdf }}">{{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}</a>
+                    {% if committee.reports.0.pdf_url %}
+                      <a href="{{ committee.reports.0.pdf_url }}">{{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}</a>
+                    {% else %}
+                      {{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}
+                    {% endif %}
                 </h4>
-               <span>Report coverage: {{ committee.reports.0.coverage_start_date|date_md }} - {{ committee.reports.0.coverage_end_date|date_md }} | <a href="http://docquery.fec.gov/pdf/{{ committee.reports[0].beginning_image_number|last_n_characters }}/{{ committee.reports[0].beginning_image_number }}/{{ committee.reports[0].beginning_image_number }}.pdf">View PDF &raquo;</a></span>
+               <span>Report coverage: {{ committee.reports.0.coverage_start_date|date_md }} - {{ committee.reports.0.coverage_end_date|date_md }}
+               {% if committee.reports.0.pdf_url %}
+                 | <a href="{{ committee.reports.0.pdf_url }}">View PDF &raquo;</a></span>
+               {% endif %}
               </div>
 
                 {% if committee_type == 'P' %}
