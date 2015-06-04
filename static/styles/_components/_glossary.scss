@@ -31,6 +31,10 @@
 .glossary {
 	z-index: 999;
 
+	.twitter-typeahead {
+		width: 100%;
+	}
+	
 	.tt-dropdown-menu {
 		width: 100%;
 	}

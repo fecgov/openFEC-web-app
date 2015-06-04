@@ -25,12 +25,6 @@ def test_date_filter_empty():
     assert app.date_filter_md(None) == ''
 
 
-def test_last_n_characters():
-    value = 123456789
-    assert app.last_n_characters(value) == '789'
-    assert app.last_n_characters(5) == '005'
-
-
 def test_fmt_year_range_int():
     assert app.fmt_year_range(1985) == '1984 - 1985'
 

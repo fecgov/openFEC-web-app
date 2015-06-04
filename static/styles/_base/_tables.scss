@@ -298,6 +298,13 @@ table {
     }
   }
 
+  .term {
+    background-color: #fff;
+    padding: .2rem 1rem;
+    border-radius: .4rem;
+    border: 1px solid $light-gray;
+  }
+
   @include media($medium) {
     .totals-table .table__row {
       padding: .5rem 2rem;
