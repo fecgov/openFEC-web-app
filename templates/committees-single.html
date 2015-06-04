@@ -1,5 +1,6 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/missing.html' as missing %}
+{% import 'macros/null.html' as null %}
 
 {% block title %}
     {{ name }} - Committee Overview
@@ -98,7 +99,7 @@
       {% import 'macros/charts.html' as charts %}
       <div class="table__row table__row--nested js-accordion_item">
         <div class="table__cell">{{ pretty_name }} </div>
-        <div class="table__cell">{{ value|currency|safe }}</div>
+        <div class="table__cell">{{ null.null(value | currency) }}</div>
         <div class="table__cell table__cell--bar">
           {% if value %}
             {{ charts.chart_bar(value|default(0),
@@ -115,7 +116,7 @@
           <h5>{{ pretty_name }}</h5>
         </div>
         <div class="table__cell">
-          <span>{{ value|currency|safe }}</span>
+          <span>{{ null.null( value | currency ) }}</span>
         </div>
         {% if description %}
         <div class="table__cell table__cell--header-description">

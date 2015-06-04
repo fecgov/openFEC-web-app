@@ -2,10 +2,11 @@
 {% set reports = committee.reports  %}
 {% set totals = committee.totals  %}
 {% import 'macros/charts.html' as charts %}
+{% import 'macros/null.html' as null %}
 {% macro group_bar_tooltip(value, key) %}
 <div class="chart-series__bar__tooltip">
   <h5 class="chart-series__bar__tooltip__title">{{ key|replace('_', ' ')|title }}</h5>
-  <span class="chart-series__bar__tooltip__value">{{ value|currency }}</span>
+  <span class="chart-series__bar__tooltip__value">{{ null.null( value | currency )}}</span>
 </div>
 {% endmacro %}
 
