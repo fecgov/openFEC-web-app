@@ -17,8 +17,8 @@ var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var preprocessify = require('preprocessify');
 
-var production = !!process.env.PRODUCTION,
-    debug = !!process.env.FEC_WEB_DEBUG;
+var debug = !!process.env.FEC_WEB_DEBUG;
+var production = !!process.env.FEC_WEB_PRODUCTION;
 
 var opts = {
   entries: ['./static/js/init.js'],

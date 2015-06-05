@@ -162,30 +162,5 @@ module.exports = {
         self.initTypeahead(options, candidateDataSet);
       }
     });
-
-    // Glossary typeahead
-    glossaryEngine = this.createEngine('Glossary', terms);
-    glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
-
-    $('#glossary-search').typeahead({
-            minLength: 1,
-            highlight: true,
-            hint: false
-        },
-        {
-            name: 'Definitions',
-            displayKey: 'term',
-            source: glossaryEngine.ttAdapter(),
-            templates: {
-              suggestion: glossarySuggestion,
-            }
-        }
-    );
-    $('#glossary-search').on('typeahead:selected', function(event, datum) {
-        glossary.setDefinition({
-            term: datum.term,
-            definition: datum.definition
-        });
-    });
   }
 };
