@@ -4,7 +4,7 @@
 
 var _ = require('underscore');
 
-require('../vendor/perfbar.min.js');
+require('perfbar/build/perfbar');
 
 var performanceBudgets = {
   'loadTime': {
