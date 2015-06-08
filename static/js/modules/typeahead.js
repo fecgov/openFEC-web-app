@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -152,6 +152,18 @@ module.exports = {
     };
 
     this.initTypeahead(options, candidateDataSet);
+
+    // Focus on search bar on "/"
+    $(document.body).on('keyup', function(e) {
+      if (e.keyCode === 191) {
+        var bar = _.find($('.search-bar'), function(bar) {
+          return $(bar).is(':visible');
+        });
+        if (bar) {
+          bar.focus();
+        }
+      }
+    });
 
     // When the select committee or candidate box is changed on the search.
     events.on('searchTypeChanged', function(data) {
