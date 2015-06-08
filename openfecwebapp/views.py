@@ -7,14 +7,12 @@ from openfecwebapp.api_caller import load_cmte_financials
 
 
 def render_search_results(results, query, result_type):
-    # if true will show "no results" message
-    no_results = not len(results)
-
-    return render_template('search-results.html',
-            results=results,
-            result_type=result_type,
-            query=query,
-            no_results=no_results)
+    return render_template(
+        'search-results.html',
+        results=results,
+        result_type=result_type,
+        query=query,
+    )
 
 
 def render_committee(data, candidates=None, cycle=None):
