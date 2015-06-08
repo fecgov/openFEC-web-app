@@ -125,7 +125,7 @@ $(document).ready(function() {
       Search($(this));
     });
 
-    // @if W_DEBUG
+    // @if DEBUG
     var perf = require('./modules/performance');
     perf.bar();
     // @endif

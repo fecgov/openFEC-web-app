@@ -33,7 +33,7 @@ function bundle(watch) {
     .pipe(source('static/js/init.js'))
     .pipe(buffer())
     .pipe(rename('./static/js/app.js'))
-    .pipe(preprocess({context: {W_DEBUG: debug}}))
+    .pipe(preprocess({context: {DEBUG: debug}}))
     .pipe(rev())
     .pipe(gulpif(production, uglify()))
     .pipe(gulp.dest('.'))
