@@ -7,6 +7,7 @@ var _ = require('underscore');
 require('typeahead.js');
 var URI = require('URIjs');
 var Handlebars = require('handlebars');
+var keyboard = require('keyboardjs');
 
 var events = require('./events.js');
 var terms = require('./terms');
@@ -154,14 +155,13 @@ module.exports = {
     this.initTypeahead(options, candidateDataSet);
 
     // Focus on search bar on "/"
-    $(document.body).on('keyup', function(e) {
-      if (e.keyCode === 191) {
-        var bar = _.find($('.search-bar'), function(bar) {
-          return $(bar).is(':visible');
-        });
-        if (bar) {
-          bar.focus();
-        }
+    keyboard.on('/', function(e) {
+      e.preventDefault();
+      var bar = _.find($('.search-bar'), function(bar) {
+        return $(bar).is(':visible');
+      });
+      if (bar) {
+        bar.focus();
       }
     });
 
