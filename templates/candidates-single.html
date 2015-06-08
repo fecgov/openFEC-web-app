@@ -29,7 +29,13 @@
           </li>
           <li class="entity__term">
             <h5 class="entity__term__label">District</h5>
-            <span class="entity__term__data">{{ state }} {% if district %}- {{district}} {% endif %}</span>
+            <span class="entity__term__data">
+              <a href="{{ url_for('candidates', state=state, cycle=max(cycles)) }}">{{ state }}</a>
+              {% if district %}
+              <span>-</span>
+              <a href="{{ url_for('candidates', district=district, cycle=max(cycles)) }}">{{district}}</a>
+              {% endif %}
+            </span>
           </li>
           <li class="entity__term">
             <h5 class="entity__term__label">
