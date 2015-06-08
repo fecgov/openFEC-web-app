@@ -24,6 +24,7 @@ def render_committee(data, candidates=None, cycle=None):
     tmpl_vars = committee
 
     tmpl_vars['cycle'] = cycle
+    tmpl_vars['result_type'] = 'committees'
 
     # add related candidates a level below
     tmpl_vars['candidates'] = candidates
@@ -62,6 +63,7 @@ def render_candidate(data, committees, cycle):
     tmpl_vars = results
 
     tmpl_vars['cycle'] = cycle
+    tmpl_vars['result_type'] = 'candidates'
 
     committee_groups = groupby(committees, lambda each: each['designation'])
     committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
