@@ -63,10 +63,10 @@ var candidateColumns = [
   },
   {data: 'office_full', className: 'min-tablet'},
   {
-    data: 'election_years',
+    data: 'cycles',
     className: 'min-tablet',
     render: function(data, type, row, meta) {
-      return yearRange(data[0], row.active_through);
+      return yearRange(_.first(data), _.last(data));
     }
   },
   {data: 'party_full', className: 'min-tablet'},
