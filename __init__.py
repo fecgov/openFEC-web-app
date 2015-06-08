@@ -140,12 +140,12 @@ def committee_page(c_id, cycle=None):
 
 @app.route('/candidates')
 def candidates():
-    return render_template('candidates.html')
+    return render_template('candidates.html', result_type='candidates')
 
 
 @app.route('/committees')
 def committees():
-    return render_template('committees.html')
+    return render_template('committees.html', result_type='committees')
 
 
 @app.errorhandler(404)

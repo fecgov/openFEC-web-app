@@ -4,14 +4,10 @@
     Search results for "{{query}}"
 {% endblock %}
 
-{% block header %}
-    {% include 'partials/page-nav.html' %}
-{% endblock %}
-
 {% block body %}
 <div class="container">
   <section class="data page-section">
-    {% if no_results %}
+    {% if not results %}
       <h4>Sorry, no results</h4>
     {% else %}
     <h1>Search Results</h1>
