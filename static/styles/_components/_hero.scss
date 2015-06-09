@@ -6,7 +6,7 @@
   text-align: center;
   background-color: $licorice;
   background-image: url('../img/mesh@2x.png');
-  background-size: contain;
+  background-size: cover;
 
   @include media($large) {
     padding: 6rem 0;
