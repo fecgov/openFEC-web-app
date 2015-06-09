@@ -35,7 +35,7 @@
             <h5 class="entity__term__label">
               <a class="term" data-term="Principal Campaign Committee">Principal Committee</a>
             </h5>
-            {% for c in committees if c.designation == 'P' %}
+            {% for c in committee_groups['P'] %}
             <p class="entity__term__data">
               <a href="{{ url_for('committee_page', c_id=c.committee_id, cycle=cycle) }}">{{ c.name }}</a>
             </p>

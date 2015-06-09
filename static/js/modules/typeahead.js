@@ -1,12 +1,13 @@
 'use strict';
 
-/* global require, module, window, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var _ = require('underscore');
 require('typeahead.js');
 var URI = require('URIjs');
 var Handlebars = require('handlebars');
+var keyboard = require('keyboardjs');
 
 var events = require('./events.js');
 var terms = require('./terms');
@@ -152,6 +153,17 @@ module.exports = {
     };
 
     this.initTypeahead(options, candidateDataSet);
+
+    // Focus on search bar on "/"
+    keyboard.on('/', function(e) {
+      e.preventDefault();
+      var bar = _.find($('.search-bar'), function(bar) {
+        return $(bar).is(':visible');
+      });
+      if (bar) {
+        bar.focus();
+      }
+    });
 
     // When the select committee or candidate box is changed on the search.
     events.on('searchTypeChanged', function(data) {
