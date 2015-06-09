@@ -1,0 +1,35 @@
+{% set description = 
+  "OpenFEC is the Federal Election Commission's new app for exploring federal campaign finance data. Use OpenFEC to see how much money is raised and spent in federal elections. OpenFEC is currently in beta." 
+%}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="{{ description }}">
+
+<!-- Mobile Specific Metas
+================================================== -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<!-- Twitter
+================================================== -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@18F">
+<meta name="twitter:creator" content="@18F">
+<meta name="twitter:title" content="{% if name %}{{ name }} - {% endif%}OpenFEC (Beta)">
+<meta name="twitter:description" content="{{ description }}">
+<meta name="twitter:image" content="">
+
+<!-- Facebook
+================================================== -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="" />
+<meta property="og:title" content="{% if name %}{{ name }} - {% endif%} OpenFEC (Beta)" />
+<meta property="og:site_name" content="OpenFEC (Beta)" />
+<meta property="og:description" content="{{ description }}" />
+<meta property="og:image" content="" />
+
+<!-- Google
+================================================== -->
+<link rel="canonical" href="">
