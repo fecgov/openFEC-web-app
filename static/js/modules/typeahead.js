@@ -21,13 +21,13 @@ var officeMap = {
   P: 'President'
 };
 
-var filterCandidates = function(result) {
+function filterCandidates(result) {
   return {
     name: result.name,
     id: result.id,
     office: officeMap[result.office_sought]
   };
-};
+}
 
 module.exports = {
   getUrl: function(resource) {
@@ -166,13 +166,21 @@ module.exports = {
     });
 
     // When the select committee or candidate box is changed on the search.
-    events.on('searchTypeChanged', function(data) {
+    function updateTypeahead(dataType) {
       $('.search-bar').typeahead('destroy');
-      if (data.type === 'committees') {
+      if (dataType === 'committees') {
         self.initTypeahead(options, committeeDataSet);
       } else {
         self.initTypeahead(options, candidateDataSet);
       }
+    }
+
+    updateTypeahead($('select[name="search_type"]').val());
+
+    // When the select committee or candidate box is changed on the search.
+    events.on('searchTypeChanged', function(data) {
+      $('.search-bar').typeahead('destroy');
+      updateTypeahead(data.type);
     });
   }
 };
