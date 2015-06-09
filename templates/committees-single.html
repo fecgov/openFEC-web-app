@@ -1,16 +1,14 @@
 {% extends 'layouts/main.html' %}
+{% import 'macros/missing.html' as missing %}
+{% import 'macros/null.html' as null %}
 
 {% block title %}
-    {{name | title}} - Committee Overview
-{% endblock %}
-
-{% block header %}
-    {% include 'partials/page-nav.html' %}
+    {{ name }} - Committee Overview
 {% endblock %}
 
 {% block body %}
   <div id="main" class="entity committee tab-interface">
-    <header class="entity__header page-header">
+    <header class="entity__header page-header page-header--dark">
       <div class="container">
         <div class="entity__header--top row">
             <span class="entity__id">ID: {{ committee_id }}</span>
@@ -20,41 +18,47 @@
                    width="20" height="20"
                    src="/static/img/icon-committee--white.svg"
                    alt="Icon representing committees">
-               Committee - {{ designation }}
-               - {{ type }}
+               Committee - {{ committee_type_full }}
+               - {{ designation_full }}
                {% if organization %} - {{ organization }}{% endif %}
             </span>
         </div>
         <div class="entity__header--bottom row">
           <ul class="entity__info">
-            {% if party %}
+            {% if party_full %}
             <li class="entity__term">
               <h5 class="entity__term__label">Political Party</h5>
-              <span class="entity__term__data">{{ party }}</span>
+              <span class="entity__term__data">{{ party_full }}</span>
             </li>
             {% endif %}
             <li class="entity__term">
               <h5 class="entity__term__label">Treasurer</h5>
-              <span class="entity__term__data">{{ treasurer }}</span>
+              <span class="entity__term__data">{{ treasurer_name }}</span>
             </li>
             {% if candidates %}
             <li class="entity__term">
-              <h5 class="entity__term__label">Related Candidates</h5>
+              <h5 class="entity__term__label">Related
+                {% if candidates|length > 1 %}
+                  Candidates
+                {% else %}
+                  Candidate
+                {% endif %}
+              </h5>
               <ul class="entity__term__data">
               {% for c in candidates %}
-                <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id) }}">{{ c.name }}</a></li>
+                <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=cycle) }}">{{ c.name }}</a></li>
               {% endfor %}
               </ul>
             </li>
+            {% endif %}
             <li class="entity__term">
               <h5 class="entity__term__label">Address</h5>
-              <span class="entity__term__data">{{ address.street_1 }}{% if address.street_2 %},{% endif %} <br> {{address.city}}, {{address.state}} {{address.zip}}</span>
+              <span class="entity__term__data">{{ street_1 }}{% if street_2 %}<br>{{ street_2 }}{% endif %} <br> {{city}}, {{state}} {{zip}}</span>
             </li>
-          {% endif %}
         </ul>
       </div>
     </header>
-    <div class="page-controls">
+    <div class="page-controls page-controls--dark">
       <div class="page-controls__top">
         <div class="container">
           <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> {{ name }}</span>
@@ -62,15 +66,18 @@
       </div>
       <div class="page-controls__bottom">
         <div class="container">
-          {% if election_years %}
-          <div class="time-period">
-            <label for="election_cycle">Two-Year Period</label>
-            <select name="election_cycle" data-id="{{ candidate_id }}" data-type="candidate">
-            {% for year in election_years|sort(reverse=True) %}
-              <option value="{{ year }}">{{ year|int - 1 }} - {{ year }}</option>
-            {% endfor %}
-            </select>
-          </div>
+          {% if cycles %}
+            <div class="time-period">
+              <label for="election_cycle">Two-Year Period</label>
+              <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
+              {% for each in cycles | restrict_cycles | sort(reverse=True) %}
+                <option
+                    value="{{ each }}"
+                    {% if each == cycle %}selected{% endif %}
+                  >{{ each | fmt_year_range }}</option>
+              {% endfor %}
+              </select>
+            </div>
           {% endif %}
         </div>
       </div>
@@ -84,16 +91,17 @@
         </div>
       </nav> -->
     </div>
-
-    {% macro totals_table_row(pretty_name, value) %}
+{% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
-      <div class="table__row js-accordion_item">
+      <div class="table__row table__row--nested js-accordion_item">
         <div class="table__cell">{{ pretty_name }} </div>
-        <div class="table__cell">{{ value|default(0)|currency }}</div>
+        <div class="table__cell">{{ null.null(value | currency) }}</div>
         <div class="table__cell table__cell--bar">
-          {{ charts.chart_bar(value|default(0),
-                              pretty_name,
-                              tooltip=None) }}
+          {% if value %}
+            {{ charts.chart_bar(value|default(0),
+                                pretty_name,
+                                tooltip=None) }}
+          {% endif %}
         </div>
       </div>
     {% endmacro %}
@@ -101,19 +109,18 @@
     {% macro totals_table_row_header(pretty_name, value, description, accordion=True) %}
       <div class="table__row table__row--header js-accordion_header accordion__header">
         <div class="table__cell">
-          <h4>{{ pretty_name }}</h4>
+          <h5>{{ pretty_name }}</h5>
         </div>
         <div class="table__cell">
-          <h4>{{ value|default(0)|currency }}</h4>
+          <span>{{ null.null( value | currency ) }}</span>
         </div>
         {% if description %}
-        <div class="table__cell u-text-center">
-          <span class="text--black"><em>{{ description }}</em></span>
+        <div class="table__cell table__cell--header-description">
+          <span><em>{{ description }}</em></span>
         </div>
         {% endif %}
         {% if accordion %}
           <a href="#" class="accordion__button js-accordion_button">
-            <i class="accordion__icon"></i>
           </a>
         {% endif %}
       </div>
@@ -126,72 +133,68 @@
           {% for item in data %}
             {{ totals_table_row(item[1], item[0]) }}
           {% endfor %}
-          {% if report_year %}
-            <div class="table__row--note js-accordion_item">
-              Calculated from reports filed {{ report_year }}
-            </div>
-          {% endif %}
         </div>
       </figure>
     {% endmacro %}
 
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
       <div class="container committee-summary">
-        {% if totals %}
+        {% if reports and totals %}
           <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-          <div class="row js-accordion">
-            <h3 class="section-header">Detailed Summary</h3>
-            {% with committee=context() %}
+          <div class="page-subsection page-subsection--noline">
+            <div class="row js-accordion meta-box recent-report">
+              {% with committee=context() %}
+              <div class="meta-box__bar">
+                <h4>Most Recent Report:
+                    {% if committee.reports.0.pdf_url %}
+                      <a href="{{ committee.reports.0.pdf_url }}">{{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}</a>
+                    {% else %}
+                      {{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}
+                    {% endif %}
+                </h4>
+               <span>Report coverage: {{ committee.reports.0.coverage_start_date|date_md }} - {{ committee.reports.0.coverage_end_date|date_md }}
+               {% if committee.reports.0.pdf_url %}
+                 | <a href="{{ committee.reports.0.pdf_url }}">View PDF &raquo;</a></span>
+               {% endif %}
+              </div>
 
-            {% set table_data = [
-                 (committee.totals.0.individual_itemized_contributions, 'Itemized Individual Contributions'),
-                 (committee.totals.0.individual_unitemized_contributions, 'Unitemized Individual Contributions'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfer from a Committee'),
-                 (committee.totals.0.all_loans_received, 'Loans'),
-               ]
-            %}
-            {{ totals_table('Total receipts', committee.totals.0.receipts, table_data,
-                committee.report_year, header_description='Money received by the committee' ) }}
+                {% if committee_type == 'P' %}
+                  {% include 'partials/committee-report-presidential.html' %}
+                {% elif committee_type == 'H' or committee_type == 'S' %}
+                  {% include 'partials/committee-report-house-senate.html' %}
+                {% else %}
+                  {% include 'partials/committee-report-pac-party.html' %}
+                {% endif %}
 
-            {% set table_data = [
-                 (committee.totals.0.operating_expenditures, 'Operating expenditures'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Transfers to authorized committees'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Fundraisings'),
-                 (committee.totals.0.transfers_to_affiliated_committee, 'Exempt legal and accounting'),
-                 (committee.totals.0.loan_repayments_made, 'Total loan repayments'),
-                 (committee.totals.0.contribution_refunds, 'Contribution refunds'),
-                 (committee.totals.0.other_disbursements, 'Other disbursements'),
-               ]
-            %}
-            {{ totals_table('Total Disbursments', committee.totals.0.disbursements, table_data,
-                committee.report_year, header_description='Money spent by the committee' ) }}
+            </div>
+            <h3 class="section-header">Detailed Summary {{ reports.0.cycle-1 }} - {{ reports.0.cycle }}</h3>
 
-            {{ totals_table('Beginning cash on hand', committee.reports[0].cash_on_hand_beginning_period) }}
-            {{ totals_table('End cash on hand', committee.reports[0].cash_on_hand_end_period) }}
-            {{ totals_table('Debts owed to committeed', committee.reports[0].debts_owed_to_committee) }}
-            {{ totals_table('Debts owed by committeed', committee.reports[0].debts_owed_by_committee) }}
+            <div class="row js-accordion">
+            {% if committee_type == 'P' %}
+              {% include 'partials/committee-totals-presidential.html' %}
+            {% elif committee_type == 'H' or committee_type == 'S' %}
+              {% include 'partials/committee-totals-house-senate.html' %}
+            {% else %}
+              {% include 'partials/committee-totals-pac-party.html' %}
+            {% endif %}
+            </div>
 
-            {% endwith %}
-          </div>
           <div class="row">
-            {% with committee=context() %}
-              {% include 'partials/committee-charts.html' %}
+            {% include 'partials/committee-charts.html' %}
             {% endwith %}
           </div>
         {% else %}
-        <div class="meta-box error-container">
-          <h2 id="section-1-header" tabindex="0">No financial data</h2>
-          <p class="text--lead">This committee has not filed any reports for the time period selected.</p>
-          <div class="error-container__bottom">
-              <h5>Is this information incorrect? Let us know.</h5>
-              <a class="button">Contact support</a>
-         </div>
-        </div>
+
+          {{ missing.missing_financials('committee', cycle) }}
+
         {% endif %}
       </div>
     </section>
   </div>
 
+{% endblock %}
+
+{% block scripts %}
   <script src="/static/js/vendor/tablist.js"></script>
 {% endblock %}

@@ -1,7 +1,7 @@
-<table id="results" class="table--sortable">
+<table id="results" data-type="committee" width="100%" class="responsive">
     <thead>
         <tr>
-            <th class="flex-cell sort-header sort-down" scope="col">Name</th>
+            <th scope="col">Name</th>
             <th scope="col">Treasurer Name</th>
             <th scope="col">State</th>
             <th scope="col">Party</th>
@@ -10,17 +10,4 @@
             <th scope="col">Designation</th>
         </tr>
     </thead>
-    <tbody>
-        {% for c in committees %}
-            <tr>
-                <td class="flex-cell" scope="row"><a class="single-link" title="{{c.name}}" data-id="{{ c.committee_id }}" data-category="committee" href="{{ url_for('committee_page', c_id=c.committee_id) }}">{{c.name}}</a></td>
-                <td>{{c.treasurer_name}}</td>
-                <td>{{c.state}}</td>
-                <td>{{c.party_full}}</td>
-                <td>{{c.organization_type_full}}</td>
-                <td>{{c.committee_type_full}}</td>
-                <td>{{c.designation_full}}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
 </table>

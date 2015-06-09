@@ -20,8 +20,23 @@
 	position: fixed;
 }
 
+.u-visible {
+  display: block;
+}
+
+.u-no-margin {
+  margin-bottom: 0;
+}
+
+[aria-hidden="true"],
 .u-hidden {
-	display: none;
+  display: none;
+}
+
+.u-visually_hidden {
+  left: -9999px;
+  position: absolute;
+  top: -9999px;
 }
 
 .u-not-responsive {

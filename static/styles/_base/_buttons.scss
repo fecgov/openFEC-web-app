@@ -12,7 +12,7 @@
   font-weight: bold;
   text-align: center;
   line-height: 1;
-  padding: .75em 1em;
+  padding: 1rem 2rem;
   text-decoration: none;
   cursor: pointer;
   user-select: none;
@@ -23,12 +23,15 @@
     background-color: $hoverbg;
     color: $hovertext;
     border: 1px solid $hoverbg;
+    text-decoration: none;
   }
 
   &:active,
   &:focus {
     @include appearance(none);
     outline: 3px solid $focus;
+    color: $textcolor;
+    background: $bgcolor;
     position: relative;
     z-index: 10;
   }
@@ -46,7 +49,7 @@
 
 button,
 .button {
-  @include button($lightest-gray, $dark-gray, $medium-gray, #fff);
+  @include button($lightest-gray, $dark-gray, $medium-gray, $dark-gray);
   border: 1px solid $medium-gray;
 }
 

@@ -7,6 +7,7 @@
 body,
 html {
   height: 100%;
+  background: $licorice-2;
 }
 
 body {
@@ -16,8 +17,8 @@ body {
 }
 
 .page-wrap {
-  min-height: 90%;
-
+  background: #fff;
+  
   &:after {
     content: "";
     display: block;
@@ -26,7 +27,7 @@ body {
 
 .main-container {
   position: relative;
-  overflow-x: hidden;
+  overflow: visible;
 }
 
 .container {
@@ -52,16 +53,20 @@ body {
   @include span-columns(6);
 }
 
+.flex-container {
+  @include display(flex);
+}
+
 // Chunks
 // These are common grouping sizes, described by their desktop size
 
 .chunk--half {
+  @include media($medium) {
+    @include span-columns(6);
+  }
+
   @include media($large) {
     @include span-columns(12);
-
-    &:nth-child(even) {
-      @include omega();
-    }
   }
 }
 
@@ -100,6 +105,11 @@ body {
   &:last-of-type {
     padding-bottom: 0;
     border-bottom: none;
+  }
+
+  &.page-subsection--noline {
+    border-bottom: 0;
+    padding-bottom: 2rem;
   }
 }
 

@@ -4,35 +4,96 @@
     Search results for "{{query}}"
 {% endblock %}
 
-{% block header %}
-    {% include 'partials/page-nav.html' %}
-{% endblock %}
-
 {% block body %}
 <div class="container">
   <section class="data page-section">
-      <h2>Search results{% if query %} <span class="text--query">{{query}}</span>{% endif %}</h2>
-
-    {% if no_results %}
-        Sorry, no results
+    {% if not results %}
+      <h4>Sorry, no results</h4>
     {% else %}
-      <div class="page-subsection">
-        {%if candidates %}
-            <div class="results-header">
-                <h3>Candidate Results</h3>
-                <a href="candidates?q={{query}}" class="button" data-category="candidates" data-query="{{query}}">View all</a>
-            </div>
-            {% include "partials/candidates-table.html" %}
+    <h1>Search Results</h1>
+    <div class="chunk--two-thirds tst-search_results">
+      {% include 'partials/search-results-controls.html' %}
+
+        {% if result_type == 'committees' %}
+          {% with committees=results %}
+            {% for committee in committees %}
+              <div class="box">
+                {% include 'partials/search-results-committee.html' %}
+              </div>
+            {% endfor %}
+          {% endwith %}
+        {% else %}
+          {% with candidates=results %}
+            {% for candidate in candidates %}
+              <div class="box">
+                <div class="box__header">
+                  <span class="text--medium">
+                    Election years: {{ candidate.election_years[0] }} -
+                    {{ candidate.election_years[-1] }}
+                  </span>
+                  {% if current_cycle in candidate.election_years %}
+                    <span class="text--medium color-activity box__right">
+                      Currently active (TODO)</span>
+                  {% endif %}
+                </div>
+                {% include 'partials/search-results-candidate.html' %}
+                {% if candidate.principal_committees %}
+                {% with committee=candidate.principal_committees[0] %}
+                  {% include "partials/search-results-committee.html" %}
+                {% endwith %}
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% endwith %}
         {% endif %}
+
+        {% include 'partials/search-results-controls.html' %}
+
       </div>
-      <div class="page-subsection">
-        {% if committees %}
-            <div class="results-header">
-                <h3>Committees Results</h3>
-                <a href="committees?q={{query}}" class="button" data-category="committees" data-query="{{query}}">View all</a>
-            </div>
-            {% include "partials/committees-table.html" %}
-        {% endif %}
+      <div class="chunk--third">
+        <div class="box meta-box">
+          <div class="box__portion">
+            <h5 class="box__title">Explore {{ result_type | title }}</h5>
+            <p>Trying to sort through a lot of results? Or want to explore
+              similar {{ result_type }}? Try exploring all {{ result_type }}.
+            </p>
+            <p>
+              <a href="{{ url_for(result_type, q=query) }}">
+                Filter results &raquo;
+              </a>
+            </p>
+            <p>
+              <a href="{{ url_for( result_type ) }}">
+                View all {{ result_type }} &raquo;
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="box meta-box">
+          <div class="box__portion">
+            {% if result_type == 'candidates' %} 
+              {% set other_type = 'committees' %}
+            {% else %}  
+              {% set other_type = 'candidates' %}
+            {% endif %}
+            <h5 class="box__title">Explore {{ other_type | title }}</h5>
+            <p>Not finding what you're looking for? Try searching through 
+              {{ other_type }}.
+            </p>
+            <p>
+              <a href="{{ url_for('search', search=query,
+                  search_type=other_type) }}">
+                Search for {{ other_type }} named "{{ query }}"
+              </a>
+            </p>
+            <hr></hr>
+            <p class="text--note u-no-margin">
+              Looking for all committees authorized to a certain candidate? View the
+              candidate's page to see them all.
+            </p>
+          </div>
+        </div>
       </div>
     {% endif %}
   </section>

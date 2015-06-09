@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="17px" height="9px" viewBox="0 0 17 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.1 (12005) - http://www.bohemiancoding.com/sketch -->
+    <title>angle-down</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Universal" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="fec_styleguide" sketch:type="MSArtboardGroup" transform="translate(-1405.000000, -900.000000)" fill="#2778BA">
+            <g id="angle-down" sketch:type="MSLayerGroup" transform="translate(1405.000000, 900.000000)">
+                <path d="M16.354,1.075 L8.499,8.929 L0.646,1.075 L1.353,0.368 L8.498,7.514 L15.646,0.367 L16.354,1.075 L16.354,1.075 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

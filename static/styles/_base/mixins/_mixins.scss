@@ -115,20 +115,17 @@
   background: $blue;
   color: #fff;
   display: inline-block;
-
-  width: 1.4em;
+  border-radius: 30px;
+  height: 25px;
+  width: 25px;
   text-align: center;
-  line-height: 1.3em;
-  border-radius: 50%;
 
   &:hover {
     background: $blue-2;
   }
 
-  &:after {
-    line-height: 1.4em !important;
-    margin-left: 0 !important;
-    padding-top: .2em;
+  &:focus {
+    outline: none;
   }
 }
 

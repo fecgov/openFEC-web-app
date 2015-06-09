@@ -1,67 +1,40 @@
-  {% if related_committees %}
-      <div class="page-section__intro">
-        <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-        <p class="text--lead">This page provides an overview of all the money received and spent by  committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees.</p>
-        <p class="text--lead">For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
-      </div>
+{% import 'macros/missing.html' as missing %}
 
-      {% if primary_committee or authorized_committees %}
-      <div class="page-subsection">
-        <h3 class="term" data-term="Campaign Committee">Campaign Committees</h3>
-        {% if primary_committee %}
-            {% with committee=primary_committee[0] %}
-              {% include 'partials/committee-stats.html' %}
-            {% endwith %}
-        {% endif %}
+{% if committees_authorized %}
+    <div class="page-section__intro">
+      <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+      <p class="text--lead">This page provides an overview of all the money received and spent by committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees, but not joint fundraising committees authorized by the candidate.  For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
+    </div>
 
-        {% if authorized_committees %}
-          {% for c in authorized_committees %}
-              {% with committee=c %}
-                  {% include 'partials/committee-stats.html' %}
-              {% endwith %}
-          {% endfor %}
-        {% endif %}
-      </div>
+    {% if committees_authorized | length > 1 %}
+      {% include 'partials/financial-aggregates.html' %}
     {% endif %}
 
-    {% if leadership_committees or joint_committees %}
-      <div class="page-subsection other-committees">
-      <h3>Other Committees</h3>
-      <p class="text--lead">This candidate has additional committees, but because those committees are not exclusively for the candidate's campaign activity, this page does not include their information.</p>
+    <div class="page-subsection">
+      <h3 class="term" data-term="Authorized Committee">Authorized Committees</h3>
+      {% for committee in committee_groups['P'] %}
+        {% include 'partials/committee-stats.html' %}
+      {% endfor %}
 
-        {% if leadership_committees %}
-        <h4>Leadership PACs</h4>
-        <ul>
-          {% for c in leadership_committees %}
-              {% with committee=c %}
-                <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }} &raquo;</a></li>
-              {% endwith %}
-          {% endfor %}
-        </ul>
-        {% endif %}
+      {% for committee in committee_groups['A'] %}
+        {% include 'partials/committee-stats.html' %}
+      {% endfor %}
+    </div>
 
-        {% if joint_committees %}
-        <h4>Joint Fundraising Committees</h4>
-        <ul>
-          {% for c in joint_committees %}
-              {% with committee=c %}
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.committee_name }} &raquo;</a></li>
-              {% endwith %}
-          {% endfor %}
-        </ul>
-        {% endif %}
-      </div>
-    {% endif %}
-
-  {% else %}
-
-  <div class="meta-box error-container">
-    <h2 id="section-1-header" tabindex="0">No results</h2>
-    <p class="text--lead">This candidate is not associated with any committees, which means there is no financial data to show.</p>
-    <div class="error-container__bottom">
-        <h4>Is this information incorrect? Let us know.</h4>
-        <a class="button">Contact support</a>
-   </div>
-  </div>
-
+  {% if committee_groups['J'] %}
+    <div class="page-subsection other-committees">
+    <h3><span class="term" data-term="Joint Fundraising Committee">Joint Fundraising Committees</span></h3>
+    <p class="text--lead">Below, is a list of the candidate’s joint fundraising committees—in joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed. Click the links to see more information about a particular committee.</p>
+      <ul>
+        {% for committee in committee_groups['J'] %}
+          <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }} &raquo;</a></li>
+        {% endfor %}
+      </ul>
+    </div>
   {% endif %}
+
+{% else %}
+
+  {{ missing.missing_financials('candidate', cycle) }}
+
+{% endif %}

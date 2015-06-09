@@ -1,51 +1,48 @@
-table {
+table,
+table.dataTable {
   background-color: #fff;
   border-collapse: collapse;
   margin: 0;
   table-layout: fixed;
   width: 100%;
   overflow-x: scroll; // scroll horizontally on smaller viewports
-}
+  border: 1px solid $light-gray;
 
-thead {
-  tr:hover {
-    background-color: #fff;
-  }
-}
-
-th {
-  padding: .5em;
-  border-right: 1px solid $light-gray;
-  border-bottom: 1px solid $light-gray;
-  text-align: left;
-  font-weight: normal;
-
-  &:last-child {
-    border-right: none;
-  }
-}
-
-tr, td, th {
-  vertical-align: middle;
-}
-
-tr {
-  @include font-size(1.4);
-  border: none;
-
-  &:nth-child(even) {
-    background-color: $lightest-gray;
+  thead {
+    tr:hover {
+      background-color: #fff;
+    }
   }
 
-  &:hover {
-    background: rgba($blue, .1);
+  th {
+    padding: 1rem !important;
+    border-bottom: 1px solid $light-gray !important;
+    text-align: left;
   }
-}
 
-td {
-  @include truncate();
-  padding: .5em;
-  border: none;
+  tr, td, th {
+    vertical-align: middle;
+  }
+
+  tr {
+    @include font-size(1.4);
+    box-sizing: content-box; // Necessary to get the responsive rows to line up
+    border: none;
+
+    &:hover {
+      background: rgba($blue, .1);
+    }
+  }
+
+  td {
+    @include truncate();
+    padding: .5em;
+    border-bottom: 1px dotted $light-gray;
+  }
+
+  &.no-footer {
+    border-bottom: 1px solid $light-gray !important;
+  }
 }
 
 .flex-cell {
@@ -99,22 +96,26 @@ td {
 }
 
 .table__cell {
-  @include rem(padding, 0 1rem);
+  padding: 0 1rem;
   float: left;
   line-height: 1;
 }
 
 .table__cell--heading {
   font-weight: bold;
-}    
+}
 
 .table__row--note {
-  @include font-size(1.4);
-  @include rem(padding, 0 .5rem);
+  @include font-size(1.0);
   width: 100%;
-  padding: .5em 1em;
+  padding: .5em;
+  text-align: left;
   font-style: italic;
   display: block;
+
+  @include media($medium) {
+    @include font-size(1.4);
+  }
 }
 
 .table__row--total {
@@ -123,11 +124,15 @@ td {
 }
 
 .table__half {
-  width: 48%;
-  float: left;
+  width: 100%;
 
-  &:last-child {
-    margin-left: 2%;
+  @include media($medium) {
+    width: 48%;
+    float: left;
+
+    &:last-child {
+      margin-left: 2%;
+    }
   }
 }
 
@@ -165,45 +170,198 @@ td {
     border-bottom: 1px solid $light-gray;
   }
 
-  .table {
-    &:last-child {
-      margin-left: 2%;
-    }
+  .table__row--header {
+    padding-top: .5em;
   }
 
-  .table__row--header {
-    margin-left: -.75em;
-    padding-top: .5em;
+  .table__row--nested {
+    background: $lightest-gray;
+    border-bottom: 1px solid #fff;
+    padding: 0 1rem;
+    font-size: 1.4rem;
 
+    &.table__row--note {
+      text-align: left;
+      padding: 1rem 2rem;
+    }
   }
 
 }
 
 .totals-table {
-  @include font-size(1.6);
 
   .table__cell {
-    width: 40%;
+    width: 100%;
+    padding: 1rem 0;
 
     &:first-child {
-      width: 60%;
+      padding: 1rem 0 0 0;
       font-weight: bold;
     }
   }
 
   &.totals-table--charts {
     .table__cell {
-      height: 2.5em;
       line-height: 1.5em;
-      width: 20%;
+      padding: 0;
+      width: 50%;
 
       &:first-child {
-        width: 40%;
-        font-weight: bold;
+        width: 50%;
       }
-      &:last-of-type {
-        width: 40%;
+
+      h5 {
+        line-height: 1.5em;
+        margin-bottom: 0;
       }
     }
+
+    .table__row--header {
+      padding: .5em 0;
+    }
+
+    .table__row--nested {
+      .table__cell,
+      .table__cell:first-child {
+        width: 100%;
+        padding-top: .5rem;
+      }
+
+      .table__cell:first-child {
+        font-weight: normal;
+      }
+    }
+
+    .table__cell--bar {
+      width: 100%;
+      padding-bottom: 1rem;
+    }
+  }
+
+  .table__cell {
+    width: 40%;
+
+    &:first-child {
+      width: 60%;
+    }
+  }
+
+  .table__cell--header-description {
+    display: none;
+  }
+
+  @include media($medium) {
+    @include font-size(1.6);
+
+    &.totals-table--charts {
+      .table__row,
+      .table__row--nested {
+        .table__cell {
+          width: 20%;
+          padding: .5em 0;
+
+          &:first-child {
+            width: 40%;
+            padding: .5em 0;
+          }
+
+          &:last-of-type {
+            width: 40%;
+          }
+        }
+      }
+    }
+    .table__cell--header-description {
+      display: block;
+    }
+
+    .table__cell {
+      width: 40%;
+
+      &:first-child {
+        width: 60%;
+      }
+    }
+  }
+}
+
+.recent-report.meta-box {
+  padding: 0;
+  position: relative;
+
+  .totals-table .table__row {
+    padding: .5rem 1rem;
+
+    &.table__row--nested {
+      padding: 0 1rem;
+      background: darken($meta-box-color, 2%);
+    }
+  }
+
+  .term {
+    background-color: #fff;
+    padding: .2rem 1rem;
+    border-radius: .4rem;
+    border: 1px solid $light-gray;
+  }
+
+  @include media($medium) {
+    .totals-table .table__row {
+      padding: .5rem 2rem;
+
+      &.table__row--nested {
+        padding: 0 2rem;
+      }
+    }
+  }
+}
+
+.reports-table {
+  font-size: 1.6rem;
+
+  @include media($medium) {
+    .table__cell:first-child {
+      width: 50%;
+    }
+  }
+}
+
+// Style overrides to the datatables defaults
+
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before {
+  background-color: $blue;
+}
+
+table.dataTable.dtr-inline.collapsed > tbody > tr.child > td:first-child:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr.child > th:first-child:before {
+  display: none;
+}
+
+table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
+  top: 8px;
+  left: 4px;
+  height: 16px;
+  width: 16px;
+  display: block;
+  position: absolute;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  text-align: center;
+  line-height: 14px;
+  box-shadow: none;
+  box-sizing: content-box;
+  content: '+';
+  background-color: $blue;
+}
+
+table.dataTable tbody tr.child {
+  background-color: $lightest-gray;
+  padding: 0 30px;
+
+  ul {
+    width: 100%;
   }
 }

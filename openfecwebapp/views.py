@@ -1,65 +1,84 @@
-from flask import render_template
-from openfecwebapp.data_prep.candidates import map_candidate_page_values
-from openfecwebapp.data_prep.committees import map_committee_page_values
-from openfecwebapp.data_prep.shared import generate_pagination_values
-from openfecwebapp.data_prep.financial_summaries import add_cmte_financial_data
+import collections
 
+from flask import render_template
 from werkzeug.exceptions import abort
 
-def render_search_results(results, query):
-    candidates = []
-    committees = []
+from openfecwebapp.api_caller import load_cmte_financials
 
-    if results.get('candidates'):
-        for c in results['candidates'].get('results', []):
-            candidates.append(c)
 
-    if results.get('committees'):
-        for c in results['committees'].get('results', []):
-            committees.append(c)
+def render_search_results(results, query, result_type):
+    return render_template(
+        'search-results.html',
+        results=results,
+        result_type=result_type,
+        query=query,
+    )
 
-    # if true will show "no results" message
-    no_results = True if not len(candidates) and not len(committees) else False
 
-    return render_template('search-results.html', candidates=candidates,
-        committees=committees, query=query, no_results=no_results)
+def render_committee(data, candidates=None, cycle=None):
+    committee = get_first_result_or_raise_500(data)
 
-# loads browse tabular views
-def render_table(data_type, results, params):
-    # if we didn't get data back from the API
-    if not results:
-        abort(500)
+    # committee fields will be top-level in the template
+    tmpl_vars = committee
 
-    results_table = {}
-    results_table[data_type] = []
-    heading = "Browse " + data_type
+    tmpl_vars['cycle'] = cycle
+    tmpl_vars['result_type'] = 'committees'
 
-    results_table['pagination'] = generate_pagination_values(
-        results, params, data_type)
+    # add related candidates a level below
+    tmpl_vars['candidates'] = candidates
 
-    for r in results['results']:
-        results_table[data_type].append(type_map[data_type](r))
+    financials = load_cmte_financials(committee['committee_id'], cycle=cycle)
+    tmpl_vars['reports'] = financials['reports']
+    tmpl_vars['totals'] = financials['totals']
 
-    if params.get('name'):
-        results_table['filter_name'] = params['name']
+    return render_template('committees-single.html', **tmpl_vars)
 
-    return render_template(data_type + '.html', **results_table)
 
-type_map = {
-    'candidates': lambda x: x,
-    'candidate': map_candidate_page_values,
-    'committees': lambda x: x,
-    'committee': map_committee_page_values
-}
+def groupby(values, keygetter):
+    ret = {}
+    for value in values:
+        key = keygetter(value)
+        ret.setdefault(key, []).append(value)
+    return ret
 
-def render_page(data_type, c_data):
-    # not handling error at api module because sometimes its ok to 
+
+def aggregate_committees(committees):
+    ret = collections.defaultdict(int)
+    for each in committees:
+        totals = each['totals'][0] if each['totals'] else {}
+        reports = each['reports'][0] if each['reports'] else {}
+        ret['receipts'] += totals.get('receipts', 0)
+        ret['disbursements'] += totals.get('disbursements', 0)
+        ret['cash'] += reports.get('cash_on_hand_end_period', 0)
+        ret['debt'] += reports.get('debts_owed_by_committee', 0)
+    return ret
+
+
+def render_candidate(data, committees, cycle):
+    results = get_first_result_or_raise_500(data)
+
+    # candidate fields will be top-level in the template
+    tmpl_vars = results
+
+    tmpl_vars['cycle'] = cycle
+    tmpl_vars['result_type'] = 'candidates'
+
+    committee_groups = groupby(committees, lambda each: each['designation'])
+    committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
+    for committee in committees_authorized:
+        committee.update(load_cmte_financials(committee['committee_id'], cycle=cycle))
+
+    tmpl_vars['committee_groups'] = committee_groups
+    tmpl_vars['committees_authorized'] = committees_authorized
+    tmpl_vars['aggregate'] = aggregate_committees(committees_authorized)
+
+    return render_template('candidates-single.html', **tmpl_vars)
+
+
+def get_first_result_or_raise_500(data):
+    # not handling error at api module because sometimes its ok to
     # not get data back - like with search results
-    if not 'results' in c_data or not c_data['results']:
+    if not data.get('results'):
         abort(500)
-
-    tmpl_vars = c_data['results'][0]
-    tmpl_vars.update(type_map[data_type](c_data['results'][0]))
-    tmpl_vars.update(add_cmte_financial_data(tmpl_vars, data_type))
-
-    return render_template(data_type + 's-single.html', **tmpl_vars)
+    else:
+        return data['results'][0]

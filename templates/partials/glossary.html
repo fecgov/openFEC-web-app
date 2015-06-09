@@ -1,10 +1,12 @@
-<div id="glossary" class="side-panel side-panel--right glossary text--white">
-  <button title="Close glossary" class="button--close u-float-right" id="hide-glossary"><i class="ti-close text--white"></i></button>
+<div id="glossary" class="side-panel side-panel--right glossary text--white"
+    aria-describedby="glassary-result">
+  <button title="Close glossary" class="button--close u-float-right"
+      id="hide-glossary"><i class="ti-close text--white"></i></button>
   <h3 class="text--white">FEC Glossary</h3>
-  <label for="glossary-search">Search for terms</label>
-  <input id="glossary-search" type="text" placeholder="Search for terms">
-  <div class="glossary__term">
-	  <h4><dt><span id="glossary-term" class="text--white"></span></dt></h4>
-	  <dd><span id="glossary-definition" class="text--white"></span></dd>
+  <label for="glossary-search">Filter glossary terms</label>
+  <input id="glossary-search" class="glossary__search" type="search" placeholder="e.g. Committee">
+  <div class="glossary__term" id="glossary-result">
+    <ul class="glossary__list js-accordion">
+    </ul>
   </div>
 </div>
