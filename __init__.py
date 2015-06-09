@@ -1,13 +1,17 @@
 import http
+import hashlib
 
 import furl
 from webargs import Arg
 from webargs.flaskparser import use_kwargs
+from dateutil.parser import parse as parse_date
 
 from flask import Flask, render_template, request, redirect
-from flask.ext.basicauth import BasicAuth
 from flask_sslify import SSLify
-from dateutil.parser import parse as parse_date
+from flask.ext.compress import Compress
+from flask.ext.compress import DictCache
+from flask.ext.basicauth import BasicAuth
+
 from openfecwebapp import config
 from openfecwebapp.views import render_search_results, render_candidate, render_committee
 from openfecwebapp.api_caller import load_search_results, load_single_type, load_nested_type, install_cache
@@ -45,9 +49,10 @@ def _get_default_cycles():
     cycle = current_cycle()
     return list(range(cycle - 4, cycle + 2, 2))
 
+
 app.jinja_env.globals['min'] = min
 app.jinja_env.globals['max'] = max
-app.jinja_env.globals['api_location'] = config.api_location
+app.jinja_env.globals['api_location'] = config.api_location_public
 app.jinja_env.globals['api_version'] = config.api_version
 app.jinja_env.globals['api_key'] = config.api_key_public
 app.jinja_env.globals['context'] = get_context
@@ -135,12 +140,12 @@ def committee_page(c_id, cycle=None):
 
 @app.route('/candidates')
 def candidates():
-    return render_template('candidates.html')
+    return render_template('candidates.html', result_type='candidates')
 
 
 @app.route('/committees')
 def committees():
-    return render_template('committees.html')
+    return render_template('committees.html', result_type='committees')
 
 
 @app.errorhandler(404)
@@ -240,6 +245,13 @@ if not config.test:
     app.config['BASIC_AUTH_PASSWORD'] = config.password
     app.config['BASIC_AUTH_FORCE'] = True
     basic_auth = BasicAuth(app)
+
+
+# Serve compressed assets, cached by SHA1.
+cache_key = lambda response: hashlib.sha1(response.get_data()).hexdigest()
+app.config['COMPRESS_CACHE_KEY'] = cache_key
+app.config['COMPRESS_CACHE_BACKEND'] = DictCache
+Compress(app)
 
 
 if __name__ == '__main__':

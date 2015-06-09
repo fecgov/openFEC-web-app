@@ -1,12 +1,13 @@
 'use strict';
 
-/* global require, module, window, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var _ = require('underscore');
 require('typeahead.js');
 var URI = require('URIjs');
 var Handlebars = require('handlebars');
+var keyboard = require('keyboardjs');
 
 var events = require('./events.js');
 var terms = require('./terms');
@@ -20,13 +21,13 @@ var officeMap = {
   P: 'President'
 };
 
-var filterCandidates = function(result) {
+function filterCandidates(result) {
   return {
     name: result.name,
     id: result.id,
     office: officeMap[result.office_sought]
   };
-};
+}
 
 module.exports = {
   getUrl: function(resource) {
@@ -153,39 +154,33 @@ module.exports = {
 
     this.initTypeahead(options, candidateDataSet);
 
+    // Focus on search bar on "/"
+    keyboard.on('/', function(e) {
+      e.preventDefault();
+      var bar = _.find($('.search-bar'), function(bar) {
+        return $(bar).is(':visible');
+      });
+      if (bar) {
+        bar.focus();
+      }
+    });
+
     // When the select committee or candidate box is changed on the search.
-    events.on('searchTypeChanged', function(data) {
+    function updateTypeahead(dataType) {
       $('.search-bar').typeahead('destroy');
-      if (data.type === 'committees') {
+      if (dataType === 'committees') {
         self.initTypeahead(options, committeeDataSet);
       } else {
         self.initTypeahead(options, candidateDataSet);
       }
-    });
+    }
 
-    // Glossary typeahead
-    glossaryEngine = this.createEngine('Glossary', terms);
-    glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
+    updateTypeahead($('select[name="search_type"]').val());
 
-    $('#glossary-search').typeahead({
-            minLength: 1,
-            highlight: true,
-            hint: false
-        },
-        {
-            name: 'Definitions',
-            displayKey: 'term',
-            source: glossaryEngine.ttAdapter(),
-            templates: {
-              suggestion: glossarySuggestion,
-            }
-        }
-    );
-    $('#glossary-search').on('typeahead:selected', function(event, datum) {
-        glossary.setDefinition({
-            term: datum.term,
-            definition: datum.definition
-        });
+    // When the select committee or candidate box is changed on the search.
+    events.on('searchTypeChanged', function(data) {
+      $('.search-bar').typeahead('destroy');
+      updateTypeahead(data.type);
     });
   }
 };
