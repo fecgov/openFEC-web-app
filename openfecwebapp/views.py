@@ -7,14 +7,12 @@ from openfecwebapp.api_caller import load_cmte_financials
 
 
 def render_search_results(results, query, result_type):
-    # if true will show "no results" message
-    no_results = not len(results)
-
-    return render_template('search-results.html',
-            results=results,
-            result_type=result_type,
-            query=query,
-            no_results=no_results)
+    return render_template(
+        'search-results.html',
+        results=results,
+        result_type=result_type,
+        query=query,
+    )
 
 
 def render_committee(data, candidates=None, cycle=None):
@@ -24,6 +22,7 @@ def render_committee(data, candidates=None, cycle=None):
     tmpl_vars = committee
 
     tmpl_vars['cycle'] = cycle
+    tmpl_vars['result_type'] = 'committees'
 
     # add related candidates a level below
     tmpl_vars['candidates'] = candidates
@@ -62,6 +61,7 @@ def render_candidate(data, committees, cycle):
     tmpl_vars = results
 
     tmpl_vars['cycle'] = cycle
+    tmpl_vars['result_type'] = 'candidates'
 
     committee_groups = groupby(committees, lambda each: each['designation'])
     committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
