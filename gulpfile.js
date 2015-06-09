@@ -30,7 +30,7 @@ var wb = watchify(browserify(watchOpts));
 
 function bundle(watch) {
   return (watch ? wb : b)
-    .transform(preprocessify({W_DEBUG: debug}))
+    .transform(preprocessify({DEBUG: debug}))
     .bundle()
     .pipe(source('static/js/init.js'))
     .pipe(buffer())

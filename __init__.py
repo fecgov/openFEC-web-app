@@ -49,12 +49,12 @@ def _get_default_cycles():
     cycle = current_cycle()
     return list(range(cycle - 4, cycle + 2, 2))
 
+
 app.jinja_env.globals['min'] = min
 app.jinja_env.globals['max'] = max
-app.jinja_env.globals['api_location'] = config.api_location
+app.jinja_env.globals['api_location'] = config.api_location_public
 app.jinja_env.globals['api_version'] = config.api_version
 app.jinja_env.globals['api_key'] = config.api_key_public
-app.jinja_env.globals['debug'] = config.debug
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
@@ -140,12 +140,12 @@ def committee_page(c_id, cycle=None):
 
 @app.route('/candidates')
 def candidates():
-    return render_template('candidates.html')
+    return render_template('candidates.html', result_type='candidates')
 
 
 @app.route('/committees')
 def committees():
-    return render_template('committees.html')
+    return render_template('committees.html', result_type='committees')
 
 
 @app.errorhandler(404)
