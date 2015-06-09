@@ -55,7 +55,6 @@ app.jinja_env.globals['max'] = max
 app.jinja_env.globals['api_location'] = config.api_location_public
 app.jinja_env.globals['api_version'] = config.api_version
 app.jinja_env.globals['api_key'] = config.api_key_public
-app.jinja_env.globals['debug'] = config.debug
 app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
