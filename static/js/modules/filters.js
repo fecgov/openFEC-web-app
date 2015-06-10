@@ -49,10 +49,6 @@ var bindFilters = function() {
     cycleSelect.change(function() {
         var query = {cycle: cycleSelect.val()};
         var selected = cycleSelect.find('option:selected');
-        var history = selected.attr('data-history');
-        if (history) {
-            query.history = history;
-        }
         window.location.href = URI(window.location.href).query(query).toString();
     });
 };

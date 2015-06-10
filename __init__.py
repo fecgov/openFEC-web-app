@@ -12,11 +12,11 @@ from flask.ext.compress import Compress
 from flask.ext.compress import DictCache
 from flask.ext.basicauth import BasicAuth
 
+from openfecwebapp import utils
 from openfecwebapp import config
 from openfecwebapp.views import render_search_results, render_candidate, render_committee
-from openfecwebapp.api_caller import load_search_results, load_single_type, load_nested_type, install_cache
+from openfecwebapp.api_caller import load_search_results, load_with_nested, install_cache
 
-import datetime
 import jinja2
 import json
 import locale
@@ -40,13 +40,8 @@ def get_context(c):
     return c
 
 
-def current_cycle():
-    year = datetime.datetime.now().year
-    return year + year % 2
-
-
 def _get_default_cycles():
-    cycle = current_cycle()
+    cycle = utils.current_cycle()
     return list(range(cycle - 4, cycle + 2, 2))
 
 
@@ -104,22 +99,14 @@ def developers():
 @app.route('/candidate/<c_id>')
 @use_kwargs({
     'cycle': Arg(int),
-    'history': Arg(int),
 })
-def candidate_page(c_id, cycle=None, history=None):
+def candidate_page(c_id, cycle=None):
     """Fetch and render data for candidate detail page.
 
     :param int cycle: Optional cycle for associated committees and financials.
-    :param int history: Optional cycle for candidate history; default to `cycle`
-        if not specified.
     """
-    history = history or cycle
-    path = ('history', str(history)) if history else ()
-    data = load_single_type('candidate', c_id, *path)
-    cycle = cycle or min(current_cycle(), max(data['results'][0]['cycles']))
-    path = ('history', str(cycle))
-    committee_data = load_nested_type('candidate', c_id, 'committees', *path)['results']
-    return render_candidate(data, committees=committee_data, cycle=cycle)
+    candidate, committees = load_with_nested('candidate', c_id, 'committees', cycle=cycle)
+    return render_candidate(candidate, committees=committees, cycle=cycle)
 
 
 @app.route('/committee/<c_id>')
@@ -131,11 +118,8 @@ def committee_page(c_id, cycle=None):
 
     :param int cycle: Optional cycle for financials.
     """
-    path = ('history', str(cycle)) if cycle else ()
-    data = load_single_type('committee', c_id, *path)
-    cycle = cycle or min(current_cycle(), max(data['results'][0]['cycles']))
-    candidate_data = load_nested_type('committee', c_id, 'candidates', cycle=cycle)['results']
-    return render_committee(data, candidates=candidate_data, cycle=cycle)
+    committee, candidates = load_with_nested('committee', c_id, 'candidates', cycle=cycle)
+    return render_committee(committee, candidates=candidates, cycle=cycle)
 
 
 @app.route('/candidates')
@@ -216,20 +200,7 @@ def fmt_report_desc(report_full_description):
 
 @app.template_filter()
 def restrict_cycles(value):
-    return [each for each in value if each <= current_cycle()]
-
-
-@app.template_filter()
-def next_cycle(value, cycles):
-    """Get the earliest election cycle greater than or equal to `value`. If no
-    cycles match, use the most recent cycle to avoid empty results from the
-    history endpoint.
-    """
-    cycles = sorted(restrict_cycles(cycles))
-    return next(
-        (each for each in cycles if value <= each),
-        max(cycles),
-    )
+    return [each for each in value if each <= utils.current_cycle()]
 
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
