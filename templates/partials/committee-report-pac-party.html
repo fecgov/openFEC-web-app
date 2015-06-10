@@ -6,6 +6,7 @@
      (reports.0.political_party_committee_contributions_period, 'Party Committees Contributions'),
      (reports.0.other_political_committee_contributions_period, 'Other Committees Contributions'),
      (reports.0.transfers_from_affiliated_party_period, 'Transfers from Affiliated Committees'),
+     (reports.0.total_contributions_period, 'Total Contributions'),
      (reports.0.all_loans_received_period, 'Loans Received'),
      (reports.0.loan_repayments_received_period, 'Loan Repayments Received'),
      (reports.0.offsets_to_operating_expenditures_period, 'Offsets to operating Expenditures'),
@@ -13,6 +14,8 @@
      (reports.0.other_fed_receipts_period, 'Other Receipts'),
      (reports.0.transfers_from_nonfed_account_period, 'Non-Federal Transfers'),
      (reports.0.transfers_from_nonfed_levin_period, 'Levin Funds'),
+     (reports.0.transfers_from_nonfed_account_period, 'Total Non-Federal Transfers'),
+     (reports.0.total_fed_receipts_period, 'Total Federal Receipts'),
    ]
 %}
 {{ totals_table('Total Receipts', reports.0.total_receipts_period, table_data,
@@ -28,14 +31,17 @@
      (reports.0.coordinated_expenditures_by_party_committee_period, 'Coordinated Party Expenditures'),
      (reports.0.loans_made_period, 'Loans Made'),
      (reports.0.loan_repayments_made_period, 'Loan Repayments Made'),
+     (reports.0.total_operating_expenditures_period, 'Total Operating Expenditures'),
      (reports.0.refunded_individual_contributions_period, 'Individual Refunds'),
      (reports.0.refunded_political_party_committee_contributions_period, 'Politial Party Refunds'),
      (reports.0.refunded_other_political_committee_contributions_period, 'Other Committee Refunds'),
+     (reports.0.total_contribution_refunds_period, 'Total Contribution Refunds'),
      (reports.0.other_disbursements_period, 'Other Disbursements'),
      (reports.0.shared_fed_activity_period, 'Allocated Federal Election Activity - Federal Share'),
      (reports.0.allocated_federal_election_levin_share_period, 'Allocated Federal Election Activity - Levin Share'),
      (reports.0.non_allocated_fed_election_activity_period, 'Federal Election Activity - Federal Only'),
-   ]
+     (reports.0.total_fed_disbursements_period, 'Total Federal Disbursements'),
+  ]
 %}
 {{ totals_table('Total Disbursements', reports.0.total_disbursements_period, table_data,
     committee.report_year, header_description='Money spent by the committee' ) }}
