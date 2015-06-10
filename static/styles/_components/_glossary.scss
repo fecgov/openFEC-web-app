@@ -24,14 +24,35 @@
 
 .term--highlight {
 }
+
 .glossary__term {
 	padding: 1em 0;
 }
 
 .glossary {
+	@include white-links();
 	z-index: 999;
 
-	.tt-dropdown-menu {
-		width: 100%;
+	label {
+		margin-top: 0;
 	}
+}
+
+.glossary__list {
+	& > li {
+		padding: 1rem 0;
+		border-bottom: 1px solid $licorice-3;
+	}
+
+	.accordion__button {
+		top: 0;
+	}
+}
+
+.glossary-term {
+	margin-bottom: 0;
+}
+
+.glossary-definition {
+	margin-top: 1rem;
 }

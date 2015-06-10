@@ -1,0 +1,60 @@
+
+// A sectioned off and bordered box with portions.
+.box {
+  @include clearfix();
+  @include rem(margin-bottom, 2.0rem);
+  clear: both;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.box__portion {
+  border: 1px solid $light-gray;
+  border-top: none;
+  padding: 1rem 1.5rem;
+}
+
+.box__portion--dark {
+  background-color: $lightest-gray;
+}
+
+.box__header {
+  line-height: 1.6rem;
+  padding: .5rem 2rem;
+  background: $licorice-3;
+  color: #fff;
+}
+
+.box__right {
+  float: right;
+  margin-right: -2rem;
+  padding: 0 1.5rem;
+}
+
+.box__title {
+  margin: 0;
+}
+
+h3.box__title {
+  margin: 0;
+}
+
+.meta-box {
+  .box__portion {
+    border: none;
+    padding: 0;
+  }
+}
+
+.chunk--half.box {
+  clear: none;
+}
+
+// Different styles of boxes
+.warning {
+  background-color: $light-yellow;
+  border: 1px solid $light-yellow-2;
+  padding: 2rem;
+}

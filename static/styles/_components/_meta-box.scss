@@ -2,13 +2,35 @@
 // For things like pagination controls and chart controls
 
 .meta-box {
-  @include span-columns(24);
-  margin-bottom: 2em;
-  padding: 1em;
+  @include clearfix();
+  padding: 1rem;
   background-color: $meta-box-color;
   border: 1px solid $light-gray;
 }
 
 .meta-box--bottom {
   margin-top: 2em;
+}
+
+.meta-box__bar {
+  @include white-links();
+  color: #fff;
+  background-color: $licorice-3;
+  padding: .5rem 1rem;
+
+  @include media($medium) {
+    padding: 1rem 2rem;
+  }
+}
+
+.results-controls {
+  margin-bottom: 2rem;
+
+  .input-button-combo {
+    @include justify-content(left);
+  }
+
+  .results-count {
+    padding-top: 1rem;
+  }
 }

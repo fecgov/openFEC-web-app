@@ -13,6 +13,10 @@
     color: #fff;
     text-decoration: underline;
   }
+
+  .input-button-combo {
+    @include justify-content(flex-start);
+  }
 }
 
 .modal__row {
@@ -49,4 +53,16 @@
     &:focus {
         position: absolute;
     }
+}
+
+.modal--alert {
+    top: 25%;
+    left: 25%;
+    right: 25%;
+    bottom: auto;
+    padding: 3rem;
+    background-color: #fff;
+    border: 1px solid $licorice;
+    color: $red;
+    text-align: center;
 }

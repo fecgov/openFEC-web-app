@@ -15,7 +15,7 @@
 
 .hero__content {
   @include media($large) {
-    @include span-columns(18);
-    @include shift(3);    
+    @include span-columns(22);
+    @include shift(1);    
   }
 }
