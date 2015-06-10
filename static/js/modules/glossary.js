@@ -21,7 +21,7 @@ var glossaryLink = $('.term'),
 populateList = function(terms) {
     var itemTemplate = '<li id="glossary-list-item">' +
                         '<div class="js-accordion_header accordion__header">' +
-                        '<h4 class="glossary-term"></h4>' +
+                        '<h5 class="glossary-term"></h5>' +
                         '<a href="#" class="accordion__button js-accordion_button"></a>' +
                         '</div>' +
                         '<p class="glossary-definition js-accordion_item"></p>' +
@@ -38,8 +38,13 @@ populateList = function(terms) {
 
 populateList(terms);
 
-// Adding title to all terms
-$('.term').attr('title', 'Click to define').attr('tabindex', 0);
+// Adding title to all terms and lowercasing all terms
+$('.term').each(function(){
+    var thisTerm = $(this).attr('data-term').toLowerCase();
+    $(this).attr('title', 'Click to define')
+        .attr('tabindex', 0)
+        .attr('data-term', thisTerm);
+})
 
 findTerm = function(term) {
     $('.glossary__search').val(term);
@@ -47,7 +52,7 @@ findTerm = function(term) {
     $('.term--highlight').removeClass('term--highlight');
     $('span[data-term="' + term + '"]').addClass('term--highlight');
     glossaryList.filter(function(item) {
-      return item._values['glossary-term'] === term;
+      return item._values['glossary-term'].toLowerCase() === term;
     });
     // Hack: Expand text for selected item
     glossaryList.search();
