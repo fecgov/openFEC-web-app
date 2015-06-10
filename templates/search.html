@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block title %}
-    Home 
+    Home
 {% endblock %}
 
 {% block body %}
@@ -29,7 +29,38 @@
     </div>
 </section>
 
-<section class="page-section section--gray" aria-labelledby="help-heading">
+<section class="page-section section--gray" aria-labelledby="progress-heading" id="progress">
+    <div class="container">
+        <h2 id="progress-heading">About This Site</h2>
+        <p class="text--lead">Welcome to OpenFEC, the Federal Election Commission’s new app for exploring campaign finance disclosure data. This site is in <a href="https://18f.gsa.gov/dashboard/stages/#beta" target="_blank">beta</a>, which means we’re actively working on it and adding new features. The official site for FEC data is still the <a href="http://www.fec.gov/pindex.shtml">Campaign Finance Disclosure Portal</a>.</p>
+        <div class="row">
+            <div class="chunk--half box">
+                <h3>Current Features</h3>
+                <ul class="list--completed">
+                    <li>Search for candidates and committees</li>
+                    <li>Browse and filter candidates and committees</li>
+                    <li>View redesigned candidate and committee pages</li>
+                    <li>View all of a candidate’s authorized and joint fundraising committees</li>
+                    <li>View latest report</li>
+                    <li><a href="{{ url_for('developers') }}">A public API</a></li>
+                </ul>
+            </div>
+            <div class="chunk--half box">
+                <h3>Coming Soon</h3>
+                <ul class="list--uncompleted">
+                    <li>View candidate reports, committee reports, and other filings</li>
+                    <li>View and filter individual contributions, disbursements and other transactions</li>
+                    <li>Download raw data and specialized datasets</li>
+                    <li>Election pages</li>
+                    <li>Campaign finance data visualizations</li>
+                 </ul>
+            </div>
+        </div>
+        <p class="text--lead">We're working hard to make OpenFEC a useful addition to the resources available at FEC.gov. Do you have feedback or feature requests? <a href="mailto:18F-FEC@gsa.gov">Email us</a> and tell us what works well and what needs improvement.</p>
+    </div>
+</section>
+
+<section class="page-section section--slate" aria-labelledby="help-heading">
     <div class="container">
         <h2 id="help-heading">Need Help Understanding the Terms?</h2>
         <div class="chunk--half">

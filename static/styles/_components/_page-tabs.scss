@@ -16,11 +16,12 @@
 
   a {
     @include font-size(1.6);
-    @include rem(padding, 1rem 2rem);
+    padding: 1rem 2rem;
     color: #fff;
     display: block;
-    border-right: 1px solid #fff;
+    border-right: 1px solid #BDC4CD;
     text-decoration: none;
+    line-height: 2rem;
 
     &[aria-selected="true"] {
       background-color: #fff;
@@ -30,7 +31,7 @@
 
   &:first-child {
     a {
-      border-left: 1px solid #fff;
+      border-left: 1px solid #BDC4CD;
     }
   }
 
