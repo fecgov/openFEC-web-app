@@ -4,9 +4,10 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var terms = require('./terms');
-
+var keyboard = require('keyboardjs');
 var List = require('list.js');
+
+var terms = require('./terms');
 
 var glossaryLink = $('.term'),
     glossaryIsOpen = false,
@@ -104,6 +105,15 @@ module.exports = {
                 hideGlossary();
             } else {
                 showGlossary();
+            }
+        });
+
+        $(document.body).on('keyup', function(e) {
+            if (e.keyCode == keyboard.key.code('escape')) {
+                if (glossaryIsOpen) {
+                    hideGlossary();
+                    $('#glossary-toggle').focus();
+                }
             }
         });
 
