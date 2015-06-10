@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block title %}
-    Home 
+    Home
 {% endblock %}
 
 {% block body %}
@@ -42,7 +42,7 @@
                     <li>View redesigned candidate and committee pages</li>
                     <li>View all of a candidate’s authorized and joint fundraising committees</li>
                     <li>View latest report</li>
-                    <li><a href="https://api.fec.gov/developers">A public API</a></li>
+                    <li><a href="{{ url_for('developers') }}">A public API</a></li>
                 </ul>
             </div>
             <div class="chunk--half box">
@@ -54,9 +54,9 @@
                     <li>Election pages</li>
                     <li>Campaign finance data visualizations</li>
                  </ul>
-            </div>      
+            </div>
         </div>
-        <p class="text--lead">We're working hard to make OpenFEC a useful addition to the resources available at FEC.gov. Do you have feedback or feature requests? <a href="mailto:18F-FEC@gsa.gov">Email us</a> and tell us what works well and what needs improvement.</p>  
+        <p class="text--lead">We're working hard to make OpenFEC a useful addition to the resources available at FEC.gov. Do you have feedback or feature requests? <a href="mailto:18F-FEC@gsa.gov">Email us</a> and tell us what works well and what needs improvement.</p>
     </div>
 </section>
 
