@@ -1,12 +1,14 @@
 'use strict';
 
-/* global require, module, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
 require('datatables');
 require('drmonty-datatables-responsive');
+
+var filters = require('./filters');
 
 function yearRange(first, last) {
   if (first === last) {
@@ -108,6 +110,13 @@ function mapResponse(response) {
   };
 }
 
+function pushQuery(filters) {
+  var params = URI('').query(filters).toString();
+  if (window.location.search !== params) {
+    window.history.pushState(filters, params, params || window.location.pathname);
+  }
+}
+
 function initTable($table, $form, baseUrl, columns) {
   var draw;
   var api = $table.DataTable({
@@ -124,6 +133,7 @@ function initTable($table, $form, baseUrl, columns) {
       var api = this.api();
       var filters = $form.serializeArray();
       parsedFilters = mapFilters(filters);
+      pushQuery(parsedFilters);
       var query = $.extend(
         {
           per_page: data.length,
@@ -142,6 +152,11 @@ function initTable($table, $form, baseUrl, columns) {
         callback(mapResponse(response));
       });
     }
+  });
+  // Update filters and data table on navigation
+  $(window).on('popstate', function() {
+    filters.activateInitialFilters();
+    api.ajax.reload();
   });
   $form.submit(function(event) {
     event.preventDefault();
