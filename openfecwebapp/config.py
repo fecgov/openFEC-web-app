@@ -8,6 +8,7 @@ host = os.getenv('FEC_WEB_HOST', '0.0.0.0')
 port = os.getenv('VCAP_APP_PORT', '3000')
 api_key = os.getenv('FEC_WEB_API_KEY', '')
 api_key_public = os.getenv('FEC_WEB_API_KEY_PUBLIC', '')
+server_name = os.getenv('FEC_WEB_SERVER_NAME')
 
 # the username and password should be the same for both the
 # web app and API
@@ -16,7 +17,8 @@ password = os.getenv('FEC_WEB_PASSWORD', '')
 
 # you can only give a var a string using set-env with Cloud Foundry
 # set FEC_WEB_DEBUG to any string but an empty one if you want debug on
-debug = bool(os.getenv('FEC_WEB_DEBUG', ''))
+debug = bool(os.getenv('FEC_WEB_DEBUG'))
+production = bool(os.getenv('FEC_WEB_PRODUCTION'))
 
 # Whether the app should force HTTPS/HSTS.
 force_https = bool(os.getenv('FEC_FORCE_HTTPS', ''))

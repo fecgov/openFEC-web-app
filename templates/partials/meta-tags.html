@@ -1,5 +1,5 @@
-{% set description = 
-  "OpenFEC is the Federal Election Commission's new app for exploring federal campaign finance data. Use OpenFEC to see how much money is raised and spent in federal elections. OpenFEC is currently in beta." 
+{% set description =
+  "OpenFEC is the Federal Election Commission's new app for exploring federal campaign finance data. Use OpenFEC to see how much money is raised and spent in federal elections. OpenFEC is currently in beta."
 %}
 
 <meta charset="utf-8">
@@ -17,18 +17,18 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@18F">
 <meta name="twitter:creator" content="@18F">
-<meta name="twitter:title" content="{% if name %}{{ name }} - {% endif%}OpenFEC (Beta)">
+<meta name="twitter:title" content="{{ title | trim }} - OpenFEC (Beta)">
 <meta name="twitter:description" content="{{ description }}">
-<meta name="twitter:image" content="/static/img/open-fec-tw.png">
+<meta name="twitter:image" content="{{ url_for('static', filename='img/open-fec-tw.png', _external=True) }}">
 
 <!-- Facebook
 ================================================== -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://open.fec.gov" />
-<meta property="og:title" content="{% if name %}{{ name }} - {% endif%} OpenFEC (Beta)" />
+<meta property="og:url" content="{{ absolute_url() }}" />
+<meta property="og:title" content="{{ title | trim }} - OpenFEC (Beta)" />
 <meta property="og:site_name" content="OpenFEC (Beta)" />
 <meta property="og:description" content="{{ description }}" />
-<meta property="og:image" content="/static/img/open-fec-fb.png" />
+<meta property="og:image" content="{{ url_for('static', filename='img/open-fec-fb.png') }}" />
 
 <!-- Google
 ================================================== -->

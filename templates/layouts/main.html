@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 
-    {% include 'partials/meta-tags.html' %}
-
     <title>{% block title %}{% endblock %} - OpenFEC</title>
+    {% set title = self.title() %}
+
+    {% include 'partials/meta-tags.html' %}
 
     <link rel="stylesheet" href="/{{ assets['static/styles/styles.css'] }}" />
     {% if api_location %}
