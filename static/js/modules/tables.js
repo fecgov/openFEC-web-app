@@ -57,6 +57,7 @@ var candidateColumns = [
   {
     data: 'name',
     className: 'all',
+    width: '30%',
     render: function(data, type, row, meta) {
       return buildEntityLink(data, '/candidate/' + row.candidate_id + buildCycle(row), 'candidate');
     }
@@ -78,12 +79,13 @@ var committeeColumns = [
   {
     data: 'name',
     className: 'all',
+    width: '20%',
     render: function(data, type, row, meta) {
       return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'committee');
     }
   },
   {data: 'treasurer_name', className: 'min-desktop'},
-  {data: 'state', className: 'min-desktop'},
+  {data: 'state', className: 'min-desktop', width: '60px'},
   {data: 'party_full', className: 'min-desktop'},
   {data: 'organization_type_full', className: 'min-desktop'},
   {data: 'committee_type_full', className: 'min-tablet'},
