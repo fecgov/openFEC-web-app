@@ -37,23 +37,24 @@ $('#filter-toggle').click(function(){
 
 var activateFilter = function(opts) {
     var $field = $('#category-filters [name=' + opts.name + ']');
+    var $parent = $field.parent();
     if (opts.value) {
-        $field.val(opts.value);
-        $field.parent().addClass('active');
-        selectedFilters[opts.name] = opts.value;
+        $field.val(opts.value).change();
+        $parent.addClass('active');
+    } else {
+        $field.val('').change();
+        $parent.removeClass('active');
     }
 };
 
 var bindFilters = function() {
-    var cycleSelect = $('#cycle');
-    cycleSelect.change(function() {
+    var cycleSelect = $('#cycle').change(function() {
         var query = {cycle: cycleSelect.val()};
         var selected = cycleSelect.find('option:selected');
         window.location.href = URI(window.location.href).query(query).toString();
     });
 };
 
-var selectedFilters = {};
 
 // all of the filters we use on candidates and committees
 var fieldMap = [
@@ -95,12 +96,9 @@ $('.button--remove').click(function(e){
 });
 
 $('.field input, .field select').change(function(){
-    var name = $(this).attr('name');
-    if ( $(this).val() !== '' ) {
-        $('[data-removes="' + name + '"]').css('display', 'block');
-    } else {
-        $('[data-removes="' + name + '"]').css('display', 'none');
-    }
+    var $this = $(this);
+    $('[data-removes="' + $this.attr('name') + '"]')
+        .css('display', $this.val() ? 'block' : 'none');
 });
 
 module.exports = {
@@ -110,5 +108,6 @@ module.exports = {
 
         // if the page was loaded with filters set in the query string
         activateInitialFilters();
-    }
+    },
+    activateInitialFilters: activateInitialFilters
 };
