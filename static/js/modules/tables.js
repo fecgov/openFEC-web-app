@@ -113,7 +113,7 @@ function mapResponse(response) {
 function pushQuery(filters) {
   var params = URI('').query(filters).toString();
   if (window.location.search !== params) {
-    window.history.pushState(filters, params, params);
+    window.history.pushState(filters, params, params || window.location.pathname);
   }
 }
 
