@@ -131,4 +131,9 @@ $(document).ready(function() {
     $search.each(function() {
       Search($(this));
     });
+
+    // @if DEBUG
+    var perf = require('./modules/performance');
+    perf.bar();
+    // @endif
 });
