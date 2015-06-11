@@ -18,8 +18,10 @@
 
 .entity__header {
   @include white-links();
-  padding-left: 0;
-  padding-right: 0;
+
+  &.page-header {
+    padding: 1rem 0;
+  }
 }
 
 .entity__name {
@@ -93,21 +95,20 @@
 .entity__term__label {
   color: #fff;
   font-weight: bold;
-  padding: 0 1rem;
 
   @include media($medium) {
     display: block;
     width: 100%;
     border-bottom: 1px solid $licorice;
+    padding: 0 1rem;
   }
 }
 
 .entity__term__data {
-  padding: 0 1rem;
-
   @include media($medium) {
     display: block;
     width: 100%;
+    padding: 0 1rem;
   }
 }
 
@@ -145,25 +146,27 @@
 
 .time-period {
   width: 100%;
-  float: left;
-  padding: 1rem 0 0 0;
   
   label {
     @include font-size(1.4);
     width: 40%;
     margin-right: 1rem;
     display: inline-block;
+    padding: 1rem 0;
+    line-height: 2rem;
   }
 
   select {
     display: inline-block;
-    width: 50% !important;
     height: 3rem;
     margin-bottom: .5rem;
-    max-width: 150px;
   }
 
   @include media($medium) {
+    width: 50%;
+    float: right;
+    text-align: right;
+
     label {
       @include font-size(1.6);
       width: auto;

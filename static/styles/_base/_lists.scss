@@ -37,3 +37,17 @@ dl {
     margin: 0;
   }
 }
+
+.list--completed {
+  li {
+    list-style-image: url('/static/img/checkbox.svg');
+    margin-left: 2.5rem;
+  }
+}
+
+.list--uncompleted {
+  li {
+    list-style-image: url('/static/img/checkbox--empty.svg');
+    margin-left: 2.5rem;
+  }
+}

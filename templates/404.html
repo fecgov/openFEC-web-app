@@ -7,8 +7,7 @@
 			    <p class="text--lead">We couldn't find what you're looking for. Please double-check the URL and try again.</p>
 				<p class="text--lead">To find a specific candidate or committee, try searching by name:</p>
 			    <form id="search" action="/" class="input-button-combo">
-		            <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Enter candidate name">
-		            <input class="search-submit" type="submit" value="Search">
+		            {% include 'partials/search-bar.html' %}
 		        </form>
 		        <div class="error-container__bottom">
 		            <h4>Still can't find what you're looking for?</h4>

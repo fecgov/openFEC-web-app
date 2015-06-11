@@ -155,6 +155,7 @@
 
   .input-button-combo {
     @include justify-content(flex-end);
+    height: 3.6rem;
   }
 
   @include media($large) {

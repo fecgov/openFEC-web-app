@@ -3,6 +3,7 @@
 /* global require, window, document */
 
 var $ = require('jquery');
+var keyboard = require('keyboardjs');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
@@ -49,7 +50,7 @@ $(document).ready(function() {
             $body.removeClass('controls--fixed');
             $body.css('padding-top', 0);
           }
-        })
+        });
     }
 
     // Reveal containers
@@ -65,7 +66,7 @@ $(document).ready(function() {
                 $revealContent.addClass('u-hidden').attr('aria-hidden', 'true');
                 $(this).html('View charts');
             }
-        })
+        });
     }
 
     // General reveal / disclosure
@@ -85,11 +86,17 @@ $(document).ready(function() {
             // Set focus back on the original triggering element
             $('.js-reveal[data-reveals="' + hideElement + '"]').focus();
         }
+    });
 
-        if ( $('.modal__overlay').length > 0 ) {
-            $('.modal__overlay').css('display','none');
+    $(document.body).on('keyup', function(e) {
+        if (e.keyCode == keyboard.key.code('escape')) {
+            var menu = $('#site-menu');
+            if (menu.attr('aria-hidden') === 'false') {
+                menu.attr('aria-hidden', true);
+                $('.js-reveal[data-reveals="site-menu"]').focus();
+            }
         }
-    })
+    });
 
     // Notice close-state persistence
     if (typeof window.sessionStorage !== 'undefined') {
@@ -124,4 +131,9 @@ $(document).ready(function() {
     $search.each(function() {
       Search($(this));
     });
+
+    // @if DEBUG
+    var perf = require('./modules/performance');
+    perf.bar();
+    // @endif
 });

@@ -143,3 +143,8 @@ body {
     text-decoration: underline;
   }
 }
+
+.section--slate {
+  background-color: $slate;
+  border-top: 1px solid darken($slate, 10%);
+}

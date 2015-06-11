@@ -15,19 +15,23 @@ var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
+var preprocessify = require('preprocessify');
 
+var debug = !!process.env.FEC_WEB_DEBUG;
 var production = !!process.env.FEC_WEB_PRODUCTION;
 
 var opts = {
   entries: ['./static/js/init.js'],
-  debug: true
+  debug: false
 };
 var watchOpts = _.assign({}, watchify.args, opts);
 var b = browserify(opts);
 var wb = watchify(browserify(watchOpts));
 
 function bundle(watch) {
-  return (watch ? wb : b).bundle()
+  return (watch ? wb : b)
+    .transform(preprocessify({DEBUG: debug}))
+    .bundle()
     .pipe(source('static/js/init.js'))
     .pipe(buffer())
     .pipe(rename('./static/js/app.js'))

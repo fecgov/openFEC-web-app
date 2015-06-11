@@ -1,8 +1,10 @@
-from openfecwebapp.config import api_location, api_version, api_key
+import os
 from urllib import parse
 
-import os
 import requests
+
+from openfecwebapp import utils
+from openfecwebapp.config import api_location, api_version, api_key
 
 
 MAX_FINANCIALS_COUNT = 4
@@ -43,6 +45,15 @@ def load_single_type(data_type, c_id, *path, **filters):
 
 def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
     return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
+
+
+def load_with_nested(primary_type, primary_id, secondary_type, cycle=None):
+    path = ('history', str(cycle)) if cycle else ()
+    data = load_single_type(primary_type, primary_id, *path)
+    cycle = cycle or min(utils.current_cycle(), max(data['results'][0]['cycles']))
+    path = ('history', str(cycle))
+    nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path)
+    return data, nested_data['results']
 
 
 def load_cmte_financials(committee_id, **filters):

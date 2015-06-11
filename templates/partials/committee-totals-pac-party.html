@@ -6,6 +6,7 @@
      (totals.0.political_party_committee_contributions, 'Party Committees Contributions'),
      (totals.0.other_political_committee_contributions, 'Other Committees Contributions'),
      (totals.0.transfers_from_affiliated_party, 'Transfers from Affiliated Committees'),
+     (totals.0.contributions, 'Total Contributions'),
      (totals.0.net_contributions, 'Net Contributions'),
      (totals.0.all_loans_received, 'Loans Received'),
      (totals.0.loan_repayments_received, 'Loan Repayments Received'),
@@ -14,6 +15,8 @@
      (totals.0.other_fed_receipts, 'Other Receipts'),
      (totals.0.transfers_from_nonfed_account, 'Non-Federal Transfers'),
      (totals.0.transfers_from_nonfed_levin, 'Levin Funds'),
+     (totals.0.transfers_from_nonfed_account, 'Total Non-Federal Transfers'),
+     (totals.0.fed_receipts, 'Total Federal Receipts'),
    ]
 %}
 {{ totals_table('Total Receipts', totals.0.receipts, table_data,
@@ -23,6 +26,7 @@
      (totals.0.shared_fed_operating_expenditures, 'Federal Allocated Operating Expenditures'),
      (totals.0.shared_nonfed_operating_expenditures, 'Non-Federal Operating Expenditures'),
      (totals.0.other_fed_operating_expenditures, 'Other Federal Operating Expenditures'),
+     (totals.0.operating_expenditures, 'Total Operating Expenditures'),
      (totals.0.net_operating_expenditures, 'Net Operating Expenditures'),
      (totals.0.transfers_to_affiliated_committee, 'Transfers to Affiliated Committees'),
      (totals.0.fed_candidate_committee_contributions, 'Contributions to Other Committees'),
@@ -30,13 +34,17 @@
      (totals.0.coordinated_expenditures_by_party_committee, 'Coordinated Party Expenditures'),
      (totals.0.loans_made, 'Loans Made'),
      (totals.0.loan_repayments_made, 'Loan Repayments Made'),
+
      (totals.0.refunded_individual_contributions, 'Individual Refunds'),
      (totals.0.refunded_political_party_committee_contributions, 'Politial Party Refunds'),
      (totals.0.refunded_other_political_committee_contributions, 'Other Committee Refunds'),
+     (totals.0.contribution_refunds, 'Total Contribution refunds'),
      (totals.0.other_disbursements, 'Other Disbursements'),
      (totals.0.shared_fed_activity, 'Allocated Federal Election Activity - Federal Share'),
      (totals.0.allocated_federal_election_levin_share, 'Allocated Federal Election Activity - Levin Share'),
      (totals.0.non_allocated_fed_election_activity, 'Federal Election Activity - Federal Only'),
+     (totals.0.fed_election_activity, 'Total Federal Election Activity'),
+     (totals.0.fed_disbursements, 'Total Federal Disbursements'),
    ]
 %}
 {{ totals_table('Total Disbursements', totals.0.disbursements, table_data,

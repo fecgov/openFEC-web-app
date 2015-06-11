@@ -15,5 +15,6 @@ static/js/app.js
 static/images
 app/
 /.env
+.DS_Store
 
 static/styles/styles.css

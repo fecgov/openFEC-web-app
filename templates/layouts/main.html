@@ -15,9 +15,23 @@
     <link rel="stylesheet" href="/{{ assets['static/styles/styles.css'] }}" />
     {% if api_location %}
     <script>
-        API_LOCATION = "{{api_location}}"
-        API_VERSION = "{{api_version}}"
-        API_KEY = "{{api_key}}"
+        API_LOCATION = "{{api_location}}";
+        API_VERSION = "{{api_version}}";
+        API_KEY = "{{api_key}}";
+
+        function trackMetric(name, imagesSelector) {
+          if (imagesSelector) {
+            var images = document.querySelectorAll(imagesSelector);
+            if (images && images.length) {
+              for (var i = 0, ilen = images.length; i < ilen; i++) {
+                images[i].addEventListener('load', function() {
+                  window.performance.mark(name);
+                });
+              }
+            }
+          }
+          window.performance.mark(name);
+        }
     </script>
     {% endif %}
 </head>
@@ -61,14 +75,14 @@
   <header class="site-header">
     <div id="notice" aria-hidden="true" class="section--blue">
       <a id="notice-close" class="js-action js-hide link--icon" tabindex="0" data-hides="notice"><i class="ti-close"></i></a>
-      <h3>This site is in alpha. Tell us what you think!</h3>
-      <p>This is the first public release of OpenFEC, a new app for exploring the FEC's disclosure data. OpenFEC uses current campaign finance disclosure data but <em>does not include</em> all data made available by the FEC and things may not work as expected. Please continue your regular work on the <a href="http://www.fec.gov/pindex.shtml">Campaign Finance Disclosure Portal</a>.</p>
-      <p>We're working hard to make OpenFEC a useful addition to the resources available at FEC.gov. Your feedback is important to us as we build this site. <a href="mailto:18F-FEC@gsa.gov">Email us</a> and let us know how it’s working for you.</p>
+      <h3>Welcome to OpenFEC. This <a href="https://18f.gsa.gov/dashboard/stages/#beta" target="_blank">beta</a> site is a work in progress.</h3>
+      <h4><a href="/#progress">Find out what’s here and what’s missing</a>.</h4>
+      <p><a href="mailto:18F-FEC@gsa.gov">Email us</a> to share feedback or open an issue on <a href="https://github.com/18f/FEC/issues" target="_blank">GitHub</a>.</p>
     </div>
     <div class="banner">
       <span class="banner--left">Looking for fec.gov? <a href="http://www.fec.gov">Click here.</a></span>
       <span class="banner--center">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></span>
-      <span class="banner--right">This site is in alpha. <a title="Learn about this site's development" tabindex="0" id="notice-reveal" class="js-reveal js-action" data-reveals="notice">Learn more.</a></span>
+      <span class="banner--right">This site is in beta. <a title="Learn about this site's development" tabindex="0" id="notice-reveal" class="js-reveal js-action" data-reveals="notice">Learn more.</a></span>
     </div>
     <div class="clearfix">
       <div class="header__left">
@@ -110,7 +124,9 @@
     <img src="/static/img/18f.png" alt="18F Logo" class="u-float-left">
     <ul class="u-float-left">
       <li>A project of <a href="https://18f.gsa.gov">18F</a></li>
-      <li><a href="https://github.com/18F/openFEC/">View project source code</a></li>
+      <li><a href="{{ url_for('developers') }}">View API</a></li>
+      <li><a href="https://github.com/18F/openFEC-web-app">View project source code</a></li>
+
     </ul>
   </div>
 
