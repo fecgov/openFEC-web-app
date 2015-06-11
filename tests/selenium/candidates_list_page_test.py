@@ -57,3 +57,15 @@ class CandidatesPageTests(SearchPageTestCase):
 
     def testCandidateOfficeFilter(self):
         self.checkFilter('office', 'P', 1, 'President')
+
+    def test_candidate_filter_history(self):
+        self.checkFilter('state', 'penn', 4, 'PA')
+        self.assertTrue(self.driver.current_url.endswith('state=PA'))
+        self.checkFilter('state', 'tex', 4, 'TX', refresh=False, click=True)
+        self.assertTrue(self.driver.current_url.endswith('state=TX'))
+        self.driver.back()
+        self.check_filter_results(4, 'PA')
+        self.assertTrue(self.driver.current_url.endswith('state=PA'))
+        self.driver.forward()
+        self.check_filter_results(4, 'TX')
+        self.assertTrue(self.driver.current_url.endswith('state=TX'))

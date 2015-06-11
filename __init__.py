@@ -40,6 +40,14 @@ def get_context(c):
     return c
 
 
+def get_absolute_url():
+    url = furl.furl(request.url)
+    if app.config['SERVER_NAME']:
+        url.host = app.config['SERVER_NAME']
+        url.scheme = app.config['PREFERRED_URL_SCHEME']
+    return url.url
+
+
 def _get_default_cycles():
     cycle = utils.current_cycle()
     return list(range(cycle - 4, cycle + 2, 2))
@@ -51,6 +59,7 @@ app.jinja_env.globals['api_location'] = config.api_location_public
 app.jinja_env.globals['api_version'] = config.api_version
 app.jinja_env.globals['api_key'] = config.api_key_public
 app.jinja_env.globals['context'] = get_context
+app.jinja_env.globals['absolute_url'] = get_absolute_url
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
 
@@ -172,6 +181,12 @@ def fmt_chart_ticks(group, keys):
     return _fmt_chart_tick(group[keys])
 
 
+@app.template_filter()
+def absolute_url(value):
+    if value:
+        return urlparse.urljoin(app.config)
+
+
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
     if not date_str:
@@ -207,6 +222,14 @@ def restrict_cycles(value):
 # Only use when you're sure. 31536000 = 1 year.
 if config.force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
+
+
+if config.server_name:
+    app.config['SERVER_NAME'] = config.server_name
+
+
+if config.production:
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 
 # Note: Apply basic auth check after HTTPS redirect so that users aren't prompted

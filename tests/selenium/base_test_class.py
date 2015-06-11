@@ -112,11 +112,19 @@ class SearchPageTestCase(BaseTest):
         return [row.find_elements_by_tag_name('td')[index].text
                 for row in data.find_elements_by_tag_name('tr')]
 
-    def checkFilter(self, name, entry, index, result):
-        self.driver.get(self.url)
+    def checkFilter(self, name, entry, index, result, refresh=True, click=False):
+        if refresh:
+            self.driver.get(self.url)
+
         div = self.getFilterDivByName(name)
-        div.find_element_by_tag_name('select').send_keys(entry)
-        div.find_element_by_tag_name('select').send_keys(Keys.ENTER)
+        select = div.find_element_by_tag_name('select')
+        # Hack: In some cases, `send_keys` will fail with Chrome; allow clicking on <option> directly
+        # TODO(jmcarp): Replace with a cleaner solution
+        if click:
+            select.find_element_by_css_selector('[value=' + result + ']').click()
+        else:
+            select.send_keys(entry)
+        select.send_keys(Keys.ENTER)
         # Refresh containing div to avoid stale reference error
         div = self.getFilterDivByName(name)
         close_buttons = div.find_elements_by_xpath(
@@ -124,6 +132,9 @@ class SearchPageTestCase(BaseTest):
         )
         self.assertEqual(len(close_buttons), 1)
         self.driver.find_element_by_id('category-filters').submit()
+        self.check_filter_results(index, result)
+
+    def check_filter_results(self, index, result):
         wait_for_ajax(self.driver)
         values = [
             row.find_elements_by_tag_name('td')[index].text
