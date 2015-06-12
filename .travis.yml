@@ -5,20 +5,29 @@ python:
 
 addons:
   postgresql: "9.4"
-  sauce_connect: true
 
 env:
   global:
-    - FEC_WEB_TEST: "true"
-    - FEC_SELENIUM_DRIVER: "remote"
+    - FEC_WEB_TEST="true"
+    - FEC_SELENIUM_DRIVER="remote"
     - secure: "Wvz5f/GyjVSooTCDtuTCgrBaiUR/idB0ikdDXWIAL02xpPaVMD0YQTVAE4WYJFEfX25APm79Bs+KHf2vKvUm/HGXfmGsRMb09dy8lVyCzdLuu9ISIH+0Udxj2qH1xdjZAqv8zuouc8N5aq24uMxFCqgxPi2kWnkieqbIw10HhQE="
     - secure: "QMVCi+DS1BSdaWCmEQXurFDCWAijxJBEswY7s9RaGcTZRBmSsP5VR8uKDSANeRLZ509x3tXcw1X2OeqBFcyIzFi5WvF6oPcKahLrA6XrtjDYsMOBy9a2VDDqFH7ROI6G+99XTDNWoKmbjaO3AGhTGhIJWSf9T400T5imK0KMJB8="
     - secure: "SKKeJG+Pc0xFyq0++/Cf0fMO4fZlK1H3CgedSGiQhwl3Rsh8QgXBhH+/YwWYAozmUNPkJCEuDdB2A1trBEPqkghAnjNdOXu2mwo5ANweu8M/HdafeeDP2klHB7bIieJ5GhUfrZ1/D/nVcE86mePFlx6Ymjdg2DtNUYBIWFs2xPs="
     - secure: "UK4kK8mrj0AsYqL7ohK9wKMCTVSK0phyNw7sW2BynRJYTU3Xi073+m8mGiCvHGEULvriCtuysCsbh5iNUz5VQ/4RBQVOJdugzbWjbwEUzb6w1W5pXvwCRUufhGcr98odfNE09pZicfL0YjH84w/dqrlC3leeyaoF7bFqpaKWwqs="
-  matrix:
-    - FEC_SAUCE_BROWSER: "false"
-    - FEC_SAUCE_BROWSER: "chrome"
-    - FEC_SAUCE_BROWSER: "firefox"
+
+# This matrix runs n+1 jobs: one for each in `include`, and one with no non-global
+# environment variables set. This allows the build that does not use Sauce Labs
+# to run without a tunnel to Sauce.
+matrix:
+  include:
+    - env: FEC_SAUCE_BROWSER=chrome
+      addons: &addons
+        sauce_connect: true
+        postgresql: "9.4"
+      python: "3.4"
+    - env: FEC_SAUCE_BROWSER=firefox
+      addons: *addons
+      python: "3.4"
 
 before_install:
   - travis_retry pip install codecov
@@ -28,8 +37,11 @@ before_install:
 
 before_script:
   # Set up environment
-  - if [[ $TRAVIS_BRANCH = 'master' ]]; then export FEC_BRANCH=master; fi
-  - if [[ $TRAVIS_BRANCH != 'master' ]]; then export FEC_BRANCH=develop; fi
+  - |
+      if [[ $TRAVIS_BRANCH = 'master' ]]; then
+        export FEC_BRANCH=master
+        else export FEC_BRANCH=develop
+      fi
 
   # Install web app and run in background
   - pip install -r requirements.txt
@@ -51,9 +63,9 @@ before_script:
 
 script:
   # Run unit tests
-  - if [[ $FEC_SAUCE_BROWSER = 'false' ]]; then py.test; fi
+  - if [[ -z $FEC_SAUCE_BROWSER  ]]; then py.test; fi
   # Run Selenium tests if not pull request
-  - if [[ $TRAVIS_PULL_REQUEST = 'false' && $FEC_SAUCE_BROWSER != 'false' ]]; then py.test --selenium; fi
+  - if [[ $TRAVIS_PULL_REQUEST = 'false' && ! -z $FEC_SAUCE_BROWSER  ]]; then py.test --selenium; fi
 
 after_success:
   # Deploy to appropriate Cloud Foundry space after all builds succeed
