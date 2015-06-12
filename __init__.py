@@ -27,6 +27,8 @@ import sys
 
 locale.setlocale(locale.LC_ALL, '')
 
+START_YEAR = 1979
+
 app = Flask(__name__)
 
 # ===== configure logging =====
@@ -214,8 +216,8 @@ def fmt_report_desc(report_full_description):
 
 
 @app.template_filter()
-def restrict_cycles(value):
-    return [each for each in value if each <= utils.current_cycle()]
+def restrict_cycles(value, start_year=START_YEAR):
+    return [each for each in value if start_year <= each <= utils.current_cycle()]
 
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
