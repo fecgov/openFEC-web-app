@@ -94,11 +94,9 @@
         <div class="table__cell">{{ pretty_name }} </div>
         <div class="table__cell">{{ null.null(value | currency) }}</div>
         <div class="table__cell table__cell--bar">
-          {% if value %}
-            {{ charts.chart_bar(value|default(0),
-                                pretty_name,
-                                tooltip=None) }}
-          {% endif %}
+          {{ charts.chart_bar(value|default(0),
+                              pretty_name,
+                              tooltip=None) }}
         </div>
       </div>
     {% endmacro %}

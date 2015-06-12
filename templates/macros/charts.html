@@ -9,26 +9,32 @@
 {% endmacro %}
 
 {% macro chart_bar(value, key, tooltip=default_tooltip, attr={}) %}
+{% if value is not none %}
 <div class="chart-series__bar data--{{ key }} {{ attr.class|default('') }}"
   data-key="{{ key }}"
   data-value="{{ value }}"
   tabindex="0">
   {% if tooltip %}{{ tooltip(value, key) }}{% endif %}
 </div>
+{% endif %}
 {% endmacro %}
 
 {% macro chart_series(bars, value_key, orient='vertical', tooltip=default_tooltip, attr={}) %}
+{% if series_has_data(bars, value_key) %}
 <div class="chart-series chart-series--{{ orient }} {{ attr.class|default('') }}">
   {% for bar in bars %}
     {{ chart_bar(bar[value_key], value_key, tooltip=tooltip, attr={}) }}
   {% endfor %}
 </div>
+{% endif %}
 {% endmacro %}
 
 {% macro chart_series_grouped(groups, value_keys,
     label_key='label', orient='vertical', tooltip=default_tooltip, attr={}) %}
+{% if series_group_has_data(groups, value_keys) %}
 <div class="js-chart-series chart-series chart-series--grouped chart-series--{{ orient }} {{ attr.class|default('') }}">
   {% for group in groups %}
+  {% if group_has_data(group, value_keys) %}
   <div class="chart-series__group">
     {% for key in value_keys %}
       {{ chart_bar(group[key], key, tooltip=tooltip, attr={}) }}
@@ -37,6 +43,8 @@
       {{ group | fmt_chart_ticks(label_key) }}
     </div>
   </div>
+  {% endif %}
   {% endfor %}
 </div>
+{% endif %}
 {% endmacro %}

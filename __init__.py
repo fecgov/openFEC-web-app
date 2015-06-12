@@ -53,6 +53,27 @@ def _get_default_cycles():
     return list(range(cycle - 4, cycle + 2, 2))
 
 
+def series_has_data(values, key):
+    return next(
+        (True for value in values if value.get(key) is not None),
+        False,
+    )
+
+
+def group_has_data(value, keys):
+    return next(
+        (True for key in keys if value.get(key) is not None),
+        False,
+    )
+
+
+def series_group_has_data(groups, keys):
+    return next(
+        (True for group in groups if group_has_data(group, keys)),
+        False,
+    )
+
+
 app.jinja_env.globals['min'] = min
 app.jinja_env.globals['max'] = max
 app.jinja_env.globals['api_location'] = config.api_location_public
@@ -62,6 +83,9 @@ app.jinja_env.globals['context'] = get_context
 app.jinja_env.globals['absolute_url'] = get_absolute_url
 app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
 app.jinja_env.globals['default_cycles'] = _get_default_cycles()
+app.jinja_env.globals['series_has_data'] = series_has_data
+app.jinja_env.globals['group_has_data'] = group_has_data
+app.jinja_env.globals['series_group_has_data'] = series_group_has_data
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
