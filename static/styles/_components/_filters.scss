@@ -11,8 +11,9 @@
   @include span-columns(24);
   margin-bottom: 1.25em;
 
-  input,
-  select {
+  input[type="text"],
+  select,
+  .button--dropdown {
     margin: 0 2% 0 0;
     float: left;
     width: 82%;
@@ -21,11 +22,16 @@
   &:nth-child(even) {
     margin-right: 0;
   }
+
+  label {
+    margin-top: 0;
+  }
   
   @include media($medium) {
     @include span-columns(6);
-    input, 
-    select {
+    input[type="text"], 
+    select,
+    .button--dropdown {
       width: 87%;
     }
   }
@@ -33,8 +39,9 @@
   @include media($large) {
     width: 100%;
 
-    input,
-    select {
+    input[type="text"],
+    select,
+    .button--dropdown {
       width: 82%;
     }
   }

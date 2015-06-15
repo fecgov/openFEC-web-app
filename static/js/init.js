@@ -88,6 +88,24 @@ $(document).ready(function() {
         }
     });
 
+    $('.js-toggle').on('click keypress', function(e){
+        if (e.which === 13 || e.type === 'click') {
+            var toggleElement,
+                toggleElementIsHidden; 
+            toggleElement = $(this).data('toggles');
+            toggleElementIsHidden = $('#' + toggleElement).attr('aria-hidden');
+            if ( toggleElementIsHidden === "true" ) {
+                $('#' + toggleElement)
+                    .attr('aria-hidden', false)
+                    .find('li:first-child input').focus();
+                $(this).addClass('active');
+            } else {
+                $('#' + toggleElement).attr('aria-hidden', true);
+                $(this).removeClass('active').focus();
+            }
+        }
+    });
+
     $(document.body).on('keyup', function(e) {
         if (e.keyCode == keyboard.key.code('escape')) {
             var menu = $('#site-menu');

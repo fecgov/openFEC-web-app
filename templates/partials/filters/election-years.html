@@ -1,9 +1,14 @@
 <div class="field">
-    <label for="cycle">Election Years</label>
-    <select multiple name="cycle" data-placeholder="Select an election cycle">
-        {% for year in range(2016, 1978, -2) %}
-        <option value={{ year }}>{{ year | fmt_year_range }}</option>
-        {% endfor %}
-    </select>
-    <button type="button" class="button--remove" data-removes="cycle"><i class="ti-close"></i></button>
+  <label>Election Years</label>
+  <fieldset name="cycle" class="dropdown">
+    <button class="js-toggle button--dropdown" data-toggles="cycle-dropdown" >Select</button>
+    <ul id="cycle-dropdown" class="dropdown__list" aria-hidden="true">
+      {% for year in range(2016, 1978, -2) %}
+        <li>
+          <label for="cycle-checkbox-{{ loop.index }}">
+            <input id="cycle-checkbox-{{ loop.index }}" type="checkbox" value={{ year }}>{{ year | fmt_year_range }}
+          </label>
+        </li>
+      {% endfor %}
+    </ul>
 </div>
