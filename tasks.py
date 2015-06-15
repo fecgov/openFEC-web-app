@@ -81,6 +81,16 @@ def _detect_apps(blue, green):
     return (green, blue)
 
 
+SPACE_URLS = {
+    'dev': [('cf.18f.us', 'fec-dev-web')],
+    'stage': [('cf.18f.us', 'fec-stage-web')],
+    'prod': [
+        ('cf.18f.us', 'fec-prod-web'),
+        ('open.fec.gov', None),
+    ],
+}
+
+
 @task
 def deploy(space=None, branch=None, yes=False):
     """Deploy app to Cloud Foundry. Log in using credentials stored in
@@ -113,8 +123,11 @@ def deploy(space=None, branch=None, yes=False):
         return
 
     # Remap
-    route = 'cf.18f.us'
-    host = 'fec-{0}-web'.format(space)
-    run('cf map-route {0} {1} -n {2}'.format(new, route, host), echo=True)
-    run('cf unmap-route {0} {1} -n {2}'.format(old, route, host), echo=True, warn=True)
+    for route, host in SPACE_URLS[space]:
+        opts = route
+        if host:
+            opts += ' -n {0}'.format(host)
+        run('cf map-route {0} {1}'.format(new, opts), echo=True)
+        run('cf unmap-route {0} {1}'.format(old, opts), echo=True, warn=True)
+
     run('cf stop {0}'.format(old), echo=True, warn=True)
