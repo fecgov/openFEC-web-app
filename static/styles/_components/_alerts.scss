@@ -20,9 +20,4 @@
   .link--icon {
     text-decoration: none;
   }
-
-  &[aria-hidden="true"] {
-    display: block;
-    top: -50px;
-  }
 }
