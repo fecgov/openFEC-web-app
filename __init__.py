@@ -15,14 +15,13 @@ from flask.ext.basicauth import BasicAuth
 from openfecwebapp import utils
 from openfecwebapp import config
 from openfecwebapp.views import render_search_results, render_candidate, render_committee
-from openfecwebapp.api_caller import load_search_results, load_with_nested, install_cache
+from openfecwebapp.api_caller import load_search_results, load_with_nested
 
 import jinja2
 import json
 import locale
 import logging
 import re
-import sys
 
 
 locale.setlocale(locale.LC_ALL, '')
@@ -273,7 +272,5 @@ Compress(app)
 
 
 if __name__ == '__main__':
-    if '--cached' in sys.argv:
-        install_cache()
     files = ['./rev-manifest.json']
     app.run(host=config.host, port=int(config.port), debug=config.debug, extra_files=files)

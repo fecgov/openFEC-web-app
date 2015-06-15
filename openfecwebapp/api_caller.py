@@ -2,27 +2,31 @@ import os
 from urllib import parse
 
 import requests
+import cachecontrol
 
 from openfecwebapp import utils
-from openfecwebapp.config import api_location, api_version, api_key
+from openfecwebapp import config
 
 
 MAX_FINANCIALS_COUNT = 4
 
 
+session = requests.Session()
+
+if config.cache:
+    cachecontrol.CacheControl(session, cache=utils.LRUCache(config.cache_size))
+
+
 def _call_api(*path_parts, **filters):
-    if api_key:
-        filters['api_key'] = api_key
+    if config.api_key:
+        filters['api_key'] = config.api_key
 
-    path = os.path.join(api_version, *[x.strip('/') for x in path_parts])
-    url = parse.urljoin(api_location, path)
+    path = os.path.join(config.api_version, *[x.strip('/') for x in path_parts])
+    url = parse.urljoin(config.api_location, path)
 
-    results = requests.get(url, params=filters)
+    results = session.get(url, params=filters)
 
-    if results.status_code == requests.codes.ok:
-        return results.json()
-    else:
-        return {}
+    return results.json() if results.ok else {}
 
 
 def load_search_results(query, query_type='candidates'):
@@ -69,8 +73,3 @@ def load_cmte_financials(committee_id, **filters):
         'reports': reports['results'],
         'totals': totals['results'],
     }
-
-
-def install_cache():
-    import requests_cache
-    requests_cache.install_cache()
