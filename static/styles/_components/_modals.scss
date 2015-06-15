@@ -20,12 +20,18 @@
 }
 
 .modal__row {
+    @include clearfix();
     border-bottom: 1px solid $modal-border;
     padding: 1.5rem 1rem;
 
     &:last-child {
         border-bottom: none;
     }
+}
+
+.modal__header {
+    width: 100%;
+    float: left;
 }
 
 .modal__overlay {
@@ -44,14 +50,19 @@
 
 .modal__close {
     position: absolute;
-    width: 50%;
-    bottom: 1.5rem;
-    left: 25%;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    // float: right;
     background: none;
     color: #fff;
+    border: none;
 
-    &:focus {
-        position: absolute;
+    &:hover,
+    &:active {
+        background: none;
+        border: none;
+        color: #fff;
     }
 }
 
