@@ -16,3 +16,4 @@ env:
   FEC_WEB_API_URL: https://api.open.fec.gov/
   FEC_WEB_SERVER_NAME: open.fec.gov
   FEC_FORCE_HTTPS: true
+  FEC_WEB_CACHE: true

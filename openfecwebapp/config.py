@@ -9,6 +9,8 @@ port = os.getenv('VCAP_APP_PORT', '3000')
 api_key = os.getenv('FEC_WEB_API_KEY', '')
 api_key_public = os.getenv('FEC_WEB_API_KEY_PUBLIC', '')
 server_name = os.getenv('FEC_WEB_SERVER_NAME')
+cache = os.getenv('FEC_WEB_CACHE')
+cache_size = int(os.getenv('FEC_WEB_CACHE_SIZE', 1000))
 
 # the username and password should be the same for both the
 # web app and API
