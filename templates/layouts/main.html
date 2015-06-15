@@ -39,10 +39,11 @@
     <div class="modal__row">
       <p class="text--small">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></p>
       <p class="text--small">Looking for fec.gov? <a title="Visit fec.gov" href="http://www.fec.gov">Click here.</a></p>
+      <button title="Close menu" class="js-hide modal__close" data-hides="site-menu"><i class="ti-close"></i></button>
     </div>
     <div class="modal__row">
       <h3>Search the Data</h3>
-      <form id="modal-search" action="/" autocomplete="off">
+      <form id="modal-search" action="/" autocomplete="off" class="js-search">
         {% include 'partials/search-bar.html' %}
       </form>
     </div>
@@ -63,7 +64,6 @@
           <li><a href="mailto:{{ contact_email }}"><i class="ti-email"></i> Contact us</a></li>
         </ul>
       </nav>
-      <button title="Close menu" class="js-hide modal__close" data-hides="site-menu"><i class="ti-close"></i> Close menu</button>
     </div>
   </div>
 </div>
