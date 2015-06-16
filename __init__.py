@@ -139,8 +139,8 @@ def candidate_page(c_id, cycle=None):
 
     :param int cycle: Optional cycle for associated committees and financials.
     """
-    candidate, committees = load_with_nested('candidate', c_id, 'committees', cycle=cycle)
-    return render_candidate(candidate, committees=committees, cycle=cycle)
+    candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle)
+    return render_candidate(candidate, committees, cycle)
 
 
 @app.route('/committee/<c_id>')
@@ -152,8 +152,8 @@ def committee_page(c_id, cycle=None):
 
     :param int cycle: Optional cycle for financials.
     """
-    committee, candidates = load_with_nested('committee', c_id, 'candidates', cycle=cycle)
-    return render_committee(committee, candidates=candidates, cycle=cycle)
+    committee, candidates, cycle = load_with_nested('committee', c_id, 'candidates', cycle)
+    return render_committee(committee, candidates, cycle)
 
 
 @app.route('/candidates')
