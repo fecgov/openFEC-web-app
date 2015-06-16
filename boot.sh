@@ -1,3 +1,5 @@
+# Copied from https://github.com/cloudfoundry/staticfile-buildpack
+
 # ------------------------------------------------------------------------------------------------
 # Copyright 2013 Jordon Bedwell.
 # Apache License.
