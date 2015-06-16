@@ -57,7 +57,7 @@ def load_with_nested(primary_type, primary_id, secondary_type, cycle=None):
     cycle = cycle or min(utils.current_cycle(), max(data['results'][0]['cycles']))
     path = ('history', str(cycle))
     nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path)
-    return data, nested_data['results']
+    return data, nested_data['results'], cycle
 
 
 def load_cmte_financials(committee_id, **filters):
