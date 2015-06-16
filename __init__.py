@@ -1,5 +1,4 @@
 import http
-import hashlib
 
 import furl
 from webargs import Arg
@@ -8,8 +7,6 @@ from dateutil.parser import parse as parse_date
 
 from flask import Flask, render_template, request, redirect
 from flask_sslify import SSLify
-from flask.ext.compress import Compress
-from flask.ext.compress import DictCache
 from flask.ext.basicauth import BasicAuth
 
 from openfecwebapp import utils
@@ -264,13 +261,6 @@ if not config.test:
     app.config['BASIC_AUTH_PASSWORD'] = config.password
     app.config['BASIC_AUTH_FORCE'] = True
     basic_auth = BasicAuth(app)
-
-
-# Serve compressed assets, cached by SHA1.
-cache_key = lambda response: hashlib.sha1(response.get_data()).hexdigest()
-app.config['COMPRESS_CACHE_KEY'] = cache_key
-app.config['COMPRESS_CACHE_BACKEND'] = DictCache
-Compress(app)
 
 
 if __name__ == '__main__':

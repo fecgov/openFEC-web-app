@@ -16,5 +16,3 @@ webargs>=0.13.0
 Flask-SSLify
 CacheControl>=0.11.5
 cachetools>=1.0.1
-
-git+https://github.com/jmcarp/flask-compress@cache
