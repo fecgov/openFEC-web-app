@@ -1,291 +1,78 @@
 [
   {
-    "term":"Act",
-    "definition":"The Federal Election Campaign Act of 1971 as amended (2 U.S.C. §§431-455)."
+    "glossary-term": "Status",
+    "glossary-definition": "Refers to whether the candidate is an incumbent, challenger or running unopposed."
   },
   {
-    "term":"ADRO",
-    "definition":"Alternative Dispute Resolution Office. ADRO provides parties in enforcement actions with an alternative method for resolving complaints that have been filed against them and for addressing issues identified by the Reports Analysis Division or FEC audit. The program is designed to promote compliance with the Act and Commission regula- tions and to reduce the cost of processing complaints by encouraging settlements outside the agency's normal enforcement track."
+    "glossary-term": "Candidate ID",
+    "glossary-definition": "A unique identifier assigned to each candidate registered with the FEC. The initial character indicates the office sought. (H)ouse, (S)enate, (P)resident. If a person runs for several offices, they will have separate Candidate IDs for each office."
   },
   {
-    "term":"Agent",
-    "definition":"Any person who has actual authority, either express or implied, to engage in certain campaign activities on be- half of a federal candidate or officeholder."
+    "glossary-term": "Party",
+    "glossary-definition": "Party affiliation as stated on a candidate’s 'Statement of Candidacy.'"
   },
   {
-    "term":"AO",
-    "definition":"Advisory Opinion. A formal ruling from the Commission regarding legality of a specific activity proposed in an advisory opinion request (AOR)."
+    "glossary-term": "District",
+    "glossary-definition": "A U.S. House of Representatives District. Because Senators represent an entire state, Senate races do not have districts associated with them."
   },
   {
-    "term":"Authorized Committee",
-    "definition":"Any political committee, including the principal campaign committee, authorized in writing by a federal candidate to receive contributions and make expenditures on his or her behalf. Authorized committees are often called “candidate committees” or “campaign committees.”"
+    "glossary-term": "Organization Type",
+    "glossary-definition": "Certain filers, like Separate Segregated Funds, certain types of PACs, and Communication Cost filers identify the types of organizations they are associated with.  These entities can be associated with corporations, trade associations, labor organizations, cooperatives, membership organizations, or corporations without capital stock, or have no association."
   },
   {
-    "term":"Bundled Contribution",
-    "definition":"Under HLOGA, the term “bundled contribution” means a contribution (subject to the applicable threshold) which is - “(i) forwarded from the contributor or contributors to the recipient by a lobbyist/registrant; or (ii) received by the committee from a contributor or contributors, but credited by the committee or candidate involved (or, in the case of a leadership PAC, by the candidate associated with the PAC) to the person through records, designations, or other means of recognizing that a certain amount of money has been raised by the person.”"
+    "glossary-term": "Committee Type",
+    "glossary-definition": "A definition that categorizes groups organized to raise and spend money in federal elections. The basic committee types are principal campaign committee, political party committee, and political action committee (PAC)."
   },
   {
-    "term":"Campaign Committee",
-    "definition":"Popular term for an authorized committee."    
+    "glossary-term": "Total Receipts",
+    "glossary-definition": "The sum of all money received by a committee as reported to the FEC, including contributions, during a filing period."
   },
   {
-    "term":"Campaign Traveler",
-    "definition":"Any individual traveling in connection with an election for federal office on behalf of a candidate or political committee; or any member of the news media traveling with a candidate."
+    "glossary-term": "Total Disbursements",
+    "glossary-definition": "The sum of all money spent by a committee as reported to the FEC during a filing period."
   },
   {
-    "term":"Candidate",
-    "definition":"An individual seeking nomination for election, or election, to a federal office becomes a candidate when he or she (or agents working on his or her behalf) raises contributions or makes expenditures that exceed $5,000."
+    "glossary-term": "Ending Cash on Hand",
+    "glossary-definition": "The ending cash balance on a report for a particular time period. Cash on hand includes funds held in checking and savings accounts, certificates of deposit, petty cash funds, traveler’s checks, treasury bills and other investments valued at cost."
   },
   {
-    "term":"CFR",
-    "definition":"Code of Federal Regulations. A codification of the current general and permanent regulations of the various fed- eral agencies. The sections of the CFR pertaining to federal elections are available on the FEC’s website or as a free pub- lication from the FEC."  
+    "glossary-term": "Debt",
+    "glossary-definition": "The amount of money a committee owes to other entities at the end of the filing period."
   },
   {
-    "term":"Contribution",
-    "definition":"A payment, service or anything of value given to influence a federal election."   
+    "glossary-term": "Joint Fundraising",
+    "glossary-definition": "Fundraising conducted jointly by a political committee and one or more other political committees or unregistered organizations.  Joint fundraising is often conducted between a principal campaign committee and a political party committee."
   },
   {
-    "term":"Coordinated",
-    "definition":"Made in cooperation, consultation or concert with, or at the request or suggestion of, a candidate, a candidate’s authorized committee, or their agents, or a political party committee or its agents."
+    "glossary-term": "Joint Fundraising Committee",
+    "glossary-definition": "A committee that has been set up for the purposes of fundraising for multiple committees at the same time, or an existing committee that has been authorized to serve that purpose."
   },
   {
-    "term":"Coordinated Party Expenditure",
-    "definition":"Also known as a 441a(d) expenditure. Certain expenditures under specific limits that are made by a national or state party committee in connection with the general election campaign of its candidates."
+    "glossary-term": "Reports and Statements",
+    "glossary-definition": "All committees registered with the FEC are required to file reports and statements regularly that disclose their financial activity.  The contents of those reports and statements, as well as the filing schedule, depend on the type of committee or organization."
   },
   {
-    "term":"Date Made",
-    "definition":"The date the contributor relinquishes control over a contribution. This date determines the election against which a contribution will count. A contribution that is mailed is “made” on the date of the postmark. Contributions made via the Internet are made on the date the contributor electronically confirms making the transaction. In-kind con- tributions are “made” on the date the goods or services are provided by the contributor."
+    "glossary-term": "Filing",
+    "glossary-definition": "A report or statement submitted to the FEC by a candidate, committee, or other filing entity. Entities are required to file to declare their status as a candidate or committee and to report the money they raise and spend."
   },
   {
-    "term":"Date Received",
-    "definition":"The date the committee (or committee agent) takes possession of (actually receives) the contribution. This date is used for FEC reporting. Contributions charged to credit cards are received on the date the committee re- ceives the contributor’s signed authorization to charge the contribution."  
+    "glossary-term": "Authorized Committee",
+    "glossary-definition": "A committee that has been authorized by a candidate to raise or spend money on his or her behalf."
   },
   {
-    "term":"Disclaimer Notice",
-    "definition":"As used by the FEC, notices that are put on public communications to identify who paid for and authorized the communication."
+    "glossary-term": "Committee",
+    "glossary-definition": "An entity that meets one of the following conditions:<ul class='default-ul'><li>An authorized committee of a candidate (see definition of candidate)</li><li>A state party committee or nonparty committee, club, association or other group of persons that receives contributions or makes  expenditures, either of which aggregate over $1,000 during a calendar year</li><li>A local unit of a political party (except a state party committee) that: (1) receives contributions aggregating over $5,000 during  a calendar year; (2) makes contributions or  expenditures either of which aggregate over  $1,000 during a calendar year; or (3) makes payments aggregating over $5,000 during a  calendar year for certain activities which are exempt from the definitions of contribution and expenditure (11 CFR 100.80, 100.87 and 100.89;  11 CFR 100.140, 100.147 and 100.149)</li><li>Any separate segregated fund upon its establishment. 11 CFR 100.5.</li><ul>"
   },
   {
-    "term":"Earmarked Contribution",
-    "definition":"A contribution that the contributor directs (either orally or in writing) to a clearly identi- fied candidate or authorized committee through an intermediary or conduit. Earmarking may take the form of a designa- tion, instruction or encumbrance, and it may be direct or indirect, express or implied."
+    "glossary-term": "Principal Campaign Committee",
+    "glossary-definition": "An authorized committee designated by a candidate as the principal committee to raise contributions and make expenditures for his or her campaign for a federal office."
   },
   {
-    "term":"Election",
-    "definition":"Any one of several processes by which an individual seeks nomination for election, or election, to federal office. They include: a primary election, including a caucus or convention that has authority to select a nominee; a gen- eral election; a runoff election; and a special election held to fill a vacant seat."
+    "glossary-term": "Candidate",
+    "glossary-definition": "An individual seeking nomination for election, or election, to a federal office becomes a candidate when he or she (or agents working on his or her behalf) raises contributions or makes expenditures that exceed $5,000."
   },
   {
-    "term":"Election Cycle",
-    "definition":"The period beginning the day after the previous general election (for federal office) and ending on the day of the next general election."
-  },
-  {
-    "term":"FEC Identification Number",
-    "definition":"Number assigned to a committee upon registration with the FEC. Used for identification purposes with the FEC only, this number is not a taxpayer identification number."
-  },
-  {
-    "term":"Federal Funds",
-    "definition":"Funds that comply with the limits, prohibitions and reporting requirements of federal law. Also called “permissible funds.”"
-  },
-  {
-    "term":"Federal Government Contractor",
-    "definition":"A person who enters into a contract, or is bidding on such a contract, with any agency or department of the US government and is paid, or to be paid, for services, material, equipment, supplies, land or building with funds appropriated by Congress."
-  },
-  {
-    "term":"Foreign National",
-    "definition":"An individual who is not a citizen of the United States or a national of the United States and has not been lawfully admitted to the U.S. for permanent residence, as defined in 8 U.S.C.§1101(a)(20); or (2) a foreign princi- pal, as defined in 22 U.S.C.§611(b)."
-  },
-  {
-    "term":"HLOGA",
-    "definition":"Honest Leadership and Open Government Act of 2007. Includes two major provisions for political commit- tees: restrictions on the use of campaign funds for noncommercial air travel and disclosure of bundled contributions."
-  },
-  {
-    "term":"Carrie Committee",
-    "definition":"A political committee that maintains one bank account for making contributions in connection with federal elections and a separate \"non-contribution account\" for making independent ex- penditures. The first account is subject to all of the limits and prohibitions of the Act, but the non-contribution account may accept unlimited contributions from individuals, corporations, labor organizations and other political committees. The committee must register with the FEC and report all receipts and disbursements for both accounts."
-  },
-  {
-    "term":"Hybrid PAC (or Carrie Committee)",
-    "definition":"A political committee that maintains one bank account for making contributions in connection with federal elections and a separate \"non-contribution account\" for making independent ex- penditures. The first account is subject to all of the limits and prohibitions of the Act, but the non-contribution account may accept unlimited contributions from individuals, corporations, labor organizations and other political committees. The committee must register with the FEC and report all receipts and disbursements for both accounts."
-  },
-  {
-    "term":"IEOPC",
-    "definition":"Independent Expenditure-Only Political Committee (also known as a Super PAC). A political committee that makes independent expenditures, but does not make contributions. These committees may solicit and accept unlim- ited contributions from individuals, corporations, labor organizations and other political committees. They may not ac- cept contributions from foreign nationals, federal government contractors, national banks or federally chartered corpora- tions. Such committees must register with the FEC and comply with all applicable reporting requirements under the Act."
-  },
-  {
-    "term":"In-Kind Contribution",
-    "definition":"A contribution of goods, services or property offered free or at less than the usual and normal charge. The term also includes payments made on behalf of, but not directly to, candidates and political committees."
-  },
-  {
-    "term":"Joint Contribution",
-    "definition":"A contribution made by more than one person on a single check or other written instrument."
-  },
-  {
-    "term":"Joint Fundraising",
-    "definition":"Fundraising conducted jointly by a political committee and one or more other committees."
-  },
-  {
-    "term":"Leadership PAC",
-    "definition":"‘‘A political committee that is directly or indirectly established, financed, maintained or controlled by [a] candidate [for Federal office] or [an] individual [holding Federal office] but which is not an authorized committee of the candidate or individual and which is not affiliated with an authorized committee of the candidate or individual, except that such term does not include a political committee of a political party.’’"
-  },
-  {
-    "term":"Lobbyist/Registrant",
-    "definition":"A person who is a current registrant under the Lobbyist Disclosure Act, or who is named on a cur- rent registration or report filed under the Lobbyist Disclosure Act."
-  },
-  {
-    "term":"Lobbyist/Registrant PAC",
-    "definition":"Any political committee that a lobbyist/registrant “established or controls” as defined in 104.22."
-  },
-  {
-    "term":"Local or District Party Committee",
-    "definition":"A political party committee responsible for the day-to-day operation of a political party at a level lower than the state level."
-  },
-  {
-    "term":"Local Party Organization",
-    "definition":"Same as Local Party Committee except that a local party organization is not a federally- registered political committee."
-  },
-  {
-    "term":"Memo Entry",
-    "definition":"Supplemental information on a reporting schedule. The dollar amount in a memo entry is not incorporated into the total figure."
-  },
-  {
-    "term":"Multicandidate Committee",
-    "definition":"A political committee that has been registered with the FEC for at least 6 months, has more than 50 contributors and, with the exception of state party committees, has made contributions to at least 5 candidates for federal office."
-  },
-  {
-    "term":"MUR",
-    "definition":"Matter Under Review. MURs are FEC enforcement cases that concern potential violations of the Act (FECA) which come to the attention of the Commission through complaints originating outside the Commission or through internal monitoring."
-  },
-  {
-    "term":"Net Debts Outstanding",
-    "definition":"The total of a campaign’s unpaid debts incurred with respect to an election plus estimated costs to liquidate the debts plus costs of terminating political activity (if appropriate) minus cash on hand and receivables."
-  },
-  {
-    "term":"Nonconnected Committee",
-    "definition":"A political committee that is not a party committee, a separate segregated fund or an authorized committee of a candidate."
-  },
-  {
-    "term":"Nonfederal Funds",
-    "definition":"Funds that are not subject to the limitations or prohibitions of the Act."
-  },
-  {
-    "term":"OGC",
-    "definition":"Office of General Counsel. The Office of General Counsel consists of five organizational units: (1) the Policy Di- vision; (2) the Enforcement Division; (3) the Litigation Division; (4) the General Law and Advice Division; and (5) the Office of Complaints Examination and Legal Administration."
-  },
-  {
-    "term":"PAC",
-    "definition":"Political Action Committee. A term which does not appear in the Act or regulations, but is generally used to refer to separate segregated funds established by corporations and labor organizations and nonconnected committees."
-  },
-  {
-    "term":"Personal Use",
-    "definition":"Any use of funds in a campaign account of a candidate (or former candidate) to pay for a commitment, obligation or expense (of any person) that would exist irrespective of the candidate’s campaign or duties as a federal officeholder."
-  },
-  {
-    "term":"Principal Campaign Committee",
-    "definition":"An authorized committee designated by a candidate as the principal committee to raise contributions and make expenditures for his or her campaign for a federal office."
-  },
-  {
-    "term":"Prohibited Sources",
-    "definition":"Those entities that are banned from making contributions or, in some cases, expenditures, in con- nection with, or for the purpose of influencing, a federal election."
-  },
-  {
-    "term":"Public Communication",
-    "definition":"A communication by means of any broadcast, cable or satellite communication, newspaper, magazine, outdoor advertising facility, mass mailing or telephone bank, or communications placed for a fee on another person’s website."
-  },
-  {
-    "term":"RAD",
-    "definition":"Reports Analysis Division. The FEC division that reviews campaign finance reports."
-  },
-  {
-    "term":"Reattributed Contribution",
-    "definition":"The portion of an excessive contribution that has been attributed in writing to another contributor and signed by both contributors."
-  },
-  {
-    "term":"Redesignated Contribution",
-    "definition":"The portion of a contribution (usually excessive) that has been designated by the con- tributor, in writing, to an election other than the one for which the funds were originally given."
-  },
-  {
-    "term":"RFAI",
-    "definition":"Request for Additional Information. Sent by RAD to committees when reports contain apparent discrepancies, errors or surface violations."
-  },
-  {
-    "term":"Solicit",
-    "definition":"To ask, request or recommend, explicitly or implicitly, that another person make a contribution, donation, trans- fer of funds or otherwise provide anything of value."
-  },
-  {
-    "term":"SSF",
-    "definition":"Separate Segregated Fund. A political committee established and/or financially supported by a corporation or la- bor organization; popularly called a PAC."
-  },
-  {
-    "term":"State Party Committee",
-    "definition":"A political committee which, by the bylaws of a political party, is responsible for the day-to- day operation of the party at the state level, as determined by the Commission"
-  },
-  {
-    "term":"Super PAC",
-    "definition":"Also known as Independent Expenditure-Only Political Committee. A political committee that makes independent expenditures, but does not make contributions. These committees may solicit and accept unlim- ited contributions from individuals, corporations, labor organizations and other political committees. They may not ac- cept contributions from foreign nationals, federal government contractors, national banks or federally chartered corpora- tions. Such committees must register with the FEC and comply with all applicable reporting requirements under the Act."
-  },
-  {
-    "term":"527 Organization",
-    "definition":"Entities organized under section 527 of the tax code are considered \"political organizations,\" defined generally as a party, committee or association that is organized and operated primarily for the purpose of influencing the selection, nomination or appointment of any individual to any federal, state or local public office, or office in a political organization. All political committees that register and file reports with the FEC are 527 organizations, but not all 527 organizations are required to file with the FEC. Some file reports with the Internal Revenue Service (IRS). For additional information on 527 organizations, please visit the IRS web site."
-  },
-  {
-    "term":"FEC",
-    "definition":"The Federal Election Commission (FEC) is an independent regulatory agency established in 1975 to administer and enforce the Federal Election Campaign Act (FECA). That statute limits the sources and amounts of the contributions used to finance federal elections, requires public disclosure of campaign finance information and--in tandem with the Primary Matching Payment Act and the Presidential Election Campaign Fund Act--provides for the public funding of Presidential elections. For more information on the FEC's role in regulating federal elections, see the brochure \"The FEC and the Federal Campaign Finance Law.\" Please note that the rules governing elections for state or local offices and procedures for getting on the ballot for an election are outside of the purview of the FEC. You will want to contact the Secretary of State or appropriate election office in your state for more information. For a guide to state offices, please see our Combined Federal/State Disclosure and Election Directory."
-  },
-  {
-    "term":"Electioneering Communication",
-    "definition":"An electioneering communication is any broadcast, cable or satellite communication that fulfills each of the following conditions: The communication refers to a clearly identified candidate for federal office; The communication is publicly distributed shortly before an election for the office that candidate is seeking; and The communication is targeted to the relevant electorate (U.S. House and Senate candidates only)."
-  },
-  // From here on down are written by Noah
-  {
-    "term":"Status",
-    "definition": "Refers to whether the candidate is an incumbent, challenging an incumbent or running for an open seat."
-  },
-  {
-    "term":"Candidate ID",
-    "definition":"A unique identifier assigned to each candidate filed with the FEC."
-  },
-  {
-    "term":"Party",
-    "definition":"The political party that a candidate or committee is formally affiliated with."
-  },
-  {
-    "term":"District",
-    "definition":"A U.S. House District. Because Senators represent an entire state, Senate races do not have districts associated with them."
-  },
-  {
-    "term":"Organization Type",
-    "definition":"Insert def here"
-  },
-  {
-    "term":"Committee Type",
-    "definition":"Insert"
-  },
-  {
-    "term":"Committee Designation",
-    "definition":"Insert"
-  },
-  {
-    "term":"Receipts",
-    "definition":"The sum of all money received by a committee as reported to the FEC."
-  },
-  {
-    "term":"Disbursements",
-    "definition":"The sum of all money spent by a committee as reported to the FEC."
-  },
-  {
-    "term":"Cash on Hand",
-    "definition": "The ending cash balance on the filing for a particular time period."
-  },
-  {
-    "term":"Debt",
-    "definition": "The amount of money a committee owes to other entities."
-  },
-  {
-    "term":"Joint Fundraising Committee",
-    "definition":"Insert",
-  },
-  {
-    "term":"Report",
-    "definition":"Insert"
-  },
-  {
-    "term":"Filing",
-    "definition":"Insert"
-  }
+    "glossary-term": "None",
+    "glossary-definition":" If data appears as 'None', it is best to check the source document. Common reasons that the data appears as 'None' are:<ul class='default-ul'><li>Data is not processed yet; often, paper filings cause delays and inconsistent upload times.</li><li>Data is from an amendment that did not properly identify the form it was amending.</li><li>The filer did not fill out the information on the form.</li></ul>If you think there is an error, you can report that via <a href='mailto:18F-FEC@gsa.gov'>email</a>."
+   }
 ]

@@ -1,33 +1,49 @@
 // the amount of padding at the bottom of vertical bar charts
 $chart-bottom: 30px;
 // the width of the axis for vertical bar charts
-$chart-axis-width: 100px;
+$chart-axis-width: 120px;
 
 $tooltip-arrow-size: 8px;
 $tooltip-border-color: #999;
+
+.chart-container {
+  border: 1px solid $light-gray;
+
+  .figure__title {
+    border-bottom: 1px solid $light-gray;
+    background: $lightest-gray;
+    padding: .5rem 1rem;
+  }
+
+  .chart-series {
+    margin: 1rem;
+  }
+}
 
 .chart-series__bar {
   background: #ccc;
 }
 
 .data--disbursement,
-.data--disbursements { 
-  background: $data-disbursement; 
+.data--disbursements,
+.data--total_disbursements_period {
+  background: $data-disbursement;
   .chart-series__bar__tooltip {
     color: $data-disbursement;
   }
 }
 
-.data--receipts { 
-  background: $data-receipt; 
+.data--receipts,
+.data--total_receipts_period {
+  background: $data-receipt;
   .chart-series__bar__tooltip {
     color: $data-receipt;
   }
 }
 
 .data--cash,
-.data--cash_on_hand { 
-  background: $data-cash; 
+.data--cash_on_hand_end_period {
+  background: $data-cash;
   .chart-series__bar__tooltip {
     color: $data-cash;
   }
@@ -35,8 +51,8 @@ $tooltip-border-color: #999;
 }
 
 .data--debt,
-.data--debts_owed { 
-  background: $data-debt; 
+.data--debts_owed_by_committee {
+  background: $data-debt;
   .chart-series__bar__tooltip {
     color: $data-debt;
   }
@@ -74,9 +90,13 @@ $tooltip-border-color: #999;
   @include display(flex);
   @include flex-direction(row);
   @include align-items(flex-end);
-  padding-left: $chart-axis-width;
   padding-bottom: $chart-bottom;
+  padding-left: 0;
   height: 200px;
+
+  @include media($medium) {
+    padding-left: $chart-axis-width;
+  }
 
   &.chart-series--short {
     height: 100px;
@@ -90,8 +110,8 @@ $tooltip-border-color: #999;
     padding-top: 1px;
     position: relative;
     height: 100%;
-    
-    margin-left: 2em;
+
+    margin-left: 10%;
 
     &:first-of-type {
       margin-left: 0;
@@ -106,6 +126,8 @@ $tooltip-border-color: #999;
     @include display(flex);
     @include flex-direction(row);
     @include align-items(flex-end);
+    max-width: 90px;
+    z-index: 9;
 
     .chart-series__bar + .chart-series__bar {
       margin-left: .5em;
@@ -115,10 +137,14 @@ $tooltip-border-color: #999;
   .chart-series__axis {
     position: absolute;
     top: 0;
-    left: $chart-axis-width;
+    left: 0;
     right: 0;
     bottom: $chart-bottom;
-    z-index: -10;
+
+    @include media($medium) {
+      left: $chart-axis-width;
+      right: 20px;
+    }
   }
 
   .chart-series__axis__tick {
@@ -130,10 +156,15 @@ $tooltip-border-color: #999;
     height: 1em;
 
     .chart-series__axis__tick__text {
+      display: none;
       position: absolute;
       right: 100%;
       top: .2em;
       padding-right: 1em;
+
+      @include media($medium) {
+        display: block;
+      }
     }
 
     &:after {
@@ -150,12 +181,17 @@ $tooltip-border-color: #999;
 }
 
 .chart-series__group__label {
+  font-size: 1rem;
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
   padding-top: .25em;
   text-align: center;
+
+  @include media($medium) {
+    font-size: 1.2rem;
+  }
 }
 
 .chart-series__bar__tooltip {

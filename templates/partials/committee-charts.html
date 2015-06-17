@@ -1,34 +1,43 @@
+{% with %}
+{% set reports = committee.reports  %}
+{% set totals = committee.totals  %}
 {% import 'macros/charts.html' as charts %}
+{% import 'macros/null.html' as null %}
 {% macro group_bar_tooltip(value, key) %}
 <div class="chart-series__bar__tooltip">
   <h5 class="chart-series__bar__tooltip__title">{{ key|replace('_', ' ')|title }}</h5>
-  <span class="chart-series__bar__tooltip__value">{{ value|currency }}</span>
+  <span class="chart-series__bar__tooltip__value">{{ null.null( value | currency )}}</span>
 </div>
 {% endmacro %}
 
+{% if series_group_has_data(reports, ('total_receipts_period', 'total_disbursements_period')) %}
 <div class="row">
   <figure class="chart-container chart--r-d">
     <div class="figure__title">
       <h4>Receipts and Disbursements</h4>
       <ul class="figure__key flat-list">
-        <li><span class="swatch data--receipts"></span> Receipts</li>
-        <li><span class="swatch data--disbursements"></span> Disbursements</li>
+        <li><span class="swatch data--receipts"></span> Total Receipts</li>
+        <li><span class="swatch data--disbursements"></span> Total Disbursements</li>
       </ul>
     </div>
-    {{ charts.chart_series_grouped(committee.totals, ('receipts', 'disbursements'),
+    {{ charts.chart_series_grouped(reports | reverse | list, ('total_receipts_period', 'total_disbursements_period'),
        label_key=('coverage_start_date', 'coverage_end_date'), tooltip=group_bar_tooltip) }}
   </figure>
 </div>
+{% endif %}
+{% if series_group_has_data(reports, ('cash_on_hand_end_period', 'debts_owed_by_committee')) %}
 <div class="row">
   <figure class="chart-container chart--c-d">
     <div class="figure__title">
       <h4>Cash and Debt</h4>
       <ul class="figure__key flat-list">
-        <li><span class="swatch data--cash"></span> Cash</li>
+        <li><span class="swatch data--cash"></span> Ending Cash on Hand</li>
         <li><span class="swatch data--debt"></span> Debt</li>
       </ul>
     </div>
-    {{ charts.chart_series_grouped(committee.reports, ('cash', 'debt'),
+    {{ charts.chart_series_grouped(reports | reverse | list, ('cash_on_hand_end_period', 'debts_owed_by_committee'),
        label_key=('coverage_end_date'), tooltip=group_bar_tooltip) }}
   </figure>
 </div>
+{% endif %}
+{% endwith %}

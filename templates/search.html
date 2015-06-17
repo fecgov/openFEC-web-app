@@ -1,7 +1,11 @@
 {% extends "layouts/main.html" %}
 
+{% block title %}
+    Home
+{% endblock %}
+
 {% block body %}
-{% include "partials/search-bar.html" %}
+{% include "partials/hero.html" %}
 <section class="page-section" aria-labelledby="browse-heading">
     <div class="container">
         <div class="page-section__intro">
@@ -10,23 +14,53 @@
             <p class="text--lead">OpenFEC currently has financial data for all candidates for federal office and profile information for other committees involved in federal races, and we will be adding more soon.</p>
         </div>
         <div class="card-grid">
-            <div class="row">
-                <div class="card">
-                    <h3><img src="/static/img/icon-candidate.svg" class="category-icon"  alt="Icon representing candidates">Candidates</h3>
-                    <p>Candidates are people who have are running or have run for office. Active candidates have at least one committee they have authorized to raise and spend money in elections. If a person has been a candidate for multiple offices (for example, they ran for senate one year and president another year), they will have a candidate page for each office sought.</p>
-                    <p><a href="/candidates">Browse all candidates &raquo;</a></p>
-                </div>
-                <div class="card card--icon">
-                    <h3><img class="category-icon" src="/static/img/icon-committee.svg" alt="Icon representing committees">Committees</h3>
-                    <p>Committees are legal entities created to raise and spend money in federal elections. There are many different types of committees involved in federal elections, and different types of committees have different fundraising and spending limitations and different requirements for reporting their activity. OpenFEC provides a glossary feature to help you understand the different types of committees as you browse through the site.</p>
-                    <p><a href="/committees">Browse all committees &raquo;</a></p>
-                </div>
-            </div>                       
+            <div class="card">
+                <h3><img src="/static/img/icon-candidate.svg" class="category-icon"  alt="Icon representing candidates">Candidates</h3>
+                <p>Candidates are people who are running or have run for office. Active candidates have at least one committee they have authorized to raise and spend money on their behalf in elections. If a person has been a candidate for multiple offices (for example, they ran for the Senate one year and President another year), they will have a candidate page for each office sought.</p>
+                <p><a href="/candidates">Browse all candidates &raquo;</a></p>
+            </div>
+            <div class="card card--icon">
+                <h3><img class="category-icon" src="/static/img/icon-committee.svg" alt="Icon representing committees">Committees</h3>
+                <p>There are many different types of committees involved in federal elections, and different types of committees have different fundraising and spending limitations and different requirements for reporting their activity. Committees can come in the form of an entity authorized by a candidate, a state or local political party, a non-party club or association or other group, and more.</p>
+                <p>For a full definition, <a class="term" data-term="Committee">click here</a>.</p>
+                <p><a href="/committees">Browse all committees &raquo;</a></p>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="page-section section--gray" aria-labelledby="help-heading">
+<section class="page-section section--gray" aria-labelledby="progress-heading" id="progress">
+    <div class="container">
+        <h2 id="progress-heading">About This Site</h2>
+        <p class="text--lead">Welcome to OpenFEC, the Federal Election Commission’s new app for exploring campaign finance disclosure data. This site is in <a href="https://18f.gsa.gov/dashboard/stages/#beta" target="_blank">beta</a>, which means we’re actively working on it and adding new features. The official site for FEC data is still the <a href="http://www.fec.gov/pindex.shtml">Campaign Finance Disclosure Portal</a>.</p>
+        <div class="row">
+            <div class="chunk--half box">
+                <h3>Current Features</h3>
+                <ul class="list--completed">
+                    <li>Search for candidates and committees</li>
+                    <li>Browse and filter candidates and committees</li>
+                    <li>View redesigned candidate and committee pages</li>
+                    <li>View all of a candidate’s authorized and joint fundraising committees</li>
+                    <li>View latest report</li>
+                    <li><a href="{{ url_for('developers') }}">A public API</a></li>
+                </ul>
+            </div>
+            <div class="chunk--half box">
+                <h3>Coming Soon</h3>
+                <ul class="list--uncompleted">
+                    <li>View candidate reports, committee reports, and other filings</li>
+                    <li>View and filter individual contributions, disbursements and other transactions</li>
+                    <li>Download raw data and specialized datasets</li>
+                    <li>Election pages</li>
+                    <li>Campaign finance data visualizations</li>
+                 </ul>
+            </div>
+        </div>
+        <p class="text--lead">We're working hard to make OpenFEC a useful addition to the resources available at FEC.gov. Do you have feedback or feature requests? <a href="mailto:18F-FEC@gsa.gov">Email us</a> and tell us what works well and what needs improvement.</p>
+    </div>
+</section>
+
+<section class="page-section section--slate" aria-labelledby="help-heading">
     <div class="container">
         <h2 id="help-heading">Need Help Understanding the Terms?</h2>
         <div class="chunk--half">
@@ -34,9 +68,7 @@
             <p class="text--lead">For example, click on this term to see its definition: <span class="term" data-term="principal campaign committee">Principal Campaign Committee</span></p>
         </div>
         <div class="chunk--half">
-            <div class="image--framed__container">
-                <img class="img--framed u-not-responsive" src="/static/img/glossary-example.gif" alt="To use the glossary, click on the question mark icon in the menu.">
-            </div>
+          <img class="image--framed" src="/static/img/glossary.jpg" alt="To use the glossary, click on the question mark icon in the menu.">
         </div>
     </div>
 </section>

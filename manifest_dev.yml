@@ -1,0 +1,10 @@
+---
+inherit: manifest_base.yml
+host: fec-dev-web
+services:
+# Must provide FEC_WEB_USERNAME, FEC_WEB_PASSWORD, NEW_RELIC_LICENSE_KEY
+  - fec-creds-dev
+env:
+  NEW_RELIC_APP_NAME: OpenFEC Web (development)
+  FEC_WEB_API_URL: http://fec-dev-api.cf.18f.us
+  FEC_WEB_DEBUG: True

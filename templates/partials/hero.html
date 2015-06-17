@@ -1,0 +1,21 @@
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container">
+    <div class="hero__content">
+      <h1 id="hero-heading" class="text--display">Explore Campaign Finance Data</h1>
+      <p class="text--hero">OpenFEC lets you see how money is raised and spent in federal elections.</p>
+      <form id="large-search" action="/" autocomplete="off" class="js-search">
+        <label for="search" class="text--hero">
+          To get started, search for a federal
+          <a tabindex="0" class="term term--underlined" data-term="Candidate">
+            candidate</a> or
+          <a tabindex="0" class="term term--underlined" data-term="Committee">
+            committee</a>.</label>
+            {% include 'partials/search-bar.html' %}
+          </div>
+      </form>
+    </div>
+  <script type="application/javascript">
+    trackMetric('large_search_loaded', '#large-search .js-search_img');
+  </script>
+  </div>
+</section>

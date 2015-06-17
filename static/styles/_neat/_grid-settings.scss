@@ -1,8 +1,0 @@
-// Neat Breakpoints
-$small-screen: em(500);
-$medium-screen: em(768);
-$large-screen: em(980);
-
-$large: new-breakpoint(min-width $large-screen 24);
-$medium: new-breakpoint(min-width $medium-screen 12);
-$small: new-breakpoint(min-width $small-screen 4);

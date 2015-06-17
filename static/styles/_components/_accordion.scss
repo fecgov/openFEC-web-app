@@ -4,19 +4,32 @@
 }
 
 .accordion__button {
+  @include icon-circle;
+  @include icon-after("\e622");
   display: block;
   right: 1%;
   position: absolute;
-  top: 25%;
+  top: .3rem;
 
-  .accordion__icon {
-    @include icon-after("\e622");
-    @include icon-circle;
+  &:hover {
+    color: #fff;
+  }
+
+  &:after {
+    font-size: 1.5rem !important;
+    margin-left: 0 !important;
+    position: absolute;
+    left: .5rem;
+    top: .5rem;
+  }
+
+  @include media($medium) {
+    top: 25%;
   }
 }
 
 .accordion--collapsed {
-  .accordion__icon {
+  .accordion__button {
     @include icon-after("\e61a");
   }
 }

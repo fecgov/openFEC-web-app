@@ -1,0 +1,46 @@
+{% with committee=context() %}
+
+{% set table_data = [
+     (reports.0.individual_itemized_contributions_period, 'Itemized Individual Contributions'),
+     (reports.0.individual_unitemized_contributions_period, 'Unitemized Individual Contributions'),
+     (reports.0.total_individual_contributions_period, 'Total Individual Contributions'),
+     (reports.0.political_party_committee_contributions_period,'Party Committee Contributions'),
+     (reports.0.other_political_committee_contributions_period,'Other Committee Contributions'),
+     (reports.0.candidate_contribution_period, 'Candidate Contributions'),
+     (reports.0.total_contributions_period, 'Total Contributions'),
+     (reports.0.transfers_from_other_authorized_committee_period, 'Transfer from Authorized Committees'),
+     (reports.0.loans_made_by_candidate_period, 'Loans Made by Candidate'),
+     (reports.0.all_other_loans_period, 'Other Loans'),
+     (reports.0.total_loans_period, 'Total Loans Received'),
+     (reports.0.offsets_to_operating_expenditures_period, 'Offsets to Operating Expenditures'),
+     (reports.0.other_receipts_period, 'Other Receipts'),
+   ]
+%}
+{{ totals_table('Total Receipts', reports.0.total_receipts_period, table_data,
+    committee.report_year, header_description='Money received by the committee' ) }}
+
+{% set table_data = [
+     (reports.0.operating_expenditures_period, 'Operating expenditures'),
+     (reports.0.transfers_to_other_authorized_committee_period, 'Transfers to authorized committees'),
+     (reports.0.loan_repayments_candidate_loans_period, 'Candidate Loan Repayments'),
+     (reports.0.loan_repayments_other_loans_period, 'Other Loan Repayments'),
+     (reports.0.total_loan_repayments_period, 'Total Loan Repayments'),
+     (reports.0.refunded_individual_contributions_period, 'Individual Refunds'),
+     (reports.0.refunded_political_party_committee_contributions_period, 'Political Party Refunds'),
+     (reports.0.refunded_other_political_committee_contributions_period, 'Other Committee Refunds'),
+     (reports.0.other_disbursements_period, 'Other Disbursements'),
+     (reports.0.total_contribution_refunds_period, 'Total Contribution refunds'),
+   ]
+%}
+
+{{ totals_table('Total Disbursements', reports.0.total_disbursements_period, table_data,
+    committee.report_year, header_description='Money spent by the committee' ) }}
+
+{{ totals_table('Beginning Cash on Hand', reports.0.cash_on_hand_beginning_period) }}
+{{ totals_table('Ending Cash on Hand', reports.0.cash_on_hand_end_period) }}
+{{ totals_table('Net Contributions', reports.0.net_contributions_period) }}
+{{ totals_table('Net Operating Expenditures', reports.0.net_operating_expenditures_period) }}
+{{ totals_table('Debts Owed to Committee', reports.0.debts_owed_to_committee) }}
+{{ totals_table('Debts Owed by Committee', reports.0.debts_owed_by_committee) }}
+
+{% endwith %}

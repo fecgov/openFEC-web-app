@@ -1,184 +1,191 @@
 'use strict';
 
-/* global require, Bloodhound */
+/* global require, module, window, document, Bloodhound, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
-require('typeahead.js/dist/typeahead.bundle.js');
+var _ = require('underscore');
+require('typeahead.js');
+var URI = require('URIjs');
 var Handlebars = require('handlebars');
+var keyboard = require('keyboardjs');
 
 var events = require('./events.js');
 var terms = require('./terms');
 var glossary = require('./glossary.js');
 
-var filterCandidates = function(result) {
+var SUGGESTION_LIMIT = 10;
 
-  var officeFull,
-      officeMap,
-      filteredResults;
-  
-  officeMap = {
-    "H": "House of Representatives",
-    "S": "Senate",
-    "P": "President"
-  }
+var officeMap = {
+  H: 'House',
+  S: 'Senate',
+  P: 'President'
+};
 
-  officeFull = officeMap[result.office_sought];
-
-  filteredResults =   {
+function filterCandidates(result) {
+  return {
     name: result.name,
-    id: result.candidate_id,
-    office: officeFull
-  }
-  return filteredResults;
-}
-
-var filterCommittees = function(result) {
-  var filteredResults =   {
-    name: result.name,
-    id: result.committee_id
-  }
-  return filteredResults;
+    id: result.id,
+    office: officeMap[result.office_sought]
+  };
 }
 
 module.exports = {
+  getUrl: function(resource) {
+    return URI(API_LOCATION)
+      .path([API_VERSION, 'names', resource].join('/'))
+      .query({
+        q: '%QUERY',
+        api_key: API_KEY
+      })
+      .readable();
+  },
+
+  /**
+   * Create a Bloodhound search engine.
+   *
+   * @param {String} name The name of the engine passed as the name parameter
+   * to Bloundhound.
+   * @param {String|Object} dataSource If a string, will assume its a url and
+   * will set it as a remote. If anything else, will assume it's local data.
+   * @return {Object}
+   */
+  createEngine: function(name, dataSource, filter) {
+    var engine;
+    var options = {
+      name: name,
+      datumTokenizer: function(d) {
+        var tokens = Bloodhound.tokenizers.whitespace(d.name);
+        if (name === 'Glossary') {
+          tokens = Bloodhound.tokenizers.whitespace(d.term);
+        }
+        return tokens;
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      limit: SUGGESTION_LIMIT
+    };
+
+    if (_.isString(dataSource)) {
+      options.remote = {
+        url: dataSource
+      };
+      if (filter) {
+        options.remote.filter = filter;
+      }
+    } else {
+      options.local = dataSource;
+    }
+
+    if (name === 'Committees') {
+      options.dupDetector = function(remoteMatch, localMatch) {
+        return remoteMatch.name === localMatch.name;
+      };
+    }
+
+    engine = new Bloodhound(options);
+    engine.initialize();
+
+    return engine;
+  },
+
+  initTypeahead: function(options, dataset) {
+
+    var $searchBar = $('.search-bar');
+
+    // Setting up main search typehead
+    $searchBar.typeahead(options, dataset);
+
+    // Update placeholder text
+    $searchBar.attr('placeholder', 'Enter a ' + dataset.name + ' name');
+
+    // Open single entity pages when selected
+    $searchBar.on('typeahead:selected', function(event, datum, datasetName) {
+      window.location = window.location.origin + '/' + datasetName + '/' + datum.id;
+    });
+
+    $('.twitter-typeahead').addClass('flex-container').css('display','');
+  },
+
   init: function(){
     var candidateEngine,
         committeeEngine,
         candidateSuggestion,
         committeeSuggestion,
-        headerTpl,
         glossaryEngine,
         glossarySuggestion,
-        url = "/rest/names?q=%QUERY";
+        options,
+        candidateDataSet,
+        committeeDataSet,
+        self = this;
 
-    if (typeof API_LOCATION !== 'undefined') {
-        url = "/names?q=%QUERY&api_key=6wpqET5GjxCwAyBqXjc4dWrfMdshFE6wu3txb6yZ"; // Replace with the correct api key
-        url = API_LOCATION.concat(url);
-    }
-
-    // Creating a candidate suggestion engine
-    candidateEngine = new Bloodhound({
-      name: 'Candidates',
-      remote: {
-        url: url,
-        filter: function(response) {
-          var results = $.map(response.results, function(result){
-            if ( result.candidate_id !== null ) {
-              return filterCandidates(result);
-            }            
-          });
-          return results;
-        }
-      },
-      datumTokenizer: function(d) {
-        var tokens = Bloodhound.tokenizers.whitespace(d.name);
-        return tokens;
-      },
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 5
+    candidateEngine = this.createEngine('Candidates', this.getUrl('candidates'), function(response) {
+      return _.map(response.results, function(result) {
+        return filterCandidates(result);
+      });
     });
 
-    // Committee Engine
-    committeeEngine = new Bloodhound({
-      name: 'Committees',
-      remote: {
-        url: url,
-        filter: function(response) {
-          var results = $.map(response.results, function(result) {
-            if ( result.committee_id !== null ) {
-              return filterCommittees(result);              
-            }
-          });
-          return results;
-        }
-      },
-      datumTokenizer: function(d) {
-        var tokens = Bloodhound.tokenizers.whitespace(d.name);
-        return tokens;
-      },
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      dupDetector: function(remoteMatch, localMatch) {
-        return remoteMatch.name === localMatch.name;
-      },
-      limit: 5
+    committeeEngine = this.createEngine('Committees', this.getUrl('committees'), function(response) {
+      return response.results;
     });
-
-    committeeEngine.initialize();
 
     // Templates for results
-    candidateSuggestion = Handlebars.compile('<span><span class="tt-suggestion__name">{{ name }}</span> <span class="tt-suggestion__office">{{ office }}</span></span>');
+    candidateSuggestion = Handlebars.compile(
+      '<span><span class="tt-suggestion__name">{{ name }}</span>' +
+      '<span class="tt-suggestion__office">{{ office }}</span></span>');
     committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
-    headerTpl = function(label) {
-      return Handlebars.compile('<span class="tt-dropdown-title">' + label + '</span>');
-    }
 
-    // Setting up main search typehead
-    $('.search-bar').typeahead({
+    options = {
       minLength: 3,
       highlight: true,
       hint: false
-    },
-    {
+    };
+
+    candidateDataSet = {
       name: 'candidate',
       displayKey: 'name',
       source: candidateEngine.ttAdapter(),
       templates: {
-        suggestion: candidateSuggestion,
-        header: headerTpl('Candidates'),
+        suggestion: candidateSuggestion
       }
-    },
-    {
+    };
+
+    committeeDataSet = {
       name: 'committee',
       displayKey: 'name',
       source: committeeEngine.ttAdapter(),
       templates: {
-        suggestion: committeeSuggestion,
-        header: headerTpl('Committees'),
+        suggestion: committeeSuggestion
+      }
+    };
+
+    this.initTypeahead(options, candidateDataSet);
+
+    // Focus on search bar on "/"
+    keyboard.on('/', function(e) {
+      e.preventDefault();
+      var bar = _.find($('.search-bar'), function(bar) {
+        return $(bar).is(':visible');
+      });
+      if (bar) {
+        bar.focus();
+      }
+    });
+
+    // When the select committee or candidate box is changed on the search.
+    function updateTypeahead(dataType) {
+      $('.search-bar').typeahead('destroy');
+      if (dataType === 'committees') {
+        self.initTypeahead(options, committeeDataSet);
+      } else {
+        self.initTypeahead(options, candidateDataSet);
       }
     }
-    );
 
-    // Glossary typeahead
-    glossaryEngine = new Bloodhound({
-      name: 'Glossary',
-      local: terms,
-      datumTokenizer: function(d) {
-          var tokens = Bloodhound.tokenizers.whitespace(d.term);
-          return tokens;
-        },
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 3
-    })
+    updateTypeahead($('select[name="search_type"]').val());
 
-    glossaryEngine.initialize();
-    glossarySuggestion = Handlebars.compile('<span>{{ term }}</span>');
-    $('#glossary-search').typeahead({
-            minLength: 3,
-            highlight: true,
-            hint: false
-        },
-        {
-            name: 'Definitions',
-            displayKey: 'term',
-            source: glossaryEngine.ttAdapter(),
-            templates: {
-              suggestion: glossarySuggestion,
-            }
-        }
-    );  
-
-    $('.twitter-typeahead').css({
-      display: 'block',
-    })
-
-    // Open single entity pages when selected
-    $(document).on('typeahead:selected', function(e, suggestion, datasetName) {
-        if ( datasetName === 'Definitions' ) {
-          glossary.setDefinition(suggestion.term, suggestion.definition);
-        } 
-        else {
-          document.location = document.location.origin + '/' + datasetName + '/' + suggestion.id;
-        }
-    })
+    // When the select committee or candidate box is changed on the search.
+    events.on('searchTypeChanged', function(data) {
+      $('.search-bar').typeahead('destroy');
+      updateTypeahead(data.type);
+    });
   }
-}
+};

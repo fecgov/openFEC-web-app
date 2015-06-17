@@ -1,106 +1,264 @@
-from openfecwebapp.config import (port, debug, host, api_location,
-    username, password, test, analytics)
-from flask import Flask, render_template, request
-from flask.ext.basicauth import BasicAuth
-from openfecwebapp.views import (render_search_results, render_table,
-    render_page)
-from openfecwebapp.api_caller import (load_search_results,
-    load_single_type, load_single_type_summary,
-    install_cache)
+import http
 
-import datetime
-import sys
-import locale
+import furl
+from webargs import Arg
+from webargs.flaskparser import use_kwargs
+from dateutil.parser import parse as parse_date
+
+from flask import Flask, render_template, request, redirect
+from flask_sslify import SSLify
+from flask.ext.basicauth import BasicAuth
+
+from openfecwebapp import utils
+from openfecwebapp import config
+from openfecwebapp.views import render_search_results, render_candidate, render_committee
+from openfecwebapp.api_caller import load_search_results, load_with_nested
+
 import jinja2
+import json
+import locale
+import logging
+import re
+
+
 locale.setlocale(locale.LC_ALL, '')
 
+START_YEAR = 1979
+
 app = Flask(__name__)
+
+# ===== configure logging =====
+logger = logging.getLogger(__name__)
+log_level = logging.DEBUG if config.debug else logging.WARN
+logging.basicConfig(level=log_level)
+
 
 @jinja2.contextfunction
 def get_context(c):
     return c
 
-app.jinja_env.globals['api_location'] = api_location
-app.jinja_env.globals['context'] = get_context
 
-if not test:
-    app.config['BASIC_AUTH_USERNAME'] = username
-    app.config['BASIC_AUTH_PASSWORD'] = password
-    app.config['BASIC_AUTH_FORCE'] = True
-    basic_auth = BasicAuth(app)
+def get_absolute_url():
+    url = furl.furl(request.url)
+    if app.config['SERVER_NAME']:
+        url.host = app.config['SERVER_NAME']
+        url.scheme = app.config['PREFERRED_URL_SCHEME']
+    return url.url
 
-if analytics:
-    app.config['USE_ANALYTICS'] = True
 
-def _convert_to_dict(params):
-    """ move from immutablemultidict -> multidict -> dict """
-    params = params.copy().to_dict()
-    params = {key: value for key, value in params.items() if value}
-    return params
+def _get_default_cycles():
+    cycle = utils.current_cycle()
+    return list(range(cycle - 4, cycle + 2, 2))
+
+
+def series_has_data(values, key):
+    return next(
+        (True for value in values if value.get(key) is not None),
+        False,
+    )
+
+
+def group_has_data(value, keys):
+    return next(
+        (True for key in keys if value.get(key) is not None),
+        False,
+    )
+
+
+def series_group_has_data(groups, keys):
+    return next(
+        (True for group in groups if group_has_data(group, keys)),
+        False,
+    )
+
+
+app.jinja_env.globals.update({
+    'min': min,
+    'max': max,
+    'api_location': config.api_location_public,
+    'api_version': config.api_version,
+    'api_key': config.api_key_public,
+    'use_analytics': config.use_analytics,
+    'context': get_context,
+    'absolute_url': get_absolute_url,
+    'contact_email': '18F-FEC@gsa.gov',
+    'default_cycles': _get_default_cycles(),
+    'series_has_data': series_has_data,
+    'group_has_data': group_has_data,
+    'series_group_has_data': series_group_has_data,
+})
+
+
+try:
+    app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
+except OSError:
+    logger.error(
+        'Manifest "rev-manifest.json" not found. Did you remember to run '
+        '"npm run build"?'
+    )
+    raise
+
 
 @app.route('/')
 def search():
     query = request.args.get('search')
     if query:
-        return render_search_results(load_search_results(query), query)
+        result_type = request.args.get('search_type') or 'candidates'
+        results = load_search_results(query, result_type)
+        return render_search_results(results, query, result_type)
     else:
-        return render_template('search.html');
+        return render_template('search.html', page='home')
 
-@app.route('/candidate/<c_id>/<cycle>')
-def candidate_page_with_cycle(c_id, cycle):
-    data = load_single_type('candidate', c_id, {'year': cycle})
-    return render_page('candidate', data)
+
+@app.route('/api')
+def api():
+    """Redirect to API as described at
+    https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
+    """
+    return redirect(config.api_location, http.client.MOVED_PERMANENTLY)
+
+
+@app.route('/developers')
+def developers():
+    """Redirect to developer portal as described at
+    https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
+    """
+    url = furl.furl(config.api_location)
+    url.path.add('developers')
+    return redirect(url.url, http.client.MOVED_PERMANENTLY)
+
 
 @app.route('/candidate/<c_id>')
-def candidate_page(c_id):
-    data = load_single_type('candidate', c_id, {})
-    return render_page('candidate', data)
+@use_kwargs({
+    'cycle': Arg(int),
+})
+def candidate_page(c_id, cycle=None):
+    """Fetch and render data for candidate detail page.
+
+    :param int cycle: Optional cycle for associated committees and financials.
+    """
+    candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle)
+    return render_candidate(candidate, committees, cycle)
+
 
 @app.route('/committee/<c_id>')
-def committee_page(c_id):
-    data = load_single_type('committee', c_id, {})
-    return render_page('committee', data)
+@use_kwargs({
+    'cycle': Arg(int),
+})
+def committee_page(c_id, cycle=None):
+    """Fetch and render data for committee detail page.
+
+    :param int cycle: Optional cycle for financials.
+    """
+    committee, candidates, cycle = load_with_nested('committee', c_id, 'candidates', cycle)
+    return render_committee(committee, candidates, cycle)
+
 
 @app.route('/candidates')
 def candidates():
-    params = _convert_to_dict(request.args)
-    results = load_single_type_summary('candidates', params)
-    return render_table('candidates', results, params)
+    return render_template('candidates.html', result_type='candidates')
+
 
 @app.route('/committees')
 def committees():
-    params = _convert_to_dict(request.args)
-    results = load_single_type_summary('committees', params)
-    return render_table('committees', results, params)
+    return render_template('committees.html', result_type='committees')
 
-@app.route('/charts')
-def charts():
-    data = {}
-    data['grouped_bar_data'] = [{"cash_on_hand": 217341.3, "debts_owed": 0.0, "disbursements": 78988.83, "receipts": 110402.55, "date": "Q1 - 2012"}, {"cash_on_hand": 208841.3, "debts_owed": 0.0, "disbursements": 78988.83, "receipts": 101902.55, "date": "Q1 - 2012"}, {"cash_on_hand": 185927.58, "debts_owed": 0.0, "disbursements": 10926.53, "receipts": 8555.0, "date": "Q1 - 2012"}, {"cash_on_hand": 232215.95, "debts_owed": 0.0, "disbursements": 28688.71, "receipts": 45715.0, "date": "Q1 - 2012"}, {"cash_on_hand": 188299.11, "debts_owed": 0.0, "disbursements": 87884.86, "receipts": 55309.91, "date": "Q1 - 2012"}, {"cash_on_hand": 216189.66, "debts_owed": 0.0, "disbursements": 172159.64, "receipts": 179508.0, "date": "Q1 - 2012"}, {"cash_on_hand": 215189.66, "debts_owed": 0.0, "disbursements": 172159.64, "receipts": 178508.0, "date": "Q1 - 2012"}, {"cash_on_hand": 204669.17, "debts_owed": 520.18, "disbursements": 58153.97, "receipts": 62568.4, "date": "Q1 - 2012"}]
-    data['bar_data'] = map(lambda d: {'debt': d['cash_on_hand']}, data['grouped_bar_data'])
-    data['committee'] = {'totals': {'receipts': 500000, 'disbursements': 450000}}
-    return render_template('charts.html', **data)
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
+
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
 
+
 @app.template_filter('currency')
 def currency_filter(num, grouping=True):
-    return locale.currency(num, grouping=grouping)
+    if isinstance(num, (int, float)):
+        return locale.currency(num, grouping=grouping)
+    return None
+
+
+def _unique(values):
+    ret = []
+    for value in values:
+        if value not in ret:
+            ret.append(value)
+    return ret
+
+
+def _fmt_chart_tick(value):
+    return parse_date(value).strftime('%m/%d/%y')
+
+
+@app.template_filter('fmt_chart_ticks')
+def fmt_chart_ticks(group, keys):
+    if not group or not keys:
+        return ''
+    if isinstance(keys, (list, tuple)):
+        values = [_fmt_chart_tick(group[key]) for key in keys]
+        values = _unique(values)
+        return ' – '.join(values)
+    return _fmt_chart_tick(group[keys])
+
 
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
-    if date_str is None or date_str == '':
+    if not date_str:
         return ''
-    d = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
-    return d.strftime('%m/%y')
+    return parse_date(date_str).strftime('%m/%y')
+
+
+@app.template_filter('date_md')
+def date_filter_md(date_str):
+    if not date_str:
+        return ''
+    return parse_date(date_str).strftime('%b %Y')
+
+
+@app.template_filter()
+def fmt_year_range(year):
+    if type(year) == int:
+        return "{} - {}".format(year - 1, year)
+    return None
+
+
+@app.template_filter()
+def fmt_report_desc(report_full_description):
+    if report_full_description:
+        return re.sub('{.+}', '', report_full_description)
+
+
+@app.template_filter()
+def restrict_cycles(value, start_year=START_YEAR):
+    return [each for each in value if start_year <= each <= utils.current_cycle()]
+
+
+# If HTTPS is on, apply full HSTS as well, to all subdomains.
+# Only use when you're sure. 31536000 = 1 year.
+if config.force_https:
+    sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
+
+
+if config.server_name:
+    app.config['SERVER_NAME'] = config.server_name
+
+
+if config.production:
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
+
+
+# Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
+# for credentials over HTTP; h/t @noahkunin.
+if not config.test:
+    app.config['BASIC_AUTH_USERNAME'] = config.username
+    app.config['BASIC_AUTH_PASSWORD'] = config.password
+    app.config['BASIC_AUTH_FORCE'] = True
+    basic_auth = BasicAuth(app)
+
 
 if __name__ == '__main__':
-    if '--cached' in sys.argv:
-        install_cache()
-    app.run(host=host, port=int(port), debug=debug)
+    files = ['./rev-manifest.json']
+    app.run(host=config.host, port=int(config.port), debug=config.debug, extra_files=files)

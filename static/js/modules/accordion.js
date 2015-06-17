@@ -4,6 +4,10 @@ var $ = require('jquery');
 
 var events = require('./events.js');
 
+var defaultOpts = {
+  closeAll: false
+};
+
 var accordion = {
   SLT_HEADER: '.js-accordion_header',
   SLT_ITEM: '.js-accordion_item',
@@ -19,23 +23,26 @@ var accordion = {
    * Events
    *   accordion:active
    *   @param header {jQuery} The accordion header that is activated to be expanded.
+   *   @param opts {Object} A hash of options to use.
    *
    * @param $base {jQuery} The container of the accordion.
    */
-  init: function($base) {
+  init: function($base, opts) {
     var self = this;
+    this.options = $.extend({}, defaultOpts, opts);
     this.$headers = this.findHeaders($base);
     this.$items = this.findItems($base);
     this.$buttons = this.findButtons(this.$headers);
 
     this.hideAll();
-    this.showHeader($(this.$headers.get(0)));
 
     this.$buttons.on('click', $.proxy(self.itemClickHandler, this));
 
     events.on(this.EV_EXPAND, function(props) {
       var $header = $(props.header);
-      self.hideAll();
+      if (self.options.closeAll) {
+        self.hideAll();
+      }
       if ($.inArray($header, self.$headers)) {
         self.showHeader($header);
       }
@@ -43,7 +50,11 @@ var accordion = {
     events.on(this.EV_COLLAPSE, function(props) {
       var $header = $(props.header);
       if ($.inArray($header, self.$headers)) {
-        self.hideAll();
+        if (self.options.closeAll) {
+          self.hideAll();
+        } else {
+          self.hideHeader($header);
+        }
       }
     });
   },
@@ -107,6 +118,20 @@ var accordion = {
     });
     this.$headers.toggleClass(this.CLS_COLLAPSED, true);
   },
+
+  /**
+   * Hide all items under the accordion header passed in.
+   * @param $header {jQuery} The header to hide items under.
+   */
+  hideHeader: function($header) {
+    var $items = this.findItemsFromHeader($header),
+        self = this;
+    $items.each(function() {
+      self.hide($(this));
+    });
+    $header.toggleClass(this.CLS_COLLAPSED, true);
+  },
+
   /**
    * Show all items under the accordion header passed in.
    * @param $header {jQuery} The header to show items under.

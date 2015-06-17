@@ -1,21 +1,29 @@
 'use strict';
 
+/* global require, window, document */
+
 var $ = require('jquery');
+var keyboard = require('keyboardjs');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
+
+// Include vendor scripts
+require('./vendor/tablist');
 
 var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
 var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
-var tablesort = require('tablesort');
 var glossary = require('./modules/glossary.js');
+var Search = require('./modules/search');
+var tables = require('./modules/tables');
 
 filters.init();
 typeahead.init();
 glossary.init();
 charts.init();
+tables.init();
 
 var SLT_ACCORDION = '.js-accordion';
 
@@ -23,12 +31,8 @@ $(document).ready(function() {
     var $body,
         $pageControls;
     $body = $('body');
-    $pageControls = $('.page-controls');
+    $pageControls = $('.page-controls.sticky');
     $body.addClass('js-initialized');
-
-    $('.table--sortable').each(function(){
-        new tablesort(this);
-    });
 
     // Sticky page controls
     if ( $pageControls.length > 0 ) {
@@ -46,7 +50,7 @@ $(document).ready(function() {
             $body.removeClass('controls--fixed');
             $body.css('padding-top', 0);
           }
-        })
+        });
     }
 
     // Reveal containers
@@ -62,10 +66,10 @@ $(document).ready(function() {
                 $revealContent.addClass('u-hidden').attr('aria-hidden', 'true');
                 $(this).html('View charts');
             }
-        })
+        });
     }
 
-    // General reveal / disclosure 
+    // General reveal / disclosure
     $('.js-reveal').on('click keypress', function(e){
         if (e.which === 13 || e.type === 'click') {
             var revealElement = $(this).data('reveals');
@@ -82,12 +86,23 @@ $(document).ready(function() {
             // Set focus back on the original triggering element
             $('.js-reveal[data-reveals="' + hideElement + '"]').focus();
         }
-    })
+    });
 
-    // Notice close-state persistence    
+    $(document.body).on('keyup', function(e) {
+        if (e.keyCode == keyboard.key.code('escape')) {
+            var menu = $('#site-menu');
+            if (menu.attr('aria-hidden') === 'false') {
+                menu.attr('aria-hidden', true);
+                $('.js-reveal[data-reveals="site-menu"]').focus();
+            }
+        }
+    });
+
+    // Notice close-state persistence
     if (typeof window.sessionStorage !== 'undefined') {
         if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
             $('#notice').attr('aria-hidden', true);
+            $('#notice-reveal').addClass('u-visible');
         } else {
             $('#notice').attr('aria-hidden', false);
         }
@@ -95,24 +110,30 @@ $(document).ready(function() {
 
     $("#notice-close").on('click keypress', function(e){
         if (e.which === 13 || e.type === 'click') {
+            $('#notice-reveal').addClass('u-visible');
             if (typeof window.sessionStorage !== 'undefined') {
                 window.sessionStorage.setItem('keep-banner-closed', '1');
-            }            
+            }
         }
+    });
+
+    // Hide the notice reveal link if you open it
+    $('#notice-reveal').click(function(){
+      $(this).removeClass('u-visible');
     });
 
     // Initialize accordions
     $(SLT_ACCORDION).each(function() {
-      accordion.init($(this));
+      Object.create(accordion).init($(this));
     });
 
-
-    // unload overlay
-    // CSS spinner courtesy of http://tobiasahlin.com/spinkit/
-    var spinner = '<div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
-    $(window).on("beforeunload", function(e){
-       var fullHeight = $(document).height();
-       $('body').prepend('<div class="unloading">' + spinner + '</div>'); 
-       $('.unloading').height(fullHeight);
+    var $search = $('.js-search');
+    $search.each(function() {
+      Search($(this));
     });
+
+    // @if DEBUG
+    var perf = require('./modules/performance');
+    perf.bar();
+    // @endif
 });

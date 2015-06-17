@@ -1,45 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <!-- Mobile Specific Metas
-    ================================================== -->
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
     <title>{% block title %}{% endblock %} - OpenFEC</title>
+    {% set title = self.title() %}
 
-    <link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16" />
-    <link rel="stylesheet" href="/static/styles/themify-icons.css">
-    <link href="/static/styles/styles.css" rel="stylesheet" type="text/css"/>
+    {% include 'partials/meta-tags.html' %}
+
+    <link rel="stylesheet" href="/{{ assets['static/styles/styles.css'] }}" />
     {% if api_location %}
     <script>
-        API_LOCATION = "{{api_location}}"
+        API_LOCATION = "{{api_location}}";
+        API_VERSION = "{{api_version}}";
+        API_KEY = "{{api_key}}";
+
+        function trackMetric(name, imagesSelector) {
+          if (imagesSelector) {
+            var images = document.querySelectorAll(imagesSelector);
+            if (images && images.length) {
+              for (var i = 0, ilen = images.length; i < ilen; i++) {
+                images[i].addEventListener('load', function() {
+                  window.performance.mark(name);
+                });
+              }
+            }
+          }
+          window.performance.mark(name);
+        }
     </script>
     {% endif %}
 </head>
 <body>
+{% include 'partials/browser-warning.html' %}
+{% include 'partials/javascript-warning.html' %}
+<a href="#main-content" class="u-visually_hidden">skip navigation</a>
 <div id="site-menu" class="modal__overlay" aria-hidden="true">
   <div class="modal">
     <div class="modal__row">
       <p class="text--small">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></p>
       <p class="text--small">Looking for fec.gov? <a title="Visit fec.gov" href="http://www.fec.gov">Click here.</a></p>
+      <button title="Close menu" class="js-hide modal__close" data-hides="site-menu"><i class="ti-close"></i></button>
     </div>
     <div class="modal__row">
       <h3>Search the Data</h3>
-      <form id="modal-search" action="/" autocomplete="off" class="input-button-combo">
-        <input id="modal-search-input" class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-        <button class="search-submit primary">Search</button>
+      <form id="modal-search" action="/" autocomplete="off" class="js-search">
+        {% include 'partials/search-bar.html' %}
       </form>
     </div>
     <div class="modal__row">
       <h3>Browse the Data</h3>
       <nav class="modal__nav">
         <ul>
-          <li><a href="/candidates" name="candidates"><img class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
-          <li><a href="/committees" name="committees"><img class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
+          <li><a href="{{ url_for('candidates', cycle=default_cycles) }}" name="candidates"><img class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
+          <li><a href="{{ url_for('committees', cycle=default_cycles) }}" name="committees"><img class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
         </ul>
       </nav>
     </div>
@@ -48,10 +61,9 @@
       <nav class="modal__nav">
         <ul>
           <li><a href="https://github.com/18F/openFEC/">View project source code</a></li>
-          <li>Contact us</li>
+          <li><a href="mailto:{{ contact_email }}"><i class="ti-email"></i> Contact us</a></li>
         </ul>
       </nav>
-      <button title="Close menu" class="js-hide modal__close" data-hides="site-menu"><i class="ti-close"></i> Close menu</button>
     </div>
   </div>
 </div>
@@ -59,14 +71,14 @@
   <header class="site-header">
     <div id="notice" aria-hidden="true" class="section--blue">
       <a id="notice-close" class="js-action js-hide link--icon" tabindex="0" data-hides="notice"><i class="ti-close"></i></a>
-      <h3>This site is in development. Tell us what you think!</h3>
-      <p>openFEC uses a snapshot of disclosure data taken in 2014. If you’re looking for current campaign finance data, please visit here the <a href="http://fec.gov/pindex.shtml">Campaign Finance Disclosure Portal</a>.</p>
-      <p>We're working hard to make openFEC a useful addition to the resources available at FEC.gov. Your feedback is important to us as we build this site. Email [X] and let us know how it’s working for you.</p>
-    </div>    
+      <h3>Welcome to OpenFEC. This <a href="https://18f.gsa.gov/dashboard/stages/#beta" target="_blank">beta</a> site is a work in progress.</h3>
+      <h4><a href="/#progress">Find out what’s here and what’s missing</a>.</h4>
+      <p><a href="mailto:18F-FEC@gsa.gov">Email us</a> to share feedback or open an issue on <a href="https://github.com/18f/FEC/issues" target="_blank">GitHub</a>.</p>
+    </div>
     <div class="banner">
       <span class="banner--left">Looking for fec.gov? <a href="http://www.fec.gov">Click here.</a></span>
       <span class="banner--center">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></span>
-      <span class="banner--right">This site is in development. <a title="Learn about this site's development" tabindex="0" id="notice-reveal" class="js-reveal js-action" data-reveals="notice">Learn more.</a></span>
+      <span class="banner--right">This site is in beta. <a title="Learn about this site's development" tabindex="0" id="notice-reveal" class="js-reveal js-action" data-reveals="notice">Learn more.</a></span>
     </div>
     <div class="clearfix">
       <div class="header__left">
@@ -74,25 +86,29 @@
         <a class="header-brand" href="/" title="Home"><img width="140" src="/static/img/logo.svg" alt="OpenFEC Logo"></a>
         <nav class="header-nav">
           <ul class="header-nav__list">
-            <li class="header-nav__item"><a class="header-nav__link" title="Browse candidates" href="/candidates" name="candidates"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
-            <li class="header-nav__item"><a class="header-nav__link" title="Browse committee" href="/committees" name="committees"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
+            <li class="header-nav__item"><a class="header-nav__link" title="Browse candidates" href="{{ url_for('candidates', cycle=default_cycles) }}" name="candidates"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
+            <li class="header-nav__item"><a class="header-nav__link" title="Browse committee" href="{{ url_for('committees', cycle=default_cycles) }}" name="committees"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
           </ul>
         </nav>
       </div>
       <div class="header__right">
+
+        {% if not page or page != 'home' %}
         <div class="header-search">
-          <form id="search" action="/" autocomplete="off" class="input-button-combo">
-            <input class="search-bar" type="text" name="search" aria-label="Search for candidates and committees" placeholder="Search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-            <button class="search-submit primary"><img width="16" height="16" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
+          <form id="search" action="/" autocomplete="off"
+            class="js-search">
+            {% include 'partials/search-bar.html' %}
           </form>
         </div>
+        {% endif %}
+
         <button id="glossary-toggle" title="View site glossary" data-slide="right" class="header-nav__link side-toggle"><i class="ti ti-help-alt"></i></button>
       </div>
     </div>
   </header>
 
   {% block header %}{% endblock %}
-  <div class="main-container">
+  <div class="main-container" id="main-content">
     <main id="main"{% if section %} data-section="{{section}}"{% endif %}>
         {% block body %}{% endblock %}
     </main>
@@ -104,13 +120,15 @@
     <img src="/static/img/18f.png" alt="18F Logo" class="u-float-left">
     <ul class="u-float-left">
       <li>A project of <a href="https://18f.gsa.gov">18F</a></li>
-      <li><a href="https://github.com/18F/openFEC/">View project source code</a></li>
+      <li><a href="{{ url_for('developers') }}">View API</a></li>
+      <li><a href="https://github.com/18F/openFEC-web-app">View project source code</a></li>
+
     </ul>
   </div>
 
   <nav class="footer__right footer__nav">
     <ul>
-      <li>Contact us</li>
+      <li><a href="mailto:{{ contact_email }}"><i class="ti-email"></i> Contact us</a></li>
       <li><a href="http://www.fec.gov">Visit fec.gov</a></li>
     </ul>
   </nav>
@@ -118,10 +136,10 @@
 
 {% include './partials/glossary.html' %}
 
-<script src="/static/js/app.js"></script>
+<script src="/{{ assets['static/js/app.js'] }}"></script>
 {% block scripts %}{% endblock %}
 
-{% if config.USE_ANALYTICS %}
+{% if use_analytics %}
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

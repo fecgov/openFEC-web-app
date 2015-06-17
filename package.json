@@ -11,29 +11,49 @@
   },
   "scripts": {
     "test": "mocha --reporter nyan tests/unit",
-    "watch": "watchify static/js/init.js -o static/js/app.js --debug --verbose",
-    "build": "browserify static/js/init.js > static/js/app.js",
-    "sass-watch": "sass --watch static/styles/:static/styles/",
-    "sass-build": "sass static/styles/styles.scss:static/styles/styles.css",
-    "watch-all": "npm run watch & npm run sass-watch"
+    "build": "gulp build-js && gulp build-sass",
+    "build-js": "gulp build-js",
+    "build-sass": "gulp build-sass",
+    "watch": "gulp watch-js & gulp watch-sass",
+    "watch-js": "gulp watch-js",
+    "watch-sass": "gulp watch-sass"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/theresaanna/openfec-web-app.git"
+    "url": "git://github.com/18F/openfec-web-app.git"
   },
   "author": "",
   "bugs": {
-    "url": "https://github.com/theresaanna/openfec-web-app/issues"
+    "url": "https://github.com/18F/openfec-web-app/issues"
   },
   "dependencies": {
-    "browserify": "~6.1.0",
+    "URIjs": "^1.15.0",
+    "browserify": ">= 10.1.2",
     "d3": "^3.5.3",
+    "datatables": "^1.10.7",
+    "drmonty-datatables-responsive": "^1.0.6",
     "eventemitter2": "~0.4.14",
+    "gulp": "^3.8.11",
+    "gulp-if": "^1.2.5",
+    "gulp-minify-css": "^1.1.5",
+    "gulp-rename": "^1.2.2",
+    "gulp-rev": "^3.0.1",
+    "gulp-sass": "^2.0.0",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.4",
     "handlebars": "^2.0.0",
     "jquery": "^2.1.4",
+    "keyboardjs": "^0.4.2",
+    "list.js": "git://github.com/slifszyc/list.js.git",
+    "node-bourbon": "^4.2.2",
+    "node-neat": "^1.7.1-beta1",
+    "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
+    "preprocessify": "0.0.3",
     "querystring": "^0.2.0",
-    "tablesort": "^2.2.3",
     "typeahead.js": "^0.10.5",
-    "underscore": "^1.7.0"
+    "underscore": "^1.7.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.1"
   }
 }

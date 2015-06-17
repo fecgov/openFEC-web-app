@@ -3,13 +3,82 @@ language: python
 python:
   - "3.4"
 
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
+addons:
+  postgresql: "9.4"
+
+env:
+  global:
+    - FEC_WEB_TEST="true"
+    - FEC_SELENIUM_DRIVER="remote"
+    - secure: "Wvz5f/GyjVSooTCDtuTCgrBaiUR/idB0ikdDXWIAL02xpPaVMD0YQTVAE4WYJFEfX25APm79Bs+KHf2vKvUm/HGXfmGsRMb09dy8lVyCzdLuu9ISIH+0Udxj2qH1xdjZAqv8zuouc8N5aq24uMxFCqgxPi2kWnkieqbIw10HhQE="
+    - secure: "QMVCi+DS1BSdaWCmEQXurFDCWAijxJBEswY7s9RaGcTZRBmSsP5VR8uKDSANeRLZ509x3tXcw1X2OeqBFcyIzFi5WvF6oPcKahLrA6XrtjDYsMOBy9a2VDDqFH7ROI6G+99XTDNWoKmbjaO3AGhTGhIJWSf9T400T5imK0KMJB8="
+    - secure: "SKKeJG+Pc0xFyq0++/Cf0fMO4fZlK1H3CgedSGiQhwl3Rsh8QgXBhH+/YwWYAozmUNPkJCEuDdB2A1trBEPqkghAnjNdOXu2mwo5ANweu8M/HdafeeDP2klHB7bIieJ5GhUfrZ1/D/nVcE86mePFlx6Ymjdg2DtNUYBIWFs2xPs="
+    - secure: "UK4kK8mrj0AsYqL7ohK9wKMCTVSK0phyNw7sW2BynRJYTU3Xi073+m8mGiCvHGEULvriCtuysCsbh5iNUz5VQ/4RBQVOJdugzbWjbwEUzb6w1W5pXvwCRUufhGcr98odfNE09pZicfL0YjH84w/dqrlC3leeyaoF7bFqpaKWwqs="
+
+# This matrix runs n+1 jobs: one for each in `include`, and one with no non-global
+# environment variables set. This allows the build that does not use Sauce Labs
+# to run without a tunnel to Sauce.
+matrix:
+  include:
+    - env: FEC_SAUCE_BROWSER=chrome
+      addons: &addons
+        sauce_connect: true
+        postgresql: "9.4"
+      python: "3.4"
+    - env: FEC_SAUCE_BROWSER=firefox
+      addons: *addons
+      python: "3.4"
+
+before_install:
+  - travis_retry pip install codecov
+  - travis_retry curl -L -o travis_after_all.py https://raw.github.com/jmcarp/travis_after_all/master/travis_after_all.py
+  - travis_retry curl -L -o cf.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel"
+  - sudo dpkg -i cf.deb
 
 before_script:
-    - cd openfecwebapp
-install:
-    - pip install -r requirements.txt
+  # Set up environment
+  - |
+      if [[ $TRAVIS_BRANCH = 'master' ]]; then
+        export FEC_BRANCH=master
+        else export FEC_BRANCH=develop
+      fi
+
+  # Install web app and run in background
+  - pip install -r requirements.txt
+  - npm install
+  - npm install -g browserify
+  - npm run build
+  - python __init__.py &
+
+  # Install API and run in background
+  - git clone https://github.com/18F/openFEC
+  - cd openFEC
+  - git checkout $FEC_BRANCH
+  - psql -c 'create database cfdm_test' -U postgres
+  - psql -f data/subset.sql cfdm_test -U postgres
+  - pip install -r requirements.txt
+  - python manage.py update_schemas
+  - python manage.py runserver &
+  - cd ..
+
 script:
-    - cd tests
-    - nosetests -a '!selenium'
+  # Run unit tests
+  - if [[ -z $FEC_SAUCE_BROWSER  ]]; then py.test; fi
+  # Run Selenium tests if not pull request
+  - if [[ $TRAVIS_PULL_REQUEST = 'false' && ! -z $FEC_SAUCE_BROWSER  ]]; then py.test --selenium; fi
+
+after_success:
+  # Deploy to appropriate Cloud Foundry space after all builds succeed
+  # See `tasks.deploy` for details
+  - python travis_after_all.py
+  - export $(cat .to_export_back)
+  - |
+      if [[ $BUILD_LEADER = 'YES' && $TRAVIS_PULL_REQUEST = 'false' ]]; then
+        if [[ $BUILD_AGGREGATE_STATUS = 'others_succeeded' ]]; then
+          echo "All builds passed; deploying..."
+          invoke deploy --branch $TRAVIS_BRANCH --yes
+        else
+          echo "One or more builds failed; skipping deploy"
+        fi
+      fi
+  - if [[ $BUILD_LEADER = 'YES' ]]; then codecov; fi
