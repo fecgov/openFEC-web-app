@@ -88,22 +88,21 @@ $(document).ready(function() {
         }
     });
 
-    $('.js-toggle').on('click keypress', function(e){
+    $('.js-toggle').on('click keypress', function(e) {
         if (e.which === 13 || e.type === 'click') {
-            var toggleElement,
-                toggleElementIsHidden; 
-            toggleElement = $(this).data('toggles');
-            toggleElementIsHidden = $('#' + toggleElement).attr('aria-hidden');
-            if ( toggleElementIsHidden === "true" ) {
-                $('#' + toggleElement)
+            var $this = $(this);
+            var $toggleElement = $('#' + $this.data('toggles'));
+            if ($toggleElement.attr('aria-hidden') === 'true') {
+                $toggleElement
                     .attr('aria-hidden', false)
                     .find('li:first-child input').focus();
-                $(this).addClass('active');
+                $this.addClass('active');
             } else {
-                $('#' + toggleElement).attr('aria-hidden', true);
-                $(this).removeClass('active').focus();
+                $toggleElement.attr('aria-hidden', true);
+                $this.removeClass('active').focus();
             }
         }
+        e.preventDefault();
     });
 
     $(document.body).on('keyup', function(e) {

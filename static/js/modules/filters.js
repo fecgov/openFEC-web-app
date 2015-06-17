@@ -35,14 +35,23 @@ $('#filter-toggle').click(function(){
     }
 });
 
+var prepareValue = function($elm, value) {
+  if ($elm.attr('type') === 'checkbox') {
+    return $.isArray(value) ? value : [value];
+  } else {
+    return value;
+  }
+  return $elm.attr('type') === 'checkbox' ? [value] : value;
+};
+
 var activateFilter = function(opts) {
     var $field = $('#category-filters [name=' + opts.name + ']');
     var $parent = $field.parent();
     if (opts.value) {
-        $field.val(opts.value).change();
+        $field.val(prepareValue($field, opts.value)).change();
         $parent.addClass('active');
     } else {
-        $field.val('').change();
+        $field.val(prepareValue($field, '')).change();
         $parent.removeClass('active');
     }
 };
