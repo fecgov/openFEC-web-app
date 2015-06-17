@@ -72,18 +72,22 @@ def series_group_has_data(groups, keys):
     )
 
 
-app.jinja_env.globals['min'] = min
-app.jinja_env.globals['max'] = max
-app.jinja_env.globals['api_location'] = config.api_location_public
-app.jinja_env.globals['api_version'] = config.api_version
-app.jinja_env.globals['api_key'] = config.api_key_public
-app.jinja_env.globals['context'] = get_context
-app.jinja_env.globals['absolute_url'] = get_absolute_url
-app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
-app.jinja_env.globals['default_cycles'] = _get_default_cycles()
-app.jinja_env.globals['series_has_data'] = series_has_data
-app.jinja_env.globals['group_has_data'] = group_has_data
-app.jinja_env.globals['series_group_has_data'] = series_group_has_data
+app.jinja_env.globals.update({
+    'min': min,
+    'max': max,
+    'api_location': config.api_location_public,
+    'api_version': config.api_version,
+    'api_key': config.api_key_public,
+    'use_analytics': config.use_analytics,
+    'context': get_context,
+    'absolute_url': get_absolute_url,
+    'contact_email': '18F-FEC@gsa.gov',
+    'default_cycles': _get_default_cycles(),
+    'series_has_data': series_has_data,
+    'group_has_data': group_has_data,
+    'series_group_has_data': series_group_has_data,
+})
+
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
@@ -93,9 +97,6 @@ except OSError:
         '"npm run build"?'
     )
     raise
-
-if config.analytics:
-    app.config['USE_ANALYTICS'] = True
 
 
 @app.route('/')
@@ -203,17 +204,12 @@ def fmt_chart_ticks(group, keys):
     return _fmt_chart_tick(group[keys])
 
 
-@app.template_filter()
-def absolute_url(value):
-    if value:
-        return urlparse.urljoin(app.config)
-
-
 @app.template_filter('date_sm')
 def date_filter_sm(date_str):
     if not date_str:
         return ''
     return parse_date(date_str).strftime('%m/%y')
+
 
 @app.template_filter('date_md')
 def date_filter_md(date_str):
