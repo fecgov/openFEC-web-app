@@ -67,6 +67,14 @@ Compile Sass as changes are made:
 
 See directions in the 18F/openFEC repo.
 
+#### Caching
+
+To avoid repeated requests to the OpenFEC API, the webapp can store recent API responses
+in a small in-memory cache. The cache can be enabled by setting the `FEC_WEB_CACHE`
+environment variable; the size of the cache, in items, is controlled by the
+`FEC_WEB_CACHE_SIZE` environment variable. When the cache is enabled, views may
+be stale for up to the cache duration set by the API.
+
 ### Run Tests
 #### Unit Tests
 
