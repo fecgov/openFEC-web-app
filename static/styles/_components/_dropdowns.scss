@@ -4,6 +4,16 @@
   text-align: left;
   padding: .5rem 1rem;
   line-height: 1.8rem;
+  background-color: #fff;
+  font-weight: normal;
+
+  &:hover {
+    background-color: #fff;
+
+    &:after {
+      background-color: $medium-gray;
+    }
+  }
 
   &:after {
     @include icon();
@@ -16,13 +26,15 @@
     right: 0;
     width: 4rem;
     border-left: 1px solid $medium-gray;
+    background-color: $light-gray;
+    color: $dark-gray;
+
   }
 
   &.active {
-    background: $light-gray;
-
     &:after {
       content: "\e648";
+      background-color: $medium-gray;
     }
   }
 }
@@ -33,10 +45,12 @@
 
 .dropdown__panel {
   position: absolute;
+  margin-top: -1px; // To prevent shadow on the button
   top: 3rem;
   min-width: 100%;
   background: #fff;
   border: 1px solid $light-gray;
+  border-top: 1px solid $medium-gray;  
   max-height: 30rem;
   overflow: hidden;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
@@ -83,6 +97,8 @@ input.dropdown__search {
 }
 
 .dropdown__selected {
+  margin-bottom: .5rem;
+
   li {
     @include animation(fadeIn .2s ease-in);
   }
