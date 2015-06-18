@@ -23,8 +23,9 @@
     margin-right: 0;
   }
 
-  label {
+  & > label {
     margin-top: 0;
+    font-weight: bold;
   }
   
   @include media($medium) {

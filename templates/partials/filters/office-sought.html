@@ -1,10 +1,27 @@
 <div class="field">
     <label for="office">Office Sought</label>
-    <select name="office" id="office" data-placeholder="Select an office">
-        <option></option>
-        <option value="H">House</option>
-        <option value="P">President</option>
-        <option value="S">Senate</option>
-    </select>
-    <button type="button" class="button--remove" data-removes="office"><i class="ti-close"></i></button>
+    <fieldset class="dropdown__container">
+      <ul class="dropdown__selected">
+      </ul>
+      <div class="dropdown">
+        <button class="js-toggle js-dropdown button--dropdown" data-toggles="office-dropdown" >More</button>
+        <ul id="office-dropdown" class="dropdown__list" aria-hidden="true">
+            <li>
+              <label for="cycle-checkbox-h">
+                <input id="cycle-checkbox-h" name="office" type="checkbox" value="H" />House
+              </label>
+            </li>
+            <li>
+              <label for="cycle-checkbox-s">
+                <input id="cycle-checkbox-s" name="office" type="checkbox" value="S" />Senate
+              </label>
+            </li>
+            <li>
+              <label for="cycle-checkbox-p">
+                <input id="cycle-checkbox-p" name="office" type="checkbox" value="P" />President
+              </label>
+            </li>                
+        </ul>
+      </div>
+    </fieldset>    
 </div>
