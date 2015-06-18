@@ -5,6 +5,7 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
+var List = require('list.js');
 
 var events = require('./events.js');
 
@@ -110,11 +111,65 @@ $('.field input, .field select').change(function(){
         .css('display', $this.val() ? 'block' : 'none');
 });
 
+// Dropdown lists
+var showSelectedItems = function(fieldset){
+    var $this = $(fieldset);
+    var $list = $this.find('.dropdown__list');
+    var checkedBoxes = $this.find('input:checked').parents('li');
+    $this.find('.dropdown__selected').prepend(checkedBoxes);
+    // Remove it all if there's no more items to check
+    if ( $list.find('li').length === 0 ) {
+        $list.remove();
+        $this.find('.button--dropdown').remove();
+    }
+}
+
+// Show "any" if there's no items checked
+var countCheckboxes = function(fieldset) {    
+    var checkboxCount = $(fieldset).find('input:checked').length;
+    if ( checkboxCount === 0 ) {
+        $(fieldset).siblings('label').find('.any').attr('aria-hidden', false);
+    } else {
+        $(fieldset).siblings('label').find('.any').attr('aria-hidden', true);
+    }
+}
+
+$('.js-checkbox-filters').each(function(){
+    var self = this;
+    showSelectedItems(self);
+
+    $(self).find('input[type=checkbox]').change(function(){
+        showSelectedItems(self);
+        countCheckboxes(self);
+    })
+})
+
+// Scrollbars
+$('.dropdown__panel').perfectScrollbar({ 'suppressScrollX': true });
+
+$('.js-dropdown').on('click keypress', function(e) {
+    if (e.which === 13 || e.type === 'click') {
+        $('.dropdown__panel').perfectScrollbar('update');
+    }
+    e.preventDefault();
+});
+
+// // Search-able lists
+// WIP as it breaks the rest of the dropdown 
+// $('.dropdown__panel').each(function(){
+//     var id = $(this).attr('id');
+//     var options = {
+//         searchClass: 'dropdown__search',
+//         listClass: 'dropdown__list',
+//         valueNames: ['dropdown__value']
+//     };
+//     var dropdownList = new List(id, options);
+// })
+
 module.exports = {
     init: function() {
 
         bindFilters();
-
         // if the page was loaded with filters set in the query string
         activateInitialFilters();
     },

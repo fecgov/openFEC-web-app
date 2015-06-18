@@ -9,14 +9,24 @@
 .field {
   @include clearfix();
   @include span-columns(24);
-  margin-bottom: 1.25em;
+  padding: 2rem 0;
+  border-bottom: 1px solid $light-gray;
+
+  input[type="checkbox"] {
+    margin-left: 0;
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+  }
 
   input[type="text"],
   select,
   .button--dropdown {
-    margin: 0 2% 0 0;
+    margin: 0 0 0 0;
     float: left;
-    width: 82%;
+    width: 100%;
   }
 
   &:nth-child(even) {
@@ -24,6 +34,7 @@
   }
 
   & > label {
+    font-size: 1.4rem;
     margin-top: 0;
     font-weight: bold;
   }
@@ -33,7 +44,7 @@
     input[type="text"], 
     select,
     .button--dropdown {
-      width: 87%;
+      width: 100%;
     }
   }
 
@@ -43,15 +54,13 @@
     input[type="text"],
     select,
     .button--dropdown {
-      width: 82%;
+      width: 100%;
     }
   }
 }
 
-.controls--fixed {
-  #filters {
-
-  }
+.any {
+  font-weight: normal;
 }
 
 .button--remove {

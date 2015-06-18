@@ -107,30 +107,6 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
-    // Dropdown lists
-    $('.js-dropdown').on('click keypress', function(e) {
-        if (e.which === 13 || e.type === 'click') {
-            $('.dropdown__list').perfectScrollbar('update');
-        }
-        e.preventDefault();
-    });
-
-    $('.dropdown__list').perfectScrollbar({ 'suppressScrollX': true });
-
-    $('.dropdown__list input[type="checkbox"]').change(function(){
-        var checkedBoxes = $(this).parents('ul').find('input:checked').parents('li');
-        var checkedCount = checkedBoxes.length;
-        var listID = $(this).parents('ul').attr('id');
-        var parentButton = $('button[data-toggles="' + listID + '"]');
-        $(this).parents('.dropdown__container').find('.dropdown__selected').prepend(checkedBoxes);
-
-    })
-
-    $('.dropdown__container').each(function(){
-        var $checkedBoxes = $(this).find('.dropdown__list input:checked').parents('li');
-        $(this).find('.dropdown__selected').append($checkedBoxes);
-    })
-
     $(document.body).on('keyup', function(e) {
         if (e.keyCode == keyboard.key.code('escape')) {
             var menu = $('#site-menu');
