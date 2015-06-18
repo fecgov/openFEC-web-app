@@ -122,30 +122,42 @@ var updateSelectedItems = function(list) {
     // Remove it all if there's no more items to check
     if ( $this.find('li').length === 0 ) {
         $this.parents('.dropdown').remove();
-    }    
+    }
 }
 
 // Show "any" if there's no items checked
-var countCheckboxes = function(fieldset) {    
+var countCheckboxes = function(fieldset) {
     var checkboxCount = $(fieldset).find('input:checked').length;
     if ( checkboxCount === 0 ) {
         $(fieldset).siblings('label').find('.any').attr('aria-hidden', false);
     } else {
         $(fieldset).siblings('label').find('.any').attr('aria-hidden', true);
     }
-}
+};
 
 $('.js-checkbox-filters').each(function(){
     var $dropdownList = $(this).find('.dropdown__list');
 
     $dropdownList.find('input[type=checkbox]').change(function(){
         updateSelectedItems($dropdownList);
-        countCheckboxes(self);
-    })
-})
+        countCheckboxes(this);
+    }).on('keypress', function(e) {
+        if (e.which === 13) {
+            var $this = $(this);
+            var $next = $this.parents('li').next('li').find('input[type="checkbox"]');
+            $(this).prop('checked', function(index, value) {
+                return !value;
+            }).change();
+            if ($next.length) {
+                $next.focus();
+            }
+            e.preventDefault();
+        }
+    });
+});
 
 // Search-able lists
-// WIP as it breaks the rest of the dropdown 
+// WIP as it breaks the rest of the dropdown
 // $('.dropdown__panel').each(function(){
 //     var id = $(this).attr('id');
 //     var options = {
