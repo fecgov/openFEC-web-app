@@ -112,22 +112,26 @@ $('.field input, .field select').change(function(){
 });
 
 // Dropdown lists
-var showSelectedItems = function(fieldset){
+var updateSelectedItems = function(list) {
     var $this,
-        $list,
-        checkedBoxes;
-
-    $this = $(fieldset);
-    $list = $this.find('.dropdown__list');
-    checkedBoxes = $this.find('input:checked').parents('li');
-    $this.find('.dropdown__selected').prepend(checkedBoxes);
+        $checkedBoxes;
+    $this = list;
+    $checkedBoxes = $this.find('input:checked').parents('li');
+    $this.parents('fieldset').find('.dropdown__selected').prepend($checkedBoxes);
 
     // Remove it all if there's no more items to check
-    if ( $list.find('li').length === 0 ) {
-        $list.remove();
-        $this.find('.button--dropdown').remove();
-    }
+    if ( $this.find('li').length === 0 ) {
+        $this.parents('.dropdown').remove();
+    }    
+}
 
+// Check both the dropdown list and selected list for checkboxes
+var showSelectedItems = function(fieldset){
+    var $this,
+        $dropdownList;
+    $this = $(fieldset);
+    $dropdownList = $this.find('.dropdown__list');
+    updateSelectedItems($dropdownList);
 }
 
 // Show "any" if there's no items checked
@@ -140,6 +144,15 @@ var countCheckboxes = function(fieldset) {
     }
 }
 
+$('.js-checkbox-filters').each(function(){
+    var $dropdownList = $(this).find('.dropdown__list');
+
+    $dropdownList.find('input[type=checkbox]').change(function(){
+        updateSelectedItems($dropdownList);
+        countCheckboxes(self);
+    })
+})
+
 // Search-able lists
 // WIP as it breaks the rest of the dropdown 
 // $('.dropdown__panel').each(function(){
@@ -151,16 +164,6 @@ var countCheckboxes = function(fieldset) {
 //     };
 //     var dropdownList = new List(id, options);
 // })
-
-$('.js-checkbox-filters').each(function(){
-    var self = this;
-    showSelectedItems(self);
-
-    $(self).find('input[type=checkbox]').change(function(){
-        showSelectedItems(self);
-        countCheckboxes(self);
-    })
-})
 
 // Scrollbars
 $('.dropdown__panel').perfectScrollbar({ 'suppressScrollX': true });
