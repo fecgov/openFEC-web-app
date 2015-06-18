@@ -1,0 +1,12 @@
+.ps-scrollbar-y-rail { 
+  position: absolute;
+  background: $lightest-gray;
+  width: 4px;
+  border-left: 1px solid $light-gray;
+}
+
+.ps-scrollbar-y {
+  position: absolute;
+  width: 4px;
+  background: $medium-gray;
+}

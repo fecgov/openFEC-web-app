@@ -48,6 +48,7 @@
     "node-bourbon": "^4.2.2",
     "node-neat": "^1.7.1-beta1",
     "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
+    "perfect-scrollbar": "0.6.2",
     "preprocessify": "0.0.3",
     "querystring": "^0.2.0",
     "typeahead.js": "^0.10.5",

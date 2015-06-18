@@ -4,6 +4,7 @@
 
 var $ = require('jquery');
 var keyboard = require('keyboardjs');
+var perfectScrollbar = require('perfect-scrollbar/jquery') ($);
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
@@ -97,6 +98,7 @@ $(document).ready(function() {
                     .attr('aria-hidden', false)
                     .find('li:first-child input').focus();
                 $this.addClass('active');
+
             } else {
                 $toggleElement.attr('aria-hidden', true);
                 $this.removeClass('active').focus();
@@ -105,6 +107,15 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
+    // Dropdown lists
+    $('.js-dropdown').on('click keypress', function(e) {
+        if (e.which === 13 || e.type === 'click') {
+            $('.dropdown__list').perfectScrollbar('update');
+        }
+        e.preventDefault();
+    });
+
+    $('.dropdown__list').perfectScrollbar({ 'suppressScrollX': true });
     $(document.body).on('keyup', function(e) {
         if (e.keyCode == keyboard.key.code('escape')) {
             var menu = $('#site-menu');
