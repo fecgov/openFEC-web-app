@@ -34,6 +34,7 @@
 .dropdown__panel {
   position: absolute;
   top: 3rem;
+  min-width: 100%;
   background: #fff;
   border: 1px solid $light-gray;
   max-height: 30rem;
