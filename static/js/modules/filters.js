@@ -113,15 +113,21 @@ $('.field input, .field select').change(function(){
 
 // Dropdown lists
 var showSelectedItems = function(fieldset){
-    var $this = $(fieldset);
-    var $list = $this.find('.dropdown__list');
-    var checkedBoxes = $this.find('input:checked').parents('li');
+    var $this,
+        $list,
+        checkedBoxes;
+
+    $this = $(fieldset);
+    $list = $this.find('.dropdown__list');
+    checkedBoxes = $this.find('input:checked').parents('li');
     $this.find('.dropdown__selected').prepend(checkedBoxes);
+
     // Remove it all if there's no more items to check
     if ( $list.find('li').length === 0 ) {
         $list.remove();
         $this.find('.button--dropdown').remove();
     }
+
 }
 
 // Show "any" if there's no items checked
@@ -133,6 +139,18 @@ var countCheckboxes = function(fieldset) {
         $(fieldset).siblings('label').find('.any').attr('aria-hidden', true);
     }
 }
+
+// Search-able lists
+// WIP as it breaks the rest of the dropdown 
+// $('.dropdown__panel').each(function(){
+//     var id = $(this).attr('id');
+//     var options = {
+//         searchClass: 'dropdown__search',
+//         listClass: 'dropdown__list',
+//         valueNames: ['dropdown__value']
+//     };
+//     var dropdownList = new List(id, options);
+// })
 
 $('.js-checkbox-filters').each(function(){
     var self = this;
@@ -153,18 +171,6 @@ $('.js-dropdown').on('click keypress', function(e) {
     }
     e.preventDefault();
 });
-
-// // Search-able lists
-// WIP as it breaks the rest of the dropdown 
-// $('.dropdown__panel').each(function(){
-//     var id = $(this).attr('id');
-//     var options = {
-//         searchClass: 'dropdown__search',
-//         listClass: 'dropdown__list',
-//         valueNames: ['dropdown__value']
-//     };
-//     var dropdownList = new List(id, options);
-// })
 
 module.exports = {
     init: function() {
