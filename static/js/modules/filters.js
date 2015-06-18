@@ -148,7 +148,7 @@ $('.field input[type="checkbox"]').on('keypress', function(e) {
     if (e.which === 13) {
         var $this = $(this);
         var $parent = $this.parents('ul.dropdown__list');
-        $(this).prop('checked', function(index, value) {
+        $this.prop('checked', function(index, value) {
             return !value;
         });
         if ($parent.length) {
@@ -157,6 +157,7 @@ $('.field input[type="checkbox"]').on('keypress', function(e) {
                 $next.focus();
             }
         }
+        $this.change();
         e.preventDefault();
     }
 });
