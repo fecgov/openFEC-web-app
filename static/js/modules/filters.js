@@ -125,15 +125,6 @@ var updateSelectedItems = function(list) {
     }    
 }
 
-// Check both the dropdown list and selected list for checkboxes
-var showSelectedItems = function(fieldset){
-    var $this,
-        $dropdownList;
-    $this = $(fieldset);
-    $dropdownList = $this.find('.dropdown__list');
-    updateSelectedItems($dropdownList);
-}
-
 // Show "any" if there's no items checked
 var countCheckboxes = function(fieldset) {    
     var checkboxCount = $(fieldset).find('input:checked').length;
