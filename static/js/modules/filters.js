@@ -141,19 +141,24 @@ $('.js-checkbox-filters').each(function(){
     $dropdownList.find('input[type=checkbox]').change(function(){
         updateSelectedItems($dropdownList);
         countCheckboxes(this);
-    }).on('keypress', function(e) {
-        if (e.which === 13) {
-            var $this = $(this);
+    });
+});
+
+$('.field input[type="checkbox"]').on('keypress', function(e) {
+    if (e.which === 13) {
+        var $this = $(this);
+        var $parent = $this.parents('ul.dropdown__list');
+        $(this).prop('checked', function(index, value) {
+            return !value;
+        });
+        if ($parent.length) {
             var $next = $this.parents('li').next('li').find('input[type="checkbox"]');
-            $(this).prop('checked', function(index, value) {
-                return !value;
-            }).change();
             if ($next.length) {
                 $next.focus();
             }
-            e.preventDefault();
         }
-    });
+        e.preventDefault();
+    }
 });
 
 // Search-able lists
