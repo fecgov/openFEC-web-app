@@ -50,8 +50,8 @@ module.exports = {
    * @return {Object}
    */
   createEngine: function(name, dataSource, filter) {
-    var engine,
-        options = {
+    var engine;
+    var options = {
       name: name,
       datumTokenizer: function(d) {
         var tokens = Bloodhound.tokenizers.whitespace(d.name);
@@ -88,11 +88,17 @@ module.exports = {
   },
 
   initTypeahead: function(options, dataset) {
+
+    var $searchBar = $('.search-bar');
+
     // Setting up main search typehead
-    $('.search-bar').typeahead(options, dataset);
+    $searchBar.typeahead(options, dataset);
+
+    // Update placeholder text
+    $searchBar.attr('placeholder', 'Enter a ' + dataset.name + ' name');
 
     // Open single entity pages when selected
-    $('.search-bar').on('typeahead:selected', function(event, datum, datasetName) {
+    $searchBar.on('typeahead:selected', function(event, datum, datasetName) {
       window.location = window.location.origin + '/' + datasetName + '/' + datum.id;
     });
 
@@ -111,7 +117,6 @@ module.exports = {
         committeeDataSet,
         self = this;
 
-    // Creating a candidate suggestion engine
     candidateEngine = this.createEngine('Candidates', this.getUrl('candidates'), function(response) {
       return _.map(response.results, function(result) {
         return filterCandidates(result);

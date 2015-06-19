@@ -70,7 +70,6 @@
             {% for each in range(max(cycles), min(cycles) - 2, -2) | restrict_cycles %}
               <option
                   value="{{ each }}"
-                  data-history="{{ each | next_cycle(cycles) }}"
                   {% if each == cycle %}selected{% endif %}
                 >{{ each | fmt_year_range }}</option>
             {% endfor %}
@@ -96,7 +95,6 @@
   {% include 'partials/filings-tab.html' %}
 
 </div>
-
 
 {% endblock %}
 

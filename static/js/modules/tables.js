@@ -1,12 +1,14 @@
 'use strict';
 
-/* global require, module, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
 require('datatables');
 require('drmonty-datatables-responsive');
+
+var filters = require('./filters');
 
 function yearRange(first, last) {
   if (first === last) {
@@ -57,6 +59,7 @@ var candidateColumns = [
   {
     data: 'name',
     className: 'all',
+    width: '30%',
     render: function(data, type, row, meta) {
       return buildEntityLink(data, '/candidate/' + row.candidate_id + buildCycle(row), 'candidate');
     }
@@ -78,12 +81,13 @@ var committeeColumns = [
   {
     data: 'name',
     className: 'all',
+    width: '20%',
     render: function(data, type, row, meta) {
       return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'committee');
     }
   },
   {data: 'treasurer_name', className: 'min-desktop'},
-  {data: 'state', className: 'min-desktop'},
+  {data: 'state', className: 'min-desktop', width: '60px'},
   {data: 'party_full', className: 'min-desktop'},
   {data: 'organization_type_full', className: 'min-desktop'},
   {data: 'committee_type_full', className: 'min-tablet'},
@@ -108,6 +112,13 @@ function mapResponse(response) {
   };
 }
 
+function pushQuery(filters) {
+  var params = URI('').query(filters).toString();
+  if (window.location.search !== params) {
+    window.history.pushState(filters, params, params || window.location.pathname);
+  }
+}
+
 function initTable($table, $form, baseUrl, columns) {
   var draw;
   var api = $table.DataTable({
@@ -124,6 +135,7 @@ function initTable($table, $form, baseUrl, columns) {
       var api = this.api();
       var filters = $form.serializeArray();
       parsedFilters = mapFilters(filters);
+      pushQuery(parsedFilters);
       var query = $.extend(
         {
           per_page: data.length,
@@ -142,6 +154,11 @@ function initTable($table, $form, baseUrl, columns) {
         callback(mapResponse(response));
       });
     }
+  });
+  // Update filters and data table on navigation
+  $(window).on('popstate', function() {
+    filters.activateInitialFilters();
+    api.ajax.reload();
   });
   $form.submit(function(event) {
     event.preventDefault();

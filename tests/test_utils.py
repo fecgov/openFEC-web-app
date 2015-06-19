@@ -41,6 +41,11 @@ def test_restrict_cycles():
     assert app.restrict_cycles(cycles) == [cycle - 2, cycle]
 
 
+def test_restrict_cycles_after_start_year():
+    cycles = [1978, 1980, 1982]
+    assert app.restrict_cycles(cycles, start_year=1979) == [1980, 1982]
+
+
 def test_fmt_chart_ticks_single_key():
     group = {
         'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),

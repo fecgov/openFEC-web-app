@@ -1,5 +1,4 @@
 import http
-import hashlib
 
 import furl
 from webargs import Arg
@@ -8,24 +7,23 @@ from dateutil.parser import parse as parse_date
 
 from flask import Flask, render_template, request, redirect
 from flask_sslify import SSLify
-from flask.ext.compress import Compress
-from flask.ext.compress import DictCache
 from flask.ext.basicauth import BasicAuth
 
+from openfecwebapp import utils
 from openfecwebapp import config
 from openfecwebapp.views import render_search_results, render_candidate, render_committee
-from openfecwebapp.api_caller import load_search_results, load_single_type, load_nested_type, install_cache
+from openfecwebapp.api_caller import load_search_results, load_with_nested
 
-import datetime
 import jinja2
 import json
 import locale
 import logging
 import re
-import sys
 
 
 locale.setlocale(locale.LC_ALL, '')
+
+START_YEAR = 1979
 
 app = Flask(__name__)
 
@@ -40,24 +38,56 @@ def get_context(c):
     return c
 
 
-def current_cycle():
-    year = datetime.datetime.now().year
-    return year + year % 2
+def get_absolute_url():
+    url = furl.furl(request.url)
+    if app.config['SERVER_NAME']:
+        url.host = app.config['SERVER_NAME']
+        url.scheme = app.config['PREFERRED_URL_SCHEME']
+    return url.url
 
 
 def _get_default_cycles():
-    cycle = current_cycle()
+    cycle = utils.current_cycle()
     return list(range(cycle - 4, cycle + 2, 2))
 
 
-app.jinja_env.globals['min'] = min
-app.jinja_env.globals['max'] = max
-app.jinja_env.globals['api_location'] = config.api_location_public
-app.jinja_env.globals['api_version'] = config.api_version
-app.jinja_env.globals['api_key'] = config.api_key_public
-app.jinja_env.globals['context'] = get_context
-app.jinja_env.globals['contact_email'] = '18F-FEC@gsa.gov'
-app.jinja_env.globals['default_cycles'] = _get_default_cycles()
+def series_has_data(values, key):
+    return next(
+        (True for value in values if value.get(key) is not None),
+        False,
+    )
+
+
+def group_has_data(value, keys):
+    return next(
+        (True for key in keys if value.get(key) is not None),
+        False,
+    )
+
+
+def series_group_has_data(groups, keys):
+    return next(
+        (True for group in groups if group_has_data(group, keys)),
+        False,
+    )
+
+
+app.jinja_env.globals.update({
+    'min': min,
+    'max': max,
+    'api_location': config.api_location_public,
+    'api_version': config.api_version,
+    'api_key': config.api_key_public,
+    'use_analytics': config.use_analytics,
+    'context': get_context,
+    'absolute_url': get_absolute_url,
+    'contact_email': '18F-FEC@gsa.gov',
+    'default_cycles': _get_default_cycles(),
+    'series_has_data': series_has_data,
+    'group_has_data': group_has_data,
+    'series_group_has_data': series_group_has_data,
+})
+
 
 try:
     app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
@@ -67,9 +97,6 @@ except OSError:
         '"npm run build"?'
     )
     raise
-
-if config.analytics:
-    app.config['USE_ANALYTICS'] = True
 
 
 @app.route('/')
@@ -104,22 +131,14 @@ def developers():
 @app.route('/candidate/<c_id>')
 @use_kwargs({
     'cycle': Arg(int),
-    'history': Arg(int),
 })
-def candidate_page(c_id, cycle=None, history=None):
+def candidate_page(c_id, cycle=None):
     """Fetch and render data for candidate detail page.
 
     :param int cycle: Optional cycle for associated committees and financials.
-    :param int history: Optional cycle for candidate history; default to `cycle`
-        if not specified.
     """
-    history = history or cycle
-    path = ('history', str(history)) if history else ()
-    data = load_single_type('candidate', c_id, *path)
-    cycle = cycle or min(current_cycle(), max(data['results'][0]['cycles']))
-    path = ('history', str(cycle))
-    committee_data = load_nested_type('candidate', c_id, 'committees', *path)['results']
-    return render_candidate(data, committees=committee_data, cycle=cycle)
+    candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle)
+    return render_candidate(candidate, committees, cycle)
 
 
 @app.route('/committee/<c_id>')
@@ -131,11 +150,8 @@ def committee_page(c_id, cycle=None):
 
     :param int cycle: Optional cycle for financials.
     """
-    path = ('history', str(cycle)) if cycle else ()
-    data = load_single_type('committee', c_id, *path)
-    cycle = cycle or min(current_cycle(), max(data['results'][0]['cycles']))
-    candidate_data = load_nested_type('committee', c_id, 'candidates', cycle=cycle)['results']
-    return render_committee(data, candidates=candidate_data, cycle=cycle)
+    committee, candidates, cycle = load_with_nested('committee', c_id, 'candidates', cycle)
+    return render_committee(committee, candidates, cycle)
 
 
 @app.route('/candidates')
@@ -194,6 +210,7 @@ def date_filter_sm(date_str):
         return ''
     return parse_date(date_str).strftime('%m/%y')
 
+
 @app.template_filter('date_md')
 def date_filter_md(date_str):
     if not date_str:
@@ -215,27 +232,22 @@ def fmt_report_desc(report_full_description):
 
 
 @app.template_filter()
-def restrict_cycles(value):
-    return [each for each in value if each <= current_cycle()]
-
-
-@app.template_filter()
-def next_cycle(value, cycles):
-    """Get the earliest election cycle greater than or equal to `value`. If no
-    cycles match, use the most recent cycle to avoid empty results from the
-    history endpoint.
-    """
-    cycles = sorted(restrict_cycles(cycles))
-    return next(
-        (each for each in cycles if value <= each),
-        max(cycles),
-    )
+def restrict_cycles(value, start_year=START_YEAR):
+    return [each for each in value if start_year <= each <= utils.current_cycle()]
 
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
 if config.force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
+
+
+if config.server_name:
+    app.config['SERVER_NAME'] = config.server_name
+
+
+if config.production:
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 
 # Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
@@ -247,15 +259,6 @@ if not config.test:
     basic_auth = BasicAuth(app)
 
 
-# Serve compressed assets, cached by SHA1.
-cache_key = lambda response: hashlib.sha1(response.get_data()).hexdigest()
-app.config['COMPRESS_CACHE_KEY'] = cache_key
-app.config['COMPRESS_CACHE_BACKEND'] = DictCache
-Compress(app)
-
-
 if __name__ == '__main__':
-    if '--cached' in sys.argv:
-        install_cache()
     files = ['./rev-manifest.json']
     app.run(host=config.host, port=int(config.port), debug=config.debug, extra_files=files)
