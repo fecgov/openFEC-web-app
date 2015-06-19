@@ -112,6 +112,29 @@ class SearchPageTestCase(BaseTest):
         return [row.find_elements_by_tag_name('td')[index].text
                 for row in data.find_elements_by_tag_name('tr')]
 
+    def check_checkbox_filter(self, name, value, column, result, refresh=True,
+                              expand=True):
+        if refresh:
+            self.driver.get(self.url)
+
+        div = self.driver.find_element_by_xpath(''.join([
+            '//*[@name="' + name + '"]',
+            '/ancestor::div[@class="field"]',
+        ]))
+        checkbox = div.find_element_by_css_selector(
+            'input[type="checkbox"][value="' + value + '"]'
+        )
+        if expand:
+            try:
+                button = div.find_element_by_css_selector('button.js-toggle')
+            except NoSuchElementException:
+                button = None
+            if button:
+                button.click()
+        checkbox.click()
+        self.driver.find_element_by_id('category-filters').submit()
+        self.check_filter_results(column, result)
+
     def checkFilter(self, name, entry, index, result, refresh=True, click=False):
         if refresh:
             self.driver.get(self.url)
