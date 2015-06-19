@@ -43,24 +43,24 @@ class CandidatesPageTests(SearchPageTestCase):
                 lower, upper = parts
                 return (lower <= entry <= upper) or (lower <= entry + 1 <= upper)
             return False
-        self.check_checkbox_filter('cycle', '2014', 2, functools.partial(checker, 2013))
+        self.check_filter('cycle', '2014', 2, functools.partial(checker, 2013))
 
     def testCandidatePartyFilter(self):
-        self.check_checkbox_filter('party', 'REP', 3, 'Republican Party')
+        self.check_filter('party', 'REP', 3, 'Republican Party')
 
     def testCandidateStateFilter(self):
-        self.check_checkbox_filter('state', 'AZ', 4, 'AZ')
+        self.check_filter('state', 'AZ', 4, 'AZ')
 
     def testCandidateDistrictFilter(self):
-        self.check_checkbox_filter('district', '05', 5, '05')
+        self.check_filter('district', '05', 5, '05')
 
     def testCandidateOfficeFilter(self):
-        self.check_checkbox_filter('office', 'P', 1, 'President')
+        self.check_filter('office', 'P', 1, 'President')
 
     def test_candidate_filter_history(self):
-        self.check_checkbox_filter('state', 'AZ', 4, 'AZ')
+        self.check_filter('state', 'AZ', 4, 'AZ')
         self.assertIn('state=AZ', self.driver.current_url)
-        self.check_checkbox_filter('state', 'CA', 4, 'CA', refresh=False, expand=False)
+        self.check_filter('state', 'CA', 4, 'CA', refresh=False, expand=False)
         self.assertIn('state=AZ', self.driver.current_url)
         self.assertIn('state=CA', self.driver.current_url)
         self.driver.back()
