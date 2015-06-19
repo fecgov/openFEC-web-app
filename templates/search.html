@@ -17,13 +17,13 @@
             <div class="card">
                 <h3><img src="/static/img/icon-candidate.svg" class="category-icon"  alt="Icon representing candidates">Candidates</h3>
                 <p>Candidates are people who are running or have run for office. Active candidates have at least one committee they have authorized to raise and spend money on their behalf in elections. If a person has been a candidate for multiple offices (for example, they ran for the Senate one year and President another year), they will have a candidate page for each office sought.</p>
-                <p><a href="/candidates">Browse all candidates &raquo;</a></p>
+                <p><a href="{{ url_for('candidates', cycle=default_cycles) }}">Browse all candidates &raquo;</a></p>
             </div>
             <div class="card card--icon">
                 <h3><img class="category-icon" src="/static/img/icon-committee.svg" alt="Icon representing committees">Committees</h3>
                 <p>There are many different types of committees involved in federal elections, and different types of committees have different fundraising and spending limitations and different requirements for reporting their activity. Committees can come in the form of an entity authorized by a candidate, a state or local political party, a non-party club or association or other group, and more.</p>
                 <p>For a full definition, <a class="term" data-term="Committee">click here</a>.</p>
-                <p><a href="/committees">Browse all committees &raquo;</a></p>
+                <p><a href="{{ url_for('committees', cycle=default_cycles) }}">Browse all committees &raquo;</a></p>
             </div>
         </div>
     </div>
