@@ -3,6 +3,7 @@
 /* global require, window, document */
 
 var $ = require('jquery');
+var _ = require('underscore');
 var keyboard = require('keyboardjs');
 var perfectScrollbar = require('perfect-scrollbar/jquery') ($);
 
@@ -89,11 +90,20 @@ $(document).ready(function() {
         }
     });
 
+    function hideToggles() {
+        _.each($('[data-toggles]'), function(toggle) {
+            var $toggle = $(toggle);
+            $('#' + $toggle.data('toggles')).attr('aria-hidden', 'true');
+            $toggle.removeClass('active');
+        });
+    }
+
     $('.js-toggle').on('click keypress', function(e) {
         if (e.which === 13 || e.type === 'click') {
             var $this = $(this);
             var $toggleElement = $('#' + $this.data('toggles'));
             if ($toggleElement.attr('aria-hidden') === 'true') {
+                hideToggles();
                 $toggleElement
                     .attr('aria-hidden', false)
                     .find('li:first-child input').focus();
