@@ -1,0 +1,121 @@
+// Dropdowns
+.button--dropdown {
+  position: relative;
+  text-align: left;
+  padding: .5rem 1rem;
+  line-height: 1.8rem;
+  background-color: #fff;
+  font-weight: normal;
+
+  &:hover {
+    background-color: #fff;
+
+    &:after {
+      background-color: $medium-gray;
+    }
+  }
+
+  &:after {
+    @include icon();
+    content: "\e64b";
+    text-align: center;
+    position: absolute;
+    padding: .5rem 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 4rem;
+    border-left: 1px solid $medium-gray;
+    background-color: $light-gray;
+    color: $dark-gray;
+
+  }
+
+  &.active {
+    &:after {
+      content: "\e648";
+      background-color: $medium-gray;
+    }
+  }
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown__panel {
+  position: absolute;
+  margin-top: -1px; // To prevent shadow on the button
+  top: 3rem;
+  min-width: 100%;
+  background: #fff;
+  border: 1px solid $light-gray;
+  border-top: 1px solid $medium-gray;  
+  max-height: 30rem;
+  overflow: hidden;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+  z-index: 999;
+
+  li {
+    font-size: 1.2rem;
+    border-bottom: 1px solid $light-gray;
+    white-space: nowrap;
+  }
+
+  label {
+    padding: .5rem 1rem;
+    &:hover {
+      background-color: $lightest-gray;
+      cursor: pointer;
+    }
+  }
+}
+
+.dropdown__search__container {
+  padding: 0 .5rem;
+  display: none; // Hiding the search for now
+}
+
+input.dropdown__search {
+  margin: .5rem 0;
+  padding-left: 2rem;
+  position: relative;
+  display: block;
+  background-image: url('/static/img/icon-search.svg');
+  background-size: 15px;
+  background-repeat: no-repeat;
+  background-position: 5px 6px;
+}
+
+@include keyframes(fadeIn) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dropdown__selected {
+  margin-bottom: .5rem;
+
+  li {
+    @include animation(fadeIn .2s ease-in);
+  }
+  input {
+    margin-left: 0;
+  }
+}
+
+.ps-scrollbar-y-rail { 
+  position: absolute;
+  background: $lightest-gray;
+  width: 4px;
+  border-left: 1px solid $light-gray;
+}
+
+.ps-scrollbar-y {
+  position: absolute;
+  width: 4px;
+  background: $medium-gray;
+}

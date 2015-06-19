@@ -1,23 +1,92 @@
 <div class="field">
     <label for="committee_type">Committee Type</label>
-    <select name="committee_type" data-placeholder="Select a type">
-        <option></option>
-        <option value="P">Presidential</option>
-        <option value="H">House</option>
-        <option value="S">Senate</option>
-        <option value="C">Communication Cost</option>
-        <option value="D">Delegate Committee</option>
-        <option value="E">Electioneering Communication</option>
-        <option value="I">Independent Expenditor (Person or Group)</option>
-        <option value="N">PAC - Nonqualified</option>
-        <option value="O">Super PAC - (Independent Expenditure-Only)</option>
-        <option value="Q">PAC - Qualified</option>
-        <option value="U">Single Candidate Independent Expenditure</option>
-        <option value="V">PAC with Non-Contribution Account - Nonqualified</option>
-        <option value="W">PAC with Non-Contribution Account - Qualified</option>
-        <option value="X">Party - Nonqualified</option>
-        <option value="Y">Party - Qualified</option>
-        <option value="Z">National Party Nonfederal Account</option>
-    </select>
-    <button type="button" class="button--remove" data-removes="committee_type"><i class="ti-close"></i></button>
+    <fieldset class="js-checkbox-filters">
+        <ul class="dropdown__selected"></ul>
+        <div class="dropdown">
+            <button class="js-toggle js-dropdown button--dropdown" data-toggles="committee-type-dropdown" >More</button>
+            <div id="committee-type-dropdown" class="dropdown__panel" aria-hidden="true">
+            <ul class="dropdown__list">
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-P">
+                        <input id="committee-type-checkbox-P" type="checkbox" name="committee_type" value="P">Presidential
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-H">
+                        <input id="committee-type-checkbox-H" type="checkbox" name="committee_type" value="H">House
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-S">
+                        <input id="committee-type-checkbox-S" type="checkbox" name="committee_type" value="S">Senate
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-C">
+                        <input id="committee-type-checkbox-C" type="checkbox" name="committee_type" value="C">Communication Cost
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-D">
+                        <input id="committee-type-checkbox-D" type="checkbox" name="committee_type" value="D">Delegate Committee
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-E">
+                        <input id="committee-type-checkbox-E" type="checkbox" name="committee_type" value="E">Electioneering Communication
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-I">
+                        <input id="committee-type-checkbox-I" type="checkbox" name="committee_type" value="I">Independent Expenditor (Person or Group)
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-N">
+                        <input id="committee-type-checkbox-N" type="checkbox" name="committee_type" value="N">PAC - Nonqualified
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-O">
+                        <input id="committee-type-checkbox-O" type="checkbox" name="committee_type" value="O">Super PAC - (Independent Expenditure-Only)
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-Q">
+                        <input id="committee-type-checkbox-Q" type="checkbox" name="committee_type" value="Q">PAC - Qualified
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-U">
+                        <input id="committee-type-checkbox-U" type="checkbox" name="committee_type" value="U">Single Candidate Independent Expenditure
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-V">
+                        <input id="committee-type-checkbox-V" type="checkbox" name="committee_type" value="V">PAC with Non-Contribution Account - Nonqualified
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-W">
+                        <input id="committee-type-checkbox-W" type="checkbox" name="committee_type" value="W">PAC with Non-Contribution Account - Qualified
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-X">
+                        <input id="committee-type-checkbox-X" type="checkbox" name="committee_type" value="X">Party - Nonqualified
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-Y">
+                        <input id="committee-type-checkbox-Y" type="checkbox" name="committee_type" value="Y">Party - Qualified
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown__value" for="committee-type-checkbox-Z">
+                        <input id="committee-type-checkbox-Z" type="checkbox" name="committee_type" value="Z">National Party Nonfederal Account
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
 </div>

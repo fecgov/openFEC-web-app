@@ -10,9 +10,7 @@ class CommitteesPageTests(SearchPageTestCase):
 
     def testCommitteesPageLoads(self):
         self.driver.get(self.url)
-        self.assertEqual(
-            self.driver.find_element_by_tag_name('h1').text,
-            'Committees')
+        self.assertEqual(self.driver.find_element_by_tag_name('h1').text, 'Committees')
 
     def testCommitteesFilterSideBar(self):
         self.driver.get(self.url)
@@ -31,18 +29,16 @@ class CommitteesPageTests(SearchPageTestCase):
             self.assertIn('pork', row.text.lower())
 
     def testCommitteePartyFilter(self):
-        self.checkFilter(
-            'party', 'republican party', 3, 'Republican Party')
+        self.check_filter('party', 'REP', 3, 'Republican Party')
 
     def testCommitteeStateFilter(self):
-        self.checkFilter('state', 'oregon', 2, 'OR')
+        self.check_filter('state', 'CA', 2, 'CA')
 
     def testCommitteeTypeFilter(self):
-        self.checkFilter('committee_type', 'pr', 5, 'Presidential')
+        self.check_filter('committee_type', 'P', 5, 'Presidential')
 
     def testCommitteeDesignationFilter(self):
-        self.checkFilter(
-            'designation', 'a', 6, 'Authorized by a candidate')
+        self.check_filter('designation', 'A', 6, 'Authorized by a candidate')
 
     def testCommitteeOrgTypeFilter(self):
-        self.checkFilter('organization_type', 'corp', 4, 'Corporation')
+        self.check_filter('organization_type', 'C', 4, 'Corporation')

@@ -7,7 +7,6 @@ import pytest
 from nose.plugins.attrib import attr
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
 from openfecwebapp.sauce import SauceClient
@@ -112,27 +111,28 @@ class SearchPageTestCase(BaseTest):
         return [row.find_elements_by_tag_name('td')[index].text
                 for row in data.find_elements_by_tag_name('tr')]
 
-    def checkFilter(self, name, entry, index, result, refresh=True, click=False):
+    def check_filter(self, name, value, column, result, refresh=True,
+                              expand=True):
         if refresh:
             self.driver.get(self.url)
 
-        div = self.getFilterDivByName(name)
-        select = div.find_element_by_tag_name('select')
-        # Hack: In some cases, `send_keys` will fail with Chrome; allow clicking on <option> directly
-        # TODO(jmcarp): Replace with a cleaner solution
-        if click:
-            select.find_element_by_css_selector('[value=' + result + ']').click()
-        else:
-            select.send_keys(entry)
-        select.send_keys(Keys.ENTER)
-        # Refresh containing div to avoid stale reference error
-        div = self.getFilterDivByName(name)
-        close_buttons = div.find_elements_by_xpath(
-            './/button[contains(@class, "button--remove")]'
+        div = self.driver.find_element_by_xpath(''.join([
+            '//*[@name="' + name + '"]',
+            '/ancestor::div[@class="field"]',
+        ]))
+        checkbox = div.find_element_by_css_selector(
+            'input[type="checkbox"][value="' + value + '"]'
         )
-        self.assertEqual(len(close_buttons), 1)
+        if expand:
+            try:
+                button = div.find_element_by_css_selector('button.js-toggle')
+            except NoSuchElementException:
+                button = None
+            if button:
+                button.click()
+        checkbox.click()
         self.driver.find_element_by_id('category-filters').submit()
-        self.check_filter_results(index, result)
+        self.check_filter_results(column, result)
 
     def check_filter_results(self, index, result):
         wait_for_ajax(self.driver)

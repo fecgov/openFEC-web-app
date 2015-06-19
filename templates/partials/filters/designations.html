@@ -1,13 +1,43 @@
 <div class="field">
     <label for="designation">Designation</label>
-    <select name="designation" data-placeholder="Select a designation">
-        <option></option>
-        <option value="A">Authorized by a candidate</option>
-        <option value="J">Joint fundraising committee</option>
-        <option value="P">Principal campaign committee</option>
-        <option value="U">Unauthorized</option>
-        <option value="B">Lobbyist/Registrant PAC</option>
-        <option value="D">Leadership PAC</option>
-    </select>
-    <button type="button" class="button--remove" data-removes="designation"><i class="ti-close"></i></button>
+    <fieldset class="js-checkbox-filters">
+        <ul class="dropdown__selected"></ul>
+        <div class="dropdown">
+            <button class="js-toggle js-dropdown button--dropdown" data-toggles="designation-dropdown" >More</button>
+            <div id="designation-dropdown" class="dropdown__panel" aria-hidden="true">
+                <ul class="dropdown__list">
+                    <li>
+                        <label class="dropdown__value" for="designation-checkbox-A">
+                            <input id="designation-checkbox-A" type="checkbox" name="designation" value="A">Authorized by a candidate
+                        </label>
+                    </li>
+                    <li>
+                        <label class="dropdown__value" for="designation-checkbox-J">
+                            <input id="designation-checkbox-J" type="checkbox" name="designation" value="J">Joint fundraising committee
+                        </label>
+                    </li>
+                    <li>
+                        <label class="dropdown__value" for="designation-checkbox-P">
+                            <input id="designation-checkbox-P" type="checkbox" name="designation" value="P">Principal campaign committee
+                        </label>
+                    </li>
+                    <li>
+                        <label class="dropdown__value" for="designation-checkbox-U">
+                            <input id="designation-checkbox-U" type="checkbox" name="designation" value="U">Unauthorized
+                        </label>
+                    </li>
+                    <li>
+                        <label class="dropdown__value" for="designation-checkbox-B">
+                            <input id="designation-checkbox-B" type="checkbox" name="designation" value="B">Lobbyist/Registrant PAC
+                        </label>
+                    </li>
+                    <li>
+                        <label class="dropdown__value" for="designation-checkbox-D">
+                            <input id="designation-checkbox-D" type="checkbox" name="designation" value="D">Leadership PAC
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </fieldset>
 </div>
