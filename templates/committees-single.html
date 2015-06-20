@@ -172,10 +172,10 @@
               {% include 'partials/committee-totals-presidential.html' %}
             {% elif committee_type == 'H' or committee_type == 'S' %}
               {% include 'partials/committee-totals-house-senate.html' %}
+            {% elif %}
+              {% include 'partials/committee-totals-ie-only.html' %}
             {% else %}
               {% include 'partials/committee-totals-pac-party.html' %}
-            {% else %}
-              {% include 'partials/committee-totals-ie-only.html' %}
             {% endif %}
             </div>
 
