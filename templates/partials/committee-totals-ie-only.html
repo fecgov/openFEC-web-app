@@ -1,0 +1,6 @@
+{% with committee=context() %}
+
+{{ totals_table('Independent Contributions', totals.0.total_independent_contributions) }}
+{{ totals_table('Independent Expenditures', totls.0.total_independent_expenditures) }}
+
+{% endwith %}
