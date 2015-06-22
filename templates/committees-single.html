@@ -180,7 +180,10 @@
             </div>
 
           <div class="row">
-            {% include 'partials/committee-charts.html' %}
+            {% if committee_type != 'I'  %}
+                {% include 'partials/committee-charts.html' %}
+            {% endif %}
+
             {% endwith %}
           </div>
         {% else %}
