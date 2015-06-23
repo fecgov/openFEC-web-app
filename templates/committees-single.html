@@ -181,9 +181,10 @@
 
           <div class="row">
             {% if committee_type != 'I'  %}
-                {% include 'partials/committee-charts.html' %}
+              {% include 'partials/committee-charts.html' %}
+            {% else %}
+              {% include 'partials/ie-chart.html' %}
             {% endif %}
-
             {% endwith %}
           </div>
         {% else %}
