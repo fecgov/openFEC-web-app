@@ -8,6 +8,17 @@ var URI = require('URIjs');
 require('datatables');
 require('drmonty-datatables-responsive');
 
+$.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
+  var settings = this.context[0];
+  if (typeof value !== 'undefined') {
+    settings._seekIndexes = settings._seekIndexes || {};
+    settings._seekIndexes[length] = settings._seekIndexes[length] || {};
+    settings._seekIndexes[length][start] = value;
+  } else {
+    return ((settings._seekIndexes || {})[length] || {})[start] || undefined;
+  }
+});
+
 var filters = require('./filters');
 
 function yearRange(first, last) {
@@ -94,6 +105,28 @@ var committeeColumns = [
   {data: 'designation_full', className: 'min-tablet'},
 ];
 
+var donationColumns = [
+  {
+    data: 'contributor_name',
+    orderable: false,
+    className: 'all',
+    width: '30%'
+  },
+  {data: 'contributor_state', orderable: false, className: 'min-desktop'},
+  {data: 'contributor_employer', orderable: false, className: 'min-desktop'},
+  {data: 'contributor_receipt_amount', className: 'min-tablet'},
+  {data: 'receipt_date', className: 'min-tablet'},
+  {
+    data: 'committee_name',
+    orderable: false,
+    className: 'all',
+    width: '30%',
+    render: function(data, type, row, meta) {
+      return buildEntityLink(data, '/committee/' + row.committee_id, 'committee');
+    }
+  },
+];
+
 function mapSort(order, columns) {
   return _.map(order, function(item) {
     var name = columns[item.column].data;
@@ -119,9 +152,9 @@ function pushQuery(filters) {
   }
 }
 
-function initTable($table, $form, baseUrl, columns) {
+function initTable($table, $form, baseUrl, columns, opts) {
   var draw;
-  var api = $table.DataTable({
+  opts = _.extend({
     serverSide: true,
     searching: false,
     columns: columns,
@@ -139,7 +172,7 @@ function initTable($table, $form, baseUrl, columns) {
       var query = $.extend(
         {
           per_page: data.length,
-          page: Math.floor(data.start / data.length) + 1,
+          last_index: api.seekIndex(data.length, data.start),
           api_key: API_KEY
         },
         parsedFilters
@@ -151,10 +184,12 @@ function initTable($table, $form, baseUrl, columns) {
         .query(query)
         .toString()
       ).done(function(response) {
+        api.seekIndex(data.length, data.length + data.start, response.pagination.last_index);
         callback(mapResponse(response));
       });
     }
-  });
+  }, opts || {});
+  var api = $table.DataTable(opts);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -170,10 +205,19 @@ module.exports = {
   init: function() {
     var $table = $('#results');
     var $form = $('#category-filters');
-    if ($table.attr('data-type') === 'candidate') {
-      initTable($table, $form, 'candidates', candidateColumns);
-    } else {
-      initTable($table, $form, 'committees', committeeColumns);
+    switch ($table.attr('data-type')) {
+      case 'candidate':
+        initTable($table, $form, 'candidates', candidateColumns);
+        break;
+      case 'committee':
+        initTable($table, $form, 'committees', committeeColumns);
+        break;
+      case 'donation':
+        initTable($table, $form, 'filings/schedule_a', donationColumns, {
+          order: [[4, 'asc']],
+          pagingType: 'simple'
+        });
+        break;
     }
 
     // Move the filter button into the results-info div

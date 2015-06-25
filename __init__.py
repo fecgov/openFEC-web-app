@@ -164,6 +164,11 @@ def committees():
     return render_template('committees.html', result_type='committees')
 
 
+@app.route('/donations')
+def donations():
+    return render_template('donations.html')
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
