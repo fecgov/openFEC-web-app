@@ -1,16 +1,41 @@
 // MODULE: Search bar
 
-.search-bar {
-  float: left;
-  margin: 0;
-  border: 0;
+.input-button-combo {
+  @include display(flex);
+  @include align-items(stretch);
+  @include flex-direction(row);
+  @include justify-content(center);
+  height: 4rem;
+
+  input,
+  button,
+  select {
+    height: auto;
+    font-size: 1em;
+  }
+
+  input {
+    @include flex(1);
+    margin: 0;
+    border-right: none;
+  }
+
+  button {
+    padding: 0 1rem;
+  }
+
+  @include media($large) {
+    border-left: none;
+  }
 }
 
-#large-search {
-  label {
-    margin-bottom: 30px;
+.search-bar--hero {
+  clear: both;
+
+  .search__radio {
+    text-align: center;
   }
-  
+
   @include media($medium) {
     .input-button-combo {
       height: 6rem;
@@ -33,7 +58,35 @@
 }
 
 .search__select {
+  display: none;
   min-width: 140px;
+  @include media($large) {
+    display: block;
+  }
+}
+
+.search__radio {
+  text-align: left;
+  margin-bottom: 1rem;
+
+  label {
+    margin: 0 2rem 0 0;
+    display: inline-block;
+  }
+  
+  input[type="radio"] {
+    margin-left: 0;
+  }
+
+  @include media($large) {
+    display: none;
+  }
+}
+
+.search-input {
+  float: left;
+  margin: 0;
+  border: 0;
 }
 
 .search-submit {
@@ -43,7 +96,11 @@
 // Typeahead
 .twitter-typeahead {
   @include display(flex);
-  width: 50%;
+  width: 100%;
+
+  @include media($large) {
+    width: 50%;
+  }
 }
 
 .tt-dropdown-menu {
@@ -58,7 +115,7 @@
 #large-search {
   .tt-dropdown-menu {
     @include font-size(1.6);
-    top: 60px !important;
+    top: 40px !important;
   }
 
   @include media($medium) {
