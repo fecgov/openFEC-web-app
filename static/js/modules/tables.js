@@ -152,7 +152,27 @@ function pushQuery(filters) {
   }
 }
 
-function initTable($table, $form, baseUrl, columns, opts) {
+function mapQueryOffset(api, data) {
+  return {
+    per_page: data.length,
+    page: Math.floor(data.start / data.length) + 1,
+  };
+}
+
+function mapQuerySeek(api, data) {
+  return {
+    per_page: data.length,
+    last_index: api.seekIndex(data.length, data.start),
+  };
+}
+
+function handleResponseOffset() {}
+
+function handleResponseSeek(api, data, response) {
+  api.seekIndex(data.length, data.length + data.start, response.pagination.last_index);
+}
+
+function initTable($table, $form, baseUrl, columns, mapQuery, handleResponse, opts) {
   var draw;
   opts = _.extend({
     serverSide: true,
@@ -170,11 +190,8 @@ function initTable($table, $form, baseUrl, columns, opts) {
       parsedFilters = mapFilters(filters);
       pushQuery(parsedFilters);
       var query = $.extend(
-        {
-          per_page: data.length,
-          last_index: api.seekIndex(data.length, data.start),
-          api_key: API_KEY
-        },
+        mapQuery(api, data),
+        {api_key: API_KEY},
         parsedFilters
       );
       query.sort = mapSort(data.order, columns);
@@ -184,7 +201,7 @@ function initTable($table, $form, baseUrl, columns, opts) {
         .query(query)
         .toString()
       ).done(function(response) {
-        api.seekIndex(data.length, data.length + data.start, response.pagination.last_index);
+        handleResponse(api, data, response);
         callback(mapResponse(response));
       });
     }
@@ -207,13 +224,13 @@ module.exports = {
     var $form = $('#category-filters');
     switch ($table.attr('data-type')) {
       case 'candidate':
-        initTable($table, $form, 'candidates', candidateColumns);
+        initTable($table, $form, 'candidates', candidateColumns, mapQueryOffset, handleResponseOffset);
         break;
       case 'committee':
-        initTable($table, $form, 'committees', committeeColumns);
+        initTable($table, $form, 'committees', committeeColumns, mapQueryOffset, handleResponseOffset);
         break;
       case 'donation':
-        initTable($table, $form, 'filings/schedule_a', donationColumns, {
+        initTable($table, $form, 'filings/schedule_a', donationColumns, mapQuerySeek, handleResponseSeek, {
           order: [[4, 'asc']],
           pagingType: 'simple'
         });

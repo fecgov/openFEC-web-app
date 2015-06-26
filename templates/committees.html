@@ -1,5 +1,7 @@
 {% extends 'layouts/main.html' %}
 
+{% import 'macros/filters/states.html' as states %}
+
 {% block title %}
     Browse Committees
 {% endblock %}
@@ -23,7 +25,7 @@
 
         {% include 'partials/filters/election-years.html' %}
         {% include 'partials/filters/parties.html' %}
-        {% include 'partials/filters/states.html' %}
+        {{ states.field('state') }}
         {% include 'partials/filters/committee-types.html' %}
         {% include 'partials/filters/designations.html' %}
         {% include 'partials/filters/organization-types.html' %}

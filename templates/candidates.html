@@ -1,5 +1,7 @@
 {% extends 'layouts/main.html' %}
 
+{% import 'macros/filters/s.html' as s %}
+
 {% block title %}
    Browse Candidates
 {% endblock %}
@@ -24,7 +26,7 @@
         {% include 'partials/filters/election-years.html' %}
         {% include 'partials/filters/office-sought.html' %}
         {% include 'partials/filters/parties.html' %}
-        {% include 'partials/filters/states.html' %}
+        {{ states.field('state') }}
         {% include 'partials/filters/districts.html' %}
 
       <div class="field">

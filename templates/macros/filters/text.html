@@ -1,0 +1,7 @@
+{% macro field(name, title) %}
+<div class="field" id="{{ name }}-field">
+  <label for="{{ name }}">{{ title }}</label>
+  <input type="text" name="{{ name }}" id="{{ name }}" />
+  <button type="button" class="button--remove" data-removes="{{ name }}"><i class="ti-close"></i></button>
+</div>
+{% endmacro %}
