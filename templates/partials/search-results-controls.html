@@ -1,9 +1,7 @@
+{% import 'macros/search.html' as search %}
+
 <div class="meta-box results-controls">
-  <form id="search" action="/" autocomplete="off"
-    class="js-search">
-    <label for="search">Search results for</label>
-    {% include 'partials/search-bar.html' %}
-  </form>
+  {{ search.search('results') }}
   {% if results|length >= 20 %}
   <div class="results-count"> Showing first 20 results. 
     <a href="{{ url_for(result_type, q=query) }}">View all &raquo;</a>

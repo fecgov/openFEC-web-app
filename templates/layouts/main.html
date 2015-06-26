@@ -31,6 +31,7 @@
     {% endif %}
 </head>
 <body>
+{% import 'macros/search.html' as search %}
 {% include 'partials/browser-warning.html' %}
 {% include 'partials/javascript-warning.html' %}
 <a href="#main-content" class="u-visually_hidden">skip navigation</a>
@@ -42,10 +43,8 @@
       <button title="Close menu" class="js-hide modal__close" data-hides="site-menu"><i class="ti-close"></i></button>
     </div>
     <div class="modal__row">
-      <h3>Search the Data</h3>
-      <form id="modal-search" action="/" autocomplete="off" class="js-search">
-        {% include 'partials/search-bar.html' %}
-      </form>
+      <h3>Search the data for:</h3>
+      {{ search.search('modal') }}
     </div>
     <div class="modal__row">
       <h3>Browse the Data</h3>
@@ -95,10 +94,7 @@
 
         {% if not page or page != 'home' %}
         <div class="header-search">
-          <form id="search" action="/" autocomplete="off"
-            class="js-search">
-            {% include 'partials/search-bar.html' %}
-          </form>
+          {{ search.search('header') }}
         </div>
         {% endif %}
 
