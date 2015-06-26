@@ -76,7 +76,11 @@ var fieldMap = [
     'office',
     'designation',
     'committee_type',
-    'organization_type'
+    'organization_type',
+    'contributor_name',
+    'contributor_city',
+    'contributor_state',
+    'contributor_employer',
 ];
 
 var activateInitialFilters = function() {
