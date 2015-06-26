@@ -10,6 +10,14 @@ require('drmonty-datatables-responsive');
 
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
+
+  // Clear stored indexes on filter change
+  if (!_.isEqual(settings._parsedFilters, parsedFilters)) {
+    settings._seekIndexes = {};
+  }
+  settings._parsedFilters = _.clone(parsedFilters);
+
+  // Set or get stored indexes
   if (typeof value !== 'undefined') {
     settings._seekIndexes = settings._seekIndexes || {};
     settings._seekIndexes[length] = settings._seekIndexes[length] || {};
