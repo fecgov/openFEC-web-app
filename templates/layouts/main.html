@@ -44,7 +44,7 @@
     </div>
     <div class="modal__row">
       <h3>Search the data for:</h3>
-      {{ search.search('modal') }}
+      {{ search.search('modal', result_type) }}
     </div>
     <div class="modal__row">
       <h3>Browse the Data</h3>
@@ -94,7 +94,7 @@
 
         {% if not page or page != 'home' %}
         <div class="header-search">
-          {{ search.search('header') }}
+          {{ search.search('header', result_type) }}
         </div>
         {% endif %}
 

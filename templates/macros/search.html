@@ -1,4 +1,4 @@
-{% macro search(location) %}
+{% macro search(location, result_type) %}
 <form id="{{ location }}-search" action="/" autocomplete="off" class="js-search">
   <div class="search-bar--{{ location }}">
     <div class="search__radio">
@@ -23,7 +23,7 @@
         value="committees">
         Committees</option>
       </select>
-      <input class="search-input" type="text" name="search"
+      <input class="js-search-input search-input" type="text" name="search"
       aria-label="Enter a candidate name"
       placeholder="Enter a candidate name" autocomplete="off"
       autocorrect="off" autocapitalize="off" spellcheck="false"

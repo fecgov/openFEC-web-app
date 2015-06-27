@@ -20,7 +20,7 @@ class LandingPageTests(BaseTest):
     def testMainSearch(self):
         self.driver.get(self.url)
         main = self.getMain()
-        main.find_element_by_class_name('search-bar').send_keys('obama')
+        main.find_element_by_class_name('search-input').send_keys('obama')
         main.find_element_by_class_name('search-submit').click()
         self.elementExistsByClassName('tst-search_results')
 
