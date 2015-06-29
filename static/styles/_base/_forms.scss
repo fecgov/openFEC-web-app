@@ -125,32 +125,6 @@ select[multiple] {
   background-image: none;
 }
 
-.input-button-combo {
-  @include display(flex);
-  @include align-items(stretch);
-  @include flex-direction(row);
-  @include justify-content(center);
-  height: 4rem;
-
-  input,
-  button,
-  select {
-    height: auto;
-    font-size: 1em;
-  }
-
-  input {
-    @include flex(1);
-    margin: 0;
-    border-left: none;
-    border-right: none;
-  }
-
-  button {
-    padding: 0 1rem;
-  }
-}
-
 // If you want some styling on the forms
 .form {
   background: $meta-box-color;

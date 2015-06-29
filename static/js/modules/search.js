@@ -15,8 +15,8 @@ function onSelectChange($input, updatedText) {
 };
 
 var Search = function($el, opts) {
-  var $select = $el.find('select'),
-      $input = $el.find('input'),
+  var $select = $el.find('.js-search-type'),
+      $input = $el.find('input[type="text"]'),
       settings = $.extend( {}, defaultOpts, opts);
 
   if (settings.placeHolderOptions) {
