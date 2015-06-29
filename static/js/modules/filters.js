@@ -81,6 +81,8 @@ var fieldMap = [
     'contributor_city',
     'contributor_state',
     'contributor_employer',
+    'min_contribution',
+    'max_contribution',
 ];
 
 var activateInitialFilters = function() {
