@@ -79,7 +79,7 @@ var candidateColumns = [
 
 var committeeColumns = [
   {
-    data: 'committee_id',
+    data: 'name',
     className: 'all',
     width: '20%',
     render: function(data, type, row, meta) {
