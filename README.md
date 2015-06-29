@@ -47,6 +47,11 @@ Then start the server:
 
     $ python __init__.py
 
+To run the server in debug mode set:
+```
+$ export FEC_WEB_DEBUG=true
+```
+
 If you'd like the app to cache API requests it makes, use the `--cached` flag:
 
     $ python __init__.py --cached
