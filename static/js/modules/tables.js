@@ -5,6 +5,7 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
+var intl = require('intl');
 require('datatables');
 require('drmonty-datatables-responsive');
 
@@ -122,7 +123,13 @@ var donationColumns = [
   },
   {data: 'contributor_state', orderable: false, className: 'min-desktop'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop'},
-  {data: 'contributor_receipt_amount', className: 'min-tablet'},
+  {
+    data: 'contributor_receipt_amount',
+    className: 'min-tablet',
+    render: function(data, type, row, meta) {
+      return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
+    }
+  },
   {data: 'receipt_date', className: 'min-tablet'},
   {
     data: 'committee_name',
