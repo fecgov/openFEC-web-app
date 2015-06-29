@@ -168,16 +168,21 @@ function mapQueryOffset(api, data) {
 }
 
 function mapQuerySeek(api, data) {
-  return {
-    per_page: data.length,
-    last_index: api.seekIndex(data.length, data.start),
-  };
+  var indexes = api.seekIndex(data.length, data.start) || {};
+  return _.extend(
+    {per_page: data.length},
+    _.chain(Object.keys(indexes))
+      .filter(function(key) { return indexes[key]; })
+      .map(function(key) { return [key, indexes[key]]; })
+      .object()
+      .value()
+  );
 }
 
 function handleResponseOffset() {}
 
 function handleResponseSeek(api, data, response) {
-  api.seekIndex(data.length, data.length + data.start, response.pagination.last_index);
+  api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
 }
 
 function initTable($table, $form, baseUrl, columns, mapQuery, handleResponse, opts) {
