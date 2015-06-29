@@ -79,7 +79,7 @@ var candidateColumns = [
 
 var committeeColumns = [
   {
-    data: 'name',
+    data: 'committee_id',
     className: 'all',
     width: '20%',
     render: function(data, type, row, meta) {
@@ -92,6 +92,27 @@ var committeeColumns = [
   {data: 'organization_type_full', className: 'min-desktop'},
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
+];
+
+var filingsColumns = [
+  {
+    data: 'committee_id',
+    className: 'all',
+    width: '20%',
+    render: function(data, type, row, meta) {
+      return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'filing');
+    }
+  },
+
+  {data: 'committee_id', className: 'min-desktop'},
+  {data: 'amendment_indicator', className: 'min-desktop'},
+  {data: 'form_type', className: 'min-desktop'},
+  {data: 'report_type', className: 'min-desktop'},
+  {data: 'receipt_date', className: 'min-tablet'},
+  {data: 'total_receipts', className: 'min-tablet'},
+  {data: 'total_disbursement', className: 'min-tablet'},
+  {data: 'total_independent_expenditures', className: 'min-tablet'},
+
 ];
 
 function mapSort(order, columns) {
@@ -172,7 +193,11 @@ module.exports = {
     var $form = $('#category-filters');
     if ($table.attr('data-type') === 'candidate') {
       initTable($table, $form, 'candidates', candidateColumns);
-    } else {
+    } else if ($table.attr('data-type') === 'filing'){
+        // This URL needs to be built differently since it has the committee_id in the middle
+        // haven't figured that out yet
+      initTable($table, $form, 'filings', filingsColumns);
+    }else {
       initTable($table, $form, 'committees', committeeColumns);
     }
 
