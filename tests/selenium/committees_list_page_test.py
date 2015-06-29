@@ -35,10 +35,10 @@ class CommitteesPageTests(SearchPageTestCase):
         self.check_filter('state', 'CA', 2, 'CA')
 
     def testCommitteeTypeFilter(self):
-        self.check_filter('committee_type', 'P', 5, 'Presidential')
+        self.check_filter('committee_type', 'P', 4, 'Presidential')
 
     def testCommitteeDesignationFilter(self):
-        self.check_filter('designation', 'A', 6, 'Authorized by a candidate')
+        self.check_filter('designation', 'B', 5, 'Lobbyist/Registrant PAC')
 
     def testCommitteeOrgTypeFilter(self):
-        self.check_filter('organization_type', 'C', 4, 'Corporation')
+        self.check_filter('organization_type', 'C', 6, 'Corporation')
