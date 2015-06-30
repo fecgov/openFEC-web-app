@@ -26,7 +26,8 @@ $tooltip-border-color: #999;
 
 .data--disbursement,
 .data--disbursements,
-.data--total_disbursements_period {
+.data--total_disbursements_period,
+.data--independent_contributions_period {
   background: $data-disbursement;
   .chart-series__bar__tooltip {
     color: $data-disbursement;
@@ -34,7 +35,8 @@ $tooltip-border-color: #999;
 }
 
 .data--receipts,
-.data--total_receipts_period {
+.data--total_receipts_period,
+.data--independent_expenditures_period {
   background: $data-receipt;
   .chart-series__bar__tooltip {
     color: $data-receipt;
