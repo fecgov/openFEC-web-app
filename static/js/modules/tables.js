@@ -5,6 +5,7 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
+var intl = require('intl');
 require('datatables');
 require('drmonty-datatables-responsive');
 
@@ -94,21 +95,34 @@ var committeeColumns = [
   {data: 'designation_full', className: 'min-tablet'},
 ];
 
+function currencyColumn(opts) {
+  return _.extend({
+    render: function(data, type, row, meta) {
+      return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
+    }
+  }, opts);
+}
+
 var filingsColumns = [
+  {
+    data: 'pdf_url',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var anchor = document.createElement('a');
+      anchor.textContent = 'View filing';
+      anchor.setAttribute('href', data);
+      anchor.setAttribute('target', '_blank');
+      return anchor.outerHTML;
+    }
+  },
   {data: 'amendment_indicator', className: 'min-desktop'},
   {data: 'form_type', className: 'min-desktop'},
   {data: 'report_type', className: 'min-desktop'},
   {data: 'receipt_date', className: 'min-tablet'},
-  {data: 'total_receipts', className: 'min-tablet'},
-  {data: 'total_disbursements', className: 'min-tablet'},
-  {data: 'total_independent_expenditures', className: 'min-tablet'},
-
-  {
-    data: 'pdf_url',
-    render: function(data, type, row, meta) {
-      return '<a href="' + data + '" target="_blank">View Filing</a>';
-    }
-  },
+  currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
+  currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
+  currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
 ];
 
 function mapSort(order, columns) {
@@ -136,9 +150,9 @@ function pushQuery(filters) {
   }
 }
 
-function initTable($table, $form, baseUrl, columns) {
+function initTable($table, $form, baseUrl, columns, opts) {
   var draw;
-  var api = $table.DataTable({
+  opts = _.extend({
     serverSide: true,
     searching: false,
     columns: columns,
@@ -171,7 +185,8 @@ function initTable($table, $form, baseUrl, columns) {
         callback(mapResponse(response));
       });
     }
-  });
+  }, opts || {});
+  var api = $table.DataTable(opts);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -187,15 +202,20 @@ module.exports = {
   init: function() {
     var $table = $('#results');
     var $form = $('#category-filters');
-    if ($table.attr('data-type') === 'candidate') {
-      initTable($table, $form, 'candidates', candidateColumns);
-    } else if ($table.attr('data-type') === 'filing'){
-        // This URL needs to be built differently since it has the committee_id in the middle
-        // haven't figured that out yet
-      var committeeId = $table.attr('data-committee');
-      initTable($table, $form, 'committee/' + committeeId + '/filings', filingsColumns);
-    }else {
-      initTable($table, $form, 'committees', committeeColumns);
+    switch ($table.attr('data-type')) {
+      case 'candidate':
+        initTable($table, $form, 'candidates', candidateColumns);
+        break;
+      case 'committee':
+        initTable($table, $form, 'committees', committeeColumns);
+        break;
+      case 'filing':
+        var committeeId = $table.attr('data-committee');
+        initTable($table, $form, 'committee/' + committeeId + '/filings', filingsColumns, {
+          // Order by receipt date descending
+          order: [[4, 'desc']],
+        });
+        break;
     }
 
     // Move the filter button into the results-info div
