@@ -116,10 +116,17 @@ var committeeColumns = [
 
 var donationColumns = [
   {
-    data: 'contributor_name',
+    data: 'contributor',
     orderable: false,
     className: 'all',
-    width: '30%'
+    width: '30%',
+    render: function(data, type, row, meta) {
+      if (data) {
+        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+      } else {
+        return row.contributor_name;
+      }
+    }
   },
   {data: 'contributor_state', orderable: false, className: 'min-desktop'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop'},
@@ -132,12 +139,12 @@ var donationColumns = [
   },
   {data: 'receipt_date', className: 'min-tablet'},
   {
-    data: 'committee_name',
+    data: 'committee',
     orderable: false,
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/committee/' + row.committee_id, 'committee');
+      return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
     }
   },
 ];
