@@ -95,24 +95,20 @@ var committeeColumns = [
 ];
 
 var filingsColumns = [
-  {
-    data: 'committee_id',
-    className: 'all',
-    width: '20%',
-    render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'filing');
-    }
-  },
-
-  {data: 'committee_id', className: 'min-desktop'},
   {data: 'amendment_indicator', className: 'min-desktop'},
   {data: 'form_type', className: 'min-desktop'},
   {data: 'report_type', className: 'min-desktop'},
   {data: 'receipt_date', className: 'min-tablet'},
   {data: 'total_receipts', className: 'min-tablet'},
-  {data: 'total_disbursement', className: 'min-tablet'},
+  {data: 'total_disbursements', className: 'min-tablet'},
   {data: 'total_independent_expenditures', className: 'min-tablet'},
 
+  {
+    data: 'pdf_url',
+    render: function(data, type, row, meta) {
+      return '<a href="' + data + '" target="_blank">View Filing</a>';
+    }
+  },
 ];
 
 function mapSort(order, columns) {
@@ -196,7 +192,8 @@ module.exports = {
     } else if ($table.attr('data-type') === 'filing'){
         // This URL needs to be built differently since it has the committee_id in the middle
         // haven't figured that out yet
-      initTable($table, $form, 'filings', filingsColumns);
+      var committeeId = $table.attr('data-committee');
+      initTable($table, $form, 'committee/' + committeeId + '/filings', filingsColumns);
     }else {
       initTable($table, $form, 'committees', committeeColumns);
     }
