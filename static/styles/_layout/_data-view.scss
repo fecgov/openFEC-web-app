@@ -23,8 +23,10 @@
 
 .results-container {
   @include clearfix();
-  width: 100%;
+  float: left;
   padding-top: 2rem;
+  width: 79%;
+
   .error-container {
     margin: 2rem 5%;
   }
@@ -32,8 +34,8 @@
 
 @include media($large) {
   .results-container {
-    width: 98%;
-    margin: 0 1%;
+    width: 96%;
+    margin: 0 3%;
   }
 
   .panel-active--left {
@@ -67,15 +69,6 @@
 
 .results-info--top {
   margin-top: 0;
-}
-
-#filter-toggle {
-  width: 100%;
-
-  @include media($medium) {
-    float: left;
-    width: auto;
-  }
 }
 
 // DataTables plugin style overrides

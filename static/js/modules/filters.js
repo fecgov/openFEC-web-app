@@ -13,27 +13,27 @@ var events = require('./events.js');
 var open = true;
 
 var openFilterPanel = function() {
-    $('body').addClass('panel-active--left');
-    $('.side-panel--left').addClass('side-panel--open');
-    $('#filter-toggle').addClass('active').html('<i class="ti-minus"></i> Hide Filters');
-    open = true;
+  $('body').addClass('panel-active--left');
+  $('.side-panel--left').addClass('side-panel--open');
+  $('#filter-toggle').addClass('active').html('<i class="ti-angle-left"></i>');
+  open = true;
 };
 
 var closeFilterPanel = function() {
-    $('body').removeClass('panel-active--left');
-    $('.side-panel--left').removeClass('side-panel--open');
-    $('#filter-toggle').removeClass('active').html('<i class="ti-plus"></i>Show Filters');
-    open = false;
+  $('body').removeClass('panel-active--left');
+  $('.side-panel--left').removeClass('side-panel--open');
+  $('#filter-toggle').removeClass('active').html('<i class="ti-angle-right"></i>');
+  open = false;
 };
 
 openFilterPanel();
 
 $('#filter-toggle').click(function(){
-    if ( open === true ) {
-        closeFilterPanel();
-    } else {
-        openFilterPanel();
-    }
+  if ( open === true ) {
+    closeFilterPanel();
+  } else {
+    openFilterPanel();
+  }
 });
 
 var prepareValue = function($elm, value) {
