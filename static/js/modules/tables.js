@@ -154,7 +154,15 @@ var expenditureColumns = [
     data: 'recipient_name',
     orderable: false,
     className: 'all',
-    width: '30%'
+    width: '30%',
+    render: function(data, type, row, meta) {
+      var committee = row.recipient_committee;
+      if (committee) {
+        return buildEntityLink(committee.name, '/committee/' + committee.committee_id, 'committee');
+      } else {
+        return data;
+      }
+    }
   },
   {data: 'recipient_state', orderable: false, className: 'min-desktop'},
   {
@@ -166,12 +174,12 @@ var expenditureColumns = [
   },
   {data: 'receipt_date', className: 'min-tablet'},
   {
-    data: 'committee_name',
+    data: 'committee',
     orderable: false,
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/committee/' + row.committee_id, 'committee');
+      return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
     }
   },
 ];
