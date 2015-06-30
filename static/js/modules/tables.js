@@ -210,7 +210,8 @@ module.exports = {
         initTable($table, $form, 'committees', committeeColumns);
         break;
       case 'filing':
-        initTable($table, $form, 'filings', filingsColumns, {
+        var committeeId = $table.attr('data-committee');
+        initTable($table, $form, 'committee/' + committeeId + '/filings', filingsColumns, {
           // Order by receipt date descending
           order: [[4, 'desc']],
         });
