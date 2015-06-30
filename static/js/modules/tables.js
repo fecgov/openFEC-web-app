@@ -142,6 +142,33 @@ var donationColumns = [
   },
 ];
 
+var expenditureColumns = [
+  {
+    data: 'recipient_name',
+    orderable: false,
+    className: 'all',
+    width: '30%'
+  },
+  {data: 'recipient_state', orderable: false, className: 'min-desktop'},
+  {
+    data: 'disbursement_amount',
+    className: 'min-tablet',
+    render: function(data, type, row, meta) {
+      return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
+    }
+  },
+  {data: 'receipt_date', className: 'min-tablet'},
+  {
+    data: 'committee_name',
+    orderable: false,
+    className: 'all',
+    width: '30%',
+    render: function(data, type, row, meta) {
+      return buildEntityLink(data, '/committee/' + row.committee_id, 'committee');
+    }
+  },
+];
+
 function mapSort(order, columns) {
   return _.map(order, function(item) {
     var name = columns[item.column].data;
@@ -251,7 +278,13 @@ module.exports = {
         break;
       case 'donation':
         initTable($table, $form, 'filings/schedule_a', donationColumns, mapQuerySeek, handleResponseSeek, {
-          order: [[4, 'asc']],
+          order: [[4, 'desc']],
+          pagingType: 'simple'
+        });
+        break;
+      case 'expenditure':
+        initTable($table, $form, 'filings/schedule_b', expenditureColumns, mapQuerySeek, handleResponseSeek, {
+          order: [[3, 'desc']],
           pagingType: 'simple'
         });
         break;

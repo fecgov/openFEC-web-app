@@ -1,0 +1,42 @@
+{% extends 'layouts/main.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/states.html' as states %}
+
+{% block title %}
+  Browse Committees
+{% endblock %}
+
+{% block body %}
+
+<header class="page-header page-header--dark">
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Committees</h1>
+</header>
+
+<section class="results-content">
+  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
+  <div id="filters" class="side-panel side-panel--left">
+    <h4>Filter Expenditures</h4>
+    <form id="category-filters">
+
+      {% include 'partials/filters/election-years.html' %}
+
+      {{ text.field('recipient_name', 'Name') }}
+      {{ text.field('recipient_city', 'City') }}
+
+      {{ states.field('recipient_state') }}
+
+      {{ text.field('min_amount', 'Minimum Expenditure') }}
+      {{ text.field('max_amount', 'Maximum Expenditure') }}
+
+      <div class="field">
+        <button type="submit" class="primary">Apply filters</button>
+      </div>
+
+    </form>
+  </div>
+  <div id="committees" class="results-container">
+    {% include 'partials/expenditures-table.html' %}
+  </div>
+</section>
+{% endblock %}
