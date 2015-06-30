@@ -117,7 +117,6 @@ module.exports = {
         committeeDataSet,
         self = this;
 
-    // Creating a candidate suggestion engine
     candidateEngine = this.createEngine('Candidates', this.getUrl('candidates'), function(response) {
       return _.map(response.results, function(result) {
         return filterCandidates(result);
