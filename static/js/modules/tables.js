@@ -96,23 +96,24 @@ var committeeColumns = [
 
 var filingsColumns = [
   {
-    data: 'committee_id',
+    data: 'pdf_url',
     className: 'all',
     width: '20%',
+    orderable: false,
     render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'filing');
+      var anchor = document.createElement('a');
+      anchor.textContent = 'View filing';
+      anchor.setAttribute('href', data);
+      return anchor.outerHTML;
     }
   },
-
-  {data: 'committee_id', className: 'min-desktop'},
   {data: 'amendment_indicator', className: 'min-desktop'},
   {data: 'form_type', className: 'min-desktop'},
   {data: 'report_type', className: 'min-desktop'},
   {data: 'receipt_date', className: 'min-tablet'},
   {data: 'total_receipts', className: 'min-tablet'},
-  {data: 'total_disbursement', className: 'min-tablet'},
+  {data: 'total_disbursements', className: 'min-tablet'},
   {data: 'total_independent_expenditures', className: 'min-tablet'},
-
 ];
 
 function mapSort(order, columns) {
@@ -140,9 +141,9 @@ function pushQuery(filters) {
   }
 }
 
-function initTable($table, $form, baseUrl, columns) {
+function initTable($table, $form, baseUrl, columns, opts) {
   var draw;
-  var api = $table.DataTable({
+  opts = _.extend({
     serverSide: true,
     searching: false,
     columns: columns,
@@ -175,7 +176,8 @@ function initTable($table, $form, baseUrl, columns) {
         callback(mapResponse(response));
       });
     }
-  });
+  }, opts || {});
+  var api = $table.DataTable(opts);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -191,14 +193,19 @@ module.exports = {
   init: function() {
     var $table = $('#results');
     var $form = $('#category-filters');
-    if ($table.attr('data-type') === 'candidate') {
-      initTable($table, $form, 'candidates', candidateColumns);
-    } else if ($table.attr('data-type') === 'filing'){
-        // This URL needs to be built differently since it has the committee_id in the middle
-        // haven't figured that out yet
-      initTable($table, $form, 'filings', filingsColumns);
-    }else {
-      initTable($table, $form, 'committees', committeeColumns);
+    switch ($table.attr('data-type')) {
+      case 'candidate':
+        initTable($table, $form, 'candidates', candidateColumns);
+        break;
+      case 'committee':
+        initTable($table, $form, 'committees', committeeColumns);
+        break;
+      case 'filing':
+        initTable($table, $form, 'filings', filingsColumns, {
+          // Order by receipt date descending
+          order: [[4, 'desc']],
+        });
+        break;
     }
 
     // Move the filter button into the results-info div
