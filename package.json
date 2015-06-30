@@ -42,6 +42,7 @@
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
     "handlebars": "^2.0.0",
+    "intl": "^1.0.0-rc-4",
     "jquery": "^2.1.4",
     "keyboardjs": "^0.4.2",
     "list.js": "git://github.com/jmcarp/list.js.git",

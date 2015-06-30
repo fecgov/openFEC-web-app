@@ -5,6 +5,7 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
+var intl = require('intl');
 require('datatables');
 require('drmonty-datatables-responsive');
 
@@ -94,16 +95,24 @@ var committeeColumns = [
   {data: 'designation_full', className: 'min-tablet'},
 ];
 
+function currencyColumn(opts) {
+  return _.extend({
+    render: function(data, type, row, meta) {
+      return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
+    }
+  }, opts);
+}
+
 var filingsColumns = [
   {
     data: 'pdf_url',
     className: 'all',
-    width: '20%',
     orderable: false,
     render: function(data, type, row, meta) {
       var anchor = document.createElement('a');
       anchor.textContent = 'View filing';
       anchor.setAttribute('href', data);
+      anchor.setAttribute('target', '_blank');
       return anchor.outerHTML;
     }
   },
@@ -111,9 +120,9 @@ var filingsColumns = [
   {data: 'form_type', className: 'min-desktop'},
   {data: 'report_type', className: 'min-desktop'},
   {data: 'receipt_date', className: 'min-tablet'},
-  {data: 'total_receipts', className: 'min-tablet'},
-  {data: 'total_disbursements', className: 'min-tablet'},
-  {data: 'total_independent_expenditures', className: 'min-tablet'},
+  currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
+  currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
+  currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
 ];
 
 function mapSort(order, columns) {
