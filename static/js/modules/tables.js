@@ -9,6 +9,8 @@ var intl = require('intl');
 require('datatables');
 require('drmonty-datatables-responsive');
 
+var donationTemplate = require('../../templates/donation.hbs');
+
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
 
@@ -115,6 +117,12 @@ var committeeColumns = [
 ];
 
 var donationColumns = [
+  {
+    width: '5%',
+    render: function(data, type, row, meta) {
+      return '<span class="modal-toggle">+</span>';
+    }
+  },
   {
     data: 'contributor',
     orderable: false,
@@ -236,13 +244,22 @@ function mapQuerySeek(api, data) {
   );
 }
 
-function handleResponseOffset() {}
+function donationsAfterRender(api, data, response) {
+  var $table = $(api.table().node());
+  $table.on('click', '.modal-toggle', function(e) {
+    var row = $(e.target).parents('tr');
+    var index = api.row(row).index();
+    var $modal = $('#datatable-modal');
+    $modal.find('.modal-content').html(donationTemplate(response.results[index]));
+    $modal.attr('aria-hidden', 'false');
+  });
+}
 
 function handleResponseSeek(api, data, response) {
   api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
 }
 
-function initTable($table, $form, baseUrl, columns, mapQuery, handleResponse, opts) {
+function initTable($table, $form, baseUrl, columns, callbacks, opts) {
   var draw;
   opts = _.extend({
     serverSide: true,
@@ -260,7 +277,7 @@ function initTable($table, $form, baseUrl, columns, mapQuery, handleResponse, op
       parsedFilters = mapFilters(filters);
       pushQuery(parsedFilters);
       var query = $.extend(
-        mapQuery(api, data),
+        callbacks.mapQuery(api, data),
         {api_key: API_KEY},
         parsedFilters
       );
@@ -271,11 +288,16 @@ function initTable($table, $form, baseUrl, columns, mapQuery, handleResponse, op
         .query(query)
         .toString()
       ).done(function(response) {
-        handleResponse(api, data, response);
+        callbacks.handleResponse(api, data, response);
         callback(mapResponse(response));
+        callbacks.afterRender(api, data, response);
       });
     }
   }, opts || {});
+  callbacks = _.extend({
+    handleResponse: function() {},
+    afterRender: function() {}
+  }, callbacks);
   var api = $table.DataTable(opts);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
@@ -294,22 +316,43 @@ module.exports = {
     var $form = $('#category-filters');
     switch ($table.attr('data-type')) {
       case 'candidate':
-        initTable($table, $form, 'candidates', candidateColumns, mapQueryOffset, handleResponseOffset);
+        initTable($table, $form, 'candidates', candidateColumns, {mapQuery: mapQueryOffset});
         break;
       case 'committee':
-        initTable($table, $form, 'committees', committeeColumns, mapQueryOffset, handleResponseOffset);
+        initTable($table, $form, 'committees', committeeColumns, {mapQuery: mapQueryOffset});
         break;
       case 'donation':
-        initTable($table, $form, 'filings/schedule_a', donationColumns, mapQuerySeek, handleResponseSeek, {
-          order: [[4, 'desc']],
-          pagingType: 'simple'
-        });
+        initTable(
+          $table,
+          $form,
+          'filings/schedule_a',
+          donationColumns,
+          {
+            mapQuery: mapQuerySeek,
+            handleResponse: handleResponseSeek,
+            afterRender: donationsAfterRender
+          },
+          {
+            order: [[4, 'desc']],
+            pagingType: 'simple'
+          }
+        );
         break;
       case 'expenditure':
-        initTable($table, $form, 'filings/schedule_b', expenditureColumns, mapQuerySeek, handleResponseSeek, {
-          order: [[3, 'desc']],
-          pagingType: 'simple'
-        });
+        initTable(
+          $table,
+          $form,
+          'filings/schedule_b',
+          expenditureColumns,
+          {
+            mapQuery: mapQuerySeek,
+            handleResponse: handleResponseSeek
+          },
+          {
+            order: [[3, 'desc']],
+            pagingType: 'simple'
+          }
+        );
         break;
     }
 

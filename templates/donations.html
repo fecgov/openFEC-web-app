@@ -4,7 +4,7 @@
 {% import 'macros/filters/states.html' as states %}
 
 {% block title %}
-  Browse Committees
+  Browse Donations
 {% endblock %}
 
 {% block body %}
@@ -51,4 +51,25 @@
     {% include 'partials/donations-table.html' %}
   </div>
 </section>
+
+<div id="datatable-modal" class="modal__overlay" aria-hidden="true">
+  <div class="modal">
+    <div class="modal__row">
+      <button title="Close menu" class="js-hide modal__close" data-hides="datatable-modal"><i class="ti-close"></i></button>
+    </div>
+    <div class="modal__row">
+      <h3>Donation Detail</h3>
+      <nav class="modal__nav">
+        <div class="modal-content">
+          <table>
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
