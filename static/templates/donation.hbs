@@ -1,7 +1,11 @@
 <table>
   <tr>
     <td>Name</td>
-    <td>{{ contributor_name }}</td>
+    {{#if contributor}}
+      <td><a href="/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
+    {{else}}
+      <td>{{contributor_name}}</td>
+    {{/if}}
   </tr>
   <tr>
     <td>City & State</td>
@@ -32,7 +36,7 @@
   </tr>
   <tr>
     <td>Image</td>
-    <td><a href="http://docquery.fec.gov/cgi-bin/fecimg/?{{ image_number }}">View original image</a></td>
+    <td><a href="{{ pdf_url }}">View original image</a></td>
   </tr>
 </table>
 

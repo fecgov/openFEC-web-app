@@ -10,6 +10,7 @@ require('datatables');
 require('drmonty-datatables-responsive');
 
 var donationTemplate = require('../../templates/donation.hbs');
+var expenditureTemplate = require('../../templates/expenditure.hbs');
 
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
@@ -163,6 +164,12 @@ var donationColumns = [
 
 var expenditureColumns = [
   {
+    width: '5%',
+    render: function(data, type, row, meta) {
+      return '<span class="modal-toggle">+</span>';
+    }
+  },
+  {
     data: 'recipient_name',
     orderable: false,
     className: 'all',
@@ -244,13 +251,13 @@ function mapQuerySeek(api, data) {
   );
 }
 
-function donationsAfterRender(api, data, response) {
+function modalAfterRender(template, api, data, response) {
   var $table = $(api.table().node());
   $table.on('click', '.modal-toggle', function(e) {
     var row = $(e.target).parents('tr');
     var index = api.row(row).index();
     var $modal = $('#datatable-modal');
-    $modal.find('.modal-content').html(donationTemplate(response.results[index]));
+    $modal.find('.modal-content').html(template(response.results[index]));
     $modal.attr('aria-hidden', 'false');
   });
 }
@@ -330,10 +337,10 @@ module.exports = {
           {
             mapQuery: mapQuerySeek,
             handleResponse: handleResponseSeek,
-            afterRender: donationsAfterRender
+            afterRender: modalAfterRender.bind(undefined, donationTemplate)
           },
           {
-            order: [[4, 'desc']],
+            order: [[5, 'desc']],
             pagingType: 'simple'
           }
         );
@@ -346,10 +353,11 @@ module.exports = {
           expenditureColumns,
           {
             mapQuery: mapQuerySeek,
-            handleResponse: handleResponseSeek
+            handleResponse: handleResponseSeek,
+            afterRender: modalAfterRender.bind(undefined, expenditureTemplate)
           },
           {
-            order: [[3, 'desc']],
+            order: [[4, 'desc']],
             pagingType: 'simple'
           }
         );
