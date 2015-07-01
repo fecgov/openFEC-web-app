@@ -1,0 +1,36 @@
+{% macro search(location, result_type) %}
+<form id="{{ location }}-search" action="/" autocomplete="off" class="js-search">
+  <div class="search-bar--{{ location }}">
+    <div class="search__radio">
+      <label for="{{ location }}-radio--candidates">
+        <input id="{{ location }}-radio--candidates" class="js-search-type" type="radio" name="search_type" value="candidates" checked>Candidates
+      </label>
+      <label for="{{ location }}-radio--committees">
+        <input id="{{ location }}-radio--committees" class="js-search-type" type="radio" name="search_type"
+        {% if result_type == 'committees' %}
+          checked
+        {% endif %}
+        value="committees">Committees
+      </label>
+    </div>
+    <div class="input-button-combo">
+      <select name="search_type" class="js-search-type search__select">
+        <option value="candidates">Candidates</option>
+        <option
+        {% if result_type == 'committees' %}
+          selected
+        {% endif %}
+        value="committees">
+        Committees</option>
+      </select>
+      <input class="js-search-input search-input" type="text" name="search"
+      aria-label="Enter a candidate name"
+      placeholder="Enter a candidate name" autocomplete="off"
+      autocorrect="off" autocapitalize="off" spellcheck="false"
+      value="{{ query or '' }}">
+      <button class="search-submit primary"><img width="16" height="16"
+            class="js-search_img" src="/static/img/icon-search--white.svg" alt="Magnifying glass icon"></button>
+    </div>
+  </div>
+</form>
+{% endmacro %}

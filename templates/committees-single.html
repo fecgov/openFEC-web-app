@@ -158,6 +158,8 @@
                   {% include 'partials/committee-report-presidential.html' %}
                 {% elif committee_type == 'H' or committee_type == 'S' %}
                   {% include 'partials/committee-report-house-senate.html' %}
+                {% elif committee_type == 'I' %}
+                  {% include 'partials/committee-report-ie-only.html' %}
                 {% else %}
                   {% include 'partials/committee-report-pac-party.html' %}
                 {% endif %}
@@ -170,13 +172,19 @@
               {% include 'partials/committee-totals-presidential.html' %}
             {% elif committee_type == 'H' or committee_type == 'S' %}
               {% include 'partials/committee-totals-house-senate.html' %}
+            {% elif committee_type == 'I' %}
+              {% include 'partials/committee-totals-ie-only.html' %}
             {% else %}
               {% include 'partials/committee-totals-pac-party.html' %}
             {% endif %}
             </div>
 
           <div class="row">
-            {% include 'partials/committee-charts.html' %}
+            {% if committee_type != 'I'  %}
+              {% include 'partials/committee-charts.html' %}
+            {% else %}
+              {% include 'partials/ie-chart.html' %}
+            {% endif %}
             {% endwith %}
           </div>
         {% else %}

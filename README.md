@@ -4,7 +4,12 @@ openfec-web-app
 [![Code Climate](https://codeclimate.com/github/18F/openFEC-web-app/badges/gpa.svg)](https://codeclimate.com/github/18F/openFEC-web-app)
 [![Test Coverage](http://codecov.io/github/18F/openFEC-web-app/coverage.svg?branch=develop)](http://codecov.io/github/18F/openFEC-web-app?branch=develop)
 
-See also http://github.com/18F/openFEC.
+## Our Repos
+
+* [fec](https://github.com/18F/fec) - A discussion forum where we can discuss the project.
+* [openfec](https://github.com/18F/openfec) - Where the API work happens. We also use this as the central repo to create issues related to each sprint and our backlog here. If you're interested in contribution, please look for "help wanted" tags or ask!
+* [openfec-web-app](https://github.com/18f/openfec-web-app) - Where the campaign finance web app work happens. Note that issues and discussion tend to happen in the other repos.
+* [fec-alpha](https://github.com/18F/fec-alpha) - A place to explore and evolve a new site for the Federal Election Commission.
 
 ### Installing
 This application is in [Flask](http://flask.pocoo.org/). Client side features are managed using [Browserify](http://browserify.org/) and [npm](https://www.npmjs.org/).
@@ -41,6 +46,11 @@ To make the site fully functional, you will need to compile the client side JS a
 Then start the server:
 
     $ python __init__.py
+
+To run the server in debug mode set:
+```
+$ export FEC_WEB_DEBUG=true
+```
 
 If you'd like the app to cache API requests it makes, use the `--cached` flag:
 
