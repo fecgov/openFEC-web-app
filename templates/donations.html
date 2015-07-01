@@ -19,6 +19,15 @@
     <h4>Filter Donations</h4>
     <form id="category-filters">
 
+      <div class="field">
+        <label class="dropdown__value" for="contributor-type">
+          <input id="contributor-type" name="contributor_type" type="checkbox" value="individual" checked>Individual
+        </label>
+        <label class="dropdown__value" for="contributor-type">
+          <input id="contributor-type" name="contributor_type" type="checkbox" value="committee" checked>Committee
+        </label>
+      </div>
+
       {{ text.field('contributor_name', 'Name') }}
       {{ text.field('contributor_city', 'City') }}
 

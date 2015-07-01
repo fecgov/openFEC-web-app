@@ -81,6 +81,7 @@ var fieldMap = [
     'contributor_city',
     'contributor_state',
     'contributor_employer',
+    'contributor_type',
     'min_contribution',
     'max_contribution',
     'start_date',
