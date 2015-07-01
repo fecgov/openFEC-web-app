@@ -26,6 +26,8 @@
   background: $lightest-gray;
   border-color: $light-gray;
   border-style: solid;
+  border-bottom-width: 1px;
+  border-top-width: 0;
   bottom: 0;
   padding: 2rem;
   position: absolute;
@@ -34,10 +36,25 @@
 
   &.side-panel--open {
     position: relative;
+
     .side-panel__toggle {
-      &:hover, &:focus {
+      &:after {
+        content: "Hide filters";
+      }
+
+      @inlude media($large) {
         &:after {
-          content: "Hide filters";
+          content: "" !important;
+        }
+
+        &:hover, &:focus {
+          .icon {
+            display: none;
+          }
+
+          &:after {
+            content: "Hide filters" !important;
+          }
         }
       }
     }
@@ -45,12 +62,35 @@
 
   .side-panel__toggle {
     border-color: $light-gray;
+    padding: 1rem;
     position: absolute;
     z-index: 100;
 
-    &:hover, &:focus {
+    .icon {
+      display: none;
+    }
+
+    &:after {
+      content: "Show filters";
+    }
+
+    @include media($large) {
+      .icon {
+        display: block;
+      }
+
       &:after {
-        content: "Show filters";
+        content: "" !important;
+      }
+
+      &:hover, &:focus {
+        .icon {
+          display: none;
+        }
+
+        &:after {
+          content: "Show filters" !important;
+        }
       }
     }
   }
@@ -59,17 +99,37 @@
 .side-panel--left {
   @include clearfix();
   border-right-width: 1px;
-  left: -17%;
+  left: 0;
+  height: 0;
   margin-right: 3%;
+
+  @include media($large) {
+    left: -17%;
+    height: auto;
+  }
 
   &.side-panel--open {
     left: 0;
+    height: auto;
+
+    .side-panel__toggle {
+      top: 100%;
+    }
   }
 
   .side-panel__toggle {
-    border-left: 0;
-    float: right;
-    left: 100%;
+    border-top-width: 0;
+    top: 50%;
+  }
+
+  @include media($large) {
+    .side-panel__toggle.side-panel__toggle {
+      border-left-width: 0;
+      border-top-width: 1px;
+      float: right;
+      left: 100%;
+      top: 2%;
+    }
   }
 
   @include media($large) {
