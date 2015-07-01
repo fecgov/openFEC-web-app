@@ -5,10 +5,11 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
-var intl = require('intl');
+var Handlebars = require('hbsfy/runtime');
 require('datatables');
 require('drmonty-datatables-responsive');
 
+require('./helpers');
 var donationTemplate = require('../../templates/donation.hbs');
 var expenditureTemplate = require('../../templates/expenditure.hbs');
 
@@ -114,7 +115,7 @@ var committeeColumns = [
   {data: 'party_full', className: 'min-desktop'},
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
-  {data: 'organization_type_full', className: 'min-desktop'},  
+  {data: 'organization_type_full', className: 'min-desktop'},
 ];
 
 var donationColumns = [
@@ -143,10 +144,16 @@ var donationColumns = [
     data: 'contributor_receipt_amount',
     className: 'min-tablet',
     render: function(data, type, row, meta) {
-      return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
+      return Handlebars.helpers.currency(data);
     }
   },
-  {data: 'contributor_receipt_date', className: 'min-tablet'},
+  {
+    data: 'contributor_receipt_date',
+    className: 'min-tablet',
+    render: function(data, type, row, meta) {
+      return Handlebars.helpers.datetime(data);
+    }
+  },
   {
     data: 'committee',
     orderable: false,
@@ -188,10 +195,16 @@ var expenditureColumns = [
     data: 'disbursement_amount',
     className: 'min-tablet',
     render: function(data, type, row, meta) {
-      return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
+      return Handlebars.helpers.currency(data);
     }
   },
-  {data: 'disbursement_date', className: 'min-tablet'},
+  {
+    data: 'disbursement_date',
+    className: 'min-tablet',
+    render: function(data, type, row, meta) {
+      return Handlebars.helpers.datetime(data);
+    }
+  },
   {
     data: 'committee',
     orderable: false,
