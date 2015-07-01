@@ -19,8 +19,6 @@
     <h4>Filter Expenditures</h4>
     <form id="category-filters">
 
-      {% include 'partials/filters/election-years.html' %}
-
       {{ text.field('recipient_name', 'Name') }}
       {{ text.field('recipient_city', 'City') }}
 
@@ -28,6 +26,9 @@
 
       {{ text.field('min_amount', 'Minimum Expenditure') }}
       {{ text.field('max_amount', 'Maximum Expenditure') }}
+
+      {{ text.field('start_date', 'Start Date') }}
+      {{ text.field('end_date', 'End Date') }}
 
       <div class="field">
         <button type="submit" class="primary">Apply filters</button>

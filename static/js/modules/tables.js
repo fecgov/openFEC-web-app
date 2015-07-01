@@ -137,14 +137,18 @@ var donationColumns = [
       return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
     }
   },
-  {data: 'receipt_date', className: 'min-tablet'},
+  {data: 'contributor_receipt_date', className: 'min-tablet'},
   {
     data: 'committee',
     orderable: false,
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+      if (data) {
+        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+      } else {
+        return '';
+      }
     }
   },
 ];
@@ -172,14 +176,18 @@ var expenditureColumns = [
       return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
     }
   },
-  {data: 'receipt_date', className: 'min-tablet'},
+  {data: 'disbursement_date', className: 'min-tablet'},
   {
     data: 'committee',
     orderable: false,
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+      if (data) {
+        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+      } else {
+        return '';
+      }
     }
   },
 ];

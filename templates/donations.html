@@ -19,8 +19,6 @@
     <h4>Filter Donations</h4>
     <form id="category-filters">
 
-      {% include 'partials/filters/election-years.html' %}
-
       {{ text.field('contributor_name', 'Name') }}
       {{ text.field('contributor_city', 'City') }}
 
@@ -30,6 +28,9 @@
 
       {{ text.field('min_amount', 'Minimum Contribution') }}
       {{ text.field('max_amount', 'Maximum Contribution') }}
+
+      {{ text.field('start_date', 'Start Date') }}
+      {{ text.field('end_date', 'End Date') }}
 
       <div class="field">
         <button type="submit" class="primary">Apply filters</button>

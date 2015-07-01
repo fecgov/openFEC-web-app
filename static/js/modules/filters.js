@@ -83,6 +83,8 @@ var fieldMap = [
     'contributor_employer',
     'min_contribution',
     'max_contribution',
+    'start_date',
+    'end_date'
 ];
 
 var activateInitialFilters = function() {
@@ -129,7 +131,7 @@ var updateSelectedItems = function(list) {
     if ( $this.find('li').length === 0 ) {
         $this.parents('.dropdown').remove();
     }
-}
+};
 
 // Show "any" if there's no items checked
 var countCheckboxes = function(fieldset) {
