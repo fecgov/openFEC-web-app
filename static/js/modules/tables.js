@@ -20,7 +20,7 @@ function yearRange(first, last) {
 
 function mapFilters(filters) {
   return _.reduce(filters, function(acc, val) {
-    if (val.value) {
+    if (val.value && val.name.slice(0, 1) !== '_') {
       if (acc[val.name]) {
         acc[val.name].push(val.value);
       } else {
@@ -89,9 +89,10 @@ var committeeColumns = [
   {data: 'treasurer_name', className: 'min-desktop'},
   {data: 'state', className: 'min-desktop', width: '60px'},
   {data: 'party_full', className: 'min-desktop'},
+  {data: 'first_file_date', className: 'min-tablet'},
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
-  {data: 'organization_type_full', className: 'min-desktop'},  
+  {data: 'organization_type_full', className: 'min-desktop'},
 ];
 
 function mapSort(order, columns) {

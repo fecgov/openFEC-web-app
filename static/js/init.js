@@ -7,6 +7,10 @@ var _ = require('underscore');
 var keyboard = require('keyboardjs');
 var perfectScrollbar = require('perfect-scrollbar/jquery') ($);
 
+require('jquery.inputmask');
+require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
+require('jquery.inputmask/dist/inputmask/jquery.inputmask.numeric.extensions.js');
+
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
 
@@ -54,6 +58,9 @@ $(document).ready(function() {
           }
         });
     }
+
+    // Inialize input masks
+    $('[data-inputmask]').inputmask();
 
     // Reveal containers
     if ( $('.js-reveal-container').length > 0 ) {

@@ -161,7 +161,11 @@ def candidates():
 
 @app.route('/committees')
 def committees():
-    return render_template('committees.html', result_type='committees')
+    return render_template(
+        'committees.html',
+        result_type='committees',
+        dates=utils.date_ranges(),
+    )
 
 
 @app.errorhandler(404)
@@ -179,6 +183,11 @@ def currency_filter(num, grouping=True):
     if isinstance(num, (int, float)):
         return locale.currency(num, grouping=grouping)
     return None
+
+
+@app.template_filter('date')
+def date_filter(value, fmt='%m/%d/%Y'):
+    return value.strftime(fmt)
 
 
 def _unique(values):
