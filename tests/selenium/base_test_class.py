@@ -111,8 +111,7 @@ class SearchPageTestCase(BaseTest):
         return [row.find_elements_by_tag_name('td')[index].text
                 for row in data.find_elements_by_tag_name('tr')]
 
-    def check_filter(self, name, value, column, result, refresh=True,
-                              expand=True):
+    def check_filter(self, name, value, column, result, refresh=True, expand=True):
         if refresh:
             self.driver.get(self.url)
 
