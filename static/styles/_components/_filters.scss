@@ -29,6 +29,10 @@
     width: 100%;
   }
 
+  &:last-child {
+    border-bottom: 0;
+  }
+
   &:nth-child(even) {
     margin-right: 0;
   }

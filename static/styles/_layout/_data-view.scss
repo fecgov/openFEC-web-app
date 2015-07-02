@@ -24,8 +24,11 @@
 .results-container {
   @include clearfix();
   float: left;
-  padding-top: 2rem;
   width: 100%;
+
+  @include media($large) {
+    padding-top: 2rem;
+  }
 
   .error-container {
     margin: 2rem 5%;
@@ -35,7 +38,7 @@
 @include media($large) {
   .results-container {
     width: 96%;
-    margin: 0 3%;
+    margin: 1.5em 3% 0  3%;
   }
 
   .panel-active--left {
@@ -75,6 +78,38 @@
 .dataTables_wrapper {
   .results-info {
 
+    &.meta-box {
+      border-top: 0;
+      padding-bottom: 2em;
+      padding-top: 4em;
+    }
+
+    .dataTables_length,
+    .dataTables_info,
+    .dataTables_paginate {
+      float: none;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    @include media($large) {
+      &.meta-box {
+        border-top: 1px solid $light-gray;
+        padding: .5em;
+      }
+
+      .dataTables_length,
+      .dataTables_info,
+      .dataTables_paginate {
+        float: left;
+        margin-left: 0;
+      }
+      .dataTables_paginate {
+        margin-left: 1.5em;
+      }
+    }
+
     .dataTables_length {
       padding: 1rem 0 0 0;
 
@@ -88,13 +123,12 @@
     }
 
     .dataTables_paginate {
-      padding-top: 0;
 
       .paginate_button.disabled {
         border: none;
         color: $medium-gray;
         display: none;
-        
+
         &:hover {
           border: none;
         }
@@ -137,7 +171,6 @@
       width: 100%;
 
       .dataTables_length {
-        float: right;
         padding: .5rem 0;
       }
     }
