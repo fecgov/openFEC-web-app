@@ -319,6 +319,17 @@ function initTable($table, $form, baseUrl, columns, callbacks, opts) {
     afterRender: function() {}
   }, callbacks);
   var api = $table.DataTable(opts);
+  // Prepare loading message
+  var $tableNode = $(api.table().node());
+  var $processing = $('<div class="processing">Loading...</div>');
+  $processing.hide();
+  $tableNode.before($processing);
+  $tableNode.on('preXhr.dt', function(e) {
+    $processing.show();
+  });
+  $tableNode.on('xhr.dt', function(e) {
+    $processing.hide();
+  });
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
