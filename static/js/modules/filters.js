@@ -65,45 +65,30 @@ var bindFilters = function() {
     });
 };
 
-
-// all of the filters we use on candidates and committees
-var fieldMap = [
-    'q',
-    'cycle',
-    'party',
-    'state',
-    'district',
-    'office',
-    'designation',
-    'committee_type',
-    'organization_type',
-    'contributor_name',
-    'contributor_city',
-    'contributor_state',
-    'contributor_employer',
-    'contributor_type',
-    'min_contribution',
-    'max_contribution',
-    'committee_id',
-    'start_date',
-    'end_date'
-];
-
 var activateInitialFilters = function() {
     // this activates dropdowns
     // name filter is activated in the template
     var open;
     var qs = URI.parseQuery(window.location.search);
-    _.each(fieldMap, function(key) {
-          activateFilter({
-              name: key,
-              value: qs[key]
-          });
-          open = open || qs[key];
+    var fields = _.chain($('div#filters :input[name]'))
+      .map(function(input) {
+        return $(input).attr('name');
+      })
+      .filter(function(name) {
+        return name && name.slice(0, 1) !== '_';
+      })
+      .uniq()
+      .value();
+    _.each(fields, function(key) {
+      activateFilter({
+        name: key,
+        value: qs[key]
+      });
+      open = open || qs[key];
     });
 
     if (open) {
-        $('body').addClass('panel-active--left');
+      $('body').addClass('panel-active--left');
     }
 };
 
@@ -209,12 +194,11 @@ function bindFileFilter() {
 }
 
 module.exports = {
-    init: function() {
-
-        bindFilters();
-        // if the page was loaded with filters set in the query string
-        activateInitialFilters();
-        bindFileFilter();
-    },
-    activateInitialFilters: activateInitialFilters
+  init: function() {
+    bindFilters();
+    // if the page was loaded with filters set in the query string
+    activateInitialFilters();
+    bindFileFilter();
+  },
+  activateInitialFilters: activateInitialFilters
 };
