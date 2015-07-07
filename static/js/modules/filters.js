@@ -179,6 +179,13 @@ $('.js-dropdown').on('click keypress', function(e) {
     e.preventDefault();
 });
 
+$('.field input[type="text"]').on('keypress', function(e) {
+    if (e.which === 13) {
+        $('button[type="submit"]').click();
+        e.preventDefault();
+    }
+})
+
 function bindFileFilter() {
   var $field = $('#file-date');
   var $startDate = $field.find('[name="start_date"]');
