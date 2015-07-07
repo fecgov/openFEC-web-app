@@ -356,7 +356,7 @@ module.exports = {
         initTable(
           $table,
           $form,
-          'filings/schedule_a',
+          'schedules/schedule_a',
           donationColumns,
           {
             mapQuery: mapQuerySeek,
@@ -373,7 +373,7 @@ module.exports = {
         initTable(
           $table,
           $form,
-          'filings/schedule_b',
+          'schedules/schedule_b',
           expenditureColumns,
           {
             mapQuery: mapQuerySeek,
