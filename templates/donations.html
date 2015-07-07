@@ -38,8 +38,18 @@
       {{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "numeric"'}) }}
       {{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "numeric"'}) }}
 
-      {{ text.field('start_date', 'Start Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
-      {{ text.field('end_date', 'End Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
+      <div class="field" id="file-date">
+        <label for="file_date">File Date</label>
+          <ul>
+            <li><input name="_file_date" type="radio" data-start-date={{ dates['today'][0] | date }} data-end-date={{ dates['today'][1] | date }}>Today</li>
+            <li><input name="_file_date" type="radio" data-start-date={{ dates['month'][0] | date }} data-end-date={{ dates['month'][1] | date }}>This month</li>
+            <li><input name="_file_date" type="radio" data-start-date={{ dates['quarter'][0] | date }} data-end-date={{ dates['quarter'][1] | date }}>This quarter</li>
+            <li><input name="_file_date" type="radio" data-start-date={{ dates['year'][0] | date }} data-end-date={{ dates['year'][1] | date }}>This year</li>
+            <li><input name="_file_date" type="radio">Custom</li>
+          </ul>
+          <input type="text" name="start_date" data-inputmask="'alias': 'mm/dd/yyyy'">
+          <input type="text" name="end_date" data-inputmask="'alias': 'mm/dd/yyyy'">
+      </div>
 
       {{ text.field('_committee_id', 'Committee', {'id': 'committee-typeahead-filter'}) }}
       <input type="hidden" name="committee_id" />
