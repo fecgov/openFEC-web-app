@@ -44,7 +44,7 @@ function yearRange(first, last) {
 
 function mapFilters(filters) {
   return _.reduce(filters, function(acc, val) {
-    if (val.value) {
+    if (val.value && val.name.slice(0, 1) !== '_') {
       if (acc[val.name]) {
         acc[val.name].push(val.value);
       } else {
