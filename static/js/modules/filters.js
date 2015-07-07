@@ -15,14 +15,14 @@ var open = true;
 var openFilterPanel = function() {
   $('body').addClass('panel-active--left');
   $('.side-panel--left').addClass('side-panel--open');
-  $('#filter-toggle').addClass('active').html('<i class="icon ti-angle-left"></i>');
+  $('#filter-toggle').addClass('active').html('<i class="icon ti-angle"></i>');
   open = true;
 };
 
 var closeFilterPanel = function() {
   $('body').removeClass('panel-active--left');
   $('.side-panel--left').removeClass('side-panel--open');
-  $('#filter-toggle').removeClass('active').html('<i class="icon ti-angle-right"></i>');
+  $('#filter-toggle').removeClass('active').html('<i class="icon ti-angle"></i>');
   open = false;
 };
 

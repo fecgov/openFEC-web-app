@@ -29,15 +29,33 @@
   border-bottom-width: 1px;
   border-top-width: 0;
   bottom: 0;
-  padding: 2rem;
+  padding: 1rem;
   position: absolute;
   top: 0;
   width: 100%;
+
+  h4 {
+    margin-top: 1em;
+  }
 
   &.side-panel--open {
     position: relative;
 
     .side-panel__toggle {
+      .icon {
+        &:before {
+          content: "\e648"; // Up
+        }
+      }
+
+      @include media($large) {
+        .icon {
+          &:before {
+            content: "\e64a"; // Left
+          }
+        }
+      }
+
       &:after {
         content: "Hide filters";
       }
@@ -46,13 +64,6 @@
         &:after {
           content: "Hide filters" !important;
         }
-      }
-      @inlude media($large) {
-
-        &:after {
-          content: "" !important;
-        }
-
       }
     }
   }
@@ -65,21 +76,21 @@
     position: absolute;
     z-index: 100;
 
-    .icon {
-      display: none;
-    }
-
     &:after {
       content: "Show filters";
     }
 
+    .icon {
+      display: inline-block;
+      padding-right: .3em;
+
+      &:before {
+        content: "\e64b"; // Down
+      }
+    }
+
     @include media($large) {
       @include transform(translateX(0));
-
-      .icon {
-        display: inline-block;
-        padding-right: .3em;
-      }
 
       &:after {
         content: "" !important;
@@ -88,6 +99,15 @@
       &:hover, &:focus {
         &:after {
           content: "Show filters" !important;
+        }
+      }
+
+      .icon {
+        display: inline-block;
+        padding-right: .3em;
+
+        &:before {
+          content: "\e649"; // Right
         }
       }
     }
@@ -119,7 +139,7 @@
 
   .side-panel__toggle {
     border-top-width: 0;
-    top: 50%;
+    top: 100%;
   }
 
   @include media($large) {

@@ -23,15 +23,26 @@
 
 .results-container {
   @include clearfix();
+  border-top: 1px solid $light-gray;
   float: left;
+  margin-top: 2rem;
   width: 100%;
 
   @include media($large) {
+    border-top: 0;
+    margin-top: 0;
     padding-top: 2rem;
   }
 
   .error-container {
     margin: 2rem 5%;
+  }
+}
+
+.panel-active--left {
+  .results-container {
+    border-top: 0;
+    margin-top: 0;
   }
 }
 
