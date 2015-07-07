@@ -135,14 +135,15 @@ $(document).ready(function() {
     });
 
     // Notice close-state persistence
-    if (typeof window.sessionStorage !== 'undefined') {
-        if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
-            $('#notice').attr('aria-hidden', true);
-            $('#notice-reveal').addClass('u-visible');
-        } else {
-            $('#notice').attr('aria-hidden', false);
-        }
-    }
+    // Commenting out for now 
+    // if (typeof window.sessionStorage !== 'undefined') {
+    //     if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
+    //         $('#notice').attr('aria-hidden', true);
+    //         $('#notice-reveal').addClass('u-visible');
+    //     } else {
+    //         $('#notice').attr('aria-hidden', false);
+    //     }
+    // }
 
     $("#notice-close").on('click keypress', function(e){
         if (e.which === 13 || e.type === 'click') {
