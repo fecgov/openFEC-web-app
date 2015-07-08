@@ -18,29 +18,23 @@
   <div id="filters" class="side-panel side-panel--left">
     <h4>Filter Donations</h4>
     <form id="category-filters">
-      <button class="button--unstyled js-reveal js-hide selected" data-reveals="basic-filters" data-hides="advanced-filters">Basic</button> | 
-      <button class="button--unstyled js-reveal js-hide" data-reveals="advanced-filters" data-hides="basic-filters">Advanced</button>
-      <div id="basic-filters" aria-hidden="false">
-        {{ text.field('contributor_name', 'Contributor Name') }}
-        {{ text.field('contributor_city', 'Contributor City') }}
-        {{ text.field('_committee_id', 'Recipient Committee', {'id': 'committee-typeahead-filter'}) }}
-      </div>
+      <button class="button--unstyled js-toggle" data-toggles="advanced-filters">Advanced</button>
+      <div class="field">
+        <span class="label">Show contributions from</span>
+        <label class="dropdown__value" for="contributor-type">
+          <input id="contributor-type" name="contributor_type" type="checkbox" value="individual" checked>Individual
+        </label>
+        <label class="dropdown__value" for="contributor-type">
+          <input id="contributor-type" name="contributor_type" type="checkbox" value="committee" checked>Committee
+        </label>
+      </div>      
+      {{ text.field('contributor_name', 'Contributor Name') }}
+      {{ text.field('_committee_id', 'Recipient Committee', {'id': 'committee-typeahead-filter'}) }}
 
       <div id="advanced-filters" aria-hidden="true">
-        <div class="field">
-          <span class="label">Show contributions from</span>
-          <label class="dropdown__value" for="contributor-type">
-            <input id="contributor-type" name="contributor_type" type="checkbox" value="individual" checked>Individual
-          </label>
-          <label class="dropdown__value" for="contributor-type">
-            <input id="contributor-type" name="contributor_type" type="checkbox" value="committee" checked>Committee
-          </label>
-        </div>
-
         <div class="js-accordion">
           <h5 class="js-accordion_header accordion__header">Contributor Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
           <div class="js-accordion_item accordion__item">
-            {{ text.field('contributor_name', 'Name') }}
             {{ text.field('contributor_city', 'City') }}
             {{ states.field('contributor_state') }}
             {{ text.field('contributor_employer', 'Employer') }}
@@ -68,14 +62,6 @@
                 <input type="text" id="end_date" name="end_date" data-inputmask="'alias': 'mm/dd/yyyy'">
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="js-accordion">        
-          <h5 class="js-accordion_header accordion__header">Recipient Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
-          <div class="js-accordion_item accordion__item">        
-            {{ text.field('_committee_id', 'Committee', {'id': 'committee-typeahead-filter'}) }}
-            <input type="hidden" name="committee_id" />
           </div>
         </div>
       </div>
