@@ -155,6 +155,7 @@ function initTable($table, $form, baseUrl, columns) {
       });
     }
   });
+  $table.css('width', '100%');
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();

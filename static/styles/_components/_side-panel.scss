@@ -76,6 +76,10 @@
     position: absolute;
     z-index: 100;
 
+    &:hover {
+      background: $lightest-gray;
+    }
+
     &:after {
       content: "Show filters";
     }
@@ -148,7 +152,7 @@
       border-top-width: 1px;
       float: right;
       left: 100%;
-      top: 2%;
+      top: 2rem;
     }
   }
 

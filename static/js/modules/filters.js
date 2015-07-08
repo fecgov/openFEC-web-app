@@ -26,7 +26,11 @@ var closeFilterPanel = function() {
   open = false;
 };
 
-openFilterPanel();
+// Keep in sync with styles/grid-settings.scss.
+// TODO find better way to sync with scss.
+if ($('body').width() > 500) {
+  openFilterPanel();
+}
 
 $('#filter-toggle').click(function(){
   if ( open === true ) {
