@@ -83,8 +83,7 @@ $(document).ready(function() {
         if (e.which === 13 || e.type === 'click') {
             var revealElement = $(this).data('reveals');
             $('#' + revealElement).attr('aria-hidden', false);
-            // Set focus to the first input
-            $('#' + revealElement + ' input:first-of-type').focus();
+            $(this).addClass('selected');
         }
     });
 
@@ -93,7 +92,7 @@ $(document).ready(function() {
             var hideElement = $(this).data('hides');
             $('#' + hideElement).attr('aria-hidden', true);
             // Set focus back on the original triggering element
-            $('.js-reveal[data-reveals="' + hideElement + '"]').focus();
+            $('.js-reveal[data-reveals="' + hideElement + '"]').removeClass('selected');
         }
     });
 
