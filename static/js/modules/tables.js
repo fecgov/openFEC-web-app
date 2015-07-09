@@ -305,7 +305,8 @@ function initTable($table, $form, baseUrl, columns, callbacks, opts) {
       $.getJSON(
         URI(API_LOCATION)
         .path([API_VERSION, baseUrl].join('/'))
-        .query(query)
+        .addQuery({sort_hide_null: true})
+        .addQuery(query)
         .toString()
       ).done(function(response) {
         callbacks.handleResponse(api, data, response);
