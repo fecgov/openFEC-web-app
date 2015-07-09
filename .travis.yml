@@ -60,7 +60,7 @@ before_script:
   - cd openFEC
   - git checkout $FEC_BRANCH
   - psql -c 'create database cfdm_test' -U postgres
-  - psql -f data/subset.sql cfdm_test -U postgres
+  - pg_restore --dbname cfdm_test data/subset.dump --no-acl --no-owner
   - pip install -r requirements.txt
   - python manage.py update_schemas
   - python manage.py runserver &
