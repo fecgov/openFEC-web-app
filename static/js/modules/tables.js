@@ -148,8 +148,7 @@ function initTable($table, $form, baseUrl, columns) {
       $.getJSON(
         URI(API_LOCATION)
         .path([API_VERSION, baseUrl].join('/'))
-        .addQuery({sort_hide_null: true})
-        .addQuery(query)
+        .query(query)
         .toString()
       ).done(function(response) {
         callback(mapResponse(response));
