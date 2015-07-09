@@ -3,7 +3,7 @@ import collections
 from flask import render_template
 from werkzeug.exceptions import abort
 
-from openfecwebapp.api_caller import load_cmte_financials
+from openfecwebapp import api_caller
 
 
 def render_search_results(results, query, result_type):
@@ -27,9 +27,20 @@ def render_committee(data, candidates=None, cycle=None):
     # add related candidates a level below
     tmpl_vars['candidates'] = candidates
 
-    financials = load_cmte_financials(committee['committee_id'], cycle=cycle)
+    financials = api_caller.load_cmte_financials(committee['committee_id'], cycle=cycle)
     tmpl_vars['reports'] = financials['reports']
     tmpl_vars['totals'] = financials['totals']
+
+    tmpl_vars['aggregates'] = {
+        'size': {
+            each['size']: each['total']
+            for each in api_caller.load_cmte_aggregates(
+                committee['committee_id'],
+                'by_size',
+                cycle=cycle,
+            )
+        }
+    }
 
     return render_template('committees-single.html', **tmpl_vars)
 
@@ -66,7 +77,12 @@ def render_candidate(data, committees, cycle):
     committee_groups = groupby(committees, lambda each: each['designation'])
     committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
     for committee in committees_authorized:
-        committee.update(load_cmte_financials(committee['committee_id'], cycle=cycle))
+        committee.update(
+            api_caller.load_cmte_financials(
+                committee['committee_id'],
+                cycle=cycle,
+            )
+        )
 
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized

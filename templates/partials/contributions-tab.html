@@ -1,0 +1,12 @@
+<section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-header">
+  <div class="container">
+    {% set table_data = [
+      (aggregates.size.0, 'Under $200'),
+      (aggregates.size.200, '$200 - $499'),
+      (aggregates.size.500, '$500 - $999'),
+      (aggregates.size.1000, '$1000 - $1999'),
+      (aggregates.size.2000, 'Over $2000'),
+    ] %}
+    {{ totals_table('Contributions by Size', aggregates.size.values() | sum, table_data, cycle) }}
+  </div>
+</section>
