@@ -20,12 +20,14 @@ var charts = require('./modules/charts.js');
 var glossary = require('./modules/glossary.js');
 var Search = require('./modules/search');
 var tables = require('./modules/tables');
+var maps = require('./modules/maps');
 
 filters.init();
 typeahead.init();
 glossary.init();
 charts.init();
 tables.init();
+maps.init();
 
 var SLT_ACCORDION = '.js-accordion';
 

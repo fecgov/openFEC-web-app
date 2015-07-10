@@ -9,4 +9,7 @@
     ] %}
     {{ totals_table('Contributions by Size', aggregates.size.values() | sum, table_data, cycle) }}
   </div>
+  <div class="container">
+    <div class="hex-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
+  </div>
 </section>

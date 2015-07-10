@@ -196,8 +196,10 @@
       </div>
     </section>
 
+    {% with committee=context() %}
     {% include 'partials/contributions-tab.html' %}
     {% include 'partials/filings-tab.html' %}
+    {% endwith %}
   </div>
 
 {% endblock %}
