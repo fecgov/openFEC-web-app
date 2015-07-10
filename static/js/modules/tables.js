@@ -5,11 +5,10 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
-var Handlebars = require('hbsfy/runtime');
 require('datatables');
 require('drmonty-datatables-responsive');
 
-require('./helpers');
+var helpers = require('./helpers');
 
 var filters = require('./filters');
 
@@ -96,7 +95,7 @@ var committeeColumns = [
     data: 'first_file_date',
     className: 'min-tablet',
     render: function(data, type, row, meta) {
-      return Handlebars.helpers.datetime(data);
+      return helpers.datetime(data);
     }
   },
   {data: 'committee_type_full', className: 'min-tablet'},

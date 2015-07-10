@@ -9,6 +9,7 @@ var _ = require('underscore');
 var chroma = require('chroma-js');
 var topojson = require('topojson');
 
+var helpers = require('./helpers');
 var states = require('../states.json');
 
 function hexMap($elm, height, width) {
@@ -72,7 +73,7 @@ function hexMap($elm, height, width) {
     hex.on('mouseover', function(d) {
       var xPosition = d3.mouse(this)[0];
       var yPosition = d3.mouse(this)[1] - 30;
-
+      var total = results[d.properties.iso3166_2];
       svg.append('text')
         .attr('id', 'tooltip')
         .attr('x', xPosition)
@@ -82,18 +83,11 @@ function hexMap($elm, height, width) {
         .attr('font-size', '11px')
         .attr('font-weight', 'bold')
         .attr('fill', 'black')
-        .text(results[d.properties.iso3166_2]);
-      })
-      .on('mouseout', function(d) {
-        d3.select('#tooltip').remove(); 
-      });
-
-    svg.selectAll('path')
-      .data(topojson.feature(states, states.objects.collection).features)
-      .enter().append('text')
-        .text(function(d) {
-          return d.properties.iso3166_2;
-        });
+        .text(helpers.currency(total));
+    })
+    .on('mouseout', function(d) {
+      d3.select('#tooltip').remove();
+    });
   });
 }
 
