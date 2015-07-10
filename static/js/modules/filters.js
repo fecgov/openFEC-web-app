@@ -76,7 +76,9 @@ var fieldMap = [
     'office',
     'designation',
     'committee_type',
-    'organization_type'
+    'organization_type',
+    'start_date',
+    'end_date'
 ];
 
 var activateInitialFilters = function() {
@@ -184,12 +186,27 @@ $('.js-dropdown').on('click keypress', function(e) {
     e.preventDefault();
 });
 
+function bindFileFilter() {
+  var $field = $('#file-date');
+  var $startDate = $field.find('[name="start_date"]');
+  var $endDate = $field.find('[name="end_date"]');
+  $field.on('click', '[name="_file_date"]', function(e) {
+    var $input = $(e.target);
+    if ($input.attr('data-start-date')) {
+      $startDate.val($input.attr('data-start-date'));
+      $endDate.val($input.attr('data-end-date'));
+    }
+    $startDate.focus();
+  });
+}
+
 module.exports = {
     init: function() {
 
         bindFilters();
         // if the page was loaded with filters set in the query string
         activateInitialFilters();
+        bindFileFilter();
     },
     activateInitialFilters: activateInitialFilters
 };
