@@ -48,8 +48,9 @@
 
 @include media($large) {
   .results-container {
+    @include transition(width .5s);
+    margin: 0 1% 0 0;
     width: 96%;
-    margin: 1.5em 3% 0  3%;
   }
 
   .panel-active--left {
