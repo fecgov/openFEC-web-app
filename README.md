@@ -1,8 +1,15 @@
 openfec-web-app
 ===============
-[![Build Status](https://travis-ci.org/18F/openFEC-web-app.svg?branch=develop)](https://travis-ci.org/18F/openFEC-web-app)
-[![Code Climate](https://codeclimate.com/github/18F/openFEC-web-app/badges/gpa.svg)](https://codeclimate.com/github/18F/openFEC-web-app)
-[![Test Coverage](http://codecov.io/github/18F/openFEC-web-app/coverage.svg?branch=develop)](http://codecov.io/github/18F/openFEC-web-app?branch=develop)
+
+**Develop**
+[![Build Status](https://img.shields.io/travis/18F/openFEC-web-app/develop.svg)](https://travis-ci.org/18F/openFEC-web-app)
+[![Test Coverage](https://img.shields.io/codecov/c/github/18F/openFEC-web-app/develop.svg)](https://codecov.io/github/18F/openFEC-web-app)
+
+**Master**
+[![Build Status](https://img.shields.io/travis/18F/openFEC-web-app/master.svg)](https://travis-ci.org/18F/openFEC-web-app)
+[![Test Coverage](https://img.shields.io/codecov/c/github/18F/openFEC-web-app/master.svg)](https://codecov.io/github/18F/openFEC-web-app)
+[![Code Climate](https://img.shields.io/codeclimate/github/18F/openFEC-web-app.svg)](https://codeclimate.com/github/18F/openFEC-web-app)
+[![Dependencies](https://img.shields.io/gemnasium/18F/openFEC-web-app.svg)](https://gemnasium.com/18F/openFEC-web-app)
 
 ## Our Repos
 
