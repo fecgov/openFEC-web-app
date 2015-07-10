@@ -10,25 +10,26 @@ var List = require('list.js');
 var events = require('./events.js');
 
 // are the panels open?
-var open = true;
+var open = false;
 
 var openFilterPanel = function() {
   $('body').addClass('panel-active--left');
   $('.side-panel--left').addClass('side-panel--open');
-  $('#filter-toggle').addClass('active').html('<i class="icon ti-angle"></i>');
+  $('#filter-toggle').addClass('active');
   open = true;
 };
 
 var closeFilterPanel = function() {
   $('body').removeClass('panel-active--left');
   $('.side-panel--left').removeClass('side-panel--open');
-  $('#filter-toggle').removeClass('active').html('<i class="icon ti-angle"></i>');
+  $('#filter-toggle').removeClass('active');
   open = false;
 };
 
 // Keep in sync with styles/grid-settings.scss.
 // TODO find better way to sync with scss.
 if ($('body').width() > 500) {
+  open = true;
   openFilterPanel();
 }
 
