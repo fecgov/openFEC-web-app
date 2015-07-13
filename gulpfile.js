@@ -22,7 +22,7 @@ var production = !!process.env.FEC_WEB_PRODUCTION;
 
 var opts = {
   entries: ['./static/js/init.js'],
-  debug: false
+  debug: debug
 };
 var watchOpts = _.assign({}, watchify.args, opts);
 var b = browserify(opts);
