@@ -68,21 +68,6 @@
   }
 }
 
-#filters {
-  .accordion__header {
-    border-top: 1px solid $light-gray;
-    padding: 1rem 0;
-  }
-
-  .accordion__item {
-    padding: 0 0 2rem 0;
-    .field {
-      border-top: none;
-      padding: 1rem 0;
-    }
-  }
-}
-
 .any {
   font-weight: normal;
 }
