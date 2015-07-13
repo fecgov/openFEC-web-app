@@ -7,6 +7,8 @@ var _ = require('underscore');
 var URI = require('URIjs');
 var List = require('list.js');
 
+var accordion = require('./accordion');
+
 var events = require('./events.js');
 
 // are the panels open?
@@ -45,12 +47,23 @@ var prepareValue = function($elm, value) {
   return $elm.attr('type') === 'checkbox' ? [value] : value;
 };
 
+function ensureVisible($elm) {
+  if ($elm.is(':visible')) {
+    return;
+  }
+  var $accordion = $elm.parents('.js-accordion');
+  if ($accordion.length) {
+    accordion.showHeader($accordion.find('.js-accordion_header'));
+  }
+}
+
 var activateFilter = function(opts) {
     var $field = $('#category-filters [name=' + opts.name + ']');
     var $parent = $field.parent();
     if (opts.value) {
         $field.val(prepareValue($field, opts.value)).change();
         $parent.addClass('active');
+        ensureVisible($field);
     } else {
         $field.val(prepareValue($field, '')).change();
         $parent.removeClass('active');

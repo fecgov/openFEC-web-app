@@ -25,11 +25,9 @@ var glossary = require('./modules/glossary.js');
 var Search = require('./modules/search');
 var tables = require('./modules/tables');
 
-filters.init();
 typeahead.init();
 glossary.init();
 charts.init();
-tables.init();
 
 var SLT_ACCORDION = '.js-accordion';
 
@@ -134,7 +132,7 @@ $(document).ready(function() {
     });
 
     // Notice close-state persistence
-    // Commenting out for now 
+    // Commenting out for now
     // if (typeof window.sessionStorage !== 'undefined') {
     //     if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
     //         $('#notice').attr('aria-hidden', true);
@@ -172,4 +170,7 @@ $(document).ready(function() {
     var perf = require('./modules/performance');
     perf.bar();
     // @endif
+
+    filters.init();
+    tables.init();
 });
