@@ -18,6 +18,13 @@ table.dataTable {
     padding: 1rem;
     border-bottom: 1px solid $light-gray !important;
     text-align: left;
+
+    &.sorting_asc,
+    &.sorting_desc,
+    &.sorting {
+      background-position-x: left !important;
+      background-position-y: 10px !important;
+    }
   }
 
   tr, td, th {
