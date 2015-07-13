@@ -122,7 +122,7 @@ function pushQuery(filters) {
 function initTable($table, $form, baseUrl, columns) {
   var draw;
   var $hideNullWidget = $(
-    '<div class="field">' +
+    '<div class="row" style="text-align: center; margin-top: 10px">' +
       '<input type="checkbox" name="sort_hide_null" checked /> ' +
       'Hide results with missing values when sorting' +
     '</div>'
@@ -162,7 +162,9 @@ function initTable($table, $form, baseUrl, columns) {
       });
     }
   });
-  $table.before($hideNullWidget);
+  var $paging = $(api.table().container()).find('.results-info--top');
+  $paging.prepend($('#filter-toggle'));
+  $paging.append($hideNullWidget);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -183,9 +185,5 @@ module.exports = {
     } else {
       initTable($table, $form, 'committees', committeeColumns);
     }
-
-    // Move the filter button into the results-info div
-    var $filterToggle = $('#filter-toggle');
-    $('.results-info--top').prepend($filterToggle);
   }
 };
