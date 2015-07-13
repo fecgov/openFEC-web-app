@@ -67,7 +67,7 @@ class CandidatesPageTests(SearchPageTestCase):
         self.check_filter_results(4, 'AZ')
         self.assertIn('state=AZ', self.driver.current_url)
         self.assertNotIn('state=CA', self.driver.current_url)
-        self.assertTrue(self.driver.current_url.endswith('state=AZ'))
+        self.assertIn('state=AZ', self.driver.current_url)
         self.driver.forward()
         self.check_filter_results(4, 'CA')
         self.assertIn('state=AZ', self.driver.current_url)

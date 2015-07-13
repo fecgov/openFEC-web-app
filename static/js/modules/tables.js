@@ -91,7 +91,7 @@ var committeeColumns = [
   {data: 'party_full', className: 'min-desktop'},
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
-  {data: 'organization_type_full', className: 'min-desktop'},  
+  {data: 'organization_type_full', className: 'min-desktop'},
 ];
 
 function mapSort(order, columns) {
@@ -121,6 +121,12 @@ function pushQuery(filters) {
 
 function initTable($table, $form, baseUrl, columns) {
   var draw;
+  var $hideNullWidget = $(
+    '<div class="row" style="text-align: center; margin-top: 10px">' +
+      '<input type="checkbox" name="sort_hide_null" checked /> ' +
+      'Hide results with missing values when sorting' +
+    '</div>'
+  );
   var api = $table.DataTable({
     serverSide: true,
     searching: false,
@@ -142,20 +148,23 @@ function initTable($table, $form, baseUrl, columns) {
           page: Math.floor(data.start / data.length) + 1,
           api_key: API_KEY
         },
-        parsedFilters
+        parsedFilters,
+        {sort_hide_null: $hideNullWidget.find('input').is(':checked')}
       );
       query.sort = mapSort(data.order, columns);
       $.getJSON(
         URI(API_LOCATION)
         .path([API_VERSION, baseUrl].join('/'))
-        .addQuery({sort_hide_null: true})
-        .addQuery(query)
+        .query(query)
         .toString()
       ).done(function(response) {
         callback(mapResponse(response));
       });
     }
   });
+  var $paging = $(api.table().container()).find('.results-info--top');
+  $paging.prepend($('#filter-toggle'));
+  $paging.append($hideNullWidget);
   $table.css('width', '100%');
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
