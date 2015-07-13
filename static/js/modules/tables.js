@@ -281,6 +281,7 @@ function handleResponseSeek(api, data, response) {
 
 function initTable($table, $form, baseUrl, columns, callbacks, opts) {
   var draw;
+  var $processing = $('<div class="processing">Loading...</div>');
   var $hideNullWidget = $(
     '<div class="row" style="text-align: center; margin-top: 10px">' +
       '<input type="checkbox" name="sort_hide_null" checked /> ' +
@@ -309,6 +310,7 @@ function initTable($table, $form, baseUrl, columns, callbacks, opts) {
         {sort_hide_null: $hideNullWidget.find('input').is(':checked')}
       );
       query.sort = mapSort(data.order, columns);
+      $processing.show();
       $.getJSON(
         URI(API_LOCATION)
         .path([API_VERSION, baseUrl].join('/'))
@@ -318,6 +320,8 @@ function initTable($table, $form, baseUrl, columns, callbacks, opts) {
         callbacks.handleResponse(api, data, response);
         callback(mapResponse(response));
         callbacks.afterRender(api, data, response);
+      }).always(function() {
+        $processing.hide();
       });
     }
   }, opts || {});
@@ -327,16 +331,8 @@ function initTable($table, $form, baseUrl, columns, callbacks, opts) {
   }, callbacks);
   var api = $table.DataTable(opts);
   // Prepare loading message
-  var $tableNode = $(api.table().node());
-  var $processing = $('<div class="processing">Loading...</div>');
   $processing.hide();
-  $tableNode.before($processing);
-  $tableNode.on('preXhr.dt', function(e) {
-    $processing.show();
-  });
-  $tableNode.on('xhr.dt', function(e) {
-    $processing.hide();
-  });
+  $table.before($processing);
   var $paging = $(api.table().container()).find('.results-info--top');
   $paging.prepend($('#filter-toggle'));
   $paging.append($hideNullWidget);
