@@ -216,6 +216,7 @@ function handleResponseSeek(api, data, response) {
 
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
+  var useFilters = opts.useFilters;
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -230,7 +231,9 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       var api = this.api();
       var filters = $form.serializeArray();
       parsedFilters = mapFilters(filters);
-      // pushQuery(parsedFilters);
+      if (useFilters) {
+        pushQuery(parsedFilters);
+      }
       var query = _.extend(
         callbacks.mapQuery(api, data),
         {api_key: API_KEY},
@@ -255,11 +258,13 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     afterRender: function() {}
   }, callbacks);
   var api = $table.DataTable(opts);
-  // // Update filters and data table on navigation
-  // $(window).on('popstate', function() {
-  //   filters.activateInitialFilters();
-  //   api.ajax.reload();
-  // });
+  if (useFilters) {
+    // Update filters and data table on navigation
+    $(window).on('popstate', function() {
+      filters.activateInitialFilters();
+      api.ajax.reload();
+    });
+  }
   $form.submit(function(event) {
     event.preventDefault();
     api.ajax.reload();
@@ -282,20 +287,20 @@ module.exports = {
       var $table = $(elm);
       var committeeId = $table.attr('data-committee');
       var cycle = $table.attr('data-cycle');
-      var toDate = $table.attr('data-to-date');
+      var year = $table.attr('data-year');
       var path, query;
       switch ($table.attr('data-type')) {
         case 'candidate':
-          initTable($table, $form, 'candidates', {}, candidateColumns, offsetCallbacks);
+          initTable($table, $form, 'candidates', {}, candidateColumns, offsetCallbacks, {useFilters: true});
           break;
         case 'committee':
-          initTable($table, $form, 'committees', {}, committeeColumns, offsetCallbacks);
+          initTable($table, $form, 'committees', {}, committeeColumns, offsetCallbacks, {useFilters: true});
           break;
         case 'committee-contributor':
           path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');
           query = {};
-          if (toDate) {
-            query.year = toDate;
+          if (year) {
+            query.year = year;
           } else {
             query.cycle = cycle;
           }
@@ -313,8 +318,8 @@ module.exports = {
             contributor_type: 'individual'
           };
           var minYear, maxYear;
-          if (toDate) {
-            minYear = maxYear = moment().year(parseInt(toDate));
+          if (year) {
+            minYear = maxYear = moment().year(parseInt(year));
           } else {
             minYear = moment().year(parseInt(cycle) - 1);
             maxYear = moment().year(parseInt(cycle));
