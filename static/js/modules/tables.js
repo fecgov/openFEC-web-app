@@ -10,6 +10,25 @@ require('drmonty-datatables-responsive');
 
 var helpers = require('./helpers');
 
+$.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
+  var settings = this.context[0];
+
+  // Clear stored indexes on filter change
+  if (!_.isEqual(settings._parsedFilters, parsedFilters)) {
+    settings._seekIndexes = {};
+  }
+  settings._parsedFilters = _.clone(parsedFilters);
+
+  // Set or get stored indexes
+  if (typeof value !== 'undefined') {
+    settings._seekIndexes = settings._seekIndexes || {};
+    settings._seekIndexes[length] = settings._seekIndexes[length] || {};
+    settings._seekIndexes[length][start] = value;
+  } else {
+    return ((settings._seekIndexes || {})[length] || {})[start] || undefined;
+  }
+});
+
 var filters = require('./filters');
 
 function yearRange(first, last) {
@@ -103,6 +122,37 @@ var committeeColumns = [
   {data: 'organization_type_full', className: 'min-desktop'},
 ];
 
+var committeeContributorColumns = [
+  {
+    data: 'contributor_name',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return buildEntityLink(data, '/committee/' + row.contributor_id, 'committee');
+    }
+  },
+  {
+    data: 'total',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return helpers.currency(data);
+    }
+  }
+];
+
+var individualContributorColumns = [
+  {data: 'contributor_name', className: 'all', orderable: false},
+  {
+    data: 'contributor_aggregate_ytd',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return helpers.currency(data);
+    }
+  }
+];
+
 function mapSort(order, columns) {
   return _.map(order, function(item) {
     var name = columns[item.column].data;
@@ -128,9 +178,43 @@ function pushQuery(filters) {
   }
 }
 
-function initTable($table, $form, baseUrl, columns) {
+function mapQueryOffset(api, data) {
+  return {
+    per_page: data.length,
+    page: Math.floor(data.start / data.length) + 1,
+  };
+}
+
+function mapQuerySeek(api, data) {
+  var indexes = api.seekIndex(data.length, data.start) || {};
+  return _.extend(
+    {per_page: data.length},
+    _.chain(Object.keys(indexes))
+      .filter(function(key) { return indexes[key]; })
+      .map(function(key) { return [key, indexes[key]]; })
+      .object()
+      .value()
+  );
+}
+
+function modalAfterRender(template, api, data, response) {
+  var $table = $(api.table().node());
+  $table.on('click', '.modal-toggle', function(e) {
+    var row = $(e.target).parents('tr');
+    var index = api.row(row).index();
+    var $modal = $('#datatable-modal');
+    $modal.find('.modal-content').html(template(response.results[index]));
+    $modal.attr('aria-hidden', 'false');
+  });
+}
+
+function handleResponseSeek(api, data, response) {
+  api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
+}
+
+function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
-  var api = $table.DataTable({
+  opts = _.extend({
     serverSide: true,
     searching: false,
     columns: columns,
@@ -146,24 +230,29 @@ function initTable($table, $form, baseUrl, columns) {
       parsedFilters = mapFilters(filters);
       pushQuery(parsedFilters);
       var query = $.extend(
-        {
-          per_page: data.length,
-          page: Math.floor(data.start / data.length) + 1,
-          api_key: API_KEY
-        },
+        callbacks.mapQuery(api, data),
+        {api_key: API_KEY},
         parsedFilters
       );
       query.sort = mapSort(data.order, columns);
       $.getJSON(
         URI(API_LOCATION)
         .path([API_VERSION, baseUrl].join('/'))
-        .query(query)
+        .addQuery(baseQuery || {})
+        .addQuery(query)
         .toString()
       ).done(function(response) {
+        callbacks.handleResponse(api, data, response);
         callback(mapResponse(response));
+        callbacks.afterRender(api, data, response);
       });
     }
-  });
+  }, opts || {});
+  callbacks = _.extend({
+    handleResponse: function() {},
+    afterRender: function() {}
+  }, callbacks);
+  var api = $table.DataTable(opts);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -177,13 +266,50 @@ function initTable($table, $form, baseUrl, columns) {
 
 module.exports = {
   init: function() {
-    var $table = $('#results');
+    var $tables = $('.data-table');
     var $form = $('#category-filters');
-    if ($table.attr('data-type') === 'candidate') {
-      initTable($table, $form, 'candidates', candidateColumns);
-    } else {
-      initTable($table, $form, 'committees', committeeColumns);
-    }
+
+    var offsetCallbacks = {
+      mapQuery: mapQueryOffset
+    };
+    var seekCallbacks = {
+      mapQuery: mapQuerySeek,
+      handleResponse: handleResponseSeek
+    };
+    $tables.each(function(index, elm) {
+      var $table = $(elm);
+      var committeeId = $table.attr('data-committee');
+      switch ($table.attr('data-type')) {
+        case 'candidate':
+          initTable($table, $form, 'candidates', {}, candidateColumns, offsetCallbacks);
+          break;
+        case 'committee':
+          initTable($table, $form, 'committees', {}, committeeColumns, offsetCallbacks);
+          break;
+        case 'committee-contributor':
+          var path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');
+          initTable($table, $form, path, {}, committeeContributorColumns, offsetCallbacks, {
+            order: [[1, 'desc']],
+            pagingType: 'simple',
+            lengthChange: false,
+            pageLength: 10
+          });
+          break;
+        case 'individual-contributor':
+          var path = ['schedules', 'schedule_a'].join('/');
+          var query = {
+            committee_id: committeeId,
+            contributor_type: 'individual'
+          };
+          initTable($table, $form, path, query, individualContributorColumns, seekCallbacks, {
+            order: [[1, 'desc']],
+            pagingType: 'simple',
+            lengthChange: false,
+            pageLength: 10
+          });
+          break;
+      }
+    });
 
     // Move the filter button into the results-info div
     var $filterToggle = $('#filter-toggle');

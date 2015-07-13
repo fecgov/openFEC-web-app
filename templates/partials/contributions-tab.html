@@ -12,4 +12,24 @@
   <div class="container">
     <div class="hex-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
   </div>
+  <div class="container">
+    <div class="row">
+      <div class="chunk--half box">
+        <table class="data-table" data-type="committee-contributor" data-committee="{{ committee.committee_id }}">
+          <thead>
+            <th scope="col">Committee</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+      </div>
+
+      <div class="chunk--half box">
+        <table class="data-table" data-type="individual-contributor" data-committee="{{ committee.committee_id }}">
+          <thead>
+            <th scope="col">Name</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+      </div>
+  </div>
 </section>
