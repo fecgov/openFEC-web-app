@@ -1,6 +1,13 @@
 // Side panel
 // This is the styles for slide out side panels
 
+
+.side-panel {
+  bottom: 0;
+  padding: 2rem;
+  top: 0;
+}
+
 .side-toggle {
   @include rem(padding, 1.0rem);
   @include transition(background-color, .1s);
@@ -22,14 +29,67 @@
   }
 }
 
-.side-panel {
+.side-panel__toggle {
+  @include transform(translateX(-50%));
+  border-color: $light-gray;
+  left: 50%;
+  padding: 1rem;
+  position: absolute;
+  z-index: 100;
+
+  &:hover {
+    background: $lightest-gray;
+  }
+
+  &:after {
+    content: "Show filters";
+  }
+
+  .icon {
+    display: inline-block;
+    padding-right: .3em;
+
+    &:before {
+      content: "\e64b"; // Down
+    }
+  }
+
+  @include media($large) {
+    @include transform(translateX(0));
+
+    &:after {
+      content: "" !important;
+    }
+
+    &:hover, &:focus {
+      &:after {
+        content: "Show filters" !important;
+      }
+    }
+
+    .icon {
+      display: inline-block;
+      padding-right: .3em;
+
+      &:before {
+        content: "\e649"; // Right
+      }
+    }
+  }
+}
+
+.side-panel--left {
+  @include clearfix();
+  @include transition(margin-left .5s);
   background: $lightest-gray;
   border-color: $light-gray;
   border-style: solid;
   border-bottom-width: 1px;
+  border-right-width: 1px;
   border-top-width: 0;
   bottom: 0;
-  //padding: 1rem;
+  height: 0;
+  margin-right: 3%;
   position: absolute;
   top: 0;
   width: 100%;
@@ -38,94 +98,9 @@
     margin-top: 1em;
   }
 
-  &.side-panel--open {
-    position: relative;
-
-    .side-panel__toggle {
-      .icon {
-        &:before {
-          content: "\e648"; // Up
-        }
-      }
-
-      @include media($large) {
-        .icon {
-          &:before {
-            content: "\e64a"; // Left
-          }
-        }
-      }
-
-      &:after {
-        content: "Hide filters";
-      }
-
-      &:hover, &:focus {
-        &:after {
-          content: "Hide filters" !important;
-        }
-      }
-    }
+  &.side-panel {
+    padding: 0;
   }
-
-  .side-panel__toggle {
-    @include transform(translateX(-50%));
-    border-color: $light-gray;
-    left: 50%;
-    padding: 1rem;
-    position: absolute;
-    z-index: 100;
-
-    &:hover {
-      background: $lightest-gray;
-    }
-
-    &:after {
-      content: "Show filters";
-    }
-
-    .icon {
-      display: inline-block;
-      padding-right: .3em;
-
-      &:before {
-        content: "\e64b"; // Down
-      }
-    }
-
-    @include media($large) {
-      @include transform(translateX(0));
-
-      &:after {
-        content: "" !important;
-      }
-
-      &:hover, &:focus {
-        &:after {
-          content: "Show filters" !important;
-        }
-      }
-
-      .icon {
-        display: inline-block;
-        padding-right: .3em;
-
-        &:before {
-          content: "\e649"; // Right
-        }
-      }
-    }
-  }
-
-
-}
-
-.side-panel--left {
-  @include clearfix();
-  @include transition(margin-left .5s);
-  border-right-width: 1px;
-  height: 0;
-  margin-right: 3%;
 
   @include media($large) {
     height: auto;
@@ -161,6 +136,36 @@
   .side-panel__box {
     @include clearfix();
     padding: 1rem 2rem;
+  }
+}
+
+.side-panel--open {
+  position: relative;
+
+  .side-panel__toggle {
+    .icon {
+      &:before {
+        content: "\e648"; // Up
+      }
+    }
+
+    @include media($large) {
+      .icon {
+        &:before {
+          content: "\e64a"; // Left
+        }
+      }
+    }
+
+    &:after {
+      content: "Hide filters";
+    }
+
+    &:hover, &:focus {
+      &:after {
+        content: "Hide filters" !important;
+      }
+    }
   }
 }
 
