@@ -62,7 +62,7 @@ before_script:
   - psql -c 'create database cfdm_test' -U postgres
   - psql -f data/subset.sql cfdm_test -U postgres
   - pip install -r requirements.txt
-  - python manage.py update_schemas
+  - python manage.py update_all
   - python manage.py runserver &
   - cd ..
 
