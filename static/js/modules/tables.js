@@ -267,7 +267,7 @@ function mapQuerySeek(api, data) {
 function modalAfterRender(template, api, data, response) {
   var $table = $(api.table().node());
   $table.on('click', '.modal-toggle', function(e) {
-    var row = $(e.target).parents('tr');
+    var row = $(e.target).closest('tr');
     var index = api.row(row).index();
     var $modal = $('#datatable-modal');
     $modal.find('.modal-content').html(template(response.results[index]));

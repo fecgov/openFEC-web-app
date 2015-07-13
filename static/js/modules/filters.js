@@ -51,7 +51,7 @@ function ensureVisible($elm) {
   if ($elm.is(':visible')) {
     return;
   }
-  var $accordion = $elm.parents('.js-accordion');
+  var $accordion = $elm.closest('.js-accordion');
   if ($accordion.length) {
     accordion.showHeader($accordion.find('.js-accordion_header'));
   }
@@ -124,12 +124,12 @@ var updateSelectedItems = function(list) {
     var $this,
         $checkedBoxes;
     $this = list;
-    $checkedBoxes = $this.find('input:checked').parents('li');
-    $this.parents('fieldset').find('.dropdown__selected').prepend($checkedBoxes);
+    $checkedBoxes = $this.find('input:checked').closest('li');
+    $this.closest('fieldset').find('.dropdown__selected').prepend($checkedBoxes);
 
     // Remove it all if there's no more items to check
     if ( $this.find('li').length === 0 ) {
-        $this.parents('.dropdown').remove();
+        $this.closest('.dropdown').remove();
     }
 };
 
@@ -155,12 +155,12 @@ $('.js-checkbox-filters').each(function(){
 $('.field input[type="checkbox"]').on('keypress', function(e) {
     if (e.which === 13) {
         var $this = $(this);
-        var $parent = $this.parents('ul.dropdown__list');
+        var $parent = $this.closest('ul.dropdown__list');
         $this.prop('checked', function(index, value) {
             return !value;
         });
         if ($parent.length) {
-            var $next = $this.parents('li').next('li').find('input[type="checkbox"]');
+            var $next = $this.closest('li').next('li').find('input[type="checkbox"]');
             if ($next.length) {
                 $next.focus();
             }
