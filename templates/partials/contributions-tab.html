@@ -15,7 +15,12 @@
   <div class="container">
     <div class="row">
       <div class="chunk--half box">
-        <table class="data-table" data-type="committee-contributor" data-committee="{{ committee.committee_id }}">
+        <table
+           class="data-table"
+           data-type="committee-contributor"
+           data-committee="{{ committee.committee_id }}"
+           data-cycle="{{ cycle }}"
+           {% if year %}data-year"{{ year }}"{% endif %}>
           <thead>
             <th scope="col">Committee</th>
             <th scope="col">Total Contributed</th>
@@ -24,7 +29,12 @@
       </div>
 
       <div class="chunk--half box">
-        <table class="data-table" data-type="individual-contributor" data-committee="{{ committee.committee_id }}">
+        <table
+           class="data-table"
+           data-type="individual-contributor"
+           data-committee="{{ committee.committee_id }}"
+           data-cycle="{{ cycle }}"
+           {% if year %}data-year"{{ year }}"{% endif %}>
           <thead>
             <th scope="col">Name</th>
             <th scope="col">Total Contributed</th>

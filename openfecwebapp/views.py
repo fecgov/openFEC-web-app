@@ -1,3 +1,4 @@
+import datetime
 import collections
 
 from flask import render_template
@@ -15,6 +16,12 @@ def render_search_results(results, query, result_type):
     )
 
 
+def to_date(committee, cycle):
+    if committee['committee_type'] in ['H', 'S', 'P']:
+        return None
+    return min(datetime.datetime.now().year, cycle)
+
+
 def render_committee(data, candidates=None, cycle=None):
     committee = get_first_result_or_raise_500(data)
 
@@ -22,6 +29,7 @@ def render_committee(data, candidates=None, cycle=None):
     tmpl_vars = committee
 
     tmpl_vars['cycle'] = cycle
+    tmpl_vars['year'] = to_date(committee, cycle)
     tmpl_vars['result_type'] = 'committees'
 
     # add related candidates a level below
