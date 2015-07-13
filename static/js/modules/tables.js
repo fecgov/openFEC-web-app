@@ -281,6 +281,12 @@ function handleResponseSeek(api, data, response) {
 
 function initTable($table, $form, baseUrl, columns, callbacks, opts) {
   var draw;
+  var $hideNullWidget = $(
+    '<div class="row" style="text-align: center; margin-top: 10px">' +
+      '<input type="checkbox" name="sort_hide_null" checked /> ' +
+      'Hide results with missing values when sorting' +
+    '</div>'
+  );
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -299,14 +305,14 @@ function initTable($table, $form, baseUrl, columns, callbacks, opts) {
       var query = $.extend(
         callbacks.mapQuery(api, data),
         {api_key: API_KEY},
-        parsedFilters
+        parsedFilters,
+        {sort_hide_null: $hideNullWidget.find('input').is(':checked')}
       );
       query.sort = mapSort(data.order, columns);
       $.getJSON(
         URI(API_LOCATION)
         .path([API_VERSION, baseUrl].join('/'))
-        .addQuery({sort_hide_null: true})
-        .addQuery(query)
+        .query(query)
         .toString()
       ).done(function(response) {
         callbacks.handleResponse(api, data, response);
@@ -331,6 +337,9 @@ function initTable($table, $form, baseUrl, columns, callbacks, opts) {
   $tableNode.on('xhr.dt', function(e) {
     $processing.hide();
   });
+  var $paging = $(api.table().container()).find('.results-info--top');
+  $paging.prepend($('#filter-toggle'));
+  $paging.append($hideNullWidget);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -388,9 +397,5 @@ module.exports = {
         );
         break;
     }
-
-    // Move the filter button into the results-info div
-    var $filterToggle = $('#filter-toggle');
-    $('.results-info--top').prepend($filterToggle);
   }
 };
