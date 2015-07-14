@@ -78,7 +78,7 @@ function hexMap($elm, height, width) {
       var yPosition = d3.mouse(this)[1] - 30;
       var total = results[d.properties.iso3166_2];
       svg.append('text')
-        .attr('id', 'tooltip')
+        .attr('id', 'map-tooltip')
         .attr('x', xPosition)
         .attr('y', yPosition)
         .attr('text-anchor', 'middle')
@@ -89,7 +89,7 @@ function hexMap($elm, height, width) {
         .text(helpers.currency(total));
     })
     .on('mouseout', function(d) {
-      d3.select('#tooltip').remove();
+      d3.select('#map-tooltip').remove();
     });
   });
 }

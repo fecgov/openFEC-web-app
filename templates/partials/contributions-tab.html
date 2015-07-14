@@ -1,15 +1,47 @@
+{% import 'macros/null.html' as null %}
+{% import 'macros/charts.html' as charts %}
+
 <section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-header">
   <div class="container">
     {% set table_data = [
-      (aggregates.size.0, 'Under $200'),
-      (aggregates.size.200, '$200 - $499'),
-      (aggregates.size.500, '$500 - $999'),
-      (aggregates.size.1000, '$1000 - $1999'),
-      (aggregates.size.2000, 'Over $2000'),
+      (aggregates.size.0, (0, 199.99), 'Under $200'),
+      (aggregates.size.200, (200, 499.99), '$200 - $499'),
+      (aggregates.size.500, (500, 999.99), '$500 - $999'),
+      (aggregates.size.1000, (1000, 1999.99), '$1000 - $1999'),
+      (aggregates.size.2000, (2000, None), 'Over $2000'),
     ] %}
     <h4>Contributions by Size {{ cycle | fmt_year_range }}</h4>
     <hr />
-    {{ totals_table('Contributions by Size', aggregates.size.values() | sum, table_data, cycle) }}
+    <figure class="table--simple totals-table totals-table--charts">
+      <div class="table__row table__row--header">
+        <div class="table__cell">
+          <h5>Contribution Size</h5>
+        </div>
+        <div class="table__cell">
+          <h5>Contribution Size</h5>
+        </div>
+      </div>
+      <div class="table js-chart-series chart-series--horizontal">
+        {% for value, limits, label in table_data %}
+          <div class="table__row table__row--nested js-accordion_item">
+            <div class="table__cell">
+              <a
+                  href="{{ url_for(
+                    'donations',
+                    committee_id=committee.committee_id,
+                    min_amount=limits[0],
+                    max_amount=limits[1],
+                  ) }}"
+              >{{ label }}</a>
+            </div>
+            <div class="table__cell">{{ null.null(value | currency) }}</div>
+            <div class="table__cell table__cell--bar">
+              {{ charts.chart_bar(value | default(0), label, tooltip=None) }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </figure>
   </div>
   <div class="container">
     <h4>Contributions by State {{ cycle | fmt_year_range }}</h4>
