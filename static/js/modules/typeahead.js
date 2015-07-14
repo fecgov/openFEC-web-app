@@ -89,7 +89,7 @@ module.exports = {
 
   initTypeahead: function(options, dataset) {
 
-    var $searchBar = $('.search-bar');
+    var $searchBar = $('.js-search-input');
 
     // Setting up main search typehead
     $searchBar.typeahead(options, dataset);
@@ -117,7 +117,6 @@ module.exports = {
         committeeDataSet,
         self = this;
 
-    // Creating a candidate suggestion engine
     candidateEngine = this.createEngine('Candidates', this.getUrl('candidates'), function(response) {
       return _.map(response.results, function(result) {
         return filterCandidates(result);
@@ -163,7 +162,7 @@ module.exports = {
     // Focus on search bar on "/"
     keyboard.on('/', function(e) {
       e.preventDefault();
-      var bar = _.find($('.search-bar'), function(bar) {
+      var bar = _.find($('.js-search-input'), function(bar) {
         return $(bar).is(':visible');
       });
       if (bar) {
@@ -173,7 +172,7 @@ module.exports = {
 
     // When the select committee or candidate box is changed on the search.
     function updateTypeahead(dataType) {
-      $('.search-bar').typeahead('destroy');
+      $('.js-search-input').typeahead('destroy');
       if (dataType === 'committees') {
         self.initTypeahead(options, committeeDataSet);
       } else {
@@ -185,7 +184,7 @@ module.exports = {
 
     // When the select committee or candidate box is changed on the search.
     events.on('searchTypeChanged', function(data) {
-      $('.search-bar').typeahead('destroy');
+      $('.js-search-input').typeahead('destroy');
       updateTypeahead(data.type);
     });
   }

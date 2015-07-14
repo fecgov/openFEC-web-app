@@ -60,15 +60,21 @@
     font-size: 1.2rem;
     border-bottom: 1px solid $light-gray;
     white-space: nowrap;
-  }
-
-  label {
     padding: .5rem 1rem;
     &:hover {
       background-color: $lightest-gray;
       cursor: pointer;
-    }
+    }    
   }
+  
+  .dropdown__subhead {
+    font-size: 1.4rem;
+    font-weight: bold;
+
+    &:hover {
+      background-color: #fff;
+    }
+  }  
 }
 
 .dropdown__search__container {

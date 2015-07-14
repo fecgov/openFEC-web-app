@@ -1,11 +1,13 @@
 'use strict';
 
-/* global require, module */
+/* global require, module, document */
 
 var $ = require('jquery');
 var _ = require('underscore');
 var keyboard = require('keyboardjs');
 var List = require('list.js');
+
+var terms = require('./terms');
 
 var terms = require('./terms');
 

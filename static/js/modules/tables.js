@@ -105,9 +105,9 @@ var committeeColumns = [
   {data: 'treasurer_name', className: 'min-desktop'},
   {data: 'state', className: 'min-desktop', width: '60px'},
   {data: 'party_full', className: 'min-desktop'},
-  {data: 'organization_type_full', className: 'min-desktop'},
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
+  {data: 'organization_type_full', className: 'min-desktop'},
 ];
 
 var filingsColumns = [
@@ -159,6 +159,12 @@ function pushQuery(filters) {
 
 function initTable($table, $form, baseUrl, columns, opts) {
   var draw;
+  var $hideNullWidget = $(
+    '<div class="row" style="text-align: center; margin-top: 10px">' +
+      '<input type="checkbox" name="sort_hide_null" checked /> ' +
+      'Hide results with missing values when sorting' +
+    '</div>'
+  );
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -180,7 +186,8 @@ function initTable($table, $form, baseUrl, columns, opts) {
           page: Math.floor(data.start / data.length) + 1,
           api_key: API_KEY
         },
-        parsedFilters
+        parsedFilters,
+        {sort_hide_null: $hideNullWidget.find('input').is(':checked')}
       );
       query.sort = mapSort(data.order, columns);
       $.getJSON(
@@ -194,6 +201,9 @@ function initTable($table, $form, baseUrl, columns, opts) {
     }
   }, opts || {});
   var api = $table.DataTable(opts);
+  var $paging = $(api.table().container()).find('.results-info--top');
+  $paging.prepend($('#filter-toggle'));
+  $paging.append($hideNullWidget);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -224,9 +234,5 @@ module.exports = {
         });
         break;
     }
-
-    // Move the filter button into the results-info div
-    var $filterToggle = $('#filter-toggle');
-    $('.results-info--top').prepend($filterToggle);
   }
 };
