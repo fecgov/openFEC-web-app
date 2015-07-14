@@ -34,7 +34,7 @@ function hexMap($elm, height, width) {
       .attr('height', height);
   var projection = d3.geo.mercator()
     .scale(500)
-    .translate([1280, 650]);
+    .translate([1250, 600]);
   var path = d3.geo.path().projection(projection);
 
   d3.json(url, function(error, data) {
@@ -97,7 +97,7 @@ function hexMap($elm, height, width) {
 function init() {
   $('.hex-map').each(function(idx, elm) {
     var $elm = $(elm);
-    hexMap($elm, 400, 600);
+    hexMap($elm, 400, 650);
   });
 }
 
