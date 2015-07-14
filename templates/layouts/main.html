@@ -52,6 +52,8 @@
         <ul>
           <li><a href="{{ url_for('candidates', cycle=default_cycles) }}" name="candidates"><img class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
           <li><a href="{{ url_for('committees', cycle=default_cycles) }}" name="committees"><img class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
+          <li><a href="{{ url_for('receipts') }}" name="receipts"><img class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing receipts">Receipts</a></li>
+          <li><a href="{{ url_for('disbursements') }}" name="disbursements"><img class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing disbursements">Disbursements</a></li>
         </ul>
       </nav>
     </div>
@@ -87,6 +89,8 @@
           <ul class="header-nav__list">
             <li class="header-nav__item"><a class="header-nav__link" title="Browse candidates" href="{{ url_for('candidates', cycle=default_cycles) }}" name="candidates"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
             <li class="header-nav__item"><a class="header-nav__link" title="Browse committee" href="{{ url_for('committees', cycle=default_cycles) }}" name="committees"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
+            <li class="header-nav__item"><a class="header-nav__link" title="Browse receipts" href="{{ url_for('receipts') }}" name="receipts"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing receipts">Receipts</a></li>
+            <li class="header-nav__item"><a class="header-nav__link" title="Browse disbursements" href="{{ url_for('disbursements') }}" name="disbursements"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing disbursements">Disbursements</a></li>
           </ul>
         </nav>
       </div>
