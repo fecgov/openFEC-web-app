@@ -75,3 +75,41 @@ gulp.task('build-sass', ['copy-static'], function() {
 gulp.task('watch-sass', function() {
   gulp.watch('./static/styles/**/*.scss', ['build-sass']);
 });
+
+var path = require('path');
+var file = require('gulp-file');
+var concat = require('concat-stream');
+var factor = require('factor-bundle');
+
+function write(name) {
+  return concat(function(body) {
+    return file(path.basename(name), body, {src: true})
+      .pipe(rev())
+      .pipe(gulp.dest('./bundle'))
+      .pipe(rev.manifest({
+        path: path.basename(name)
+          .replace(new RegExp(path.extname(name) + '$'), '.json')
+        }))
+      .pipe(gulp.dest('./bundle'));
+  });
+}
+
+gulp.task('factor', function() {
+  return browserify({
+    entries: ['./static/js/pages/candidates.js', './static/js/pages/committees.js'],
+    plugin: [
+      ['factor-bundle', {outputs: [write('candidates.js'), write('committees.js')]}]
+    ],
+    debug: true
+  })
+  .bundle()
+  .pipe(write('common.js'));
+});
+
+var extend = require('gulp-extend');
+
+gulp.task('merge', function() {
+  return gulp.src('./bundle/*.json')
+    .pipe(extend('rev-manifest.json', true, 2))
+    .pipe(gulp.dest('.'));
+});

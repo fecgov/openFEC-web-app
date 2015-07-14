@@ -55,45 +55,6 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
-var candidateColumns = [
-  {
-    data: 'name',
-    className: 'all',
-    width: '30%',
-    render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/candidate/' + row.candidate_id + buildCycle(row), 'candidate');
-    }
-  },
-  {data: 'office_full', className: 'min-tablet'},
-  {
-    data: 'cycles',
-    className: 'min-tablet',
-    render: function(data, type, row, meta) {
-      return yearRange(_.first(data), _.last(data));
-    }
-  },
-  {data: 'party_full', className: 'min-tablet'},
-  {data: 'state', className: 'min-desktop'},
-  {data: 'district', className: 'min-desktop'},
-];
-
-var committeeColumns = [
-  {
-    data: 'name',
-    className: 'all',
-    width: '20%',
-    render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'committee');
-    }
-  },
-  {data: 'treasurer_name', className: 'min-desktop'},
-  {data: 'state', className: 'min-desktop', width: '60px'},
-  {data: 'party_full', className: 'min-desktop'},
-  {data: 'committee_type_full', className: 'min-tablet'},
-  {data: 'designation_full', className: 'min-tablet'},
-  {data: 'organization_type_full', className: 'min-desktop'},
-];
-
 function mapSort(order, columns) {
   return _.map(order, function(item) {
     var name = columns[item.column].data;
@@ -177,13 +138,8 @@ function initTable($table, $form, baseUrl, columns) {
 }
 
 module.exports = {
-  init: function() {
-    var $table = $('#results');
-    var $form = $('#category-filters');
-    if ($table.attr('data-type') === 'candidate') {
-      initTable($table, $form, 'candidates', candidateColumns);
-    } else {
-      initTable($table, $form, 'committees', committeeColumns);
-    }
-  }
+  yearRange: yearRange,
+  buildCycle: buildCycle,
+  buildEntityLink: buildEntityLink,
+  initTable: initTable
 };
