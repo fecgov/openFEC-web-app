@@ -29,6 +29,11 @@
     width: 100%;
   }
 
+  &:last-child {
+    border-bottom: 0;
+    text-align: center;
+  }
+
   &:nth-child(even) {
     margin-right: 0;
   }
@@ -38,7 +43,7 @@
     margin-top: 0;
     font-weight: bold;
   }
-  
+
   @include media($medium) {
     @include span-columns(6);
     input[type="text"], 
@@ -50,6 +55,10 @@
 
   @include media($large) {
     width: 100%;
+
+    &:last-child {
+      text-align: left;
+    }
 
     input[type="text"],
     select,

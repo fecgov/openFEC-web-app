@@ -163,8 +163,8 @@ function initTable($table, $form, baseUrl, columns) {
     }
   });
   var $paging = $(api.table().container()).find('.results-info--top');
-  $paging.prepend($('#filter-toggle'));
   $paging.append($hideNullWidget);
+  $table.css('width', '100%');
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
