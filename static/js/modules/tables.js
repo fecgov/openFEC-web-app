@@ -5,7 +5,9 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
-var intl = require('intl');
+
+var helpers = require('./helpers');
+
 require('datatables');
 require('drmonty-datatables-responsive');
 
@@ -56,6 +58,19 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
+function formattedColumn(formatter) {
+  return function(opts) {
+    return _.extend({
+      render: function(data, type, row, meta) {
+        return formatter(data);
+      }
+    }, opts);
+  };
+}
+
+var dateColumn = formattedColumn(helpers.datetime);
+var currencyColumn = formattedColumn(helpers.currency);
+
 var candidateColumns = [
   {
     data: 'name',
@@ -90,18 +105,10 @@ var committeeColumns = [
   {data: 'treasurer_name', className: 'min-desktop'},
   {data: 'state', className: 'min-desktop', width: '60px'},
   {data: 'party_full', className: 'min-desktop'},
-  {data: 'organization_type_full', className: 'min-desktop'},
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
+  {data: 'organization_type_full', className: 'min-desktop'},
 ];
-
-function currencyColumn(opts) {
-  return _.extend({
-    render: function(data, type, row, meta) {
-      return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
-    }
-  }, opts);
-}
 
 var filingsColumns = [
   {
@@ -119,7 +126,7 @@ var filingsColumns = [
   {data: 'amendment_indicator', className: 'min-desktop'},
   {data: 'form_type', className: 'min-desktop'},
   {data: 'report_type', className: 'min-desktop'},
-  {data: 'receipt_date', className: 'min-tablet'},
+  dateColumn({data: 'receipt_date', className: 'min-tablet'}),
   currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
   currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
   currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
@@ -152,6 +159,12 @@ function pushQuery(filters) {
 
 function initTable($table, $form, baseUrl, columns, opts) {
   var draw;
+  var $hideNullWidget = $(
+    '<div class="row" style="text-align: center; margin-top: 10px">' +
+      '<input type="checkbox" name="sort_hide_null" checked /> ' +
+      'Hide results with missing values when sorting' +
+    '</div>'
+  );
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -173,7 +186,8 @@ function initTable($table, $form, baseUrl, columns, opts) {
           page: Math.floor(data.start / data.length) + 1,
           api_key: API_KEY
         },
-        parsedFilters
+        parsedFilters,
+        {sort_hide_null: $hideNullWidget.find('input').is(':checked')}
       );
       query.sort = mapSort(data.order, columns);
       $.getJSON(
@@ -187,6 +201,9 @@ function initTable($table, $form, baseUrl, columns, opts) {
     }
   }, opts || {});
   var api = $table.DataTable(opts);
+  var $paging = $(api.table().container()).find('.results-info--top');
+  $paging.prepend($('#filter-toggle'));
+  $paging.append($hideNullWidget);
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -217,9 +234,5 @@ module.exports = {
         });
         break;
     }
-
-    // Move the filter button into the results-info div
-    var $filterToggle = $('#filter-toggle');
-    $('.results-info--top').prepend($filterToggle);
   }
 };

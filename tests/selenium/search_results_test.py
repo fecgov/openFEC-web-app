@@ -49,7 +49,7 @@ class SearchResultsPageTests(SearchPageTestCase):
         self.driver.get(self.url.url)
         select = self.driver.find_element_by_css_selector('select[name="search_type"]')
         self.assertEqual(select.get_attribute('value'), 'candidates')
-        self.driver.find_element_by_css_selector('.header-search .search-bar').send_keys('boeh')
+        self.driver.find_element_by_css_selector('.header-search .search-input').send_keys('boeh')
         results = self.driver.find_elements_by_css_selector('.tt-suggestion')
         self.assertGreater(len(results), 0)
 
@@ -58,6 +58,6 @@ class SearchResultsPageTests(SearchPageTestCase):
         self.driver.get(self.url.url)
         select = self.driver.find_element_by_css_selector('select[name="search_type"]')
         self.assertEqual(select.get_attribute('value'), 'committees')
-        self.driver.find_element_by_css_selector('.header-search .search-bar').send_keys('grij')
+        self.driver.find_element_by_css_selector('.header-search .search-input').send_keys('grij')
         results = self.driver.find_elements_by_css_selector('.tt-suggestion')
         self.assertGreater(len(results), 0)
