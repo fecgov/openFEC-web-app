@@ -150,3 +150,16 @@
     }
   }
 }
+
+.processing {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0,0,0,.5);
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 3rem;
+}

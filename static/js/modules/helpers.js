@@ -1,14 +1,17 @@
 'use strict';
 
-/* global require, module */
+/* global require, module, Intl */
 
-var intl = require('intl');
 var moment = require('moment');
 var Handlebars = require('hbsfy/runtime');
 
+var intl = require('intl');
+var locale = require('intl/locale-data/json/en-US.json');
+intl.__addLocaleData(locale);
+
 function currency(value) {
   if (!isNaN(parseInt(value))) {
-    return '$' + intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(value);
+    return '$' + Intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(value);
   } else {
     return null;
   }

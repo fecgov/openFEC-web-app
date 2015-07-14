@@ -10,7 +10,11 @@ var moment = require('moment');
 require('datatables');
 require('drmonty-datatables-responsive');
 
+var filters = require('./filters');
 var helpers = require('./helpers');
+
+var donationTemplate = require('../../templates/donation.hbs');
+var expenditureTemplate = require('../../templates/expenditure.hbs');
 
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
@@ -30,8 +34,6 @@ $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
     return ((settings._seekIndexes || {})[length] || {})[start] || undefined;
   }
 });
-
-var filters = require('./filters');
 
 function yearRange(first, last) {
   if (first === last) {
@@ -78,6 +80,19 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
+function formattedColumn(formatter) {
+  return function(opts) {
+    return _.extend({
+      render: function(data, type, row, meta) {
+        return formatter(data);
+      }
+    }, opts);
+  };
+}
+
+var dateColumn = formattedColumn(helpers.datetime);
+var currencyColumn = formattedColumn(helpers.currency);
+
 var candidateColumns = [
   {
     data: 'name',
@@ -112,13 +127,7 @@ var committeeColumns = [
   {data: 'treasurer_name', className: 'min-desktop'},
   {data: 'state', className: 'min-desktop', width: '60px'},
   {data: 'party_full', className: 'min-desktop'},
-  {
-    data: 'first_file_date',
-    className: 'min-tablet',
-    render: function(data, type, row, meta) {
-      return helpers.datetime(data);
-    }
-  },
+  dateColumn({data: 'first_file_date', className: 'min-tablet'}),
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
   {data: 'organization_type_full', className: 'min-desktop'},
@@ -133,26 +142,90 @@ var committeeContributorColumns = [
       return buildEntityLink(data, '/committee/' + row.contributor_id, 'committee');
     }
   },
-  {
-    data: 'total',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return helpers.currency(data);
-    }
-  }
+  currencyColumn({data: 'total', className: 'all', orderable: false})
 ];
 
 var individualContributorColumns = [
   {data: 'contributor_name', className: 'all', orderable: false},
+  currencyColumn({data: 'contributor_aggregate_ytd', className: 'all', orderable: false})
+];
+
+var donationColumns = [
   {
-    data: 'contributor_aggregate_ytd',
-    className: 'all',
-    orderable: false,
+    width: '5%',
     render: function(data, type, row, meta) {
-      return helpers.currency(data);
+      return '<span class="modal-toggle">+</span>';
     }
-  }
+  },
+  {
+    data: 'contributor',
+    orderable: false,
+    className: 'all',
+    width: '30%',
+    render: function(data, type, row, meta) {
+      if (data) {
+        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+      } else {
+        return row.contributor_name;
+      }
+    }
+  },
+  {data: 'contributor_state', orderable: false, className: 'min-desktop'},
+  {data: 'contributor_employer', orderable: false, className: 'min-desktop'},
+  currencyColumn({data: 'contributor_receipt_amount', className: 'min-tablet'}),
+  dateColumn({data: 'contributor_receipt_date', className: 'min-tablet'}),
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all',
+    width: '30%',
+    render: function(data, type, row, meta) {
+      if (data) {
+        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+      } else {
+        return '';
+      }
+    }
+  },
+];
+
+var expenditureColumns = [
+  {
+    width: '5%',
+    render: function(data, type, row, meta) {
+      return '<span class="modal-toggle">+</span>';
+    }
+  },
+  {
+    data: 'recipient_name',
+    orderable: false,
+    className: 'all',
+    width: '30%',
+    render: function(data, type, row, meta) {
+      var committee = row.recipient_committee;
+      if (committee) {
+        return buildEntityLink(committee.name, '/committee/' + committee.committee_id, 'committee');
+      } else {
+        return data;
+      }
+    }
+  },
+  {data: 'recipient_state', orderable: false, className: 'min-desktop'},
+  currencyColumn({data: 'disbursement_amount', className: 'min-tablet'}),
+  dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all',
+    width: '30%',
+    render: function(data, type, row, meta) {
+      if (data) {
+        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+      } else {
+        return '';
+      }
+    }
+  },
 ];
 
 function mapSort(order, columns) {
@@ -202,7 +275,7 @@ function mapQuerySeek(api, data) {
 function modalAfterRender(template, api, data, response) {
   var $table = $(api.table().node());
   $table.on('click', '.modal-toggle', function(e) {
-    var row = $(e.target).parents('tr');
+    var row = $(e.target).closest('tr');
     var index = api.row(row).index();
     var $modal = $('#datatable-modal');
     $modal.find('.modal-content').html(template(response.results[index]));
@@ -216,6 +289,7 @@ function handleResponseSeek(api, data, response) {
 
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
+  var $processing = $('<div class="processing">Loading...</div>');
   var $hideNullWidget = $(
     '<div class="row" style="text-align: center; margin-top: 10px">' +
       '<input type="checkbox" name="sort_hide_null" checked /> ' +
@@ -253,6 +327,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
         );
       }
       query.sort = mapSort(data.order, columns);
+      $processing.show();
       $.getJSON(
         URI(API_LOCATION)
         .path([API_VERSION, baseUrl].join('/'))
@@ -263,14 +338,16 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
         callbacks.handleResponse(api, data, response);
         callback(mapResponse(response));
         callbacks.afterRender(api, data, response);
+      }).always(function() {
+        $processing.hide();
       });
     }
   }, opts || {});
+  var api = $table.DataTable(opts);
   callbacks = _.extend({
     handleResponse: function() {},
     afterRender: function() {}
   }, callbacks);
-  var api = $table.DataTable(opts);
   if (useFilters) {
     // Update filters and data table on navigation
     $(window).on('popstate', function() {
@@ -278,6 +355,9 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       api.ajax.reload();
     });
   }
+  // Prepare loading message
+  $processing.hide();
+  $table.before($processing);
   var $paging = $(api.table().container()).find('.results-info--top');
   $paging.prepend($('#filter-toggle'));
   if (useHideNull) {
@@ -318,6 +398,42 @@ module.exports = {
           break;
         case 'committee':
           initTable($table, $form, 'committees', {}, committeeColumns, offsetCallbacks, {useFilters: true});
+          break;
+        case 'donation':
+          initTable(
+            $table,
+            $form,
+            'schedules/schedule_a',
+            {},
+            donationColumns,
+            {
+              mapQuery: mapQuerySeek,
+              handleResponse: handleResponseSeek,
+              afterRender: modalAfterRender.bind(undefined, donationTemplate)
+            },
+            {
+              order: [[5, 'desc']],
+              pagingType: 'simple'
+            }
+          );
+          break;
+        case 'expenditure':
+          initTable(
+            $table,
+            $form,
+            'schedules/schedule_b',
+            {},
+            expenditureColumns,
+            {
+              mapQuery: mapQuerySeek,
+              handleResponse: handleResponseSeek,
+              afterRender: modalAfterRender.bind(undefined, expenditureTemplate)
+            },
+            {
+              order: [[4, 'desc']],
+              pagingType: 'simple'
+            }
+          );
           break;
         case 'committee-contributor':
           path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');
