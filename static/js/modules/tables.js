@@ -216,14 +216,14 @@ function handleResponseSeek(api, data, response) {
 
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
-  var useFilters = opts.useFilters;
-  var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
   var $hideNullWidget = $(
     '<div class="row" style="text-align: center; margin-top: 10px">' +
       '<input type="checkbox" name="sort_hide_null" checked /> ' +
       'Hide results with missing values when sorting' +
     '</div>'
   );
+  var useFilters = opts.useFilters;
+  var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
   opts = _.extend({
     serverSide: true,
     searching: false,
