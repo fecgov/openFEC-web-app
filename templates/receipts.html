@@ -4,19 +4,19 @@
 {% import 'macros/filters/states.html' as states %}
 
 {% block title %}
-  Browse Donations
+  Browse Receipts
 {% endblock %}
 
 {% block body %}
 
 <header class="page-header page-header--dark">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Donations</h1>
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing receipts"> Receipts</h1>
 </header>
 
 <section class="results-content">
   <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
   <div id="filters" class="side-panel side-panel--left">
-    <h4>Filter Donations</h4>
+    <h4>Filter Receipts</h4>
     <form id="category-filters">
       <div class="field">
         <span class="label">Show contributions from</span>
@@ -70,7 +70,7 @@
     </form>
   </div>
   <div id="committees" class="results-container">
-    {% include 'partials/donations-table.html' %}
+    {% include 'partials/receipts-table.html' %}
   </div>
 </section>
 
@@ -80,7 +80,7 @@
       <button title="Close menu" class="js-hide modal__close" data-hides="datatable-modal"><i class="ti-close"></i></button>
     </div>
     <div class="modal__row">
-      <h3>Donation Detail</h3>
+      <h3>Receipt Detail</h3>
       <nav class="modal__nav">
         <div class="modal__content">
           <table>

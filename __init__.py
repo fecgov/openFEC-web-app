@@ -164,14 +164,14 @@ def committees():
     return render_template('committees.html', result_type='committees')
 
 
-@app.route('/donations')
-def donations():
-    return render_template('donations.html', dates=utils.date_ranges())
+@app.route('/receipts')
+def receipts():
+    return render_template('receipts.html', dates=utils.date_ranges())
 
 
-@app.route('/expenditures')
-def expenditures():
-    return render_template('expenditures.html')
+@app.route('/disbursements')
+def disbursements():
+    return render_template('disbursements.html')
 
 
 @app.errorhandler(404)

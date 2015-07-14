@@ -4,19 +4,19 @@
 {% import 'macros/filters/states.html' as states %}
 
 {% block title %}
-  Browse Expenditures
+  Browse Disbursements
 {% endblock %}
 
 {% block body %}
 
 <header class="page-header page-header--dark">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Expenditures</h1>
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing disbursements"> Disbursements</h1>
 </header>
 
 <section class="results-content">
   <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
   <div id="filters" class="side-panel side-panel--left">
-    <h4>Filter Expenditures</h4>
+    <h4>Filter Disbursements</h4>
     <form id="category-filters">
 
       {{ text.field('recipient_name', 'Name') }}
@@ -24,8 +24,8 @@
 
       {{ states.field('recipient_state') }}
 
-      {{ text.field('min_amount', 'Minimum Expenditure') }}
-      {{ text.field('max_amount', 'Maximum Expenditure') }}
+      {{ text.field('min_amount', 'Minimum Disbursement') }}
+      {{ text.field('max_amount', 'Maximum Disbursement') }}
 
       {{ text.field('start_date', 'Start Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
       {{ text.field('end_date', 'End Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
@@ -37,7 +37,7 @@
     </form>
   </div>
   <div id="committees" class="results-container">
-    {% include 'partials/expenditures-table.html' %}
+    {% include 'partials/disbursements-table.html' %}
   </div>
 </section>
 
@@ -47,7 +47,7 @@
       <button title="Close menu" class="js-hide modal__close" data-hides="datatable-modal"><i class="ti-close"></i></button>
     </div>
     <div class="modal__row">
-      <h3>Expenditure Detail</h3>
+      <h3>Disbursement Detail</h3>
       <nav class="modal__nav">
         <div class="modal__content">
           <table>
