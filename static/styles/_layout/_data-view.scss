@@ -86,6 +86,13 @@
   margin-top: 0;
 }
 
+.results-info__null {
+  text-align: center;
+  @include media($medium) {
+    float: right;
+    padding: .5rem 0;
+  }
+}
 // DataTables plugin style overrides
 .dataTables_wrapper {
   .results-info {
@@ -107,20 +114,21 @@
       text-align: center;
     }
 
-    @include media($large) {
+    @include media($medium) {
       &.meta-box {
         border-top: 1px solid $light-gray;
         padding: .5em;
       }
 
       .dataTables_length,
-      .dataTables_info,
-      .dataTables_paginate {
+      .dataTables_info {
         float: left;
         margin-left: 0;
       }
+
       .dataTables_paginate {
         margin-left: 1.5em;
+        float: right;
       }
     }
 
@@ -137,7 +145,6 @@
     }
 
     .dataTables_paginate {
-
       .paginate_button.disabled {
         border: none;
         color: $medium-gray;
