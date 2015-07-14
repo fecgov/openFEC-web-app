@@ -217,6 +217,13 @@ function handleResponseSeek(api, data, response) {
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
   var useFilters = opts.useFilters;
+  var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
+  var $hideNullWidget = $(
+    '<div class="row" style="text-align: center; margin-top: 10px">' +
+      '<input type="checkbox" name="sort_hide_null" checked /> ' +
+      'Hide results with missing values when sorting' +
+    '</div>'
+  );
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -239,6 +246,12 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
         {api_key: API_KEY},
         parsedFilters
       );
+      if (useHideNull) {
+        query = _.extend(
+          query,
+          {sort_hide_null: $hideNullWidget.find('input').is(':checked')}
+        );
+      }
       query.sort = mapSort(data.order, columns);
       $.getJSON(
         URI(API_LOCATION)
@@ -265,6 +278,16 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       api.ajax.reload();
     });
   }
+  var $paging = $(api.table().container()).find('.results-info--top');
+  $paging.prepend($('#filter-toggle'));
+  if (useHideNull) {
+    $paging.append($hideNullWidget);
+  }
+  // Update filters and data table on navigation
+  $(window).on('popstate', function() {
+    filters.activateInitialFilters();
+    api.ajax.reload();
+  });
   $form.submit(function(event) {
     event.preventDefault();
     api.ajax.reload();
@@ -308,7 +331,8 @@ module.exports = {
             order: [[1, 'desc']],
             pagingType: 'simple',
             lengthChange: false,
-            pageLength: 10
+            pageLength: 10,
+            useHideNull: false
           });
           break;
         case 'individual-contributor':
@@ -332,14 +356,11 @@ module.exports = {
             order: [[1, 'desc']],
             pagingType: 'simple',
             lengthChange: false,
-            pageLength: 10
+            pageLength: 10,
+            useHideNull: false
           });
           break;
       }
     });
-
-    // Move the filter button into the results-info div
-    var $filterToggle = $('#filter-toggle');
-    $('.results-info--top').prepend($filterToggle);
   }
 };
