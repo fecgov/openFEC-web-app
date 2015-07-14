@@ -5,7 +5,9 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
-var intl = require('intl');
+
+var helpers = require('./helpers');
+
 require('datatables');
 require('drmonty-datatables-responsive');
 
@@ -56,6 +58,19 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
+function formattedColumn(formatter) {
+  return function(opts) {
+    return _.extend({
+      render: function(data, type, row, meta) {
+        return formatter(data);
+      }
+    }, opts);
+  };
+}
+
+var dateColumn = formattedColumn(helpers.datetime);
+var currencyColumn = formattedColumn(helpers.currency);
+
 var candidateColumns = [
   {
     data: 'name',
@@ -95,14 +110,6 @@ var committeeColumns = [
   {data: 'designation_full', className: 'min-tablet'},
 ];
 
-function currencyColumn(opts) {
-  return _.extend({
-    render: function(data, type, row, meta) {
-      return intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(data);
-    }
-  }, opts);
-}
-
 var filingsColumns = [
   {
     data: 'pdf_url',
@@ -119,7 +126,7 @@ var filingsColumns = [
   {data: 'amendment_indicator', className: 'min-desktop'},
   {data: 'form_type', className: 'min-desktop'},
   {data: 'report_type', className: 'min-desktop'},
-  {data: 'receipt_date', className: 'min-tablet'},
+  dateColumn({data: 'receipt_date', className: 'min-tablet'}),
   currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
   currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
   currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
