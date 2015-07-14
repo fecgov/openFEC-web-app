@@ -9,6 +9,8 @@ var browserify = require('browserify');
 
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
+var hbsfy = require('hbsfy');
+var sass = require('gulp-sass');
 var gutil = require('gulp-util');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
@@ -32,6 +34,7 @@ var wb = watchify(browserify(watchOpts));
 function bundle(watch) {
   return (watch ? wb : b)
     .transform(preprocessify({DEBUG: debug}))
+    .transform(hbsfy)
     .bundle()
     .pipe(source('static/js/init.js'))
     .pipe(buffer())

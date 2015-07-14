@@ -93,6 +93,11 @@
   position: absolute;
   top: 0;
   width: 100%;
+  
+  .accordion__header {
+    border-top: 1px solid $light-gray;
+    padding: 1rem 0;
+  }
 
   h4 {
     margin-top: 1em;

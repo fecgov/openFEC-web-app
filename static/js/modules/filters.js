@@ -7,6 +7,8 @@ var _ = require('underscore');
 var URI = require('URIjs');
 var List = require('list.js');
 
+var accordion = require('./accordion');
+
 var events = require('./events.js');
 
 // are the panels open?
@@ -50,12 +52,23 @@ var prepareValue = function($elm, value) {
   return $elm.attr('type') === 'checkbox' ? [value] : value;
 };
 
+function ensureVisible($elm) {
+  if ($elm.is(':visible')) {
+    return;
+  }
+  var $accordion = $elm.closest('.js-accordion');
+  if ($accordion.length) {
+    accordion.showHeader($accordion.find('.js-accordion_header'));
+  }
+}
+
 var activateFilter = function(opts) {
     var $field = $('#category-filters [name=' + opts.name + ']');
     var $parent = $field.parent();
     if (opts.value) {
         $field.val(prepareValue($field, opts.value)).change();
         $parent.addClass('active');
+        ensureVisible($field);
     } else {
         $field.val(prepareValue($field, '')).change();
         $parent.removeClass('active');
@@ -70,35 +83,30 @@ var bindFilters = function() {
     });
 };
 
-
-// all of the filters we use on candidates and committees
-var fieldMap = [
-    'q',
-    'cycle',
-    'party',
-    'state',
-    'district',
-    'office',
-    'designation',
-    'committee_type',
-    'organization_type'
-];
-
 var activateInitialFilters = function() {
     // this activates dropdowns
     // name filter is activated in the template
     var open;
     var qs = URI.parseQuery(window.location.search);
-    _.each(fieldMap, function(key) {
-          activateFilter({
-              name: key,
-              value: qs[key]
-          });
-          open = open || qs[key];
+    var fields = _.chain($('div#filters :input[name]'))
+      .map(function(input) {
+        return $(input).attr('name');
+      })
+      .filter(function(name) {
+        return name && name.slice(0, 1) !== '_';
+      })
+      .uniq()
+      .value();
+    _.each(fields, function(key) {
+      activateFilter({
+        name: key,
+        value: qs[key]
+      });
+      open = open || qs[key];
     });
 
     if (open) {
-        $('body').addClass('panel-active--left');
+      $('body').addClass('panel-active--left');
     }
 };
 
@@ -121,14 +129,14 @@ var updateSelectedItems = function(list) {
     var $this,
         $checkedBoxes;
     $this = list;
-    $checkedBoxes = $this.find('input:checked').parents('li');
-    $this.parents('fieldset').find('.dropdown__selected').prepend($checkedBoxes);
+    $checkedBoxes = $this.find('input:checked').closest('li');
+    $this.closest('fieldset').find('.dropdown__selected').prepend($checkedBoxes);
 
     // Remove it all if there's no more items to check
     if ( $this.find('li').length === 0 ) {
-        $this.parents('.dropdown').remove();
+        $this.closest('.dropdown').remove();
     }
-}
+};
 
 // Show "any" if there's no items checked
 var countCheckboxes = function(fieldset) {
@@ -152,12 +160,12 @@ $('.js-checkbox-filters').each(function(){
 $('.field input[type="checkbox"]').on('keypress', function(e) {
     if (e.which === 13) {
         var $this = $(this);
-        var $parent = $this.parents('ul.dropdown__list');
+        var $parent = $this.closest('ul.dropdown__list');
         $this.prop('checked', function(index, value) {
             return !value;
         });
         if ($parent.length) {
-            var $next = $this.parents('li').next('li').find('input[type="checkbox"]');
+            var $next = $this.closest('li').next('li').find('input[type="checkbox"]');
             if ($next.length) {
                 $next.focus();
             }
@@ -189,12 +197,33 @@ $('.js-dropdown').on('click keypress', function(e) {
     e.preventDefault();
 });
 
-module.exports = {
-    init: function() {
+$('.field input[type="text"]').on('keypress', function(e) {
+    if (e.which === 13) {
+        $('button[type="submit"]').click();
+        e.preventDefault();
+    }
+})
 
-        bindFilters();
-        // if the page was loaded with filters set in the query string
-        activateInitialFilters();
-    },
-    activateInitialFilters: activateInitialFilters
+function bindFileFilter() {
+  var $field = $('#file-date');
+  var $startDate = $field.find('[name="start_date"]');
+  var $endDate = $field.find('[name="end_date"]');
+  $field.on('click', '[name="_file_date"]', function(e) {
+    var $input = $(e.target);
+    if ($input.attr('data-start-date')) {
+      $startDate.val($input.attr('data-start-date'));
+      $endDate.val($input.attr('data-end-date'));
+    }
+    $startDate.focus();
+  });
+}
+
+module.exports = {
+  init: function() {
+    bindFilters();
+    // if the page was loaded with filters set in the query string
+    activateInitialFilters();
+    bindFileFilter();
+  },
+  activateInitialFilters: activateInitialFilters
 };
