@@ -122,7 +122,7 @@ function pushQuery(filters) {
 function initTable($table, $form, baseUrl, columns) {
   var draw;
   var $hideNullWidget = $(
-    '<div class="row" style="text-align: center; margin-top: 10px">' +
+    '<div class="results-info__null">' +
       '<input type="checkbox" name="sort_hide_null" checked /> ' +
       'Hide results with missing values when sorting' +
     '</div>'
@@ -163,7 +163,7 @@ function initTable($table, $form, baseUrl, columns) {
     }
   });
   var $paging = $(api.table().container()).find('.results-info--top');
-  $paging.append($hideNullWidget);
+  $paging.prepend($hideNullWidget);
   $table.css('width', '100%');
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
