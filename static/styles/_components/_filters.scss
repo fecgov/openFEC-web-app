@@ -33,6 +33,11 @@
     width: 100%;
   }
 
+  &:last-child {
+    border-bottom: 0;
+    text-align: center;
+  }
+
   &:nth-child(even) {
     margin-right: 0;
   }
@@ -43,13 +48,9 @@
     font-weight: bold;
   }
 
-  label {
-    margin: 0;
-  }
-
   @include media($medium) {
     @include span-columns(6);
-    input[type="text"], 
+    input[type="text"],
     select,
     .button--dropdown {
       width: 100%;
@@ -59,6 +60,10 @@
   @include media($large) {
     width: 100%;
     float: none;
+
+    &:last-child {
+      text-align: left;
+    }
 
     input[type="text"],
     select,
@@ -80,15 +85,4 @@
   display: none;
   padding: .5rem;
   float: left;
-  position: absolute;  
-  right: 0;
-  top: 0;
-}
-
-.date-range-input {
-  padding-left: 33px;
-
-  label {
-    font-size: 1.4rem;
-  }  
 }
