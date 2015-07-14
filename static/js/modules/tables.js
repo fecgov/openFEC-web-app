@@ -444,6 +444,7 @@ module.exports = {
             query.cycle = cycle;
           }
           initTable($table, $form, path, query, committeeContributorColumns, offsetCallbacks, {
+            dom: '<"results-info meta-box results-info--top"lfrip>t',
             order: [[1, 'desc']],
             pagingType: 'simple',
             lengthChange: false,
@@ -469,6 +470,7 @@ module.exports = {
             max_date: maxYear.endOf('year').format()
           });
           initTable($table, $form, path, query, individualContributorColumns, seekCallbacks, {
+            dom: '<"results-info meta-box results-info--top"lfrip>t',
             order: [[1, 'desc']],
             pagingType: 'simple',
             lengthChange: false,

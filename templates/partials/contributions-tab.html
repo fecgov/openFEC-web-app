@@ -7,14 +7,26 @@
       (aggregates.size.1000, '$1000 - $1999'),
       (aggregates.size.2000, 'Over $2000'),
     ] %}
+    <h4>Contributions by Size {{ cycle | fmt_year_range }}</h4>
+    <hr />
     {{ totals_table('Contributions by Size', aggregates.size.values() | sum, table_data, cycle) }}
   </div>
   <div class="container">
+    <h4>Contributions by State {{ cycle | fmt_year_range }}</h4>
+    <hr />
     <div class="hex-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
   </div>
   <div class="container">
+    <h3>Top Contributors {{ year if year else cycle | fmt_year_range }}</h3>
+    <hr />
     <div class="row">
       <div class="chunk--half box">
+        <h4>Top Committee Contributors</h4>
+        <div>
+          <a
+              href={{ url_for('donations', committee_id=committee.committee_id, contributor_type='committee') }}
+            >View all committee contributions</a>
+        </div>
         <table
            class="data-table"
            data-type="committee-contributor"
@@ -29,6 +41,12 @@
       </div>
 
       <div class="chunk--half box">
+        <h4>Top Individual Contributors</h4>
+        <div>
+          <a
+              href={{ url_for('donations', committee_id=committee.committee_id, contributor_type='individual') }}
+            >View all individual contributions</a>
+        </div>
         <table
            class="data-table"
            data-type="individual-contributor"

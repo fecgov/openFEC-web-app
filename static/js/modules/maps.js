@@ -94,7 +94,7 @@ function hexMap($elm, height, width) {
 function init() {
   $('.hex-map').each(function(idx, elm) {
     var $elm = $(elm);
-    hexMap($elm, 600, 800);
+    hexMap($elm, 400, 600);
   });
 }
 
