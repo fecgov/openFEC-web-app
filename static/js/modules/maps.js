@@ -66,6 +66,9 @@ function hexMap($elm, height, width) {
         return 'translate(' + projection(d3.geo.centroid(d)) + ')';
       })
       .append('text')
+      .attr('text-anchor', 'middle')         // Horizontal center
+      .attr('alignment-baseline', 'middle')  // Vertical center
+      .attr('pointer-events', 'none')        // Don't capture mouseover event on hex grid
       .text(function(d) {
         return d.properties.iso3166_2;
       });
