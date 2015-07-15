@@ -5,6 +5,7 @@
   "main": "app.js",
   "devDependencies": {
     "chai": "^1.10.0",
+    "gulp-sourcemaps": "^1.5.2",
     "jquery-mockjax": "^1.6.1",
     "selenium-webdriver": "^2.44.0",
     "watchify": "~2.0.0"

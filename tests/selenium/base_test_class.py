@@ -122,6 +122,8 @@ class SearchPageTestCase(BaseTest):
         checkbox = div.find_element_by_css_selector(
             'input[type="checkbox"][value="' + value + '"]'
         )
+        # Ensure performance bar doesn't block clicks
+        self.driver.execute_script('$(".perfBar-bar").hide()')
         if expand:
             try:
                 button = div.find_element_by_css_selector('button.js-toggle')

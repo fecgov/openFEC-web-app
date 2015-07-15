@@ -1,5 +1,7 @@
 {% extends 'layouts/main.html' %}
 
+{% import 'macros/filters/states.html' as states %}
+
 {% block title %}
     Browse Committees
 {% endblock %}
@@ -11,29 +13,33 @@
 </header>
 
 <section class="results-content">
-  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
   <div id="filters" class="side-panel side-panel--left">
-    <h4>Filter Committees</h4>
-    <form id="category-filters">
+    <div class="side-panel__box">
+      <button id="filter-toggle" data-slide="left" class="side-panel__toggle">
+        <i class="icon ti-angle"></i>
+      </button>
+      <h4>Filter Candidates</h4>
+      <form id="category-filters">
         <div class="field" id="q-field">
-            <label for="q">Name</label>
-            <input type="text" name="q" id="q" />
-            <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
+          <label for="q">Name</label>
+          <input type="text" name="q" />
+          <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
         </div>
 
         {% include 'partials/filters/election-years.html' %}
         {% include 'partials/filters/parties.html' %}
-        {% include 'partials/filters/states.html' %}
-
+        {{ states.field('state') }}
         {% include 'partials/filters/committee-types.html' %}
 
         <div class="field">
           <button type="submit" class="primary">Apply filters</button>
         </div>
-    </form>
+      </form>
+    </div>
   </div>
   <div id="committees" class="results-container">
     {% include 'partials/committees-table.html' %}
   </div>
 </section>
+
 {% endblock %}

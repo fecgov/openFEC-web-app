@@ -68,7 +68,7 @@ var accordion = {
     return $base.find(this.SLT_ITEM);
   },
   findHeaderFromButton: function($target) {
-    return $target.parents(this.SLT_HEADER);
+    return $target.closest(this.SLT_HEADER);
   },
   findItemsFromHeader: function($header) {
     return $header.siblings(this.SLT_ITEM);

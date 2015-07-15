@@ -168,6 +168,16 @@ def committees():
     )
 
 
+@app.route('/donations')
+def donations():
+    return render_template('donations.html', dates=utils.date_ranges())
+
+
+@app.route('/expenditures')
+def expenditures():
+    return render_template('expenditures.html')
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

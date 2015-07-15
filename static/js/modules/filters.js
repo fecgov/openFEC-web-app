@@ -7,33 +7,40 @@ var _ = require('underscore');
 var URI = require('URIjs');
 var List = require('list.js');
 
+var accordion = require('./accordion');
+
 var events = require('./events.js');
 
 // are the panels open?
-var open = true;
+var open = false;
 
 var openFilterPanel = function() {
-    $('body').addClass('panel-active--left');
-    $('.side-panel--left').addClass('side-panel--open');
-    $('#filter-toggle').addClass('active').html('<i class="ti-minus"></i> Hide Filters');
-    open = true;
+  $('body').addClass('panel-active--left');
+  $('.side-panel--left').addClass('side-panel--open');
+  $('#filter-toggle').addClass('active');
+  open = true;
 };
 
 var closeFilterPanel = function() {
-    $('body').removeClass('panel-active--left');
-    $('.side-panel--left').removeClass('side-panel--open');
-    $('#filter-toggle').removeClass('active').html('<i class="ti-plus"></i>Show Filters');
-    open = false;
+  $('body').removeClass('panel-active--left');
+  $('.side-panel--left').removeClass('side-panel--open');
+  $('#filter-toggle').removeClass('active');
+  open = false;
 };
 
-openFilterPanel();
+// Keep in sync with styles/grid-settings.scss.
+// TODO find better way to sync with scss.
+if ($('body').width() > 500) {
+  open = true;
+  openFilterPanel();
+}
 
 $('#filter-toggle').click(function(){
-    if ( open === true ) {
-        closeFilterPanel();
-    } else {
-        openFilterPanel();
-    }
+  if ( open === true ) {
+    closeFilterPanel();
+  } else {
+    openFilterPanel();
+  }
 });
 
 var prepareValue = function($elm, value) {
@@ -45,12 +52,23 @@ var prepareValue = function($elm, value) {
   return $elm.attr('type') === 'checkbox' ? [value] : value;
 };
 
+function ensureVisible($elm) {
+  if ($elm.is(':visible')) {
+    return;
+  }
+  var $accordion = $elm.closest('.js-accordion');
+  if ($accordion.length) {
+    accordion.showHeader($accordion.find('.js-accordion_header'));
+  }
+}
+
 var activateFilter = function(opts) {
     var $field = $('#category-filters [name=' + opts.name + ']');
     var $parent = $field.parent();
     if (opts.value) {
         $field.val(prepareValue($field, opts.value)).change();
         $parent.addClass('active');
+        ensureVisible($field);
     } else {
         $field.val(prepareValue($field, '')).change();
         $parent.removeClass('active');
@@ -65,37 +83,30 @@ var bindFilters = function() {
     });
 };
 
-
-// all of the filters we use on candidates and committees
-var fieldMap = [
-    'q',
-    'cycle',
-    'party',
-    'state',
-    'district',
-    'office',
-    'designation',
-    'committee_type',
-    'organization_type',
-    'start_date',
-    'end_date'
-];
-
 var activateInitialFilters = function() {
     // this activates dropdowns
     // name filter is activated in the template
     var open;
     var qs = URI.parseQuery(window.location.search);
-    _.each(fieldMap, function(key) {
-          activateFilter({
-              name: key,
-              value: qs[key]
-          });
-          open = open || qs[key];
+    var fields = _.chain($('div#filters :input[name]'))
+      .map(function(input) {
+        return $(input).attr('name');
+      })
+      .filter(function(name) {
+        return name && name.slice(0, 1) !== '_';
+      })
+      .uniq()
+      .value();
+    _.each(fields, function(key) {
+      activateFilter({
+        name: key,
+        value: qs[key]
+      });
+      open = open || qs[key];
     });
 
     if (open) {
-        $('body').addClass('panel-active--left');
+      $('body').addClass('panel-active--left');
     }
 };
 
@@ -118,14 +129,14 @@ var updateSelectedItems = function(list) {
     var $this,
         $checkedBoxes;
     $this = list;
-    $checkedBoxes = $this.find('input:checked').parents('li');
-    $this.parents('fieldset').find('.dropdown__selected').prepend($checkedBoxes);
+    $checkedBoxes = $this.find('input:checked').closest('li');
+    $this.closest('fieldset').find('.dropdown__selected').prepend($checkedBoxes);
 
     // Remove it all if there's no more items to check
     if ( $this.find('li').length === 0 ) {
-        $this.parents('.dropdown').remove();
+        $this.closest('.dropdown').remove();
     }
-}
+};
 
 // Show "any" if there's no items checked
 var countCheckboxes = function(fieldset) {
@@ -149,12 +160,12 @@ $('.js-checkbox-filters').each(function(){
 $('.field input[type="checkbox"]').on('keypress', function(e) {
     if (e.which === 13) {
         var $this = $(this);
-        var $parent = $this.parents('ul.dropdown__list');
+        var $parent = $this.closest('ul.dropdown__list');
         $this.prop('checked', function(index, value) {
             return !value;
         });
         if ($parent.length) {
-            var $next = $this.parents('li').next('li').find('input[type="checkbox"]');
+            var $next = $this.closest('li').next('li').find('input[type="checkbox"]');
             if ($next.length) {
                 $next.focus();
             }
@@ -186,6 +197,13 @@ $('.js-dropdown').on('click keypress', function(e) {
     e.preventDefault();
 });
 
+$('.field input[type="text"]').on('keypress', function(e) {
+    if (e.which === 13) {
+        $('button[type="submit"]').click();
+        e.preventDefault();
+    }
+});
+
 function bindFileFilter() {
   var $field = $('#file-date');
   var $startDate = $field.find('[name="start_date"]');
@@ -201,12 +219,11 @@ function bindFileFilter() {
 }
 
 module.exports = {
-    init: function() {
-
-        bindFilters();
-        // if the page was loaded with filters set in the query string
-        activateInitialFilters();
-        bindFileFilter();
-    },
-    activateInitialFilters: activateInitialFilters
+  init: function() {
+    bindFilters();
+    // if the page was loaded with filters set in the query string
+    activateInitialFilters();
+    bindFileFilter();
+  },
+  activateInitialFilters: activateInitialFilters
 };

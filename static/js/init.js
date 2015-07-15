@@ -25,11 +25,9 @@ var glossary = require('./modules/glossary.js');
 var Search = require('./modules/search');
 var tables = require('./modules/tables');
 
-filters.init();
 typeahead.init();
 glossary.init();
 charts.init();
-tables.init();
 
 var SLT_ACCORDION = '.js-accordion';
 
@@ -83,8 +81,7 @@ $(document).ready(function() {
         if (e.which === 13 || e.type === 'click') {
             var revealElement = $(this).data('reveals');
             $('#' + revealElement).attr('aria-hidden', false);
-            // Set focus to the first input
-            $('#' + revealElement + ' input:first-of-type').focus();
+            $(this).addClass('selected');
         }
     });
 
@@ -93,7 +90,7 @@ $(document).ready(function() {
             var hideElement = $(this).data('hides');
             $('#' + hideElement).attr('aria-hidden', true);
             // Set focus back on the original triggering element
-            $('.js-reveal[data-reveals="' + hideElement + '"]').focus();
+            $('.js-reveal[data-reveals="' + hideElement + '"]').removeClass('selected');
         }
     });
 
@@ -135,14 +132,15 @@ $(document).ready(function() {
     });
 
     // Notice close-state persistence
-    if (typeof window.sessionStorage !== 'undefined') {
-        if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
-            $('#notice').attr('aria-hidden', true);
-            $('#notice-reveal').addClass('u-visible');
-        } else {
-            $('#notice').attr('aria-hidden', false);
-        }
-    }
+    // Commenting out for now
+    // if (typeof window.sessionStorage !== 'undefined') {
+    //     if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
+    //         $('#notice').attr('aria-hidden', true);
+    //         $('#notice-reveal').addClass('u-visible');
+    //     } else {
+    //         $('#notice').attr('aria-hidden', false);
+    //     }
+    // }
 
     $("#notice-close").on('click keypress', function(e){
         if (e.which === 13 || e.type === 'click') {
@@ -172,4 +170,7 @@ $(document).ready(function() {
     var perf = require('./modules/performance');
     perf.bar();
     // @endif
+
+    filters.init();
+    tables.init();
 });
