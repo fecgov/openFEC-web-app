@@ -7,7 +7,7 @@
 
     {% include 'partials/meta-tags.html' %}
 
-    <link rel="stylesheet" href="/{{ assets['static/styles/styles.css'] }}" />
+    <link rel="stylesheet" href="/{{ assets['dist/styles/styles.css'] }}" />
     {% if api_location %}
     <script>
         API_LOCATION = "{{api_location}}";
@@ -132,7 +132,8 @@
 
 {% include './partials/glossary.html' %}
 
-<script src="/{{ assets['static/js/app.js'] }}"></script>
+<script src="/{{ assets['dist/js/common.js'] }}"></script>
+<script src="/{{ assets['dist/js/init.js'] }}"></script>
 {% block scripts %}{% endblock %}
 
 {% if use_analytics %}

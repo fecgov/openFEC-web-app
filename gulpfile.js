@@ -45,18 +45,27 @@ function bundle(watch) {
 wb.on('update', bundle);
 wb.on('log', gutil.log);
 
-gulp.task('build-js', bundle.bind(this, false));
+// gulp.task('build-js', bundle.bind(this, false));
 gulp.task('watch-js', bundle.bind(this, true));
 
-gulp.task('copy-static', function() {
-  return gulp.src([
-    './node_modules/datatables/media/images/*'
-  ]).pipe(gulp.dest('./static/images'));
+gulp.task('copy-vendor-images', function() {
+  return gulp.src('./node_modules/datatables/media/images/**/*')
+    .pipe(gulp.dest('./dist/images'));
 });
 
-gulp.task('build-sass', ['copy-static'], function() {
+gulp.task('copy-fonts', function() {
+  return gulp.src('./static/fonts/**/*')
+  .pipe(gulp.dest('./dist/fonts'));
+});
+
+gulp.task('copy-images', function() {
+  return gulp.src('./static/img/**/*')
+  .pipe(gulp.dest('./dist/img'));
+});
+
+gulp.task('build-sass', ['copy-vendor-images', 'copy-fonts', 'copy-images'], function() {
   return gulp.src('./static/styles/styles.scss')
-    .pipe(rename('static/styles/styles.css'))
+    .pipe(rename('dist/styles/styles.css'))
     .pipe(sass({
       includePaths: Array.prototype.concat(
         './static/styles',
@@ -76,40 +85,53 @@ gulp.task('watch-sass', function() {
   gulp.watch('./static/styles/**/*.scss', ['build-sass']);
 });
 
+var fs = require('fs');
 var path = require('path');
 var file = require('gulp-file');
 var concat = require('concat-stream');
 var factor = require('factor-bundle');
 
 function write(name) {
+  var dest = name.replace(/static/, 'dist');
   return concat(function(body) {
-    return file(path.basename(name), body, {src: true})
+    return file(dest, body, {src: true})
       .pipe(rev())
-      .pipe(gulp.dest('./bundle'))
+      .pipe(gulp.dest('.'))
       .pipe(rev.manifest({
-        path: path.basename(name)
+        path: dest
           .replace(new RegExp(path.extname(name) + '$'), '.json')
         }))
-      .pipe(gulp.dest('./bundle'));
+      .pipe(gulp.dest('.'));
   });
 }
 
 gulp.task('factor', function() {
+  var pages = fs.readdirSync('./static/js/pages').map(function(each) {
+    return path.join('./static/js/pages', each);
+  });
+  pages.unshift('static/js/init.js');
   return browserify({
-    entries: ['./static/js/pages/candidates.js', './static/js/pages/committees.js'],
+    entries: pages,
     plugin: [
-      ['factor-bundle', {outputs: [write('candidates.js'), write('committees.js')]}]
+      [
+        'factor-bundle',
+        {
+          outputs: _.map(pages, function(each) {
+            return write(each);
+          })
+        }
+      ]
     ],
     debug: true
   })
   .bundle()
-  .pipe(write('common.js'));
+  .pipe(write('static/js/common.js'));
 });
 
 var extend = require('gulp-extend');
 
 gulp.task('merge', function() {
-  return gulp.src('./bundle/*.json')
+  return gulp.src('./dist/js/**/*.json')
     .pipe(extend('rev-manifest.json', true, 2))
     .pipe(gulp.dest('.'));
 });
