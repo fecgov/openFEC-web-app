@@ -291,7 +291,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   var draw;
   var $processing = $('<div class="processing">Loading...</div>');
   var $hideNullWidget = $(
-    '<div class="row" style="text-align: center; margin-top: 10px">' +
+    '<div class="results-info__null">' +
       '<input type="checkbox" name="sort_hide_null" checked /> ' +
       'Hide results with missing values when sorting' +
     '</div>'
@@ -359,10 +359,10 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   $processing.hide();
   $table.before($processing);
   var $paging = $(api.table().container()).find('.results-info--top');
-  $paging.prepend($('#filter-toggle'));
   if (useHideNull) {
-    $paging.append($hideNullWidget);
+    $paging.prepend($hideNullWidget);
   }
+  $table.css('width', '100%');
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
