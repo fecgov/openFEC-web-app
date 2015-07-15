@@ -145,9 +145,14 @@ var committeeContributorColumns = [
   currencyColumn({data: 'total', className: 'all', orderable: false})
 ];
 
-var individualContributorColumns = [
-  {data: 'contributor_name', className: 'all', orderable: false},
-  currencyColumn({data: 'contributor_aggregate_ytd', className: 'all', orderable: false})
+var employerContributorColumns = [
+  {data: 'employer', className: 'all', orderable: false},
+  currencyColumn({data: 'total', className: 'all', orderable: false})
+];
+
+var occupationContributorColumns = [
+  {data: 'occupation', className: 'all', orderable: false},
+  currencyColumn({data: 'total', className: 'all', orderable: false})
 ];
 
 var donationColumns = [
@@ -452,24 +457,22 @@ module.exports = {
             useHideNull: false
           });
           break;
-        case 'individual-contributor':
-          path = ['schedules', 'schedule_a'].join('/');
-          query = {
-            committee_id: committeeId,
-            contributor_type: 'individual'
-          };
-          var minYear, maxYear;
-          if (year) {
-            minYear = maxYear = moment().year(parseInt(year));
-          } else {
-            minYear = moment().year(parseInt(cycle) - 1);
-            maxYear = moment().year(parseInt(cycle));
-          }
-          query = _.extend(query, {
-            min_date: minYear.startOf('year').format(),
-            max_date: maxYear.endOf('year').format()
+        case 'receipts-by-employer':
+          path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'].join('/');
+          query = {cycle: parseInt(cycle)};
+          initTable($table, $form, path, query, employerContributorColumns, offsetCallbacks, {
+            dom: '<"results-info meta-box results-info--top"lfrip>t',
+            order: [[1, 'desc']],
+            pagingType: 'simple',
+            lengthChange: false,
+            pageLength: 10,
+            useHideNull: false
           });
-          initTable($table, $form, path, query, individualContributorColumns, seekCallbacks, {
+          break;
+        case 'receipts-by-occupation':
+          path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'].join('/');
+          query = {cycle: parseInt(cycle)};
+          initTable($table, $form, path, query, occupationContributorColumns, offsetCallbacks, {
             dom: '<"results-info meta-box results-info--top"lfrip>t',
             order: [[1, 'desc']],
             pagingType: 'simple',

@@ -52,7 +52,7 @@
     <h3>Top Contributors {{ year if year else cycle | fmt_year_range }}</h3>
     <hr />
     <div class="row">
-      <div class="chunk--half box">
+      <div>
         <h4>Top Committee Contributors</h4>
         <div>
           <a
@@ -72,24 +72,35 @@
         </table>
       </div>
 
-      <div class="chunk--half box">
-        <h4>Top Individual Contributors</h4>
-        <div>
-          <a
-              href={{ url_for('donations', committee_id=committee.committee_id, contributor_type='individual') }}
-            >View all individual contributions</a>
-        </div>
+      <div>
+        <h4>Contributions by Employer</h4>
         <table
-           class="data-table"
-           data-type="individual-contributor"
-           data-committee="{{ committee.committee_id }}"
-           data-cycle="{{ cycle }}"
-           {% if year %}data-year"{{ year }}"{% endif %}>
+            class="data-table"
+            data-type="receipts-by-employer"
+            data-committee="{{ committee.committee_id }}"
+            data-cycle="{{ cycle }}"
+          >
           <thead>
-            <th scope="col">Name</th>
+            <th scope="col">Employer</th>
             <th scope="col">Total Contributed</th>
           </thead>
         </table>
       </div>
+
+      <div>
+        <h4>Contributions by Occupation</h4>
+        <table
+            class="data-table"
+            data-type="receipts-by-occupation"
+            data-committee="{{ committee.committee_id }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <th scope="col">Occupation</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
