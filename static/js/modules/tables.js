@@ -113,6 +113,13 @@ var committeeColumns = [
   {data: 'treasurer_name', className: 'min-desktop'},
   {data: 'state', className: 'min-desktop', width: '60px'},
   {data: 'party_full', className: 'min-desktop'},
+  {
+    data: 'first_file_date',
+    className: 'min-tablet',
+    render: function(data, type, row, meta) {
+      return Handlebars.helpers.datetime(data);
+    }
+  },
   {data: 'committee_type_full', className: 'min-tablet'},
   {data: 'designation_full', className: 'min-tablet'},
   {data: 'organization_type_full', className: 'min-desktop'},

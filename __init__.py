@@ -161,7 +161,11 @@ def candidates():
 
 @app.route('/committees')
 def committees():
-    return render_template('committees.html', result_type='committees')
+    return render_template(
+        'committees.html',
+        result_type='committees',
+        dates=utils.date_ranges(),
+    )
 
 
 @app.route('/donations')
