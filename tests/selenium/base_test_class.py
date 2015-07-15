@@ -11,6 +11,8 @@ from selenium.common.exceptions import NoSuchElementException
 
 from openfecwebapp.sauce import SauceClient
 
+from tests.selenium import utils
+
 
 # Silence Selenium logs
 remote_logger = logging.getLogger('selenium.webdriver.remote.remote_connection')
@@ -46,16 +48,6 @@ drivers = {
         command_executor=sauce_url,
     ),
 }
-
-
-def wait_for_ajax(driver, timeout=10, interval=0.1):
-    elapsed = 0
-    while True:
-        active = driver.execute_script('return $.active === 0')
-        if active or elapsed > timeout:
-            break
-        time.sleep(interval)
-        elapsed += interval
 
 
 @attr('selenium')
@@ -137,7 +129,7 @@ class SearchPageTestCase(BaseTest):
         self.check_filter_results(column, result)
 
     def check_filter_results(self, index, result):
-        wait_for_ajax(self.driver)
+        utils.wait_for_ajax(self.driver)
         values = [
             row.find_elements_by_tag_name('td')[index].text
             for row in self.driver.find_elements_by_css_selector('tbody tr')
