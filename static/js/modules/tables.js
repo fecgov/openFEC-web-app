@@ -158,7 +158,17 @@ var stateContributorColumns = [
       return span.outerHTML;
     }
   },
-  currencyColumn({data: 'total', className: 'all'})
+  {
+    data: 'total',
+    className: 'all',
+    render: function(data, type, row, meta) {
+      var span = document.createElement('div');
+      span.textContent = helpers.currency(data);
+      span.setAttribute('data-value', data);
+      span.setAttribute('data-row', meta.row);
+      return span.outerHTML;
+    }
+  },
 ];
 
 var employerContributorColumns = [
@@ -301,6 +311,21 @@ function modalAfterRender(template, api, data, response) {
     var $modal = $('#datatable-modal');
     $modal.find('.modal-content').html(template(response.results[index]));
     $modal.attr('aria-hidden', 'false');
+  });
+}
+
+function barsAfterRender(template, api, data, response) {
+  var $table = $(api.table().node());
+  var $cols = $table.find('div[data-value]');
+  var values = $cols.map(function(idx, each) {
+    return parseFloat(each.getAttribute('data-value'));
+  });
+  var max = _.max(values);
+  $cols.after(function() {
+    var width = 100 * parseFloat($(this).attr('data-value')) / max;
+    return $('<div>')
+      .addClass('value-bar')
+      .css('width', _.max([width, 1]) + '%');
   });
 }
 
@@ -476,7 +501,10 @@ module.exports = {
         case 'receipts-by-state':
           path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'].join('/');
           query = {cycle: parseInt(cycle), per_page: 99, hide_null: true};
-          initTable($table, $form, path, query, stateContributorColumns, offsetCallbacks, {
+          initTable($table, $form, path, query, stateContributorColumns,
+            _.extend({
+              afterRender: barsAfterRender.bind(undefined, undefined)
+            }, offsetCallbacks), {
             dom: '<"results-info meta-box results-info--top"lfrip>t',
             order: [[1, 'desc']],
             paging: false,

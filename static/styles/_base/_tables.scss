@@ -54,6 +54,11 @@ table.dataTable {
   &.no-footer {
     border-bottom: 1px solid $light-gray !important;
   }
+
+  .value-bar {
+    height: 5px;
+    background-color: #205683;
+  }
 }
 
 .flex-cell {
