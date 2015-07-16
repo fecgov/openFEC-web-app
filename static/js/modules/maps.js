@@ -34,8 +34,8 @@ function hexMap($elm, width, height) {
       .attr('width', width)
       .attr('height', height);
   var projection = d3.geo.albersUsa()
-    .scale(400)
-    .translate([240, 250]);
+    .scale(450)
+    .translate([220, 250]);
   var path = d3.geo.path().projection(projection);
 
   d3.json(url, function(error, data) {
@@ -61,25 +61,6 @@ function hexMap($elm, width, height) {
         })
         .attr('class', 'shape')
         .attr('d', path);
-
-    // hex.on('mouseover', function(d) {
-    //   var xPosition = d3.mouse(this)[0];
-    //   var yPosition = d3.mouse(this)[1] - 30;
-    //   var total = results[d.properties.iso3166_2];
-    //   svg.append('text')
-    //     .attr('id', 'map-tooltip')
-    //     .attr('x', xPosition)
-    //     .attr('y', yPosition)
-    //     .attr('text-anchor', 'middle')
-    //     .attr('font-family', 'sans-serif')
-    //     .attr('font-size', '11px')
-    //     .attr('font-weight', 'bold')
-    //     .attr('fill', 'black')
-    //     .text(helpers.currency(total));
-    // })
-    // .on('mouseout', function(d) {
-    //   d3.select('#map-tooltip').remove();
-    // });
   });
 }
 
