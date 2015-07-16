@@ -59,6 +59,7 @@ function hexMap($elm, width, height) {
         .attr('data-state', function(d) {
           return d.properties.name;
         })
+        .attr('class', 'shape')
         .attr('d', path);
 
     // hex.on('mouseover', function(d) {
@@ -82,17 +83,25 @@ function hexMap($elm, width, height) {
   });
 }
 
+function highlightState($parent, state) {
+  var rule = '[data-state="' + state + '"]';
+  $parent.find('path:not(' + rule + ')').each(function(idx, elm) {
+    elm.classList.remove('active');
+  });
+  $parent.find('path' + rule)[0].classList.add('active');
+}
+
 function init() {
   $('.hex-map').each(function(idx, elm) {
     var $elm = $(elm);
     hexMap($elm, 400, 400);
     events.on('state.table', function(params) {
-      var rule = '[data-state="' + params.state + '"]';
-      $elm.find('path:not(' + rule + ')').attr('stroke', '#000');
-      $elm.find('path' + rule).attr('stroke', '#fff');
+      highlightState($elm, params.state);
     });
     $elm.on('click', 'path[data-state]', function(e) {
-      events.emit('state.map', {state: $(this).attr('data-state')});
+      var state = $(this).attr('data-state');
+      highlightState($elm, state);
+      events.emit('state.map', {state: state});
     });
   });
 }
