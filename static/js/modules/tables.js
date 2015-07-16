@@ -277,7 +277,7 @@ function modalAfterRender(template, api, data, response) {
     var row = $(e.target).closest('tr');
     var index = api.row(row).index();
     var $modal = $('#datatable-modal');
-    $modal.find('.modal-content').html(template(response.results[index]));
+    $modal.find('.modal__content').html(template(response.results[index]));
     $modal.attr('aria-hidden', 'false');
   });
 }
