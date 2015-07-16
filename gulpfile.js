@@ -91,12 +91,13 @@ var file = require('gulp-file');
 var concat = require('concat-stream');
 var factor = require('factor-bundle');
 
+var del = require('del');
 var extend = require('gulp-extend');
-var clean = require('gulp-clean');
+var vinylPaths = require('vinyl-paths');
 
 function merge() {
-  return gulp.src('./dist/js/**/*.json')
-    .pipe(clean())
+  return gulp.src(['./rev-manifest.json', './dist/js/**/*.json'])
+    .pipe(vinylPaths(del))
     .pipe(extend('rev-manifest.json', true, 2))
     .pipe(gulp.dest('.'));
 }
