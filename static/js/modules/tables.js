@@ -145,6 +145,21 @@ var committeeContributorColumns = [
   currencyColumn({data: 'total', className: 'all', orderable: false})
 ];
 
+var stateContributorColumns = [
+  {
+    data: 'state_full',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var span = document.createElement('span');
+      span.textContent = data;
+      span.setAttribute('data-state', data);
+      return span.outerHTML;
+    }
+  },
+  currencyColumn({data: 'total', className: 'all', orderable: false})
+];
+
 var employerContributorColumns = [
   {data: 'employer', className: 'all', orderable: false},
   currencyColumn({data: 'total', className: 'all', orderable: false})
@@ -449,6 +464,18 @@ module.exports = {
             query.cycle = cycle;
           }
           initTable($table, $form, path, query, committeeContributorColumns, offsetCallbacks, {
+            dom: '<"results-info meta-box results-info--top"lfrip>t',
+            order: [[1, 'desc']],
+            pagingType: 'simple',
+            lengthChange: false,
+            pageLength: 10,
+            useHideNull: false
+          });
+          break;
+        case 'receipts-by-state':
+          path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'].join('/');
+          query = {cycle: parseInt(cycle)};
+          initTable($table, $form, path, query, stateContributorColumns, offsetCallbacks, {
             dom: '<"results-info meta-box results-info--top"lfrip>t',
             order: [[1, 'desc']],
             pagingType: 'simple',

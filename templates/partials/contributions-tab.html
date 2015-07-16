@@ -48,7 +48,17 @@
     <hr />
     <div class="row">
       <div class="chunk--half">
-        TABLE HERE
+        <table
+            class="data-table"
+            data-type="receipts-by-state"
+            data-committee="{{ committee.committee_id }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <th scope="col">State</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
       </div>
       <div class="chunk--half">
         <div class="hex-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
