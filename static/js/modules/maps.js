@@ -9,6 +9,7 @@ var _ = require('underscore');
 var chroma = require('chroma-js');
 var topojson = require('topojson');
 
+var events = require('./events');
 var helpers = require('./helpers');
 var states = require('../us.json');
 
@@ -55,6 +56,9 @@ function hexMap($elm, width, height) {
         .attr('fill', function(d) {
           return scale(results[d.properties.name]);
         })
+        .attr('data-state', function(d) {
+          return d.properties.name;
+        })
         .attr('d', path);
 
     // hex.on('mouseover', function(d) {
@@ -82,6 +86,14 @@ function init() {
   $('.hex-map').each(function(idx, elm) {
     var $elm = $(elm);
     hexMap($elm, 400, 400);
+    events.on('state.table', function(params) {
+      var rule = '[data-state="' + params.state + '"]';
+      $elm.find('path:not(' + rule + ')').attr('stroke', '#000');
+      $elm.find('path' + rule).attr('stroke', '#fff');
+    });
+    $elm.on('click', 'path[data-state]', function(e) {
+      events.emit('state.map', {state: $(this).attr('data-state')});
+    });
   });
 }
 

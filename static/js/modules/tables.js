@@ -10,6 +10,7 @@ var moment = require('moment');
 require('datatables');
 require('drmonty-datatables-responsive');
 
+var events = require('./events');
 var filters = require('./filters');
 var helpers = require('./helpers');
 
@@ -154,6 +155,7 @@ var stateContributorColumns = [
       var span = document.createElement('span');
       span.textContent = data;
       span.setAttribute('data-state', data);
+      span.setAttribute('data-row', meta.row);
       return span.outerHTML;
     }
   },
@@ -474,14 +476,26 @@ module.exports = {
           break;
         case 'receipts-by-state':
           path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'].join('/');
-          query = {cycle: parseInt(cycle)};
+          query = {cycle: parseInt(cycle), per_page: 99};
           initTable($table, $form, path, query, stateContributorColumns, offsetCallbacks, {
             dom: '<"results-info meta-box results-info--top"lfrip>t',
             order: [[1, 'desc']],
-            pagingType: 'simple',
+            paging: false,
             lengthChange: false,
             pageLength: 10,
-            useHideNull: false
+            useHideNull: false,
+            scrollY: 300,
+            scrollCollapse: true
+          });
+          events.on('state.map', function(params) {
+            var $scrollBody = $table.closest('.dataTables_scrollBody');
+            var $row = $scrollBody.find('span[data-state="' + params.state + '"]');
+            $scrollBody.animate({
+              scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
+            }, 500);
+          });
+          $table.on('click', 'tr', function(e) {
+            events.emit('state.table', {state: $(this).find('span[data-state]').attr('data-state')});
           });
           break;
         case 'receipts-by-employer':
