@@ -46,7 +46,14 @@
   <div class="container">
     <h4>Contributions by State {{ cycle | fmt_year_range }}</h4>
     <hr />
-    <div class="hex-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
+    <div class="row">
+      <div class="chunk--half">
+        TABLE HERE
+      </div>
+      <div class="chunk--half">
+        <div class="hex-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
+      </div>
+    </div>
   </div>
   <div class="container">
     <h3>Top Contributors {{ year if year else cycle | fmt_year_range }}</h3>

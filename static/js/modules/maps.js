@@ -10,9 +10,9 @@ var chroma = require('chroma-js');
 var topojson = require('topojson');
 
 var helpers = require('./helpers');
-var states = require('../states.json');
+var states = require('../us.json');
 
-function hexMap($elm, height, width) {
+function hexMap($elm, width, height) {
   var url = URI(API_LOCATION)
     .path([
       API_VERSION,
@@ -32,16 +32,16 @@ function hexMap($elm, height, width) {
     .append('svg')
       .attr('width', width)
       .attr('height', height);
-  var projection = d3.geo.mercator()
-    .scale(500)
-    .translate([1250, 600]);
+  var projection = d3.geo.albersUsa()
+    .scale(400)
+    .translate([240, 250]);
   var path = d3.geo.path().projection(projection);
 
   d3.json(url, function(error, data) {
     var results = _.reduce(
       data.results,
       function(acc, val) {
-        acc[val.state] = val.total;
+        acc[val.state_full] = val.total;
         return acc;
       },
       {}
@@ -50,54 +50,38 @@ function hexMap($elm, height, width) {
     var scale = chroma.scale('RdYlBu').domain([0, max]);
     var hex = svg.append('g')
       .selectAll('path')
-        .data(topojson.feature(states, states.objects.collection).features)
+        .data(topojson.feature(states, states.objects.units).features)
       .enter().append('path')
         .attr('fill', function(d) {
-          return scale(results[d.properties.iso3166_2]);
+          return scale(results[d.properties.name]);
         })
         .attr('d', path);
 
-    var labels = svg.selectAll('g.label')
-      .data(topojson.feature(states, states.objects.collection).features)
-      .enter()
-      .append('g')
-      .attr('class', 'label')
-      .attr('transform', function(d) {
-        return 'translate(' + projection(d3.geo.centroid(d)) + ')';
-      })
-      .append('text')
-      .attr('text-anchor', 'middle')         // Horizontal center
-      .attr('alignment-baseline', 'middle')  // Vertical center
-      .attr('pointer-events', 'none')        // Don't capture mouseover event on hex grid
-      .text(function(d) {
-        return d.properties.iso3166_2;
-      });
-
-    hex.on('mouseover', function(d) {
-      var xPosition = d3.mouse(this)[0];
-      var yPosition = d3.mouse(this)[1] - 30;
-      var total = results[d.properties.iso3166_2];
-      svg.append('text')
-        .attr('id', 'map-tooltip')
-        .attr('x', xPosition)
-        .attr('y', yPosition)
-        .attr('text-anchor', 'middle')
-        .attr('font-family', 'sans-serif')
-        .attr('font-size', '11px')
-        .attr('font-weight', 'bold')
-        .attr('fill', 'black')
-        .text(helpers.currency(total));
-    })
-    .on('mouseout', function(d) {
-      d3.select('#map-tooltip').remove();
-    });
+    // hex.on('mouseover', function(d) {
+    //   var xPosition = d3.mouse(this)[0];
+    //   var yPosition = d3.mouse(this)[1] - 30;
+    //   var total = results[d.properties.iso3166_2];
+    //   svg.append('text')
+    //     .attr('id', 'map-tooltip')
+    //     .attr('x', xPosition)
+    //     .attr('y', yPosition)
+    //     .attr('text-anchor', 'middle')
+    //     .attr('font-family', 'sans-serif')
+    //     .attr('font-size', '11px')
+    //     .attr('font-weight', 'bold')
+    //     .attr('fill', 'black')
+    //     .text(helpers.currency(total));
+    // })
+    // .on('mouseout', function(d) {
+    //   d3.select('#map-tooltip').remove();
+    // });
   });
 }
 
 function init() {
   $('.hex-map').each(function(idx, elm) {
     var $elm = $(elm);
-    hexMap($elm, 400, 650);
+    hexMap($elm, 400, 400);
   });
 }
 
