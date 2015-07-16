@@ -150,7 +150,6 @@ var stateContributorColumns = [
   {
     data: 'state_full',
     className: 'all',
-    orderable: false,
     render: function(data, type, row, meta) {
       var span = document.createElement('span');
       span.textContent = data;
@@ -159,7 +158,7 @@ var stateContributorColumns = [
       return span.outerHTML;
     }
   },
-  currencyColumn({data: 'total', className: 'all', orderable: false})
+  currencyColumn({data: 'total', className: 'all'})
 ];
 
 var employerContributorColumns = [
@@ -476,7 +475,7 @@ module.exports = {
           break;
         case 'receipts-by-state':
           path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'].join('/');
-          query = {cycle: parseInt(cycle), per_page: 99};
+          query = {cycle: parseInt(cycle), per_page: 99, hide_null: true};
           initTable($table, $form, path, query, stateContributorColumns, offsetCallbacks, {
             dom: '<"results-info meta-box results-info--top"lfrip>t',
             order: [[1, 'desc']],
