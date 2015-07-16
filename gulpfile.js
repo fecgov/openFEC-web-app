@@ -91,7 +91,18 @@ var file = require('gulp-file');
 var concat = require('concat-stream');
 var factor = require('factor-bundle');
 
-function write(name) {
+var extend = require('gulp-extend');
+var clean = require('gulp-clean');
+
+function merge() {
+  return gulp.src('./dist/js/**/*.json')
+    .pipe(clean())
+    .pipe(extend('rev-manifest.json', true, 2))
+    .pipe(gulp.dest('.'));
+}
+
+var count = 0;
+function write(streams, name) {
   var dest = name.replace(/static/, 'dist');
   return concat(function(body) {
     return file(dest, body, {src: true})
@@ -101,7 +112,12 @@ function write(name) {
         path: dest
           .replace(new RegExp(path.extname(name) + '$'), '.json')
         }))
-      .pipe(gulp.dest('.'));
+      .pipe(gulp.dest('.'))
+      .on('end', function() {
+        if (++count >= streams) {
+          merge();
+        }
+      });
   });
 }
 
@@ -110,28 +126,13 @@ gulp.task('factor', function() {
     return path.join('./static/js/pages', each);
   });
   pages.unshift('static/js/init.js');
+  var callback = write.bind(undefined, pages.length + 1);
+  count = 0;
   return browserify({
     entries: pages,
-    plugin: [
-      [
-        'factor-bundle',
-        {
-          outputs: _.map(pages, function(each) {
-            return write(each);
-          })
-        }
-      ]
-    ],
+    plugin: [['factor-bundle', {outputs: _.map(pages, callback)}]],
     debug: true
   })
   .bundle()
-  .pipe(write('static/js/common.js'));
-});
-
-var extend = require('gulp-extend');
-
-gulp.task('merge', function() {
-  return gulp.src('./dist/js/**/*.json')
-    .pipe(extend('rev-manifest.json', true, 2))
-    .pipe(gulp.dest('.'));
+  .pipe(callback('static/js/common.js'));
 });
