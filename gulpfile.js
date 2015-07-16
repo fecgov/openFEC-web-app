@@ -108,6 +108,7 @@ function write(streams, name) {
   return concat(function(body) {
     return file(dest, body, {src: true})
       .pipe(rev())
+      .pipe(gulpif(production, uglify()))
       .pipe(gulp.dest('.'))
       .pipe(rev.manifest({
         path: dest
@@ -134,6 +135,7 @@ gulp.task('factor', function() {
     plugin: [['factor-bundle', {outputs: _.map(pages, callback)}]],
     debug: true
   })
+  .transform(preprocessify({DEBUG: debug}))
   .bundle()
   .pipe(callback('static/js/common.js'));
 });
