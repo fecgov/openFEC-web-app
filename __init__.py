@@ -163,6 +163,10 @@ def candidates():
 def committees():
     return render_template('committees.html', result_type='committees')
 
+@app.route('/filings')
+def filings():
+    return render_template('filings-table.html',result_type='committees')
+
 
 @app.errorhandler(404)
 def page_not_found(e):

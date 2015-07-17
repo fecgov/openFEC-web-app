@@ -123,9 +123,31 @@ var filingsColumns = [
       return anchor.outerHTML;
     }
   },
+  {data: 'committee_name', className: 'min-desktop'},
   {data: 'amendment_indicator', className: 'min-desktop'},
-  {data: 'form_type', className: 'min-desktop'},
-  {data: 'report_type', className: 'min-desktop'},
+  {data: 'report_type_full', className: 'min-desktop'},
+  dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
+  currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
+  currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
+];
+// this will be different
+var filingsTableColumns = [
+  {
+    data: 'pdf_url',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var anchor = document.createElement('a');
+      anchor.textContent = 'View filing';
+      anchor.setAttribute('href', data);
+      anchor.setAttribute('target', '_blank');
+      return anchor.outerHTML;
+    }
+  },
+  {data: 'committee_name', className: 'min-desktop'},
+  {data: 'amendment_indicator', className: 'min-desktop'},
+  {data: 'report_type_full', className: 'min-desktop'},
   dateColumn({data: 'receipt_date', className: 'min-tablet'}),
   currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
   currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
@@ -225,6 +247,12 @@ module.exports = {
         break;
       case 'committee':
         initTable($table, $form, 'committees', committeeColumns);
+        break;
+      case 'filing-table':
+        initTable($table, $form, 'filings', filingsTableColumns, {
+          // Order by receipt date descending
+          order: [[4, 'desc']],
+        });
         break;
       case 'filing':
         var committeeId = $table.attr('data-committee');

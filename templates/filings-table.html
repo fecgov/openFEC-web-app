@@ -1,6 +1,17 @@
-<section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-header">
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+    {{ name }} - Filings
+{% endblock %}
+
+{% block body %}
+<header class="page-header page-header--dark">
+  <h1>Filings</h1>
+</header>
+
+<section class="results-content">
   <div class="container">
-    <table id="results" data-type="filing" data-committee="{{ committee_id }}" width="100%" class="responsive">
+    <table id="results" data-type="filing-table" width="100%" class="responsive">
     <thead>
         <tr>
             <th scope="col">Link</th>
@@ -16,3 +27,9 @@
    </table>
   </div>
 </section>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="/static/js/vendor/tablist.js"></script>
+{% endblock %}
