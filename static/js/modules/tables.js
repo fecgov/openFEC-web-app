@@ -131,7 +131,7 @@ var filingsColumns = [
   currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
   currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
 ];
-// this will be different
+
 var filingsTableColumns = [
   {
     data: 'pdf_url',
@@ -145,9 +145,10 @@ var filingsTableColumns = [
       return anchor.outerHTML;
     }
   },
-  {data: 'committee_name', className: 'min-desktop'},
+  {data: 'committee_name', className: 'min-desktop', orderable: false},
+  {data: 'candidate_name', className: 'min-desktop', orderable: false},
   {data: 'amendment_indicator', className: 'min-desktop'},
-  {data: 'report_type_full', className: 'min-desktop'},
+  {data: 'report_type_full', className: 'min-desktop', orderable: false},
   dateColumn({data: 'receipt_date', className: 'min-tablet'}),
   currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
   currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
@@ -251,7 +252,7 @@ module.exports = {
       case 'filing-table':
         initTable($table, $form, 'filings', filingsTableColumns, {
           // Order by receipt date descending
-          order: [[4, 'desc']],
+          order: [[5, 'desc']],
         });
         break;
       case 'filing':

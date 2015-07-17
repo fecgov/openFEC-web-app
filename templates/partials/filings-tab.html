@@ -1,5 +1,26 @@
 <section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-header">
-  <div class="container">
+<button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
+
+    <div id="filters" class="side-panel side-panel--left">
+        <form id="category-filters">
+        <h4>Filter filings</h4>
+            <div class="field" id="report-year">
+                <label for="report_year">Report Year</label>
+                <input type="text" name="report_year" />
+                <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
+            </div>
+
+            {% include 'partials/filters/amendment-indicatior.html' %}
+            {% include 'partials/filters/primary-general.html' %}
+            {% include 'partials/filters/report-type.html' %}
+
+            <div class="field">
+                <button type="submit" class="primary">Apply filters</button>
+            </div>
+        </form>
+    </div>
+
+  <div class="results-container">
     <table id="results" data-type="filing" data-committee="{{ committee_id }}" width="100%" class="responsive">
     <thead>
         <tr>
