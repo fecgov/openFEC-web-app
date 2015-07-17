@@ -3,21 +3,23 @@
     <button id="filter-toggle" data-slide="left" class="side-panel__toggle">
       <i class="icon ti-angle"></i>
     </button>
-    <h4>Filter {{ result_type|capitalize }}</h4>
-    <form id="category-filters">
-      <div class="field" id="q-field">
-        <label for="q">Name</label>
-        <input type="text" name="q" />
-        <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
-      </div>
+    <div class="side-panel__hider">
+      <h4>Filter {{ result_type|capitalize }}</h4>
+      <form id="category-filters">
+        <div class="field" id="q-field">
+          <label for="q">Name</label>
+          <input type="text" name="q" />
+          <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
+        </div>
 
-      {% for filter in filters %}
-        {% include 'partials/filters/' + filter %}
-      {% endfor %}
+        {% for filter in filters %}
+          {% include 'partials/filters/' + filter %}
+        {% endfor %}
 
-      <div class="field">
-        <button type="submit" class="primary">Apply filters</button>
-      </div>
-    </form>
+        <div class="field">
+          <button type="submit" class="primary">Apply filters</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
