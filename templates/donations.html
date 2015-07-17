@@ -14,60 +14,62 @@
 </header>
 
 <section class="results-content">
-  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
   <div id="filters" class="side-panel side-panel--left">
-    <h4>Filter Donations</h4>
-    <form id="category-filters">
-      <div class="field">
-        <span class="label">Show contributions from</span>
-        <label class="dropdown__value" for="contributor-type">
-          <input id="contributor-type" name="contributor_type" type="checkbox" value="individual" checked>Individual
-        </label>
-        <label class="dropdown__value" for="contributor-type">
-          <input id="contributor-type" name="contributor_type" type="checkbox" value="committee" checked>Committee
-        </label>
-      </div>
-      {{ text.field('contributor_name', 'Contributor Name') }}
-      {{ text.field('_committee_id', 'Recipient Committee', {'id': 'committee-typeahead-filter'}) }}
-
-      <div class="js-accordion">
-        <h5 class="js-accordion_header accordion__header">Contributor Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
-        <div class="js-accordion_item accordion__item">
-          {{ text.field('contributor_city', 'City') }}
-          {{ states.field('contributor_state') }}
-          {{ text.field('contributor_employer', 'Employer') }}
+    <div class="side-panel__box">
+      <button id="filter-toggle" data-slide="left" class="side-panel__toggle">
+        <i class="icon ti-angle"></i>
+      </button>
+      <h4>Filter </h4>
+      <form id="category-filters">
+        <div class="field">
+          <span class="label">Show contributions from</span>
+          <label class="dropdown__value" for="contributor-type">
+            <input id="contributor-type" name="contributor_type" type="checkbox" value="individual" checked>Individual
+          </label>
+          <label class="dropdown__value" for="contributor-type">
+            <input id="contributor-type" name="contributor_type" type="checkbox" value="committee" checked>Committee
+          </label>
         </div>
-      </div>
+        {{ text.field('contributor_name', 'Contributor Name') }}
+        {{ text.field('_committee_id', 'Recipient Committee', {'id': 'committee-typeahead-filter'}) }}
 
-      <div class="js-accordion">
-        <h5 class="js-accordion_header accordion__header">Transaction Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
-        <div class="js-accordion_item accordion__item">
-          {{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-          {{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-          <div class="field" id="file-date">
-            <label for="file_date" class="label">File Date</label>
-            <ul>
-              <li><input name="_file_date" type="radio" data-start-date={{ dates['today'][0] | date }} data-end-date={{ dates['today'][1] | date }}>Today</li>
-              <li><input name="_file_date" type="radio" data-start-date={{ dates['month'][0] | date }} data-end-date={{ dates['month'][1] | date }}>This month</li>
-              <li><input name="_file_date" type="radio" data-start-date={{ dates['quarter'][0] | date }} data-end-date={{ dates['quarter'][1] | date }}>This quarter</li>
-              <li><input name="_file_date" type="radio" data-start-date={{ dates['year'][0] | date }} data-end-date={{ dates['year'][1] | date }}>This year</li>
-              <li><input name="_file_date" type="radio">Custom</li>
-            </ul>
-            <div class="date-range-input">
-              <label for="start_date">From</label>
-              <input type="text" id="start_date" name="start_date" data-inputmask="'alias': 'mm/dd/yyyy'">
-              <label for="end_date">To</label>
-              <input type="text" id="end_date" name="end_date" data-inputmask="'alias': 'mm/dd/yyyy'">
+        <div class="js-accordion">
+          <h5 class="js-accordion_header accordion__header">Contributor Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
+          <div class="js-accordion_item accordion__item">
+            {{ text.field('contributor_city', 'City') }}
+            {{ states.field('contributor_state') }}
+            {{ text.field('contributor_employer', 'Employer') }}
+          </div>
+        </div>
+
+        <div class="js-accordion">
+          <h5 class="js-accordion_header accordion__header">Transaction Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
+          <div class="js-accordion_item accordion__item">
+            {{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+            {{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+            <div class="field" id="file-date">
+              <label for="file_date" class="label">File Date</label>
+              <ul>
+                <li><input name="_file_date" type="radio" data-start-date={{ dates['today'][0] | date }} data-end-date={{ dates['today'][1] | date }}>Today</li>
+                <li><input name="_file_date" type="radio" data-start-date={{ dates['month'][0] | date }} data-end-date={{ dates['month'][1] | date }}>This month</li>
+                <li><input name="_file_date" type="radio" data-start-date={{ dates['quarter'][0] | date }} data-end-date={{ dates['quarter'][1] | date }}>This quarter</li>
+                <li><input name="_file_date" type="radio" data-start-date={{ dates['year'][0] | date }} data-end-date={{ dates['year'][1] | date }}>This year</li>
+                <li><input name="_file_date" type="radio">Custom</li>
+              </ul>
+              <div class="date-range-input">
+                <label for="start_date">From</label>
+                <input type="text" id="start_date" name="start_date" data-inputmask="'alias': 'mm/dd/yyyy'">
+                <label for="end_date">To</label>
+                <input type="text" id="end_date" name="end_date" data-inputmask="'alias': 'mm/dd/yyyy'">
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="field">
-        <button type="submit" class="primary">Apply filters</button>
-      </div>
-
-    </form>
+        <div class="field">
+          <button type="submit" class="primary">Apply filters</button>
+        </div>
+      </form>
+    </div>
   </div>
   <div id="committees" class="results-container">
     {% include 'partials/donations-table.html' %}
