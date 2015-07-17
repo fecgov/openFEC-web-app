@@ -1,0 +1,60 @@
+<table>
+  <tr>
+    <td>Name</td>
+    {{#if contributor}}
+      <td><a href="/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
+    {{else}}
+      <td>{{contributor_name}}</td>
+    {{/if}}
+  </tr>
+  <tr>
+    <td>City & State</td>
+    <td>{{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}</td>
+  </tr>
+  <tr>
+    <td>Year to Date</td>
+    <td>{{{ currency contributor_aggregate_ytd }}}</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>Amount</td>
+    <td>{{{ currency contributor_receipt_amount }}}</td>
+  </tr>
+  <tr>
+    <td>Receipt Date</td>
+    <td>{{{ datetime contributor_receipt_date }}}</td>
+  </tr>
+  <tr>
+    <td>Memo</td>
+    <td>{{ memo_text }}</td>
+  </tr>
+  <tr>
+    <td>Election Type</td>
+    <td>{{ election_type_full }}</td>
+  </tr>
+  <tr>
+    <td>Image</td>
+    <td><a href="{{ pdf_url }}">View original image</a></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>Committee</td>
+    <td><a href="/committee/{{ committee.committee_id }}/">{{ committee.name }}</a></td>
+  </tr>
+  <tr>
+    <td>Political Party</td>
+    <td>{{ committee.party_full }}</td>
+  </tr>
+  <tr>
+    <td>Type</td>
+    <td>{{ committee.committee_type_full }}</td>
+  </tr>
+  <tr>
+    <td>State</td>
+    <td>{{ committee.state_full }}</td>
+  </tr>
+</table>

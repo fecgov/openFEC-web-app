@@ -93,7 +93,7 @@ input[type="submit"],
   background: none;
   border: none;
   padding: 0;
-  
+
   &:active,
   &:hover {
     background: none;
@@ -101,3 +101,23 @@ input[type="submit"],
   }
 }
 
+.button--unstyled {
+  @include appearance(none);
+  display: inline;
+  padding: 0;
+  border: 0;
+  color: $base-link-color;
+  font-weight: normal;
+
+  &:hover,
+  &:active {
+    background: none;
+    text-decoration: underline;
+    border: none;
+    padding: 0;
+  }
+
+  &.selected {
+    color: $dark-gray;
+  }
+}

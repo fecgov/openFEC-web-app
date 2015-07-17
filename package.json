@@ -5,6 +5,7 @@
   "main": "app.js",
   "devDependencies": {
     "chai": "^1.10.0",
+    "gulp-sourcemaps": "^1.5.2",
     "jquery-mockjax": "^1.6.1",
     "selenium-webdriver": "^2.44.0",
     "watchify": "~2.0.0"
@@ -43,8 +44,9 @@
     "gulp-util": "3.0.4",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
-    "intl": "1.0.0",
+    "intl": "1.0.0-rc-4",
     "jquery": "2.1.4",
+    "jquery.inputmask": "3.1.63",
     "keyboardjs": "0.4.2",
     "list.js": "git://github.com/jmcarp/list.js.git",
     "moment": "2.10.3",
