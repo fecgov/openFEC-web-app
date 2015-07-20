@@ -1,8 +1,5 @@
 {% extends 'layouts/main.html' %}
 
-{% import 'macros/filters/text.html' as text %}
-{% import 'macros/filters/states.html' as states %}
-
 {% block title %}
   Browse Expenditures
 {% endblock %}
@@ -14,28 +11,7 @@
 </header>
 
 <section class="results-content">
-  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
-  <div id="filters" class="side-panel side-panel--left">
-    <h4>Filter Expenditures</h4>
-    <form id="category-filters">
-
-      {{ text.field('recipient_name', 'Name') }}
-      {{ text.field('recipient_city', 'City') }}
-
-      {{ states.field('recipient_state') }}
-
-      {{ text.field('min_amount', 'Minimum Expenditure') }}
-      {{ text.field('max_amount', 'Maximum Expenditure') }}
-
-      {{ text.field('start_date', 'Start Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
-      {{ text.field('end_date', 'End Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
-
-      <div class="field">
-        <button type="submit" class="primary">Apply filters</button>
-      </div>
-
-    </form>
-  </div>
+  {% include 'partials/expenditures-filter.html' %}
   <div id="committees" class="results-container">
     {% include 'partials/expenditures-table.html' %}
   </div>

@@ -1,0 +1,20 @@
+<div id="filters" class="side-panel side-panel--left">
+  <div class="side-panel__box">
+    <button id="filter-toggle" data-slide="left" class="side-panel__toggle">
+      <i class="icon ti-angle"></i>
+    </button>
+    <h4>
+      {% block heading %}
+      Filter {{ result_type | capitalize }}
+      {% endblock %}
+    </h4>
+    <form id="category-filters">
+      {% block filters %}{% endblock %}
+      {% block submit %}
+      <div class="field">
+        <button type="submit" class="primary">Apply filters</button>
+      </div>
+      {% endblock %}
+    </form>
+  </div>
+</div>
