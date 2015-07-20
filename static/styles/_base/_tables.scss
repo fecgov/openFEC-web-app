@@ -43,7 +43,7 @@ table.dataTable {
   td {
     @include truncate();
     padding: .5em;
-    padding-left: 42px !important;
+    padding-left: 20px !important;
     border-bottom: 1px dotted $light-gray;
 
     @include media($large) {
@@ -355,7 +355,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
   left: 18px;
   height: 16px;
   width: 16px;
-  display: block;
+  display: none;
   position: absolute;
   color: white;
   border: none;
