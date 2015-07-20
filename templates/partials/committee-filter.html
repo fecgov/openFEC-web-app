@@ -1,20 +1,12 @@
 {% extends 'partials/filters.html' %}
 
+{% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/states.html' as states %}
 
 {% block filters %}
-<div class="field" id="q-field">
-  <label for="q">Name</label>
-  <input type="text" name="q" />
-  <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
-</div>
-
+{{ text.field('name', 'Name') }}
 {% include 'partials/filters/election-years.html' %}
 {% include 'partials/filters/parties.html' %}
 {{ states.field('state') }}
 {% include 'partials/filters/committee-types.html' %}
-
-<div class="field">
-  <button type="submit" class="primary">Apply filters</button>
-</div>
 {% endblock %}
