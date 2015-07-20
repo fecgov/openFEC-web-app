@@ -8,9 +8,13 @@
 
 .field {
   @include clearfix();
-  @include span-columns(24);
+  width: 100%;
   padding: 2rem 0;
-  border-bottom: 1px solid $light-gray;
+  border-top: 1px solid $light-gray;
+
+  &:first-of-type {
+    border-top: none;
+  }
 
   input[type="checkbox"] {
     margin-left: 0;
@@ -29,19 +33,24 @@
     width: 100%;
   }
 
+  &:last-child {
+    border-bottom: 0;
+    text-align: center;
+  }
+
   &:nth-child(even) {
     margin-right: 0;
   }
 
-  & > label {
+  & > .label {
     font-size: 1.4rem;
     margin-top: 0;
     font-weight: bold;
   }
-  
+
   @include media($medium) {
     @include span-columns(6);
-    input[type="text"], 
+    input[type="text"],
     select,
     .button--dropdown {
       width: 100%;
@@ -50,6 +59,11 @@
 
   @include media($large) {
     width: 100%;
+    float: none;
+
+    &:last-child {
+      text-align: left;
+    }
 
     input[type="text"],
     select,
@@ -61,6 +75,10 @@
 
 .any {
   font-weight: normal;
+}
+
+.input--removeable {
+  position: relative;
 }
 
 .button--remove {

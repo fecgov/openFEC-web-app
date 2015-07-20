@@ -10,11 +10,13 @@
 </header>
 
 <section class="results-content">
-  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
   <div id="filters" class="side-panel side-panel--left">
-    <form id="category-filters">
-      <h4>Filter filings</h4>
-
+    <div class="side-panel__box">
+      <button id="filter-toggle" data-slide="left" class="side-panel__toggle">
+        <i class="icon ti-angle"></i>
+      </button>
+      <h4>Filter Filings</h4>
+      <form id="category-filters">
         <div class="field" id="committee-id-field">
           <label for="committee_id">Committee ID</label>
           <input type="text" name="committee_id" />
@@ -27,30 +29,31 @@
           <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
         </div>
 
-        {% include 'partials/filters/amendment-indicatior.html' %}
+        {% include 'partials/filters/amendment-indicator.html' %}
         {% include 'partials/filters/primary-general.html' %}
         {% include 'partials/filters/report-type.html' %}
 
-      <div class="field">
-        <button type="submit" class="primary">Apply filters</button>
-      </div>
-    </form>
+        <div class="field">
+          <button type="submit" class="primary">Apply filters</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <div id="filings" class="results-container">
     <table id="results" data-type="filing-table" width="100%" class="responsive">
     <thead>
-        <tr>
-            <th scope="col">Link</th>
-            <th scope="col">Filer Name</th>
-            <th scope="col">Candidate Name</th>
-            <th scope="col">Amendment Indicator</th>
-            <th scope="col">Document Type</th>
-            <th scope="col">Receipt Date</th>
-            <th scope="col">Total Receipts</th>
-            <th scope="col">Total Disbursement</th>
-            <th scope="col">Total Independent Expenditures</th>
-        </tr>
+      <tr>
+        <th scope="col">Link</th>
+        <th scope="col">Filer Name</th>
+        <th scope="col">Candidate Name</th>
+        <th scope="col">Amendment Indicator</th>
+        <th scope="col">Document Type</th>
+        <th scope="col">Receipt Date</th>
+        <th scope="col">Total Receipts</th>
+        <th scope="col">Total Disbursement</th>
+        <th scope="col">Total Independent Expenditures</th>
+      </tr>
     </thead>
    </table>
   </div>
