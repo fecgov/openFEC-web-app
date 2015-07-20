@@ -145,7 +145,6 @@ var filingsColumns = [
       return anchor.outerHTML;
     }
   },
-  {data: 'committee_name', className: 'min-desktop'},
   {data: 'amendment_indicator', className: 'min-desktop'},
   {data: 'report_type_full', className: 'min-desktop'},
   dateColumn({data: 'receipt_date', className: 'min-tablet'}),
