@@ -13,7 +13,31 @@ var events = require('./events');
 var helpers = require('./helpers');
 var states = require('../us.json');
 
-function hexMap($elm, width, height) {
+var compactRules = [
+  ['B', 9],
+  ['M', 6],
+  ['k', 3]
+];
+
+function chooseRule(value) {
+  var rule;
+  for (var i=0; i<compactRules.length; i++) {
+    rule = compactRules[i];
+    if (value >= Math.pow(10, rule[1])) {
+      return rule;
+    }
+  }
+  return null;
+}
+
+function compactNumber(value, rule) {
+  var divisor = Math.pow(10, rule[1]);
+  return d3.round(value / divisor, 1).toString() + rule[0];
+}
+
+var quantiles = 7;
+
+function stateMap($elm, width, height) {
   var url = URI(API_LOCATION)
     .path([
       API_VERSION,
@@ -49,7 +73,8 @@ function hexMap($elm, width, height) {
     );
     var max = _.max(_.pluck(data.results, 'total'));
     var scale = chroma.scale('RdYlBu').domain([0, max]);
-    var hex = svg.append('g')
+    var quantize = chroma.scale('RdYlBu').domain([0, max], quantiles);
+    var map = svg.append('g')
       .selectAll('path')
         .data(topojson.feature(states, states.objects.units).features)
       .enter().append('path')
@@ -61,6 +86,40 @@ function hexMap($elm, width, height) {
         })
         .attr('class', 'shape')
         .attr('d', path);
+
+    // Add legend swatches
+    var legendWidth = 40;
+    var legendBar = 35;
+    var legend = svg.selectAll('g.legend')
+      .data(quantize.domain())
+      .enter()
+        .append('g')
+        .attr('class', 'legend');
+    legend.append('rect')
+      .attr('x', function(d, i) {
+        return i * legendWidth + (legendWidth - legendBar) / 2;
+      })
+      .attr('y', 20)
+      .attr('width', legendBar)
+      .attr('height', 20)
+      .style('fill', function(d) {
+        return scale(d);
+      });
+
+    // Add legend text
+    var compactRule = chooseRule(quantize.domain()[Math.floor(quantiles / 2)]);
+    legend.append('text')
+      .attr('x', function(d, i) {
+        return (i + 0.5) * legendWidth;
+      })
+      .attr('y', 50)
+      .attr('width', legendWidth)
+      .attr('height', 20)
+      .attr('font-size', '10px')
+      .attr('text-anchor', 'middle')
+      .text(function(d) {
+        return compactNumber(d, compactRule);
+      });
   });
 }
 
@@ -73,9 +132,9 @@ function highlightState($parent, state) {
 }
 
 function init() {
-  $('.hex-map').each(function(idx, elm) {
+  $('.state-map').each(function(idx, elm) {
     var $elm = $(elm);
-    hexMap($elm, 400, 400);
+    stateMap($elm, 400, 400);
     events.on('state.table', function(params) {
       highlightState($elm, params.state);
     });
@@ -89,5 +148,5 @@ function init() {
 
 module.exports = {
   init: init,
-  hexMap: hexMap
+  stateMap: stateMap
 };
