@@ -25,6 +25,7 @@ var glossary = require('./modules/glossary.js');
 var Search = require('./modules/search');
 var tables = require('./modules/tables');
 var maps = require('./modules/maps');
+var toggle = require('./modules/toggle');
 
 typeahead.init();
 glossary.init();
@@ -175,4 +176,5 @@ $(document).ready(function() {
 
     filters.init();
     tables.init();
+    toggle.init();
 });

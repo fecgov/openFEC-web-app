@@ -68,8 +68,11 @@
   <div class="container">
     <h3>Top Contributors {{ year if year else cycle | fmt_year_range }}</h3>
     <hr />
+    <input type="radio" class="panel-toggle-control" name="aggregate" value="by-committee" checked />Committee
+    <input type="radio" class="panel-toggle-control" name="aggregate" value="by-employer" />Employer
+    <input type="radio" class="panel-toggle-control" name="aggregate" value="by-occupation" />Occupation
     <div class="row">
-      <div>
+      <div id="by-committee" class="panel-toggle-element">
         <h4>Top Committee Contributors</h4>
         <div>
           <a
@@ -89,7 +92,7 @@
         </table>
       </div>
 
-      <div>
+      <div id="by-employer" class="panel-toggle-element">
         <h4>Contributions by Employer</h4>
         <table
             class="data-table"
@@ -104,7 +107,7 @@
         </table>
       </div>
 
-      <div>
+      <div id="by-occupation" class="panel-toggle-element">
         <h4>Contributions by Occupation</h4>
         <table
             class="data-table"
