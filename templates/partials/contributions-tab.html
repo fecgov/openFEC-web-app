@@ -31,6 +31,8 @@
                     committee_id=committee.committee_id,
                     min_amount=limits[0],
                     max_amount=limits[1],
+                    min_date=cycle_start(cycle).strftime('%m/%d/%Y'),
+                    max_date=cycle_end(cycle).strftime('%m/%d/%Y'),
                   ) }}"
               >{{ label }}</a>
             </div>
