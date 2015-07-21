@@ -1,0 +1,21 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/states.html' as states %}
+
+{% block heading %}
+Filter Disbursements
+{% endblock %}
+
+{% block filters %}
+{{ text.field('recipient_name', 'Name') }}
+{{ text.field('recipient_city', 'City') }}
+
+{{ states.field('recipient_state') }}
+
+{{ text.field('min_amount', 'Minimum Expenditure') }}
+{{ text.field('max_amount', 'Maximum Expenditure') }}
+
+{{ text.field('start_date', 'Start Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
+{{ text.field('end_date', 'End Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
+{% endblock %}
