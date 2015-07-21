@@ -212,6 +212,7 @@ var expenditureColumns = [
       return Handlebars.helpers.datetime(data);
     }
   },
+  {data: 'disbursement_description', className: 'min-tablet', orderable: false},
   {
     data: 'committee',
     orderable: false,
