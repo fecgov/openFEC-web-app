@@ -20,22 +20,15 @@ var compactRules = [
 ];
 
 function chooseRule(value) {
-  var rule;
-  for (var i=0; i<compactRules.length; i++) {
-    rule = compactRules[i];
-    if (value >= Math.pow(10, rule[1])) {
-      return rule;
-    }
-  }
-  return null;
+  return _.find(compactRules, function(rule) {
+    return value >= Math.pow(10, rule[1]);
+  });
 }
 
 function compactNumber(value, rule) {
   var divisor = Math.pow(10, rule[1]);
   return d3.round(value / divisor, 1).toString() + rule[0];
 }
-
-var quantiles = 7;
 
 function stateMap($elm, width, height) {
   var url = URI(API_LOCATION)
@@ -107,6 +100,7 @@ function stateMap($elm, width, height) {
       });
 
     // Add legend text
+    var quantiles = 7;
     var compactRule = chooseRule(quantize.domain()[Math.floor(quantiles / 2)]);
     legend.append('text')
       .attr('x', function(d, i) {
