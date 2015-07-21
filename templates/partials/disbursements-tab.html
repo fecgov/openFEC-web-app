@@ -2,9 +2,15 @@
   <div class="container">
     <h3>Top Recipients {{ cycle | fmt_year_range }}</h3>
     <hr />
-    <input type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />Purpose
-    <input type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />Recipient Name
-    <input type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient-id" />Recipient Committee
+    <label for="toggle-purpose">
+      <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />Purpose
+    </label>
+    <label for="toggle-recipient">
+      <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />Recipient Name
+    </label>
+    <label for="toggle-id">
+      <input id="toggle-id" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient-id" />Recipient Committee
+    </label>
     <div class="row">
       <div id="by-purpose" class="panel-toggle-element">
         <h4>Disbursements by Purpose</h4>
@@ -20,8 +26,8 @@
             data-cycle="{{ cycle }}"
           >
           <thead>
-            <th scope="col">Committee</th>
-            <th scope="col">Total Contributed</th>
+            <th scope="col">Purpose</th>
+            <th scope="col">Total Received</th>
           </thead>
         </table>
       </div>
@@ -36,7 +42,7 @@
           >
           <thead>
             <th scope="col">Recipient</th>
-            <th scope="col">Total Contributed</th>
+            <th scope="col">Total Received</th>
           </thead>
         </table>
       </div>
@@ -51,7 +57,7 @@
           >
           <thead>
             <th scope="col">Recipient Committee</th>
-            <th scope="col">Total Contributed</th>
+            <th scope="col">Total Received</th>
           </thead>
         </table>
       </div>
