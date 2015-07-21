@@ -64,6 +64,7 @@ function stateMap($elm, width, height) {
       },
       {}
     );
+    var quantiles = 7;
     var max = _.max(_.pluck(data.results, 'total'));
     var scale = chroma.scale('RdYlBu').domain([0, max]);
     var quantize = chroma.scale('RdYlBu').domain([0, max], quantiles);
@@ -100,7 +101,6 @@ function stateMap($elm, width, height) {
       });
 
     // Add legend text
-    var quantiles = 7;
     var compactRule = chooseRule(quantize.domain()[Math.floor(quantiles / 2)]);
     legend.append('text')
       .attr('x', function(d, i) {
@@ -122,7 +122,10 @@ function highlightState($parent, state) {
   $parent.find('path:not(' + rule + ')').each(function(idx, elm) {
     elm.classList.remove('active');
   });
-  $parent.find('path' + rule)[0].classList.add('active');
+  var $path = $parent.find('path' + rule);
+  if ($path.length) {
+    $path[0].classList.add('active');
+  }
 }
 
 function init() {
