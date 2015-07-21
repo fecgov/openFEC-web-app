@@ -20,22 +20,15 @@ var compactRules = [
 ];
 
 function chooseRule(value) {
-  var rule;
-  for (var i=0; i<compactRules.length; i++) {
-    rule = compactRules[i];
-    if (value >= Math.pow(10, rule[1])) {
-      return rule;
-    }
-  }
-  return null;
+  return _.find(compactRules, function(rule) {
+    return value >= Math.pow(10, rule[1]);
+  });
 }
 
 function compactNumber(value, rule) {
   var divisor = Math.pow(10, rule[1]);
   return d3.round(value / divisor, 1).toString() + rule[0];
 }
-
-var quantiles = 7;
 
 function stateMap($elm, width, height) {
   var url = URI(API_LOCATION)
@@ -71,6 +64,7 @@ function stateMap($elm, width, height) {
       },
       {}
     );
+    var quantiles = 7;
     var max = _.max(_.pluck(data.results, 'total'));
     var scale = chroma.scale('RdYlBu').domain([0, max]);
     var quantize = chroma.scale('RdYlBu').domain([0, max], quantiles);
@@ -128,7 +122,10 @@ function highlightState($parent, state) {
   $parent.find('path:not(' + rule + ')').each(function(idx, elm) {
     elm.classList.remove('active');
   });
-  $parent.find('path' + rule)[0].classList.add('active');
+  var $path = $parent.find('path' + rule);
+  if ($path.length) {
+    $path[0].classList.add('active');
+  }
 }
 
 function init() {

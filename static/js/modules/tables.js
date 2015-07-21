@@ -266,6 +266,7 @@ var expenditureColumns = [
   {data: 'recipient_state', orderable: false, className: 'min-desktop'},
   currencyColumn({data: 'disbursement_amount', className: 'min-tablet'}),
   dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
+  {data: 'disbursement_description', className: 'min-tablet', orderable: false},
   {
     data: 'committee',
     orderable: false,
