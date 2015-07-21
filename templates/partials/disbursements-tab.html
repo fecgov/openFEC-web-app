@@ -1,0 +1,60 @@
+<section class="page-section" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-header">
+  <div class="container">
+    <h3>Top Recipients {{ cycle | fmt_year_range }}</h3>
+    <hr />
+    <input type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />Purpose
+    <input type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />Recipient Name
+    <input type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient-id" />Recipient Committee
+    <div class="row">
+      <div id="by-purpose" class="panel-toggle-element">
+        <h4>Disbursements by Purpose</h4>
+        <div>
+          <a
+              href={{ url_for('expenditures', committee_id=committee.committee_id) }}
+            >View all committee disbursements</a>
+        </div>
+        <table
+            class="data-table"
+            data-type="disbursements-by-purpose"
+            data-committee="{{ committee.committee_id }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <th scope="col">Committee</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+      </div>
+
+      <div id="by-recipient" class="panel-toggle-element">
+        <h4>Disbursements by Recipient Name</h4>
+        <table
+            class="data-table"
+            data-type="disbursements-by-recipient"
+            data-committee="{{ committee.committee_id }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <th scope="col">Recipient</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+      </div>
+
+      <div id="by-recipient-id" class="panel-toggle-element">
+        <h4>Disbursements by Recipient Committee (if applicable)</h4>
+        <table
+            class="data-table"
+            data-type="disbursements-by-recipient-id"
+            data-committee="{{ committee.committee_id }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <th scope="col">Recipient Committee</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
