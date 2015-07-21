@@ -1,6 +1,6 @@
 {% macro field(name, title, attrs={}) %}
 <div class="field" id="{{ name }}-field">
-  <label  class="label" for="{{ name }}">{{ title }}</label>
+  <label class="label" for="{{ name }}">{{ title }}</label>
   <div class="input--removeable">
     <input type="text" name="{{ name }}"
       {% for attr, value in attrs.items() %}
