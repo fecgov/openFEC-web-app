@@ -6,7 +6,7 @@
   -webkit-font-smoothing: antialiased;
   background: $bgcolor;
   border-radius: $base-border-radius;
-  border: 1px solid $bgcolor;
+  border: 1px solid darken($bgcolor, 5%);
   display: inline-block;
   color: $textcolor;
   font-weight: bold;
