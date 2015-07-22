@@ -48,19 +48,21 @@ var columns = [
   },
 ];
 
-var $table = $('#results');
-var $form = $('#category-filters');
-tables.initTable(
-  $table,
-  $form,
-  'schedules/schedule_b',
-  {},
-  columns,
-  _.extend(tables.seekCallbacks, {
-    afterRender: tables.modalAfterRender.bind(undefined, disbursementTemplate)
-  }),
-  {
-    order: [[4, 'desc']],
-    pagingType: 'simple'
-  }
-);
+$(document).ready(function() {
+  var $table = $('#results');
+  var $form = $('#category-filters');
+  tables.initTable(
+    $table,
+    $form,
+    'schedules/schedule_b',
+    {},
+    columns,
+    _.extend(tables.seekCallbacks, {
+      afterRender: tables.modalAfterRender.bind(undefined, disbursementTemplate)
+    }),
+    {
+      order: [[4, 'desc']],
+      pagingType: 'simple'
+    }
+  );
+});

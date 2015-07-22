@@ -24,6 +24,8 @@ var columns = [
   {data: 'organization_type_full', className: 'min-desktop'},
 ];
 
-var $table = $('#results');
-var $form = $('#category-filters');
-tables.initTable($table, $form, 'committees', {}, columns, tables.offsetCallbacks, {useFilters: true});
+$(document).ready(function() {
+  var $table = $('#results');
+  var $form = $('#category-filters');
+  tables.initTable($table, $form, 'committees', {}, columns, tables.offsetCallbacks, {useFilters: true});
+});

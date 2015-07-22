@@ -189,7 +189,6 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     dom: '<"results-info meta-box results-info--top"lfrip>t<"results-info meta-box"ip>',
     ajax: function(data, callback, settings) {
       var api = this.api();
-      var parsedFilters;
       if ($form) {
         var filters = $form.serializeArray();
         parsedFilters = mapFilters(filters);

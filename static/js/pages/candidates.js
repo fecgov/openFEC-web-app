@@ -29,6 +29,8 @@ var columns = [
   {data: 'district', className: 'min-desktop'},
 ];
 
-var $table = $('#results');
-var $form = $('#category-filters');
-tables.initTable($table, $form, 'candidates', {}, columns, tables.offsetCallbacks, {useFilters: true});
+$(document).ready(function() {
+  var $table = $('#results');
+  var $form = $('#category-filters');
+  tables.initTable($table, $form, 'candidates', {}, columns, tables.offsetCallbacks, {useFilters: true});
+});

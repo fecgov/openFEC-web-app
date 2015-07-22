@@ -47,19 +47,21 @@ var columns = [
   },
 ];
 
-var $table = $('#results');
-var $form = $('#category-filters');
-tables.initTable(
-  $table,
-  $form,
-  'schedules/schedule_a',
-  {},
-  columns,
-  _.extend(tables.seekCallbacks, {
-    afterRender: tables.modalAfterRender.bind(undefined, donationTemplate)
-  }),
-  {
-    order: [[5, 'desc']],
-    pagingType: 'simple'
-  }
-);
+$(document).ready(function() {
+  var $table = $('#results');
+  var $form = $('#category-filters');
+  tables.initTable(
+    $table,
+    $form,
+    'schedules/schedule_a',
+    {},
+    columns,
+    _.extend(tables.seekCallbacks, {
+      afterRender: tables.modalAfterRender.bind(undefined, donationTemplate)
+    }),
+    {
+      order: [[5, 'desc']],
+      pagingType: 'simple'
+    }
+  );
+});
