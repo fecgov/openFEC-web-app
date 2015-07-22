@@ -1,4 +1,5 @@
 import http
+import datetime
 
 import furl
 from webargs import Arg
@@ -72,6 +73,14 @@ def series_group_has_data(groups, keys):
     )
 
 
+def cycle_start(value):
+    return datetime.datetime(value - 1, 1, 1)
+
+
+def cycle_end(value):
+    return datetime.datetime(value, 12, 31)
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -86,6 +95,8 @@ app.jinja_env.globals.update({
     'series_has_data': series_has_data,
     'group_has_data': group_has_data,
     'series_group_has_data': series_group_has_data,
+    'cycle_start': cycle_start,
+    'cycle_end': cycle_end,
 })
 
 

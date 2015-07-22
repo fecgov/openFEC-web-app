@@ -1,0 +1,13 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/states.html' as states %}
+
+{% block filters %}
+{{ text.field('name', 'Name') }}
+{% include 'partials/filters/election-years.html' %}
+{% include 'partials/filters/office-sought.html' %}
+{% include 'partials/filters/parties.html' %}
+{{ states.field('state') }}
+{% include 'partials/filters/districts.html' %}
+{% endblock %}

@@ -10,7 +10,7 @@
       {% include 'partials/financial-aggregates.html' %}
     {% endif %}
 
-    <div class="page-subsection">
+    <div class="page-subsection page-subsection--bordered">
       <h3 class="term" data-term="Authorized Committee">Authorized Committees</h3>
       {% for committee in committee_groups['P'] %}
         {% include 'partials/committee-stats.html' %}
