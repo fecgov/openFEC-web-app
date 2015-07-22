@@ -183,6 +183,28 @@ var occupationContributorColumns = [
   currencyColumn({data: 'total', className: 'all', orderable: false})
 ];
 
+var disbursementPurposeColumns = [
+  {data: 'purpose', className: 'all', orderable: false},
+  currencyColumn({data: 'total', className: 'all', orderable: false})
+];
+
+var disbursementRecipientColumns = [
+  {data: 'recipient_name', className: 'all', orderable: false},
+  currencyColumn({data: 'total', className: 'all', orderable: false})
+];
+
+var disbursementRecipientIDColumns = [
+  {
+    data: 'recipient_name',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return buildEntityLink(data, '/committee/' + row.recipient_id, 'committee');
+    }
+  },
+  currencyColumn({data: 'total', className: 'all', orderable: false})
+];
+
 var donationColumns = [
   {
     width: '5%',
@@ -546,6 +568,42 @@ module.exports = {
           path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'].join('/');
           query = {cycle: parseInt(cycle)};
           initTable($table, $form, path, query, occupationContributorColumns, offsetCallbacks, {
+            dom: '<"results-info meta-box results-info--top"lfrip>t',
+            order: [[1, 'desc']],
+            pagingType: 'simple',
+            lengthChange: false,
+            pageLength: 10,
+            useHideNull: false
+          });
+          break;
+        case 'disbursements-by-purpose':
+          path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'].join('/');
+          query = {cycle: parseInt(cycle)};
+          initTable($table, $form, path, query, disbursementPurposeColumns, offsetCallbacks, {
+            dom: '<"results-info meta-box results-info--top"lfrip>t',
+            order: [[1, 'desc']],
+            pagingType: 'simple',
+            lengthChange: false,
+            pageLength: 10,
+            useHideNull: false
+          });
+          break;
+        case 'disbursements-by-recipient':
+          path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'].join('/');
+          query = {cycle: parseInt(cycle)};
+          initTable($table, $form, path, query, disbursementRecipientColumns, offsetCallbacks, {
+            dom: '<"results-info meta-box results-info--top"lfrip>t',
+            order: [[1, 'desc']],
+            pagingType: 'simple',
+            lengthChange: false,
+            pageLength: 10,
+            useHideNull: false
+          });
+          break;
+        case 'disbursements-by-recipient-id':
+          path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'].join('/');
+          query = {cycle: parseInt(cycle)};
+          initTable($table, $form, path, query, disbursementRecipientIDColumns, offsetCallbacks, {
             dom: '<"results-info meta-box results-info--top"lfrip>t',
             order: [[1, 'desc']],
             pagingType: 'simple',
