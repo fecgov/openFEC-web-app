@@ -14,9 +14,6 @@ var events = require('./events');
 var filters = require('./filters');
 var helpers = require('./helpers');
 
-var donationTemplate = require('../../templates/donation.hbs');
-var expenditureTemplate = require('../../templates/expenditure.hbs');
-
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
 
@@ -94,173 +91,6 @@ function formattedColumn(formatter) {
 var dateColumn = formattedColumn(helpers.datetime);
 var currencyColumn = formattedColumn(helpers.currency);
 
-var candidateColumns = [
-  {
-    data: 'name',
-    className: 'all',
-    width: '30%',
-    render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/candidate/' + row.candidate_id + buildCycle(row), 'candidate');
-    }
-  },
-  {data: 'office_full', className: 'min-tablet'},
-  {
-    data: 'cycles',
-    className: 'min-tablet',
-    render: function(data, type, row, meta) {
-      return yearRange(_.first(data), _.last(data));
-    }
-  },
-  {data: 'party_full', className: 'min-tablet'},
-  {data: 'state', className: 'min-desktop'},
-  {data: 'district', className: 'min-desktop'},
-];
-
-var committeeColumns = [
-  {
-    data: 'name',
-    className: 'all',
-    width: '20%',
-    render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/committee/' + row.committee_id + buildCycle(row), 'committee');
-    }
-  },
-  {data: 'treasurer_name', className: 'min-desktop'},
-  {data: 'state', className: 'min-desktop', width: '60px'},
-  {data: 'party_full', className: 'min-desktop'},
-  dateColumn({data: 'first_file_date', className: 'min-tablet'}),
-  {data: 'committee_type_full', className: 'min-tablet'},
-  {data: 'designation_full', className: 'min-tablet'},
-  {data: 'organization_type_full', className: 'min-desktop'},
-];
-
-var committeeContributorColumns = [
-  {
-    data: 'contributor_name',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/committee/' + row.contributor_id, 'committee');
-    }
-  },
-  currencyColumn({data: 'total', className: 'all', orderable: false})
-];
-
-var stateContributorColumns = [
-  {
-    data: 'state_full',
-    width: '50%',
-    className: 'all',
-    render: function(data, type, row, meta) {
-      var span = document.createElement('span');
-      span.textContent = data;
-      span.setAttribute('data-state', data);
-      span.setAttribute('data-row', meta.row);
-      return span.outerHTML;
-    }
-  },
-  {
-    data: 'total',
-    width: '50%',
-    className: 'all',
-    render: function(data, type, row, meta) {
-      var span = document.createElement('div');
-      span.textContent = helpers.currency(data);
-      span.setAttribute('data-value', data);
-      span.setAttribute('data-row', meta.row);
-      return span.outerHTML;
-    }
-  },
-];
-
-var employerContributorColumns = [
-  {data: 'employer', className: 'all', orderable: false},
-  currencyColumn({data: 'total', className: 'all', orderable: false})
-];
-
-var occupationContributorColumns = [
-  {data: 'occupation', className: 'all', orderable: false},
-  currencyColumn({data: 'total', className: 'all', orderable: false})
-];
-
-var donationColumns = [
-  {
-    width: '5%',
-    render: function(data, type, row, meta) {
-      return '<span class="modal-toggle">+</span>';
-    }
-  },
-  {
-    data: 'contributor',
-    orderable: false,
-    className: 'all',
-    width: '30%',
-    render: function(data, type, row, meta) {
-      if (data) {
-        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
-      } else {
-        return row.contributor_name;
-      }
-    }
-  },
-  {data: 'contributor_state', orderable: false, className: 'min-desktop'},
-  {data: 'contributor_employer', orderable: false, className: 'min-desktop'},
-  currencyColumn({data: 'contributor_receipt_amount', className: 'min-tablet'}),
-  dateColumn({data: 'contributor_receipt_date', className: 'min-tablet'}),
-  {
-    data: 'committee',
-    orderable: false,
-    className: 'all',
-    width: '30%',
-    render: function(data, type, row, meta) {
-      if (data) {
-        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
-      } else {
-        return '';
-      }
-    }
-  },
-];
-
-var expenditureColumns = [
-  {
-    width: '5%',
-    render: function(data, type, row, meta) {
-      return '<span class="modal-toggle">+</span>';
-    }
-  },
-  {
-    data: 'recipient_name',
-    orderable: false,
-    className: 'all',
-    width: '30%',
-    render: function(data, type, row, meta) {
-      var committee = row.recipient_committee;
-      if (committee) {
-        return buildEntityLink(committee.name, '/committee/' + committee.committee_id, 'committee');
-      } else {
-        return data;
-      }
-    }
-  },
-  {data: 'recipient_state', orderable: false, className: 'min-desktop'},
-  currencyColumn({data: 'disbursement_amount', className: 'min-tablet'}),
-  dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
-  {data: 'disbursement_description', className: 'min-tablet', orderable: false},
-  {
-    data: 'committee',
-    orderable: false,
-    className: 'all',
-    width: '30%',
-    render: function(data, type, row, meta) {
-      if (data) {
-        return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
-      } else {
-        return '';
-      }
-    }
-  },
-];
 
 function mapSort(order, columns) {
   return _.map(order, function(item) {
@@ -359,15 +189,16 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     dom: '<"results-info meta-box results-info--top"lfrip>t<"results-info meta-box"ip>',
     ajax: function(data, callback, settings) {
       var api = this.api();
-      var filters = $form.serializeArray();
-      parsedFilters = mapFilters(filters);
-      if (useFilters) {
+      var parsedFilters;
+      if ($form) {
+        var filters = $form.serializeArray();
+        parsedFilters = mapFilters(filters);
         pushQuery(parsedFilters);
       }
       var query = _.extend(
         callbacks.mapQuery(api, data),
         {api_key: API_KEY},
-        parsedFilters
+        parsedFilters || {}
       );
       if (useHideNull) {
         query = _.extend(
@@ -417,10 +248,12 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     filters.activateInitialFilters();
     api.ajax.reload();
   });
-  $form.submit(function(event) {
-    event.preventDefault();
-    api.ajax.reload();
-  });
+  if ($form) {
+    $form.submit(function(event) {
+      event.preventDefault();
+      api.ajax.reload();
+    });
+  }
 }
 
 var offsetCallbacks = {
@@ -435,6 +268,10 @@ module.exports = {
   yearRange: yearRange,
   buildCycle: buildCycle,
   buildEntityLink: buildEntityLink,
+  currencyColumn: currencyColumn,
+  dateColumn: dateColumn,
+  modalAfterRender: modalAfterRender,
+  barsAfterRender: barsAfterRender,
   offsetCallbacks: offsetCallbacks,
   seekCallbacks: seekCallbacks,
   initTable: initTable,
@@ -448,112 +285,6 @@ module.exports = {
       var year = $table.attr('data-year');
       var path, query;
       switch ($table.attr('data-type')) {
-        case 'donation':
-          initTable(
-            $table,
-            $form,
-            'schedules/schedule_a',
-            {},
-            donationColumns,
-            {
-              mapQuery: mapQuerySeek,
-              handleResponse: handleResponseSeek,
-              afterRender: modalAfterRender.bind(undefined, donationTemplate)
-            },
-            {
-              order: [[5, 'desc']],
-              pagingType: 'simple'
-            }
-          );
-          break;
-        case 'expenditure':
-          initTable(
-            $table,
-            $form,
-            'schedules/schedule_b',
-            {},
-            expenditureColumns,
-            {
-              mapQuery: mapQuerySeek,
-              handleResponse: handleResponseSeek,
-              afterRender: modalAfterRender.bind(undefined, expenditureTemplate)
-            },
-            {
-              order: [[4, 'desc']],
-              pagingType: 'simple'
-            }
-          );
-          break;
-        case 'committee-contributor':
-          path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');
-          query = {};
-          if (year) {
-            query.year = year;
-          } else {
-            query.cycle = cycle;
-          }
-          initTable($table, $form, path, query, committeeContributorColumns, offsetCallbacks, {
-            dom: '<"results-info meta-box results-info--top"lfrip>t',
-            order: [[1, 'desc']],
-            pagingType: 'simple',
-            lengthChange: false,
-            pageLength: 10,
-            useHideNull: false
-          });
-          break;
-        case 'receipts-by-state':
-          path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'].join('/');
-          query = {cycle: parseInt(cycle), per_page: 99, hide_null: true};
-          initTable($table, $form, path, query, stateContributorColumns,
-            _.extend({
-              afterRender: barsAfterRender.bind(undefined, undefined)
-            }, offsetCallbacks), {
-            dom: 't',
-            order: [[1, 'desc']],
-            paging: false,
-            lengthChange: false,
-            pageLength: 10,
-            useHideNull: false,
-            scrollY: 400,
-            scrollCollapse: true
-          });
-          events.on('state.map', function(params) {
-            var $scrollBody = $table.closest('.dataTables_scrollBody');
-            var $row = $scrollBody.find('span[data-state="' + params.state + '"]');
-            $scrollBody.find('.active').removeClass('active');
-            $row.parents('tr').addClass('active');
-            $scrollBody.animate({
-              scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
-            }, 500);
-          });
-          $table.on('click', 'tr', function(e) {
-            events.emit('state.table', {state: $(this).find('span[data-state]').attr('data-state')});
-          });
-          break;
-        case 'receipts-by-employer':
-          path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'].join('/');
-          query = {cycle: parseInt(cycle)};
-          initTable($table, $form, path, query, employerContributorColumns, offsetCallbacks, {
-            dom: '<"results-info meta-box results-info--top"lfrip>t',
-            order: [[1, 'desc']],
-            pagingType: 'simple',
-            lengthChange: false,
-            pageLength: 10,
-            useHideNull: false
-          });
-          break;
-        case 'receipts-by-occupation':
-          path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'].join('/');
-          query = {cycle: parseInt(cycle)};
-          initTable($table, $form, path, query, occupationContributorColumns, offsetCallbacks, {
-            dom: '<"results-info meta-box results-info--top"lfrip>t',
-            order: [[1, 'desc']],
-            pagingType: 'simple',
-            lengthChange: false,
-            pageLength: 10,
-            useHideNull: false
-          });
-          break;
       }
     });
   }
