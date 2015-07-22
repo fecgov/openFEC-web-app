@@ -31,4 +31,4 @@ var columns = [
 
 var $table = $('#results');
 var $form = $('#category-filters');
-tables.initTable($table, $form, 'candidates', columns);
+tables.initTable($table, $form, 'candidates', {}, columns, tables.offsetCallbacks, {useFilters: true});

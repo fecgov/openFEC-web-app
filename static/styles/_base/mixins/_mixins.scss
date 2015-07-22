@@ -12,7 +12,7 @@
 
 @mixin u-visually_hidden {
   position: absolute !important;
-  top: -9999px !important;
+  top: auto;
   left: -9999px !important;
 }
 

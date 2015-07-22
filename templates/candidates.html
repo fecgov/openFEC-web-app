@@ -11,34 +11,13 @@
 </header>
 
 <section class="results-content">
-  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
-  <div id="filters" class="side-panel side-panel--left">
-    <form id="category-filters">
-      <h4>Filter Candidates</h4>
-        <div class="field" id="q-field">
-          <label for="q">Name</label>
-          <input type="text" name="q" />
-          <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
-        </div>
-
-        {% include 'partials/filters/election-years.html' %}
-        {% include 'partials/filters/office-sought.html' %}
-        {% include 'partials/filters/parties.html' %}
-        {% include 'partials/filters/states.html' %}
-        {% include 'partials/filters/districts.html' %}
-
-      <div class="field">
-        <button type="submit" class="primary">Apply filters</button>
-      </div>
-    </form>
-  </div>
-
+  {% include 'partials/candidates-filter.html' %}
   <div id="candidates" class="results-container">
-      {% include 'partials/candidates-table.html' %}
+    {% include 'partials/candidates-table.html' %}
   </div>
 </section>
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/js/{{ assets['candidates.js'] }}"></script>
+<script src="/{{ assets['dist/js/pages/candidates.js'] }}"></script>
 {% endblock %}

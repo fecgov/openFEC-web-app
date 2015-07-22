@@ -26,4 +26,4 @@ var columns = [
 
 var $table = $('#results');
 var $form = $('#category-filters');
-tables.initTable($table, $form, 'committees', columns);
+tables.initTable($table, $form, 'committees', {}, columns, tables.offsetCallbacks, {useFilters: true});

@@ -1,0 +1,37 @@
+<table>
+  <tr>
+    <td>Receipient Name</td>
+    {{#if recipient}}
+      <td><a href="/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
+    {{else}}
+      <td>{{recipient_name}}</td>
+    {{/if}}
+  </tr>
+  <tr>
+    <td>Recipient City & State</td>
+    <td>{{ recipient_city }}, {{ recipient_state }}, {{ recipient_zip }}</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>Amount</td>
+    <td>{{{ currency disbursement_amount }}}</td>
+  </tr>
+  <tr>
+    <td>Receipt Date</td>
+    <td>{{{ datetime disbursement_date }}}</td>
+  </tr>
+  <tr>
+    <td>Memo</td>
+    <td>{{ memo_text }}</td>
+  </tr>
+  <tr>
+    <td>Election Type</td>
+    <td>{{ election_type_full }}</td>
+  </tr>
+  <tr>
+    <td>Image</td>
+    <td><a href="{{ pdf_url }}">View original image</a></td>
+  </tr>
+</table>

@@ -1,6 +1,6 @@
 {% macro search(location, result_type) %}
 <form id="{{ location }}-search" action="/" autocomplete="off" class="js-search">
-  <div class="search-bar--{{ location }}">
+  <div class="search-bar search-bar--{{ location }}">
     <div class="search__radio">
       <label for="{{ location }}-radio--candidates">
         <input id="{{ location }}-radio--candidates" class="js-search-type" type="radio" name="search_type" value="candidates" checked>Candidates

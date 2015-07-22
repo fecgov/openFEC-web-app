@@ -1,0 +1,13 @@
+{% macro field(name, title, attrs={}) %}
+<div class="field" id="{{ name }}-field">
+  <label class="label" for="{{ name }}">{{ title }}</label>
+  <div class="input--removeable">
+    <input type="text" name="{{ name }}"
+      {% for attr, value in attrs.items() %}
+        {{ attr }}="{{ value }}"
+      {% endfor %}
+    />
+    <button type="button" class="button--remove" data-removes="{{ name }}"><i class="ti-close"></i></button>
+  </div>
+</div>
+{% endmacro %}

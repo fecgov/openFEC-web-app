@@ -1,6 +1,5 @@
 table,
 table.dataTable {
-  background-color: #fff;
   border-collapse: collapse;
   margin: 0;
   table-layout: fixed;
@@ -15,9 +14,16 @@ table.dataTable {
   }
 
   th {
-    padding: 1rem !important;
+    padding: 1rem;
     border-bottom: 1px solid $light-gray !important;
     text-align: left;
+
+    &.sorting_asc,
+    &.sorting_desc,
+    &.sorting {
+      background-position-x: left !important;
+      background-position-y: 10px !important;
+    }
   }
 
   tr, td, th {
@@ -32,16 +38,30 @@ table.dataTable {
     &:hover {
       background: rgba($blue, .1);
     }
+
+    &.active {
+      border: 2px solid $focus;
+    }
   }
 
   td {
     @include truncate();
     padding: .5em;
+    padding-left: 42px !important;
     border-bottom: 1px dotted $light-gray;
+
+    @include media($large) {
+      padding-left: 10px !important;
+    }
   }
 
   &.no-footer {
     border-bottom: 1px solid $light-gray !important;
+  }
+
+  .value-bar {
+    height: 5px;
+    background-color: #205683;
   }
 }
 
@@ -341,7 +361,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.child > th:first-child:before 
 table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before,
 table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
   top: 8px;
-  left: 4px;
+  left: 18px;
   height: 16px;
   width: 16px;
   display: block;
@@ -364,4 +384,9 @@ table.dataTable tbody tr.child {
   ul {
     width: 100%;
   }
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: 1px solid $light-gray;
+  box-shadow: inset 0px -1px 4px 0px rgba(0,0,0,0.75); 
 }

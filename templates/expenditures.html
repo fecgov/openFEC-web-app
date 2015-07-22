@@ -1,0 +1,40 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse Expenditures
+{% endblock %}
+
+{% block body %}
+
+<header class="page-header page-header--dark">
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Expenditures</h1>
+</header>
+
+<section class="results-content">
+  {% include 'partials/expenditures-filter.html' %}
+  <div id="committees" class="results-container">
+    {% include 'partials/expenditures-table.html' %}
+  </div>
+</section>
+
+<div id="datatable-modal" class="modal__overlay" aria-hidden="true">
+  <div class="modal">
+    <div class="modal__row">
+      <button title="Close menu" class="js-hide modal__close" data-hides="datatable-modal"><i class="ti-close"></i></button>
+    </div>
+    <div class="modal__row">
+      <h3>Expenditure Detail</h3>
+      <nav class="modal__nav">
+        <div class="modal__content">
+          <table>
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

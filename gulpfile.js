@@ -8,14 +8,17 @@ var watchify = require('watchify');
 var browserify = require('browserify');
 
 var gulp = require('gulp');
-var rev = require('gulp-rev');
 var gulpif = require('gulp-if');
+var hbsfy = require('hbsfy');
 var sass = require('gulp-sass');
 var gutil = require('gulp-util');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
+var rename = require('gulp-rename');
+var rev = require('gulp-rev');
 var preprocessify = require('preprocessify');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
 
 var debug = !!process.env.FEC_WEB_DEBUG;
 var production = !!process.env.FEC_WEB_PRODUCTION;
@@ -31,6 +34,7 @@ var wb = watchify(browserify(watchOpts));
 function bundle(watch) {
   return (watch ? wb : b)
     .transform(preprocessify({DEBUG: debug}))
+    .transform(hbsfy)
     .bundle()
     .pipe(source('static/js/init.js'))
     .pipe(buffer())
@@ -66,6 +70,7 @@ gulp.task('copy-images', function() {
 gulp.task('build-sass', ['copy-vendor-images', 'copy-fonts', 'copy-images'], function() {
   return gulp.src('./static/styles/styles.scss')
     .pipe(rename('dist/styles/styles.css'))
+    .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths: Array.prototype.concat(
         './static/styles',
@@ -75,6 +80,7 @@ gulp.task('build-sass', ['copy-vendor-images', 'copy-fonts', 'copy-images'], fun
       )
     }).on('error', sass.logError))
     .pipe(rev())
+    .pipe(sourcemaps.write())
     .pipe(gulpif(production, minifyCss()))
     .pipe(gulp.dest('.'))
     .pipe(rev.manifest({merge: true}))
@@ -136,6 +142,7 @@ gulp.task('factor', function() {
     debug: true
   })
   .transform(preprocessify({DEBUG: debug}))
+  .transform(hbsfy)
   .bundle()
   .pipe(callback('static/js/common.js'));
 });

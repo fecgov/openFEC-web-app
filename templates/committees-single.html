@@ -82,7 +82,8 @@
            <nav class="page-tabs">
               <ul role="tablist">
                 <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Filings</a></li>
+                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Contributions</a></li>
+                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Filings</a></li>
               </ul>
           </nav>
         </div>
@@ -137,7 +138,7 @@
         {% if reports and totals %}
           <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
-          <div class="page-subsection page-subsection--noline">
+          <div class="page-subsection">
             <div class="row js-accordion meta-box recent-report">
               {% with committee=context() %}
               <div class="meta-box__bar">
@@ -195,7 +196,10 @@
       </div>
     </section>
 
+    {% with committee=context() %}
+    {% include 'partials/contributions-tab.html' %}
     {% include 'partials/filings-tab.html' %}
+    {% endwith %}
   </div>
 
 {% endblock %}

@@ -1,4 +1,5 @@
 import http
+import datetime
 
 import furl
 from webargs import Arg
@@ -72,6 +73,14 @@ def series_group_has_data(groups, keys):
     )
 
 
+def cycle_start(value):
+    return datetime.datetime(value - 1, 1, 1)
+
+
+def cycle_end(value):
+    return datetime.datetime(value, 12, 31)
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -86,6 +95,8 @@ app.jinja_env.globals.update({
     'series_has_data': series_has_data,
     'group_has_data': group_has_data,
     'series_group_has_data': series_group_has_data,
+    'cycle_start': cycle_start,
+    'cycle_end': cycle_end,
 })
 
 
@@ -167,7 +178,21 @@ def candidates():
 
 @app.route('/committees')
 def committees():
-    return render_template('committees.html', result_type='committees')
+    return render_template(
+        'committees.html',
+        result_type='committees',
+        dates=utils.date_ranges(),
+    )
+
+
+@app.route('/donations')
+def donations():
+    return render_template('donations.html', dates=utils.date_ranges())
+
+
+@app.route('/expenditures')
+def expenditures():
+    return render_template('expenditures.html')
 
 
 @app.errorhandler(404)
@@ -185,6 +210,11 @@ def currency_filter(num, grouping=True):
     if isinstance(num, (int, float)):
         return locale.currency(num, grouping=grouping)
     return None
+
+
+@app.template_filter('date')
+def date_filter(value, fmt='%m/%d/%Y'):
+    return value.strftime(fmt)
 
 
 def _unique(values):
