@@ -4,6 +4,8 @@ memory: 512M
 stack: cflinuxfs2
 buildpack: "https://github.com/ddollar/heroku-buildpack-multi.git"
 env:
+  # Build devDependencies on `npm install`
+  NPM_CONFIG_PRODUCTION: "false"
   NEW_RELIC_CONFIG_FILE: newrelic.ini
   NEW_RELIC_LOG: stdout
 applications:
