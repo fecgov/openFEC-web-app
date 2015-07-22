@@ -251,12 +251,6 @@ var disbursementRecipientIDColumns = [
 
 var donationColumns = [
   {
-    width: '5%',
-    render: function(data, type, row, meta) {
-      return '<span class="modal-toggle">+</span>';
-    }
-  },
-  {
     data: 'contributor',
     orderable: false,
     className: 'all',
@@ -286,15 +280,16 @@ var donationColumns = [
       }
     }
   },
+  {
+    width: '5%',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return '';
+    }
+  }
 ];
 
 var expenditureColumns = [
-  {
-    width: '5%',
-    render: function(data, type, row, meta) {
-      return '<span class="modal-toggle">+</span>';
-    }
-  },
   {
     data: 'recipient_name',
     orderable: false,
@@ -326,6 +321,13 @@ var expenditureColumns = [
       }
     }
   },
+  {
+    width: '5%',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return '';
+    }
+  }
 ];
 
 function mapSort(order, columns) {
@@ -374,11 +376,14 @@ function mapQuerySeek(api, data) {
 
 function modalAfterRender(template, api, data, response) {
   var $table = $(api.table().node());
-  $table.on('click', '.modal-toggle', function(e) {
-    var row = $(e.target).closest('tr');
-    var index = api.row(row).index();
+  $table.on('click', '.js-panel-toggle tr', function(e) {
+    var $row = $(e.target).closest('tr');
+    if ($row.is('a')) {
+      return true;
+    }
+    var index = api.row($row).index();
     var $modal = $('#datatable-modal');
-    $modal.find('.modal__content').html(template(response.results[index]));
+    $modal.find('.js-panel-content').html(template(response.results[index]));
     $modal.attr('aria-hidden', 'false');
   });
 }
@@ -478,6 +483,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     $paging.prepend($hideNullWidget);
   }
   $table.css('width', '100%');
+  $table.find('tbody').addClass('js-panel-toggle');
   // Update filters and data table on navigation
   $(window).on('popstate', function() {
     filters.activateInitialFilters();
@@ -501,7 +507,6 @@ module.exports = {
   init: function() {
     var $tables = $('.data-table');
     var $form = $('#category-filters');
-
     var offsetCallbacks = {
       mapQuery: mapQueryOffset
     };
@@ -535,7 +540,7 @@ module.exports = {
               afterRender: modalAfterRender.bind(undefined, donationTemplate)
             },
             {
-              order: [[5, 'desc']],
+              order: [[4, 'desc']],
               pagingType: 'simple'
             }
           );
@@ -553,7 +558,7 @@ module.exports = {
               afterRender: modalAfterRender.bind(undefined, expenditureTemplate)
             },
             {
-              order: [[4, 'desc']],
+              order: [[3, 'desc']],
               pagingType: 'simple'
             }
           );

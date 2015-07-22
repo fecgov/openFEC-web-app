@@ -1,0 +1,11 @@
+
+.panel__overlay {
+  background: $meta-box-color;
+  bottom: 0;
+  left: 0;
+  padding: 1em 2em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 200;
+}

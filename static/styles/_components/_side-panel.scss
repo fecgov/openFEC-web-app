@@ -37,10 +37,19 @@
 .side-panel__toggle {
   @include transform(translateX(-50%));
   border-color: $light-gray;
+  border-left-width: 1px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+  border-color: $filter-bg;
+  border-style: solid;
   left: 50%;
   padding: 1rem;
   position: absolute;
   z-index: 100;
+
+  // Hacks to get borders to work
+  margin-left: 1px;
+  margin-top: 1px;
 
   &:hover {
     background: $lightest-gray;
