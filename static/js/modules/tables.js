@@ -134,6 +134,50 @@ var committeeColumns = [
   {data: 'organization_type_full', className: 'min-desktop'},
 ];
 
+var filingsColumns = [
+  {
+    data: 'pdf_url',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var anchor = document.createElement('a');
+      anchor.textContent = 'View filing';
+      anchor.setAttribute('href', data);
+      anchor.setAttribute('target', '_blank');
+      return anchor.outerHTML;
+    }
+  },
+  {data: 'amendment_indicator', className: 'min-desktop'},
+  {data: 'report_type_full', className: 'min-desktop'},
+  dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
+  currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
+  currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
+];
+
+var filingsTableColumns = [
+  {
+    data: 'pdf_url',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var anchor = document.createElement('a');
+      anchor.textContent = 'View filing';
+      anchor.setAttribute('href', data);
+      anchor.setAttribute('target', '_blank');
+      return anchor.outerHTML;
+    }
+  },
+  {data: 'committee_name', className: 'min-desktop', orderable: false},
+  {data: 'candidate_name', className: 'min-desktop', orderable: false},
+  {data: 'amendment_indicator', className: 'min-desktop'},
+  {data: 'report_type_full', className: 'min-desktop', orderable: false},
+  dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
+  currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
+  currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'})
+];
+
 var committeeContributorColumns = [
   {
     data: 'contributor_name',
@@ -445,6 +489,14 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   });
 }
 
+var offsetCallbacks = {
+  mapQuery: mapQueryOffset
+};
+var seekCallbacks = {
+  mapQuery: mapQuerySeek,
+  handleResponse: handleResponseSeek
+};
+
 module.exports = {
   init: function() {
     var $tables = $('.data-table');
@@ -505,6 +557,18 @@ module.exports = {
               pagingType: 'simple'
             }
           );
+          break;
+        case 'filing-table':
+          initTable($table, $form, 'filings', {}, filingsTableColumns, offsetCallbacks, {
+            // Order by receipt date descending
+            order: [[5, 'desc']],
+          });
+          break;
+        case 'filing':
+          initTable($table, $form, 'committee/' + committeeId + '/filings', {}, filingsColumns, offsetCallbacks, {
+            // Order by receipt date descending
+            order: [[4, 'desc']],
+          });
           break;
         case 'committee-contributor':
           path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');

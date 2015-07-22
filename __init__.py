@@ -188,6 +188,10 @@ def donations():
 def expenditures():
     return render_template('expenditures.html')
 
+@app.route('/filings')
+def filings():
+    return render_template('filings-table.html',result_type='committees')
+
 
 @app.errorhandler(404)
 def page_not_found(e):
