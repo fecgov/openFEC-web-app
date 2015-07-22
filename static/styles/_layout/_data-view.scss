@@ -145,6 +145,8 @@
     }
 
     .dataTables_paginate {
+      padding-top: 0;
+
       .paginate_button.disabled {
         border: none;
         color: $medium-gray;
@@ -181,18 +183,12 @@
     }
   }
 
-  .results-info--top {
-    .dataTables_paginate,
-    .dataTables_info {
-      padding-top: 1rem;
-    }
-  }
   @include media($medium) {
     .results-info {
       width: 100%;
 
       .dataTables_length {
-        padding: .5rem 0;
+        padding: .5rem 0 2rem;
       }
     }
   }

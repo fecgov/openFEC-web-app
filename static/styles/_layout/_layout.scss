@@ -98,7 +98,6 @@ body {
 
 // This is a grouping of content withinin a section, labeled by a h3
 .page-subsection {
-  @include primary-divider();
   @include clearfix();
   padding: 2rem 0 4rem;
 
@@ -107,7 +106,8 @@ body {
     border-bottom: none;
   }
 
-  &.page-subsection--noline {
+  &.page-subsection--bordered {
+    @include primary-divider();
     border-bottom: 0;
     padding-bottom: 2rem;
   }
