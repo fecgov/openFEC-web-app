@@ -1,6 +1,6 @@
 path.shape{
-  stroke: none;
+  stroke: #ccc;
   &.active {
-    stroke: #000;
+    fill: $focus;
   }
 }

@@ -1,0 +1,20 @@
+.toggles {
+  label {
+    display: inline-block;
+    margin-top: 0;
+    margin-left: -2px;
+  }
+
+  input[type="radio"] {
+    @include u-visually_hidden();
+  }
+
+  input:checked + .toggle-button {
+    background-color: $dark-gray;
+    color: #fff;
+  }
+}
+
+.toggle-button {
+  @include button($light-gray, $dark-gray, $medium-gray, $dark-gray);
+}

@@ -64,10 +64,10 @@ function stateMap($elm, width, height) {
       },
       {}
     );
-    var quantiles = 7;
+    var quantiles = 4;
     var max = _.max(_.pluck(data.results, 'total'));
-    var scale = chroma.scale('RdYlBu').domain([0, max]);
-    var quantize = chroma.scale('RdYlBu').domain([0, max], quantiles);
+    var scale = chroma.scale(['#fff', '#2678BA']).domain([0, max]);
+    var quantize = chroma.scale(['#fff', '#2678BA']).domain([0, max], quantiles);
     var map = svg.append('g')
       .selectAll('path')
         .data(topojson.feature(states, states.objects.units).features)
