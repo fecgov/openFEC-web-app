@@ -52,7 +52,7 @@ class CandidatesPageTests(SearchPageTestCase):
         self.check_filter('state', 'AZ', 4, 'AZ')
 
     def testCandidateDistrictFilter(self):
-        self.check_filter('district', '05', 5, '05')
+        self.check_filter('district', '01', 5, '01')
 
     def testCandidateOfficeFilter(self):
         self.check_filter('office', 'P', 1, 'President')
