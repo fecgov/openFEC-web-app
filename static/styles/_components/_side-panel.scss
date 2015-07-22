@@ -8,6 +8,11 @@
   top: 0;
 }
 
+.side-panel__hider {
+  height: 0;
+  overflow: hidden;
+}
+
 .side-toggle {
   @include rem(padding, 1.0rem);
   @include transition(background-color, .1s);
@@ -146,6 +151,10 @@
 
 .side-panel--open {
   position: relative;
+
+  .side-panel__hider {
+    height: auto;
+  }
 
   .side-panel__toggle {
     .icon {
