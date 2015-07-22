@@ -66,8 +66,6 @@
     "topojson": "1.6.19",
     "typeahead.js": "0.10.5",
     "underscore": "1.8.3",
-    "vinyl-buffer": "1.0.0",
-    "vinyl-source-stream": "1.1.0",
     "watchify": "3.2.1"
   }
 }

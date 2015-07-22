@@ -1,8 +1,6 @@
 /* global require */
 
 var _ = require('underscore');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
 
 var watchify = require('watchify');
 var browserify = require('browserify');
@@ -23,34 +21,8 @@ var uglify = require('gulp-uglify');
 var debug = !!process.env.FEC_WEB_DEBUG;
 var production = !!process.env.FEC_WEB_PRODUCTION;
 
-var opts = {
-  entries: ['./static/js/init.js'],
-  debug: debug
-};
-var watchOpts = _.assign({}, watchify.args, opts);
-var b = browserify(opts);
-var wb = watchify(browserify(watchOpts));
-
-function bundle(watch) {
-  return (watch ? wb : b)
-    .transform(preprocessify({DEBUG: debug}))
-    .transform(hbsfy)
-    .bundle()
-    .pipe(source('static/js/init.js'))
-    .pipe(buffer())
-    .pipe(rename('./static/js/app.js'))
-    .pipe(rev())
-    .pipe(gulpif(production, uglify()))
-    .pipe(gulp.dest('.'))
-    .pipe(rev.manifest({merge: true}))
-    .pipe(gulp.dest('.'));
-}
-
-wb.on('update', bundle);
-wb.on('log', gutil.log);
-
-// gulp.task('build-js', bundle.bind(this, false));
-gulp.task('watch-js', bundle.bind(this, true));
+// TODO(jmcarp) Restore `watch-js`
+// gulp.task('watch-js', bundle.bind(this, true));
 
 gulp.task('copy-vendor-images', function() {
   return gulp.src('./node_modules/datatables/media/images/**/*')
@@ -129,7 +101,7 @@ function write(streams, name) {
   });
 }
 
-gulp.task('factor', function() {
+gulp.task('build-js', function() {
   var pages = fs.readdirSync('./static/js/pages').map(function(each) {
     return path.join('./static/js/pages', each);
   });
@@ -139,7 +111,7 @@ gulp.task('factor', function() {
   return browserify({
     entries: pages,
     plugin: [['factor-bundle', {outputs: _.map(pages, callback)}]],
-    debug: true
+    debug: debug
   })
   .transform(preprocessify({DEBUG: debug}))
   .transform(hbsfy)
