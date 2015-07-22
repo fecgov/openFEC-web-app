@@ -1,29 +1,26 @@
 <section class="page-section" id="section-4" role="tabpanel" aria-hidden="true" aria-labelledby="section-4-header">
-  <div id="filters" class="side-panel side-panel--left">
-    <div class="side-panel__box">
-      <button id="filter-toggle" data-slide="left" class="side-panel__toggle">
-        <i class="icon ti-angle"></i>
-      </button>
+  <div class="container">
+    <div id="filters" class="meta-box">
       <h4>Filter Filings</h4>
       <form id="category-filters">
-        <div class="field" id="report-year">
-          <label for="report_year">Report Year</label>
-          <input type="text" name="report_year" />
-          <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
+        <div class="chunk--half">
+          <div class="field" id="report-year">
+            <label for="report_year">Report Year</label>
+            <input type="text" name="report_year" />
+            <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
+          </div>
+          {% include 'partials/filters/amendment-indicator.html' %}
         </div>
-
-        {% include 'partials/filters/amendment-indicator.html' %}
-        {% include 'partials/filters/primary-general.html' %}
-        {% include 'partials/filters/report-type.html' %}
-
-        <div class="field">
-          <button type="submit" class="primary">Apply filters</button>
+        <div class="chunk--half">
+          {% include 'partials/filters/primary-general.html' %}
+          {% include 'partials/filters/report-type.html' %}
+          <div class="field">
+            <button type="submit" class="primary">Apply filters</button>
+          </div>
         </div>
       </form>
     </div>
-  </div>
 
-  <div class="results-container">
     <table class="data-table" data-type="filing" data-committee="{{ committee_id }}" width="100%" class="responsive">
       <thead>
         <tr>
