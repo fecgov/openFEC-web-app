@@ -1,6 +1,12 @@
-path.shape{
-  stroke: none;
+path.shape {
+  stroke: #ccc;
   &.active {
-    stroke: #000;
+    fill: $focus;
+  }
+}
+
+.legend {
+  rect {
+    stroke: #ccc;
   }
 }

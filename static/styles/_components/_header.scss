@@ -172,7 +172,19 @@
 }
 
 .section-header {
+  @include clearfix();
   border-bottom: 2px solid $dark-gray;
+  margin-bottom: 2rem;
+
+  h3 {
+    float: left;
+    margin-bottom: 0;
+  }
+
+  .toggles {
+    float: right;
+    margin-bottom: 1rem;
+  }
 }
 
 #glossary-toggle {

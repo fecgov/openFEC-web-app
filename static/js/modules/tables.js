@@ -149,6 +149,7 @@ var committeeContributorColumns = [
 var stateContributorColumns = [
   {
     data: 'state_full',
+    width: '50%',
     className: 'all',
     render: function(data, type, row, meta) {
       var span = document.createElement('span');
@@ -160,6 +161,7 @@ var stateContributorColumns = [
   },
   {
     data: 'total',
+    width: '50%',
     className: 'all',
     render: function(data, type, row, meta) {
       var span = document.createElement('div');
@@ -528,18 +530,20 @@ module.exports = {
             _.extend({
               afterRender: barsAfterRender.bind(undefined, undefined)
             }, offsetCallbacks), {
-            dom: '<"results-info meta-box results-info--top"lfrip>t',
+            dom: 't',
             order: [[1, 'desc']],
             paging: false,
             lengthChange: false,
             pageLength: 10,
             useHideNull: false,
-            scrollY: 300,
+            scrollY: 400,
             scrollCollapse: true
           });
           events.on('state.map', function(params) {
             var $scrollBody = $table.closest('.dataTables_scrollBody');
             var $row = $scrollBody.find('span[data-state="' + params.state + '"]');
+            $scrollBody.find('.active').removeClass('active');
+            $row.parents('tr').addClass('active');
             $scrollBody.animate({
               scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
             }, 500);
