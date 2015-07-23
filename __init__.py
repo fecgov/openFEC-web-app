@@ -26,7 +26,7 @@ locale.setlocale(locale.LC_ALL, '')
 
 START_YEAR = 1979
 
-app = Flask(__name__)
+app = Flask(__name__, static_path='/static', static_folder='dist')
 
 # ===== configure logging =====
 logger = logging.getLogger(__name__)
@@ -101,13 +101,19 @@ app.jinja_env.globals.update({
 
 
 try:
-    app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
+    assets = json.load(open('./rev-manifest.json'))
 except OSError:
     logger.error(
         'Manifest "rev-manifest.json" not found. Did you remember to run '
         '"npm run build"?'
     )
     raise
+# Hack: Rename paths from "dist" to "static"
+# TODO(jmcarp) Find a better solution
+app.jinja_env.globals['assets'] = {
+    key: value.replace('dist', 'static')
+    for key, value in assets.items()
+}
 
 
 @app.route('/')

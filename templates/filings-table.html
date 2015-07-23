@@ -41,7 +41,7 @@
   </div>
 
   <div id="filings" class="results-container">
-    <table class="data-table" data-type="filing-table" width="100%" class="responsive">
+    <table id="results" data-type="filing-table" width="100%" class="responsive">
     <thead>
       <tr>
         <th scope="col">Link</th>
@@ -62,5 +62,5 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/static/js/vendor/tablist.js"></script>
+<script src="/{{ assets['dist/js/pages/filings.js'] }}"></script>
 {% endblock %}
