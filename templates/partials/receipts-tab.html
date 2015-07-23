@@ -89,21 +89,6 @@
           </div>
         </figure>
       </div>
-      <div id="by-committee" class="panel-toggle-element">
-        <table
-           class="data-table"
-           data-type="committee-contributor"
-           data-committee="{{ committee.committee_id }}"
-           data-cycle="{{ cycle }}"
-           {% if year %}data-year"{{ year }}"{% endif %}>
-          <thead>
-            <th scope="col">Committee</th>
-            <th scope="col">Total Contributed</th>
-          </thead>
-        </table>
-        <a href={{ url_for('receipts', committee_id=committee.committee_id, contributor_type='committee') }}>
-          View all contributions from committees &raquo;</a>
-      </div>
       <div class="row">
         <div id="by-committee" class="panel-toggle-element">
           <table

@@ -10,12 +10,6 @@ var disbursementTemplate = require('../../templates/expenditure.hbs');
 
 var columns = [
   {
-    width: '5%',
-    render: function(data, type, row, meta) {
-      return '<span class="modal-toggle">+</span>';
-    }
-  },
-  {
     data: 'recipient_name',
     orderable: false,
     className: 'all',
@@ -46,6 +40,13 @@ var columns = [
       }
     }
   },
+  {
+    width: '5%',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return '';
+    }
+  }
 ];
 
 $(document).ready(function() {
@@ -61,7 +62,7 @@ $(document).ready(function() {
       afterRender: tables.modalAfterRender.bind(undefined, disbursementTemplate)
     }),
     {
-      order: [[4, 'desc']],
+      order: [[3, 'desc']],
       pagingType: 'simple'
     }
   );

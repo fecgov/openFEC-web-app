@@ -10,12 +10,6 @@ var donationTemplate = require('../../templates/donation.hbs');
 
 var columns = [
   {
-    width: '5%',
-    render: function(data, type, row, meta) {
-      return '<span class="modal-toggle">+</span>';
-    }
-  },
-  {
     data: 'contributor',
     orderable: false,
     className: 'all',
@@ -45,6 +39,13 @@ var columns = [
       }
     }
   },
+  {
+    width: '5%',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return '';
+    }
+  }
 ];
 
 $(document).ready(function() {
@@ -60,7 +61,7 @@ $(document).ready(function() {
       afterRender: tables.modalAfterRender.bind(undefined, donationTemplate)
     }),
     {
-      order: [[5, 'desc']],
+      order: [[4, 'desc']],
       pagingType: 'simple'
     }
   );
