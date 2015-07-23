@@ -27,7 +27,7 @@
               <div class="table__cell">
                 <a
                     href="{{ url_for(
-                      'donations',
+                      'receipts',
                       committee_id=committee.committee_id,
                       min_amount=limits[0],
                       max_amount=limits[1],
@@ -98,7 +98,7 @@
               <th scope="col">Total Contributed</th>
             </thead>
           </table>
-          <a href={{ url_for('donations', committee_id=committee.committee_id, contributor_type='committee') }}>
+          <a href={{ url_for('receipts', committee_id=committee.committee_id, contributor_type='committee') }}>
             View all contributions from committees &raquo;</a>
         </div>
 

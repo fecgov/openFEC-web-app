@@ -1,7 +1,7 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-  Browse Expenditures
+  Browse Disbursements
 {% endblock %}
 
 {% block body %}
@@ -11,9 +11,9 @@
 </header>
 
 <section class="results-content">
-  {% include 'partials/expenditures-filter.html' %}
+  {% include 'partials/disbursements-filter.html' %}
   <div id="committees" class="results-container">
-    {% include 'partials/expenditures-table.html' %}
+    {% include 'partials/disbursements-table.html' %}
   </div>
 </section>
 
@@ -23,7 +23,7 @@
       <button title="Close menu" class="js-hide modal__close" data-hides="datatable-modal"><i class="ti-close"></i></button>
     </div>
     <div class="modal__row">
-      <h3>Expenditure Detail</h3>
+      <h3>Disbursement Detail</h3>
       <nav class="modal__nav">
         <div class="modal__content">
           <table>
