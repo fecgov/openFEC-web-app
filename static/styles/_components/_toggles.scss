@@ -1,8 +1,10 @@
 .toggles {
-  label {
-    display: inline-block;
-    margin-top: 0;
-    margin-left: -2px;
+  @include clearfix();
+
+  .label {
+    display: block;
+    font-weight: bold;
+    clear: both;
   }
 
   input[type="radio"] {
@@ -11,10 +13,30 @@
 
   input:checked + .toggle-button {
     background-color: $dark-gray;
+    border-color: $dark-gray;
     color: #fff;
+  }
+
+  label {
+    margin-top: 0;
+    float: left;
+  }
+
+  label:first-of-type {
+    .toggle-button {
+      border-radius: 4px 0 0 4px;
+    }
+  }
+
+  label:last-of-type {
+    .toggle-button {
+      border-radius: 0 4px 4px 0;
+      border-right-width: 1px;
+    }
   }
 }
 
 .toggle-button {
-  @include button($light-gray, $dark-gray, $medium-gray, $dark-gray);
+  @include button(#FBFBFD, $dark-gray, $medium-gray, $dark-gray);
+  border-right-width: 0;
 }

@@ -1,22 +1,22 @@
 <section class="page-section" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-header">
   <div class="container">
-    <div class="section-header">
-      <h3>Top Recipients {{ cycle | fmt_year_range }}</h3>
-      <div class="toggles">
-        <span class="label">Compare by:</span>
-        <label for="toggle-purpose">
-          <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />
-          <span class="toggle-button">Purpose</span>
-        </label>
-        <label for="toggle-recipient">
-          <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />
-          <span class="toggle-button">Recipient Name</span>
-        </label>
-        <label for="toggle-id">
-          <input id="toggle-id" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient-id" />
-          <span class="toggle-button">Recipient Committee</span>
-        </label>
-      </div>
+    <div class="page-section__intro">
+      <h2>Top Recipients {{ cycle | fmt_year_range }}</h2>
+        <div class="toggles">
+          <span class="label">Compare by:</span>
+          <label for="toggle-purpose">
+            <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />
+            <span class="toggle-button">Purpose</span>
+          </label>
+          <label for="toggle-recipient">
+            <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />
+            <span class="toggle-button">Recipient Name</span>
+          </label>
+          <label for="toggle-id">
+            <input id="toggle-id" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient-id" />
+            <span class="toggle-button">Recipient Committee</span>
+          </label>
+        </div>
     </div>
     <div class="row">
       <div id="by-purpose" class="panel-toggle-element">

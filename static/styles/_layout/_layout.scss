@@ -94,6 +94,7 @@ body {
 
 .page-section__intro {
   @include clearfix();
+  padding-bottom: 2rem;
 }
 
 // This is a grouping of content withinin a section, labeled by a h3
