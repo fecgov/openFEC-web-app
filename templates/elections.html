@@ -1,0 +1,29 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse Donations
+{% endblock %}
+
+{% block body %}
+
+<section class="results-content">
+  <div class="container">
+    <h4>Active Candidates</h4>
+    <table id="results" class="data-table" data-type="candidates">
+      <thead>
+        <th role="col">Candidate</th>
+        <th role="col">Status</th>
+        <th role="col">Total Receipts</th>
+        <th role="col">Total Disbursements</th>
+        <th role="col">Cash on Hand</th>
+        <th role="col">Most Recent Report</th>
+      </thead>
+    </table>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/elections.js'] }}"></script>
+{% endblock %}
