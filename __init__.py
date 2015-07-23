@@ -200,6 +200,11 @@ def filings():
     return render_template('filings-table.html', result_type='committees')
 
 
+@app.route('/elections')
+def elections():
+    return render_template('elections.html')
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
