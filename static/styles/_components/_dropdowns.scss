@@ -1,9 +1,10 @@
 // Dropdowns
 .button--dropdown {
+  font-size: 1.4rem;
   position: relative;
   text-align: left;
   padding: .5rem 1rem;
-  line-height: 1.8rem;
+  line-height: 1.5rem;
   background-color: #fff;
   font-weight: normal;
 
@@ -57,7 +58,6 @@
   z-index: 999;
 
   li {
-    font-size: 1.2rem;
     border-bottom: 1px solid $light-gray;
     white-space: nowrap;
     padding: .5rem 1rem;

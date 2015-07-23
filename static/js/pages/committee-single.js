@@ -9,6 +9,8 @@ var events = require('../modules/events');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 
+var singlePageTableDOM = 't<"results-info meta-box"frip>';
+
 var committeeColumns = [
   {
     data: 'contributor_name',
@@ -118,7 +120,7 @@ $(document).ready(function() {
           query.cycle = cycle;
         }
         tables.initTable($table, null, path, query, committeeColumns, tables.offsetCallbacks, {
-          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          dom: singlePageTableDOM,
           order: [[1, 'desc']],
           pagingType: 'simple',
           lengthChange: false,
@@ -159,7 +161,7 @@ $(document).ready(function() {
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'].join('/');
         query = {cycle: parseInt(cycle)};
         tables.initTable($table, null, path, query, employerColumns, tables.offsetCallbacks, {
-          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          dom: singlePageTableDOM,
           order: [[1, 'desc']],
           pagingType: 'simple',
           lengthChange: false,
@@ -171,7 +173,7 @@ $(document).ready(function() {
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'].join('/');
         query = {cycle: parseInt(cycle)};
         tables.initTable($table, null, path, query, occupationColumns, tables.offsetCallbacks, {
-          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          dom: singlePageTableDOM,
           order: [[1, 'desc']],
           pagingType: 'simple',
           lengthChange: false,
@@ -181,6 +183,7 @@ $(document).ready(function() {
         break;
       case 'filing':
         tables.initTable($table, null, 'committee/' + committeeId + '/filings', {}, filingsColumns, tables.offsetCallbacks, {
+          dom: 't<"results-info meta-box"lfrip>',
           // Order by receipt date descending
           order: [[4, 'desc']],
         });
@@ -189,7 +192,7 @@ $(document).ready(function() {
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'].join('/');
         query = {cycle: parseInt(cycle)};
         tables.initTable($table, null, path, query, disbursementPurposeColumns, tables.offsetCallbacks, {
-          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          dom: singlePageTableDOM,
           order: [[1, 'desc']],
           pagingType: 'simple',
           lengthChange: false,
@@ -201,7 +204,7 @@ $(document).ready(function() {
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'].join('/');
         query = {cycle: parseInt(cycle)};
         tables.initTable($table, null, path, query, disbursementRecipientColumns, tables.offsetCallbacks, {
-          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          dom: singlePageTableDOM,
           order: [[1, 'desc']],
           pagingType: 'simple',
           lengthChange: false,
@@ -213,7 +216,7 @@ $(document).ready(function() {
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'].join('/');
         query = {cycle: parseInt(cycle)};
         tables.initTable($table, null, path, query, disbursementRecipientIDColumns, tables.offsetCallbacks, {
-          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          dom: singlePageTableDOM,
           order: [[1, 'desc']],
           pagingType: 'simple',
           lengthChange: false,

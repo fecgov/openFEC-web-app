@@ -42,8 +42,11 @@
     margin-right: 0;
   }
 
-  & > .label {
+  label {
     font-size: 1.4rem;
+  }
+
+  & > .label {
     margin-top: 0;
     font-weight: bold;
   }
@@ -85,4 +88,30 @@
   display: none;
   padding: .5rem;
   float: left;
+}
+
+.filters--horizontal {
+
+  @include media($large) {
+    form {
+      @include display(flex);
+      @include justify-content(flex-start);
+    }
+
+    .field {
+      border-top: none;
+      border-right: 1px solid $light-gray;
+      padding: 0 1rem;
+      margin-right: 0;
+      
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        border-right: none;
+        padding-right: 0;
+      }
+    }
+  }
 }
