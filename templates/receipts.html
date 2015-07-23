@@ -1,0 +1,45 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse Donations
+{% endblock %}
+
+{% block body %}
+
+<header class="page-header page-header--dark">
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Receipts</h1>
+</header>
+
+<section class="results-content">
+  {% include "partials/receipts-filter.html" %}
+  <div id="committees" class="results-container">
+    {% include 'partials/receipts-table.html' %}
+  </div>
+</section>
+
+<div id="datatable-modal" class="panel__overlay" aria-hidden="true">
+  <div class="panel">
+    <div class="panel__row">
+      <button title="Close menu" class="js-hide panel__close" data-hides="datatable-modal">
+        <i class="ti-close"></i></button>
+    </div>
+    <div class="panel__row">
+      <h3>Donation Detail</h3>
+      <nav class="panel__nav">
+        <div class="js-panel-content panel__content">
+          <table>
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/receipts.js'] }}"></script>
+{% endblock %}

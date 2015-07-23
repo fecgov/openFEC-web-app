@@ -1,0 +1,153 @@
+{% import 'macros/null.html' as null %}
+{% import 'macros/charts.html' as charts %}
+
+<section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-header">
+  <div class="container">
+      {% set table_data = [
+        (aggregates.size.0, (0, 199.99), 'Under $200'),
+        (aggregates.size.200, (200, 499.99), '$200 - $499'),
+        (aggregates.size.500, (500, 999.99), '$500 - $999'),
+        (aggregates.size.1000, (1000, 1999.99), '$1000 - $1999'),
+        (aggregates.size.2000, (2000, None), 'Over $2000'),
+      ] %}
+    <div class="page-section__intro">
+      <h2>Analyze Contributions {{ year if year else cycle | fmt_year_range }}</h2>
+      <div class="toggles">
+        <span class="label">Compare by:</span>
+        <label for="toggle-state">
+          <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
+          <span class="toggle-button">State</span>
+        </label>
+        <label for="toggle-contribution-size">
+          <input id="toggle-contribution-size" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
+          <span class="toggle-button">Contribution Size</span>
+        </label>
+        <label for="toggle-committee">
+          <input id="toggle-committee" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-committee">
+          <span class="toggle-button">Committee</span>
+        </label>
+        <label for="toggle-employer">
+          <input id="toggle-employer" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-employer">
+          <span class="toggle-button">Employer</span>
+        </label>
+        <label for="toggle-occupation">
+          <input id="toggle-occupation" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-occupation">
+          <span class="toggle-button">Occupation</span>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div id="by-state" class="panel-toggle-element">
+        <div class="chunk--half">
+          <table
+              class="data-table"
+              data-type="receipts-by-state"
+              data-committee="{{ committee.committee_id }}"
+              data-cycle="{{ cycle }}"
+            >
+            <thead>
+              <th scope="col">State</th>
+              <th scope="col">Total Contributed</th>
+            </thead>
+          </table>
+        </div>
+        <div class="chunk--half">
+          <div class="state-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
+        </div>
+      </div>
+      <div id="by-contribution-size" class="panel-toggle-element">
+        <figure class="table--simple totals-table totals-table--charts">
+          <div class="table__row table__row--header">
+            <div class="table__cell">
+              <h5>Contribution Size</h5>
+            </div>
+            <div class="table__cell">
+              <h5>Contribution Size</h5>
+            </div>
+          </div>
+          <div class="table js-chart-series chart-series--horizontal">
+            {% for value, limits, label in table_data %}
+              <div class="table__row">
+                <div class="table__cell">
+                  <a
+                      href="{{ url_for(
+                        'receipts',
+                        committee_id=committee.committee_id,
+                        min_amount=limits[0],
+                        max_amount=limits[1],
+                        min_date=cycle_start(cycle).strftime('%m/%d/%Y'),
+                        max_date=cycle_end(cycle).strftime('%m/%d/%Y'),
+                      ) }}"
+                  >{{ label }}</a>
+                </div>
+                <div class="table__cell">{{ null.null(value | currency) }}</div>
+                <div class="table__cell table__cell--bar">
+                  {{ charts.chart_bar(value | default(0), label, tooltip=None) }}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </figure>
+      </div>
+      <div id="by-committee" class="panel-toggle-element">
+        <table
+           class="data-table"
+           data-type="committee-contributor"
+           data-committee="{{ committee.committee_id }}"
+           data-cycle="{{ cycle }}"
+           {% if year %}data-year"{{ year }}"{% endif %}>
+          <thead>
+            <th scope="col">Committee</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+        <a href={{ url_for('receipts', committee_id=committee.committee_id, contributor_type='committee') }}>
+          View all contributions from committees &raquo;</a>
+      </div>
+      <div class="row">
+        <div id="by-committee" class="panel-toggle-element">
+          <table
+             class="data-table"
+             data-type="committee-contributor"
+             data-committee="{{ committee.committee_id }}"
+             data-cycle="{{ cycle }}"
+             {% if year %}data-year"{{ year }}"{% endif %}>
+            <thead>
+              <th scope="col">Committee</th>
+              <th scope="col">Total Contributed</th>
+            </thead>
+          </table>
+          <a href={{ url_for('receipts', committee_id=committee.committee_id, contributor_type='committee') }}>
+            View all contributions from committees &raquo;</a>
+        </div>
+
+      <div id="by-employer" class="panel-toggle-element">
+        <table
+            class="data-table"
+            data-type="receipts-by-employer"
+            data-committee="{{ committee.committee_id }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <th scope="col">Employer</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+      </div>
+
+      <div id="by-occupation" class="panel-toggle-element">
+        <table
+            class="data-table"
+            data-type="receipts-by-occupation"
+            data-committee="{{ committee.committee_id }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <th scope="col">Occupation</th>
+            <th scope="col">Total Contributed</th>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

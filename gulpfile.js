@@ -9,7 +9,6 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var hbsfy = require('hbsfy');
 var sass = require('gulp-sass');
-var gutil = require('gulp-util');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var rev = require('gulp-rev');

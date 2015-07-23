@@ -1,19 +1,19 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-  Browse Donations
+  Browse Disbursements
 {% endblock %}
 
 {% block body %}
 
 <header class="page-header page-header--dark">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Donations</h1>
+  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Disbursements</h1>
 </header>
 
 <section class="results-content">
-  {% include "partials/donations-filter.html" %}
+  {% include 'partials/disbursements-filter.html' %}
   <div id="committees" class="results-container">
-    {% include 'partials/donations-table.html' %}
+    {% include 'partials/disbursements-table.html' %}
   </div>
 </section>
 
@@ -23,7 +23,7 @@
       <button title="Close menu" class="js-hide modal__close" data-hides="datatable-modal"><i class="ti-close"></i></button>
     </div>
     <div class="modal__row">
-      <h3>Donation Detail</h3>
+      <h3>Disbursement Detail</h3>
       <nav class="modal__nav">
         <div class="modal__content">
           <table>
@@ -40,5 +40,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/{{ assets['dist/js/pages/receipts.js'] }}"></script>
+<script src="/{{ assets['dist/js/pages/disbursements.js'] }}"></script>
 {% endblock %}

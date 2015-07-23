@@ -66,24 +66,12 @@
       </div>
       <div class="page-controls__bottom">
         <div class="container">
-          {% if cycles %}
-            <div class="time-period">
-              <label for="election_cycle">Two-Year Period</label>
-              <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
-              {% for each in cycles | restrict_cycles | sort(reverse=True) %}
-                <option
-                    value="{{ each }}"
-                    {% if each == cycle %}selected{% endif %}
-                  >{{ each | fmt_year_range }}</option>
-              {% endfor %}
-              </select>
-            </div>
-          {% endif %}
            <nav class="page-tabs">
               <ul role="tablist">
                 <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
                 <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Contributions</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Filings</a></li>
+                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Disbursements</a></li>
+                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel4" href="#section-4">Filings</a></li>
               </ul>
           </nav>
         </div>
@@ -137,6 +125,19 @@
       <div class="container committee-summary">
         {% if reports and totals %}
           <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
+          {% if cycles %}
+            <div class="time-period">
+              <label for="election_cycle">Two-Year Period</label>
+              <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
+              {% for each in cycles | restrict_cycles | sort(reverse=True) %}
+                <option
+                    value="{{ each }}"
+                    {% if each == cycle %}selected{% endif %}
+                  >{{ each | fmt_year_range }}</option>
+              {% endfor %}
+              </select>
+            </div>
+          {% endif %}
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
           <div class="page-subsection">
             <div class="row js-accordion meta-box recent-report">
@@ -197,7 +198,8 @@
     </section>
 
     {% with committee=context() %}
-    {% include 'partials/contributions-tab.html' %}
+    {% include 'partials/receipts-tab.html' %}
+    {% include 'partials/disbursements-tab.html' %}
     {% include 'partials/filings-tab.html' %}
     {% endwith %}
   </div>

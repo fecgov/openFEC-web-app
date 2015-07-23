@@ -14,7 +14,7 @@ module.exports = {
         });
         $('#' + $elm.attr('value')).show();
       });
-      $('.panel-toggle-control').change();
+      $('.panel-toggle-control:checked').change();
     });
   }
 };
