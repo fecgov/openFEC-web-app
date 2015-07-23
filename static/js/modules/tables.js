@@ -10,7 +10,6 @@ var moment = require('moment');
 require('datatables');
 require('drmonty-datatables-responsive');
 
-var events = require('./events');
 var filters = require('./filters');
 var helpers = require('./helpers');
 
@@ -90,49 +89,6 @@ function formattedColumn(formatter) {
 
 var dateColumn = formattedColumn(helpers.datetime);
 var currencyColumn = formattedColumn(helpers.currency);
-
-var filingsColumns = [
-  {
-    data: 'pdf_url',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      var anchor = document.createElement('a');
-      anchor.textContent = 'View filing';
-      anchor.setAttribute('href', data);
-      anchor.setAttribute('target', '_blank');
-      return anchor.outerHTML;
-    }
-  },
-  {data: 'amendment_indicator', className: 'min-desktop'},
-  {data: 'report_type_full', className: 'min-desktop'},
-  dateColumn({data: 'receipt_date', className: 'min-tablet'}),
-  currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
-  currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
-  currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
-];
-
-var disbursementPurposeColumns = [
-  {data: 'purpose', className: 'all', orderable: false},
-  currencyColumn({data: 'total', className: 'all', orderable: false})
-];
-
-var disbursementRecipientColumns = [
-  {data: 'recipient_name', className: 'all', orderable: false},
-  currencyColumn({data: 'total', className: 'all', orderable: false})
-];
-
-var disbursementRecipientIDColumns = [
-  {
-    data: 'recipient_name',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return buildEntityLink(data, '/committee/' + row.recipient_id, 'committee');
-    }
-  },
-  currencyColumn({data: 'total', className: 'all', orderable: false})
-];
 
 function mapSort(order, columns) {
   return _.map(order, function(item) {
@@ -320,59 +276,4 @@ module.exports = {
   offsetCallbacks: offsetCallbacks,
   seekCallbacks: seekCallbacks,
   initTable: initTable,
-  init: function() {
-    var $tables = $('.data-table');
-    var $form = $('#category-filters');
-    $tables.each(function(index, elm) {
-      var $table = $(elm);
-      var committeeId = $table.attr('data-committee');
-      var cycle = $table.attr('data-cycle');
-      var year = $table.attr('data-year');
-      var path, query;
-      switch ($table.attr('data-type')) {
-        case 'filing':
-          initTable($table, $form, 'committee/' + committeeId + '/filings', {}, filingsColumns, offsetCallbacks, {
-            // Order by receipt date descending
-            order: [[4, 'desc']],
-          });
-          break;
-        case 'disbursements-by-purpose':
-          path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'].join('/');
-          query = {cycle: parseInt(cycle)};
-          initTable($table, $form, path, query, disbursementPurposeColumns, offsetCallbacks, {
-            dom: '<"results-info meta-box results-info--top"lfrip>t',
-            order: [[1, 'desc']],
-            pagingType: 'simple',
-            lengthChange: false,
-            pageLength: 10,
-            useHideNull: false
-          });
-          break;
-        case 'disbursements-by-recipient':
-          path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'].join('/');
-          query = {cycle: parseInt(cycle)};
-          initTable($table, $form, path, query, disbursementRecipientColumns, offsetCallbacks, {
-            dom: '<"results-info meta-box results-info--top"lfrip>t',
-            order: [[1, 'desc']],
-            pagingType: 'simple',
-            lengthChange: false,
-            pageLength: 10,
-            useHideNull: false
-          });
-          break;
-        case 'disbursements-by-recipient-id':
-          path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'].join('/');
-          query = {cycle: parseInt(cycle)};
-          initTable($table, $form, path, query, disbursementRecipientIDColumns, offsetCallbacks, {
-            dom: '<"results-info meta-box results-info--top"lfrip>t',
-            order: [[1, 'desc']],
-            pagingType: 'simple',
-            lengthChange: false,
-            pageLength: 10,
-            useHideNull: false
-          });
-          break;
-      }
-    });
-  }
 };

@@ -58,6 +58,49 @@ var occupationColumns = [
   tables.currencyColumn({data: 'total', className: 'all', orderable: false})
 ];
 
+var filingsColumns = [
+  {
+    data: 'pdf_url',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var anchor = document.createElement('a');
+      anchor.textContent = 'View filing';
+      anchor.setAttribute('href', data);
+      anchor.setAttribute('target', '_blank');
+      return anchor.outerHTML;
+    }
+  },
+  {data: 'amendment_indicator', className: 'min-desktop'},
+  {data: 'report_type_full', className: 'min-desktop'},
+  tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  tables.currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
+  tables.currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
+  tables.currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
+];
+
+var disbursementPurposeColumns = [
+  {data: 'purpose', className: 'all', orderable: false},
+  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+];
+
+var disbursementRecipientColumns = [
+  {data: 'recipient_name', className: 'all', orderable: false},
+  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+];
+
+var disbursementRecipientIDColumns = [
+  {
+    data: 'recipient_name',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildEntityLink(data, '/committee/' + row.recipient_id, 'committee');
+    }
+  },
+  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+];
+
 $(document).ready(function() {
   $('.data-table').each(function(index, table) {
     var $table = $(table);
@@ -128,6 +171,48 @@ $(document).ready(function() {
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'].join('/');
         query = {cycle: parseInt(cycle)};
         tables.initTable($table, null, path, query, occupationColumns, tables.offsetCallbacks, {
+          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          order: [[1, 'desc']],
+          pagingType: 'simple',
+          lengthChange: false,
+          pageLength: 10,
+          useHideNull: false
+        });
+        break;
+      case 'filing':
+        tables.initTable($table, null, 'committee/' + committeeId + '/filings', {}, filingsColumns, tables.offsetCallbacks, {
+          // Order by receipt date descending
+          order: [[4, 'desc']],
+        });
+        break;
+      case 'disbursements-by-purpose':
+        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'].join('/');
+        query = {cycle: parseInt(cycle)};
+        tables.initTable($table, null, path, query, disbursementPurposeColumns, tables.offsetCallbacks, {
+          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          order: [[1, 'desc']],
+          pagingType: 'simple',
+          lengthChange: false,
+          pageLength: 10,
+          useHideNull: false
+        });
+        break;
+      case 'disbursements-by-recipient':
+        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'].join('/');
+        query = {cycle: parseInt(cycle)};
+        tables.initTable($table, null, path, query, disbursementRecipientColumns, tables.offsetCallbacks, {
+          dom: '<"results-info meta-box results-info--top"lfrip>t',
+          order: [[1, 'desc']],
+          pagingType: 'simple',
+          lengthChange: false,
+          pageLength: 10,
+          useHideNull: false
+        });
+        break;
+      case 'disbursements-by-recipient-id':
+        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'].join('/');
+        query = {cycle: parseInt(cycle)};
+        tables.initTable($table, null, path, query, disbursementRecipientIDColumns, tables.offsetCallbacks, {
           dom: '<"results-info meta-box results-info--top"lfrip>t',
           order: [[1, 'desc']],
           pagingType: 'simple',
