@@ -182,7 +182,8 @@ $(document).ready(function() {
         });
         break;
       case 'filing':
-        tables.initTable($table, null, 'committee/' + committeeId + '/filings', {}, filingsColumns, tables.offsetCallbacks, {
+        var $form = $('#category-filters');
+        tables.initTable($table, $form, 'committee/' + committeeId + '/filings', {}, filingsColumns, tables.offsetCallbacks, {
           dom: 't<"results-info results-info--bottom meta-box"lfrip>',
           // Order by receipt date descending
           order: [[4, 'desc']],
@@ -226,4 +227,11 @@ $(document).ready(function() {
         break;
     }
   });
+
+  // Trigger debounced form submission on change
+  var $form = $('#category-filters');
+  var onChange = _.debounce(function(e) {
+    $form.trigger('submit');
+  }, 500);
+  $form.on('change', 'input,select', onChange);
 });
