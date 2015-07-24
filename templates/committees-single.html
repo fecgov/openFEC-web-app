@@ -124,10 +124,10 @@
     <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
       <div class="container committee-summary">
         <div class="page-section__intro">
-          <h2 class="section-heading" id="section-1-heading" tabindex="0">Financial Summary        {% include 'partials/cycle-select.html' %}    </h2>
+          <h2 class="section-heading" id="section-1-heading" tabindex="0">Financial Summary {% include 'partials/cycle-select.html' %}</h2>
+          <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
         </div>
         {% if reports and totals %}
-          <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
           <div class="page-subsection">
             <div class="row js-accordion meta-box recent-report">
               {% with committee=context() %}
