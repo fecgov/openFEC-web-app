@@ -95,7 +95,7 @@ be stale for up to the cache duration set by the API.
 ### Run Tests
 #### Unit Tests
 
-    $ py.test openfecwebapp/tests
+    $ py.test
 
 #### Browser Tests
 First, install [PhantomJS](http://phantomjs.org/).
@@ -112,7 +112,7 @@ Run development app server:
 
 While app is running, run tests:
 
-    $ py.test openfecwebapp/tests --selenium
+    $ py.test --selenium
 
 If the development API is down or for testing with feature branches of the API,
 a local API server can be used:
