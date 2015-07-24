@@ -9,7 +9,7 @@ var events = require('../modules/events');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 
-var singlePageTableDOM = 't<"results-info meta-box"frip>';
+var singlePageTableDOM = 't<"results-info results-info--bottom meta-box"frip>';
 
 var committeeColumns = [
   {
@@ -183,7 +183,7 @@ $(document).ready(function() {
         break;
       case 'filing':
         tables.initTable($table, null, 'committee/' + committeeId + '/filings', {}, filingsColumns, tables.offsetCallbacks, {
-          dom: 't<"results-info meta-box"lfrip>',
+          dom: 't<"results-info results-info--bottom meta-box"lfrip>',
           // Order by receipt date descending
           order: [[4, 'desc']],
         });
