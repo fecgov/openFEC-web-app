@@ -63,8 +63,12 @@
 }
 
 .results-info {
-  @include font-size(1.6);
+  font-size: 1.4rem;
   clear: both;
+
+  label {
+    font-size: 1.4rem;
+  }
 
   li {
     line-height: 1;
@@ -86,6 +90,11 @@
   margin-top: 0;
 }
 
+.results-info--bottom.meta-box {
+  margin-top: 0;
+  border-top: none;
+}
+
 .results-info__null {
   text-align: center;
   @include media($medium) {
@@ -98,7 +107,6 @@
   .results-info {
 
     &.meta-box {
-      border-top: 0;
       padding-bottom: 2em;
       padding-left: 2rem;
       padding-right: 2rem;
@@ -116,7 +124,6 @@
 
     @include media($medium) {
       &.meta-box {
-        border-top: 1px solid $light-gray;
         padding: .5em;
       }
 

@@ -63,19 +63,6 @@
     </div>
     <div class="page-controls__bottom">
       <div class="container">
-        {% if cycles %}
-          <div class="time-period">
-            <label for="cycle">Two-Year Period</label>
-            <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
-            {% for each in range(max(cycles), min(cycles) - 2, -2) | restrict_cycles %}
-              <option
-                  value="{{ each }}"
-                  {% if each == cycle %}selected{% endif %}
-                >{{ each | fmt_year_range }}</option>
-            {% endfor %}
-            </select>
-        </div>
-        {% endif %}
          <nav class="page-tabs">
             <ul role="tablist">
               <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
@@ -86,7 +73,7 @@
     </div>
   </div>
 
-  <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
+  <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
     <div class="container">
       {% include 'partials/financial-summary.html' %}
     </div>

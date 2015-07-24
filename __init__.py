@@ -267,7 +267,7 @@ def date_filter_md(date_str):
 @app.template_filter()
 def fmt_year_range(year):
     if type(year) == int:
-        return "{} - {}".format(year - 1, year)
+        return "{}–{}".format(year - 1, year)
     return None
 
 
