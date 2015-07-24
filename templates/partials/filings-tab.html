@@ -3,25 +3,16 @@
     <div class="page-section__intro">
       <h2 class="section-heading" id="section-4-heading">Committee Filings</h2>
     </div>
-    <div id="filters" class="meta-box">
-      <h4>Filter Filings</h4>
+    <div id="filters" class="meta-box filters--horizontal">
       <form id="category-filters">
-        <div class="chunk--half">
-          <div class="field" id="report-year">
-            <label for="report_year">Report Year</label>
-            <input type="text" name="report_year" />
-            <input type="text" name="report_year" placeholder="e.g. 2015"/>
-            <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
-          </div>
-          {% include 'partials/filters/amendment-indicator.html' %}
+        <div class="field" id="report-year">
+          <label for="report_year">Report Year</label>
+          <input type="text" name="report_year" placeholder="e.g. 2015"/>
+          <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
         </div>
-        <div class="chunk--half">
-          {% include 'partials/filters/primary-general.html' %}
-          {% include 'partials/filters/report-type.html' %}
-          <div class="field">
-            <button type="submit" class="primary">Apply filters</button>
-          </div>
-        </div>
+        {% include 'partials/filters/amendment-indicator.html' %}
+        {% include 'partials/filters/primary-general.html' %}
+        {% include 'partials/filters/report-type.html' %}
       </form>
     </div>
 

@@ -91,7 +91,8 @@
 }
 
 .filters--horizontal {
-
+  margin-bottom: 2rem;
+  
   @include media($large) {
     form {
       @include display(flex);
