@@ -1,27 +1,27 @@
-<section class="page-section" id="section-4" role="tabpanel" aria-hidden="true" aria-labelledby="section-4-header">
+<section class="page-section" id="section-4" role="tabpanel" aria-hidden="true" aria-labelledby="section-4-heading">
   <div class="container">
     <div class="page-section__intro">
-      <h2>Committee Filings</h2>
-      <div id="filters" class="meta-box">
-        <h4>Filter Filings</h4>
-        <form id="category-filters">
-          <div class="chunk--half">
-            <div class="field" id="report-year">
-              <label for="report_year">Report Year</label>
-              <input type="text" name="report_year" />
-              <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
-            </div>
-            {% include 'partials/filters/amendment-indicator.html' %}
+      <h2 class="section-heading" id="section-4-heading">Committee Filings</h2>
+    </div>
+    <div id="filters" class="meta-box">
+      <h4>Filter Filings</h4>
+      <form id="category-filters">
+        <div class="chunk--half">
+          <div class="field" id="report-year">
+            <label for="report_year">Report Year</label>
+            <input type="text" name="report_year" />
+            <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
           </div>
-          <div class="chunk--half">
-            {% include 'partials/filters/primary-general.html' %}
-            {% include 'partials/filters/report-type.html' %}
-            <div class="field">
-              <button type="submit" class="primary">Apply filters</button>
-            </div>
+          {% include 'partials/filters/amendment-indicator.html' %}
+        </div>
+        <div class="chunk--half">
+          {% include 'partials/filters/primary-general.html' %}
+          {% include 'partials/filters/report-type.html' %}
+          <div class="field">
+            <button type="submit" class="primary">Apply filters</button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
 
     <table class="data-table" data-type="filing" data-committee="{{ committee_id }}" width="100%" class="responsive">

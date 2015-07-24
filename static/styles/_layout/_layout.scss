@@ -97,6 +97,10 @@ body {
   padding-bottom: 2rem;
 }
 
+.section-heading {
+  float: left;
+}
+
 // This is a grouping of content withinin a section, labeled by a h3
 .page-subsection {
   @include clearfix();

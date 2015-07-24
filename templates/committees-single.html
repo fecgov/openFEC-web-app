@@ -121,23 +121,12 @@
       </figure>
     {% endmacro %}
 
-    <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
+    <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
       <div class="container committee-summary">
+        <div class="page-section__intro">
+          <h2 class="section-heading" id="section-1-heading" tabindex="0">Financial Summary        {% include 'partials/cycle-select.html' %}    </h2>
+        </div>
         {% if reports and totals %}
-          <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-          {% if cycles %}
-            <div class="time-period">
-              <label for="election_cycle">Two-Year Period</label>
-              <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
-              {% for each in cycles | restrict_cycles | sort(reverse=True) %}
-                <option
-                    value="{{ each }}"
-                    {% if each == cycle %}selected{% endif %}
-                  >{{ each | fmt_year_range }}</option>
-              {% endfor %}
-              </select>
-            </div>
-          {% endif %}
           <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
           <div class="page-subsection">
             <div class="row js-accordion meta-box recent-report">
