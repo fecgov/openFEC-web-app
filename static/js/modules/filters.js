@@ -76,10 +76,14 @@ var activateFilter = function(opts) {
 };
 
 var bindFilters = function() {
-    var cycleSelect = $('#cycle').change(function() {
-        var query = {cycle: cycleSelect.val()};
-        var selected = cycleSelect.find('option:selected');
+    var cycleSelect = $('.js-cycle');
+    cycleSelect.each(function(){
+      var $this = $(this);
+      $this.change(function() {
+        var query = {cycle: $this.val()};
+        var selected = $this.find('option:selected');
         window.location.href = URI(window.location.href).query(query).toString();
+      });
     });
 };
 
