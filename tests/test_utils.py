@@ -26,7 +26,7 @@ def test_date_filter_empty():
 
 
 def test_fmt_year_range_int():
-    assert app.fmt_year_range(1985) == '1984 - 1985'
+    assert app.fmt_year_range(1985) == '1984–1985'
 
 
 def test_fmt_year_range_not_int():

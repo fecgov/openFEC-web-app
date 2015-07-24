@@ -1,7 +1,7 @@
-<section class="page-section" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-header">
+<section class="page-section" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
   <div class="container">
     <div class="page-section__intro">
-      <h2>Top Recipients {{ cycle | fmt_year_range }}</h2>
+      <h2 class="section-heading" id="section-3-heading">Top Recipients {% include 'partials/cycle-select.html' %}  </h2>
         <div class="toggles">
           <span class="label">Compare by:</span>
           <label for="toggle-purpose">

@@ -1,7 +1,7 @@
 {% import 'macros/null.html' as null %}
 {% import 'macros/charts.html' as charts %}
 
-<section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-header">
+<section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
       {% set table_data = [
         (aggregates.size.0, (0, 199.99), 'Under $200'),
@@ -11,7 +11,7 @@
         (aggregates.size.2000, (2000, None), 'Over $2000'),
       ] %}
     <div class="page-section__intro">
-      <h2>Analyze Contributions {{ year if year else cycle | fmt_year_range }}</h2>
+      <h2 class="section-heading" id="section-2-heading">Analyze Contributions {% include 'partials/cycle-select.html' %}  </h2>
       <div class="toggles">
         <span class="label">Compare by:</span>
         <label for="toggle-state">

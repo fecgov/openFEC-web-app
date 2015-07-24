@@ -144,9 +144,7 @@
   }
 }
 
-.time-period {
-  width: 100%;
-  
+.time-period {  
   label {
     @include font-size(1.4);
     width: 40%;
@@ -163,9 +161,12 @@
   }
 
   @include media($medium) {
-    width: 50%;
-    float: right;
+    display: inline;
     text-align: right;
+    font-size: 1.8rem;
+    line-height: 3.7rem;
+    padding: 0 4rem 0 1rem;
+    height: auto;
 
     label {
       @include font-size(1.6);
