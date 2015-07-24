@@ -1,10 +1,10 @@
 {% import 'macros/missing.html' as missing %}
 
-{% if committees_authorized %}
-    <div class="page-section__intro">
-      <h2 id="section-1-header" tabindex="0">Financial Summary</h2>
-      <p class="text--lead">This page provides an overview of all the money received and spent by committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees, but not joint fundraising committees authorized by the candidate.  For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
-    </div>
+  <div class="page-section__intro">
+    <h2 id="section-1-heading" tabindex="0">Financial Summary       {% include 'partials/cycle-select.html' %}</h2>
+    <p class="text--lead">This page provides an overview of all the money received and spent by committees authorized by this candidate, including his or her principal campaign committees and authorized campaign committees, but not joint fundraising committees authorized by the candidate.  For more information about an individual committee — the funding they've received, how they have spent their money, and more — visit the committee’s page.</p>
+  </div>
+  {% if committees_authorized %}
 
     {% if committees_authorized | length > 1 %}
       {% include 'partials/financial-aggregates.html' %}
