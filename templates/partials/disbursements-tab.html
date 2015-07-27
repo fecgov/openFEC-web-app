@@ -2,7 +2,7 @@
   <div class="container">
     <div class="page-section__intro">
       <h2 class="section-heading" id="section-3-heading">Top Recipients {% include 'partials/cycle-select.html' %}  </h2>
-        <div class="toggles">
+        <div class="toggles section__intro__left">
           <span class="label">Compare by:</span>
           <label for="toggle-purpose">
             <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />
@@ -17,15 +17,14 @@
             <span class="toggle-button">Recipient Committee</span>
           </label>
         </div>
+        <div class="section__intro__right">
+          <span class="label">View the raw data:</span>
+          <a class="button" href="{{ url_for('disbursements', committee_id=committee.committee_id, cycle=cycle) }}">View all disbursements &raquo;</a>
+        </div>
     </div>
     <div class="row">
       <div id="by-purpose" class="panel-toggle-element">
         <h4>Disbursements by Purpose</h4>
-        <div>
-          <a
-              href={{ url_for('disbursements', committee_id=committee.committee_id) }}
-            >View all committee disbursements</a>
-        </div>
         <table
             class="data-table"
             data-type="disbursements-by-purpose"

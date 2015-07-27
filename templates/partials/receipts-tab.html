@@ -12,7 +12,7 @@
       ] %}
     <div class="page-section__intro">
       <h2 class="section-heading" id="section-2-heading">Analyze Receipts {% include 'partials/cycle-select.html' %}  </h2>
-      <div class="toggles">
+      <div class="toggles section__intro__left">
         <span class="label">Compare by:</span>
         <label for="toggle-state">
           <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
@@ -34,6 +34,11 @@
           <input id="toggle-occupation" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-occupation">
           <span class="toggle-button">Occupation</span>
         </label>
+      </div>
+
+      <div class="section__intro__right">
+        <span class="label">View the raw data:</span>
+        <a class="button" href="{{ url_for('receipts', committee_id=committee.committee_id, cycle=cycle) }}">View all receipts &raquo;</a>
       </div>
     </div>
     <div class="row">
@@ -102,8 +107,6 @@
               <th scope="col">Total Contributed</th>
             </thead>
           </table>
-          <a href={{ url_for('receipts', committee_id=committee.committee_id, contributor_type='committee') }}>
-            View all contributions from committees &raquo;</a>
         </div>
 
       <div id="by-employer" class="panel-toggle-element">

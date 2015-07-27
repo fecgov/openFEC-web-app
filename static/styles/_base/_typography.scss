@@ -227,6 +227,10 @@ cite {
   @include font-size(1.2);
 }
 
+.label {
+  font-weight: bold;
+}
+
 // Data styles
 // When we're presenting data but not using semantic headers
 .data {

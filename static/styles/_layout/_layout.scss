@@ -97,6 +97,20 @@ body {
   padding-bottom: 2rem;
 }
 
+.section__intro__left {
+  @include media($large) {
+    @include span-columns(18)
+  }
+}
+
+.section__intro__right {
+  @include media($large) {
+    @include span-columns(6);
+    .button {
+      width: 100%;
+    }
+  }
+}
 // This is a grouping of content withinin a section, labeled by a h3
 .page-subsection {
   @include clearfix();
