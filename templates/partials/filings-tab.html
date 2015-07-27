@@ -1,15 +1,10 @@
 <section class="page-section" id="section-4" role="tabpanel" aria-hidden="true" aria-labelledby="section-4-heading">
   <div class="container">
     <div class="page-section__intro">
-      <h2 class="section-heading" id="section-4-heading">Committee Filings</h2>
+      <h2 class="section-heading" id="section-4-heading">Committee Filings {% include 'partials/cycle-select.html' %}</h2>
     </div>
     <div id="filters" class="meta-box filters--horizontal">
       <form id="category-filters">
-        <div class="field" id="report-year">
-          <label for="report_year">Report Year</label>
-          <input type="text" name="report_year" placeholder="e.g. 2015"/>
-          <button type="button" class="button--remove" data-removes="report-year"><i class="ti-close"></i></button>
-        </div>
         {% include 'partials/filters/amendment-indicator.html' %}
         {% include 'partials/filters/primary-general.html' %}
         {% include 'partials/filters/report-type.html' %}
