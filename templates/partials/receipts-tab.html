@@ -1,5 +1,6 @@
 {% import 'macros/null.html' as null %}
 {% import 'macros/charts.html' as charts %}
+{% import 'macros/disclaimer.html' as disclaimer %}
 
 <section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
@@ -102,8 +103,6 @@
               <th scope="col">Total Contributed</th>
             </thead>
           </table>
-          <a href={{ url_for('receipts', committee_id=committee.committee_id, contributor_type='committee') }}>
-            View all contributions from committees &raquo;</a>
         </div>
 
       <div id="by-employer" class="panel-toggle-element">
@@ -118,6 +117,7 @@
             <th scope="col">Total Contributed</th>
           </thead>
         </table>
+        {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}
       </div>
 
       <div id="by-occupation" class="panel-toggle-element">
@@ -132,6 +132,7 @@
             <th scope="col">Total Contributed</th>
           </thead>
         </table>
+        {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}
       </div>
     </div>
   </div>
