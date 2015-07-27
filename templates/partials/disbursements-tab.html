@@ -1,3 +1,4 @@
+{% import 'macros/disclaimer.html' as disclaimer %}
 <section class="page-section" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
   <div class="container">
     <div class="page-section__intro">
@@ -37,6 +38,7 @@
             <th scope="col">Total Received</th>
           </thead>
         </table>
+        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
       <div id="by-recipient" class="panel-toggle-element">
@@ -52,6 +54,7 @@
             <th scope="col">Total Received</th>
           </thead>
         </table>
+        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}        
       </div>
 
       <div id="by-recipient-id" class="panel-toggle-element">
