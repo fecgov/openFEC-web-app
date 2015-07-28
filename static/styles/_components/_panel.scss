@@ -1,11 +1,21 @@
 
 .panel__overlay {
-  background: $meta-box-color;
+  background: $lightest-gray;
   bottom: 0;
   left: 0;
-  padding: 1em 2em;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 200;
+}
+
+.panel {
+  background: $lightest-gray;
+  padding: 2rem 1rem;
+}
+
+.panel__row {
+  background: white;
+  margin-top: 3px;
+  padding: .65rem 1.5rem;
 }
