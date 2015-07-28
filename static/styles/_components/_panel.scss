@@ -18,4 +18,17 @@
   background: white;
   margin-top: 3px;
   padding: .65rem 1.5rem;
+
+  table {
+    border: 0;
+  }
+
+  td {
+    border-bottom: 0;
+    padding: .3rem 0 !important;
+
+    &:first-child {
+      font-weight: bold;
+    }
+  }
 }
