@@ -1,11 +1,12 @@
 table,
 table.dataTable {
+  border: 1px solid $light-gray;
   border-collapse: collapse;
   margin: 0;
+  overflow-x: scroll; // scroll horizontally on smaller viewports
+  position: relative;
   table-layout: fixed;
   width: 100%;
-  overflow-x: scroll; // scroll horizontally on smaller viewports
-  border: 1px solid $light-gray;
 
   thead {
     tr:hover {
@@ -389,4 +390,9 @@ table.dataTable tbody tr.child {
 .dataTables_wrapper.no-footer .dataTables_scrollBody {
   border-bottom: 1px solid $light-gray;
   box-shadow: inset 0px -1px 4px 0px rgba(0,0,0,0.75); 
+}
+
+.panel-active .dataTables_wrapper {
+  overflow: hidden;
+  height: 105vh;
 }
