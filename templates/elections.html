@@ -19,60 +19,60 @@
         <th role="col">Most Recent Report</th>
       </thead>
     </table>
-  </div>
 
-  <div id="comparison"></div>
+    <div id="comparison"></div>
 
-  <div class="toggles">
-    <span class="label">Compare by:</span>
-    <label for="toggle-size">
-      <input id="toggle-size" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-size" checked>
-      <span class="toggle-button">Contribution Size</span>
-    </label>
-    <label for="toggle-state">
-      <input id="toggle-state" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-state">
-      <span class="toggle-button">Contribution Location</span>
-    </label>
-    <label for="toggle-contributor-type">
-      <input id="toggle-contributor-type" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-contributor-type">
-      <span class="toggle-button">Contributor Type</span>
-    </label>
-  </div>
-
-  <div class="row">
-    <div id="by-size" class="panel-toggle-element">
-      <table class="data-table" data-type="by-size">
-        <thead>
-          <th scope="col">Candidate</th>
-          <th scope="col">$200 & Under</th>
-          <th scope="col">$200.01 - $499.99</th>
-          <th scope="col">$500 - $999.99</th>
-          <th scope="col">$1,000 - $1,999.99</th>
-          <th scope="col">$2,000 +</th>
-        </thead>
-      </table>
+    <div class="toggles">
+      <span class="label">Compare by:</span>
+      <label for="toggle-size">
+        <input id="toggle-size" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-size" checked>
+        <span class="toggle-button">Contribution Size</span>
+      </label>
+      <label for="toggle-state">
+        <input id="toggle-state" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-state">
+        <span class="toggle-button">Contribution Location</span>
+      </label>
+      <label for="toggle-contributor-type">
+        <input id="toggle-contributor-type" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-contributor-type">
+        <span class="toggle-button">Contributor Type</span>
+      </label>
     </div>
-  </div>
 
-  <div class="row">
-    <div id="by-state" class="panel-toggle-element">
-      <table class="data-table" data-type="by-state">
-        <thead></thead>
-      </table>
+    <div class="row">
+      <div id="by-size" class="panel-toggle-element">
+        <table class="data-table" data-type="by-size">
+          <thead>
+            <th scope="col">Candidate</th>
+            <th scope="col">$200 & Under</th>
+            <th scope="col">$200.01 - $499.99</th>
+            <th scope="col">$500 - $999.99</th>
+            <th scope="col">$1,000 - $1,999.99</th>
+            <th scope="col">$2,000 +</th>
+          </thead>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div id="by-contributor-type" class="panel-toggle-element">
-      <table class="data-table" data-type="committee-contributor">
-        <thead>
-          <th scope="col">Individual</th>
-          <th scope="col">Committee</th>
-        </thead>
-      </table>
+    <div class="row">
+      <div id="by-state" class="panel-toggle-element">
+        <table class="data-table" data-type="by-state">
+          <thead></thead>
+        </table>
+      </div>
     </div>
-  </div>
 
+    <div class="row">
+      <div id="by-contributor-type" class="panel-toggle-element">
+        <table class="data-table" data-type="committee-contributor">
+          <thead>
+            <th scope="col">Individual</th>
+            <th scope="col">Committee</th>
+          </thead>
+        </table>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 {% endblock %}

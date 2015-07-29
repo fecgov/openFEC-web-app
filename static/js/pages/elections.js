@@ -74,8 +74,24 @@ function stateColumns(results) {
   return [stateColumn].concat(columns);
 }
 
+function refreshTables() {
+  var $comparison = $('#comparison');
+  var selected = $comparison.find('input[type="checkbox"]:checked').map(function(_, input) {
+    var $input = $(input);
+    return {
+      candidate_id: $input.attr('data-id'),
+      candidate_name: $input.attr('data-name')
+    };
+  });
+  drawSizeTable(selected);
+  drawStateTable(selected);
+}
+
 function drawComparison(results) {
-  $('#comparison').html(comparisonTemplate(results));
+  var $comparison = $('#comparison');
+  $comparison.html(comparisonTemplate(results));
+  $comparison.on('change', 'input[type="checkbox"]', refreshTables);
+  refreshTables();
 }
 
 function mapSize(response, primary) {
@@ -106,6 +122,21 @@ function mapState(response, primary) {
   });
 }
 
+var defaultOpts = {
+  lengthChange: false,
+  serverSide: false,
+  searching: false,
+  paging: false
+};
+
+function destroyTable($table) {
+  if ($.fn.dataTable.isDataTable($table)) {
+    var api = $table.DataTable();
+    api.clear();
+    api.destroy();
+  }
+}
+
 function drawSizeTable(results) {
   var $table = $('table[data-type="by-size"]');
   var params = URI.parseQuery(window.location.search);
@@ -123,13 +154,10 @@ function drawSizeTable(results) {
     .toString()
   ).done(function(response) {
     var data = mapSize(response, primary);
-    $table.dataTable({
+    $table.dataTable(_.extend({
       data: data,
       columns: sizeColumns,
-      lengthChange: false,
-      serverSide: false,
-      paging: false,
-    });
+    }, defaultOpts));
   });
 }
 
@@ -150,21 +178,16 @@ function drawStateTable(results) {
     .addQuery({per_page: 99999})
     .toString()
   ).done(function(response) {
-    if ($.fn.dataTable.isDataTable($table)) {
-      $table.DataTable().destroy();
-    }
+    destroyTable($table);
     var headers = _.map(results, function(result) {
       return $('<th scope="col">' + result.candidate_name + '</th>');
     });
     $table.find('thead').html([$('<th scope="col">State</th>')].concat(headers));
     var data = mapState(response, primary);
-    $table.dataTable({
+    $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(results),
-      lengthChange: false,
-      serverSide: false,
-      paging: false,
-    });
+    }, defaultOpts));
   });
 }
 
@@ -180,7 +203,5 @@ $(document).ready(function() {
   });
   $table.on('xhr.dt', function(event, settings, json) {
     drawComparison(json.data);
-    drawSizeTable(json.data);
-    drawStateTable(json.data);
   });
 });
