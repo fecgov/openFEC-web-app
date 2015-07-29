@@ -2,15 +2,18 @@
   <div class="container">
     <div class="page-section__intro">
       <h2 class="section-heading" id="section-4-heading">Committee Filings {% include 'partials/cycle-select.html' %}</h2>
-    </div>
-    <div id="filters" class="meta-box filters--horizontal">
+    <div id="filters" class="meta-box filters--horizontal section__intro__left">
       <form id="category-filters">
         {% include 'partials/filters/amendment-indicator.html' %}
         {% include 'partials/filters/primary-general.html' %}
         {% include 'partials/filters/report-type.html' %}
       </form>
     </div>
-
+    <div class="section__intro__right">
+      <span class="label">View the raw data:</span>
+      <a class="button" href="{{ url_for('filings', committee_id=committee.committee_id) }}">View all filings &raquo;</a>
+    </div>
+    </div>
     <table class="data-table" data-type="filing" data-committee="{{ committee_id }}" width="100%" class="responsive">
       <thead>
         <tr>

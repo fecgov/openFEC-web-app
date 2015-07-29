@@ -48,8 +48,7 @@
 
 button,
 .button {
-  @include button($lightest-gray, $dark-gray, $medium-gray, $dark-gray);
-  border: 1px solid $medium-gray;
+  @include button(#FBFBFD, $dark-gray, $medium-gray, $dark-gray);
 }
 
 .button--selected {
