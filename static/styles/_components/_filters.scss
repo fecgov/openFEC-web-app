@@ -9,11 +9,12 @@
 .field {
   @include clearfix();
   width: 100%;
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   border-top: 1px solid $light-gray;
 
   &:first-of-type {
     border-top: none;
+    padding-top: 0;
   }
 
   input[type="checkbox"] {
@@ -48,6 +49,7 @@
 
   label {
     font-size: 1.4rem;
+    margin-top: 0;
   }
 
   & > .label {
@@ -80,6 +82,17 @@
   }
 }
 
+.filter__header {
+  padding: 0 1rem;
+}
+
+.accordion__item {
+  padding: 0 1rem 2rem 1rem;
+  .field {
+    padding: 1rem 0;
+  }
+}
+
 .any {
   font-weight: normal;
 }
@@ -92,6 +105,7 @@
   display: none;
   padding: .6rem;
   position: absolute;
+  top: 0;
   right: 0;
 
   &:hover {

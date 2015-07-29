@@ -112,8 +112,12 @@
   width: 100%;
   
   .accordion__header {
-    border-top: 1px solid $light-gray;
-    padding: 1rem 0;
+    border-top: 2px solid $light-gray;
+    padding: 1rem 1rem 1rem 4.5rem;
+  }
+
+  .accordion__button {
+    left: 1rem;
   }
 
   h4 {
@@ -157,7 +161,7 @@
 
   .side-panel__box {
     @include clearfix();
-    padding: 1rem 2rem;
+    padding: 1rem 0;
   }
 }
 
