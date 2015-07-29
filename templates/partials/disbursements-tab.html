@@ -20,7 +20,7 @@
         </div>
         <div class="section__intro__right">
           <span class="label">View the raw data:</span>
-          <a class="button" href="{{ url_for('disbursements', committee_id=committee.committee_id, cycle=cycle) }}">View all disbursements &raquo;</a>
+          <a class="button" href="{{ url_for('disbursements', committee_id=committee_id, cycle=cycle) }}">View all disbursements &raquo;</a>
         </div>
     </div>
     <div class="row">
@@ -53,7 +53,7 @@
             <th scope="col">Total Received</th>
           </thead>
         </table>
-        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}        
+        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
       <div id="by-recipient-id" class="panel-toggle-element">
