@@ -38,10 +38,10 @@ Filter Receipts
     <div class="field" id="file-date">
       <label for="file_date" class="label">File Date</label>
       <ul>
-        <li><input name="_file_date" type="radio" data-start-date={{ dates['today'][0] | date }} data-end-date={{ dates['today'][1] | date }}>Today</li>
-        <li><input name="_file_date" type="radio" data-start-date={{ dates['month'][0] | date }} data-end-date={{ dates['month'][1] | date }}>This month</li>
-        <li><input name="_file_date" type="radio" data-start-date={{ dates['quarter'][0] | date }} data-end-date={{ dates['quarter'][1] | date }}>This quarter</li>
-        <li><input name="_file_date" type="radio" data-start-date={{ dates['year'][0] | date }} data-end-date={{ dates['year'][1] | date }}>This year</li>
+        <li><input name="_file_date" type="radio" data-min-date={{ dates['today'][0] | date }} data-max-date={{ dates['today'][1] | date }}>Today</li>
+        <li><input name="_file_date" type="radio" data-min-date={{ dates['month'][0] | date }} data-max-date={{ dates['month'][1] | date }}>This month</li>
+        <li><input name="_file_date" type="radio" data-min-date={{ dates['quarter'][0] | date }} data-max-date={{ dates['quarter'][1] | date }}>This quarter</li>
+        <li><input name="_file_date" type="radio" data-min-date={{ dates['year'][0] | date }} data-max-date={{ dates['year'][1] | date }}>This year</li>
         <li><input name="_file_date" type="radio">Custom</li>
       </ul>
       <div class="date-range-input">
