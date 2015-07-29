@@ -137,54 +137,51 @@ function destroyTable($table) {
   }
 }
 
-function drawSizeTable(results) {
-  var $table = $('table[data-type="by-size"]');
+function buildUrl(selected, path) {
   var params = URI.parseQuery(window.location.search);
   var query = {
     cycle: params.cycle,
-    candidate_id: _.pluck(results, 'candidate_id')
+    candidate_id: _.pluck(selected, 'candidate_id')
   };
-  var primary = _.object(_.map(results, function(result) {
+  return URI(API_LOCATION)
+    .path([API_VERSION, path].join('/'))
+    .addQuery(query)
+    .addQuery({per_page: 0})
+    .toString();
+}
+
+function drawSizeTable(selected) {
+  var $table = $('table[data-type="by-size"]');
+  var primary = _.object(_.map(selected, function(result) {
     return [result.candidate_id, result];
   }));
   $.getJSON(
-    URI(API_LOCATION)
-    .path([API_VERSION, 'schedules/schedule_a/by_size/by_candidate'].join('/'))
-    .addQuery(query)
-    .toString()
+    buildUrl(selected, 'schedules/schedule_a/by_size/by_candidate')
   ).done(function(response) {
     var data = mapSize(response, primary);
     $table.dataTable(_.extend({
       data: data,
-      columns: sizeColumns,
+      columns: sizeColumns
     }, defaultOpts));
   });
 }
 
-function drawStateTable(results) {
+function drawStateTable(selected) {
   var $table = $('table[data-type="by-state"]');
-  var params = URI.parseQuery(window.location.search);
-  var query = {
-    cycle: params.cycle,
-    candidate_id: _.pluck(results, 'candidate_id')
-  };
-  var primary = _.object(_.map(results, function(result) {
+  var primary = _.object(_.map(selected, function(result) {
     return [result.candidate_id, result];
   }));
   $.getJSON(
-    URI(API_LOCATION)
-    .path([API_VERSION, 'schedules/schedule_a/by_state/by_candidate'].join('/'))
-    .addQuery(query)
-    .addQuery({per_page: 99999})
-    .toString()
+    buildUrl(selected, 'schedules/schedule_a/by_state/by_candidate')
   ).done(function(response) {
     destroyTable($table);
     var data = mapState(response, primary);
     $table.dataTable(_.extend({
       data: data,
-      columns: stateColumns(results),
+      columns: stateColumns(selected),
+      order: [[1, 'desc']]
     }, defaultOpts));
-    var headers = ['State'].concat(_.pluck(results, 'candidate_name'));
+    var headers = ['State'].concat(_.pluck(selected, 'candidate_name'));
     $table.find('th').each(function(index, elm) {
       $(elm).text(headers[index]);
     });
