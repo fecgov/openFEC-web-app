@@ -2,22 +2,29 @@
 
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/states.html' as states %}
-
+{% import 'macros/filters/date.html' as date %}
 {% block heading %}
 Filter Disbursements
 {% endblock %}
 
 {% block filters %}
-{{ text.field('recipient_name', 'Name') }}
-{{ text.field('recipient_city', 'City') }}
+{{ text.field('_committee_id', 'From Committee', {'id': 'committee-typeahead-filter'}) }}
 
-{{ states.field('recipient_state') }}
-
-{{ text.field('min_amount', 'Minimum Expenditure') }}
-{{ text.field('max_amount', 'Maximum Expenditure') }}
-
-{{ text.field('min_date', 'Start Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
-{{ text.field('max_date', 'End Date', {'data-inputmask': '"alias": "mm/dd/yyyy"'}) }}
-
-{{ text.field('disbursement_description', 'Purpose') }}
+<div class="js-accordion">
+  <h5 class="js-accordion_header accordion__header">Recipient Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
+  <div class="js-accordion_item accordion__item">
+  {{ text.field('recipient_name', 'Receipient Name') }}
+  {{ text.field('recipient_city', 'City') }}
+  {{ states.field('recipient_state')}}
+  </div>
+</div>
+<div class="js-accordion">
+  <h5 class="js-accordion_header accordion__header">Transaction Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
+  <div class="js-accordion_item accordion__item">
+    {{ text.field('disbursement_description', 'Purpose') }}
+    {{ text.field('min_amount', 'Minimum Expenditure') }}
+    {{ text.field('max_amount', 'Maximum Expenditure') }}
+    {{ date.field('disbursement_date', 'Disbursement Date', dates ) }}
+  </div>
+</div>
 {% endblock %}

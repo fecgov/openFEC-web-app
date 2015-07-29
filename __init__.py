@@ -192,7 +192,7 @@ def receipts():
 
 @app.route('/disbursements')
 def disbursements():
-    return render_template('disbursements.html')
+    return render_template('disbursements.html', dates=utils.date_ranges())
 
 
 @app.route('/filings')
