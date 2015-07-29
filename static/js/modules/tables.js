@@ -182,7 +182,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   );
   var useFilters = opts.useFilters;
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
-  callbacks = _.extend(callbacks, defaultCallbacks);
+  callbacks = _.extend({}, defaultCallbacks, callbacks);
   opts = _.extend({
     serverSide: true,
     searching: false,
