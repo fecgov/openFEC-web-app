@@ -29,62 +29,97 @@ function filterCandidates(result) {
   };
 }
 
+function getUrl(resource) {
+  return URI(API_LOCATION)
+    .path([API_VERSION, 'names', resource].join('/'))
+    .query({
+      q: '%QUERY',
+      api_key: API_KEY
+    })
+    .readable();
+}
+
+/**
+  * Create a Bloodhound search engine.
+  *
+  * @param {String} name The name of the engine passed as the name parameter
+  * to Bloundhound.
+  * @param {String|Object} dataSource If a string, will assume its a url and
+  * will set it as a remote. If anything else, will assume it's local data.
+  * @return {Object}
+  */
+function createEngine(name, dataSource, filter) {
+  var engine;
+  var options = {
+    name: name,
+    datumTokenizer: function(d) {
+      var tokens = Bloodhound.tokenizers.whitespace(d.name);
+      if (name === 'Glossary') {
+        tokens = Bloodhound.tokenizers.whitespace(d.term);
+      }
+      return tokens;
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: SUGGESTION_LIMIT
+  };
+
+  if (_.isString(dataSource)) {
+    options.remote = {
+      url: dataSource
+    };
+    if (filter) {
+      options.remote.filter = filter;
+    }
+  } else {
+    options.local = dataSource;
+  }
+
+  if (name === 'Committees') {
+    options.dupDetector = function(remoteMatch, localMatch) {
+      return remoteMatch.name === localMatch.name;
+    };
+  }
+
+  engine = new Bloodhound(options);
+  engine.initialize();
+
+  return engine;
+}
+
+var candidateEngine = createEngine('Candidates', getUrl('candidates'), function(response) {
+  return _.map(response.results, function(result) {
+    return filterCandidates(result);
+  });
+});
+
+var committeeEngine = createEngine('Committees', getUrl('committees'), function(response) {
+  return response.results;
+});
+
+// Templates for results
+var candidateSuggestion = Handlebars.compile(
+  '<span><span class="tt-suggestion__name">{{ name }}</span>' +
+  '<span class="tt-suggestion__office">{{ office }}</span></span>');
+var committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
+
 module.exports = {
-  getUrl: function(resource) {
-    return URI(API_LOCATION)
-      .path([API_VERSION, 'names', resource].join('/'))
-      .query({
-        q: '%QUERY',
-        api_key: API_KEY
-      })
-      .readable();
+
+  candidateDataSet: {
+    name: 'candidate',
+    displayKey: 'name',
+    source: candidateEngine.ttAdapter(),
+    templates: {
+      suggestion: candidateSuggestion
+    }
   },
 
-  /**
-   * Create a Bloodhound search engine.
-   *
-   * @param {String} name The name of the engine passed as the name parameter
-   * to Bloundhound.
-   * @param {String|Object} dataSource If a string, will assume its a url and
-   * will set it as a remote. If anything else, will assume it's local data.
-   * @return {Object}
-   */
-  createEngine: function(name, dataSource, filter) {
-    var engine;
-    var options = {
-      name: name,
-      datumTokenizer: function(d) {
-        var tokens = Bloodhound.tokenizers.whitespace(d.name);
-        if (name === 'Glossary') {
-          tokens = Bloodhound.tokenizers.whitespace(d.term);
-        }
-        return tokens;
-      },
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: SUGGESTION_LIMIT
-    };
-
-    if (_.isString(dataSource)) {
-      options.remote = {
-        url: dataSource
-      };
-      if (filter) {
-        options.remote.filter = filter;
-      }
-    } else {
-      options.local = dataSource;
+  committeeDataSet: {
+    name: 'committee',
+    displayKey: 'name',
+    source: committeeEngine.ttAdapter(),
+    templates: {
+      suggestion: committeeSuggestion
     }
-
-    if (name === 'Committees') {
-      options.dupDetector = function(remoteMatch, localMatch) {
-        return remoteMatch.name === localMatch.name;
-      };
-    }
-
-    engine = new Bloodhound(options);
-    engine.initialize();
-
-    return engine;
   },
 
   initTypeahead: function(options, dataset) {
@@ -108,30 +143,10 @@ module.exports = {
   init: function(){
     var candidateEngine,
         committeeEngine,
-        candidateSuggestion,
-        committeeSuggestion,
         glossaryEngine,
         glossarySuggestion,
         options,
-        candidateDataSet,
-        committeeDataSet,
         self = this;
-
-    candidateEngine = this.createEngine('Candidates', this.getUrl('candidates'), function(response) {
-      return _.map(response.results, function(result) {
-        return filterCandidates(result);
-      });
-    });
-
-    committeeEngine = this.createEngine('Committees', this.getUrl('committees'), function(response) {
-      return response.results;
-    });
-
-    // Templates for results
-    candidateSuggestion = Handlebars.compile(
-      '<span><span class="tt-suggestion__name">{{ name }}</span>' +
-      '<span class="tt-suggestion__office">{{ office }}</span></span>');
-    committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
 
     options = {
       minLength: 3,
@@ -139,32 +154,7 @@ module.exports = {
       hint: false
     };
 
-    candidateDataSet = {
-      name: 'candidate',
-      displayKey: 'name',
-      source: candidateEngine.ttAdapter(),
-      templates: {
-        suggestion: candidateSuggestion
-      }
-    };
-
-    committeeDataSet = {
-      name: 'committee',
-      displayKey: 'name',
-      source: committeeEngine.ttAdapter(),
-      templates: {
-        suggestion: committeeSuggestion
-      }
-    };
-
-    this.initTypeahead(options, candidateDataSet);
-
-    var $committeeFilter = $('#committee-typeahead-filter');
-    var $committeeInput = $('input[name="committee_id"]');
-    $committeeFilter.typeahead({}, committeeDataSet);
-    $committeeFilter.on('typeahead:selected', function(event, datum, datasetName) {
-      $committeeInput.val(datum.id);
-    });
+    this.initTypeahead(options, this.candidateDataSet);
 
     // Focus on search bar on "/"
     keyboard.on('/', function(e) {
@@ -181,9 +171,9 @@ module.exports = {
     function updateTypeahead(dataType) {
       $('.js-search-input').typeahead('destroy');
       if (dataType === 'committees') {
-        self.initTypeahead(options, committeeDataSet);
+        self.initTypeahead(options, self.committeeDataSet);
       } else {
-        self.initTypeahead(options, candidateDataSet);
+        self.initTypeahead(options, self.candidateDataSet);
       }
     }
 

@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
+var typeahead = require('../modules/typeahead');
 var donationTemplate = require('../../templates/donation.hbs');
 
 var columns = [
@@ -49,6 +50,8 @@ var columns = [
 ];
 
 $(document).ready(function() {
+
+  // Set up data table
   var $table = $('#results');
   var $form = $('#category-filters');
   tables.initTable(
@@ -65,4 +68,12 @@ $(document).ready(function() {
       pagingType: 'simple'
     }
   );
+
+  // Set up committee typeahead
+  var $committeeFilter = $('#committee-typeahead-filter');
+  var $committeeInput = $('input[name="committee_id"]');
+  $committeeFilter.typeahead({}, typeahead.committeeDataSet);
+  $committeeFilter.on('typeahead:selected', function(event, datum, datasetName) {
+    $committeeInput.val(datum.id);
+  });
 });

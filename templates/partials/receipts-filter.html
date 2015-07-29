@@ -17,8 +17,9 @@ Filter Receipts
     <input id="contributor-type" name="contributor_type" type="checkbox" value="committee" checked>Committee
   </label>
 </div>
-{{ text.field('contributor_name', 'Contributor Name') }}
+
 {{ text.field('_committee_id', 'Recipient Committee', {'id': 'committee-typeahead-filter'}) }}
+<input type="hidden" name="committee_id" />
 
 <div class="js-accordion">
   <h5 class="js-accordion_header accordion__header">Contributor Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
