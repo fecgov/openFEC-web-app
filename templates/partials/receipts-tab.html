@@ -12,8 +12,8 @@
         (aggregates.size.2000, (2000, None), 'Over $2000'),
       ] %}
     <div class="page-section__intro">
-      <h2 class="section-heading" id="section-2-heading">Analyze Contributions {% include 'partials/cycle-select.html' %}  </h2>
-      <div class="toggles">
+      <h2 class="section-heading" id="section-2-heading">Analyze Receipts {% include 'partials/cycle-select.html' %}  </h2>
+      <div class="toggles section__intro__left">
         <span class="label">Compare by:</span>
         <label for="toggle-state">
           <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
@@ -35,6 +35,11 @@
           <input id="toggle-occupation" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-occupation">
           <span class="toggle-button">Occupation</span>
         </label>
+      </div>
+
+      <div class="section__intro__right">
+        <span class="label">View the raw data:</span>
+        <a class="button" href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle) }}">View all receipts &raquo;</a>
       </div>
     </div>
     <div class="row">

@@ -47,8 +47,8 @@ class SearchResultsPageTests(SearchPageTestCase):
     def test_typeahead_from_candidates_page(self):
         self.url.path.add('candidates')
         self.driver.get(self.url.url)
-        select = self.driver.find_element_by_css_selector('select[name="search_type"]')
-        self.assertEqual(select.get_attribute('value'), 'candidates')
+        select = self.driver.find_element_by_css_selector('input[value="candidates"]')
+        self.assertEqual(select.get_attribute('checked'), 'true')
         self.driver.find_element_by_css_selector('.header-search .search-input').send_keys('boeh')
         results = self.driver.find_elements_by_css_selector('.tt-suggestion')
         self.assertGreater(len(results), 0)
@@ -56,8 +56,8 @@ class SearchResultsPageTests(SearchPageTestCase):
     def test_typeahead_from_committees_page(self):
         self.url.path.add('committees')
         self.driver.get(self.url.url)
-        select = self.driver.find_element_by_css_selector('select[name="search_type"]')
-        self.assertEqual(select.get_attribute('value'), 'committees')
+        select = self.driver.find_element_by_css_selector('input[value="committees"]')
+        self.assertEqual(select.get_attribute('checked'), 'true')
         self.driver.find_element_by_css_selector('.header-search .search-input').send_keys('grij')
         results = self.driver.find_elements_by_css_selector('.tt-suggestion')
         self.assertGreater(len(results), 0)

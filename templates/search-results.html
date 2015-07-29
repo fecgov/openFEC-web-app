@@ -1,18 +1,21 @@
 {% extends "layouts/main.html" %}
+{% set hide_header_search = true %}
 
 {% block title %}
     Search results for "{{query}}"
 {% endblock %}
 
 {% block body %}
+
 <div class="container">
   <section class="data page-section">
-    {% if not results %}
-      <h4>Sorry, no results</h4>
-    {% else %}
     <h1>Search Results</h1>
     <div class="chunk--two-thirds tst-search_results">
       {% include 'partials/search-results-controls.html' %}
+        
+        {% if not results %}
+          <h4>Sorry, no results</h4>
+        {% else %}
 
         {% if result_type == 'committees' %}
           {% with committees=results %}
