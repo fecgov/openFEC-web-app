@@ -179,15 +179,15 @@ function drawStateTable(results) {
     .toString()
   ).done(function(response) {
     destroyTable($table);
-    var headers = _.map(results, function(result) {
-      return $('<th scope="col">' + result.candidate_name + '</th>');
-    });
-    $table.find('thead').html([$('<th scope="col">State</th>')].concat(headers));
     var data = mapState(response, primary);
     $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(results),
     }, defaultOpts));
+    var headers = ['State'].concat(_.pluck(results, 'candidate_name'));
+    $table.find('th').each(function(index, elm) {
+      $(elm).text(headers[index]);
+    });
   });
 }
 
