@@ -187,7 +187,7 @@ module.exports = {
       }
     }
 
-    updateTypeahead($('select[name="search_type"]').val());
+    updateTypeahead($('.js-search-type:checked').val());
 
     // When the select committee or candidate box is changed on the search.
     events.on('searchTypeChanged', function(data) {

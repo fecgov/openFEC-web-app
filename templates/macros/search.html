@@ -1,9 +1,13 @@
-{% macro search(location, result_type) %}
+{% macro search(location, result_type, query) %}
 <form id="{{ location }}-search" action="/" autocomplete="off" class="js-search">
   <div class="search-bar search-bar--{{ location }}">
     <div class="search__radio">
       <label for="{{ location }}-radio--candidates">
-        <input id="{{ location }}-radio--candidates" class="js-search-type" type="radio" name="search_type" value="candidates" checked>Candidates
+        <input id="{{ location }}-radio--candidates" class="js-search-type" type="radio" name="search_type"
+        {% if result_type != 'committees' %}
+          checked
+        {% endif %} 
+        value="candidates">Candidates
       </label>
       <label for="{{ location }}-radio--committees">
         <input id="{{ location }}-radio--committees" class="js-search-type" type="radio" name="search_type"
@@ -14,15 +18,6 @@
       </label>
     </div>
     <div class="input-button-combo">
-      <select name="search_type" class="js-search-type search__select">
-        <option value="candidates">Candidates</option>
-        <option
-        {% if result_type == 'committees' %}
-          selected
-        {% endif %}
-        value="committees">
-        Committees</option>
-      </select>
       <input class="js-search-input search-input" type="text" name="search"
       aria-label="Enter a candidate name"
       placeholder="Enter a candidate name" autocomplete="off"
