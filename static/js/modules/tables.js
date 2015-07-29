@@ -167,6 +167,10 @@ function handleResponseSeek(api, data, response) {
   api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
 }
 
+var defaultCallbacks = {
+  preprocess: mapResponse
+};
+
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
   var $processing = $('<div class="processing">Loading...</div>');
@@ -178,6 +182,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   );
   var useFilters = opts.useFilters;
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
+  callbacks = _.extend(callbacks, defaultCallbacks);
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -216,7 +221,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
         .toString()
       ).done(function(response) {
         callbacks.handleResponse(api, data, response);
-        callback(mapResponse(response));
+        callback(callbacks.preprocess(response));
         callbacks.afterRender(api, data, response);
       }).always(function() {
         $processing.hide();
