@@ -250,10 +250,12 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     api.ajax.reload();
   });
   if ($form) {
-    $form.submit(function(event) {
-      event.preventDefault();
-      api.ajax.reload();
-    });
+    $form.find('input').each(function(){
+      $(this).change(function(event) {
+        event.preventDefault();
+        api.ajax.reload();
+      });
+    })
   }
 }
 
