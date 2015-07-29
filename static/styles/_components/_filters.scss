@@ -25,6 +25,10 @@
     padding: 0;
   }
 
+  input[type="text"] {
+    padding-right: 30px;
+  }
+
   input[type="text"],
   select,
   .button--dropdown {
@@ -86,8 +90,14 @@
 
 .button--remove {
   display: none;
-  padding: .5rem;
-  float: left;
+  padding: .6rem;
+  position: absolute;
+  right: 0;
+
+  &:hover {
+    padding: .6rem;
+    text-decoration: none;
+  }
 }
 
 .filters--horizontal {

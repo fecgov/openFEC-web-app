@@ -102,6 +102,7 @@ input[type="submit"],
 
 .button--unstyled {
   @include appearance(none);
+  background: none;
   display: inline;
   padding: 0;
   border: 0;
