@@ -1,7 +1,7 @@
 {% import 'macros/search.html' as search %}
 
 <div class="meta-box results-controls">
-  {{ search.search('results') }}
+  {{ search.search('results', result_type, query) }}
   {% if results|length >= 20 %}
   <div class="results-count"> Showing first 20 results. 
     <a href="{{ url_for(result_type, q=query) }}">View all &raquo;</a>
