@@ -1,5 +1,6 @@
 <div>
 {{#each this}}
-  <input type="checkbox" />{{this.candidate_name}}
+  <input type="checkbox" data-id="{{this.candidate_id}}" data-name="{{this.candidate_name}}" checked />
+  {{this.candidate_name}}
 {{/each}}
 </div>
