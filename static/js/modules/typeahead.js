@@ -159,11 +159,13 @@ module.exports = {
 
     this.initTypeahead(options, candidateDataSet);
 
-    var $committeeFilter = $('#committee-typeahead-filter');
-    var $committeeInput = $('input[name="committee_id"]');
-    $committeeFilter.typeahead({}, committeeDataSet);
-    $committeeFilter.on('typeahead:selected', function(event, datum, datasetName) {
-      $committeeInput.val(datum.id);
+    $('.committee-typeahead-field').each(function(_, field) {
+      var $field = $(field);
+      var $input = $('#' + $field.attr('data-input'));
+      $field.typeahead({}, committeeDataSet);
+      $field.on('typeahead:selected', function(event, datum) {
+        $input.val(datum.id).change();
+      });
     });
 
     // Focus on search bar on "/"
