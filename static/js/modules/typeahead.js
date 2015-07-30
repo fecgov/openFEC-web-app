@@ -159,6 +159,7 @@ module.exports = {
 
     this.initTypeahead(options, candidateDataSet);
 
+    // Initialize committee typeahead filters
     $('.committee-typeahead-field').each(function(_, field) {
       var $field = $(field);
       var $input = $('#' + $field.attr('data-input'));

@@ -208,7 +208,10 @@ $('.field input[type="text"]').on('keypress', function(e) {
     }
 });
 
-function bindFileFilter() {
+/**
+ * Initialize date picker filters
+ */
+function bindDateFilters() {
   $('.date-choice-field').each(function(_, field) {
     var $field = $(field);
     var $minDate = $field.find('[name="min_date"]');
@@ -229,7 +232,7 @@ module.exports = {
     bindFilters();
     // if the page was loaded with filters set in the query string
     activateInitialFilters();
-    bindFileFilter();
+    bindDateFilters();
   },
   activateInitialFilters: activateInitialFilters
 };
