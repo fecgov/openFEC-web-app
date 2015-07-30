@@ -9,11 +9,12 @@
 .field {
   @include clearfix();
   width: 100%;
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   border-top: 1px solid $light-gray;
 
   &:first-of-type {
     border-top: none;
+    padding-top: 0;
   }
 
   input[type="checkbox"] {
@@ -23,6 +24,10 @@
   fieldset {
     margin: 0;
     padding: 0;
+  }
+
+  input[type="text"] {
+    padding-right: 30px;
   }
 
   input[type="text"],
@@ -44,6 +49,7 @@
 
   label {
     font-size: 1.4rem;
+    margin-top: 0;
   }
 
   & > .label {
@@ -76,6 +82,10 @@
   }
 }
 
+.filter__header {
+  padding: 0 1rem;
+}
+
 .any {
   font-weight: normal;
 }
@@ -86,8 +96,15 @@
 
 .button--remove {
   display: none;
-  padding: .5rem;
-  float: left;
+  padding: .6rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  &:hover {
+    padding: .6rem;
+    text-decoration: none;
+  }
 }
 
 .filters--horizontal {

@@ -227,11 +227,4 @@ $(document).ready(function() {
         break;
     }
   });
-
-  // Trigger debounced form submission on change
-  var $form = $('#category-filters');
-  var onChange = _.debounce(function(e) {
-    $form.trigger('submit');
-  }, 500);
-  $form.on('change', 'input,select', onChange);
 });

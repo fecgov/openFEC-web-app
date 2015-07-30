@@ -11,6 +11,9 @@
 .side-panel__hider {
   height: 0;
   overflow: hidden;
+  @include media($large) {
+    overflow: visible;
+  }
 }
 
 .side-toggle {
@@ -109,8 +112,19 @@
   width: 100%;
   
   .accordion__header {
-    border-top: 1px solid $light-gray;
-    padding: 1rem 0;
+    border-top: 2px solid $light-gray;
+    padding: 1rem 1rem 1rem 4.5rem;
+  }
+
+  .accordion__button {
+    left: 1rem;
+  }
+
+  .accordion__item {
+    padding: 0 1rem 2rem 1rem;
+    .field {
+      padding: 1rem 0;
+    }
   }
 
   h4 {
@@ -154,7 +168,7 @@
 
   .side-panel__box {
     @include clearfix();
-    padding: 1rem 2rem;
+    padding: 1rem 0;
   }
 }
 

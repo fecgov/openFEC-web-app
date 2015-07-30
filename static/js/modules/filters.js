@@ -118,7 +118,7 @@ var activateInitialFilters = function() {
 $('.button--remove').click(function(e){
     e.preventDefault();
     var removes = $(this).data('removes');
-    $('[name="' + removes + '"]').val('');
+    $('[name="' + removes + '"]').val('').trigger('change');
     $(this).css('display', 'none');
 });
 
@@ -208,17 +208,22 @@ $('.field input[type="text"]').on('keypress', function(e) {
     }
 });
 
-function bindFileFilter() {
-  var $field = $('#file-date');
-  var $startDate = $field.find('[name="start_date"]');
-  var $endDate = $field.find('[name="end_date"]');
-  $field.on('click', '[name="_file_date"]', function(e) {
-    var $input = $(e.target);
-    if ($input.attr('data-start-date')) {
-      $startDate.val($input.attr('data-start-date'));
-      $endDate.val($input.attr('data-end-date'));
-    }
-    $startDate.focus();
+/**
+ * Initialize date picker filters
+ */
+function bindDateFilters() {
+  $('.date-choice-field').each(function(_, field) {
+    var $field = $(field);
+    var $minDate = $field.find('[name="min_date"]');
+    var $maxDate = $field.find('[name="max_date"]');
+    $field.on('change', '[type="radio"]', function(e) {
+      var $input = $(e.target);
+      if ($input.attr('data-min-date')) {
+        $minDate.val($input.attr('data-min-date'));
+        $maxDate.val($input.attr('data-max-date'));
+      }
+      $minDate.focus();
+    });
   });
 }
 
@@ -227,7 +232,7 @@ module.exports = {
     bindFilters();
     // if the page was loaded with filters set in the query string
     activateInitialFilters();
-    bindFileFilter();
+    bindDateFilters();
   },
   activateInitialFilters: activateInitialFilters
 };
