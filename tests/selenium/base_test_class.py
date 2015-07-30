@@ -124,7 +124,6 @@ class SearchPageTestCase(BaseTest):
             if button:
                 utils.try_until(lambda: button.click())
         utils.try_until(lambda: checkbox.click())
-        self.driver.find_element_by_id('category-filters').submit()
         self.check_filter_results(column, result)
 
     def check_filter_results(self, index, result):
