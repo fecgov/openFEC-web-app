@@ -36,18 +36,7 @@ var stateColumns = [
       return span.outerHTML;
     }
   },
-  {
-    data: 'total',
-    width: '50%',
-    className: 'all',
-    render: function(data, type, row, meta) {
-      var span = document.createElement('div');
-      span.textContent = helpers.currency(data);
-      span.setAttribute('data-value', data);
-      span.setAttribute('data-row', meta.row);
-      return span.outerHTML;
-    }
-  },
+  tables.barCurrencyColumn({data: 'total', width: '50%', className: 'all'})
 ];
 
 var employerColumns = [
