@@ -124,10 +124,11 @@ class SearchPageTestCase(BaseTest):
             if button:
                 utils.try_until(lambda: button.click())
         utils.try_until(lambda: checkbox.click())
-        self.driver.find_element_by_id('category-filters').submit()
         self.check_filter_results(column, result)
 
     def check_filter_results(self, index, result):
+        # Wait for debounce interval
+        time.sleep(0.35)
         utils.wait_for_ajax(self.driver)
         values = [
             row.find_elements_by_tag_name('td')[index].text

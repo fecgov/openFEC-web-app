@@ -1,0 +1,20 @@
+{% macro field(name, label, dates) %}
+
+<div class="field date-choice-field" id="{{ name }}">
+  <label for="{{ name }}" class="label">{{ label }}</label>
+  <ul>
+    <li><input name="{{ name }}" type="radio" data-min-date={{ dates['today'][0] | date }} data-max-date={{ dates['today'][1] | date }}>Today</li>
+    <li><input name="{{ name }}" type="radio" data-min-date={{ dates['month'][0] | date }} data-max-date={{ dates['month'][1] | date }}>This month</li>
+    <li><input name="{{ name }}" type="radio" data-min-date={{ dates['quarter'][0] | date }} data-max-date={{ dates['quarter'][1] | date }}>This quarter</li>
+    <li><input name="{{ name }}" type="radio" data-min-date={{ dates['year'][0] | date }} data-max-date={{ dates['year'][1] | date }}>This year</li>
+    <li><input name="{{ name }}" type="radio">Custom</li>
+  </ul>
+  <div class="date-range-input">
+    <label for="min_date">From</label>
+    <input type="text" id="min_date" name="min_date" data-inputmask="'alias': 'mm/dd/yyyy'">
+    <label for="max_date">To</label>
+    <input type="text" id="max_date" name="max_date" data-inputmask="'alias': 'mm/dd/yyyy'">
+  </div>
+</div>
+
+{% endmacro %}

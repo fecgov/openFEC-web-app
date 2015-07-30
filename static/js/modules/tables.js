@@ -171,6 +171,14 @@ var defaultCallbacks = {
   preprocess: mapResponse
 };
 
+function submitOnChange($form, api) {
+  function onChange(e) {
+    e.preventDefault();
+    api.ajax.reload();
+  }
+  $form.on('change', 'input,select', _.debounce(onChange, 250));
+}
+
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
   var $processing = $('<div class="processing">Loading...</div>');
@@ -255,10 +263,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     api.ajax.reload();
   });
   if ($form) {
-    $form.submit(function(event) {
-      event.preventDefault();
-      api.ajax.reload();
-    });
+    submitOnChange($form, api);
   }
 }
 
