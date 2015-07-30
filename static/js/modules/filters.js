@@ -118,7 +118,7 @@ var activateInitialFilters = function() {
 $('.button--remove').click(function(e){
     e.preventDefault();
     var removes = $(this).data('removes');
-    $('[name="' + removes + '"]').val('');
+    $('[name="' + removes + '"]').val('').trigger('change');
     $(this).css('display', 'none');
 });
 

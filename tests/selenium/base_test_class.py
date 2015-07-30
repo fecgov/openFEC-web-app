@@ -127,6 +127,8 @@ class SearchPageTestCase(BaseTest):
         self.check_filter_results(column, result)
 
     def check_filter_results(self, index, result):
+        # Wait for debounce interval
+        time.sleep(0.35)
         utils.wait_for_ajax(self.driver)
         values = [
             row.find_elements_by_tag_name('td')[index].text

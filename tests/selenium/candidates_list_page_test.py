@@ -49,7 +49,7 @@ class CandidatesPageTests(SearchPageTestCase):
         self.check_filter('party', 'REP', 3, 'Republican Party')
 
     def testCandidateStateFilter(self):
-        self.check_filter('state', 'AZ', 4, 'AZ')
+        self.check_filter('state', 'AL', 4, 'AL')
 
     def testCandidateDistrictFilter(self):
         self.check_filter('district', '01', 5, '01')
@@ -58,17 +58,17 @@ class CandidatesPageTests(SearchPageTestCase):
         self.check_filter('office', 'P', 1, 'President')
 
     def test_candidate_filter_history(self):
-        self.check_filter('state', 'AZ', 4, 'AZ')
-        self.assertIn('state=AZ', self.driver.current_url)
-        self.check_filter('state', 'CA', 4, 'CA', refresh=False, expand=False)
-        self.assertIn('state=AZ', self.driver.current_url)
-        self.assertIn('state=CA', self.driver.current_url)
+        self.check_filter('state', 'AL', 4, 'AL')
+        self.assertIn('state=AL', self.driver.current_url)
+        self.check_filter('state', 'AR', 4, 'AR', refresh=False, expand=False)
+        self.assertIn('state=AL', self.driver.current_url)
+        self.assertIn('state=AR', self.driver.current_url)
         self.driver.back()
-        self.check_filter_results(4, 'AZ')
-        self.assertIn('state=AZ', self.driver.current_url)
-        self.assertNotIn('state=CA', self.driver.current_url)
-        self.assertIn('state=AZ', self.driver.current_url)
+        self.check_filter_results(4, 'AL')
+        self.assertIn('state=AL', self.driver.current_url)
+        self.assertNotIn('state=AR', self.driver.current_url)
+        self.assertIn('state=AL', self.driver.current_url)
         self.driver.forward()
-        self.check_filter_results(4, 'CA')
-        self.assertIn('state=AZ', self.driver.current_url)
-        self.assertIn('state=CA', self.driver.current_url)
+        self.check_filter_results(4, 'AR')
+        self.assertIn('state=AL', self.driver.current_url)
+        self.assertIn('state=AR', self.driver.current_url)
