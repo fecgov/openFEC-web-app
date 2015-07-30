@@ -57,7 +57,6 @@ var typeColumns = [
   {
     data: 'candidate_name',
     className: 'all',
-    width: '30%',
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
     }
@@ -85,6 +84,7 @@ function refreshTables() {
   });
   drawSizeTable(selected);
   drawStateTable(selected);
+  drawTypeTable(selected);
 }
 
 function drawComparison(results) {
@@ -122,7 +122,27 @@ function mapState(response, primary) {
   });
 }
 
+function mapType(response, primary) {
+  var groups = {};
+  var typeMap = {
+    true: 'individual',
+    false: 'committee'
+  };
+  _.each(response.results, function(result) {
+    groups[result.candidate_id] = groups[result.candidate_id] || {};
+    groups[result.candidate_id][typeMap[result.individual]] = result.total;
+  });
+  return _.map(_.pairs(groups), function(pair) {
+    return _.extend(
+      pair[1], {
+        candidate_id: pair[0],
+        candidate_name: primary[pair[0]].candidate_name
+      });
+  });
+}
+
 var defaultOpts = {
+  destroy: true,
   lengthChange: false,
   serverSide: false,
   searching: false,
@@ -175,16 +195,34 @@ function drawStateTable(selected) {
     buildUrl(selected, 'schedules/schedule_a/by_state/by_candidate')
   ).done(function(response) {
     destroyTable($table);
+    $table.find('thead').html('');
     var data = mapState(response, primary);
     $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(selected),
       order: [[1, 'desc']]
     }, defaultOpts));
-    var headers = ['State'].concat(_.pluck(selected, 'candidate_name'));
+    // Populate headers with correct text
+    var headerLabels = ['State'].concat(_.pluck(selected, 'candidate_name'));
     $table.find('th').each(function(index, elm) {
-      $(elm).text(headers[index]);
+      $(elm).text(headerLabels[index]);
     });
+  });
+}
+
+function drawTypeTable(selected) {
+  var $table = $('table[data-type="by-type"]');
+  var primary = _.object(_.map(selected, function(result) {
+    return [result.candidate_id, result];
+  }));
+  $.getJSON(
+    buildUrl(selected, 'schedules/schedule_a/by_contributor_type/by_candidate')
+  ).done(function(response) {
+    var data = mapType(response, primary);
+    $table.dataTable(_.extend({
+      data: data,
+      columns: typeColumns
+    }, defaultOpts));
   });
 }
 
