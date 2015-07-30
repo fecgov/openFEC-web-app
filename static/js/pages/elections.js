@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document, context, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -158,9 +158,8 @@ function destroyTable($table) {
 }
 
 function buildUrl(selected, path) {
-  var params = URI.parseQuery(window.location.search);
   var query = {
-    cycle: params.cycle,
+    cycle: context.election.cycle,
     candidate_id: _.pluck(selected, 'candidate_id')
   };
   return URI(API_LOCATION)
@@ -234,8 +233,7 @@ function drawTypeTable(selected) {
 
 $(document).ready(function() {
   var $table = $('#results');
-  var query = URI.parseQuery(window.location.search);
-  tables.initTable($table, null, 'elections', query, columns, tables.offsetCallbacks, {
+  tables.initTable($table, null, 'elections', context.election, columns, tables.offsetCallbacks, {
     ordering: false,
     dom: '<"results-info meta-box results-info--top"lfrip>t',
     pagingType: 'simple',

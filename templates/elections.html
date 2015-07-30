@@ -80,4 +80,14 @@
 
 {% block scripts %}
 <script src="/{{ assets['dist/js/pages/elections.js'] }}"></script>
+<script>
+var context = {
+  election: {
+    office: '{{ office }}',
+    cycle: {{ cycle }},
+    state: '{{ state }}',
+    district: '{{ district }}'
+  }
+};
+</script>
 {% endblock %}

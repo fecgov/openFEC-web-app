@@ -200,9 +200,17 @@ def filings():
     return render_template('filings-table.html', result_type='committees')
 
 
-@app.route('/elections')
-def elections():
-    return render_template('elections.html')
+@app.route('/elections/<office>/<cycle>')
+@app.route('/elections/<office>/<state>/<cycle>')
+@app.route('/elections/<office>/<state>/<district>/<cycle>')
+def elections(office, cycle, state=None, district=None):
+    return render_template(
+        'elections.html',
+        office=office,
+        cycle=cycle,
+        state=state,
+        district=district,
+    )
 
 
 @app.errorhandler(404)
