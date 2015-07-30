@@ -209,16 +209,18 @@ $('.field input[type="text"]').on('keypress', function(e) {
 });
 
 function bindFileFilter() {
-  var $field = $('#file-date');
-  var $startDate = $field.find('[name="start_date"]');
-  var $endDate = $field.find('[name="end_date"]');
-  $field.on('click', '[name="_file_date"]', function(e) {
-    var $input = $(e.target);
-    if ($input.attr('data-start-date')) {
-      $startDate.val($input.attr('data-start-date'));
-      $endDate.val($input.attr('data-end-date'));
-    }
-    $startDate.focus();
+  $('.date-choice-field').each(function(_, field) {
+    var $field = $(field);
+    var $minDate = $field.find('[name="min_date"]');
+    var $maxDate = $field.find('[name="max_date"]');
+    $field.on('change', '[type="radio"]', function(e) {
+      var $input = $(e.target);
+      if ($input.attr('data-min-date')) {
+        $minDate.val($input.attr('data-min-date'));
+        $maxDate.val($input.attr('data-max-date'));
+      }
+      $minDate.focus();
+    });
   });
 }
 
