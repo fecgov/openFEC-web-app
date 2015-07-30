@@ -20,9 +20,9 @@ var columns = [
     }
   },
   {data: 'candidate_status_full', className: 'min-tablet'},
-  tables.currencyColumn({data: 'total_receipts'}),
-  tables.currencyColumn({data: 'total_disbursements'}),
-  tables.currencyColumn({data: 'cash_on_hand_end_period'}),
+  tables.barCurrencyColumn({data: 'total_receipts'}),
+  tables.barCurrencyColumn({data: 'total_disbursements'}),
+  tables.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
   {
     data: 'pdf_url',
     className: 'all',
@@ -46,11 +46,11 @@ var sizeColumns = [
       return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
     }
   },
-  tables.currencyColumn({data: '0'}),
-  tables.currencyColumn({data: '200'}),
-  tables.currencyColumn({data: '500'}),
-  tables.currencyColumn({data: '1000'}),
-  tables.currencyColumn({data: '2000'})
+  tables.barCurrencyColumn({data: '0'}),
+  tables.barCurrencyColumn({data: '200'}),
+  tables.barCurrencyColumn({data: '500'}),
+  tables.barCurrencyColumn({data: '1000'}),
+  tables.barCurrencyColumn({data: '2000'})
 ];
 
 var typeColumns = [
@@ -61,14 +61,14 @@ var typeColumns = [
       return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
     }
   },
-  tables.currencyColumn({data: 'individual'}),
-  tables.currencyColumn({data: 'committee'}),
+  tables.barCurrencyColumn({data: 'individual'}),
+  tables.barCurrencyColumn({data: 'committee'}),
 ];
 
 var stateColumn = {'data': 'state'};
 function stateColumns(results) {
   var columns = _.map(results, function(result) {
-    return tables.currencyColumn({data: result.candidate_id});
+    return tables.barCurrencyColumn({data: result.candidate_id});
   });
   return [stateColumn].concat(columns);
 }
@@ -181,8 +181,10 @@ function drawSizeTable(selected) {
     var data = mapSize(response, primary);
     $table.dataTable(_.extend({
       data: data,
-      columns: sizeColumns
+      columns: sizeColumns,
+      order: [[1, 'desc']]
     }, defaultOpts));
+    tables.barsAfterRender(null, $table.DataTable());
   });
 }
 
@@ -195,6 +197,7 @@ function drawStateTable(selected) {
     buildUrl(selected, 'schedules/schedule_a/by_state/by_candidate')
   ).done(function(response) {
     destroyTable($table);
+    // Clear headers
     $table.find('thead').html('');
     var data = mapState(response, primary);
     $table.dataTable(_.extend({
@@ -202,6 +205,7 @@ function drawStateTable(selected) {
       columns: stateColumns(selected),
       order: [[1, 'desc']]
     }, defaultOpts));
+    tables.barsAfterRender(null, $table.DataTable());
     // Populate headers with correct text
     var headerLabels = ['State'].concat(_.pluck(selected, 'candidate_name'));
     $table.find('th').each(function(index, elm) {
@@ -221,8 +225,10 @@ function drawTypeTable(selected) {
     var data = mapType(response, primary);
     $table.dataTable(_.extend({
       data: data,
-      columns: typeColumns
+      columns: typeColumns,
+      order: [[1, 'desc']]
     }, defaultOpts));
+    tables.barsAfterRender(null, $table.DataTable());
   });
 }
 

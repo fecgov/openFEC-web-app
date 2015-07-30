@@ -87,8 +87,24 @@ function formattedColumn(formatter) {
   };
 }
 
+function barColumn(formatter) {
+  formatter = formatter || function(value) { return value; };
+  return function(opts) {
+    return _.extend({
+      render: function(data, type, row, meta) {
+        var span = document.createElement('div');
+        span.textContent = formatter(data);
+        span.setAttribute('data-value', data);
+        span.setAttribute('data-row', meta.row);
+        return span.outerHTML;
+      }
+    }, opts);
+  };
+}
+
 var dateColumn = formattedColumn(helpers.datetime);
 var currencyColumn = formattedColumn(helpers.currency);
+var barCurrencyColumn = barColumn(helpers.currency);
 
 function mapSort(order, columns) {
   return _.map(order, function(item) {
@@ -292,6 +308,7 @@ module.exports = {
   buildCycle: buildCycle,
   buildEntityLink: buildEntityLink,
   currencyColumn: currencyColumn,
+  barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
   modalAfterRender: modalAfterRender,
   barsAfterRender: barsAfterRender,
