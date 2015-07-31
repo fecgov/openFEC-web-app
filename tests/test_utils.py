@@ -71,3 +71,7 @@ def test_fmt_chart_ticks_two_keys_repeated_value():
     }
     keys = ('coverage_start_date', 'coverage_end_date')
     assert app.fmt_chart_ticks(group, keys) == '01/01/15 – 01/15/15'
+
+def test_fmt_state_full():
+    value = 'ny'
+    assert app.fmt_state_full(value) == 'New York'
