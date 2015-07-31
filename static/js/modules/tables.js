@@ -193,6 +193,10 @@ function handleResponseSeek(api, data, response) {
   api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
 }
 
+var defaultCallbacks = {
+  preprocess: mapResponse
+};
+
 function submitOnChange($form, api) {
   function onChange(e) {
     e.preventDefault();
