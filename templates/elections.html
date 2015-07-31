@@ -60,6 +60,7 @@
         </table>
         <div id="state-maps">
           <button class="add-map">Add</button>
+          <div class="legend"></div>
           <div class="choropleths row"></div>
         </div>
       </div>
@@ -87,8 +88,8 @@
 <script>
 var context = {
   election: {
-    office: '{{ office }}',
     cycle: {{ cycle }},
+    office: '{{ office }}',
     state: '{{ state or '' }}',
     district: '{{ district or '' }}'
   }

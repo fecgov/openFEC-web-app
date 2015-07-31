@@ -2,9 +2,11 @@
 
 /* global require, module, window, document, context, API_LOCATION, API_VERSION, API_KEY */
 
+var d3 = require('d3');
 var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
+var chroma = require('chroma-js');
 
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
@@ -233,7 +235,7 @@ function drawTypeTable(selected) {
   });
 }
 
-function drawStateMap($container, candidateId) {
+function drawStateMap($container, candidateId, cached) {
   var url = URI(API_LOCATION)
     .path([
       API_VERSION,
@@ -250,10 +252,32 @@ function drawStateMap($container, candidateId) {
     .toString();
   var $map = $container.find('.state-map-choropleth');
   $map.html('');
-  maps.stateMap($map, url, 400, 400);
+  $.getJSON(url).done(function(data) {
+    var results = _.reduce(
+      data.results,
+      function(acc, val) {
+        acc[val.state_full] = val.total;
+        return acc;
+      },
+      {}
+    );
+    cached[candidateId] = results;
+    updateColorScale($container, cached);
+    var max = mapMax(cached);
+    maps.stateMap($map, data, 400, 400, max, false);
+  });
 }
 
-function appendStateMap($parent, results) {
+function mapMax(cached) {
+  return _.chain(cached)
+    .map(function(value, key) {
+      return _.max(_.values(value));
+    })
+    .max()
+    .value();
+}
+
+function appendStateMap($parent, results, cached) {
   var ids = _.pluck(results, 'candidate_id');
   var displayed = $parent.find('.state-map select').map(function(_, select) {
     return $(select).val();
@@ -266,6 +290,7 @@ function appendStateMap($parent, results) {
   $select.val(value);
   $select.trigger('change');
   updateButtonsDisplay($parent);
+  updateColorScale($parent, cached);
 }
 
 function updateButtonsDisplay($parent) {
@@ -273,26 +298,51 @@ function updateButtonsDisplay($parent) {
   $parent.find('.state-map button').css('display', display);
 }
 
+function updateColorScale($container, cached) {
+  $container = $container.closest('#state-maps');
+  var displayed = $container.find('.state-map select').map(function(_, select) {
+    return $(select).val();
+  }).get();
+  _.each(_.keys(cached), function(key) {
+    if (displayed.indexOf(key) === -1) {
+      delete cached[key];
+    }
+  });
+  var max = mapMax(cached);
+  var scale = chroma.scale(['#fff', '#2678BA']).domain([0, max]);
+  $container.closest('#state-maps').find('.state-map').each(function(_, elm) {
+    var $elm = $(elm);
+    var results = cached[$elm.find('select').val()];
+    d3.select($elm.find('g')[0])
+      .selectAll('path')
+      .attr('fill', function(d) {
+        return scale(results[d.properties.name]);
+      });
+  });
+}
+
 function initStateMaps(results) {
+  var cached = {};
   var $stateMaps = $('#state-maps');
   var $choropleths = $stateMaps.find('.choropleths');
-  $stateMaps.on('change', 'select', function(e) {
+  $stateMaps.find('.add-map').on('click', function(e) {
+    appendStateMap($choropleths, results, cached);
+  });
+  $choropleths.on('change', 'select', function(e) {
     var $target = $(e.target);
     var $parent = $target.closest('.state-map');
-    drawStateMap($parent, $target.val());
+    drawStateMap($parent, $target.val(), cached);
   });
-  $stateMaps.find('.add-map').on('click', function(e) {
-    appendStateMap($choropleths, results);
-  });
-  $stateMaps.on('click', 'button', function(e) {
+  $choropleths.on('click', 'button', function(e) {
     var $target = $(e.target);
     var $parent = $target.closest('.state-map');
     var $container = $parent.closest('#state-maps');
     $parent.remove();
     updateButtonsDisplay($container);
+    updateColorScale($container, cached);
   });
   $choropleths.find('.state-map').remove();
-  appendStateMap($choropleths, results);
+  appendStateMap($choropleths, results, cached);
 }
 
 $(document).ready(function() {

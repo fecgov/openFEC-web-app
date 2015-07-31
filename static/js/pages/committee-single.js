@@ -240,7 +240,9 @@ $(document).ready(function() {
   // Set up state map
   var $map = $('.state-map');
   var url = buildStateUrl($map);
-  maps.stateMap($map, url, 400, 400);
+  $.getJSON(url).done(function(data) {
+    maps.stateMap($map, data, 400, 400);
+  });
   events.on('state.table', function(params) {
     maps.highlightState($map, params.state);
   });
