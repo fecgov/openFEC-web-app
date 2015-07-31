@@ -4,7 +4,6 @@
 
 var d3 = require('d3');
 var $ = require('jquery');
-var URI = require('URIjs');
 var _ = require('underscore');
 var chroma = require('chroma-js');
 var topojson = require('topojson');
@@ -30,22 +29,7 @@ function compactNumber(value, rule) {
   return d3.round(value / divisor, 1).toString() + rule[0];
 }
 
-function stateMap($elm, width, height) {
-  var url = URI(API_LOCATION)
-    .path([
-      API_VERSION,
-      'committee',
-      $elm.data('committee-id'),
-      'schedules',
-      'schedule_a',
-      'by_state'
-    ].join('/'))
-    .query({
-      cycle: $elm.data('cycle'),
-      per_page: 99
-    })
-    .toString();
-
+function stateMap($elm, url, width, height) {
   var svg = d3.select($elm[0])
     .append('svg')
       .attr('width', width)
@@ -128,22 +112,7 @@ function highlightState($parent, state) {
   }
 }
 
-function init() {
-  $('.state-map').each(function(idx, elm) {
-    var $elm = $(elm);
-    stateMap($elm, 400, 400);
-    events.on('state.table', function(params) {
-      highlightState($elm, params.state);
-    });
-    $elm.on('click', 'path[data-state]', function(e) {
-      var state = $(this).attr('data-state');
-      highlightState($elm, state);
-      events.emit('state.map', {state: state});
-    });
-  });
-}
-
 module.exports = {
-  init: init,
-  stateMap: stateMap
+  stateMap: stateMap,
+  highlightState: highlightState
 };

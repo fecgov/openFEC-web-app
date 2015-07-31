@@ -1,10 +1,12 @@
 'use strict';
 
-/* global require, document */
+/* global require, module, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
+var URI = require('URIjs');
 var _ = require('underscore');
 
+var maps = require('../modules/maps');
 var events = require('../modules/events');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
@@ -92,7 +94,25 @@ var disbursementRecipientIDColumns = [
   tables.currencyColumn({data: 'total', className: 'all', orderable: false})
 ];
 
+function buildStateUrl($elm) {
+  return URI(API_LOCATION)
+    .path([
+      API_VERSION,
+      'committee',
+      $elm.data('committee-id'),
+      'schedules',
+      'schedule_a',
+      'by_state'
+    ].join('/'))
+    .query({
+      cycle: $elm.data('cycle'),
+      per_page: 99
+    })
+    .toString();
+}
+
 $(document).ready(function() {
+  // Set up data tables
   $('.data-table').each(function(index, table) {
     var $table = $(table);
     var committeeId = $table.attr('data-committee');
@@ -215,5 +235,18 @@ $(document).ready(function() {
         });
         break;
     }
+  });
+
+  // Set up state map
+  var $map = $('.state-map');
+  var url = buildStateUrl($map);
+  maps.stateMap($map, url, 400, 400);
+  events.on('state.table', function(params) {
+    maps.highlightState($map, params.state);
+  });
+  $map.on('click', 'path[data-state]', function(e) {
+    var state = $(this).attr('data-state');
+    maps.highlightState($map, state);
+    events.emit('state.map', {state: state});
   });
 });

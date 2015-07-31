@@ -6,9 +6,11 @@ var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 
+var maps = require('../modules/maps');
 var tables = require('../modules/tables');
 
 var comparisonTemplate = require('../../templates/comparison.hbs');
+var candidateStateMapTemplate = require('../../templates/candidateStateMap.hbs');
 
 var columns = [
   {
@@ -231,9 +233,78 @@ function drawTypeTable(selected) {
   });
 }
 
+function drawStateMap($container, candidateId) {
+  var url = URI(API_LOCATION)
+    .path([
+      API_VERSION,
+      'schedules',
+      'schedule_a',
+      'by_state',
+      'by_candidate'
+    ].join('/'))
+    .query({
+      cycle: context.election.cycle,
+      candidate_id: candidateId,
+      per_page: 99
+    })
+    .toString();
+  var $map = $container.find('.state-map-choropleth');
+  $map.html('');
+  maps.stateMap($map, url, 400, 400);
+}
+
+function appendStateMap($parent, results) {
+  var ids = _.pluck(results, 'candidate_id');
+  var displayed = $parent.find('.state-map select').map(function(_, select) {
+    return $(select).val();
+  }).get();
+  var value = _.find(ids, function(each) {
+    return displayed.indexOf(each) === -1;
+  }) || _.last(ids);
+  $parent.append(candidateStateMapTemplate(results));
+  var $select = $parent.find('.state-map:last select');
+  $select.val(value);
+  $select.trigger('change');
+  updateButtonsDisplay($parent);
+}
+
+function updateButtonsDisplay($parent) {
+  var display = $parent.find('.state-map').length > 1 ? 'block' : 'none';
+  $parent.find('.state-map button').css('display', display);
+}
+
+function initStateMaps(results) {
+  var $stateMaps = $('#state-maps');
+  var $choropleths = $stateMaps.find('.choropleths');
+  $stateMaps.on('change', 'select', function(e) {
+    var $target = $(e.target);
+    var $parent = $target.closest('.state-map');
+    drawStateMap($parent, $target.val());
+  });
+  $stateMaps.find('.add-map').on('click', function(e) {
+    appendStateMap($choropleths, results);
+  });
+  $stateMaps.on('click', 'button', function(e) {
+    var $target = $(e.target);
+    var $parent = $target.closest('.state-map');
+    var $container = $parent.closest('#state-maps');
+    $parent.remove();
+    updateButtonsDisplay($container);
+  });
+  $choropleths.find('.state-map').remove();
+  appendStateMap($choropleths, results);
+}
+
 $(document).ready(function() {
   var $table = $('#results');
-  tables.initTable($table, null, 'elections', context.election, columns, tables.offsetCallbacks, {
+  var query = _.chain(context.election)
+    .pairs()
+    .filter(function(pair) {
+      return pair[1];
+    })
+    .object()
+    .value();
+  tables.initTable($table, null, 'elections', query, columns, tables.offsetCallbacks, {
     ordering: false,
     dom: '<"results-info meta-box results-info--top"lfrip>t',
     pagingType: 'simple',
@@ -242,5 +313,6 @@ $(document).ready(function() {
   });
   $table.on('xhr.dt', function(event, settings, json) {
     drawComparison(json.data);
+    initStateMaps(json.data);
   });
 });
