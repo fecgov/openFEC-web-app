@@ -1,11 +1,39 @@
 
 .panel__overlay {
-  background: $meta-box-color;
+  @include transform(translateX(100%));
+  background: $lightest-gray;
   bottom: 0;
   left: 0;
-  padding: 1em 2em;
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
   z-index: 200;
+
+  &[aria-hidden="false"] {
+    @include transform(translateX(0%));
+  }
+}
+
+.panel {
+  background: $lightest-gray;
+  padding: 2rem 1rem;
+}
+
+.panel__row {
+  background: white;
+  margin-top: 3px;
+  padding: .65rem 1.5rem;
+
+  table {
+    border: 0;
+  }
+
+  td {
+    border-bottom: 0;
+    padding: .3rem 0 !important;
+
+    &:first-child {
+      font-weight: bold;
+    }
+  }
 }
