@@ -58,6 +58,10 @@
         <table class="data-table" data-type="by-state">
           <thead></thead>
         </table>
+        <div id="state-maps">
+          <button class="add-map">Add</button>
+          <div class="choropleths row"></div>
+        </div>
       </div>
     </div>
 
@@ -85,8 +89,8 @@ var context = {
   election: {
     office: '{{ office }}',
     cycle: {{ cycle }},
-    state: '{{ state }}',
-    district: '{{ district }}'
+    state: '{{ state or '' }}',
+    district: '{{ district or '' }}'
   }
 };
 </script>
