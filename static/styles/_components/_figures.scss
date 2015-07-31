@@ -88,6 +88,7 @@ figure {
 .figure__title {
   @include clearfix();
   border-bottom: 1px solid $medium-gray;
+  margin-bottom: 2rem;
 
   h4 {
     margin-bottom: 0;
@@ -96,6 +97,11 @@ figure {
   @include media($medium) {
     h4 {
       float: left
+    }
+
+    .toggles {
+      float: left;
+      margin: 0 0 1rem 2rem;
     }
   }
 }
