@@ -10,9 +10,9 @@ module.exports = {
         var $elm = $(e.target);
         $('[name="' + $elm.attr('name') + '"]').each(function(idx, input) {
           var $input = $(input);
-          $('#' + $input.attr('value')).hide();
+          $('#' + $input.attr('value')).attr('aria-hidden','true');
         });
-        $('#' + $elm.attr('value')).show();
+        $('#' + $elm.attr('value')).attr('aria-hidden','false');
       });
       $('.panel-toggle-control:checked').change();
     });

@@ -362,7 +362,7 @@ $(document).ready(function() {
     .value();
   tables.initTable($table, null, 'elections', query, columns, tables.offsetCallbacks, {
     ordering: false,
-    dom: '<"results-info meta-box results-info--top"lfrip>t',
+    dom: 't',
     pagingType: 'simple',
     lengthChange: false,
     pageLength: 10
