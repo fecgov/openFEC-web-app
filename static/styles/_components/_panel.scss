@@ -12,11 +12,25 @@
   &[aria-hidden="false"] {
     @include transform(translateX(0%));
   }
+
+  @include media($medium) {
+    &[aria-hidden="false"] {
+      @include transform(translateX(100%));
+    }
+
+    background: white;
+    border: 1px solid $light-gray;
+    width: 95%;
+  }
 }
 
 .panel {
   background: $lightest-gray;
   padding: 2rem 1rem;
+
+  @include media($medium) {
+    padding: 0;
+  }
 }
 
 .panel__row {
@@ -29,11 +43,21 @@
   }
 
   td {
-    border-bottom: 0;
+    border-bottom: 0 !important;
     padding: .3rem 0 !important;
 
     &:first-child {
       font-weight: bold;
+    }
+  }
+
+  @include media($medium) {
+    border-bottom: 1px solid $light-gray;
+    padding: 10px 18px;
+    margin-top: 0;
+
+    &:last-child {
+      border-bottom: none;
     }
   }
 }

@@ -22,14 +22,14 @@ var columns = [
       }
     }
   },
-  {data: 'contributor_state', orderable: false, className: 'min-desktop'},
-  {data: 'contributor_employer', orderable: false, className: 'min-desktop'},
+  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel'},
+  {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'contributor_receipt_amount', className: 'min-tablet'}),
   tables.dateColumn({data: 'contributor_receipt_date', className: 'min-tablet'}),
   {
     data: 'committee',
     orderable: false,
-    className: 'all',
+    className: 'all hide-panel',
     width: '30%',
     render: function(data, type, row, meta) {
       if (data) {
