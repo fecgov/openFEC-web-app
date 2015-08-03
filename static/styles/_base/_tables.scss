@@ -50,6 +50,11 @@ table.dataTable {
         border-bottom: 0;
       }
     }
+
+    &.row-active {
+      background: $blue;
+      color: #fff;
+    }
   }
 
   td {

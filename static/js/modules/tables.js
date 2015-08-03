@@ -149,11 +149,14 @@ function modalAfterRender(template, api, data, response) {
     var index = api.row($row).index();
     $modal.find('.js-panel-content').html(template(response.results[index]));
     $modal.attr('aria-hidden', 'false');
+    $row.siblings().toggleClass('row-active', false);
+    $row.toggleClass('row-active', true);
     $('body').toggleClass('panel-active', true);
   });
 
   $modal.on('click', '.js-panel-close', function(ev) {
     ev.preventDefault();
+    $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
   });
 }
