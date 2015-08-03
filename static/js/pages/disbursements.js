@@ -6,7 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
-var disbursementTemplate = require('../../templates/expenditure.hbs');
+var disbursementTemplate = require('../../templates/disbursements.hbs');
 
 var columns = [
   {
