@@ -92,6 +92,9 @@ function refreshTables() {
 }
 
 function drawComparison(results) {
+  _.each(_.first(results, 10), function(result) {
+    result._checked = true;
+  });
   var $comparison = $('#comparison');
   $comparison.html(comparisonTemplate(results));
   $comparison.on('change', 'input[type="checkbox"]', refreshTables);
