@@ -147,10 +147,10 @@ function mapType(response, primary) {
 
 var defaultOpts = {
   destroy: true,
-  lengthChange: false,
-  serverSide: false,
   searching: false,
-  paging: false
+  serverSide: false,
+  lengthChange: false,
+  dom: '<"results-info meta-box results-info--top"lfrip>t<"results-info meta-box"ip>',
 };
 
 function destroyTable($table) {
@@ -264,7 +264,7 @@ function drawStateMap($container, candidateId, cached) {
     cached[candidateId] = results;
     updateColorScale($container, cached);
     var max = mapMax(cached);
-    maps.stateMap($map, data, 400, 400, max, false);
+    maps.stateMap($map, data, 400, 300, max, false);
   });
 }
 
@@ -360,15 +360,18 @@ $(document).ready(function() {
     })
     .object()
     .value();
-  tables.initTable($table, null, 'elections', query, columns, tables.offsetCallbacks, {
-    ordering: false,
-    dom: 't',
-    pagingType: 'simple',
-    lengthChange: false,
-    pageLength: 10
-  });
-  $table.on('xhr.dt', function(event, settings, json) {
-    drawComparison(json.data);
-    initStateMaps(json.data);
+  var url = URI(API_LOCATION)
+    .path([API_VERSION, 'elections'].join('/'))
+    .addQuery(query)
+    .addQuery({per_page: 0})
+    .toString();
+  $.getJSON(url).done(function(response) {
+    $table.dataTable(_.extend({}, defaultOpts, {
+      columns: columns,
+      data: response.results,
+      order: [[2, 'desc']]
+    }));
+    drawComparison(response.results);
+    initStateMaps(response.results);
   });
 });

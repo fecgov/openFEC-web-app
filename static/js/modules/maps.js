@@ -36,7 +36,7 @@ function stateMap($elm, data, width, height, max, addLegend) {
       .attr('height', height);
   var projection = d3.geo.albersUsa()
     .scale(450)
-    .translate([220, 250]);
+    .translate([220, 150]);
   var path = d3.geo.path().projection(projection);
 
   var results = _.reduce(
