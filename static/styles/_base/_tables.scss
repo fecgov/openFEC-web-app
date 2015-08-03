@@ -1,11 +1,13 @@
 table,
 table.dataTable {
+  background: white;
+  border: 1px solid $light-gray;
   border-collapse: collapse;
   margin: 0;
+  overflow-x: scroll; // scroll horizontally on smaller viewports
+  position: relative;
   table-layout: fixed;
   width: 100%;
-  overflow-x: scroll; // scroll horizontally on smaller viewports
-  border: 1px solid $light-gray;
 
   thead {
     tr:hover {
@@ -41,6 +43,17 @@ table.dataTable {
 
     &.active {
       border: 2px solid $focus;
+    }
+
+    &:last-child {
+      td {
+        border-bottom: 0;
+      }
+    }
+
+    &.row-active {
+      background: $blue;
+      color: #fff;
     }
   }
 
@@ -388,5 +401,23 @@ table.dataTable tbody tr.child {
 
 .dataTables_wrapper.no-footer .dataTables_scrollBody {
   border-bottom: 1px solid $light-gray;
-  box-shadow: inset 0px -1px 4px 0px rgba(0,0,0,0.75); 
+  box-shadow: inset 0px -1px 4px 0px rgba(0,0,0,0.75);
+}
+
+.panel-active .dataTables_wrapper {
+  height: 118vh;
+  overflow: hidden;
+
+  @include media($medium) {
+    height: auto;
+    overflow: auto;
+
+    .dataTable {
+      width: 50% !important;
+    }
+
+    .hide-panel {
+      display: none;
+    }
+  }
 }

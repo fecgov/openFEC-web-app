@@ -135,16 +135,29 @@ function mapQuerySeek(api, data) {
 }
 
 function modalAfterRender(template, api, data, response) {
-  var $table = $(api.table().node());
-  $table.on('click', '.js-panel-toggle tr', function(e) {
-    var $row = $(e.target).closest('tr');
-    if ($row.is('a')) {
+  var $table = $(api.table().node()),
+      $modal = $('#datatable-modal');
+
+  // Move the modal to the results div.
+  $modal.appendTo($('#results'));
+
+  $table.on('click', '.js-panel-toggle tr', function(ev) {
+    if ($(ev.target).is('a')) {
       return true;
     }
+    var $row = $(ev.target).closest('tr');
     var index = api.row($row).index();
-    var $modal = $('#datatable-modal');
     $modal.find('.js-panel-content').html(template(response.results[index]));
     $modal.attr('aria-hidden', 'false');
+    $row.siblings().toggleClass('row-active', false);
+    $row.toggleClass('row-active', true);
+    $('body').toggleClass('panel-active', true);
+  });
+
+  $modal.on('click', '.js-panel-close', function(ev) {
+    ev.preventDefault();
+    $('.js-panel-toggle tr').toggleClass('row-active', false);
+    $('body').toggleClass('panel-active', false);
   });
 }
 
@@ -191,7 +204,9 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     searching: false,
     columns: columns,
     lengthMenu: [30, 50, 100],
-    responsive: true,
+    responsive: {
+      details: false
+    },
     language: {
       lengthMenu: 'Results per page: _MENU_'
     },

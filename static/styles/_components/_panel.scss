@@ -1,11 +1,78 @@
 
 .panel__overlay {
-  background: $meta-box-color;
+  @include transform(translateX(100%));
+  background: $lightest-gray;
   bottom: 0;
   left: 0;
-  padding: 1em 2em;
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
   z-index: 200;
+
+  &[aria-hidden="false"] {
+    @include transform(translateX(0%));
+  }
+
+  @include media($medium) {
+    &[aria-hidden="false"] {
+      @include transform(translateX(100%));
+    }
+
+    background: white;
+    border: 1px solid $light-gray;
+    width: 95%;
+  }
+}
+
+.panel {
+  background: $lightest-gray;
+  padding: 2rem 1rem;
+
+  @include media($medium) {
+    padding: 0;
+  }
+}
+
+.panel__row {
+  background: white;
+  margin-top: 3px;
+  padding: .65rem 1.5rem;
+
+  table {
+    border: 0;
+  }
+
+  td {
+    border-bottom: 0 !important;
+    padding: .3rem 0 !important;
+
+    &:first-child {
+      font-weight: bold;
+    }
+  }
+
+  h4 {
+    @include font-size(1.6);
+    font-weight: 600;
+  }
+
+  @include media($medium) {
+    border-bottom: 1px solid $light-gray;
+    padding: 10px 18px;
+    margin-top: 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+#datatable-modal .panel .panel__row {
+  // TODO This selector is overly specific because of a very specific selector in the tables.scss
+  // file which has to be refactored.
+  @include media($medium) {
+    td {
+      padding-left: 0 !important;
+    }
+  }
 }
