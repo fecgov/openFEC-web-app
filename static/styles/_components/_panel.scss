@@ -68,7 +68,8 @@
 }
 
 #datatable-modal .panel .panel__row {
-  // TODO this shit is broken.
+  // TODO This selector is overly specific because of a very specific selector in the tables.scss
+  // file which has to be refactored.
   @include media($medium) {
     td {
       padding-left: 0 !important;
