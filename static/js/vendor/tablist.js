@@ -3,6 +3,9 @@
 -----------------------------------------------------------------------------------------
 */
 
+var URI = require('URIjs');
+var _ = require('underscore');
+
 // The class for the container div
 
 var $container = '.tab-interface';
@@ -32,56 +35,58 @@ $('[role="tab"]').on('keydown', function(e) {
       break;
   }
 
-  if ($target.length) {
-      $original.attr({
-        'tabindex' : '-1',
-        'aria-selected' : null
-      });
-      $target.attr({
-        'tabindex' : '0',
-        'aria-selected' : true
-      }).focus();
+  if ($target && $target.length) {
+    show($target, true);
+    $target.focus();
   }
-
-  // Hide panels
-
-  $($container +' [role="tabpanel"]')
-    .attr('aria-hidden', 'true');
-
-  // Show panel which corresponds to target
-
-  $('#' + $(document.activeElement).attr('href').substring(1))
-    .attr('aria-hidden', null);
-
 });
 
 // Handle click on tab to show + focus tabpanel
 
 $('[role="tab"]').on('click', function(e) {
-
   e.preventDefault();
+  show($(this), true);
+});
 
-  // remove focusability [sic] and aria-selected
-
+function show($target, push) {
+  // Toggle tabs
   $('[role="tab"]').attr({
     'tabindex': '-1',
-    'aria-selected' : null
-    });
-
-  // replace above on clicked tab
-
-  $(this).attr({
-    'aria-selected' : true,
-    'tabindex' : '0'
+    'aria-selected': null
+  });
+  $target.attr({
+    'aria-selected': 'true',
+    'tabindex': '0'
   });
 
-  // Hide panels
+  // Toggle panels
+  $($container + ' [role="tabpanel"]').attr('aria-hidden', 'true');
+  var $panel = $('#' + $target.attr('href').substring(1));
+  $panel.attr('aria-hidden', null);
 
-  $($container +' [role="tabpanel"]').attr('aria-hidden', 'true');
+  if (push) {
+    var name = $target.closest('[role="tablist"]').attr('name');
+    var value = $target.attr('name');
+    var query = _.extend(
+      URI.parseQuery(window.location.search),
+      _.object([[name, value]])
+    );
+    var search = URI('').query(query).toString();
+    window.history.pushState(query, search, search || window.location.pathname);
+  }
+}
 
-  // show corresponding panel
+function refreshTabs() {
+  var query = URI.parseQuery(window.location.search);
+  $('ul[role="tablist"]').each(function(index, tabs) {
+    var $tabs = $(tabs);
+    var name = $tabs.attr('name');
+    var $target = query[name] ?
+      $tabs.find('[role="tab"][name="' + query[name] + '"]') :
+      $tabs.find('[role="tab"]').eq(0);
+    show($target);
+  });
+}
 
-  $('#' + $(this).attr('href').substring(1))
-    .attr('aria-hidden', null);
-
-});
+$(window).on('popstate', refreshTabs);
+refreshTabs();

@@ -231,7 +231,11 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       var api = this.api();
       if ($form) {
         var filters = $form.serializeArray();
-        parsedFilters = mapFilters(filters);
+        var tempFilters = mapFilters(filters);
+        if (_.isEqual(tempFilters, parsedFilters)) {
+          return;
+        }
+        parsedFilters = tempFilters;
         pushQuery(parsedFilters);
       }
       var query = _.extend(
