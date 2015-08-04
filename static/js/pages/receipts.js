@@ -43,7 +43,7 @@ var columns = [
     width: '3%',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon ti-angle-right"></icon>';
+      return '<i class="icon ti-angle-right"></i>';
     }
   }
 ];
