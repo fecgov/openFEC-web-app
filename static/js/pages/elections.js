@@ -14,6 +14,36 @@ var tables = require('../modules/tables');
 var comparisonTemplate = require('../../templates/comparison.hbs');
 var candidateStateMapTemplate = require('../../templates/candidateStateMap.hbs');
 
+var supportOpposeMap = {
+  S: 'Support',
+  O: 'Oppose',
+};
+var independentExpenditureColumns = [
+  tables.currencyColumn({data: 'expenditure_amount', className: 'min-tablet'}),
+  {
+    data: 'committee',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+    }
+  },
+  {
+    data: 'support_oppose_indicator',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return supportOpposeMap[data] || 'Unknown';
+    }
+  },
+  {
+    data: 'candidate_name',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
+    }
+  },
+];
+
 var columns = [
   {
     data: 'candidate_name',
@@ -356,6 +386,19 @@ function initStateMaps(results) {
   appendStateMap($choropleths, results, cached);
 }
 
+function initSpendingTables() {
+  var $table = $('table[data-type="independent-expenditures"]');
+  var path = ['schedules', 'schedule_e'].join('/');
+  tables.initTable($table, null, path, context.election, independentExpenditureColumns, tables.seekCallbacks, {
+    // dom: singlePageTableDOM,
+    order: [[0, 'desc']],
+    pagingType: 'simple',
+    lengthChange: false,
+    pageLength: 10,
+    useHideNull: false
+  });
+}
+
 $(document).ready(function() {
   var $table = $('#results');
   var query = _.chain(context.election)
@@ -379,4 +422,6 @@ $(document).ready(function() {
     drawComparison(response.results);
     initStateMaps(response.results);
   });
+
+  initSpendingTables();
 });
