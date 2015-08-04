@@ -86,9 +86,11 @@ function refreshTables() {
       candidate_name: $input.attr('data-name')
     };
   });
-  drawSizeTable(selected);
-  drawStateTable(selected);
-  drawTypeTable(selected);
+  if (selected.length > 0) {
+    drawSizeTable(selected);
+    drawStateTable(selected);
+    drawTypeTable(selected);
+  }
 }
 
 function drawComparison(results) {
