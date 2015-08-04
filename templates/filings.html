@@ -1,0 +1,24 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+    {{ name }} - Filings
+{% endblock %}
+
+{% block body %}
+<header class="page-header page-header--dark">
+  <h1>Filings</h1>
+</header>
+
+<section class="results-content">
+  {% include 'partials/filings-filter.html' %}
+
+  <div id="filings" class="results-container">
+    {% include 'partials/filings-table.html' %}
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/filings.js'] }}"></script>
+{% endblock %}
