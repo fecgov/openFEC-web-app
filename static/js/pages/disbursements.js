@@ -6,7 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
-var disbursementTemplate = require('../../templates/expenditure.hbs');
+var disbursementTemplate = require('../../templates/disbursements.hbs');
 
 var columns = [
   {
@@ -23,14 +23,14 @@ var columns = [
       }
     }
   },
-  {data: 'recipient_state', orderable: false, className: 'min-desktop'},
+  {data: 'recipient_state', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'disbursement_amount', className: 'min-tablet'}),
   tables.dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
-  {data: 'disbursement_description', className: 'min-tablet', orderable: false},
+  {data: 'disbursement_description', className: 'min-tablet hide-panel', orderable: false},
   {
     data: 'committee',
     orderable: false,
-    className: 'all',
+    className: 'all hide-panel',
     width: '30%',
     render: function(data, type, row, meta) {
       if (data) {

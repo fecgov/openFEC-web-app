@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, document, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -22,7 +22,19 @@ var committeeColumns = [
       return tables.buildEntityLink(data, '/committee/' + row.contributor_id, 'committee');
     }
   },
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          contributor_id: row.contributor_id,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
+    }
+  }
 ];
 
 var stateColumns = [
@@ -38,17 +50,61 @@ var stateColumns = [
       return span.outerHTML;
     }
   },
-  tables.barCurrencyColumn({data: 'total', width: '50%', className: 'all'})
+  {
+    data: 'total',
+    width: '50%',
+    className: 'all',
+    render: function(data, type, row, meta) {
+      var span = document.createElement('div');
+      span.setAttribute('data-value', data);
+      span.setAttribute('data-row', meta.row);
+      var link = document.createElement('a');
+      link.textContent = helpers.currency(data);
+      link.setAttribute('title', 'View individual transactions');
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          contributor_state: row.state
+        });
+      link.setAttribute('href', tables.buildAggregateUrl(uri, row.cycle));
+      span.appendChild(link);
+      return span.outerHTML;
+    }
+  },
 ];
 
 var employerColumns = [
   {data: 'employer', className: 'all', orderable: false},
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          contributor_employer: row.employer,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
+    }
+  }
 ];
 
 var occupationColumns = [
   {data: 'occupation', className: 'all', orderable: false},
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          contributor_occupation: row.occupation,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
+    }
+  }
 ];
 
 var filingsColumns = [
@@ -79,7 +135,19 @@ var disbursementPurposeColumns = [
 
 var disbursementRecipientColumns = [
   {data: 'recipient_name', className: 'all', orderable: false},
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var uri = URI('/disbursements')
+        .query({
+          committee_id: row.committee_id,
+          recipient_name: row.recipient_name,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
+    }
+  }
 ];
 
 var disbursementRecipientIDColumns = [
@@ -91,7 +159,19 @@ var disbursementRecipientIDColumns = [
       return tables.buildEntityLink(data, '/committee/' + row.recipient_id, 'committee');
     }
   },
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      var uri = URI('/disbursements')
+        .query({
+          committee_id: row.committee_id,
+          recipient_id: row.recipient_id,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
+    }
+  }
 ];
 
 function buildStateUrl($elm) {

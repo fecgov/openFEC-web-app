@@ -77,6 +77,22 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
+function buildAggregateUrl(uri, cycle) {
+  var dates = helpers.cycleDates(cycle);
+  return uri.addQuery({
+    min_date: dates.min,
+    max_date: dates.max
+  }).toString();
+}
+
+function buildAggregateLink(data, uri, cycle) {
+  var anchor = document.createElement('a');
+  anchor.textContent = helpers.currency(data);
+  anchor.setAttribute('href', buildAggregateUrl(uri, cycle));
+  anchor.setAttribute('title', 'View individual transactions');
+  return anchor.outerHTML;
+}
+
 function formattedColumn(formatter) {
   return function(opts) {
     return _.extend({
@@ -165,11 +181,14 @@ function modalAfterRender(template, api, data, response) {
     var index = api.row($row).index();
     $modal.find('.js-panel-content').html(template(response.results[index]));
     $modal.attr('aria-hidden', 'false');
+    $row.siblings().toggleClass('row-active', false);
+    $row.toggleClass('row-active', true);
     $('body').toggleClass('panel-active', true);
   });
 
   $modal.on('click', '.js-panel-close', function(ev) {
     ev.preventDefault();
+    $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
   });
 }
@@ -311,6 +330,8 @@ module.exports = {
   yearRange: yearRange,
   buildCycle: buildCycle,
   buildEntityLink: buildEntityLink,
+  buildAggregateUrl: buildAggregateUrl,
+  buildAggregateLink: buildAggregateLink,
   currencyColumn: currencyColumn,
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
