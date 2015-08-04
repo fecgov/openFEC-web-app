@@ -63,6 +63,12 @@ table.dataTable {
     padding-left: 20px !important;
     border-bottom: 1px dotted $light-gray;
 
+    .icon {
+      color: $light-gray;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
     @include media($large) {
       padding-left: 10px !important;
     }

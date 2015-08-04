@@ -15,7 +15,7 @@
 
   @include media($medium) {
     &[aria-hidden="false"] {
-      @include transform(translateX(100%));
+      @include transform(translateX(103.5%));
     }
 
     background: white;

@@ -40,10 +40,10 @@ var columns = [
     }
   },
   {
-    width: '5%',
+    width: '3%',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '';
+      return '<i class="icon ti-angle-right"></icon>';
     }
   }
 ];
