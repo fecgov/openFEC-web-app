@@ -13,7 +13,7 @@ def check_sort(driver, index, parser, reverse=False):
     table = driver.find_element_by_css_selector('table#results')
     values = [
         parser(row.find_elements_by_tag_name('td')[index].text)
-        for row in table.find_elements_by_tag_name('tr')[1:]
+        for row in table.find_elements_by_css_selector('tr[role="row"]')[1:]
     ]
     assert values == sorted(values, reverse=reverse)
 
@@ -34,15 +34,15 @@ class TestReceipts(SearchPageTestCase):
         self.driver.get(self.url)
 
         # Sort on date
-        check_sort(self.driver, 4, parse_date, reverse=True)
-        toggle_sort(self.driver, 4)
-        check_sort(self.driver, 4, parse_date, reverse=False)
+        check_sort(self.driver, 5, parse_date, reverse=True)
+        toggle_sort(self.driver, 5)
+        check_sort(self.driver, 5, parse_date, reverse=False)
 
         # Sort on amount
-        toggle_sort(self.driver, 3)
-        check_sort(self.driver, 3, parse_amount, reverse=False)
-        toggle_sort(self.driver, 3)
-        check_sort(self.driver, 3, parse_amount, reverse=True)
+        toggle_sort(self.driver, 4)
+        check_sort(self.driver, 4, parse_amount, reverse=False)
+        toggle_sort(self.driver, 4)
+        check_sort(self.driver, 4, parse_amount, reverse=True)
 
 
 class TestDisbursements(SearchPageTestCase):
