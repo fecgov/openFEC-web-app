@@ -124,9 +124,29 @@ function mapResponse(response) {
   };
 }
 
+function ensureArray(value) {
+  return _.isArray(value) ? value : [value];
+}
+
+function compareQuery(first, second) {
+  var keys = _.keys(first);
+  if (!_.isEqual(keys.sort(), _.keys(second).sort())) {
+    return false;
+  }
+  var different = _.find(keys, function(key) {
+    return !_.isEqual(
+      ensureArray(first[key]).sort(),
+      ensureArray(second[key]).sort()
+    );
+  });
+  return !different;
+}
+
 function pushQuery(filters) {
-  var params = URI('').query(filters).toString();
-  if (window.location.search !== params) {
+  var query = URI.parseQuery(window.location.search);
+  if (!compareQuery(query, filters)) {
+    filters = _.extend(query, filters);
+    var params = URI('').query(filters).toString();
     window.history.pushState(filters, params, params || window.location.pathname);
   }
 }

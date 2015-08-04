@@ -197,7 +197,7 @@ def disbursements():
 
 @app.route('/filings')
 def filings():
-    return render_template('filings-table.html', result_type='committees')
+    return render_template('filings.html', result_type='committees')
 
 
 @app.errorhandler(404)
