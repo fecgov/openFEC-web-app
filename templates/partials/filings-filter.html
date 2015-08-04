@@ -10,7 +10,8 @@ Filter Filings
 
 {% block filters %}
 
-{{ text.field('_committee_id', 'From Committee', {'id': 'committee-typeahead-filter'}) }}
+{{ text.field('_committee_id', 'Committee', {'class': 'committee-typeahead-field', 'data-input': 'committee_id'}) }}
+<input type="hidden" name="committee_id" id="committee_id" />
 
 {{ text.field('report_year', 'Report Year') }}
 
