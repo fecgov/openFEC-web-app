@@ -17,26 +17,7 @@
   </div>
 </section>
 
-<div id="datatable-modal" class="panel__overlay" aria-hidden="true">
-  <div class="panel">
-    <div class="panel__row">
-      <strong>
-        <a href="#" class="js-hide js-panel-close panel__close"
-            data-hides="datatable-modal">
-          <i class="icon icon--bold ti-angle-left"></i>
-          View all
-        </a>
-      </strong>
-    </div>
-    <div class="js-panel-content panel__content">
-      <table>
-        <tr>
-          <td></td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</div>
+{% include 'partials/datatable-modal.html' %}
 
 {% endblock %}
 
