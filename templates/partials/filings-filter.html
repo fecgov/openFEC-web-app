@@ -1,0 +1,21 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/date.html' as date %}
+
+{% block heading %}
+Filter Filings
+{% endblock %}
+
+{% block filters %}
+
+{{ text.field('_committee_id', 'From Committee', {'id': 'committee-typeahead-filter'}) }}
+
+{{ text.field('report_year', 'Report Year') }}
+
+{% include 'partials/filters/amendment-indicator.html' %}
+{% include 'partials/filters/primary-general.html' %}
+{% include 'partials/filters/report-type.html' %}
+
+{% endblock %}
