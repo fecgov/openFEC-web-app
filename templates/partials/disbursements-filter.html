@@ -9,6 +9,7 @@ Filter Disbursements
 
 {% block filters %}
 {{ text.field('_committee_id', 'From Committee', {'id': 'committee-typeahead-filter'}) }}
+<input type="hidden" name="committee_id" id="committee_id" />
 
 <div class="js-accordion">
   <h5 class="js-accordion_header accordion__header">Recipient Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
