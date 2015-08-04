@@ -37,7 +37,6 @@
   background: white;
   margin-top: 3px;
   padding: .65rem 1.5rem;
-  text-align: right;
 
   table {
     border: 0;
@@ -57,12 +56,6 @@
     font-weight: 600;
   }
 
-  .icon {
-    &:before {
-      content: "\e64a";
-    }
-  }
-
   @include media($medium) {
     border-bottom: 1px solid $light-gray;
     padding: 10px 18px;
@@ -71,6 +64,18 @@
     &:last-child {
       border-bottom: none;
     }
+  }
+}
+
+.panel__navigation {
+  .icon {
+    &:before {
+      content: "\e64a";
+    }
+  }
+
+  @include media($medium) {
+    text-align: right;
 
     .icon {
       &:before {
