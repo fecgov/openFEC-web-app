@@ -20,7 +20,14 @@ var committeeColumns = [
       return tables.buildEntityLink(data, '/committee/' + row.contributor_id, 'committee');
     }
   },
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total', 
+    className: 'all', 
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_id=' + row.contributor_id);
+    }
+  }
 ];
 
 var stateColumns = [
@@ -42,9 +49,14 @@ var stateColumns = [
     className: 'all',
     render: function(data, type, row, meta) {
       var span = document.createElement('div');
-      span.textContent = helpers.currency(data);
+      var link = document.createElement('a');
+      var url = '/receipts?committee_id=' + row.committee_id + '&contributor_state=' + row.state;
       span.setAttribute('data-value', data);
       span.setAttribute('data-row', meta.row);
+      span.appendChild(link);
+      link.textContent = helpers.currency(data);
+      link.setAttribute('title', 'View individual transactions');
+      link.setAttribute('href', url);
       return span.outerHTML;
     }
   },
@@ -52,12 +64,26 @@ var stateColumns = [
 
 var employerColumns = [
   {data: 'employer', className: 'all', orderable: false},
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total', 
+    className: 'all', 
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_employer=' + row.employer);
+    }
+  }
 ];
 
 var occupationColumns = [
   {data: 'occupation', className: 'all', orderable: false},
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total', 
+    className: 'all', 
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_occupation=' + row.occupation);
+    }
+  }
 ];
 
 var filingsColumns = [
@@ -88,7 +114,14 @@ var disbursementPurposeColumns = [
 
 var disbursementRecipientColumns = [
   {data: 'recipient_name', className: 'all', orderable: false},
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total', 
+    className: 'all', 
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildAggregateLink(data, '/disbursements?committee_id=' + row.committee_id + '&recipient_name=' + row.recipient_name);
+    }
+  }
 ];
 
 var disbursementRecipientIDColumns = [
@@ -100,7 +133,14 @@ var disbursementRecipientIDColumns = [
       return tables.buildEntityLink(data, '/committee/' + row.recipient_id, 'committee');
     }
   },
-  tables.currencyColumn({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total', 
+    className: 'all', 
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildAggregateLink(data, '/disbursements?committee_id=' + row.committee_id + '&recipient_id=' + row.recipient_id);
+    }
+  }
 ];
 
 $(document).ready(function() {

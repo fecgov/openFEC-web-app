@@ -77,6 +77,14 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
+function buildAggregateLink(data, url) {
+  var anchor = document.createElement('a');
+  anchor.textContent = helpers.currency(data);
+  anchor.setAttribute('href', url);
+  anchor.setAttribute('title', 'View individual transactions');
+  return anchor.outerHTML;
+}
+
 function formattedColumn(formatter) {
   return function(opts) {
     return _.extend({
@@ -289,6 +297,7 @@ module.exports = {
   yearRange: yearRange,
   buildCycle: buildCycle,
   buildEntityLink: buildEntityLink,
+  buildAggregateLink: buildAggregateLink,
   currencyColumn: currencyColumn,
   dateColumn: dateColumn,
   modalAfterRender: modalAfterRender,
