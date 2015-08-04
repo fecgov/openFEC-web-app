@@ -77,8 +77,11 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
-function buildAggregateLink(data, url) {
+function buildAggregateLink(data, url, cycle) {
   var anchor = document.createElement('a');
+  var min_date = helpers.cycleDates(cycle).min_date;
+  var max_date = helpers.cycleDates(cycle).max_date;
+  url = url + '&min_date=' + min_date + '&max_date=' + max_date;
   anchor.textContent = helpers.currency(data);
   anchor.setAttribute('href', url);
   anchor.setAttribute('title', 'View individual transactions');

@@ -25,7 +25,7 @@ var committeeColumns = [
     className: 'all', 
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_id=' + row.contributor_id);
+      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_id=' + row.contributor_id, row.cycle);
     }
   }
 ];
@@ -50,7 +50,9 @@ var stateColumns = [
     render: function(data, type, row, meta) {
       var span = document.createElement('div');
       var link = document.createElement('a');
-      var url = '/receipts?committee_id=' + row.committee_id + '&contributor_state=' + row.state;
+      var min_date = helpers.cycleDates(row.cycle).min_date;
+      var max_date = helpers.cycleDates(row.cycle).max_date;
+      var url = '/receipts?committee_id=' + row.committee_id + '&contributor_state=' + row.state + '&min_date=' + min_date + '&max_date=' + max_date;
       span.setAttribute('data-value', data);
       span.setAttribute('data-row', meta.row);
       span.appendChild(link);
@@ -69,7 +71,7 @@ var employerColumns = [
     className: 'all', 
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_employer=' + row.employer);
+      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_employer=' + row.employer, row.cycle);
     }
   }
 ];
@@ -81,7 +83,7 @@ var occupationColumns = [
     className: 'all', 
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_occupation=' + row.occupation);
+      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_occupation=' + row.occupation, row.cycle);
     }
   }
 ];
@@ -119,7 +121,7 @@ var disbursementRecipientColumns = [
     className: 'all', 
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/disbursements?committee_id=' + row.committee_id + '&recipient_name=' + row.recipient_name);
+      return tables.buildAggregateLink(data, '/disbursements?committee_id=' + row.committee_id + '&recipient_name=' + row.recipient_name, row.cycle);
     }
   }
 ];
@@ -138,7 +140,7 @@ var disbursementRecipientIDColumns = [
     className: 'all', 
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/disbursements?committee_id=' + row.committee_id + '&recipient_id=' + row.recipient_id);
+      return tables.buildAggregateLink(data, '/disbursements?committee_id=' + row.committee_id + '&recipient_id=' + row.recipient_id, row.cycle);
     }
   }
 ];
