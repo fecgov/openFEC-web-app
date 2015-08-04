@@ -24,12 +24,11 @@ function datetime(value) {
 }
 Handlebars.registerHelper('datetime', datetime);
 
-function cycleDates(value) {
-  var secondYear = value;
-  var firstYear = secondYear - 1;
-  var min_date = '01-01-' + firstYear;
-  var max_date = '12-31-' + secondYear;
-  return { min_date: min_date, max_date: max_date };
+function cycleDates(year) {
+  return {
+    min: '01-01-' + (year - 1),
+    max: '12-31-' + year
+  };
 }
 
 module.exports = {

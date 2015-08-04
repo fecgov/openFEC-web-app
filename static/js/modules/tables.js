@@ -77,13 +77,18 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
-function buildAggregateLink(data, url, cycle) {
+function buildAggregateUrl(uri, cycle) {
+  var dates = helpers.cycleDates(cycle);
+  return uri.addQuery({
+    min_date: dates.min,
+    max_date: dates.max
+  }).toString();
+}
+
+function buildAggregateLink(data, uri, cycle) {
   var anchor = document.createElement('a');
-  var min_date = helpers.cycleDates(cycle).min_date;
-  var max_date = helpers.cycleDates(cycle).max_date;
-  url = url + '&min_date=' + min_date + '&max_date=' + max_date;
   anchor.textContent = helpers.currency(data);
-  anchor.setAttribute('href', url);
+  anchor.setAttribute('href', buildAggregateUrl(uri, cycle));
   anchor.setAttribute('title', 'View individual transactions');
   return anchor.outerHTML;
 }
@@ -300,6 +305,7 @@ module.exports = {
   yearRange: yearRange,
   buildCycle: buildCycle,
   buildEntityLink: buildEntityLink,
+  buildAggregateUrl: buildAggregateUrl,
   buildAggregateLink: buildAggregateLink,
   currencyColumn: currencyColumn,
   dateColumn: dateColumn,

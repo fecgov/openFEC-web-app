@@ -3,6 +3,7 @@
 /* global require, document */
 
 var $ = require('jquery');
+var URI = require('URIjs');
 var _ = require('underscore');
 
 var events = require('../modules/events');
@@ -21,11 +22,16 @@ var committeeColumns = [
     }
   },
   {
-    data: 'total', 
-    className: 'all', 
+    data: 'total',
+    className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_id=' + row.contributor_id, row.cycle);
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          contributor_id: row.contributor_id,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
     }
   }
 ];
@@ -49,16 +55,18 @@ var stateColumns = [
     className: 'all',
     render: function(data, type, row, meta) {
       var span = document.createElement('div');
-      var link = document.createElement('a');
-      var min_date = helpers.cycleDates(row.cycle).min_date;
-      var max_date = helpers.cycleDates(row.cycle).max_date;
-      var url = '/receipts?committee_id=' + row.committee_id + '&contributor_state=' + row.state + '&min_date=' + min_date + '&max_date=' + max_date;
       span.setAttribute('data-value', data);
       span.setAttribute('data-row', meta.row);
-      span.appendChild(link);
+      var link = document.createElement('a');
       link.textContent = helpers.currency(data);
       link.setAttribute('title', 'View individual transactions');
-      link.setAttribute('href', url);
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          contributor_state: row.state
+        });
+      link.setAttribute('href', tables.buildAggregateUrl(uri, row.cycle));
+      span.appendChild(link);
       return span.outerHTML;
     }
   },
@@ -67,11 +75,16 @@ var stateColumns = [
 var employerColumns = [
   {data: 'employer', className: 'all', orderable: false},
   {
-    data: 'total', 
-    className: 'all', 
+    data: 'total',
+    className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_employer=' + row.employer, row.cycle);
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          contributor_employer: row.employer,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
     }
   }
 ];
@@ -79,11 +92,16 @@ var employerColumns = [
 var occupationColumns = [
   {data: 'occupation', className: 'all', orderable: false},
   {
-    data: 'total', 
-    className: 'all', 
+    data: 'total',
+    className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/receipts?committee_id=' + row.committee_id + '&contributor_occupation=' + row.occupation, row.cycle);
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          contributor_occupation: row.occupation,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
     }
   }
 ];
@@ -117,11 +135,16 @@ var disbursementPurposeColumns = [
 var disbursementRecipientColumns = [
   {data: 'recipient_name', className: 'all', orderable: false},
   {
-    data: 'total', 
-    className: 'all', 
+    data: 'total',
+    className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/disbursements?committee_id=' + row.committee_id + '&recipient_name=' + row.recipient_name, row.cycle);
+      var uri = URI('/disbursements')
+        .query({
+          committee_id: row.committee_id,
+          recipient_name: row.recipient_name,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
     }
   }
 ];
@@ -136,11 +159,16 @@ var disbursementRecipientIDColumns = [
     }
   },
   {
-    data: 'total', 
-    className: 'all', 
+    data: 'total',
+    className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildAggregateLink(data, '/disbursements?committee_id=' + row.committee_id + '&recipient_id=' + row.recipient_id, row.cycle);
+      var uri = URI('/disbursements')
+        .query({
+          committee_id: row.committee_id,
+          recipient_id: row.recipient_id,
+        });
+      return tables.buildAggregateLink(data, uri, row.cycle);
     }
   }
 ];
