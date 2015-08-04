@@ -67,6 +67,38 @@
   }
 }
 
+.panel__navigation {
+  .icon {
+    &:before {
+      content: "\e64a";
+    }
+  }
+
+  @include media($medium) {
+    text-align: right;
+
+    .icon {
+      &:before {
+        content: "\e646";
+        float: right;
+        padding: .2em 0 0 .4em;
+      }
+    }
+  }
+}
+
+.panel__close {
+  &:after {
+    content: "View all";
+  }
+
+  @include media($medium) {
+    &:after {
+      content: "Close";
+    }
+  }
+}
+
 #datatable-modal .panel .panel__row {
   // TODO This selector is overly specific because of a very specific selector in the tables.scss
   // file which has to be refactored.
