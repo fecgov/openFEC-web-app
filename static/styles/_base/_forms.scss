@@ -19,7 +19,6 @@ select {
 
 label {
   @include font-size(1.6);
-  margin-top: 2em;
   margin-bottom: $base-line-height / 4;
 
   &.required:after {

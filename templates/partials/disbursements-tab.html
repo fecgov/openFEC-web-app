@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row">
-      <div id="by-purpose" class="panel-toggle-element">
+      <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
         <h4>Disbursements by Purpose</h4>
         <table
             class="data-table"
@@ -48,7 +48,7 @@
         {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
-      <div id="by-recipient" class="panel-toggle-element">
+      <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
         <h4>Disbursements by Recipient Name</h4>
         <table
             class="data-table"
@@ -64,7 +64,7 @@
         {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
-      <div id="by-recipient-id" class="panel-toggle-element">
+      <div id="by-recipient-id" class="panel-toggle-element" aria-hidden="false">
         <h4>Disbursements by Recipient Committee (if applicable)</h4>
         <table
             class="data-table"

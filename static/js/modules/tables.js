@@ -103,8 +103,24 @@ function formattedColumn(formatter) {
   };
 }
 
+function barColumn(formatter) {
+  formatter = formatter || function(value) { return value; };
+  return function(opts) {
+    return _.extend({
+      render: function(data, type, row, meta) {
+        var span = document.createElement('div');
+        span.textContent = formatter(data);
+        span.setAttribute('data-value', data);
+        span.setAttribute('data-row', meta.row);
+        return span.outerHTML;
+      }
+    }, opts);
+  };
+}
+
 var dateColumn = formattedColumn(helpers.datetime);
 var currencyColumn = formattedColumn(helpers.currency);
+var barCurrencyColumn = barColumn(helpers.currency);
 
 function mapSort(order, columns) {
   return _.map(order, function(item) {
@@ -216,6 +232,10 @@ function handleResponseSeek(api, data, response) {
   api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
 }
 
+var defaultCallbacks = {
+  preprocess: mapResponse
+};
+
 function submitOnChange($form, api) {
   function onChange(e) {
     e.preventDefault();
@@ -223,6 +243,10 @@ function submitOnChange($form, api) {
   }
   $form.on('change', 'input,select', _.debounce(onChange, 250));
 }
+
+var defaultCallbacks = {
+  preprocess: mapResponse
+};
 
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
@@ -235,6 +259,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   );
   var useFilters = opts.useFilters;
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
+  callbacks = _.extend({}, defaultCallbacks, callbacks);
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -279,7 +304,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
         .toString()
       ).done(function(response) {
         callbacks.handleResponse(api, data, response);
-        callback(mapResponse(response));
+        callback(callbacks.preprocess(response));
         callbacks.afterRender(api, data, response);
       }).always(function() {
         $processing.hide();
@@ -327,6 +352,7 @@ module.exports = {
   buildAggregateUrl: buildAggregateUrl,
   buildAggregateLink: buildAggregateLink,
   currencyColumn: currencyColumn,
+  barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
   modalAfterRender: modalAfterRender,
   barsAfterRender: barsAfterRender,

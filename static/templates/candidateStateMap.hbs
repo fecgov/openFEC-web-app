@@ -1,0 +1,11 @@
+<div class="state-map chunk--half">
+  <select>
+  {{#each this}}
+    <option value="{{ this.candidate_id }}">
+      {{ this.candidate_name }}
+    </option>
+  {{/each}}
+  </select>
+  <button class="button--unstyled"><i class="ti-close"></i></button>
+  <div class="state-map-choropleth"></div>
+</div>
