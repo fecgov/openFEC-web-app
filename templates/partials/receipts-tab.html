@@ -4,13 +4,6 @@
 
 <section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
-      {% set table_data = [
-        (aggregates.size.0, (0, 199.99), 'Under $200'),
-        (aggregates.size.200, (200, 499.99), '$200 - $499'),
-        (aggregates.size.500, (500, 999.99), '$500 - $999'),
-        (aggregates.size.1000, (1000, 1999.99), '$1000 - $1999'),
-        (aggregates.size.2000, (2000, None), 'Over $2000'),
-      ] %}
     <div class="page-section__intro">
       <h2 class="section-heading" id="section-2-heading">Analyze Receipts {% include 'partials/cycle-select.html' %}  </h2>
       <div class="toggles section__intro__left">
@@ -70,38 +63,18 @@
         </div>
       </div>
       <div id="by-contribution-size" class="panel-toggle-element">
-        <figure class="table--simple totals-table totals-table--charts">
-          <div class="table__row table__row--header">
-            <div class="table__cell">
-              <h5>Contribution Size</h5>
-            </div>
-            <div class="table__cell">
-              <h5>Contribution Size</h5>
-            </div>
-          </div>
-          <div class="table js-chart-series chart-series--horizontal">
-            {% for value, limits, label in table_data %}
-              <div class="table__row">
-                <div class="table__cell">
-                  <a
-                      href="{{ url_for(
-                        'receipts',
-                        committee_id=committee.committee_id,
-                        min_amount=limits[0],
-                        max_amount=limits[1],
-                        min_date=cycle_start(cycle).strftime('%m/%d/%Y'),
-                        max_date=cycle_end(cycle).strftime('%m/%d/%Y'),
-                      ) }}"
-                  >{{ label }}</a>
-                </div>
-                <div class="table__cell">{{ null.null(value | currency) }}</div>
-                <div class="table__cell table__cell--bar">
-                  {{ charts.chart_bar(value | default(0), label, tooltip=None) }}
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        </figure>
+        <div id="by-size" class="panel-toggle-element">
+          <table
+             class="data-table"
+             data-type="contribution-size"
+             data-committee="{{ committee.committee_id }}"
+             data-cycle="{{ cycle }}">
+            <thead>
+              <th scope="col">Contribution Size</th>
+              <th scope="col">Total Contributed</th>
+            </thead>
+          </table>
+        </div>
       </div>
       <div class="row">
         <div id="by-committee" class="panel-toggle-element">

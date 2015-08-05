@@ -12,6 +12,55 @@ var helpers = require('../modules/helpers');
 
 var singlePageTableDOM = 't<"results-info results-info--bottom meta-box"frip>';
 
+var tableOpts = {
+  dom: singlePageTableDOM,
+  pagingType: 'simple',
+  lengthChange: false,
+  pageLength: 10,
+  useHideNull: false
+};
+
+var sizeInfo = {
+  0: {limits: [0, 199.99], label: 'Under $200'},
+  200: {limits: [200, 499.99], label: '$200 - $499'},
+  500: {limits: [500, 999.99], label: '$500 - $999'},
+  1000: {limits: [1000, 1999.99], label: '$1000 - $1999'},
+  2000: {limits: [2000, null], label: 'Over $2000'},
+};
+var sizeColumns = [
+  {
+    data: 'size',
+    width: '50%',
+    className: 'all',
+    render: function(data, type, row, meta) {
+      var info = sizeInfo[data];
+      var anchor = document.createElement('a');
+      anchor.textContent = info.label;
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          min_amount: info.limits[0],
+          max_amount: info.limits[1]
+        });
+      anchor.setAttribute('href', tables.buildAggregateUrl(uri, row.cycle));
+      anchor.setAttribute('title', 'View individual transactions');
+      return anchor.outerHTML;
+    }
+  },
+  {
+    data: 'total',
+    width: '50%',
+    className: 'all',
+    render: function(data, type, row, meta) {
+      var span = document.createElement('div');
+      span.textContent = helpers.currency(data);
+      span.setAttribute('data-value', data);
+      span.setAttribute('data-row', meta.row);
+      return span.outerHTML;
+    }
+  },
+];
+
 var committeeColumns = [
   {
     data: 'contributor_name',
@@ -198,22 +247,41 @@ $(document).ready(function() {
           useHideNull: false
         });
         break;
+      case 'contribution-size':
+        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_size'].join('/');
+        query = {cycle: cycle};
+        tables.initTable($table, null, path, query, sizeColumns,
+          _.extend({
+            afterRender: tables.barsAfterRender.bind(undefined, undefined)
+          }, tables.offsetCallbacks), {
+          dom: singlePageTableDOM,
+          order: [[1, 'desc']],
+          pagingType: 'simple',
+          lengthChange: false,
+          pageLength: 10,
+          useHideNull: false
+        });
+        break;
       case 'receipts-by-state':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'].join('/');
         query = {cycle: parseInt(cycle), per_page: 99, hide_null: true};
         tables.initTable($table, null, path, query, stateColumns,
-          _.extend({
-            afterRender: tables.barsAfterRender.bind(undefined, undefined)
-          }, tables.offsetCallbacks), {
-          dom: 't',
-          order: [[1, 'desc']],
-          paging: false,
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false,
-          scrollY: 400,
-          scrollCollapse: true
-        });
+          _.extend(
+            {afterRender: tables.barsAfterRender.bind(undefined, undefined)},
+            tables.offsetCallbacks
+          ),
+          _.extend(
+            {},
+            tableOpts,
+            {
+              dom: 't',
+              order: [[1, 'desc']],
+              paging: false,
+              scrollY: 400,
+              scrollCollapse: true
+            }
+          )
+        );
         events.on('state.map', function(params) {
           var $scrollBody = $table.closest('.dataTables_scrollBody');
           var $row = $scrollBody.find('span[data-state="' + params.state + '"]');
@@ -230,26 +298,16 @@ $(document).ready(function() {
       case 'receipts-by-employer':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'].join('/');
         query = {cycle: parseInt(cycle)};
-        tables.initTable($table, null, path, query, employerColumns, tables.offsetCallbacks, {
-          dom: singlePageTableDOM,
+        tables.initTable($table, null, path, query, employerColumns, tables.offsetCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false
-        });
+        }));
         break;
       case 'receipts-by-occupation':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'].join('/');
         query = {cycle: parseInt(cycle)};
-        tables.initTable($table, null, path, query, occupationColumns, tables.offsetCallbacks, {
-          dom: singlePageTableDOM,
+        tables.initTable($table, null, path, query, occupationColumns, tables.offsetCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false
-        });
+        }));
         break;
       case 'filing':
         var $form = $('#category-filters');
@@ -262,38 +320,23 @@ $(document).ready(function() {
       case 'disbursements-by-purpose':
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'].join('/');
         query = {cycle: parseInt(cycle)};
-        tables.initTable($table, null, path, query, disbursementPurposeColumns, tables.offsetCallbacks, {
-          dom: singlePageTableDOM,
+        tables.initTable($table, null, path, query, disbursementPurposeColumns, tables.offsetCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false
-        });
+        }));
         break;
       case 'disbursements-by-recipient':
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'].join('/');
         query = {cycle: parseInt(cycle)};
-        tables.initTable($table, null, path, query, disbursementRecipientColumns, tables.offsetCallbacks, {
-          dom: singlePageTableDOM,
+        tables.initTable($table, null, path, query, disbursementRecipientColumns, tables.offsetCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false
-        });
+        }));
         break;
       case 'disbursements-by-recipient-id':
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'].join('/');
         query = {cycle: parseInt(cycle)};
-        tables.initTable($table, null, path, query, disbursementRecipientIDColumns, tables.offsetCallbacks, {
-          dom: singlePageTableDOM,
+        tables.initTable($table, null, path, query, disbursementRecipientIDColumns, tables.offsetCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false
-        });
+        }));
         break;
     }
   });
