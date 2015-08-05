@@ -26,11 +26,11 @@ var columns = [
   {data: 'recipient_state', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'disbursement_amount', className: 'min-tablet'}),
   tables.dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
-  {data: 'disbursement_description', className: 'min-tablet hide-panel', orderable: false},
+  {data: 'disbursement_description', className: 'min-desktop hide-panel', orderable: false},
   {
     data: 'committee',
     orderable: false,
-    className: 'all hide-panel',
+    className: 'min-tablet hide-panel',
     width: '30%',
     render: function(data, type, row, meta) {
       if (data) {
@@ -41,10 +41,11 @@ var columns = [
     }
   },
   {
-    width: '5%',
+    className: 'all',
+    width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '';
+      return '<i class="icon ti-angle-right"></i>';
     }
   }
 ];
