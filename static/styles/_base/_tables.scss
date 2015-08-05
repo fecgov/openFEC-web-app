@@ -418,21 +418,7 @@ table.dataTable tbody tr.child {
     height: auto;
     overflow: auto;
 
-    .dataTable {
-      width: 50% !important;
-    }
-
     .hide-panel {
-      display: none;
-    }
-  }
-
-  @include media($small) {
-    .dataTable {
-      width: 52% !important;
-    }
-
-    .hide-panel-tablet {
       display: none;
     }
   }
