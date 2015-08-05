@@ -13,7 +13,7 @@ var columns = [
     data: 'contributor',
     orderable: false,
     className: 'all',
-    width: '30%',
+    width: '27%',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
@@ -25,12 +25,13 @@ var columns = [
   {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'contributor_receipt_amount', className: 'min-tablet'}),
-  tables.dateColumn({data: 'contributor_receipt_date', className: 'min-tablet'}),
+  tables.dateColumn({data: 'contributor_receipt_date', 
+      className: 'min-mobile hide-panel-tablet'}),
   {
     data: 'committee',
     orderable: false,
     className: 'all hide-panel',
-    width: '30%',
+    width: '27%',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
@@ -40,7 +41,8 @@ var columns = [
     }
   },
   {
-    width: '3%',
+    className: 'min-mobile',
+    width: '4%',
     orderable: false,
     render: function(data, type, row, meta) {
       return '<i class="icon ti-angle-right"></i>';

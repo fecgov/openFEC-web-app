@@ -426,4 +426,14 @@ table.dataTable tbody tr.child {
       display: none;
     }
   }
+
+  @include media($small) {
+    .dataTable {
+      width: 52% !important;
+    }
+
+    .hide-panel-tablet {
+      display: none;
+    }
+  }
 }
