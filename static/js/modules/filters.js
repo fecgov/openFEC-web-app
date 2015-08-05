@@ -80,9 +80,10 @@ var bindFilters = function() {
     cycleSelect.each(function(){
       var $this = $(this);
       $this.change(function() {
-        var query = {cycle: $this.val()};
-        var selected = $this.find('option:selected');
-        window.location.href = URI(window.location.href).query(query).toString();
+        window.location.href = URI(window.location.href)
+          .removeQuery('cycle')
+          .addQuery({cycle: $this.val()})
+          .toString();
       });
     });
 };

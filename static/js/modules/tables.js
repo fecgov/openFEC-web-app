@@ -251,7 +251,11 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       var api = this.api();
       if ($form) {
         var filters = $form.serializeArray();
-        parsedFilters = mapFilters(filters);
+        var tempFilters = mapFilters(filters);
+        if (_.isEqual(tempFilters, parsedFilters)) {
+          return;
+        }
+        parsedFilters = tempFilters;
         pushQuery(parsedFilters);
       }
       var query = _.extend(
@@ -303,11 +307,6 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   }
   $table.css('width', '100%');
   $table.find('tbody').addClass('js-panel-toggle');
-  // Update filters and data table on navigation
-  $(window).on('popstate', function() {
-    filters.activateInitialFilters();
-    api.ajax.reload();
-  });
   if ($form) {
     submitOnChange($form, api);
   }
