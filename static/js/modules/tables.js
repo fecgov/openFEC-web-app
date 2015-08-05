@@ -204,12 +204,25 @@ function modalAfterRender(template, api, data, response) {
     $row.siblings().toggleClass('row-active', false);
     $row.toggleClass('row-active', true);
     $('body').toggleClass('panel-active', true);
+    var hideColumns = api.columns('.hide-panel');
+    hideColumns.visible(false);
+    // When under $large-screen
+    // TODO figure way to share these values with CSS.
+    if ($(document).width() < 980) {
+      api.columns('.hide-panel-tablet').visible(false);
+    }
   });
 
   $modal.on('click', '.js-panel-close', function(ev) {
     ev.preventDefault();
     $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
+    var hideColumns = api.columns('.hide-panel');
+    hideColumns.visible(true);
+    // When under $large-screen
+    if ($(document).width() < 980) {
+      api.columns('.hide-panel-tablet').visible(true);
+    }
   });
 }
 
@@ -271,7 +284,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     language: {
       lengthMenu: 'Results per page: _MENU_'
     },
-    dom: '<"results-info meta-box results-info--top"lfrip>t<"results-info meta-box"ip>',
+    dom: '<"results-info meta-box results-info--top"lfrip><"panel__main"t><"results-info meta-box"ip>',
     ajax: function(data, callback, settings) {
       var api = this.api();
       if ($form) {
