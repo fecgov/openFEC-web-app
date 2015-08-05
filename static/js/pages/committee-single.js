@@ -34,18 +34,7 @@ var sizeColumns = [
     width: '50%',
     className: 'all',
     render: function(data, type, row, meta) {
-      var info = sizeInfo[data];
-      var anchor = document.createElement('a');
-      anchor.textContent = info.label;
-      var uri = URI('/receipts')
-        .query({
-          committee_id: row.committee_id,
-          min_amount: info.limits[0],
-          max_amount: info.limits[1]
-        });
-      anchor.setAttribute('href', tables.buildAggregateUrl(uri, row.cycle));
-      anchor.setAttribute('title', 'View individual transactions');
-      return anchor.outerHTML;
+      return sizeInfo[data].label;
     }
   },
   {
@@ -54,12 +43,23 @@ var sizeColumns = [
     className: 'all',
     render: function(data, type, row, meta) {
       var span = document.createElement('div');
-      span.textContent = helpers.currency(data);
       span.setAttribute('data-value', data);
       span.setAttribute('data-row', meta.row);
+      var link = document.createElement('a');
+      link.textContent = helpers.currency(data);
+      link.setAttribute('title', 'View individual transactions');
+      var info = sizeInfo[row.size];
+      var uri = URI('/receipts')
+        .query({
+          committee_id: row.committee_id,
+          min_amount: info.limits[0],
+          max_amount: info.limits[1]
+        });
+      link.setAttribute('href', tables.buildAggregateUrl(uri, row.cycle));
+      span.appendChild(link);
       return span.outerHTML;
     }
-  },
+  }
 ];
 
 var committeeColumns = [
