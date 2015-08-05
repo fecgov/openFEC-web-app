@@ -25,7 +25,7 @@ var columns = [
   {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'contributor_receipt_amount', className: 'min-tablet'}),
-  tables.dateColumn({data: 'contributor_receipt_date', className: 'min-tablet'}),
+  tables.dateColumn({data: 'contributor_receipt_date', className: 'min-tablet hide-panel-tablet'}),
   {
     data: 'committee',
     orderable: false,
@@ -40,10 +40,11 @@ var columns = [
     }
   },
   {
-    width: '5%',
+    className: 'min-tablet',
+    width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '';
+      return '<i class="icon ti-angle-right"></i>';
     }
   }
 ];

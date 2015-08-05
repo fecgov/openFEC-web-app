@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="row">
-      <div id="by-state" class="panel-toggle-element">
+      <div id="by-state" class="panel-toggle-element" aria-hidden="false">
         <div class="chunk--half">
           <table
               class="data-table"
@@ -62,7 +62,7 @@
           <div class="state-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
         </div>
       </div>
-      <div id="by-contribution-size" class="panel-toggle-element">
+      <div id="by-contribution-size" class="panel-toggle-element" aria-hidden="true">
         <div id="by-size" class="panel-toggle-element">
           <table
              class="data-table"
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div class="row">
-        <div id="by-committee" class="panel-toggle-element">
+        <div id="by-committee" class="panel-toggle-element" aria-hidden="true">
           <table
              class="data-table"
              data-type="committee-contributor"
@@ -91,7 +91,7 @@
           </table>
         </div>
 
-      <div id="by-employer" class="panel-toggle-element">
+      <div id="by-employer" class="panel-toggle-element" aria-hidden="true">
         <table
             class="data-table"
             data-type="receipts-by-employer"
@@ -106,7 +106,7 @@
         {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}
       </div>
 
-      <div id="by-occupation" class="panel-toggle-element">
+      <div id="by-occupation" class="panel-toggle-element" aria-hidden="true">
         <table
             class="data-table"
             data-type="receipts-by-occupation"

@@ -15,12 +15,13 @@
 
   @include media($medium) {
     &[aria-hidden="false"] {
-      @include transform(translateX(100%));
+      // 99.5 to ensure when container is not an even number.
+      @include transform(translateX(99.5%));
     }
 
     background: white;
     border: 1px solid $light-gray;
-    width: 95%;
+    width: 100%;
   }
 }
 
@@ -31,6 +32,14 @@
   @include media($medium) {
     padding: 0;
   }
+}
+
+.panel__main {
+  clear: both;
+}
+
+.panel-active .panel__main {
+  width: 50%;
 }
 
 .panel__row {
