@@ -307,11 +307,6 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   }
   $table.css('width', '100%');
   $table.find('tbody').addClass('js-panel-toggle');
-  // Update filters and data table on navigation
-  $(window).on('popstate', function() {
-    filters.activateInitialFilters();
-    api.ajax.reload();
-  });
   if ($form) {
     submitOnChange($form, api);
   }

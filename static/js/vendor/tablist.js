@@ -65,8 +65,8 @@ function show($target, push) {
   $panel.attr('aria-hidden', null);
 
   if (push) {
-    var name = $target.closest('[role="tablist"]').attr('name');
-    var value = $target.attr('name');
+    var name = $target.closest('[role="tablist"]').attr('data-name');
+    var value = $target.attr('data-name');
     var query = _.extend(
       URI.parseQuery(window.location.search),
       _.object([[name, value]])
@@ -80,9 +80,9 @@ function refreshTabs() {
   var query = URI.parseQuery(window.location.search);
   $('ul[role="tablist"]').each(function(index, tabs) {
     var $tabs = $(tabs);
-    var name = $tabs.attr('name');
+    var name = $tabs.attr('data-name');
     var $target = query[name] ?
-      $tabs.find('[role="tab"][name="' + query[name] + '"]') :
+      $tabs.find('[role="tab"][data-name="' + query[name] + '"]') :
       $tabs.find('[role="tab"]').eq(0);
     show($target);
   });
