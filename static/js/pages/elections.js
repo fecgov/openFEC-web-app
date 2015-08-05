@@ -352,7 +352,7 @@ function updateColorScale($container, cached) {
     d3.select($elm.find('g')[0])
       .selectAll('path')
       .attr('fill', function(d) {
-        return scale(results[d.properties.name]);
+        return scale(results[d.properties.name] || 0);
       });
   });
   $container.find('.legend svg g').remove();

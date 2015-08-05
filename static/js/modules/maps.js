@@ -56,7 +56,7 @@ function stateMap($elm, data, width, height, max, addLegend) {
       .data(topojson.feature(states, states.objects.units).features)
     .enter().append('path')
       .attr('fill', function(d) {
-        return scale(results[d.properties.name]);
+        return scale(results[d.properties.name] || 0);
       })
       .attr('data-state', function(d) {
         return d.properties.name;
