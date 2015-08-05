@@ -1,3 +1,4 @@
+{% import 'macros/links.html' as links %}
 {% extends 'layouts/main.html' %}
 
 {% block title %}
@@ -47,7 +48,7 @@
             <h5 class="entity__term__label">Elections</h5>
             <ul class="entity__term__data">
             {% for year in election_years %}
-              <span value="{{ year }}">{{ year }}{% if loop.last == false %},{% endif %}</span>
+              <a href="/elections/{{ office_full|lower }}/{{ state|lower }}{% if district %}/{{ district|default('', true) }}{% endif %}/{{ year }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
             {% endfor %}
             </ul>
           </li>
