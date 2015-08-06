@@ -102,6 +102,15 @@ $(document).ready(function() {
         });
     }
 
+    // Hide toggles on clicking outside toggle button or body
+    $(document.body).on('click', function(e) {
+      var $target = $(e.target);
+      if (!$('.js-toggle').has(e.target).length &&
+          !$('.js-checkbox-filters').has(e.target).length) {
+        hideToggles();
+      }
+    });
+
     $('.js-toggle').on('click keypress', function(e) {
         if (e.which === 13 || e.type === 'click') {
             var $this = $(this);
