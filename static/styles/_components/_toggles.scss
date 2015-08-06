@@ -1,5 +1,6 @@
 .toggles {
   @include clearfix();
+  margin-bottom: 2rem;
 
   .label {
     display: block;

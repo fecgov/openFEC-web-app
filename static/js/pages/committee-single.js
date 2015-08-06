@@ -273,7 +273,7 @@ $(document).ready(function() {
           _.extend({
             afterRender: tables.barsAfterRender.bind(undefined, undefined)
           }, tables.offsetCallbacks), {
-          dom: singlePageTableDOM,
+          dom: 't',
           order: [[1, 'desc']],
           pagingType: 'simple',
           lengthChange: false,
