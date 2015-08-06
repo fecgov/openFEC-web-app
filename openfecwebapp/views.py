@@ -39,17 +39,6 @@ def render_committee(data, candidates=None, cycle=None):
     tmpl_vars['reports'] = financials['reports']
     tmpl_vars['totals'] = financials['totals']
 
-    tmpl_vars['aggregates'] = {
-        'size': {
-            each['size']: each['total']
-            for each in api_caller.load_cmte_aggregates(
-                committee['committee_id'],
-                'by_size',
-                cycle=cycle,
-            )
-        }
-    }
-
     return render_template('committees-single.html', **tmpl_vars)
 
 
