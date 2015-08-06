@@ -22,7 +22,7 @@ def toggle_sort(driver, index):
     table = driver.find_element_by_css_selector('table#results')
     column = table.find_elements_by_tag_name('th')[index]
     utils.try_until(lambda: column.click())
-    utils.wait_for_ajax(driver)
+    utils.wait_for_event(driver, 'draw.dt', 'draw')
 
 
 class TestReceipts(SearchPageTestCase):

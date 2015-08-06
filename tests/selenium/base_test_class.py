@@ -1,5 +1,4 @@
 import os
-import time
 import logging
 import unittest
 
@@ -8,6 +7,7 @@ from nose.plugins.attrib import attr
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
 
 from openfecwebapp.sauce import SauceClient
 
@@ -127,13 +127,13 @@ class SearchPageTestCase(BaseTest):
         self.check_filter_results(column, result)
 
     def check_filter_results(self, index, result):
-        # Wait for debounce interval
-        time.sleep(0.35)
-        utils.wait_for_ajax(self.driver)
-        values = [
+        utils.wait_for_event(self.driver, 'draw.dt', 'draw')
+        # Handle stale reference errors in Chrome
+        get_values = lambda: [
             row.find_elements_by_tag_name('td')[index].text
             for row in self.driver.find_elements_by_css_selector('tbody tr')
         ]
+        values = utils.try_until(get_values, (StaleElementReferenceException, ))
         if callable(result):
             for value in values:
                 self.assertTrue(result(value))
