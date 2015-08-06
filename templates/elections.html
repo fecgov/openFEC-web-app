@@ -1,0 +1,50 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse Donations
+{% endblock %}
+
+{% block body %}
+<div class="entity election tab-interface">
+  <header class="page-header entity__header page-header--dark">
+    <div class="container">
+      <div class="entity__header--top row">
+        {% if office == 'president' %}
+          <h1 class="entity__name">{{ cycle }} Presidential Election</h1>
+        {% else %}
+          <h1 class="entity__name">{{ cycle }} {{ office|title }} Election: {{ state|fmt_state_full }}</h1>
+          {% if district %}
+            <h2>House District {{ district }}</h2>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </header>
+  <div class="page-controls page-controls--dark sticky">
+    <div class="container">
+       <nav class="page-tabs">
+          <ul role="tablist" name="tab">
+            <li role="presentation" class="page-tabs__item"><a role="tab" name="comparison" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Candidate Comparison</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" name="spending" tabindex="-1" aria-controls="panel2" href="#section-2">Outside Spending</a></li>
+          </ul>
+      </nav>
+    </div>
+  </div>
+  {% include 'partials/elections/candidate-comparison-tab.html' %}
+  {% include 'partials/elections/outside-spending-tab.html' %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/elections.js'] }}"></script>
+<script>
+var context = {
+  election: {
+    cycle: {{ cycle }},
+    office: '{{ office }}',
+    state: '{{ state or '' }}',
+    district: '{{ district or '' }}'
+  }
+};
+</script>
+{% endblock %}

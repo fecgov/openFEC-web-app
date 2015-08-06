@@ -67,11 +67,11 @@
       <div class="page-controls__bottom">
         <div class="container">
            <nav class="page-tabs">
-              <ul role="tablist">
-                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Receipts</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel3" href="#section-3">Disbursements</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel4" href="#section-4">Filings</a></li>
+              <ul role="tablist" data-name="tab">
+                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
+                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="receipts" tabindex="-1" aria-controls="panel2" href="#section-2">Receipts</a></li>
+                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="disbursements" tabindex="-1" aria-controls="panel3" href="#section-3">Disbursements</a></li>
+                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="filings" tabindex="-1" aria-controls="panel4" href="#section-4">Filings</a></li>
               </ul>
           </nav>
         </div>
@@ -129,35 +129,8 @@
         </div>
         {% if reports and totals %}
           <div class="page-subsection">
-            <div class="row js-accordion meta-box recent-report">
               {% with committee=context() %}
-              <div class="meta-box__bar">
-                <h4>Most Recent Report:
-                    {% if committee.reports.0.pdf_url %}
-                      <a href="{{ committee.reports.0.pdf_url }}">{{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}</a>
-                    {% else %}
-                      {{ committee.reports.0.report_year }} {{committee.reports.0.report_type_full|fmt_report_desc}}
-                    {% endif %}
-                </h4>
-               <span>Report coverage: {{ committee.reports.0.coverage_start_date|date_md }} - {{ committee.reports.0.coverage_end_date|date_md }}
-               {% if committee.reports.0.pdf_url %}
-                 | <a href="{{ committee.reports.0.pdf_url }}">View PDF &raquo;</a></span>
-               {% endif %}
-              </div>
-
-                {% if committee_type == 'P' %}
-                  {% include 'partials/committee-report-presidential.html' %}
-                {% elif committee_type == 'H' or committee_type == 'S' %}
-                  {% include 'partials/committee-report-house-senate.html' %}
-                {% elif committee_type == 'I' %}
-                  {% include 'partials/committee-report-ie-only.html' %}
-                {% else %}
-                  {% include 'partials/committee-report-pac-party.html' %}
-                {% endif %}
-
-            </div>
             <h3 class="section-header">Detailed Summary {{ reports.0.cycle-1 }} - {{ reports.0.cycle }}</h3>
-
             <div class="row js-accordion">
             {% if committee_type == 'P' %}
               {% include 'partials/committee-totals-presidential.html' %}

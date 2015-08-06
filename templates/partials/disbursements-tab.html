@@ -20,11 +20,19 @@
         </div>
         <div class="section__intro__right">
           <span class="label">View the raw data:</span>
-          <a class="button" href="{{ url_for('disbursements', committee_id=committee_id, cycle=cycle) }}">View all disbursements &raquo;</a>
+          <a
+              class="button"
+              href="{{ url_for(
+                'disbursements',
+                committee_id=committee_id,
+                min_date=cycle_start(cycle).strftime('%m/%d/%Y'),
+                max_date=cycle_end(cycle).strftime('%m/%d/%Y'),
+              ) }}">View all disbursements &raquo;
+          </a>
         </div>
     </div>
     <div class="row">
-      <div id="by-purpose" class="panel-toggle-element">
+      <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
         <h4>Disbursements by Purpose</h4>
         <table
             class="data-table"
@@ -40,7 +48,7 @@
         {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
-      <div id="by-recipient" class="panel-toggle-element">
+      <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
         <h4>Disbursements by Recipient Name</h4>
         <table
             class="data-table"
@@ -56,7 +64,7 @@
         {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
-      <div id="by-recipient-id" class="panel-toggle-element">
+      <div id="by-recipient-id" class="panel-toggle-element" aria-hidden="false">
         <h4>Disbursements by Recipient Committee (if applicable)</h4>
         <table
             class="data-table"

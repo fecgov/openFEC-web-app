@@ -36,6 +36,12 @@
   }
 }
 
+.toggles--small {
+  .toggle-button {
+    font-size: 1.4rem;
+    padding: .5rem 1rem;
+  }
+}
 .toggle-button {
   @include button(#FBFBFD, $dark-gray, $medium-gray, $dark-gray);
   border-right-width: 0;

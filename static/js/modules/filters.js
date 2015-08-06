@@ -80,9 +80,10 @@ var bindFilters = function() {
     cycleSelect.each(function(){
       var $this = $(this);
       $this.change(function() {
-        var query = {cycle: $this.val()};
-        var selected = $this.find('option:selected');
-        window.location.href = URI(window.location.href).query(query).toString();
+        window.location.href = URI(window.location.href)
+          .removeQuery('cycle')
+          .addQuery({cycle: $this.val()})
+          .toString();
       });
     });
 };
@@ -118,7 +119,7 @@ var activateInitialFilters = function() {
 $('.button--remove').click(function(e){
     e.preventDefault();
     var removes = $(this).data('removes');
-    $('[name="' + removes + '"]').val('').trigger('change');
+    $('[name="' + removes + '"]').val('').trigger('change').focus();
     $(this).css('display', 'none');
 });
 
@@ -203,7 +204,7 @@ $('.js-dropdown').on('click keypress', function(e) {
 
 $('.field input[type="text"]').on('keypress', function(e) {
     if (e.which === 13) {
-        $('button[type="submit"]').click();
+        $(this).change();
         e.preventDefault();
     }
 });

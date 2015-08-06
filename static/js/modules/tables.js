@@ -77,6 +77,22 @@ function buildEntityLink(data, url, category) {
   return anchor.outerHTML;
 }
 
+function buildAggregateUrl(uri, cycle) {
+  var dates = helpers.cycleDates(cycle);
+  return uri.addQuery({
+    min_date: dates.min,
+    max_date: dates.max
+  }).toString();
+}
+
+function buildAggregateLink(data, uri, cycle) {
+  var anchor = document.createElement('a');
+  anchor.textContent = helpers.currency(data);
+  anchor.setAttribute('href', buildAggregateUrl(uri, cycle));
+  anchor.setAttribute('title', 'View individual transactions');
+  return anchor.outerHTML;
+}
+
 function formattedColumn(formatter) {
   return function(opts) {
     return _.extend({
@@ -87,8 +103,24 @@ function formattedColumn(formatter) {
   };
 }
 
+function barColumn(formatter) {
+  formatter = formatter || function(value) { return value; };
+  return function(opts) {
+    return _.extend({
+      render: function(data, type, row, meta) {
+        var span = document.createElement('div');
+        span.textContent = formatter(data);
+        span.setAttribute('data-value', data);
+        span.setAttribute('data-row', meta.row);
+        return span.outerHTML;
+      }
+    }, opts);
+  };
+}
+
 var dateColumn = formattedColumn(helpers.datetime);
 var currencyColumn = formattedColumn(helpers.currency);
+var barCurrencyColumn = barColumn(helpers.currency);
 
 function mapSort(order, columns) {
   return _.map(order, function(item) {
@@ -108,9 +140,29 @@ function mapResponse(response) {
   };
 }
 
+function ensureArray(value) {
+  return _.isArray(value) ? value : [value];
+}
+
+function compareQuery(first, second) {
+  var keys = _.keys(first);
+  if (!_.isEqual(keys.sort(), _.keys(second).sort())) {
+    return false;
+  }
+  var different = _.find(keys, function(key) {
+    return !_.isEqual(
+      ensureArray(first[key]).sort(),
+      ensureArray(second[key]).sort()
+    );
+  });
+  return !different;
+}
+
 function pushQuery(filters) {
-  var params = URI('').query(filters).toString();
-  if (window.location.search !== params) {
+  var query = URI.parseQuery(window.location.search);
+  if (!compareQuery(query, filters)) {
+    filters = _.extend(query, filters);
+    var params = URI('').query(filters).toString();
     window.history.pushState(filters, params, params || window.location.pathname);
   }
 }
@@ -152,12 +204,25 @@ function modalAfterRender(template, api, data, response) {
     $row.siblings().toggleClass('row-active', false);
     $row.toggleClass('row-active', true);
     $('body').toggleClass('panel-active', true);
+    var hideColumns = api.columns('.hide-panel');
+    hideColumns.visible(false);
+    // When under $large-screen
+    // TODO figure way to share these values with CSS.
+    if ($(document).width() < 980) {
+      api.columns('.hide-panel-tablet').visible(false);
+    }
   });
 
   $modal.on('click', '.js-panel-close', function(ev) {
     ev.preventDefault();
     $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
+    var hideColumns = api.columns('.hide-panel');
+    hideColumns.visible(true);
+    // When under $large-screen
+    if ($(document).width() < 980) {
+      api.columns('.hide-panel-tablet').visible(true);
+    }
   });
 }
 
@@ -180,6 +245,10 @@ function handleResponseSeek(api, data, response) {
   api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
 }
 
+var defaultCallbacks = {
+  preprocess: mapResponse
+};
+
 function submitOnChange($form, api) {
   function onChange(e) {
     e.preventDefault();
@@ -187,6 +256,10 @@ function submitOnChange($form, api) {
   }
   $form.on('change', 'input,select', _.debounce(onChange, 250));
 }
+
+var defaultCallbacks = {
+  preprocess: mapResponse
+};
 
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
@@ -199,6 +272,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   );
   var useFilters = opts.useFilters;
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
+  callbacks = _.extend({}, defaultCallbacks, callbacks);
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -210,7 +284,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     language: {
       lengthMenu: 'Results per page: _MENU_'
     },
-    dom: '<"results-info meta-box results-info--top"lfrip>t<"results-info meta-box"ip>',
+    dom: '<"results-info meta-box results-info--top"lfrip><"panel__main"t><"results-info meta-box"ip>',
     ajax: function(data, callback, settings) {
       var api = this.api();
       if ($form) {
@@ -239,7 +313,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
         .toString()
       ).done(function(response) {
         callbacks.handleResponse(api, data, response);
-        callback(mapResponse(response));
+        callback(callbacks.preprocess(response));
         callbacks.afterRender(api, data, response);
       }).always(function() {
         $processing.hide();
@@ -255,7 +329,10 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     // Update filters and data table on navigation
     $(window).on('popstate', function() {
       filters.activateInitialFilters();
-      api.ajax.reload();
+      var tempFilters = mapFilters(filters);
+      if (!_.isEqual(tempFilters, parsedFilters)) {
+        api.ajax.reload();
+      }
     });
   }
   // Prepare loading message
@@ -267,11 +344,6 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   }
   $table.css('width', '100%');
   $table.find('tbody').addClass('js-panel-toggle');
-  // Update filters and data table on navigation
-  $(window).on('popstate', function() {
-    filters.activateInitialFilters();
-    api.ajax.reload();
-  });
   if ($form) {
     submitOnChange($form, api);
   }
@@ -289,7 +361,10 @@ module.exports = {
   yearRange: yearRange,
   buildCycle: buildCycle,
   buildEntityLink: buildEntityLink,
+  buildAggregateUrl: buildAggregateUrl,
+  buildAggregateLink: buildAggregateLink,
   currencyColumn: currencyColumn,
+  barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
   modalAfterRender: modalAfterRender,
   barsAfterRender: barsAfterRender,

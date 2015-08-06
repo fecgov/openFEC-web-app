@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="entity candidate tab-interface">
   <header class="page-header entity__header page-header--dark">
     <div class="container">
@@ -27,9 +28,9 @@
             <h5 class="entity__term__label">District</h5>
             <span class="entity__term__data">
               {% if district %}
-              <a href="{{ url_for('candidates', state=state, district=district, cycle=max(cycles)) }}">{{ state }} - {{ district }}</a>
+              <a href="{{ election_url(context(), cycle) }}">{{ state }} - {{ district }}</a>
               {% else %}
-              <a href="{{ url_for('candidates', state=state, cycle=max(cycles)) }}">{{ state }}</a>
+              <a href="{{ election_url(context(), cycle) }}">{{ state }}</a>
               {% endif %}
             </span>
           </li>
@@ -47,7 +48,7 @@
             <h5 class="entity__term__label">Elections</h5>
             <ul class="entity__term__data">
             {% for year in election_years %}
-              <span value="{{ year }}">{{ year }}{% if loop.last == false %},{% endif %}</span>
+              <a href="{{ election_url(context(), year) }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
             {% endfor %}
             </ul>
           </li>
@@ -64,9 +65,9 @@
     <div class="page-controls__bottom">
       <div class="container">
          <nav class="page-tabs">
-            <ul role="tablist">
-              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
-              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Filings</a></li>
+            <ul role="tablist" data-name="tabs">
+              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
+              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="filings" tabindex="-1" aria-controls="panel2" href="#section-2">Filings</a></li>
             </ul>
         </nav>
       </div>

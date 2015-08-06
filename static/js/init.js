@@ -23,13 +23,11 @@ var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
 var glossary = require('./modules/glossary.js');
 var Search = require('./modules/search');
-var maps = require('./modules/maps');
 var toggle = require('./modules/toggle');
 
 typeahead.init();
 glossary.init();
 charts.init();
-maps.init();
 
 var SLT_ACCORDION = '.js-accordion';
 
@@ -103,6 +101,15 @@ $(document).ready(function() {
             $toggle.removeClass('active');
         });
     }
+
+    // Hide toggles on clicking outside toggle button or body
+    $(document.body).on('click', function(e) {
+      var $target = $(e.target);
+      if (!$('.js-toggle').has(e.target).length &&
+          !$('.js-checkbox-filters').has(e.target).length) {
+        hideToggles();
+      }
+    });
 
     $('.js-toggle').on('click keypress', function(e) {
         if (e.which === 13 || e.type === 'click') {

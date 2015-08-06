@@ -24,7 +24,15 @@ function datetime(value) {
 }
 Handlebars.registerHelper('datetime', datetime);
 
+function cycleDates(year) {
+  return {
+    min: '01-01-' + (year - 1),
+    max: '12-31-' + year
+  };
+}
+
 module.exports = {
   currency: currency,
-  datetime: datetime
+  datetime: datetime,
+  cycleDates: cycleDates,
 };
