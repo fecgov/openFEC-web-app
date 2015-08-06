@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block body %}
+
+{% if district %}
+  {% set electionURL = '/elections/' ~ office_full|lower ~ '/' ~ state|lower ~ '/' ~ district %}
+{% else %}
+  {% set electionURL = '/elections/' ~ office_full|lower ~ '/' ~ state|lower %}
+{% endif %}
+
 <div class="entity candidate tab-interface">
   <header class="page-header entity__header page-header--dark">
     <div class="container">
@@ -27,9 +34,9 @@
             <h5 class="entity__term__label">District</h5>
             <span class="entity__term__data">
               {% if district %}
-              <a href="{{ url_for('candidates', state=state, district=district, cycle=max(cycles)) }}">{{ state }} - {{ district }}</a>
+              <a href="{{ electionURL }}/{{ cycle }}">{{ state }} - {{ district }}</a>
               {% else %}
-              <a href="{{ url_for('candidates', state=state, cycle=max(cycles)) }}">{{ state }}</a>
+              <a href="{{ electionURL }}/{{ cycle }}">{{ state }}</a>
               {% endif %}
             </span>
           </li>
@@ -47,7 +54,7 @@
             <h5 class="entity__term__label">Elections</h5>
             <ul class="entity__term__data">
             {% for year in election_years %}
-              <span value="{{ year }}">{{ year }}{% if loop.last == false %},{% endif %}</span>
+              <a href="{{ electionURL }}/{{ year }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
             {% endfor %}
             </ul>
           </li>
