@@ -289,11 +289,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       var api = this.api();
       if ($form) {
         var filters = $form.serializeArray();
-        var tempFilters = mapFilters(filters);
-        if (_.isEqual(tempFilters, parsedFilters)) {
-          return;
-        }
-        parsedFilters = tempFilters;
+        parsedFilters = mapFilters(filters);
         pushQuery(parsedFilters);
       }
       var query = _.extend(
@@ -333,7 +329,10 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     // Update filters and data table on navigation
     $(window).on('popstate', function() {
       filters.activateInitialFilters();
-      api.ajax.reload();
+      var tempFilters = mapFilters(filters);
+      if (!_.isEqual(tempFilters, parsedFilters)) {
+        api.ajax.reload();
+      }
     });
   }
   // Prepare loading message
