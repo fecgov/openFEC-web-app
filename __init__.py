@@ -6,7 +6,7 @@ from webargs import Arg
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sslify import SSLify
 from flask.ext.basicauth import BasicAuth
 
@@ -81,6 +81,16 @@ def cycle_end(value):
     return datetime.datetime(value, 12, 31)
 
 
+def get_election_url(candidate, cycle):
+    return url_for(
+        'elections',
+        office=candidate['office_full'].lower(),
+        state=candidate['state'] if candidate['state'] != 'US' else None,
+        district=candidate['district'],
+        cycle=cycle,
+    )
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -97,6 +107,7 @@ app.jinja_env.globals.update({
     'series_group_has_data': series_group_has_data,
     'cycle_start': cycle_start,
     'cycle_end': cycle_end,
+    'election_url': get_election_url,
 })
 
 
@@ -200,9 +211,9 @@ def filings():
     return render_template('filings.html', result_type='committees')
 
 
-@app.route('/elections/<office>/<cycle>')
-@app.route('/elections/<office>/<state>/<cycle>')
-@app.route('/elections/<office>/<state>/<district>/<cycle>')
+@app.route('/elections/<office>/<cycle>/')
+@app.route('/elections/<office>/<state>/<cycle>/')
+@app.route('/elections/<office>/<state>/<district>/<cycle>/')
 def elections(office, cycle, state=None, district=None):
     return render_template(
         'elections.html',
