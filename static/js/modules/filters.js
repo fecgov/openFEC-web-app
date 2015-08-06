@@ -119,7 +119,7 @@ var activateInitialFilters = function() {
 $('.button--remove').click(function(e){
     e.preventDefault();
     var removes = $(this).data('removes');
-    $('[name="' + removes + '"]').val('').trigger('change');
+    $('[name="' + removes + '"]').val('').trigger('change').focus();
     $(this).css('display', 'none');
 });
 
@@ -204,7 +204,7 @@ $('.js-dropdown').on('click keypress', function(e) {
 
 $('.field input[type="text"]').on('keypress', function(e) {
     if (e.which === 13) {
-        $('button[type="submit"]').click();
+        $(this).change();
         e.preventDefault();
     }
 });
