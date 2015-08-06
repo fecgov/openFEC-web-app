@@ -13,7 +13,7 @@ var columns = [
     data: 'contributor',
     orderable: false,
     className: 'all',
-    width: '30%',
+    width: '20%',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
@@ -24,6 +24,7 @@ var columns = [
   },
   {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
+  {data: 'contributor_occupation', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'contributor_receipt_amount', className: 'min-tablet'}),
   tables.dateColumn({data: 'contributor_receipt_date', className: 'min-tablet hide-panel-tablet'}),
   {
