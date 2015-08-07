@@ -6,6 +6,7 @@ var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
+var tabs = require('../vendor/tablist');
 
 require('datatables');
 require('drmonty-datatables-responsive');
@@ -349,6 +350,13 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   }
 }
 
+function initTableDeferred($table) {
+  var args = _.toArray(arguments);
+  tabs.onShow($table, function() {
+    initTable.apply(null, args);
+  });
+}
+
 var offsetCallbacks = {
   mapQuery: mapQueryOffset
 };
@@ -371,4 +379,5 @@ module.exports = {
   offsetCallbacks: offsetCallbacks,
   seekCallbacks: seekCallbacks,
   initTable: initTable,
+  initTableDeferred: initTableDeferred
 };

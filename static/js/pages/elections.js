@@ -389,7 +389,7 @@ function initStateMaps(results) {
 function initSpendingTables() {
   var $table = $('table[data-type="independent-expenditures"]');
   var path = ['schedules', 'schedule_e'].join('/');
-  tables.initTable($table, null, path, context.election, independentExpenditureColumns, tables.seekCallbacks, {
+  tables.initTableDeferred($table, null, path, context.election, independentExpenditureColumns, tables.seekCallbacks, {
     // dom: singlePageTableDOM,
     order: [[0, 'desc']],
     pagingType: 'simple',
