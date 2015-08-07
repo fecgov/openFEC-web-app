@@ -53,7 +53,8 @@ var columns = [
       return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
     }
   },
-  {data: 'candidate_status_full', className: 'min-tablet'},
+  {data: 'incumbent_challenge_full', className: 'min-tablet'},
+  {data: 'party_full', className: 'min-tablet'},
   tables.barCurrencyColumn({data: 'total_receipts'}),
   tables.barCurrencyColumn({data: 'total_disbursements'}),
   tables.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
