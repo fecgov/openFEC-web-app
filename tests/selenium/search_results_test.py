@@ -15,17 +15,17 @@ class SearchResultsPageTests(SearchPageTestCase):
         self.url = furl.furl(self.base_url)
 
     def test_search_results_page_load(self):
-        self.url.args.update({'search': 'boehner'})
+        self.url.args.update({'search': 'john'})
         self.driver.get(self.url.url)
         self.assertIn('Search results', self.driver.title)
 
     def test_search_results_page_type(self):
-        self.url.args.update({'search': 'boehner', 'search_type': 'candidates'})
+        self.url.args.update({'search': 'john', 'search_type': 'candidates'})
         self.driver.get(self.url.url)
         self.assertIn('Search results', self.driver.title)
 
     def test_search_results_page_link_candidates(self):
-        self.url.args.update({'search': 'boehner', 'search_type': 'candidates'})
+        self.url.args.update({'search': 'john', 'search_type': 'candidates'})
         self.driver.get(self.url.url)
         elms = self.driver.find_elements_by_css_selector('.tst-search_results h3 a')
         self.assertTrue(elms)
@@ -35,7 +35,7 @@ class SearchResultsPageTests(SearchPageTestCase):
         ]))
 
     def test_search_results_page_link_committees(self):
-        self.url.args.update({'search': 'grijalva', 'search_type': 'committees'})
+        self.url.args.update({'search': 'americ', 'search_type': 'committees'})
         self.driver.get(self.url.url)
         elms = self.driver.find_elements_by_css_selector('.tst-search_results h5 a')
         self.assertTrue(elms)
@@ -49,7 +49,7 @@ class SearchResultsPageTests(SearchPageTestCase):
         self.driver.get(self.url.url)
         select = self.driver.find_element_by_css_selector('input[value="candidates"]')
         self.assertEqual(select.get_attribute('checked'), 'true')
-        self.driver.find_element_by_css_selector('.header-search .search-input').send_keys('boeh')
+        self.driver.find_element_by_css_selector('.header-search .search-input').send_keys('john')
         results = self.driver.find_elements_by_css_selector('.tt-suggestion')
         self.assertGreater(len(results), 0)
 
@@ -58,6 +58,6 @@ class SearchResultsPageTests(SearchPageTestCase):
         self.driver.get(self.url.url)
         select = self.driver.find_element_by_css_selector('input[value="committees"]')
         self.assertEqual(select.get_attribute('checked'), 'true')
-        self.driver.find_element_by_css_selector('.header-search .search-input').send_keys('grij')
+        self.driver.find_element_by_css_selector('.header-search .search-input').send_keys('americ')
         results = self.driver.find_elements_by_css_selector('.tt-suggestion')
         self.assertGreater(len(results), 0)
