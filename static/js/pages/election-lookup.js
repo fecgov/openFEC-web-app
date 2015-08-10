@@ -79,6 +79,9 @@ ElectionLookup.prototype.init = function() {
 
   this.$zip.on('change', this.search.bind(this));
   this.$district.on('change', this.search.bind(this));
+  this.$state.on('change', this.handleStateChange.bind(this));
+
+  this.handleStateChange();
 };
 
 ElectionLookup.prototype.getUrl = function(query) {
@@ -96,6 +99,12 @@ ElectionLookup.prototype.serialize = function() {
     district: this.$district.val()
   };
   return filterNull(params);
+};
+
+ElectionLookup.prototype.handleStateChange = function() {
+  var value = this.$state.val();
+  this.$district.prop('disabled', value === '');
+  this.$district.val('');
 };
 
 ElectionLookup.prototype.search = function() {
