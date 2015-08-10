@@ -88,20 +88,24 @@ var bindFilters = function() {
     });
 };
 
+function getFields() {
+  return _.chain($('div#filters :input[name]'))
+    .map(function(input) {
+      return $(input).attr('name');
+    })
+    .filter(function(name) {
+      return name && name.slice(0, 1) !== '_';
+    })
+    .uniq()
+    .value();
+}
+
 var activateInitialFilters = function() {
     // this activates dropdowns
     // name filter is activated in the template
     var open;
     var qs = URI.parseQuery(window.location.search);
-    var fields = _.chain($('div#filters :input[name]'))
-      .map(function(input) {
-        return $(input).attr('name');
-      })
-      .filter(function(name) {
-        return name && name.slice(0, 1) !== '_';
-      })
-      .uniq()
-      .value();
+    var fields = getFields();
     _.each(fields, function(key) {
       activateFilter({
         name: key,
@@ -235,5 +239,6 @@ module.exports = {
     activateInitialFilters();
     bindDateFilters();
   },
+  getFields: getFields,
   activateInitialFilters: activateInitialFilters
 };

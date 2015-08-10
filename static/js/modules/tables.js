@@ -159,12 +159,16 @@ function compareQuery(first, second) {
   return !different;
 }
 
-function pushQuery(filters) {
+function pushQuery(params) {
   var query = URI.parseQuery(window.location.search);
-  if (!compareQuery(query, filters)) {
-    filters = _.extend(query, filters);
-    var params = URI('').query(filters).toString();
-    window.history.pushState(filters, params, params || window.location.pathname);
+  if (!compareQuery(query, params)) {
+    // Clear and update filter fields
+    _.each(filters.getFields(), function(field) {
+      delete query[field];
+    });
+    params = _.extend(query, params);
+    var queryString = URI('').query(params).toString();
+    window.history.pushState(params, queryString, queryString || window.location.pathname);
   }
 }
 

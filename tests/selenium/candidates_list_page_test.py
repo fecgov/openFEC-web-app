@@ -3,6 +3,8 @@ import functools
 
 from .base_test_class import SearchPageTestCase
 
+from tests.selenium import utils
+
 
 class CandidatesPageTests(SearchPageTestCase):
 
@@ -60,15 +62,26 @@ class CandidatesPageTests(SearchPageTestCase):
     def test_candidate_filter_history(self):
         self.check_filter('state', 'AL', 4, 'AL')
         self.assertIn('state=AL', self.driver.current_url)
-        self.check_filter('state', 'AR', 4, 'AR', refresh=False, expand=False)
+        self.check_filter('state', 'AR', 4, {'AL', 'AR'}, refresh=False, expand=False)
         self.assertIn('state=AL', self.driver.current_url)
         self.assertIn('state=AR', self.driver.current_url)
+
+        # Test back behavior
         self.driver.back()
         self.check_filter_results(4, 'AL')
         self.assertIn('state=AL', self.driver.current_url)
         self.assertNotIn('state=AR', self.driver.current_url)
         self.assertIn('state=AL', self.driver.current_url)
+
+        # Test forward behavior
         self.driver.forward()
-        self.check_filter_results(4, 'AR')
+        self.check_filter_results(4, {'AL', 'AR'})
         self.assertIn('state=AL', self.driver.current_url)
         self.assertIn('state=AR', self.driver.current_url)
+
+        # Uncheck filters and verify empty query string
+        self.click_filter('state', 'AR', expand=False)
+        self.click_filter('state', 'AL', expand=False)
+        utils.wait_for_event(self.driver, 'draw.dt', 'draw')
+        self.assertNotIn('state=AL', self.driver.current_url)
+        self.assertNotIn('state=AR', self.driver.current_url)
