@@ -1,0 +1,9 @@
+<div>
+  {{#each this}}
+  <div class="result">
+    <h2>{{this.electionName}}</h2>
+    <div>Next general election: {{this.electionDate}}</div>
+    <div>Current candidates: <a href="{{this.url}}">View all</a></div>
+  </div>
+  {{/each}}
+</div>
