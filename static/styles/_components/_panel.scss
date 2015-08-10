@@ -39,7 +39,9 @@
 }
 
 .panel-active .panel__main {
-  width: 50%;
+  @include media($medium) {
+    width: 50%;
+  }
 }
 
 .panel__row {
@@ -77,6 +79,18 @@
 }
 
 .panel__navigation {
+  text-align: right;
+
+  @include media($medium) {
+    text-align: left;
+  }
+}
+
+.panel__navigation--right {
+  display: inline-block;
+  float: left;
+  margin-right: 1em;
+
   .icon {
     &:before {
       content: "\e64a";
@@ -84,6 +98,8 @@
   }
 
   @include media($medium) {
+    float: right;
+    margin-right: 0;
     text-align: right;
 
     .icon {
