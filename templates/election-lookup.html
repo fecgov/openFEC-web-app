@@ -22,7 +22,7 @@
             <div>
               <select id="state" name="state">
                 <option value="">Select state</option>
-                {% for value, label in states.items() %}
+                {% for value, label in states %}
                 <option value="{{ value }}">{{ label }}</option>
                 {% endfor %}
               </select>
