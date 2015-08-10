@@ -28,13 +28,15 @@ def wait_for_event(driver, name, label, timeout=10, interval=0.1):
     driver.execute_script('$(document).off("{0}")'.format(name))
 
 
-def try_until(work, errors=(Exception, ), timeout=10, interval=0.1):
+def try_until(work, condition=None, errors=(Exception, ), timeout=10, interval=0.1):
     elapsed = 0
     while True:
         try:
-            return work()
+            ret = work()
+            if condition is None or condition():
+                return ret
         except errors:
             time.sleep(interval)
             elapsed += interval
         if elapsed > timeout:
-            return
+            raise RuntimeError('`try_until` timed out')
