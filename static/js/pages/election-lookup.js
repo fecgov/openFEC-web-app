@@ -72,16 +72,22 @@ function ElectionLookup(selector) {
 }
 
 ElectionLookup.prototype.init = function() {
+  this.hasResults = false;
+
+  this.$search = this.$elm.find('.search');
   this.$zip = this.$elm.find('[name="zip"]');
   this.$state = this.$elm.find('[name="state"]');
   this.$district = this.$elm.find('[name="district"]');
   this.$results = this.$elm.find('.results');
+  this.$resultsItems = this.$elm.find('.results-items');
+  this.$searchPopulated = this.$elm.find('.search-populated');
 
   this.$zip.on('change', this.search.bind(this));
   this.$district.on('change', this.search.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
 
   this.handleStateChange();
+  this.$results.hide();
 };
 
 ElectionLookup.prototype.getUrl = function(query) {
@@ -116,7 +122,13 @@ ElectionLookup.prototype.search = function() {
 };
 
 ElectionLookup.prototype.draw = function(results) {
-  this.$results.html(resultTemplate(_.map(results, formatResult)));
+  this.$resultsItems.html(resultTemplate(_.map(results, formatResult)));
+  if (!this.hasResults) {
+    var $search = this.$search.detach();
+    this.$searchPopulated.append($search);
+    this.$results.show();
+    this.hasResults = true;
+  }
 };
 
 $(document).ready(function() {
