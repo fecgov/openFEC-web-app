@@ -58,7 +58,7 @@ class BaseTest(unittest.TestCase):
     def setUpClass(cls):
         driver = os.getenv('FEC_SELENIUM_DRIVER', 'phantomjs')
         cls.driver = drivers[driver](cls)
-        cls.driver.maximize_window()
+        cls.driver.set_window_size(2000, 1000)
         cls.driver.implicitly_wait(5)
         cls.base_url = 'http://localhost:3000'
 
@@ -134,7 +134,7 @@ class SearchPageTestCase(BaseTest):
         )
 
     def check_filter_results(self, index, result):
-        utils.wait_for_event(self.driver, 'draw.dt', 'draw')
+        utils.wait_for_event(self.driver, 'draw.dt', 'draw', timeout=0.5)
         # Handle stale reference errors in Chrome
         get_values = lambda: [
             row.find_elements_by_tag_name('td')[index].text

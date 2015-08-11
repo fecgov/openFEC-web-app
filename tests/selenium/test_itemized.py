@@ -1,4 +1,5 @@
 from dateutil.parser import parse as parse_date
+from selenium.common.exceptions import StaleElementReferenceException
 
 from tests.selenium import utils
 from tests.selenium.base_test_class import SearchPageTestCase
@@ -11,10 +12,11 @@ def parse_amount(value):
 
 def check_sort(driver, index, parser, reverse=False):
     table = driver.find_element_by_css_selector('table#results')
-    values = [
+    get_values = lambda: [
         parser(row.find_elements_by_tag_name('td')[index].text)
         for row in table.find_elements_by_css_selector('tr[role="row"]')[1:]
     ]
+    values = utils.try_until(get_values, errors=(StaleElementReferenceException, ))
     assert values == sorted(values, reverse=reverse)
 
 
@@ -22,7 +24,7 @@ def toggle_sort(driver, index):
     table = driver.find_element_by_css_selector('table#results')
     column = table.find_elements_by_tag_name('th')[index]
     utils.try_until(lambda: column.click())
-    utils.wait_for_event(driver, 'draw.dt', 'draw')
+    utils.wait_for_event(driver, 'draw.dt', 'draw', timeout=0.5)
 
 
 class TestReceipts(SearchPageTestCase):
