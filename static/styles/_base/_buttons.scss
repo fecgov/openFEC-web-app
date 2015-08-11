@@ -100,6 +100,11 @@ input[type="submit"],
   }
 }
 
+.button--sm {
+  @include rem(font-size, 1.4rem);
+  padding: .3rem 1rem;
+}
+
 .button--unstyled {
   @include appearance(none);
   background: none;
