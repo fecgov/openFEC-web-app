@@ -49,19 +49,19 @@ before_script:
       fi
 
   # Install web app and run in background
-  - pip install -r requirements.txt
-  - npm install
-  - npm install -g gulp
+  - travis_retry pip install -r requirements.txt
+  - travis_retry npm install
+  - travis_retry npm install -g gulp
   - npm run build
   - python __init__.py &
 
   # Install API and run in background
-  - git clone https://github.com/18F/openFEC
+  - travis_retry git clone https://github.com/18F/openFEC
   - cd openFEC
   - git checkout $FEC_BRANCH
   - psql -c 'create database cfdm_test' -U postgres
   - pg_restore --dbname cfdm_test data/subset.dump --no-acl --no-owner
-  - pip install -r requirements.txt
+  - travis_retry pip install -r requirements.txt
   - python manage.py update_all --processes 1
   - python manage.py runserver &
   - cd ..
