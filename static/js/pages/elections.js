@@ -14,6 +14,8 @@ var tables = require('../modules/tables');
 var comparisonTemplate = require('../../templates/comparison.hbs');
 var candidateStateMapTemplate = require('../../templates/candidateStateMap.hbs');
 
+var MAX_MAPS = 2;
+
 var supportOpposeMap = {
   S: 'Support',
   O: 'Oppose',
@@ -330,8 +332,11 @@ function appendStateMap($parent, results, cached) {
 }
 
 function updateButtonsDisplay($parent) {
-  var display = $parent.find('.state-map').length > 1 ? 'block' : 'none';
-  $parent.find('.state-map button').css('display', display);
+  var $maps = $parent.find('.state-map');
+  var showAdd = $maps.length < MAX_MAPS ? 'block' : 'none';
+  var showRemove = $maps.length > 1 ? 'block' : 'none';
+  $parent.closest('#state-maps').find('.add-map').css('display', showAdd);
+  $parent.find('.state-map button').css('display', showRemove);
 }
 
 function updateColorScale($container, cached) {
