@@ -418,7 +418,7 @@ $(document).ready(function() {
     $table.dataTable(_.extend({}, defaultOpts, {
       columns: columns,
       data: response.results,
-      order: [[2, 'desc']]
+      order: [[3, 'desc']]
     }));
     drawComparison(response.results);
     initStateMaps(response.results);
