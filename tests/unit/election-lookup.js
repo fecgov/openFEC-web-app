@@ -87,7 +87,7 @@ describe('election lookup', function() {
   });
 
   describe('fetching ajax', function() {
-    before(function() {
+    beforeEach(function() {
       this.response = {
         results: [
           {cycle: 2016, office: 'P', state: 'US'},
@@ -100,7 +100,7 @@ describe('election lookup', function() {
       this.deferred.resolve(this.response);
     });
 
-    after(function() {
+    afterEach(function() {
       $.ajax.restore();
     });
 
@@ -112,6 +112,14 @@ describe('election lookup', function() {
       var call = $.ajax.getCall(0);
       expect(call.args[0].url).to.equal('/v1/elections/search?cycle=2016&zip=19041');
       expect(this.el.draw).to.have.been.calledWith(this.response.results);
+    });
+
+    it('should skip search if missing params', function() {
+      sinon.stub(this.el, 'draw');
+      $('#election-lookup [name="state"]').val('NY');
+      this.el.search();
+      expect($.ajax).not.to.have.been.called;
+      expect(this.el.draw).not.to.have.been.called;
     });
   });
 });

@@ -99,12 +99,11 @@ ElectionLookup.prototype.getUrl = function(query) {
 
 ElectionLookup.prototype.serialize = function() {
   var params = {
-    cycle: cycle,
     zip: this.$zip.val(),
     state: this.$state.val(),
     district: this.$district.val()
   };
-  return filterNull(params);
+  return _.extend({cycle: cycle}, filterNull(params));
 };
 
 ElectionLookup.prototype.handleStateChange = function() {
@@ -115,10 +114,13 @@ ElectionLookup.prototype.handleStateChange = function() {
 
 ElectionLookup.prototype.search = function() {
   var self = this;
+  var serialized = self.serialize();
+  if (serialized.zip || (serialized.state && serialized.district)) {
+    $.getJSON(self.getUrl(serialized)).done(function(response) {
+      self.draw(response.results);
+    });
+  }
   var url = self.getUrl(this.serialize());
-  $.getJSON(url).done(function(response) {
-    self.draw(response.results);
-  });
 };
 
 ElectionLookup.prototype.draw = function(results) {
