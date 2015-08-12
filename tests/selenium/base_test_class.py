@@ -147,4 +147,4 @@ class SearchPageTestCase(BaseTest):
                 self.assertTrue(result(value))
         else:
             result = set([result]) if not isinstance(result, set) else result
-            self.assertEqual(result, set(values))
+            self.assertTrue(result.issuperset(values))
