@@ -11,7 +11,7 @@ chai.use(sinonChai);
 var $ = require('jquery');
 var _ = require('underscore');
 
-var ElectionLookup = require('../../static/js/pages/election-lookup').ElectionLookup;
+var ElectionLookup = require('../../static/js/modules/election-lookup').ElectionLookup;
 
 _.extend(window, {
   API_LOCATION: '',
