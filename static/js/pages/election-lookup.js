@@ -75,9 +75,10 @@ ElectionLookup.prototype.init = function() {
   this.hasResults = false;
 
   this.$search = this.$elm.find('.search');
-  this.$zip = this.$elm.find('[name="zip"]');
-  this.$state = this.$elm.find('[name="state"]');
-  this.$district = this.$elm.find('[name="district"]');
+  this.$form = this.$elm.find('form');
+  this.$zip = this.$form.find('[name="zip"]');
+  this.$state = this.$form.find('[name="state"]');
+  this.$district = this.$form.find('[name="district"]');
   this.$results = this.$elm.find('.results');
   this.$resultsItems = this.$elm.find('.results-items');
   this.$searchPopulated = this.$elm.find('.search-populated');
@@ -85,6 +86,7 @@ ElectionLookup.prototype.init = function() {
   this.$zip.on('change', this.search.bind(this));
   this.$district.on('change', this.search.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
+  this.$form.on('submit', this.search.bind(this));
 
   this.handleStateChange();
   this.$results.hide();
@@ -112,7 +114,8 @@ ElectionLookup.prototype.handleStateChange = function() {
   this.$district.val('');
 };
 
-ElectionLookup.prototype.search = function() {
+ElectionLookup.prototype.search = function(event) {
+  event && event.preventDefault();
   var self = this;
   var serialized = self.serialize();
   if (serialized.zip || (serialized.state && serialized.district)) {
