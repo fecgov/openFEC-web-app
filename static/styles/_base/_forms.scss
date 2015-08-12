@@ -115,6 +115,10 @@ select {
   &::-ms-expand {
     display: none;
   }
+
+  &:disabled {
+    opacity: .5;
+  }
 }
 
 select[multiple] {
