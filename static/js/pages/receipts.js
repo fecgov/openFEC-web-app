@@ -63,7 +63,7 @@ $(document).ready(function() {
       afterRender: tables.modalAfterRender.bind(undefined, donationTemplate)
     }),
     {
-      order: [[4, 'desc']],
+      order: [[5, 'desc']],
       pagingType: 'simple'
     }
   );
