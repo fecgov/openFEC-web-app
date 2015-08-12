@@ -91,6 +91,7 @@ ElectionLookup.prototype.init = function() {
   this.$resultsItems = this.$elm.find('.results-items');
   this.$searchPopulated = this.$elm.find('.search-populated');
 
+  this.$zip.on('change', this.handleZipChange.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
   this.$form.on('change', 'input,select', this.search.bind(this));
   this.$form.on('submit', this.search.bind(this));
@@ -113,15 +114,22 @@ ElectionLookup.prototype.serialize = function() {
 
 ElectionLookup.prototype.handleStateChange = function() {
   var value = this.$state.val();
+  this.$zip.val('');
   this.districts = context.districts[value] ? context.districts[value].districts : 0;
   this.$district
     .html(districtTemplate(_.range(1, this.districts + 1)))
     .val('')
     .prop('disabled', !(value && this.districts));
   if (value && !this.districts) {
+    this.$zip.val('');
     this.search();
   }
 };
+
+ElectionLookup.prototype.handleZipChange = function() {
+  this.$state.val('');
+  this.$district.val('');
+}
 
 ElectionLookup.prototype.search = function(event) {
   event && event.preventDefault();
