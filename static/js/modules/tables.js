@@ -86,14 +86,6 @@ function buildAggregateUrl(uri, cycle) {
   }).toString();
 }
 
-function buildAggregateLink(data, uri, cycle) {
-  var anchor = document.createElement('a');
-  anchor.textContent = helpers.currency(data);
-  anchor.setAttribute('href', buildAggregateUrl(uri, cycle));
-  anchor.setAttribute('title', 'View individual transactions');
-  return anchor.outerHTML;
-}
-
 function formattedColumn(formatter) {
   return function(opts) {
     return _.extend({
@@ -375,7 +367,6 @@ module.exports = {
   buildCycle: buildCycle,
   buildEntityLink: buildEntityLink,
   buildAggregateUrl: buildAggregateUrl,
-  buildAggregateLink: buildAggregateLink,
   currencyColumn: currencyColumn,
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
