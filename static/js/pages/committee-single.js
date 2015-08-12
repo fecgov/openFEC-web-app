@@ -22,23 +22,6 @@ var tableOpts = {
   useHideNull: false
 };
 
-function buildTotalLink(getParams) {
-  return function(data, type, row, meta) {
-    var span = document.createElement('div');
-    span.setAttribute('data-value', data);
-    span.setAttribute('data-row', meta.row);
-    var link = document.createElement('a');
-    link.textContent = helpers.currency(data);
-    link.setAttribute('title', 'View individual transactions');
-    var uri = URI('/receipts')
-      .query({committee_id: row.committee_id})
-      .addQuery(getParams(row));
-    link.setAttribute('href', tables.buildAggregateUrl(uri, row.cycle));
-    span.appendChild(link);
-    return span.outerHTML;
-  };
-}
-
 var sizeInfo = {
   0: {limits: [0, 199.99], label: 'Under $200'},
   200: {limits: [200, 499.99], label: '$200 - $499'},
@@ -60,7 +43,7 @@ var sizeColumns = [
     data: 'total',
     width: '50%',
     className: 'all',
-    render: buildTotalLink(function(row) {
+    render: tables.buildTotalLink(function(row) {
       var info = sizeInfo[row.size];
       return {
         min_amount: info.limits[0],
@@ -83,7 +66,7 @@ var committeeColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: buildTotalLink(function(row) {
+    render: tables.buildTotalLink(function(row) {
       return {contributor_id: row.contributor_id};
     })
   }
@@ -106,7 +89,7 @@ var stateColumns = [
     data: 'total',
     width: '50%',
     className: 'all',
-    render: buildTotalLink(function(row) {
+    render: tables.buildTotalLink(function(row) {
       return {contributor_state: row.contributor_state};
     })
   },
@@ -118,7 +101,7 @@ var employerColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: buildTotalLink(function(row) {
+    render: tables.buildTotalLink(function(row) {
       return {contributor_employer: row.employer};
     })
   }
@@ -130,7 +113,7 @@ var occupationColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: buildTotalLink(function(row) {
+    render: tables.buildTotalLink(function(row) {
       return {contributor_occupation: row.occupation};
     })
   }
@@ -168,7 +151,7 @@ var disbursementRecipientColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: buildTotalLink(function(row) {
+    render: tables.buildTotalLink(function(row) {
       return {recipient_name: row.recipient_name};
     })
   }
@@ -187,7 +170,7 @@ var disbursementRecipientIDColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: buildTotalLink(function(row) {
+    render: tables.buildTotalLink(function(row) {
       return {recipient_id: row.recipient_id};
     })
   }
