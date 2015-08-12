@@ -37,6 +37,7 @@ describe('election lookup', function() {
     this.$fixture.empty().append(
       '<div id="election-lookup">' +
         '<form>' +
+          '<input name="cycle" value="2016" />' +
           '<input name="zip" />' +
           '<input name="state" />' +
           '<input name="district" />' +
@@ -75,14 +76,14 @@ describe('election lookup', function() {
   });
 
   it('should serialize zip codes', function() {
-    $('#election-lookup [name="zip"]').val('22902');
-    expect(this.el.serialize()).to.deep.equal({cycle: 2016, zip: '22902'});
+    this.el.$zip.val('22902');
+    expect(this.el.serialize()).to.deep.equal({cycle: '2016', zip: '22902'});
   });
 
   it('should serialize state and district inputs', function() {
-    $('#election-lookup [name="state"]').val('VA');
-    $('#election-lookup [name="district"]').val('01');
-    expect(this.el.serialize()).to.deep.equal({cycle: 2016, state: 'VA', district: '01'});
+    this.el.$state.val('VA').change();
+    this.el.$district.val('01');
+    expect(this.el.serialize()).to.deep.equal({cycle: '2016', state: 'VA', district: '01'});
   });
 
   it('should draw search results', function() {

@@ -111,6 +111,7 @@ app.jinja_env.globals.update({
     'election_url': get_election_url,
     'states': sorted(constants.states.items(), key=lambda pair: pair[0]),
     'districts': DISTRICTS,
+    'cycles': range(utils.current_cycle(), START_YEAR, -2),
 })
 
 

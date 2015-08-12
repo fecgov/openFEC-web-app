@@ -16,8 +16,14 @@ var officeMap = {
   H: 'House'
 };
 
-var year = new Date().getFullYear();
-var cycle = year + year % 2;
+function serializeObject($form) {
+  return _.chain($form.serializeArray())
+    .map(function(obj) {
+      return [obj.name, obj.value];
+    })
+    .object()
+    .value();
+}
 
 function filterNull(params) {
   return _.chain(params)
@@ -85,9 +91,8 @@ ElectionLookup.prototype.init = function() {
   this.$resultsItems = this.$elm.find('.results-items');
   this.$searchPopulated = this.$elm.find('.search-populated');
 
-  this.$zip.on('change', this.search.bind(this));
-  this.$district.on('change', this.search.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
+  this.$form.on('change', 'input,select', this.search.bind(this));
   this.$form.on('submit', this.search.bind(this));
 
   this.handleStateChange();
@@ -102,12 +107,8 @@ ElectionLookup.prototype.getUrl = function(query) {
 };
 
 ElectionLookup.prototype.serialize = function() {
-  var params = {
-    zip: this.$zip.val(),
-    state: this.$state.val(),
-    district: this.$district.val()
-  };
-  return _.extend({cycle: cycle}, filterNull(params));
+  var params = serializeObject(this.$form);
+  return _.extend(filterNull(params));
 };
 
 ElectionLookup.prototype.handleStateChange = function() {

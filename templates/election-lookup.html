@@ -24,6 +24,14 @@
           <h4>New Search</h4>
           <form>
             <div>
+              <label for="cycle" class="label">Election cycle</label>
+              <select id="cycle" name="cycle">
+                {% for cycle in cycles %}
+                <option value="{{ cycle }}">{{ cycle }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
               <label for="zip" class="label">Search by zip code</label>
               <input id="zip" name="zip" placeholder="10001" />
             </div>
