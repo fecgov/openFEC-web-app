@@ -12,7 +12,6 @@ var columns = [
     data: 'document_description',
     className: 'all',
     orderable: false,
-    width: '20%',
     render: function(data, type, row, meta) {
       var anchor = document.createElement('a');
       anchor.textContent = data;
@@ -21,9 +20,36 @@ var columns = [
       return anchor.outerHTML;
     }
   },
-  {data: 'committee_name', className: 'min-desktop', orderable: false},
-  {data: 'candidate_name', className: 'min-desktop', orderable: false},
-  {data: 'amendment_indicator', className: 'min-desktop'},
+  {
+    data: 'committee_name',
+    className: 'min-desktop',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildEntityLink(data, '/committee/' + row.committee_id + tables.buildCycle(row), 'committee');
+    },
+  },
+  {
+    data: 'candidate_name',
+    className: 'min-desktop',
+    orderable: false,
+    render: function(data, type, row, meta) {
+      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id + tables.buildCycle(row), 'candidate');
+    },
+  },
+  {
+    data: 'amendment_indicator',
+    className: 'min-desktop',
+    render: function(data, type, row, meta) {
+      if (data === 'A') {
+        data = 'Amended';
+      } else if (data === 'N') {
+        data = 'New';
+      } else {
+        data = '';
+      }
+      return data;
+    },
+  },
   tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
   // this would be better as a range of dates, with the title "Coverage Period"
   tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet', orderable: false}),
