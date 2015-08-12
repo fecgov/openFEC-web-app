@@ -18,6 +18,15 @@ _.extend(window, {
   API_VERSION: '/v1',
 });
 
+_.extend(window, {
+  context: {
+    districts: {
+      NJ: {state: 'New Jersey', districts: 12},
+      VA: {state: 'Virginia', districts: 11}
+    }
+  }
+});
+
 describe('election lookup', function() {
   before(function() {
     this.$fixture = $('<div id="fixtures"></div>');
@@ -50,13 +59,18 @@ describe('election lookup', function() {
     expect(this.el.$district.is($('#election-lookup [name="district"]'))).to.be.true;
   });
 
-  it('should enable the district select when state is set', function() {
+  it('should disable the district select when state is not set', function() {
     this.el.$state.val('').change();
     expect(this.el.$district.prop('disabled')).to.equal(true);
   });
 
-  it('should disable the district select when state is not set', function() {
-    this.el.$state.val('NY').change();
+  it('should disable the district select when state is set and the state does not have districts', function() {
+    this.el.$state.val('AS').change();
+    expect(this.el.$district.prop('disabled')).to.equal(true);
+  });
+
+  it('should enable the district select when state is set and the state has districts', function() {
+    this.el.$state.val('VA').change();
     expect(this.el.$district.prop('disabled')).to.equal(false);
   });
 
@@ -116,7 +130,7 @@ describe('election lookup', function() {
 
     it('should skip search if missing params', function() {
       sinon.stub(this.el, 'draw');
-      $('#election-lookup [name="state"]').val('NY');
+      $('#election-lookup [name="state"]').val('VA').change();
       this.el.search();
       expect($.ajax).not.to.have.been.called;
       expect(this.el.draw).not.to.have.been.called;

@@ -1,7 +1,12 @@
+import re
 import http
+import json
+import locale
+import logging
 import datetime
 
 import furl
+import jinja2
 from webargs import Arg
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
@@ -16,16 +21,11 @@ from openfecwebapp import constants
 from openfecwebapp.views import render_search_results, render_candidate, render_committee
 from openfecwebapp.api_caller import load_search_results, load_with_nested
 
-import jinja2
-import json
-import locale
-import logging
-import re
-
 
 locale.setlocale(locale.LC_ALL, '')
 
 START_YEAR = 1979
+DISTRICTS = json.load(open('./data/districts.json'))
 
 app = Flask(__name__, static_path='/static', static_folder='dist')
 
@@ -110,6 +110,7 @@ app.jinja_env.globals.update({
     'cycle_end': cycle_end,
     'election_url': get_election_url,
     'states': sorted(constants.states.items(), key=lambda pair: pair[0]),
+    'districts': DISTRICTS,
 })
 
 
@@ -251,6 +252,11 @@ def currency_filter(num, grouping=True):
 @app.template_filter('date')
 def date_filter(value, fmt='%m/%d/%Y'):
     return value.strftime(fmt)
+
+
+@app.template_filter('json')
+def json_filter(value):
+    return json.dumps(value)
 
 
 def _unique(values):

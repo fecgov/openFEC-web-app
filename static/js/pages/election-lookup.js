@@ -1,12 +1,13 @@
 'use strict';
 
-/* global require, module, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, document, context, API_LOCATION, API_VERSION, API_KEY */
 
 var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
 
+var districtTemplate = require('../../templates/districts.hbs');
 var resultTemplate = require('../../templates/electionResult.hbs');
 
 var officeMap = {
@@ -72,6 +73,7 @@ function ElectionLookup(selector) {
 }
 
 ElectionLookup.prototype.init = function() {
+  this.districts = 0;
   this.hasResults = false;
 
   this.$search = this.$elm.find('.search');
@@ -110,20 +112,32 @@ ElectionLookup.prototype.serialize = function() {
 
 ElectionLookup.prototype.handleStateChange = function() {
   var value = this.$state.val();
-  this.$district.prop('disabled', value === '');
-  this.$district.val('');
+  this.districts = context.districts[value] ? context.districts[value].districts : 0;
+  this.$district
+    .html(districtTemplate(_.range(1, this.districts + 1)))
+    .val('')
+    .prop('disabled', !(value && this.districts));
+  if (value && !this.districts) {
+    this.search();
+  }
 };
 
 ElectionLookup.prototype.search = function(event) {
   event && event.preventDefault();
   var self = this;
   var serialized = self.serialize();
-  if (serialized.zip || (serialized.state && serialized.district)) {
+  if (self.shouldSearch(serialized)) {
     $.getJSON(self.getUrl(serialized)).done(function(response) {
       self.draw(response.results);
     });
   }
   var url = self.getUrl(this.serialize());
+};
+
+ElectionLookup.prototype.shouldSearch = function(serialized) {
+  return serialized.zip ||
+    (serialized.state && serialized.district) ||
+    (serialized.state && this.districts === 0);
 };
 
 ElectionLookup.prototype.draw = function(results) {

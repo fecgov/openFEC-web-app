@@ -61,4 +61,9 @@
 
 {% block scripts %}
 <script src="/{{ assets['dist/js/pages/election-lookup.js'] }}"></script>
+<script>
+var context = {
+  districts: {{ districts | json | safe }}
+};
+</script>
 {% endblock %}
