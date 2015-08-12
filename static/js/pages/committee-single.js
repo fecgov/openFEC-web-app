@@ -159,20 +159,33 @@ var occupationColumns = [
 
 var filingsColumns = [
   {
-    data: 'pdf_url',
+    data: 'document_description',
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
       var anchor = document.createElement('a');
-      anchor.textContent = 'View filing';
-      anchor.setAttribute('href', data);
+      anchor.textContent = data;
+      anchor.setAttribute('href', row.pdf_url);
       anchor.setAttribute('target', '_blank');
       return anchor.outerHTML;
     }
   },
-  {data: 'amendment_indicator', className: 'min-desktop'},
-  {data: 'report_type_full', className: 'min-desktop'},
+  {
+    data: 'amendment_indicator',
+    className: 'min-desktop',
+    render: function(data, type, row, meta) {
+      if (data === 'A') {
+        data = 'Amended';
+      } else if (data === 'N') {
+        data = 'New';
+      } else {
+        data = '';
+      }
+      return data;
+    },
+  },
   tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet', orderable: false}),
   tables.currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
   tables.currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
   tables.currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
