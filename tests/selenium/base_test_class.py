@@ -39,9 +39,10 @@ drivers = {
     'remote': lambda cls: webdriver.Remote(
         desired_capabilities={
             'name': cls.__name__,
+            'screen-resolution': '1280x1024',
             'build': os.getenv('TRAVIS_BUILD_NUMBER'),
             'tunnel-identifier': os.getenv('TRAVIS_JOB_NUMBER'),
-            'platform': os.getenv('FEC_SAUCE_PLATFORM', 'Mac OS X 10.9'),
+            'platform': os.getenv('FEC_SAUCE_PLATFORM', 'Mac OS X 10.8'),
             'browserName': os.getenv('FEC_SAUCE_BROWSER', 'chrome'),
             'version': os.getenv('FEC_SAUCE_VERSION', ''),
         },
