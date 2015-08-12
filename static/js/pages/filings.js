@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
+var decoders = require('../modules/decoders');
 
 var columns = [
   {
@@ -40,14 +41,7 @@ var columns = [
     data: 'amendment_indicator',
     className: 'min-desktop',
     render: function(data, type, row, meta) {
-      if (data === 'A') {
-        data = 'Amended';
-      } else if (data === 'N') {
-        data = 'New';
-      } else {
-        data = '';
-      }
-      return data;
+      return decoders.amendments[data] || '';
     },
   },
   tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
