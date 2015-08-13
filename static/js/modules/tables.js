@@ -86,12 +86,21 @@ function buildAggregateUrl(uri, cycle) {
   }).toString();
 }
 
-function buildAggregateLink(data, uri, cycle) {
-  var anchor = document.createElement('a');
-  anchor.textContent = helpers.currency(data);
-  anchor.setAttribute('href', buildAggregateUrl(uri, cycle));
-  anchor.setAttribute('title', 'View individual transactions');
-  return anchor.outerHTML;
+function buildTotalLink(getParams) {
+  return function(data, type, row, meta) {
+    var span = document.createElement('div');
+    span.setAttribute('data-value', data);
+    span.setAttribute('data-row', meta.row);
+    var link = document.createElement('a');
+    link.textContent = helpers.currency(data);
+    link.setAttribute('title', 'View individual transactions');
+    var uri = URI('/receipts')
+      .query({committee_id: row.committee_id})
+      .addQuery(getParams(row));
+    link.setAttribute('href', buildAggregateUrl(uri, row.cycle));
+    span.appendChild(link);
+    return span.outerHTML;
+  };
 }
 
 function formattedColumn(formatter) {
@@ -373,9 +382,9 @@ var seekCallbacks = {
 module.exports = {
   yearRange: yearRange,
   buildCycle: buildCycle,
-  buildEntityLink: buildEntityLink,
   buildAggregateUrl: buildAggregateUrl,
-  buildAggregateLink: buildAggregateLink,
+  buildTotalLink: buildTotalLink,
+  buildEntityLink: buildEntityLink,
   currencyColumn: currencyColumn,
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
