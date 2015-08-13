@@ -5,12 +5,12 @@
 var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
-var tabs = require('../vendor/tablist');
 
 var maps = require('../modules/maps');
 var events = require('../modules/events');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
+var decoders = require('../modules/decoders');
 
 var singlePageTableDOM = 't<"results-info results-info--bottom meta-box"frip>';
 
@@ -173,15 +173,8 @@ var filingsColumns = [
   {
     data: 'amendment_indicator',
     className: 'min-desktop',
-    render: function(data, type, row, meta) {
-      if (data === 'A') {
-        data = 'Amended';
-      } else if (data === 'N') {
-        data = 'New';
-      } else {
-        data = '';
-      }
-      return data;
+    render: function(data) {
+      return decoders.amendments[data] || '';
     },
   },
   tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
