@@ -120,7 +120,7 @@ gulp.task('build-js', function() {
 });
 
 gulp.task('test', function() {
-  return mochify('./tests/unit/**.js')
+  return mochify('./tests/unit/**/*.js')
     .transform(hbsfy)
     .bundle();
 });

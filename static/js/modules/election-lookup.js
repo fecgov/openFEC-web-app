@@ -112,6 +112,11 @@ ElectionLookup.prototype.serialize = function() {
   return _.extend(filterNull(params));
 };
 
+ElectionLookup.prototype.handleZipChange = function() {
+  this.$state.val('');
+  this.$district.val('');
+};
+
 ElectionLookup.prototype.handleStateChange = function() {
   var value = this.$state.val();
   this.$zip.val('');
@@ -121,15 +126,9 @@ ElectionLookup.prototype.handleStateChange = function() {
     .val('')
     .prop('disabled', !(value && this.districts));
   if (value && !this.districts) {
-    this.$zip.val('');
     this.search();
   }
 };
-
-ElectionLookup.prototype.handleZipChange = function() {
-  this.$state.val('');
-  this.$district.val('');
-}
 
 ElectionLookup.prototype.search = function(event) {
   event && event.preventDefault();

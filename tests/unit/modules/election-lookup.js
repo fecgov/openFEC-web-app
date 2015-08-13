@@ -11,7 +11,7 @@ chai.use(sinonChai);
 var $ = require('jquery');
 var _ = require('underscore');
 
-var ElectionLookup = require('../../static/js/modules/election-lookup').ElectionLookup;
+var ElectionLookup = require('../../../static/js/modules/election-lookup').ElectionLookup;
 
 _.extend(window, {
   API_LOCATION: '',
@@ -93,9 +93,9 @@ describe('election lookup', function() {
       {cycle: 2016, office: 'H', state: 'NJ', district: '09'}
     ];
     this.el.draw(results);
-    var $rendered = this.el.$resultsItems.find('.result');
+    var $rendered = this.el.$resultsItems.find('.election-result');
     var titles = $rendered.map(function(idx, elm) {
-      return $(elm).find('h2').text();
+      return $(elm).find('h4').text();
     }).get();
     expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
     expect(this.el.hasResults).to.be.true;
