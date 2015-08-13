@@ -16,6 +16,7 @@ var preprocessify = require('preprocessify');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var mochify = require('mochify');
 
 var debug = !!process.env.FEC_WEB_DEBUG;
 var production = !!process.env.FEC_WEB_PRODUCTION;
@@ -116,4 +117,10 @@ gulp.task('build-js', function() {
   .transform(hbsfy)
   .bundle()
   .pipe(callback('static/js/common.js'));
+});
+
+gulp.task('test', function() {
+  return mochify('./tests/unit/**/*.js')
+    .transform(hbsfy)
+    .bundle();
 });

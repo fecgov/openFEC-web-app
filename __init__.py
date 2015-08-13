@@ -1,7 +1,12 @@
+import re
 import http
+import json
+import locale
+import logging
 import datetime
 
 import furl
+import jinja2
 from webargs import Arg
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
@@ -12,19 +17,15 @@ from flask.ext.basicauth import BasicAuth
 
 from openfecwebapp import utils
 from openfecwebapp import config
+from openfecwebapp import constants
 from openfecwebapp.views import render_search_results, render_candidate, render_committee
 from openfecwebapp.api_caller import load_search_results, load_with_nested
-
-import jinja2
-import json
-import locale
-import logging
-import re
 
 
 locale.setlocale(locale.LC_ALL, '')
 
 START_YEAR = 1979
+DISTRICTS = json.load(open('./data/districts.json'))
 
 app = Flask(__name__, static_path='/static', static_folder='dist')
 
@@ -108,6 +109,9 @@ app.jinja_env.globals.update({
     'cycle_start': cycle_start,
     'cycle_end': cycle_end,
     'election_url': get_election_url,
+    'states': sorted(constants.states.items(), key=lambda pair: pair[0]),
+    'districts': DISTRICTS,
+    'cycles': range(utils.current_cycle(), START_YEAR, -2),
 })
 
 
@@ -211,6 +215,11 @@ def filings():
     return render_template('filings.html', result_type='committees')
 
 
+@app.route('/elections/')
+def election_lookup():
+    return render_template('election-lookup.html')
+
+
 @app.route('/elections/<office>/<cycle>/')
 @app.route('/elections/<office>/<state>/<cycle>/')
 @app.route('/elections/<office>/<state>/<district>/<cycle>/')
@@ -244,6 +253,11 @@ def currency_filter(num, grouping=True):
 @app.template_filter('date')
 def date_filter(value, fmt='%m/%d/%Y'):
     return value.strftime(fmt)
+
+
+@app.template_filter('json')
+def json_filter(value):
+    return json.dumps(value)
 
 
 def _unique(values):
@@ -300,68 +314,10 @@ def fmt_report_desc(report_full_description):
 def restrict_cycles(value, start_year=START_YEAR):
     return [each for each in value if start_year <= each <= utils.current_cycle()]
 
+
 @app.template_filter()
 def fmt_state_full(value):
-    states = {
-        'AK': 'Alaska',
-        'AL': 'Alabama',
-        'AR': 'Arkansas',
-        'AS': 'American Samoa',
-        'AZ': 'Arizona',
-        'CA': 'California',
-        'CO': 'Colorado',
-        'CT': 'Connecticut',
-        'DC': 'District of Columbia',
-        'DE': 'Delaware',
-        'FL': 'Florida',
-        'GA': 'Georgia',
-        'GU': 'Guam',
-        'HI': 'Hawaii',
-        'IA': 'Iowa',
-        'ID': 'Idaho',
-        'IL': 'Illinois',
-        'IN': 'Indiana',
-        'KS': 'Kansas',
-        'KY': 'Kentucky',
-        'LA': 'Louisiana',
-        'MA': 'Massachusetts',
-        'MD': 'Maryland',
-        'ME': 'Maine',
-        'MI': 'Michigan',
-        'MN': 'Minnesota',
-        'MO': 'Missouri',
-        'MP': 'Northern Mariana Islands',
-        'MS': 'Mississippi',
-        'MT': 'Montana',
-        'NA': 'National',
-        'NC': 'North Carolina',
-        'ND': 'North Dakota',
-        'NE': 'Nebraska',
-        'NH': 'New Hampshire',
-        'NJ': 'New Jersey',
-        'NM': 'New Mexico',
-        'NV': 'Nevada',
-        'NY': 'New York',
-        'OH': 'Ohio',
-        'OK': 'Oklahoma',
-        'OR': 'Oregon',
-        'PA': 'Pennsylvania',
-        'PR': 'Puerto Rico',
-        'RI': 'Rhode Island',
-        'SC': 'South Carolina',
-        'SD': 'South Dakota',
-        'TN': 'Tennessee',
-        'TX': 'Texas',
-        'UT': 'Utah',
-        'VA': 'Virginia',
-        'VI': 'Virgin Islands',
-        'VT': 'Vermont',
-        'WA': 'Washington',
-        'WI': 'Wisconsin',
-        'WV': 'West Virginia',
-        'WY': 'Wyoming'
-    }
-    return states[value.upper()]
+    return constants.states[value.upper()]
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
