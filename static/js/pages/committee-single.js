@@ -5,7 +5,6 @@
 var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
-var tabs = require('../vendor/tablist');
 
 var maps = require('../modules/maps');
 var events = require('../modules/events');
