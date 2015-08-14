@@ -5,12 +5,12 @@
 var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
-var tabs = require('../vendor/tablist');
 
 var maps = require('../modules/maps');
 var events = require('../modules/events');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
+var decoders = require('../modules/decoders');
 
 var singlePageTableDOM = 't<"results-info results-info--bottom meta-box"frip>';
 
@@ -121,20 +121,26 @@ var occupationColumns = [
 
 var filingsColumns = [
   {
-    data: 'pdf_url',
+    data: 'document_description',
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
       var anchor = document.createElement('a');
-      anchor.textContent = 'View filing';
-      anchor.setAttribute('href', data);
+      anchor.textContent = data;
+      anchor.setAttribute('href', row.pdf_url);
       anchor.setAttribute('target', '_blank');
       return anchor.outerHTML;
     }
   },
-  {data: 'amendment_indicator', className: 'min-desktop'},
-  {data: 'report_type_full', className: 'min-desktop'},
+  {
+    data: 'amendment_indicator',
+    className: 'min-desktop',
+    render: function(data) {
+      return decoders.amendments[data] || '';
+    },
+  },
   tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet', orderable: false}),
   tables.currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
   tables.currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
   tables.currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),

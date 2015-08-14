@@ -1,0 +1,24 @@
+<section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
+  <div class="container">
+    <div class="page-section__intro">
+      <h2 class="section-heading" id="section-4-heading">Candidate Filings {% include 'partials/cycle-select.html' %}</h2>
+    <div id="filters" class="meta-box filters--horizontal section__intro__left">
+      <form id="category-filters">
+        {% include 'partials/filters/amendment-indicator.html' %}
+        {% include 'partials/filters/primary-general.html' %}
+        {% include 'partials/filters/report-type.html' %}
+      </form>
+    </div>
+    </div>
+    <table class="data-table" data-type="filing" data-candidate="{{ candidate_id }}" width="100%" class="responsive">
+      <thead>
+        <tr>
+        <th scope="col">Document</th>
+        <th scope="col">Amendment Indicator</th>
+        <th scope="col">Receipt Date</th>
+        <th scope="col">Coverage End Date</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</section>

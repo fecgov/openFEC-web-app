@@ -80,8 +80,12 @@
     </div>
   </section>
 
-  {% include 'partials/filings-tab.html' %}
+  {% include 'partials/filings-tab-candidate.html' %}
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/candidate-single.js'] }}"></script>
 {% endblock %}
