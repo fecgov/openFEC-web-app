@@ -27,25 +27,15 @@ Filter Receipts
 
 {{ text.field('_committee_id', 'Recipient Committee', {'class': 'committee-typeahead-field', 'data-input': 'committee_id'}) }}
 <input type="hidden" name="committee_id" id="committee_id" />
+<h3 class="filters__subheader">Contributor Information</h3>
+{{ text.field('contributor_city', 'City') }}
+{{ states.field('contributor_state') }}
+{{ text.field('contributor_employer', 'Employer') }}
+{{ text.field('contributor_occupation', 'Occupation') }}
 
-<!-- <div class="js-accordion"> -->
-  <h3 class="js-accordion_header accordion__header">Contributor Information <a href="#" class="accordion__button js-accordion_button"></a></h3>
-  <div class="js-accordion_item accordion__item">
-    {{ text.field('contributor_city', 'City') }}
-    {{ states.field('contributor_state') }}
-    {{ text.field('contributor_employer', 'Employer') }}
-    {{ text.field('contributor_occupation', 'Occupation') }}
-  </div>
-<!-- </div> -->
+<h3 class="filters__subheader">Transaction Information</h3>
+{{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+{{ date.field('receipt_date', 'Receipt Date', dates ) }}
 
-<!-- <div class="js-accordion"> -->
-  <h3 class="js-accordion_header accordion__header">Transaction Information <a href="#" class="accordion__button js-accordion_button"></a></h3>
-  <div class="js-accordion_item accordion__item">
-    {{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-    {{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-
-    {{ date.field('receipt_date', 'Receipt Date', dates ) }}
-
-  </div>
-<!-- </div> -->
 {% endblock %}

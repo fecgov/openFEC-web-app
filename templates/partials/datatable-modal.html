@@ -1,16 +1,13 @@
 <div id="datatable-modal" class="panel__overlay" aria-hidden="true">
   <div class="panel">
     <div class="panel__row panel__navigation">
-      <a class="button button--sm js-pdf_url">
+      <a class="panel__link button--small button--primary js-pdf_url">
         View original image
       </a>
-      <strong class="panel__navigation--right">
-        <a href="#" class="js-hide js-panel-close panel__close"
-            data-hides="datatable-modal">
-          <i class="icon icon--bold ti-angle"></i>
-          <span class="u-visually_hidden">View all</span>
-        </a>
-      </strong>
+      <button class="js-hide js-panel-close panel__close button--small button--neutral"
+          data-hides="datatable-modal">
+        <span class="u-visually-hidden">View all</span>
+      </button>
     </div>
     <div class="js-panel-content panel__content">
       <table>
