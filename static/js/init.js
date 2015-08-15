@@ -35,23 +35,23 @@ $(document).ready(function() {
     var $body,
         $pageControls;
     $body = $('body');
-    $pageControls = $('.page-controls.sticky');
+    $pageControls = $('.page-controls');
     $body.addClass('js-initialized');
 
     // Sticky page controls
     if ( $pageControls.length > 0 ) {
         var scrollPos,
             controlsHeight,
-            controlsTop = $pageControls.offset().top;
+            controlsTop = $pageControls.offset().top + 200;
         $(document).scroll(function(){
           scrollPos = $(window).scrollTop();
 
           if (scrollPos >= controlsTop) {
             controlsHeight = $pageControls.height();
-            $body.addClass('controls--fixed');
+            $pageControls.addClass('is-fixed');
             $body.css('padding-top', controlsHeight);
           } else {
-            $body.removeClass('controls--fixed');
+            $pageControls.removeClass('is-fixed');
             $body.css('padding-top', 0);
           }
         });

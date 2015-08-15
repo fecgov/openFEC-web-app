@@ -2,7 +2,7 @@
 {% import 'macros/charts.html' as charts %}
 {% import 'macros/disclaimer.html' as disclaimer %}
 
-<section class="page-section" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
+<section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
     <div class="page-section__intro">
       <div class="section__intro__left">
@@ -14,25 +14,25 @@
     </div>
     <div class="page-subsection">
       <h3>Money received from individuals</h3>
-      <span class="label">Compare by:</span>
-      <div class="toggles">
+      <fieldset class="toggles">
+        <legend class="label">Compare by:</legend>
         <label for="toggle-state">
           <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
-          <span class="toggle-button">State</span>
+          <span class="button--primary">State</span>
         </label>
         <label for="toggle-contribution-size">
           <input id="toggle-contribution-size" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
-          <span class="toggle-button">Contribution Size</span>
+          <span class="button--primary">Contribution Size</span>
         </label>
         <label for="toggle-employer">
           <input id="toggle-employer" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-employer">
-          <span class="toggle-button">Employer</span>
+          <span class="button--primary">Employer</span>
         </label>
         <label for="toggle-occupation">
           <input id="toggle-occupation" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-occupation">
-          <span class="toggle-button">Occupation</span>
+          <span class="button--primary">Occupation</span>
         </label>
-      </div>
+      </fieldset>
       <div class="row">
         <div id="by-state" class="panel-toggle-element">
           <div class="chunk--half">
