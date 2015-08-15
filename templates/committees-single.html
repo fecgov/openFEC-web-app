@@ -76,12 +76,13 @@
         </div>
       </div>
     </div>
-{% macro totals_table_row(pretty_name, value) %}
+    
+    {% macro totals_table_row(pretty_name, value) %}
       {% import 'macros/charts.html' as charts %}
-      <div class="table__row table__row--nested js-accordion_item">
-        <div class="table__cell">{{ pretty_name }} </div>
-        <div class="table__cell">{{ null.null(value | currency) }}</div>
-        <div class="table__cell table__cell--bar">
+      <div class="totals-table__row totals-table__row--nested js-accordion_item" aria-hidden="true">
+        <div class="totals-table__cell">{{ pretty_name }} </div>
+        <div class="totals-table__cell">{{ null.null(value | currency) }}</div>
+        <div class="totals-table__cell totals-table__cell--bar">
           {{ charts.chart_bar(value|default(0),
                               pretty_name,
                               tooltip=None) }}
@@ -90,18 +91,16 @@
     {% endmacro %}
 
     {% macro totals_table_row_header(pretty_name, value, description, accordion=True) %}
-      <div class="table__row table__row--header js-accordion_header accordion__header">
-        <div class="table__cell">
-          <h5>{{ pretty_name }}</h5>
+      <div class="totals-table__row totals-table__row--header js-accordion_header accordion__header">
+        <div class="totals-table__cell">
+          <span class="totals-table__label">{{ pretty_name }}</span>
+          {% if description %}
+          <span class="t-note"><em>{{ description }}</em></span>
+          {% endif %}
         </div>
-        <div class="table__cell">
+        <div class="totals-table__cell">
           <span>{{ null.null( value | currency ) }}</span>
         </div>
-        {% if description %}
-        <div class="table__cell table__cell--header-description">
-          <span><em>{{ description }}</em></span>
-        </div>
-        {% endif %}
         {% if accordion %}
           <button class="button button--primary accordion__button js-accordion_button"></button>
         {% endif %}
@@ -109,27 +108,25 @@
     {% endmacro %}
 
     {% macro totals_table(header_name, header_value, data, report_year, header_description='') %}
-      <figure class="table--simple totals-table totals-table--charts">
-        <div class="table js-chart-series chart-series--horizontal">
-          {{ totals_table_row_header(header_name, header_value, header_description, accordion=data|length) }}
-          {% for item in data %}
-            {{ totals_table_row(item[1], item[0]) }}
-          {% endfor %}
-        </div>
+      <figure class="totals-table totals-table--charts js-chart-series chart-series--horizontal">
+        {{ totals_table_row_header(header_name, header_value, header_description, accordion=data|length) }}
+        {% for item in data %}
+          {{ totals_table_row(item[1], item[0]) }}
+        {% endfor %}
       </figure>
     {% endmacro %}
 
     <section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
-      <div class="container committee-summary">
+      <div class="container">
         <div class="page-section__intro">
-          <h2 class="section-heading" id="section-1-heading" tabindex="0">Financial Summary {% include 'partials/cycle-select.html' %}</h2>
-          <p class="text--lead">Get the full picture of all of the money received and spent by this committee.</p>
+          <h2 class="section-heading" id="section-1-heading">Financial Summary {% include 'partials/cycle-select.html' %}</h2>
+          <p>Get the full picture of all of the money received and spent by this committee.</p>
         </div>
         {% if reports and totals %}
-          <div class="page-subsection">
+          <div class="slab">
               {% with committee=context() %}
-            <h3 class="section-header">Detailed Summary {{ reports.0.cycle-1 }} - {{ reports.0.cycle }}</h3>
-            <div class="row js-accordion">
+            <h3>Detailed Summary {{ reports.0.cycle-1 }} - {{ reports.0.cycle }}</h3>
+            <div class="js-accordion">
             {% if committee_type == 'P' %}
               {% include 'partials/committee-totals-presidential.html' %}
             {% elif committee_type == 'H' or committee_type == 'S' %}
@@ -141,7 +138,7 @@
             {% endif %}
             </div>
 
-          <div class="row">
+          <div class="slab">
             {% if committee_type != 'I'  %}
               {% include 'partials/committee-charts.html' %}
             {% else %}
