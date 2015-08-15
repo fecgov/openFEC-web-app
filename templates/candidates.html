@@ -1,18 +1,18 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-   Browse Candidates
+  Browse Candidates
 {% endblock %}
 
 {% block body %}
 
-<header class="page-header page-header--dark">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing committees"> Candidates</h1>
+<header class="page-header slab slab--primary">
+  <h1>Candidates</h1>
 </header>
 
-<section class="results-content">
+<section class="main__content">
   {% include 'partials/candidates-filter.html' %}
-  <div id="candidates" class="results-container">
+  <div id="candidates" class="datatable__container">
     {% include 'partials/candidates-table.html' %}
   </div>
 </section>

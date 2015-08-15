@@ -1,19 +1,17 @@
-<div id="filters" class="side-panel side-panel--left">
-  <div class="side-panel__box">
-    <button id="filter-toggle" data-slide="left" class="side-panel__toggle">
-      <i class="icon ti-angle"></i>
-    </button>
-    <div class="side-panel__hider">
-      <h4 class="filter__header">
-        {% block heading %}
-        Filter {{ result_type | capitalize }}
-        {% endblock %}
-      </h4>
-      <form id="category-filters">
-        {% block filters %}{% endblock %}
-        {% block submit %}
-        {% endblock %}
-      </form>
-    </div>
+<div id="filters" class="filters">
+  <button id="filter-toggle" data-slide="left" class="filters__toggle">
+    <span class="u-visually-hidden">Toggle filter visibility</span>
+  </button>
+  <div class="filters__hider">
+    <h2 class="filter__header">
+      {% block heading %}
+      Filter {{ result_type | capitalize }}
+      {% endblock %}
+    </h2>
+    <form id="category-filters">
+      {% block filters %}{% endblock %}
+      {% block submit %}
+      {% endblock %}
+    </form>
   </div>
 </div>

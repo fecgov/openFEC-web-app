@@ -6,13 +6,13 @@
 
 {% block body %}
 
-<header class="page-header page-header--dark">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Receipts</h1>
+<header class="page-header slab slab--primary">
+  <h1>Receipts</h1>
 </header>
 
-<section class="results-content">
+<section class="main__content">
   {% include "partials/receipts-filter.html" %}
-  <div id="committees" class="results-container">
+  <div id="committees" class="datatable__container">
     {% include 'partials/receipts-table.html' %}
   </div>
 </section>

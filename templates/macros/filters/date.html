@@ -1,6 +1,6 @@
 {% macro field(name, label, dates) %}
 
-<div class="field date-choice-field" id="{{ name }}">
+<div class="filter date-choice-field" id="{{ name }}">
   <label for="{{ name }}" class="label">{{ label }}</label>
   <ul>
     <li><input name="{{ name }}" type="radio" data-min-date={{ dates['today'][0] | date }} data-max-date={{ dates['today'][1] | date }}>Today</li>

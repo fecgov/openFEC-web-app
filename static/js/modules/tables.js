@@ -280,10 +280,10 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   var draw;
   var $processing = $('<div class="processing">Loading...</div>');
   var $hideNullWidget = $(
-    '<div class="results-info__null">' +
-      '<input type="checkbox" name="sort_hide_null" checked /> ' +
+    '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
+    '<label for="null-checkbox" class="results-info__null">' +
       'Hide results with missing values when sorting' +
-    '</div>'
+    '</label>'
   );
   var useFilters = opts.useFilters;
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
@@ -299,7 +299,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
     language: {
       lengthMenu: 'Results per page: _MENU_'
     },
-    dom: '<"results-info meta-box results-info--top"lfrip><"panel__main"t><"results-info meta-box"ip>',
+    dom: '<"results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
     ajax: function(data, callback, settings) {
       var api = this.api();
       if ($form) {

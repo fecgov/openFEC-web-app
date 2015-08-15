@@ -7,7 +7,8 @@
 
     {% include 'partials/meta-tags.html' %}
 
-    <link rel="stylesheet" href="/{{ assets['dist/styles/styles.css'] }}" />
+    <!-- <link rel="stylesheet" href="/{{ assets['dist/styles/styles.css'] }}" /> -->
+    <link rel="stylesheet" href="http://localhost:8080/css/styles.css" />
     {% if api_location %}
     <script>
         API_LOCATION = "{{api_location}}";
@@ -34,100 +35,61 @@
 {% import 'macros/search.html' as search %}
 {% include 'partials/browser-warning.html' %}
 {% include 'partials/javascript-warning.html' %}
-<a href="#main-content" class="u-visually_hidden">skip navigation</a>
-<div id="site-menu" class="modal__overlay" aria-hidden="true">
-  <div class="modal">
-    <div class="modal__row">
-      <p class="text--small">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></p>
-      <p class="text--small">Looking for fec.gov? <a title="Visit fec.gov" href="http://www.fec.gov">Click here.</a></p>
-      <button title="Close menu" class="js-hide modal__close" data-hides="site-menu"><i class="ti-close"></i></button>
-    </div>
-    <div class="modal__row">
-      <h3>Search the data for:</h3>
-      {{ search.search('modal', result_type, query) }}
-    </div>
-    <div class="modal__row">
-      <h3>Browse the Data</h3>
-      <nav class="modal__nav">
-        <ul>
-          <li><a href="{{ url_for('candidates', cycle=default_cycles) }}" name="candidates"><img class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
-          <li><a href="{{ url_for('committees', cycle=default_cycles) }}" name="committees"><img class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="modal__row">
-      <h3>Additional Information</h3>
-      <nav class="modal__nav">
-        <ul>
-          <li><a href="https://github.com/18F/openFEC/">View project source code</a></li>
-          <li><a href="mailto:{{ contact_email }}"><i class="ti-email"></i> Contact us</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</div>
-<div class="page-wrap">
+<a href="#main-content" class="u-visually-hidden">skip navigation</a>
+
   <header class="site-header">
-    <div id="notice" aria-hidden="true" class="section--blue">
-      <a id="notice-close" class="js-action js-hide link--icon" tabindex="0" data-hides="notice"><i class="ti-close"></i></a>
-      <h3>Welcome to OpenFEC. This <a href="https://18f.gsa.gov/dashboard/stages/#beta" target="_blank">beta</a> site is a work in progress.</h3>
-      <h4><a href="/#progress">Find out what’s here and what’s missing</a>.</h4>
-      <p><a href="mailto:18F-FEC@gsa.gov">Email us</a> to share feedback or open an issue on <a href="https://github.com/18f/FEC/issues" target="_blank">GitHub</a>.</p>
+    <div class="disclaimer">
+      <span class="disclaimer__left">Looking for fec.gov? <a href="http://www.fec.gov">Click here.</a></span>
+      <span class="disclaimer__center">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></span>
+      <span class="disclaimer__right">This site is in beta. <a title="Learn about this site's development" tabindex="0" href="https://18f.gsa.gov/dashboard/stages/#beta">Learn more.</a></span>
     </div>
-    <div class="banner">
-      <span class="banner--left">Looking for fec.gov? <a href="http://www.fec.gov">Click here.</a></span>
-      <span class="banner--center">An official website of the United States Government <img src="/static/img/us_flag_small.png" alt="US flag signifying that this is a United States Federal Government website"></span>
-      <span class="banner--right">This site is in beta. <a title="Learn about this site's development" tabindex="0" id="notice-reveal" class="js-reveal js-action" data-reveals="notice">Learn more.</a></span>
+    <div class="masthead">
+      <span class="site-title">Federal Election Commission</span>
+      <ul class="utility-nav list--flat">
+        <li class="utility-nav__item">About</li>
+        <li class="utility-nav__item">Contact</li>
+      </ul>
     </div>
-    <div class="clearfix">
-      <div class="header__left">
-        <button id="site-menu-toggle" class="header-nav__link side-toggle js-reveal" data-reveals="site-menu"><i class="ti ti-menu"></i></button>
-        <a class="header-brand" href="/" title="Home"><img width="140" src="/static/img/logo.svg" alt="OpenFEC Logo"></a>
-        <nav class="header-nav">
-          <ul class="header-nav__list">
-            <li class="header-nav__item"><a class="header-nav__link" title="Browse candidates" href="{{ url_for('candidates', cycle=default_cycles) }}" name="candidates"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidates</a></li>
-            <li class="header-nav__item"><a class="header-nav__link" title="Browse committee" href="{{ url_for('committees', cycle=default_cycles) }}" name="committees"><img class="category-icon" width="20" height="20" src="/static/img/icon-committee--white.svg" alt="Icon representing committees">Committees</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div class="header__right">
-
-        {% if hide_header_search != true %}
-        <div class="header-search">
-          {{ search.search('header', result_type, query) }}
-        </div>
-        {% endif %}
-
-        <button id="glossary-toggle" title="View site glossary" data-slide="right" class="header-nav__link side-toggle"><i class="ti ti-book"></i></button>
-      </div>
-    </div>
+    <nav class="site-nav">
+      <button class="site-nav__button site-nav__button--left">Glossary</button>
+      <ul class="site-nav__list">
+        <li class="site-nav__item">
+          <a href="#" class="site-nav__link is-current">Campaign Finance Data</a>
+        </li>
+        <li class="site-nav__item">
+          <a href="#" class="site-nav__link is-disabled">Reporting &amp; Registration</a>
+        </li>
+        <li class="site-nav__item">
+          <a href="#" class="site-nav__link is-disabled">Calendar</a>
+        </li>
+        <li class="site-nav__item">
+          <a href="#" class="site-nav__link is-disabled">TBD</a>
+        </li>
+        <li class="site-nav__item">
+          <a href="#" class="site-nav__link is-disabled">TBD</a>
+        </li>                
+      </ul>
+      <button id="glossary-toggle" title="View site glossary" data-slide="right" class="site-nav__button site-nav__button--right">Glossary</button>
+    </nav>    
   </header>
 
   {% block header %}{% endblock %}
-  <div class="main-container" id="main-content">
-    <main id="main"{% if section %} data-section="{{section}}"{% endif %}>
-        {% block body %}{% endblock %}
-    </main>
+  <main id="main" {% if section %} data-section="{{section}}"{% endif %}>
+      {% block body %}{% endblock %}
+  </main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="seal">
+       <img class="seal__img" src="/static/img/seal--reversed@2x.png" alt="Seal of the Federal Election Commission">
+    </div>
+    <div class="address">
+      <p class="address__title">Federal Election Commission</p>
+      <p>999 E Street, NW, Washington, DC 20463</p>
+      <p>(800) 424-9530</p>
+      <p><a href="mailto:info@FEC.gov">info@FEC.gov</a></p>
+    </div>
   </div>
-
-</div> <!-- .page-wrap -->
-<footer>
-  <div class="footer__left">
-    <img src="/static/img/18f.png" alt="18F Logo" class="u-float-left">
-    <ul class="u-float-left">
-      <li>A project of <a href="https://18f.gsa.gov">18F</a></li>
-      <li><a href="{{ url_for('developers') }}">View API</a></li>
-      <li><a href="https://github.com/18F/openFEC-web-app">View project source code</a></li>
-
-    </ul>
-  </div>
-
-  <nav class="footer__right footer__nav">
-    <ul>
-      <li><a href="mailto:{{ contact_email }}"><i class="ti-email"></i> Contact us</a></li>
-      <li><a href="http://www.fec.gov">Visit fec.gov</a></li>
-    </ul>
-  </nav>
 </footer>
 
 {% include './partials/glossary.html' %}

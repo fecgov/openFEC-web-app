@@ -1,47 +1,38 @@
- <div class="field">
-    <label class="label" for="amendment-dropdown">Amendment Indicator<span class="any" aria-hidden="true">(Any)</span></label>
-    <fieldset class="js-checkbox-filters">
-        <ul class="dropdown__selected">
-            <li>
-                <label class="dropdown__value" for="amendment-indicator-N">
-                  <input id="amendment-indicator-N" name="amendment_indicator" type="checkbox" value="N" />New
-                </label>
-            </li>
-            <li>
-                <label class="dropdown__value" for="amendment-indicator-A">
-                  <input id="amendment-indicator-A" name="amendment_indicator" type="checkbox" value="A" />Amended
-                </label>
-            </li>
+ <div class="filter">
+  <fieldset class="js-checkbox-filters">
+    <legend class="label" for="amendment-dropdown">Amendment Indicator<span class="any" aria-hidden="true">(Any)</span></legend>
+    <ul class="dropdown__selected">
+      <li>
+        <input id="amendment-indicator-N" name="amendment_indicator" type="checkbox" value="N">
+        <label class="dropdown__value" for="amendment-indicator-N">New</label>
+      </li>
+      <li>
+        <input id="amendment-indicator-A" name="amendment_indicator" type="checkbox" value="A">
+        <label class="dropdown__value" for="amendment-indicator-A">Amended</label>
+      </li>
+    </ul>
+    <div class="dropdown">
+      <button class="js-toggle js-dropdown button--dropdown button--neutral" data-toggles="amendment-dropdown">More</button>
+      <div id="amendment-dropdown" class="dropdown__panel" aria-hidden="true">
+        <ul class="dropdown__list">
+          <li>
+            <input id="amendment-indicator-T" name="amendment_indicator" type="checkbox" value="T">
+            <label class="dropdown__value" for="amendment-indicator-T">Terminated</label>
+          </li>
+          <li>
+            <input id="amendment-indicator-C" name="amendment_indicator" type="checkbox" value="C">
+            <label class="dropdown__value" for="amendment-indicator-C">Consolidated</label>
+          </li>
+          <li>
+            <input id="amendment-indicator-M" name="amendment_indicator" type="checkbox" value="M">
+            <label class="dropdown__value" for="amendment-indicator-M">Multi-Candidate</label>
+          </li>
+          <li>
+            <input id="amendment-indicator-S" name="amendment_indicator" type="checkbox" value="S">
+            <label class="dropdown__value" for="amendment-indicator-S">Secondary</label>
+          </li>
         </ul>
-        <div class="dropdown">
-            <button class="js-toggle js-dropdown button--dropdown" data-toggles="amendment-dropdown">More</button>
-            <div id="amendment-dropdown" class="dropdown__panel" aria-hidden="true">
-                <div class="dropdown__search__container">
-                    <input type="search" class="dropdown__search">
-                </div>
-                <ul class="dropdown__list">
-                    <li>
-                        <label class="dropdown__value" for="amendment-indicator-T">
-                            <input id="amendment-indicator-T" name="amendment_indicator" type="checkbox" value="T" />Terminated
-                        </label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="amendment-indicator-C">
-                            <input id="amendment-indicator-C" name="amendment_indicator" type="checkbox" value="C" />Consolidated
-                        </label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="amendment-indicator-M">
-                            <input id="amendment-indicator-M" name="amendment_indicator" type="checkbox" value="M" />Multi-Candidate
-                        </label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="amendment-indicator-S">
-                            <input id="amendment-indicator-S" name="amendment_indicator" type="checkbox" value="S" />Secondary
-                        </label>
-                    </li>
-                </ul>
-            </div>
-         </div>
-    </fieldset>
+      </div>
+     </div>
+  </fieldset>
 </div>

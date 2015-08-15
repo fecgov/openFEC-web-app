@@ -1,155 +1,194 @@
-<div class="field">
-    <label class="label" for="party">Political Party <span class="any" aria-hidden="true">(Any)</span></label>
-    <fieldset class="js-checkbox-filters">
-        <ul class="dropdown__selected">
-            <li>
-                <label class="dropdown__value" for="party-checkbox-DEM">
-                    <input id="party-checkbox-DEM" name="party" type="checkbox" value="DEM">Democratic Party
-                </label></li>
-            <li>
-                <label class="dropdown__value" for="party-checkbox-REP">
-                    <input id="party-checkbox-REP" name="party" type="checkbox" value="REP">Republican Party
-                </label>
-            </li>
+<div class="filter">
+  <fieldset class="js-checkbox-filters">
+    <legend class="label" for="party">Political Party <span class="any" aria-hidden="true">(Any)</span></legend>
+    <ul class="dropdown__selected">
+      <li>
+        <input id="party-checkbox-DEM" name="party" type="checkbox" value="DEM">
+        <label class="dropdown__value" for="party-checkbox-DEM">Democratic Party</label>
+      </li>
+      <li>
+        <input id="party-checkbox-REP" name="party" type="checkbox" value="REP">
+        <label class="dropdown__value" for="party-checkbox-REP">Republican Party</label>
+      </li>
+    </ul>
+    <div class="dropdown">
+      <button class="js-toggle js-dropdown button--dropdown button--neutral" data-toggles="party-dropdown" >More</button>
+      <div id="party-dropdown" class="dropdown__panel" aria-hidden="true">
+        <ul class="dropdown__list">
+          <li>
+            <input id="party-checkbox-AIC" name="party" type="checkbox" value="AIC">          
+            <label class="dropdown__value" for="party-checkbox-AIC">American Independent Conservative</label>
+          </li>
+          <li>
+            <input id="party-checkbox-AIP" name="party" type="checkbox" value="AIP">          
+            <label class="dropdown__value" for="party-checkbox-AIP">American Independent Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-AMP" name="party" type="checkbox" value="AMP">
+            <label class="dropdown__value" for="party-checkbox-AMP">American Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-APF" name="party" type="checkbox" value="APF">
+            <label class="dropdown__value" for="party-checkbox-APF">American People's Freedom Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-CIT" name="party" type="checkbox" value="CIT">
+            <label class="dropdown__value" for="party-checkbox-CIT">Citizens' Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-CMP" name="party" type="checkbox" value="CMP">
+            <label class="dropdown__value" for="party-checkbox-CMP">Commonwealth Party of the U.S.</label>
+          </li>
+          <li>
+            <input id="party-checkbox-COM" name="party" type="checkbox" value="COM">
+            <label class="dropdown__value" for="party-checkbox-COM">Communist Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-CRV" name="party" type="checkbox" value="CRV">
+            <label class="dropdown__value" for="party-checkbox-CRV">Conservative Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-CST" name="party" type="checkbox" value="CST">
+            <label class="dropdown__value" for="party-checkbox-CST">Constitutional</label>
+          </li>
+          <li>
+            <input id="party-checkbox-D/C" name="party" type="checkbox" value="D/C">
+            <label class="dropdown__value" for="party-checkbox-D/C">Democratic/Conservative</label>
+          </li>
+          <li>
+            <input id="party-checkbox-DFL" name="party" type="checkbox" value="DFL">
+            <label class="dropdown__value" for="party-checkbox-DFL">Democratic-Farm-Labor</label>
+          </li>
+          <li>
+            <input id="party-checkbox-FLP" name="party" type="checkbox" value="FLP">
+            <label class="dropdown__value" for="party-checkbox-FLP">Freedom Labor Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-GRE" name="party" type="checkbox" value="GRE">
+            <label class="dropdown__value" for="party-checkbox-GRE">Green Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-GWP" name="party" type="checkbox" value="GWP">
+            <label class="dropdown__value" for="party-checkbox-GWP">George Wallace Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-HRP" name="party" type="checkbox" value="HRP">
+            <label class="dropdown__value" for="party-checkbox-HRP">Human Rights Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-IAP" name="party" type="checkbox" value="IAP">
+            <label class="dropdown__value" for="party-checkbox-IAP">Independent American Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-ICD" name="party" type="checkbox" value="ICD">
+            <label class="dropdown__value" for="party-checkbox-ICD">Independent Conserv. Democratic</label>
+          </li>
+          <li>
+            <input id="party-checkbox-IGD" name="party" type="checkbox" value="IGD">
+            <label class="dropdown__value" for="party-checkbox-IGD">Industrial Government Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-IND" name="party" type="checkbox" value="IND">
+            <label class="dropdown__value" for="party-checkbox-IND">Independent</label>
+          </li>
+          <li>
+            <input id="party-checkbox-LAB" name="party" type="checkbox" value="LAB">
+            <label class="dropdown__value" for="party-checkbox-LAB">U.S. Labor Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-LBL" name="party" type="checkbox" value="LBL">
+            <label class="dropdown__value" for="party-checkbox-LBL">Liberal Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-LBR" name="party" type="checkbox" value="LBR">
+            <label class="dropdown__value" for="party-checkbox-LBR">Labor Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-LBU" name="party" type="checkbox" value="LBU">
+            <label class="dropdown__value" for="party-checkbox-LBU">Liberty Union Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-LFT" name="party" type="checkbox" value="LFT">
+            <label class="dropdown__value" for="party-checkbox-LFT">Less Federal Taxes</label>
+          </li>
+          <li>
+            <input id="party-checkbox-LIB" name="party" type="checkbox" value="LIB">
+            <label class="dropdown__value" for="party-checkbox-LIB">Libertarian</label>
+          </li>
+          <li>
+            <input id="party-checkbox-LRU" name="party" type="checkbox" value="LRU">
+            <label class="dropdown__value" for="party-checkbox-LRU">La Raza Unida</label>
+          </li>
+          <li>
+            <input id="party-checkbox-NAP" name="party" type="checkbox" value="NAP">
+            <label class="dropdown__value" for="party-checkbox-NAP">Prohibition Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-NDP" name="party" type="checkbox" value="NDP">
+            <label class="dropdown__value" for="party-checkbox-NDP">National Democratic Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-NLP" name="party" type="checkbox" value="NLP">
+            <label class="dropdown__value" for="party-checkbox-NLP">Natural Law Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-PAF" name="party" type="checkbox" value="PAF">
+            <label class="dropdown__value" for="party-checkbox-PAF">Peace and Freedom</label>
+          </li>
+          <li>
+            <input id="party-checkbox-PFD" name="party" type="checkbox" value="PFD">
+            <label class="dropdown__value" for="party-checkbox-PFD">Peace Freedom Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-POP" name="party" type="checkbox" value="POP">
+            <label class="dropdown__value" for="party-checkbox-POP">People Over Politics</label>
+          </li>
+          <li>
+            <input id="party-checkbox-PPD" name="party" type="checkbox" value="PPD">
+            <label class="dropdown__value" for="party-checkbox-PPD">Protest, Progress, Dignity</label>
+          </li>
+          <li>
+            <input id="party-checkbox-PPY" name="party" type="checkbox" value="PPY">
+            <label class="dropdown__value" for="party-checkbox-PPY">People's Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-REF" name="party" type="checkbox" value="REF">
+            <label class="dropdown__value" for="party-checkbox-REF">Reform Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-RTL" name="party" type="checkbox" value="RTL">
+            <label class="dropdown__value" for="party-checkbox-RTL">Right to Life</label>
+          </li>
+          <li>
+            <input id="party-checkbox-SLP" name="party" type="checkbox" value="SLP">
+            <label class="dropdown__value" for="party-checkbox-SLP">Socialist Labor Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-SUS" name="party" type="checkbox" value="SUS">
+            <label class="dropdown__value" for="party-checkbox-SUS">Socialist Party U.S.A.</label>
+          </li>
+          <li>
+            <input id="party-checkbox-SWP" name="party" type="checkbox" value="SWP">
+            <label class="dropdown__value" for="party-checkbox-SWP">Socialist Workers Party</label>
+          </li>
+          <li>
+            <input id="party-checkbox-THD" name="party" type="checkbox" value="THD">
+            <label class="dropdown__value" for="party-checkbox-THD">Theo-Dem</label>
+          </li>
+          <li>
+            <input id="party-checkbox-TWR" name="party" type="checkbox" value="TWR">
+            <label class="dropdown__value" for="party-checkbox-TWR">Taxpayers Without Representation</label>
+          </li>
+          <li>
+            <input id="party-checkbox-TX" name="party" type="checkbox" value="TX">
+            <label class="dropdown__value" for="party-checkbox-TX">Taxpayers</label>
+          </li>
+          <li>
+            <input id="party-checkbox-USP" name="party" type="checkbox" value="USP">
+            <label class="dropdown__value" for="party-checkbox-USP">U.S. People's Party</label>
+          </li>     
         </ul>
-        <div class="dropdown">
-            <button class="js-toggle js-dropdown button--dropdown" data-toggles="party-dropdown" >More</button>
-            <div id="party-dropdown" class="dropdown__panel" aria-hidden="true">
-                <div class="dropdown__search__container">
-                    <input type="search" class="dropdown__search">
-                </div>
-                <ul class="dropdown__list">
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-AIC"><input id="party-checkbox-AIC" name="party" type="checkbox" value="AIC">American Independent Conservative</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-AIP"><input id="party-checkbox-AIP" name="party" type="checkbox" value="AIP">American Independent Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-AMP"><input id="party-checkbox-AMP" name="party" type="checkbox" value="AMP">American Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-APF"><input id="party-checkbox-APF" name="party" type="checkbox" value="APF">American People's Freedom Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-CIT"><input id="party-checkbox-CIT" name="party" type="checkbox" value="CIT">Citizens' Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-CMP"><input id="party-checkbox-CMP" name="party" type="checkbox" value="CMP">Commonwealth Party of the U.S.</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-COM"><input id="party-checkbox-COM" name="party" type="checkbox" value="COM">Communist Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-CRV"><input id="party-checkbox-CRV" name="party" type="checkbox" value="CRV">Conservative Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-CST"><input id="party-checkbox-CST" name="party" type="checkbox" value="CST">Constitutional</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-D/C"><input id="party-checkbox-D/C" name="party" type="checkbox" value="D/C">Democratic/Conservative</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-DFL"><input id="party-checkbox-DFL" name="party" type="checkbox" value="DFL">Democratic-Farm-Labor</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-FLP"><input id="party-checkbox-FLP" name="party" type="checkbox" value="FLP">Freedom Labor Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-GRE"><input id="party-checkbox-GRE" name="party" type="checkbox" value="GRE">Green Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-GWP"><input id="party-checkbox-GWP" name="party" type="checkbox" value="GWP">George Wallace Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-HRP"><input id="party-checkbox-HRP" name="party" type="checkbox" value="HRP">Human Rights Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-IAP"><input id="party-checkbox-IAP" name="party" type="checkbox" value="IAP">Independent American Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-ICD"><input id="party-checkbox-ICD" name="party" type="checkbox" value="ICD">Independent Conserv. Democratic</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-IGD"><input id="party-checkbox-IGD" name="party" type="checkbox" value="IGD">Industrial Government Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-IND"><input id="party-checkbox-IND" name="party" type="checkbox" value="IND">Independent</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-LAB"><input id="party-checkbox-LAB" name="party" type="checkbox" value="LAB">U.S. Labor Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-LBL"><input id="party-checkbox-LBL" name="party" type="checkbox" value="LBL">Liberal Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-LBR"><input id="party-checkbox-LBR" name="party" type="checkbox" value="LBR">Labor Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-LBU"><input id="party-checkbox-LBU" name="party" type="checkbox" value="LBU">Liberty Union Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-LFT"><input id="party-checkbox-LFT" name="party" type="checkbox" value="LFT">Less Federal Taxes</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-LIB"><input id="party-checkbox-LIB" name="party" type="checkbox" value="LIB">Libertarian</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-LRU"><input id="party-checkbox-LRU" name="party" type="checkbox" value="LRU">La Raza Unida</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-NAP"><input id="party-checkbox-NAP" name="party" type="checkbox" value="NAP">Prohibition Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-NDP"><input id="party-checkbox-NDP" name="party" type="checkbox" value="NDP">National Democratic Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-NLP"><input id="party-checkbox-NLP" name="party" type="checkbox" value="NLP">Natural Law Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-PAF"><input id="party-checkbox-PAF" name="party" type="checkbox" value="PAF">Peace and Freedom</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-PFD"><input id="party-checkbox-PFD" name="party" type="checkbox" value="PFD">Peace Freedom Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-POP"><input id="party-checkbox-POP" name="party" type="checkbox" value="POP">People Over Politics</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-PPD"><input id="party-checkbox-PPD" name="party" type="checkbox" value="PPD">Protest, Progress, Dignity</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-PPY"><input id="party-checkbox-PPY" name="party" type="checkbox" value="PPY">People's Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-REF"><input id="party-checkbox-REF" name="party" type="checkbox" value="REF">Reform Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-RTL"><input id="party-checkbox-RTL" name="party" type="checkbox" value="RTL">Right to Life</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-SLP"><input id="party-checkbox-SLP" name="party" type="checkbox" value="SLP">Socialist Labor Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-SUS"><input id="party-checkbox-SUS" name="party" type="checkbox" value="SUS">Socialist Party U.S.A.</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-SWP"><input id="party-checkbox-SWP" name="party" type="checkbox" value="SWP">Socialist Workers Party</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-THD"><input id="party-checkbox-THD" name="party" type="checkbox" value="THD">Theo-Dem</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-TWR"><input id="party-checkbox-TWR" name="party" type="checkbox" value="TWR">Taxpayers Without Representation</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-TX"><input id="party-checkbox-TX" name="party" type="checkbox" value="TX">Taxpayers</label>
-                    </li>
-                    <li>
-                        <label class="dropdown__value" for="party-checkbox-USP"><input id="party-checkbox-USP" name="party" type="checkbox" value="USP">U.S. People's Party</label>
-                    </li>       
-                </ul>
-            </div>
-        </div>
-    </fieldset>
+      </div>
+    </div>
+  </fieldset>
 </div>
