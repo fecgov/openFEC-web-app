@@ -2,26 +2,9 @@
 <section class="main" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
   <div class="container">
     <div class="page-section__intro">
-      <h2 class="section-heading" id="section-3-heading">Top Recipients {% include 'partials/cycle-select.html' %}  </h2>
-        <fieldset class="toggles section__intro__left">
-          <legend class="label">Compare by:</legend>
-          <label for="toggle-purpose">
-            <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />
-            <span class="button--primary">Purpose</span>
-          </label>
-          <label for="toggle-recipient">
-            <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />
-            <span class="button--primary">Recipient Name</span>
-          </label>
-          <label for="toggle-id">
-            <input id="toggle-id" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient-id" />
-            <span class="button--primary">Recipient Committee</span>
-          </label>
-        </fieldset>
-        <div class="section__intro__right">
-          <span class="label">View the raw data:</span>
+      <h2 class="section-heading" id="section-3-heading">Money Spent by this Committee {% include 'partials/cycle-select.html' %}  </h2>
+        <div class="section__intro__right card card--primary">
           <a
-              class="button"
               href="{{ url_for(
                 'disbursements',
                 committee_id=committee_id,
@@ -32,7 +15,22 @@
         </div>
     </div>
     <div class="row">
-      <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
+      <fieldset class="toggles section__intro__left">
+        <legend class="label">Compare by:</legend>
+        <label for="toggle-purpose">
+          <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />
+          <span class="button--primary">Purpose</span>
+        </label>
+        <label for="toggle-recipient">
+          <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />
+          <span class="button--primary">Recipient Name</span>
+        </label>
+        <label for="toggle-id">
+          <input id="toggle-id" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient-id" />
+          <span class="button--primary">Recipient Committee</span>
+        </label>
+      </fieldset>
+      <div id="by-purpose" class="panel-toggle-element box" aria-hidden="false">
         <h4>Disbursements by Purpose</h4>
         <table
             class="data-table"
@@ -48,7 +46,7 @@
         {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
-      <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
+      <div id="by-recipient" class="panel-toggle-element box" aria-hidden="false">
         <h4>Disbursements by Recipient Name</h4>
         <table
             class="data-table"
@@ -64,7 +62,7 @@
         {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
-      <div id="by-recipient-id" class="panel-toggle-element" aria-hidden="false">
+      <div id="by-recipient-id" class="panel-toggle-element box" aria-hidden="false">
         <h4>Disbursements by Recipient Committee (if applicable)</h4>
         <table
             class="data-table"

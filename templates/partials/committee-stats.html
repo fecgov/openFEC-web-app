@@ -1,8 +1,5 @@
-<div class="figure-group committee-summary js-reveal-container">
+<div class="box figure-group committee-summary js-reveal-container">
   <div class="figure-group__bar">
-    <img class="category-icon"
-         width="20" height="20"
-         src="/static/img/icon-committee--white.svg" alt="Icon representing committees">
     <a class="figure-group__description term" data-term="{{ committee.designation_full }}">{{ committee.designation_full }}</a>
   </div>
   <div class="figure-group__main">
@@ -16,10 +13,10 @@
       <div class="row">
         {% include 'partials/committee-summary.html' %}
       </div>
-      <div class="js-reveal-content u-hidden" aria-hidden="true">
+      <div class="js-reveal-content" aria-hidden="true">
         {% include 'partials/committee-charts.html' %}
       </div><!-- .hidden-container -->
     </div>
   </div>
-  <button class="js-reveal-button">View charts</button>
+  <button class="js-reveal-button button--neutral">View charts</button>
 </div> <!-- .figure-group -->
