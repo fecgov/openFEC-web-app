@@ -1,6 +1,8 @@
-<section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
+<section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
   <div class="container">
-    <h2 id="section-1-heading">Candidate Comparison {% include 'partials/cycle-select.html' %}</h2>
+    <div class="page-section__intro">
+      <h2 class="section-heading" id="section-1-heading">Candidate Comparison {% include 'partials/cycle-select.html' %}</h2>
+    </div>
     <div class="page-subsection">
       <h4>Active Candidates</h4>
       <p>Totals reflect the sum total reported by all of a candidate's authorized committees.</p>
@@ -21,21 +23,21 @@
         <h3>Fundraising Comparison</h3>
         <p>Compare the source and nature of candidate receipts.</p>
         <div id="comparison" class="meta-box filters--horizontal"></div>
-        <div class="toggles">
-          <span class="label">Compare by:</span>
+        <fieldset class="toggles">
+          <legend class="label">Compare by:</legend>
           <label for="toggle-size">
             <input id="toggle-size" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-size" checked>
-            <span class="toggle-button">Contribution Size</span>
+            <span class="button--primary">Contribution Size</span>
           </label>
           <label for="toggle-state">
             <input id="toggle-state" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-state">
-            <span class="toggle-button">Contribution Location</span>
+            <span class="button--primary">Contribution Location</span>
           </label>
           <label for="toggle-contributor-type">
             <input id="toggle-contributor-type" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-contributor-type">
-            <span class="toggle-button">Contributor Type</span>
+            <span class="button--primary">Contributor Type</span>
           </label>
-        </div>
+        </fieldset>
       </div>
 
       <div class="row">
@@ -58,16 +60,17 @@
         <div id="by-state" class="panel-toggle-element" aria-hidden="true">
           <div class="figure__title">
             <h4>Receipts by state</h4>
-            <div class="toggles toggles--small">
+            <fieldset class="toggles toggles--small">
+              <legend class="label">Toggle view:</legend>
               <label for="toggle-table">
                 <input id="toggle-table" type="radio" class="panel-toggle-control" name="state-view" value="state-table" checked>
-                <span class="toggle-button">Table</span>
+                <span class="button--neutral button--small">Table</span>
               </label>
               <label for="toggle-map">
                 <input id="toggle-map" type="radio" class="panel-toggle-control" name="state-view" value="state-maps">
-                <span class="toggle-button">Map</span>
+                <span class="button--neutral button--small">Map</span>
               </label>
-            </div>
+            </fieldset>
           </div>
           <div id="state-table">
             <table class="data-table panel-toggle-element" data-type="by-state" aria-hidden="false">
@@ -75,7 +78,7 @@
             </table>
           </div>
           <div id="state-maps" class="panel-toggle-element" aria-hidden="true'">
-            <button class="add-map">Add</button>
+            <button class="add-map button--primary">Compare Candidates</button>
             <div class="legend"><svg></svg></div>
             <div class="choropleths row"></div>
           </div>
