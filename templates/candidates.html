@@ -7,10 +7,10 @@
 {% block body %}
 
 <header class="page-header slab slab--primary">
-  <h1>Candidates</h1>
+  <h1 class="page-header__title">Candidates</h1>
 </header>
 
-<section class="main__content">
+<section class="main__content--full">
   {% include 'partials/candidates-filter.html' %}
   <div id="candidates" class="datatable__container">
     {% include 'partials/candidates-table.html' %}

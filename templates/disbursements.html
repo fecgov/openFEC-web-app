@@ -7,10 +7,10 @@
 {% block body %}
 
 <header class="page-header slab slab--primary">
-  <h1>Disbursements</h1>
+  <h1 class="page-header__title">Disbursements</h1>
 </header>
 
-<section class="main__content">
+<section class="main__content--full">
   {% include 'partials/disbursements-filter.html' %}
   <div id="committees" class="datatable__container">
     {% include 'partials/disbursements-table.html' %}
