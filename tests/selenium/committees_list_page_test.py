@@ -15,7 +15,7 @@ class CommitteesPageTests(SearchPageTestCase):
     def testCommitteesFilterSideBar(self):
         self.driver.get(self.url)
         filters = self.driver.find_element_by_id('filters')
-        self.assertIn('side-panel--open', filters.get_attribute('class'))
+        self.assertIn('is-open', filters.get_attribute('class'))
 
     @unittest.skip('Will fail unless we ensure that subset data includes "pork"')
     def testCommitteeNameFilter(self):

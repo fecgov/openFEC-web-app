@@ -61,25 +61,3 @@ class SearchResultsPageTests(SearchPageTestCase):
             committee_url_re.search(elm.get_attribute('href'))
             for elm in elms
         ]))
-
-    def test_typeahead_from_candidates_page(self):
-        self.url.path.add('candidates')
-        self.driver.get(self.url.url)
-        select = self.driver.find_element_by_css_selector('input[value="candidates"]')
-        self.assertEqual(select.get_attribute('checked'), 'true')
-        self.driver.find_element_by_css_selector(
-            '.header-search .search-input'
-        ).send_keys(self.candidate)
-        results = self.driver.find_elements_by_css_selector('.tt-suggestion')
-        self.assertGreater(len(results), 0)
-
-    def test_typeahead_from_committees_page(self):
-        self.url.path.add('committees')
-        self.driver.get(self.url.url)
-        select = self.driver.find_element_by_css_selector('input[value="committees"]')
-        self.assertEqual(select.get_attribute('checked'), 'true')
-        self.driver.find_element_by_css_selector(
-            '.header-search .search-input'
-        ).send_keys(self.committee)
-        results = self.driver.find_elements_by_css_selector('.tt-suggestion')
-        self.assertGreater(len(results), 0)

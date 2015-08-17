@@ -20,8 +20,8 @@ class LandingPageTests(BaseTest):
     def testMainSearch(self):
         self.driver.get(self.url)
         main = self.getMain()
-        main.find_element_by_class_name('search-input').send_keys('obama')
-        main.find_element_by_class_name('search-submit').click()
+        main.find_element_by_class_name('js-search-input').send_keys('obama')
+        main.find_element_by_class_name('button--primary').click()
         self.elementExistsByClassName('tst-search_results')
 
     def testGlossaryToggle(self):
