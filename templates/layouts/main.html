@@ -7,8 +7,13 @@
 
     {% include 'partials/meta-tags.html' %}
 
-    <!-- <link rel="stylesheet" href="/{{ assets['dist/styles/styles.css'] }}" /> -->
-    <link rel="stylesheet" href="http://localhost:8080/css/styles.css" />
+    <link rel="stylesheet" href="/{{ assets['dist/styles/styles.css'] }}" />
+
+    {% if style_url %}
+    <link rel="stylesheet" href="{{ style_url }}" />
+    {% else %}
+    <link rel="stylesheet" href="/{{ assets['dist/styles/fec.css'] }}" />
+    {% endif %}
     {% if api_location %}
     <script>
         API_LOCATION = "{{api_location}}";
