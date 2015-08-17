@@ -14,7 +14,7 @@ class CandidatesPageTests(SearchPageTestCase):
     def testCandidatesPageLoads(self):
         self.driver.get(self.url)
         self.assertEqual(
-            self.driver.find_element_by_tag_name('h1').text,
+            self.driver.find_element_by_class_name('tst-page-title').text,
             'Candidates')
 
     def testCandidatesFilterSideBar(self):
