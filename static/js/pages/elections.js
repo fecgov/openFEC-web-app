@@ -10,6 +10,7 @@ var chroma = require('chroma-js');
 
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
+var helpers = require('../modules/helpers');
 
 var comparisonTemplate = require('../../templates/comparison.hbs');
 var candidateStateMapTemplate = require('../../templates/candidateStateMap.hbs');
@@ -21,7 +22,7 @@ var supportOpposeMap = {
   O: 'Oppose',
 };
 var independentExpenditureColumns = [
-  tables.currencyColumn({data: 'expenditure_amount', className: 'min-tablet'}),
+  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
   {
     data: 'committee',
     orderable: false,
@@ -37,11 +38,11 @@ var independentExpenditureColumns = [
     }
   },
   {
-    data: 'candidate_name',
+    data: 'candidate',
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
+      return tables.buildEntityLink(data.name, '/candidate/' + data.candidate_id, 'candidate');
     }
   },
 ];
@@ -394,8 +395,8 @@ function initStateMaps(results) {
 
 function initSpendingTables() {
   var $table = $('table[data-type="independent-expenditures"]');
-  var path = ['schedules', 'schedule_e'].join('/');
-  tables.initTableDeferred($table, null, path, context.election, independentExpenditureColumns, tables.seekCallbacks, {
+  var path = ['schedules', 'schedule_e', 'by_candidate'].join('/');
+  tables.initTableDeferred($table, null, path, helpers.filterNull(context.election), independentExpenditureColumns, tables.offsetCallbacks, {
     // dom: singlePageTableDOM,
     order: [[0, 'desc']],
     pagingType: 'simple',
