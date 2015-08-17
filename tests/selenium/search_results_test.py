@@ -45,7 +45,7 @@ class SearchResultsPageTests(SearchPageTestCase):
     def test_search_results_page_link_candidates(self):
         self.url.args.update({'search': self.candidate, 'search_type': 'candidates'})
         self.driver.get(self.url.url)
-        elms = self.driver.find_elements_by_css_selector('.tst-search_results h3 a')
+        elms = self.driver.find_elements_by_css_selector('.tst-search_results .tst-result-link')
         self.assertTrue(elms)
         self.assertTrue(all([
             candidate_url_re.search(elm.get_attribute('href'))
@@ -55,7 +55,7 @@ class SearchResultsPageTests(SearchPageTestCase):
     def test_search_results_page_link_committees(self):
         self.url.args.update({'search': self.committee, 'search_type': 'committees'})
         self.driver.get(self.url.url)
-        elms = self.driver.find_elements_by_css_selector('.tst-search_results h5 a')
+        elms = self.driver.find_elements_by_css_selector('.tst-search_results .tst-result-link')
         self.assertTrue(elms)
         self.assertTrue(all([
             committee_url_re.search(elm.get_attribute('href'))
@@ -68,7 +68,7 @@ class SearchResultsPageTests(SearchPageTestCase):
         select = self.driver.find_element_by_css_selector('input[value="candidates"]')
         self.assertEqual(select.get_attribute('checked'), 'true')
         self.driver.find_element_by_css_selector(
-            '.header-search .search-input'
+            '.tst-search-input'
         ).send_keys(self.candidate)
         results = self.driver.find_elements_by_css_selector('.tt-suggestion')
         self.assertGreater(len(results), 0)
@@ -79,7 +79,7 @@ class SearchResultsPageTests(SearchPageTestCase):
         select = self.driver.find_element_by_css_selector('input[value="committees"]')
         self.assertEqual(select.get_attribute('checked'), 'true')
         self.driver.find_element_by_css_selector(
-            '.header-search .search-input'
+            '.tst-search-input'
         ).send_keys(self.committee)
         results = self.driver.find_elements_by_css_selector('.tt-suggestion')
         self.assertGreater(len(results), 0)

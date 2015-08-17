@@ -113,7 +113,7 @@ class SearchPageTestCase(BaseTest):
     def click_filter(self, name, value, expand=True):
         div = self.driver.find_element_by_xpath(''.join([
             '//*[@name="' + name + '"]',
-            '/ancestor::div[@class="field"]',
+            '/ancestor::div[@class="tst-filter"]',
         ]))
         checkbox = div.find_element_by_css_selector(
             'input[type="checkbox"][value="' + value + '"]'
