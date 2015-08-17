@@ -48,8 +48,6 @@ gulp.task('build-sass', ['copy-vendor-images', 'copy-fonts', 'copy-images'], fun
     .pipe(sass({
       includePaths: Array.prototype.concat(
         './static/styles',
-        require('node-bourbon').includePaths,
-        require('node-neat').includePaths,
         'node_modules'
       )
     }).on('error', sass.logError))

@@ -61,8 +61,6 @@
     "keyboardjs": "0.4.2",
     "list.js": "git://github.com/jmcarp/list.js.git",
     "moment": "2.10.3",
-    "node-bourbon": "4.2.2",
-    "node-neat": "1.7.1-beta1",
     "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
     "perfect-scrollbar": "0.6.2",
     "querystring": "0.2.0",
