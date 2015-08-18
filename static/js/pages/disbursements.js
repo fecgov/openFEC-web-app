@@ -13,7 +13,7 @@ var columns = [
     data: 'recipient_name',
     orderable: false,
     className: 'all',
-    width: '30%',
+    width: '300px',
     render: function(data, type, row, meta) {
       var committee = row.recipient_committee;
       if (committee) {
@@ -45,7 +45,7 @@ var columns = [
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon ti-angle-right"></i>';
+      return '<i class="icon arrow--right"></i>';
     }
   }
 ];

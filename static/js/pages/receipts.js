@@ -13,7 +13,7 @@ var columns = [
     data: 'contributor',
     orderable: false,
     className: 'all',
-    width: '20%',
+    width: '300px',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
@@ -45,7 +45,7 @@ var columns = [
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon ti-angle-right"></i>';
+      return '<i class="icon arrow--right"></i>';
     }
   }
 ];
