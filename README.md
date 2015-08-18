@@ -55,9 +55,12 @@ Then start the server:
     $ python __init__.py
 
 To run the server in debug mode set:
-```
-$ export FEC_WEB_DEBUG=true
-```
+
+    $ export FEC_WEB_DEBUG=true
+
+To use styles served from a custom location (e.g., if developing against a local `fec-style`):
+
+    $ export FEC_WEB_STYLE_URL=http://localhost:8080/css/styles.css
 
 If you'd like the app to cache API requests it makes, use the `--cached` flag:
 
