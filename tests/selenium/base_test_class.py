@@ -77,6 +77,9 @@ class BaseTest(unittest.TestCase):
     def getMain(self):
         return self.driver.find_element_by_tag_name('main')
 
+    def getGlossary(self):
+        return self.driver.find_element_by_id('glossary')
+        
     def elementExistsByClassName(self, name):
         try:
             self.driver.find_element_by_class_name(name)

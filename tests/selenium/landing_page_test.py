@@ -8,9 +8,6 @@ class LandingPageTests(BaseTest):
     def setUp(self):
         self.url = self.base_url
 
-    def getGlossary(self):
-        return self.driver.find_element_by_id('glossary')
-
     def testLandingPageLoads(self):
         self.driver.get(self.url)
         self.assertEqual(
@@ -28,11 +25,11 @@ class LandingPageTests(BaseTest):
         self.driver.get(self.url)
         self.driver.find_element_by_id('glossary-toggle').click()
         glossary = self.getGlossary()
-        self.assertIn('side-panel--open', glossary.get_attribute('class'))
+        self.assertIn('is-open', glossary.get_attribute('class'))
         hide = glossary.find_element_by_id('hide-glossary')
         WebDriverWait(self.driver, 1).until(lambda driver: hide.is_displayed())
         hide.click()
-        self.assertNotIn('side-panel--open', glossary.get_attribute('class'))
+        self.assertNotIn('is-open', glossary.get_attribute('class'))
 
     def testGlossarySearch(self):
         self.driver.get(self.url)
@@ -47,22 +44,4 @@ class LandingPageTests(BaseTest):
         self.assertIn(
             'Can',
             glossary.find_element_by_class_name('glossary-definition').text,
-        )
-
-    def testGlossaryLoadFromTerm(self):
-        self.driver.get(self.url)
-        term = self.driver.find_element_by_class_name('term')
-        term.click()
-        glossary = self.getGlossary()
-        # Glossary is open
-        self.assertIn('side-panel--open', glossary.get_attribute('class'))
-        highlighted = self.driver.find_elements_by_css_selector('.glossary-term')
-        # Exactly one glossary term is highlighted
-        self.assertEqual(len(highlighted), 1)
-        # Expected term is highlighted
-        WebDriverWait(self.driver, 1).until(lambda driver: highlighted[0].text)
-        self.assertEqual(term.text.lower(), highlighted[0].text.lower())
-        # Definition is expanded
-        self.assertTrue(
-            self.driver.find_element_by_css_selector('.glossary-definition').text
         )
