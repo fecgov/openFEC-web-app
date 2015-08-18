@@ -214,13 +214,18 @@ function modalAfterRender(template, api, data, response) {
     var $row = $(ev.target).closest('tr');
     var index = api.row($row).index();
     $modal.find('.js-panel-content').html(template(response.results[index]));
-    $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
     $modal.attr('aria-hidden', 'false');
     $row.siblings().toggleClass('row-active', false);
     $row.toggleClass('row-active', true);
     $('body').toggleClass('panel-active', true);
     var hideColumns = api.columns('.hide-panel');
     hideColumns.visible(false);
+    // Populate the pdf button if there is one 
+    if ( response.results[index].pdf_url ) {
+      $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
+    } else {
+      $modal.find('.js-pdf_url').remove();
+    }
     // When under $large-screen
     // TODO figure way to share these values with CSS.
     if ($(document).width() < 980) {
