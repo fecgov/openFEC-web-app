@@ -40,14 +40,14 @@ gulp.task('copy-images', function() {
 });
 
 gulp.task('build-sass', ['copy-vendor-images', 'copy-fonts', 'copy-images'], function() {
-  return gulp.src('./static/styles/styles.scss')
-    .pipe(rename('dist/styles/styles.css'))
+  return gulp.src('./static/styles/*.scss')
+    .pipe(rename(function(path) {
+      path.dirname = './dist/styles';
+    }))
     .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths: Array.prototype.concat(
         './static/styles',
-        require('node-bourbon').includePaths,
-        require('node-neat').includePaths,
         'node_modules'
       )
     }).on('error', sass.logError))
