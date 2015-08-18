@@ -31,12 +31,12 @@ gulp.task('copy-vendor-images', function() {
 
 gulp.task('copy-fonts', function() {
   return gulp.src('./static/fonts/**/*')
-  .pipe(gulp.dest('./dist/fonts'));
+    .pipe(gulp.dest('./dist/fonts'));
 });
 
 gulp.task('copy-images', function() {
-  return gulp.src('./static/img/**/*')
-  .pipe(gulp.dest('./dist/img'));
+  return gulp.src(['./static/img/**/*', './node_modules/fec-style/img/**/*'])
+    .pipe(gulp.dest('./dist/img'));
 });
 
 gulp.task('build-sass', ['copy-vendor-images', 'copy-fonts', 'copy-images'], function() {
