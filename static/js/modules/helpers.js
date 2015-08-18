@@ -2,6 +2,7 @@
 
 /* global require, module, Intl */
 
+var _ = require('underscore');
 var moment = require('moment');
 var Handlebars = require('hbsfy/runtime');
 
@@ -31,8 +32,19 @@ function cycleDates(year) {
   };
 }
 
+function filterNull(params) {
+  return _.chain(params)
+    .pairs()
+    .filter(function(pair) {
+      return pair[1] !== '';
+    })
+    .object()
+    .value();
+}
+
 module.exports = {
   currency: currency,
   datetime: datetime,
   cycleDates: cycleDates,
+  filterNull: filterNull
 };
