@@ -7,6 +7,8 @@ var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
 
+var helpers = require('./helpers');
+
 var districtTemplate = require('../../templates/districts.hbs');
 var resultTemplate = require('../../templates/electionResult.hbs');
 
@@ -20,16 +22,6 @@ function serializeObject($form) {
   return _.chain($form.serializeArray())
     .map(function(obj) {
       return [obj.name, obj.value];
-    })
-    .object()
-    .value();
-}
-
-function filterNull(params) {
-  return _.chain(params)
-    .pairs()
-    .filter(function(pair) {
-      return pair[1] !== '';
     })
     .object()
     .value();
@@ -109,7 +101,7 @@ ElectionLookup.prototype.getUrl = function(query) {
 
 ElectionLookup.prototype.serialize = function() {
   var params = serializeObject(this.$form);
-  return _.extend(filterNull(params));
+  return _.extend(helpers.filterNull(params));
 };
 
 ElectionLookup.prototype.handleZipChange = function() {

@@ -24,6 +24,7 @@
       </div>
     </div>
   </header>
+  
   <div class="page-controls page-controls--primary">
     <div class="page-controls__top">
       <div class="container">
@@ -33,7 +34,7 @@
     <div class="page-controls__bottom">
       <div class="container">
         <nav class="page-tabs">
-          <ul class="list--flat" role="tablist" name="tab">
+          <ul class="list--flat" role="tablist">
             <li role="presentation" class="page-tabs__item"><a role="tab" name="comparison" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Candidate Comparison</a></li>
             <li role="presentation" class="page-tabs__item"><a role="tab" name="spending" tabindex="-1" aria-controls="panel2" href="#section-2">Outside Spending</a></li>
           </ul>
@@ -41,6 +42,7 @@
       </div>
     </div>
   </div>
+
   {% include 'partials/elections/candidate-comparison-tab.html' %}
   {% include 'partials/elections/outside-spending-tab.html' %}
 </div>
