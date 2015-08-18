@@ -21,30 +21,25 @@ var supportOpposeMap = {
   S: 'Support',
   O: 'Oppose',
 };
+var supportOpposeColumn = {
+  data: 'support_oppose_indicator',
+  orderable: false,
+  render: function(data, type, row, meta) {
+    return supportOpposeMap[data] || 'Unknown';
+  }
+};
 var independentExpenditureColumns = [
   tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  {
-    data: 'committee',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
-    }
-  },
-  {
-    data: 'support_oppose_indicator',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return supportOpposeMap[data] || 'Unknown';
-    }
-  },
-  {
-    data: 'candidate',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data.name, '/candidate/' + data.candidate_id, 'candidate');
-    }
-  },
+  tables.committeeColumn({data: 'committee', orderable: false}),
+  supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', orderable: false}),
+];
+
+var communicationCostColumns = [
+  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
+  tables.committeeColumn({data: 'committee', orderable: false}),
+  supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', orderable: false})
 ];
 
 var columns = [
@@ -394,15 +389,31 @@ function initStateMaps(results) {
 }
 
 function initSpendingTables() {
-  var $table = $('table[data-type="independent-expenditures"]');
-  var path = ['schedules', 'schedule_e', 'by_candidate'].join('/');
-  tables.initTableDeferred($table, null, path, helpers.filterNull(context.election), independentExpenditureColumns, tables.offsetCallbacks, {
-    // dom: singlePageTableDOM,
-    order: [[0, 'desc']],
-    pagingType: 'simple',
-    lengthChange: false,
-    pageLength: 10,
-    useHideNull: false
+  $('.data-table').each(function(index, table) {
+    var $table = $(table);
+    var path;
+    switch ($table.attr('data-type')) {
+      case 'independent-expenditures':
+        path = ['schedules', 'schedule_e', 'by_candidate'].join('/');
+        tables.initTableDeferred($table, null, path, helpers.filterNull(context.election), independentExpenditureColumns, tables.offsetCallbacks, {
+          order: [[0, 'desc']],
+          pagingType: 'simple',
+          lengthChange: false,
+          pageLength: 10,
+          useHideNull: false
+        });
+        break;
+      case 'communication-costs':
+        path = ['communication_costs', 'by_candidate'].join('/');
+        tables.initTableDeferred($table, null, path, helpers.filterNull(context.election), communicationCostColumns, tables.offsetCallbacks, {
+          order: [[0, 'desc']],
+          pagingType: 'simple',
+          lengthChange: false,
+          pageLength: 10,
+          useHideNull: false
+        });
+        break;
+    }
   });
 }
 
