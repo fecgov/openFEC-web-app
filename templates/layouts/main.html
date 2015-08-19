@@ -49,33 +49,15 @@
       <span class="disclaimer__right">This site is in beta. <a title="Learn about this site's development" tabindex="0" href="https://18f.gsa.gov/dashboard/stages/#beta">Learn more.</a></span>
     </div>
     <div class="masthead">
-      <span class="site-title">Federal Election Commission</span>
+      <a class="site-title" href="{{cms_url}}">Federal Election Commission</a>
       <ul class="utility-nav list--flat">
         <li class="utility-nav__item">About</li>
         <li class="utility-nav__item">Contact</li>
       </ul>
     </div>
-    <nav class="site-nav">
-      <button class="site-nav__button site-nav__button--left">Glossary</button>
-      <ul class="site-nav__list">
-        <li class="site-nav__item">
-          <a href="/" class="site-nav__link is-current">Campaign Finance Data</a>
-        </li>
-        <li class="site-nav__item">
-          <a href="#" class="site-nav__link is-disabled">Reporting &amp; Registration</a>
-        </li>
-        <li class="site-nav__item">
-          <a href="#" class="site-nav__link is-disabled">Calendar</a>
-        </li>
-        <li class="site-nav__item">
-          <a href="#" class="site-nav__link is-disabled">TBD</a>
-        </li>
-        <li class="site-nav__item">
-          <a href="#" class="site-nav__link is-disabled">TBD</a>
-        </li>                
-      </ul>
-      <button id="glossary-toggle" title="View site glossary" class="site-nav__button site-nav__button--right">Glossary</button>
-    </nav>    
+    
+    {% include 'partials/navigation.html' %}
+    
   </header>
 
   {% block header %}{% endblock %}
