@@ -17,14 +17,16 @@ var open = false;
 var openFilterPanel = function() {
   $('body').addClass('is-showing-filters');
   $('.filters').addClass('is-open');
-  $('#filter-toggle').addClass('is-active');
+  $('#filter-toggle').addClass('is-active')
+    .find('.filters__toggle__text').html('Hide filters');
   open = true;
 };
 
 var closeFilterPanel = function() {
   $('body').removeClass('is-showing-filters');
   $('.filters.is-open').removeClass('is-open');
-  $('#filter-toggle').removeClass('is-active');
+  $('#filter-toggle').removeClass('is-active')
+    .find('.filters__toggle__text').html('Show filters');
   open = false;
 };
 

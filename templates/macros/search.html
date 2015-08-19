@@ -3,22 +3,22 @@
   {% set size = 'combo--search--large' %}
 {% endif %}
 <form id="{{ location }}-search" action="/" autocomplete="off" class="search__container js-search">
-    <!-- <div class="search__radio toggles">
-     <label for="{{ location }}-radio--candidates">
+<!--   <div class="search__radio toggles">
+    <label class="search__radio__item" for="{{ location }}-radio--candidates">
       <input id="{{ location }}-radio--candidates" class="js-search-type" type="radio" name="search_type"
       {% if result_type != 'committees' %}
         checked
       {% endif %} 
-      value="candidates"><span class="button--primary">Candidates</span>
+      value="candidates"><span class="button--primary search__radio__button">Candidates</span>
     </label>
-    <label for="{{ location }}-radio--committees">
+    <label class="search__radio__item" for="{{ location }}-radio--committees">
       <input id="{{ location }}-radio--committees" class="js-search-type" type="radio" name="search_type"
       {% if result_type == 'committees' %}
         checked
       {% endif %}
-      value="committees"><span class="button--primary">Committees</span>
+      value="committees"><span class="button--primary search__radio__button">Committees</span>
     </label> 
-    </div>  -->
+  </div>  -->
   <div class="combo combo--search {{ size }}">
     <select class="search__select js-search-type" name="search_type">
       <option value="candidates"
