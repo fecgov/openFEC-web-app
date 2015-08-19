@@ -42,6 +42,12 @@ var communicationCostColumns = [
   tables.candidateColumn({data: 'candidate', orderable: false})
 ];
 
+var electioneeringColumns = [
+  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
+  tables.committeeColumn({data: 'committee', orderable: false}),
+  tables.candidateColumn({data: 'candidate', orderable: false})
+];
+
 var columns = [
   {
     data: 'candidate_name',
@@ -388,31 +394,34 @@ function initStateMaps(results) {
   appendStateMap($choropleths, results, cached);
 }
 
+var tableOpts = {
+  'independent-expenditures': {
+    path: ['schedules', 'schedule_e', 'by_candidate'].join('/'),
+    columns: independentExpenditureColumns
+  },
+  'communication-costs': {
+    path: ['communication_costs', 'by_candidate'].join('/'),
+    columns: communicationCostColumns
+  },
+  'electioneering': {
+    path: ['electioneering_costs', 'by_candidate'].join('/'),
+    columns: electioneeringColumns
+  },
+};
+
 function initSpendingTables() {
   $('.data-table').each(function(index, table) {
     var $table = $(table);
-    var path;
-    switch ($table.attr('data-type')) {
-      case 'independent-expenditures':
-        path = ['schedules', 'schedule_e', 'by_candidate'].join('/');
-        tables.initTableDeferred($table, null, path, helpers.filterNull(context.election), independentExpenditureColumns, tables.offsetCallbacks, {
-          order: [[0, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false
-        });
-        break;
-      case 'communication-costs':
-        path = ['communication_costs', 'by_candidate'].join('/');
-        tables.initTableDeferred($table, null, path, helpers.filterNull(context.election), communicationCostColumns, tables.offsetCallbacks, {
-          order: [[0, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false
-        });
-        break;
+    var dataType = $table.attr('data-type');
+    var opts = tableOpts[dataType];
+    if (opts) {
+      tables.initTableDeferred($table, null, opts.path, helpers.filterNull(context.election), opts.columns, tables.offsetCallbacks, {
+        order: [[0, 'desc']],
+        pagingType: 'simple',
+        lengthChange: false,
+        pageLength: 10,
+        useHideNull: false
+      });
     }
   });
 }
