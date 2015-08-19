@@ -18,13 +18,13 @@ var glossaryLink = $('.term'),
     findTerm,
     showGlossary,
     hideGlossary;
-    
+
 // Builds the List in the glossary slide panel
 populateList = function(terms) {
     var itemTemplate = '<li id="glossary-list-item" class="glossary__item">' +
                         '<div class="js-accordion_header accordion__header">' +
                         '<h4 class="glossary-term"></h4>' +
-                        '<button class="button--primary accordion__button js-accordion_button"></button>' +
+                        '<button class="button button--secondary accordion__button js-accordion_button"></button>' +
                         '</div>' +
                         '<p class="glossary-definition js-accordion_item"></p>' +
                         '</li>';
