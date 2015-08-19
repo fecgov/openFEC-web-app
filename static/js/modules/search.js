@@ -6,8 +6,9 @@ var events = require('./events.js');
 
 var defaultOpts = {
   placeHolderOptions: {
-    'candidates': 'Enter a candidate name',
-    'committees': 'Enter a committee name'}
+    'candidates': 'Search candidates',
+    'committees': 'Search committees'
+  }
 };
 
 function onSelectChange($input, updatedText) {

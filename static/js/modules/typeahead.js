@@ -94,9 +94,6 @@ module.exports = {
     // Setting up main search typehead
     $searchBar.typeahead(options, dataset);
 
-    // Update placeholder text
-    $searchBar.attr('placeholder', 'Enter a ' + dataset.name + ' name');
-
     // Open single entity pages when selected
     $searchBar.on('typeahead:selected', function(event, datum, datasetName) {
       window.location = window.location.origin + '/' + datasetName + '/' + datum.id;
@@ -131,7 +128,7 @@ module.exports = {
     candidateSuggestion = Handlebars.compile(
       '<span><span class="tt-suggestion__name">{{ name }}</span>' +
       '<span class="tt-suggestion__office">{{ office }}</span></span>');
-    committeeSuggestion = Handlebars.compile('<span>{{ name }}</span>');
+    committeeSuggestion = Handlebars.compile('<span class="tt-suggestion__name">{{ name }}</span>');
 
     options = {
       minLength: 3,

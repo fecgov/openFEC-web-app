@@ -3,8 +3,8 @@
   {% set size = 'combo--search--large' %}
 {% endif %}
 <form id="{{ location }}-search" action="/" autocomplete="off" class="search__container js-search">
-  <div class="search__radio toggles">
-    <label for="{{ location }}-radio--candidates">
+    <!-- <div class="search__radio toggles">
+     <label for="{{ location }}-radio--candidates">
       <input id="{{ location }}-radio--candidates" class="js-search-type" type="radio" name="search_type"
       {% if result_type != 'committees' %}
         checked
@@ -17,12 +17,24 @@
         checked
       {% endif %}
       value="committees"><span class="button--primary">Committees</span>
-    </label>
-  </div>
+    </label> 
+    </div>  -->
   <div class="combo combo--search {{ size }}">
+    <select class="search__select js-search-type" name="search_type">
+      <option value="candidates"
+        {% if result_type != 'committees' %}
+          selected
+        {% endif %} 
+      >Candidates</option>
+      <option value="committees"
+        {% if result_type == 'committees' %}
+          selected
+        {% endif %}
+      >Committees</option>
+    </select>
     <input class="js-search-input combo__input tst-search-input" type="text" name="search"
-    aria-label="Enter a candidate name"
-    placeholder="Enter a candidate name" autocomplete="off"
+    aria-label="Search {{ result_type }}"
+    placeholder="Search {{ result_type }}" autocomplete="off"
     autocorrect="off" autocapitalize="off" spellcheck="false"
     value="{{ query or '' }}">
     <button class="combo__button tst-search-submit button--primary">
