@@ -77,6 +77,9 @@ class BaseTest(unittest.TestCase):
     def getMain(self):
         return self.driver.find_element_by_tag_name('main')
 
+    def getGlossary(self):
+        return self.driver.find_element_by_id('glossary')
+        
     def elementExistsByClassName(self, name):
         try:
             self.driver.find_element_by_class_name(name)
@@ -141,7 +144,7 @@ class SearchPageTestCase(BaseTest):
         # Handle stale reference errors in Chrome
         get_values = lambda: [
             row.find_elements_by_tag_name('td')[index].text
-            for row in self.driver.find_elements_by_css_selector('tbody tr')
+            for row in self.driver.find_elements_by_css_selector('tbody tr[role="row"]')
         ]
         values = utils.try_until(get_values, errors=(StaleElementReferenceException, ))
         if callable(result):
