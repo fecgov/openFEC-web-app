@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block body %}
-<header class="page-header page-header--dark">
-  <h1>Filings</h1>
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title">Filings</h1>
 </header>
 
-<section class="results-content">
+<section class="main__content--full">
   {% include 'partials/filings-filter.html' %}
 
-  <div id="filings" class="results-container">
+  <div id="filings" class="datatable__container">
     {% include 'partials/filings-table.html' %}
   </div>
 </section>

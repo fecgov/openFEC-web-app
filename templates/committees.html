@@ -1,21 +1,22 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-    Browse Committees
+  Browse Committees
 {% endblock %}
 
 {% block body %}
 
-<header class="page-header page-header--dark">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Committees</h1>
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title tst-page-title">Committees</h1>
 </header>
 
-<section class="results-content">
+<section class="main__content--full">
   {% include 'partials/committee-filter.html' %}
-  <div id="committees" class="results-container">
+  <div id="committees" class="datatable__container">
     {% include 'partials/committees-table.html' %}
   </div>
 </section>
+{% include 'partials/datatable-modal.html' %}
 
 {% endblock %}
 

@@ -102,7 +102,7 @@ module.exports = {
       window.location = window.location.origin + '/' + datasetName + '/' + datum.id;
     });
 
-    $('.twitter-typeahead').addClass('flex-container').css('display','');
+    $('.twitter-typeahead').css('display','block');
   },
 
   init: function(){

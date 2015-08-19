@@ -15,16 +15,16 @@ var events = require('./events.js');
 var open = false;
 
 var openFilterPanel = function() {
-  $('body').addClass('panel-active--left');
-  $('.side-panel--left').addClass('side-panel--open');
-  $('#filter-toggle').addClass('active');
+  $('body').addClass('is-showing-filters');
+  $('.filters').addClass('is-open');
+  $('#filter-toggle').addClass('is-active');
   open = true;
 };
 
 var closeFilterPanel = function() {
-  $('body').removeClass('panel-active--left');
-  $('.side-panel--left').removeClass('side-panel--open');
-  $('#filter-toggle').removeClass('active');
+  $('body').removeClass('is-showing-filters');
+  $('.filters.is-open').removeClass('is-open');
+  $('#filter-toggle').removeClass('is-active');
   open = false;
 };
 
@@ -67,11 +67,11 @@ var activateFilter = function(opts) {
     var $parent = $field.parent();
     if (opts.value) {
         $field.val(prepareValue($field, opts.value)).change();
-        $parent.addClass('active');
+        $parent.addClass('is-active');
         ensureVisible($field);
     } else {
         $field.val(prepareValue($field, '')).change();
-        $parent.removeClass('active');
+        $parent.removeClass('is-active');
     }
 };
 
@@ -115,7 +115,7 @@ var activateInitialFilters = function() {
     });
 
     if (open) {
-      $('body').addClass('panel-active--left');
+      $('body').addClass('is-showing-filters');
     }
 };
 
@@ -127,7 +127,7 @@ $('.button--remove').click(function(e){
     $(this).css('display', 'none');
 });
 
-$('.field input, .field select').change(function(){
+$('.filter input, .filter select').change(function(){
     var $this = $(this);
     $('[data-removes="' + $this.attr('name') + '"]')
         .css('display', $this.val() ? 'block' : 'none');
@@ -166,7 +166,7 @@ $('.js-checkbox-filters').each(function(){
     });
 });
 
-$('.field input[type="checkbox"]').on('keypress', function(e) {
+$('.filter input[type="checkbox"]').on('keypress', function(e) {
     if (e.which === 13) {
         var $this = $(this);
         var $parent = $this.closest('ul.dropdown__list');
@@ -206,7 +206,7 @@ $('.js-dropdown').on('click keypress', function(e) {
     e.preventDefault();
 });
 
-$('.field input[type="text"]').on('keypress', function(e) {
+$('.filter input[type="text"]').on('keypress', function(e) {
     if (e.which === 13) {
         $(this).change();
         e.preventDefault();

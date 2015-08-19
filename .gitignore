@@ -7,10 +7,8 @@ node_modules
 .sass-cache/
 rev-manifest.json
 openfecwebapp/local_config.py
-static/images
 app/
 /.env
 .DS_Store
 
 dist
-static/styles/styles.css

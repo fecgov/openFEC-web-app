@@ -113,11 +113,13 @@ class SearchPageTestCase(BaseTest):
     def click_filter(self, name, value, expand=True):
         div = self.driver.find_element_by_xpath(''.join([
             '//*[@name="' + name + '"]',
-            '/ancestor::div[@class="field"]',
+            '/ancestor::fieldset',
+            '/parent::div[contains(@class, "filter")]',
         ]))
         checkbox = div.find_element_by_css_selector(
             'input[type="checkbox"][value="' + value + '"]'
         )
+        label = checkbox.find_element_by_xpath('following-sibling::label')
         # Ensure performance bar doesn't block clicks
         self.driver.execute_script('$(".perfBar-bar").hide()')
         if expand:
@@ -130,7 +132,7 @@ class SearchPageTestCase(BaseTest):
         # Handle probabilistic checkbox click failures in Chrome
         checked = bool(checkbox.get_attribute('checked'))
         utils.try_until(
-            lambda: checkbox.click(),
+            lambda: label.click(),
             condition=lambda: bool(checkbox.get_attribute('checked')) != checked,
         )
 

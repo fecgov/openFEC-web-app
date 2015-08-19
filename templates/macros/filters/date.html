@@ -1,13 +1,28 @@
 {% macro field(name, label, dates) %}
 
-<div class="field date-choice-field" id="{{ name }}">
+<div class="filter date-choice-field" id="{{ name }}">
   <label for="{{ name }}" class="label">{{ label }}</label>
   <ul>
-    <li><input name="{{ name }}" type="radio" data-min-date={{ dates['today'][0] | date }} data-max-date={{ dates['today'][1] | date }}>Today</li>
-    <li><input name="{{ name }}" type="radio" data-min-date={{ dates['month'][0] | date }} data-max-date={{ dates['month'][1] | date }}>This month</li>
-    <li><input name="{{ name }}" type="radio" data-min-date={{ dates['quarter'][0] | date }} data-max-date={{ dates['quarter'][1] | date }}>This quarter</li>
-    <li><input name="{{ name }}" type="radio" data-min-date={{ dates['year'][0] | date }} data-max-date={{ dates['year'][1] | date }}>This year</li>
-    <li><input name="{{ name }}" type="radio">Custom</li>
+    <li>
+      <input id="radio-1" name="{{ name }}" type="radio" data-min-date={{ dates['today'][0] | date }} data-max-date={{ dates['today'][1] | date }}>
+      <lable for="radio-1">Today</label>
+    </li>
+    <li>
+      <input id="radio-2" name="{{ name }}" type="radio" data-min-date={{ dates['month'][0] | date }} data-max-date={{ dates['month'][1] | date }}>
+      <label for="radio-2">This month</label>
+    </li>
+    <li>
+      <input id="radio-3" name="{{ name }}" type="radio" data-min-date={{ dates['quarter'][0] | date }} data-max-date={{ dates['quarter'][1] | date }}>
+      <label for="radio-3">This quarter</label>
+    </li>
+    <li>
+      <input id="radio-4" name="{{ name }}" type="radio" data-min-date={{ dates['year'][0] | date }} data-max-date={{ dates['year'][1] | date }}>
+      <label for="radio-4">This year</label>
+    </li>
+    <li>
+      <input id="radio-5" name="{{ name }}" type="radio">
+      <label for="radio-5">Custom</label>
+    </li>
   </ul>
   <div class="date-range-input">
     <label for="min_date">From</label>

@@ -1,0 +1,33 @@
+<div class="panel__row">
+  <h4>Candidate: <a href="/candidate/{{candidate_id}}">{{name}}</a></h4>
+  <table>
+    <tr>
+      <td>Office</td>
+      <td>{{office_full}}</td>
+    </tr>
+    <tr>
+      <td>Election Years</td>
+      <td>{{election_years}}</td>
+    </tr>
+    <tr>
+      <td>Political Party</td>
+      <td>{{party_full}}</td>
+    </tr> 
+    <tr>
+      <td>Status</td>
+      <td>{{incumbent_challenge_full}}</td>
+    </tr>  
+    {{#if state}}
+    <tr>
+      <td>State</td>
+      <td>{{state}}</td>
+    </tr>
+    {{/if}}
+    {{#if district}}
+    <tr>
+      <td>District</td>
+      <td>{{district}}</td>
+    </tr>    
+    {{/if}}
+  </table>
+</div>

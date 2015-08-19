@@ -12,6 +12,8 @@ server_name = os.getenv('FEC_WEB_SERVER_NAME')
 cache = os.getenv('FEC_WEB_CACHE')
 cache_size = int(os.getenv('FEC_WEB_CACHE_SIZE', 1000))
 
+style_url = os.getenv('FEC_WEB_STYLE_URL')
+
 # the username and password should be the same for both the
 # web app and API
 username = os.getenv('FEC_WEB_USERNAME', '')

@@ -13,11 +13,11 @@
 {% if series_group_has_data(reports, ('total_receipts_period', 'total_disbursements_period')) %}
 <div class="row">
   <figure class="chart-container chart--r-d">
-    <div class="figure__title">
-      <h4>Receipts and Disbursements</h4>
-      <ul class="figure__key flat-list">
-        <li><span class="swatch data--receipts"></span> Total Receipts</li>
-        <li><span class="swatch data--disbursements"></span> Total Disbursements</li>
+    <div class="chart__header">
+      <h4 class="chart__title">Receipts and Disbursements</h4>
+      <ul class="chart__key list--flat">
+        <li class="chart__key__item"><span class="swatch data--receipts"></span> Total Receipts</li>
+        <li class="chart__key__item"><span class="swatch data--disbursements"></span> Total Disbursements</li>
       </ul>
     </div>
     {{ charts.chart_series_grouped(reports | reverse | list, ('total_receipts_period', 'total_disbursements_period'),
@@ -28,11 +28,11 @@
 {% if series_group_has_data(reports, ('cash_on_hand_end_period', 'debts_owed_by_committee')) %}
 <div class="row">
   <figure class="chart-container chart--c-d">
-    <div class="figure__title">
-      <h4>Cash and Debt</h4>
-      <ul class="figure__key flat-list">
-        <li><span class="swatch data--cash"></span> Ending Cash on Hand</li>
-        <li><span class="swatch data--debt"></span> Debt</li>
+    <div class="chart__header">
+      <h4 class="chart__title">Cash and Debt</h4>
+      <ul class="chart__key list--flat">
+        <li class="chart__key__item"><span class="swatch data--cash"></span> Ending Cash on Hand</li>
+        <li class="chart__key__item"><span class="swatch data--debt"></span> Debt</li>
       </ul>
     </div>
     {{ charts.chart_series_grouped(reports | reverse | list, ('cash_on_hand_end_period', 'debts_owed_by_committee'),

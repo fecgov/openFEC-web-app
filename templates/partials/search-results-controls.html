@@ -1,6 +1,6 @@
 {% import 'macros/search.html' as search %}
 
-<div class="meta-box results-controls">
+<div class="results-info">
   {{ search.search('results', result_type, query) }}
   {% if results|length >= 20 %}
   <div class="results-count"> Showing first 20 results. 

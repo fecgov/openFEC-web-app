@@ -1,66 +1,214 @@
-<div class="field">
+<div class="filter">
     <label for="report_type" class="label">Report Type<span class="any" aria-hidden="true">(Any)</span></label>
     <fieldset class="js-checkbox-filters">
-        <ul class="dropdown__selected"></ul>
-        <div class="dropdown">
-          <button class="js-toggle js-dropdown button--dropdown" data-toggles="report-dropdown" >More</button>
-          <div id="report-dropdown" class="dropdown__panel" aria-hidden="true">
-            <div class="dropdown__search__container">
-              <input type="search" class="dropdown__search">
-            </div>
-            <ul class="dropdown__list">
-                <li><label class="dropdown_value" for="report-checkbox-CA"><input name="report_type" id="report-checkbox-CA" type="checkbox" value="CA">COMPREHENSIVE AMEND</li>
-                <li><label class="dropdown_value" for="report-checkbox-ADJ"><input name="report_type" id="report-checkbox-ADJ" type="checkbox" value="ADJ">COMP ADJUST AMEND</li>
-                <li><label class="dropdown_value" for="report-checkbox-10D"><input name="report_type" id="report-checkbox-10D" type="checkbox" value="10D">PRE-ELECTION</li>
-                <li><label class="dropdown_value" for="report-checkbox-10G"><input name="report_type" id="report-checkbox-10G" type="checkbox" value="10G">PRE-GENERAL</li>
-                <li><label class="dropdown_value" for="report-checkbox-10P"><input name="report_type" id="report-checkbox-10P" type="checkbox" value="10P">PRE-PRIMARY</li>
-                <li><label class="dropdown_value" for="report-checkbox-10R"><input name="report_type" id="report-checkbox-10R" type="checkbox" value="10R">PRE-RUN-OFF</li>
-                <li><label class="dropdown_value" for="report-checkbox-10S"><input name="report_type" id="report-checkbox-10S" type="checkbox" value="10S">PRE-SPECIAL</li>
-                <li><label class="dropdown_value" for="report-checkbox-12C"><input name="report_type" id="report-checkbox-12C" type="checkbox" value="12C">Pre-Convention</li>
-                <li><label class="dropdown_value" for="report-checkbox-12G"><input name="report_type" id="report-checkbox-12G" type="checkbox" value="12G">Pre-General</li>
-                <li><label class="dropdown_value" for="report-checkbox-12P"><input name="report_type" id="report-checkbox-12P" type="checkbox" value="12P">Pre-Primary</li>
-                <li><label class="dropdown_value" for="report-checkbox-12R"><input name="report_type" id="report-checkbox-12R" type="checkbox" value="12R">Pre-Runoff</li>
-                <li><label class="dropdown_value" for="report-checkbox-12S"><input name="report_type" id="report-checkbox-12S" type="checkbox" value="12S">Pre-Special</li>
-                <li><label class="dropdown_value" for="report-checkbox-30D"><input name="report_type" id="report-checkbox-30D" type="checkbox" value="30D">POST-ELECTION</li>
-                <li><label class="dropdown_value" for="report-checkbox-30G"><input name="report_type" id="report-checkbox-30G" type="checkbox" value="30G">Post-General</li>
-                <li><label class="dropdown_value" for="report-checkbox-30P"><input name="report_type" id="report-checkbox-30P" type="checkbox" value="30P">POST-PRIMARY</li>
-                <li><label class="dropdown_value" for="report-checkbox-30R"><input name="report_type" id="report-checkbox-30R" type="checkbox" value="30R">Post-Runoff</li>
-                <li><label class="dropdown_value" for="report-checkbox-30S"><input name="report_type" id="report-checkbox-30S" type="checkbox" value="30S">Post-Special</li>
-                <li><label class="dropdown_value" for="report-checkbox-60D"><input name="report_type" id="report-checkbox-60D" type="checkbox" value="60D">60 Day Post Convention of a Presidential Host Committee</li>
-                <li><label class="dropdown_value" for="report-checkbox-90D"><input name="report_type" id="report-checkbox-90D" type="checkbox" value="90D">90 Day Post Inaugural Report by an Inaugural Committee</li>
-                <li><label class="dropdown_value" for="report-checkbox-90S"><input name="report_type" id="report-checkbox-90S" type="checkbox" value="90S">Supplement to a 90D Inaugural Report</li>
-                <li><label class="dropdown_value" for="report-checkbox-M1"><input name="report_type" id="report-checkbox-M1" type="checkbox" value="M1">JANUARY MONTHLY</li>
-                <li><label class="dropdown_value" for="report-checkbox-M2"><input name="report_type" id="report-checkbox-M2" type="checkbox" value="M2">February Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M3"><input name="report_type" id="report-checkbox-M3" type="checkbox" value="M3">March Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M4"><input name="report_type" id="report-checkbox-M4" type="checkbox" value="M4">April Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M5"><input name="report_type" id="report-checkbox-M5" type="checkbox" value="M5">May Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M6"><input name="report_type" id="report-checkbox-M6" type="checkbox" value="M6">June Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M7"><input name="report_type" id="report-checkbox-M7" type="checkbox" value="M7">July Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M8"><input name="report_type" id="report-checkbox-M8" type="checkbox" value="M8">August Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M9"><input name="report_type" id="report-checkbox-M9" type="checkbox" value="M9">September Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M10"><input name="report_type" id="report-checkbox-M10" type="checkbox" value="M10">October Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M11"><input name="report_type" id="report-checkbox-M11" type="checkbox" value="M11">November Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-M12"><input name="report_type" id="report-checkbox-M12" type="checkbox" value="M12">December Monthly</li>
-                <li><label class="dropdown_value" for="report-checkbox-MY"><input name="report_type" id="report-checkbox-MY" type="checkbox" value="MY">Mid-year Report</li>
-                <li><label class="dropdown_value" for="report-checkbox-Q1"><input name="report_type" id="report-checkbox-Q1" type="checkbox" value="Q1">April Quarterly</li>
-                <li><label class="dropdown_value" for="report-checkbox-Q2"><input name="report_type" id="report-checkbox-Q2" type="checkbox" value="Q2">July Quarterly</li>
-                <li><label class="dropdown_value" for="report-checkbox-Q3"><input name="report_type" id="report-checkbox-Q3" type="checkbox" value="Q3">October Quarterly</li>
-                <li><label class="dropdown_value" for="report-checkbox-YE"><input name="report_type" id="report-checkbox-YE" type="checkbox" value="YE">Year-end</li>
-                <li><label class="dropdown_value" for="report-checkbox-MYE"><input name="report_type" id="report-checkbox-MYE" type="checkbox" value="MYE">Monthly Year-end\</li>
-                <li><label class="dropdown_value" for="report-checkbox-TER"><input name="report_type" id="report-checkbox-TER" type="checkbox" value="TER">Termination Report</li>
-                <li><label class="dropdown_value" for="report-checkbox-24"><input name="report_type" id="report-checkbox-24" type="checkbox" value="24">24-Hour Report</li>
-                <li><label class="dropdown_value" for="report-checkbox-48"><input name="report_type" id="report-checkbox-48" type="checkbox" value="48">48-Hour Report</li>
-                <li><label class="dropdown_value" for="report-checkbox-Q2S"><input name="report_type" id="report-checkbox-Q2S" type="checkbox" value="Q2S">July 15 (Q2) report and Semi-annual</li>
-                <li><label class="dropdown_value" for="report-checkbox-QSA"><input name="report_type" id="report-checkbox-QSA" type="checkbox" value="QSA">Semi-Annual only></li>
-                <li><label class="dropdown_value" for="report-checkbox-QYS"><input name="report_type" id="report-checkbox-QYS" type="checkbox" value="QYS">Jan 31 Year End (YE) report and Semi-Annual</li>
-                <li><label class="dropdown_value" for="report-checkbox-QYE"><input name="report_type" id="report-checkbox-QYE" type="checkbox" value="QYE">Semi-Annual only</li>
-                <li><label class="dropdown_value" for="report-checkbox-QMS"><input name="report_type" id="report-checkbox-QMS" type="checkbox" value="QMS">July 31 Mid-Year (MY) reportand Semi-annual</li>
-                <li><label class="dropdown_value" for="report-checkbox-M7S"><input name="report_type" id="report-checkbox-M7S" type="checkbox" value="M7S">July 20 (M7) Monthly report and Semi-Annual</li>
-                <li><label class="dropdown_value" for="report-checkbox-MSA"><input name="report_type" id="report-checkbox-MSA" type="checkbox" value="MSA">Semi-Annual only</li>
-                <li><label class="dropdown_value" for="report-checkbox-MYS"><input name="report_type" id="report-checkbox-MYS" type="checkbox" value="MYS">Jan 31 Year End (MYE) report and Semi-annual</li>
-                <li><label class="dropdown_value" for="report-checkbox-MSY"><input name="report_type" id="report-checkbox-MSY" type="checkbox" value="MSY"> Semi-Annual only</li>
-            </ul>
-          </div>
+      <ul class="dropdown__selected"></ul>
+      <div class="dropdown">
+        <button class="js-toggle js-dropdown button--dropdown button--neutral" data-toggles="report-dropdown" >More</button>
+        <div id="report-dropdown" class="dropdown__panel" aria-hidden="true">
+          <ul class="dropdown__list">
+            <li>
+                <input name="report_type" id="report-checkbox-CA" type="checkbox" value="CA">
+                <label class="dropdown_value" for="report-checkbox-CA">COMPREHENSIVE AMEND</label>
+            </li>
+            <li>
+                <input name="report_type" id="report-checkbox-ADJ" type="checkbox" value="ADJ">
+                <label class="dropdown_value" for="report-checkbox-ADJ">COMP ADJUST AMEND</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-10D" type="checkbox" value="10D">
+              <label class="dropdown_value" for="report-checkbox-10D">PRE-ELECTION</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-10G" type="checkbox" value="10G">
+              <label class="dropdown_value" for="report-checkbox-10G">PRE-GENERAL</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-10P" type="checkbox" value="10P">
+              <label class="dropdown_value" for="report-checkbox-10P">PRE-PRIMARY</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-10R" type="checkbox" value="10R">
+              <label class="dropdown_value" for="report-checkbox-10R">PRE-RUN-OFF</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-10S" type="checkbox" value="10S">
+              <label class="dropdown_value" for="report-checkbox-10S">PRE-SPECIAL</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-12C" type="checkbox" value="12C">
+              <label class="dropdown_value" for="report-checkbox-12C">Pre-Convention</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-12G" type="checkbox" value="12G">
+              <label class="dropdown_value" for="report-checkbox-12G">Pre-General</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-12P" type="checkbox" value="12P">
+              <label class="dropdown_value" for="report-checkbox-12P">Pre-Primary</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-12R" type="checkbox" value="12R">
+              <label class="dropdown_value" for="report-checkbox-12R">Pre-Runoff</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-12S" type="checkbox" value="12S">
+              <label class="dropdown_value" for="report-checkbox-12S">Pre-Special</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-30D" type="checkbox" value="30D">
+              <label class="dropdown_value" for="report-checkbox-30D">POST-ELECTION</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-30G" type="checkbox" value="30G">
+              <label class="dropdown_value" for="report-checkbox-30G">Post-General</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-30P" type="checkbox" value="30P">
+              <label class="dropdown_value" for="report-checkbox-30P">POST-PRIMARY</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-30R" type="checkbox" value="30R">
+              <label class="dropdown_value" for="report-checkbox-30R">Post-Runoff</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-30S" type="checkbox" value="30S">
+              <label class="dropdown_value" for="report-checkbox-30S">Post-Special</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-60D" type="checkbox" value="60D">
+              <label class="dropdown_value" for="report-checkbox-60D">60 Day Post Convention of a Presidential Host Committee</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-90D" type="checkbox" value="90D">
+              <label class="dropdown_value" for="report-checkbox-90D">90 Day Post Inaugural Report by an Inaugural Committee</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-90S" type="checkbox" value="90S">
+              <label class="dropdown_value" for="report-checkbox-90S">Supplement to a 90D Inaugural Report</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M1" type="checkbox" value="M1">
+              <label class="dropdown_value" for="report-checkbox-M1">JANUARY MONTHLY</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M2" type="checkbox" value="M2">
+              <label class="dropdown_value" for="report-checkbox-M2">February Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M3" type="checkbox" value="M3">
+              <label class="dropdown_value" for="report-checkbox-M3">March Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M4" type="checkbox" value="M4">
+              <label class="dropdown_value" for="report-checkbox-M4">April Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M5" type="checkbox" value="M5">
+              <label class="dropdown_value" for="report-checkbox-M5">May Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M6" type="checkbox" value="M6">
+              <label class="dropdown_value" for="report-checkbox-M6">June Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M7" type="checkbox" value="M7">
+              <label class="dropdown_value" for="report-checkbox-M7">July Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M8" type="checkbox" value="M8">
+              <label class="dropdown_value" for="report-checkbox-M8">August Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M9" type="checkbox" value="M9">
+              <label class="dropdown_value" for="report-checkbox-M9">September Monthly</label>
+            </li>
+
+            <li>
+              <input name="report_type" id="report-checkbox-M10" type="checkbox" value="M10">
+              <label class="dropdown_value" for="report-checkbox-M10">October Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M11" type="checkbox" value="M11">
+              <label class="dropdown_value" for="report-checkbox-M11">November Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M12" type="checkbox" value="M12">
+              <label class="dropdown_value" for="report-checkbox-M12">December Monthly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-MY" type="checkbox" value="MY">
+              <label class="dropdown_value" for="report-checkbox-MY">Mid-year Report</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-Q1" type="checkbox" value="Q1">
+              <label class="dropdown_value" for="report-checkbox-Q1">April Quarterly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-Q2" type="checkbox" value="Q2">
+              <label class="dropdown_value" for="report-checkbox-Q2">July Quarterly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-Q3" type="checkbox" value="Q3">
+              <label class="dropdown_value" for="report-checkbox-Q3">October Quarterly</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-YE" type="checkbox" value="YE">
+              <label class="dropdown_value" for="report-checkbox-YE">Year-end</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-MYE" type="checkbox" value="MYE">
+              <label class="dropdown_value" for="report-checkbox-MYE">Monthly Year-end</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-TER" type="checkbox" value="TER">
+              <label class="dropdown_value" for="report-checkbox-TER">Termination Report</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-24" type="checkbox" value="24">
+              <label class="dropdown_value" for="report-checkbox-24">24-Hour Report</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-48" type="checkbox" value="48">
+              <label class="dropdown_value" for="report-checkbox-48">48-Hour Report</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-Q2S" type="checkbox" value="Q2S">
+              <label class="dropdown_value" for="report-checkbox-Q2S">July 15 (Q2) report and Semi-annual</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-QSA" type="checkbox" value="QSA">
+              <label class="dropdown_value" for="report-checkbox-QSA">Semi-Annual only></label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-QYS" type="checkbox" value="QYS">
+              <label class="dropdown_value" for="report-checkbox-QYS">Jan 31 Year End (YE) report and Semi-Annual</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-QYE" type="checkbox" value="QYE">
+              <label class="dropdown_value" for="report-checkbox-QYE">Semi-Annual only</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-QMS" type="checkbox" value="QMS">
+              <label class="dropdown_value" for="report-checkbox-QMS">July 31 Mid-Year (MY) reportand Semi-annual</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-M7S" type="checkbox" value="M7S">
+              <label class="dropdown_value" for="report-checkbox-M7S">July 20 (M7) Monthly report and Semi-Annual</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-MSA" type="checkbox" value="MSA">
+              <label class="dropdown_value" for="report-checkbox-MSA">Semi-Annual only</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-MYS" type="checkbox" value="MYS">
+              <label class="dropdown_value" for="report-checkbox-MYS">Jan 31 Year End (MYE) report and Semi-annual</label>
+            </li>
+            <li>
+              <input name="report_type" id="report-checkbox-MSY" type="checkbox" value="MSY">
+              <label class="dropdown_value" for="report-checkbox-MSY">Semi-Annual only</label>
+            </li>
+          </ul>
         </div>
+      </div>
     </fieldset>
 </div>

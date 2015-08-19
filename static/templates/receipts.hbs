@@ -1,23 +1,17 @@
 <div class="panel__row">
-  <h4>Contributor Information</h3>
+  <h4>Contributor Information</h4>
   <table>
     <tr>
       <td>Name</td>
       {{#if contributor}}
-        <td>
-          <a href="/committee/{{contributor.committee_id}}">
-            {{contributor.name}}
-          </a>
-        </td>
+        <td><a href="/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
       {{else}}
         <td>{{contributor_name}}</td>
       {{/if}}
     </tr>
     <tr>
       <td>City & State</td>
-      <td>
-        {{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}
-      </td>
+      <td>{{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}</td>
     </tr>
     <tr>
       <td>Occupation</td>
