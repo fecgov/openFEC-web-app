@@ -1,0 +1,52 @@
+<nav class="site-nav">
+  <button class="site-nav__button site-nav__button--left">Navigation</button>
+  <ul id="site-menu" class="site-nav__list">
+    <li class="site-nav__item">
+      <a href="/" class="site-nav__link is-current">Campaign Finance Data</a>
+      <ul class="site-nav__dropdown">
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="/">Search for candidates &raquo;</a>
+        </li>
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="/elections">Search by ZIP code &raquo;</a>
+        </li>     
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="{{ url_for('candidates', cycle=default_cycles) }}">Browse candidates &raquo;</a>
+        </li>
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="{{ url_for('committees', cycle=default_cycles) }}">Browse committees &raquo;</a>
+        </li>
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="{{ url_for('filings') }}">Browse filings &raquo;</a>
+        </li>
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="{{ url_for('receipts') }}">Browse receipts &raquo;</a>
+        </li>  
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="{{ url_for('disbursements') }}">Browse disbursements &raquo;</a>
+        </li>         
+      </ul>
+    </li>
+    <li class="site-nav__item">
+      <a href="{{ cms_url }}/registration-and-reporting" class="site-nav__link">Reporting &amp; Registration</a>
+      <ul class="site-nav__dropdown">
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="{{ cms_url }}/registration-and-reporting">Reporting &amp; Registration Home</a>
+        </li> 
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="{{ cms_url }}/registration-options">Registration Options</a>
+        </li> 
+      </ul>      
+    </li>
+    <li class="site-nav__item">
+      <a href="#" class="site-nav__link is-disabled">Calendar</a>
+    </li>
+    <li class="site-nav__item">
+      <a href="#" class="site-nav__link is-disabled">TBD</a>
+    </li>
+    <li class="site-nav__item">
+      <a href="#" class="site-nav__link is-disabled">TBD</a>
+    </li>                
+  </ul>
+  <button id="glossary-toggle" title="View site glossary" class="site-nav__button site-nav__button--right">Glossary</button>
+</nav>    

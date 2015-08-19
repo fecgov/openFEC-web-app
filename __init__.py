@@ -100,6 +100,7 @@ app.jinja_env.globals.update({
     'api_key': config.api_key_public,
     'use_analytics': config.use_analytics,
     'style_url': config.style_url,
+    'cms_url': config.cms_url,
     'context': get_context,
     'absolute_url': get_absolute_url,
     'contact_email': '18F-FEC@gsa.gov',

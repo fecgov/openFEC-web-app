@@ -62,6 +62,10 @@ To use styles served from a custom location (e.g., if developing against a local
 
     $ export FEC_WEB_STYLE_URL=http://localhost:8080/css/styles.css
 
+To be able to have links between this app and a local installation of the cms:
+
+    $ export FEC_CMS_URL=http://localhost:8000
+    
 If you'd like the app to cache API requests it makes, use the `--cached` flag:
 
     $ python __init__.py --cached
