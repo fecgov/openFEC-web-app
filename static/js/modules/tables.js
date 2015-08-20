@@ -222,39 +222,49 @@ function modalAfterRender(template, api, data, response) {
 
   // Move the modal to the results div.
   $modal.appendTo($('#results'));
+  $table.find('tr').each(function(){
+    $(this).attr('tabindex', 0);
+  })
 
-  $table.on('click', '.js-panel-toggle tr', function(ev) {
-    if ($(ev.target).is('a')) {
-      return true;
-    }
-    var $row = $(ev.target).closest('tr');
-    var index = api.row($row).index();
-    $modal.find('.js-panel-content').html(template(response.results[index]));
-    $modal.attr('aria-hidden', 'false');
-    $row.siblings().toggleClass('row-active', false);
-    $row.toggleClass('row-active', true);
-    $('body').toggleClass('panel-active', true);
-    var hideColumns = api.columns('.hide-panel');
-    hideColumns.visible(false);
-    // Populate the pdf button if there is one 
-    if ( response.results[index].pdf_url ) {
-      $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
-    } else {
-      $modal.find('.js-pdf_url').remove();
-    }
-    // When under $large-screen
-    // TODO figure way to share these values with CSS.
-    if ($(document).width() < 980) {
-      api.columns('.hide-panel-tablet').visible(false);
-    }
+  $table.on('click keypress', '.js-panel-toggle tr', function(ev) {
+    if (ev.which === 13 || ev.type === 'click') {
+      if ($(ev.target).is('a')) {
+        return true;
+      }
+      var $row = $(ev.target).closest('tr');
+      var index = api.row($row).index();
+      $modal.find('.js-panel-content').html(template(response.results[index]));
+      $modal.attr('aria-hidden', 'false');
+      $row.siblings().toggleClass('row-active', false);
+      $row.toggleClass('row-active', true);
+      $('body').toggleClass('panel-active', true);
+      var hideColumns = api.columns('.hide-panel');
+      hideColumns.visible(false);
+      // Populate the pdf button if there is one 
+      if ( response.results[index].pdf_url ) {
+        $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
+      } else {
+        $modal.find('.js-pdf_url').remove();
+      }
+      
+      // Set focus on the close button
+      $('.js-hide').focus();
+
+      // When under $large-screen
+      // TODO figure way to share these values with CSS.
+      if ($(document).width() < 980) {
+        api.columns('.hide-panel-tablet').visible(false);
+      }
+    } 
   });
 
   $modal.on('click', '.js-panel-close', function(ev) {
     ev.preventDefault();
+    $('.row-active').focus();
     $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
     var hideColumns = api.columns('.hide-panel');
-    hideColumns.visible(true);
+    hideColumns.visible(true);    
     // When under $large-screen
     if ($(document).width() < 980) {
       api.columns('.hide-panel-tablet').visible(true);
