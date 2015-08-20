@@ -6,7 +6,7 @@
 var URI = require('URIjs');
 var _ = require('underscore');
 
-var events = require('../modules/events');
+var events = require('fec-style/js/events');
 
 // The class for the container div
 

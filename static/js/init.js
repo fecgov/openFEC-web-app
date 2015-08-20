@@ -8,6 +8,7 @@ var keyboard = require('keyboardjs');
 var perfectScrollbar = require('perfect-scrollbar/jquery') ($);
 
 var glossary = require('fec-style/js/glossary');
+var accordion = require('fec-style/js/accordion');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
@@ -19,7 +20,6 @@ window.$ = window.jQuery = $;
 // Include vendor scripts
 require('./vendor/tablist');
 
-var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
 var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');

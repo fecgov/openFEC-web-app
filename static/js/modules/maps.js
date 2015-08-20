@@ -8,7 +8,8 @@ var _ = require('underscore');
 var chroma = require('chroma-js');
 var topojson = require('topojson');
 
-var events = require('./events');
+var events = require('fec-style/js/events');
+
 var helpers = require('./helpers');
 var states = require('../us.json');
 

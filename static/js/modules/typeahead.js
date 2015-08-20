@@ -10,8 +10,7 @@ var Handlebars = require('handlebars');
 var keyboard = require('keyboardjs');
 
 var terms = require('fec-style/js/terms');
-
-var events = require('./events.js');
+var events = require('fec-style/js/events');
 
 var SUGGESTION_LIMIT = 10;
 
@@ -55,9 +54,6 @@ module.exports = {
       name: name,
       datumTokenizer: function(d) {
         var tokens = Bloodhound.tokenizers.whitespace(d.name);
-        if (name === 'Glossary') {
-          tokens = Bloodhound.tokenizers.whitespace(d.term);
-        }
         return tokens;
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -107,8 +103,6 @@ module.exports = {
         committeeEngine,
         candidateSuggestion,
         committeeSuggestion,
-        glossaryEngine,
-        glossarySuggestion,
         options,
         candidateDataSet,
         committeeDataSet,

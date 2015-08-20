@@ -2,7 +2,7 @@
 
 var $ = require('jquery');
 
-var events = require('./events.js');
+var events = require('fec-style/js/events.js');
 
 var defaultOpts = {
   placeHolderOptions: {
