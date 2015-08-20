@@ -79,7 +79,7 @@ class BaseTest(unittest.TestCase):
 
     def getGlossary(self):
         return self.driver.find_element_by_id('glossary')
-        
+
     def elementExistsByClassName(self, name):
         try:
             self.driver.find_element_by_class_name(name)

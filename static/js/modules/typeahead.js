@@ -9,9 +9,9 @@ var URI = require('URIjs');
 var Handlebars = require('handlebars');
 var keyboard = require('keyboardjs');
 
+var terms = require('fec-style/js/terms');
+
 var events = require('./events.js');
-var terms = require('./terms');
-var glossary = require('./glossary.js');
 
 var SUGGESTION_LIMIT = 10;
 
