@@ -6,8 +6,9 @@ var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 
+var events = require('fec-style/js/events');
+
 var maps = require('../modules/maps');
-var events = require('../modules/events');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 var decoders = require('../modules/decoders');

@@ -10,8 +10,7 @@ var Handlebars = require('handlebars');
 var keyboard = require('keyboardjs');
 
 var terms = require('fec-style/js/terms');
-
-var events = require('./events.js');
+var events = require('fec-style/js/events');
 
 var SUGGESTION_LIMIT = 10;
 

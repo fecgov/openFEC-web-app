@@ -7,9 +7,8 @@ var _ = require('underscore');
 var URI = require('URIjs');
 var List = require('list.js');
 
-var accordion = require('./accordion');
-
-var events = require('./events.js');
+var events = require('fec-style/js/events');
+var accordion = require('fec-style/js/accordion');
 
 // are the panels open?
 var open = false;
