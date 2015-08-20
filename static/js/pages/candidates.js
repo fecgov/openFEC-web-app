@@ -42,12 +42,12 @@ $(document).ready(function() {
   var $table = $('#results');
   var $form = $('#category-filters');
   tables.initTable(
-    $table, 
-    $form, 
-    'candidates', 
-    {}, 
-    columns, 
-    _.extend(tables.seekCallbacks, {
+    $table,
+    $form,
+    'candidates',
+    {},
+    columns,
+    _.extend(tables.offsetCallbacks, {
       afterRender: tables.modalAfterRender.bind(undefined, candidatesTemplate)
     }),
     {}

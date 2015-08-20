@@ -38,12 +38,12 @@ $(document).ready(function() {
   var $table = $('#results');
   var $form = $('#category-filters');
   tables.initTable(
-    $table, 
-    $form, 
-    'committees', 
-    {}, 
-    columns, 
-    _.extend(tables.seekCallbacks, {
+    $table,
+    $form,
+    'committees',
+    {},
+    columns,
+    _.extend(tables.offsetCallbacks, {
       afterRender: tables.modalAfterRender.bind(undefined, committeesTemplate)
     }),
     {}
