@@ -26,7 +26,7 @@ class LandingPageTests(BaseTest):
         self.driver.find_element_by_id('glossary-toggle').click()
         glossary = self.getGlossary()
         self.assertIn('is-open', glossary.get_attribute('class'))
-        hide = glossary.find_element_by_id('hide-glossary')
+        hide = glossary.find_element_by_css_selector('.toggle')
         WebDriverWait(self.driver, 1).until(lambda driver: hide.is_displayed())
         hide.click()
         self.assertNotIn('is-open', glossary.get_attribute('class'))
