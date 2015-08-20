@@ -132,6 +132,22 @@ var dateColumn = formattedColumn(helpers.datetime);
 var currencyColumn = formattedColumn(helpers.currency);
 var barCurrencyColumn = barColumn(helpers.currency);
 
+var candidateColumn = formattedColumn(function(data) {
+  if (data) {
+    return buildEntityLink(data.name, '/candidate/' + data.candidate_id, 'candidate');
+  } else {
+    return '';
+  }
+});
+
+var committeeColumn = formattedColumn(function(data) {
+  if (data) {
+    return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+  } else {
+    return '';
+  }
+});
+
 function mapSort(order, columns) {
   return _.map(order, function(item) {
     var name = columns[item.column].data;
@@ -390,6 +406,8 @@ module.exports = {
   buildAggregateUrl: buildAggregateUrl,
   buildTotalLink: buildTotalLink,
   buildEntityLink: buildEntityLink,
+  candidateColumn: candidateColumn,
+  committeeColumn: committeeColumn,
   currencyColumn: currencyColumn,
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,

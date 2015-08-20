@@ -21,30 +21,31 @@ var supportOpposeMap = {
   S: 'Support',
   O: 'Oppose',
 };
+var supportOpposeColumn = {
+  data: 'support_oppose_indicator',
+  orderable: false,
+  render: function(data, type, row, meta) {
+    return supportOpposeMap[data] || 'Unknown';
+  }
+};
 var independentExpenditureColumns = [
   tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  {
-    data: 'committee',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
-    }
-  },
-  {
-    data: 'support_oppose_indicator',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return supportOpposeMap[data] || 'Unknown';
-    }
-  },
-  {
-    data: 'candidate',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data.name, '/candidate/' + data.candidate_id, 'candidate');
-    }
-  },
+  tables.committeeColumn({data: 'committee', orderable: false}),
+  supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', orderable: false}),
+];
+
+var communicationCostColumns = [
+  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
+  tables.committeeColumn({data: 'committee', orderable: false}),
+  supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', orderable: false})
+];
+
+var electioneeringColumns = [
+  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
+  tables.committeeColumn({data: 'committee', orderable: false}),
+  tables.candidateColumn({data: 'candidate', orderable: false})
 ];
 
 var columns = [
@@ -393,16 +394,35 @@ function initStateMaps(results) {
   appendStateMap($choropleths, results, cached);
 }
 
+var tableOpts = {
+  'independent-expenditures': {
+    path: ['schedules', 'schedule_e', 'by_candidate'].join('/'),
+    columns: independentExpenditureColumns
+  },
+  'communication-costs': {
+    path: ['communication_costs', 'by_candidate'].join('/'),
+    columns: communicationCostColumns
+  },
+  'electioneering': {
+    path: ['electioneering_costs', 'by_candidate'].join('/'),
+    columns: electioneeringColumns
+  },
+};
+
 function initSpendingTables() {
-  var $table = $('table[data-type="independent-expenditures"]');
-  var path = ['schedules', 'schedule_e', 'by_candidate'].join('/');
-  tables.initTableDeferred($table, null, path, helpers.filterNull(context.election), independentExpenditureColumns, tables.offsetCallbacks, {
-    // dom: singlePageTableDOM,
-    order: [[0, 'desc']],
-    pagingType: 'simple',
-    lengthChange: false,
-    pageLength: 10,
-    useHideNull: false
+  $('.data-table').each(function(index, table) {
+    var $table = $(table);
+    var dataType = $table.attr('data-type');
+    var opts = tableOpts[dataType];
+    if (opts) {
+      tables.initTableDeferred($table, null, opts.path, helpers.filterNull(context.election), opts.columns, tables.offsetCallbacks, {
+        order: [[0, 'desc']],
+        pagingType: 'simple',
+        lengthChange: false,
+        pageLength: 10,
+        useHideNull: false
+      });
+    }
   });
 }
 
