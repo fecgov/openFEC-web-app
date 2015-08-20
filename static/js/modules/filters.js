@@ -26,6 +26,7 @@ var closeFilterPanel = function() {
   $('.filters.is-open').removeClass('is-open');
   $('#filter-toggle').removeClass('is-active')
     .find('.filters__toggle__text').html('Show filters');
+  $('#results tr:first-child').focus();
   open = false;
 };
 
