@@ -320,7 +320,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       if (useHideNull) {
         query = _.extend(
           query,
-          {sort_hide_null: $hideNullWidget.find('input').is(':checked')}
+          {sort_hide_null: $hideNullWidget.is(':checked')}
         );
       }
       query.sort = mapSort(data.order, columns);
