@@ -10,22 +10,13 @@ Filter Disbursements
 {% block filters %}
 {{ text.field('_committee_id', 'From Committee', {'class': 'committee-typeahead-field', 'data-input': 'committee_id'}) }}
 <input type="hidden" name="committee_id" id="committee_id" />
-
-<div class="js-accordion">
-  <h5 class="js-accordion_header accordion__header">Recipient Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
-  <div class="js-accordion_item accordion__item">
-  {{ text.field('recipient_name', 'Receipient Name') }}
-  {{ text.field('recipient_city', 'City') }}
-  {{ states.field('recipient_state')}}
-  </div>
-</div>
-<div class="js-accordion">
-  <h5 class="js-accordion_header accordion__header">Transaction Information <a href="#" class="accordion__button js-accordion_button"></a></h5>
-  <div class="js-accordion_item accordion__item">
-    {{ text.field('disbursement_description', 'Purpose') }}
-    {{ text.field('min_amount', 'Minimum Expenditure') }}
-    {{ text.field('max_amount', 'Maximum Expenditure') }}
-    {{ date.field('disbursement_date', 'Disbursement Date', dates ) }}
-  </div>
-</div>
+<h4 class="filters__subheader">Recipient Information</h4>
+{{ text.field('recipient_name', 'Receipient Name') }}
+{{ text.field('recipient_city', 'City') }}
+{{ states.field('recipient_state')}}
+<h4 class="filters__subheader">Transaction Information</h4>
+{{ text.field('disbursement_description', 'Purpose') }}
+{{ text.field('min_amount', 'Minimum Expenditure') }}
+{{ text.field('max_amount', 'Maximum Expenditure') }}
+{{ date.field('disbursement_date', 'Disbursement Date', dates ) }}
 {% endblock %}
