@@ -40,7 +40,7 @@
 {% import 'macros/search.html' as search %}
 {% include 'partials/browser-warning.html' %}
 {% include 'partials/javascript-warning.html' %}
-<a href="#main-content" class="skip-nav">skip navigation</a>
+<a href="#main" class="skip-nav">skip navigation</a>
 
   <header class="site-header">
     <div class="disclaimer">
@@ -61,7 +61,7 @@
   </header>
 
   {% block header %}{% endblock %}
-  <main id="main" {% if section %} data-section="{{section}}"{% endif %}>
+  <main id="main" {% if section %} data-section="{{section}}"{% endif %} tabindex="0">
       {% block body %}{% endblock %}
   </main>
 
