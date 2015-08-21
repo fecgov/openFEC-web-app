@@ -7,6 +7,7 @@ var _ = require('underscore');
 var keyboard = require('keyboardjs');
 var perfectScrollbar = require('perfect-scrollbar/jquery') ($);
 
+var terms = require('fec-style/js/terms');
 var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
 
@@ -58,7 +59,7 @@ $(document).ready(function() {
     }
 
     // Initialize glossary
-    new glossary.Glossary('#glossary', '#glossary-toggle');
+    new glossary.Glossary(terms, {body: '#glossary', toggle: '#glossary-toggle'});
 
     // Inialize input masks
     $('[data-inputmask]').inputmask();
