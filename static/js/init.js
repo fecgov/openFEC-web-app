@@ -7,26 +7,25 @@ var _ = require('underscore');
 var keyboard = require('keyboardjs');
 var perfectScrollbar = require('perfect-scrollbar/jquery') ($);
 
+// Hack: Append jQuery to `window` for use by legacy libraries
+window.$ = window.jQuery = $;
+
 var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
+var typeahead = require('fec-style/js/typeahead');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
 require('jquery.inputmask/dist/inputmask/jquery.inputmask.numeric.extensions.js');
 
-// Hack: Append jQuery to `window` for use by legacy libraries
-window.$ = window.jQuery = $;
-
 // Include vendor scripts
 require('./vendor/tablist');
 
 var filters = require('./modules/filters.js');
-var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
 
-typeahead.init();
 charts.init();
 
 var SLT_ACCORDION = '.js-accordion';
@@ -59,6 +58,9 @@ $(document).ready(function() {
 
     // Initialize glossary
     new glossary.Glossary('#glossary', '#glossary-toggle');
+
+    // Initialize typeaheads
+    new typeahead.Typeahead('.js-search-input');
 
     // Inialize input masks
     $('[data-inputmask]').inputmask();
