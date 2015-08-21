@@ -11,6 +11,7 @@ var keyboard = require('keyboardjs');
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
 
+var terms = require('fec-style/js/terms');
 var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
@@ -63,7 +64,7 @@ $(document).ready(function() {
     }
 
     // Initialize glossary
-    new glossary.Glossary('#glossary', '#glossary-toggle');
+    new glossary.Glossary(terms, {body: '#glossary', toggle: '#glossary-toggle'});
 
     // Initialize typeaheads
     new typeahead.Typeahead('.js-search-input', $('.js-search-type').val());
@@ -166,7 +167,7 @@ $(document).ready(function() {
 
     var $search = $('.js-search');
     $search.each(function() {
-      Search($(this));
+      new Search($(this));
     });
 
     // @if DEBUG
