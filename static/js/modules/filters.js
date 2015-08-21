@@ -134,69 +134,6 @@ $('.filter input, .filter select').change(function(){
         .css('display', $this.val() ? 'block' : 'none');
 });
 
-// Dropdown lists
-var updateSelectedItems = function(list) {
-    var $this,
-        $checkedBoxes;
-    $this = list;
-    $checkedBoxes = $this.find('input:checked').closest('li');
-    $this.closest('fieldset').find('.dropdown__selected').prepend($checkedBoxes);
-
-    // Remove it all if there's no more items to check
-    if ( $this.find('li').length === 0 ) {
-        $this.closest('.dropdown').remove();
-    }
-};
-
-// Show "any" if there's no items checked
-var countCheckboxes = function(fieldset) {
-    var checkboxCount = $(fieldset).find('input:checked').length;
-    if ( checkboxCount === 0 ) {
-        $(fieldset).siblings('label').find('.any').attr('aria-hidden', false);
-    } else {
-        $(fieldset).siblings('label').find('.any').attr('aria-hidden', true);
-    }
-};
-
-$('.js-checkbox-filters').each(function(){
-    var $dropdownList = $(this).find('.dropdown__list');
-
-    $dropdownList.find('input[type=checkbox]').change(function(){
-        updateSelectedItems($dropdownList);
-        countCheckboxes(this);
-    });
-});
-
-$('.filter input[type="checkbox"]').on('keypress', function(e) {
-    if (e.which === 13) {
-        var $this = $(this);
-        var $parent = $this.closest('ul.dropdown__list');
-        $this.prop('checked', function(index, value) {
-            return !value;
-        });
-        if ($parent.length) {
-            var $next = $this.closest('li').next('li').find('input[type="checkbox"]');
-            if ($next.length) {
-                $next.focus();
-            }
-        }
-        $this.change();
-        e.preventDefault();
-    }
-});
-
-// Search-able lists
-// WIP as it breaks the rest of the dropdown
-// $('.dropdown__panel').each(function(){
-//     var id = $(this).attr('id');
-//     var options = {
-//         searchClass: 'dropdown__search',
-//         listClass: 'dropdown__list',
-//         valueNames: ['dropdown__value']
-//     };
-//     var dropdownList = new List(id, options);
-// })
-
 // Scrollbars
 $('.dropdown__panel').perfectScrollbar({ 'suppressScrollX': true });
 

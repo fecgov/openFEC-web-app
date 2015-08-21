@@ -9,6 +9,7 @@ var perfectScrollbar = require('perfect-scrollbar/jquery') ($);
 
 var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
+var dropdown = require('fec-style/js/dropdowns.js');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
@@ -30,6 +31,10 @@ typeahead.init();
 charts.init();
 
 var SLT_ACCORDION = '.js-accordion';
+
+$('.js-dropdown').each(function() {
+  new dropdown.Dropdown(this);
+})
 
 $(document).ready(function() {
     var $body,
@@ -104,15 +109,6 @@ $(document).ready(function() {
             $toggle.removeClass('active');
         });
     }
-
-    // Hide toggles on clicking outside toggle button or body
-    $(document.body).on('click', function(e) {
-      var $target = $(e.target);
-      if (!$('.js-toggle').has(e.target).length &&
-          !$('.js-checkbox-filters').has(e.target).length) {
-        hideToggles();
-      }
-    });
 
     $('.js-toggle').on('click keypress', function(e) {
         if (e.which === 13 || e.type === 'click') {
