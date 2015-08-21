@@ -5,7 +5,6 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
-var List = require('list.js');
 
 var events = require('fec-style/js/events');
 var accordion = require('fec-style/js/accordion');
