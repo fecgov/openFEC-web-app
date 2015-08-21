@@ -60,7 +60,7 @@ $(document).ready(function() {
     new glossary.Glossary('#glossary', '#glossary-toggle');
 
     // Initialize typeaheads
-    new typeahead.Typeahead('.js-search-input');
+    new typeahead.Typeahead('.js-search-input', $('.js-search-type').val());
 
     // Inialize input masks
     $('[data-inputmask]').inputmask();
