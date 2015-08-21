@@ -134,16 +134,6 @@ $('.filter input, .filter select').change(function(){
         .css('display', $this.val() ? 'block' : 'none');
 });
 
-// Scrollbars
-$('.dropdown__panel').perfectScrollbar({ 'suppressScrollX': true });
-
-$('.js-dropdown').on('click keypress', function(e) {
-    if (e.which === 13 || e.type === 'click') {
-        $('.dropdown__panel').perfectScrollbar('update');
-    }
-    e.preventDefault();
-});
-
 $('.filter input[type="text"]').on('keypress', function(e) {
     if (e.which === 13) {
         $(this).change();
