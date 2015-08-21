@@ -2,6 +2,8 @@
 
 /* global require, window, document */
 
+var KEYCODE_SLASH = 191;
+
 var $ = require('jquery');
 var _ = require('underscore');
 var keyboard = require('keyboardjs');
@@ -61,6 +63,25 @@ $(document).ready(function() {
 
     // Initialize typeaheads
     new typeahead.Typeahead('.js-search-input', $('.js-search-type').val());
+
+    // Focus search on "/"
+    $(document.body).on('keyup', function(e) {
+      e.preventDefault();
+      if (e.keyCode === KEYCODE_SLASH) {
+        $('.js-search-input:visible').first().focus();
+      }
+    });
+
+    // Initialize committee typeahead filters
+    // TODO(jmcarp) Refactor as component
+    $('.committee-typeahead-field').each(function(_, field) {
+      var $field = $(field);
+      var $input = $('#' + $field.attr('data-input'));
+      $field.typeahead({}, typeahead.datasets.committees);
+      $field.on('typeahead:selected', function(event, datum) {
+        $input.val(datum.id).change();
+      });
+    });
 
     // Inialize input masks
     $('[data-inputmask]').inputmask();
