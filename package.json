@@ -52,7 +52,7 @@
     "datatables": "1.10.7",
     "drmonty-datatables-responsive": "1.0.6",
     "eventemitter2": "0.4.14",
-    "fec-style": "git://github.com/18F/fec-style.git",
+    "fec-style": "git+https://github.com/18f/fec-style.git#master",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
     "intl": "1.0.0-rc-4",
