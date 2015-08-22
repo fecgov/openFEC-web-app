@@ -127,7 +127,7 @@ class SearchPageTestCase(BaseTest):
         self.driver.execute_script('$(".perfBar-bar").hide()')
         if expand:
             try:
-                button = div.find_element_by_css_selector('button.js-toggle')
+                button = div.find_element_by_css_selector('button.dropdown__button')
             except NoSuchElementException:
                 button = None
             if button:
