@@ -46,5 +46,5 @@ $(document).ready(function() {
     _.extend(tables.offsetCallbacks, {
       afterRender: tables.modalAfterRender.bind(undefined, committeesTemplate)
     }),
-    {}
+    {useFilters: true}
   );});

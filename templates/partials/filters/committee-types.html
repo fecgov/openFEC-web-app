@@ -1,5 +1,5 @@
 <div class="filter">
-  <fieldset class="js-checkbox-filters">
+  <fieldset class="js-dropdown">
     <legend class="label" for="committee_type">Authorized Committees</legend>
     <ul class="dropdown__selected">
       <li>
@@ -19,13 +19,13 @@
 </div>
 
 <div class="filter">
-  <fieldset class="js-checkbox-filters">
+  <fieldset class="js-dropdown">
     <legend class="label" for="committee_type">PACs</legend>
     <ul class="dropdown__selected"></ul>
     <div class="dropdown">
-      <button class="js-toggle js-dropdown dropdown__button button--neutral" data-toggles="pac-dropdown" >More</button>
+      <button class="dropdown__button button--neutral">More</button>
       <div id="pac-dropdown" class="dropdown__panel" aria-hidden="true">
-      <ul class="dropdown__list">   
+      <ul class="dropdown__list">
         <li class="dropdown__item">
           <input id="designation-checkbox-B" type="checkbox" name="designation" value="B">
           <label class="dropdown__value" for="designation-checkbox-B">Lobbyist/Registrant PAC</label>
@@ -33,7 +33,7 @@
         <li class="dropdown__item">
           <input id="designation-checkbox-D" type="checkbox" name="designation" value="D">
           <label class="dropdown__value" for="designation-checkbox-D">Leadership PAC</label>
-        </li>      
+        </li>
         <li class="dropdown__item">
           <input id="committee-type-checkbox-N" type="checkbox" name="committee_type" value="N">
           <label class="dropdown__value" for="committee-type-checkbox-N">PAC - Nonqualified</label>
@@ -82,7 +82,7 @@
 
 
 <div class="filter">
-  <fieldset class="js-checkbox-filters">
+  <fieldset class="js-dropdown">
     <legend class="label" for="committee_type">Other Committees</legend>
     <ul class="dropdown__selected">
       <li>
@@ -91,7 +91,7 @@
       </li>
     </ul>
     <div class="dropdown">
-      <button class="js-toggle js-dropdown dropdown__button button--neutral" data-toggles="other-dropdown">More</button>
+      <button class="dropdown__button button--neutral">More</button>
       <div id="other-dropdown" class="dropdown__panel" aria-hidden="true">
       <ul class="dropdown__list">
         <li class="dropdown__item">
@@ -105,7 +105,7 @@
         <li class="dropdown__item">
           <input id="committee-type-checkbox-E" type="checkbox" name="committee_type" value="E">
           <label class="dropdown__value" for="committee-type-checkbox-E">Electioneering Communication</label>
-        </li>    
+        </li>
         <li class="dropdown__item">
           <input id="committee-type-checkbox-X" type="checkbox" name="committee_type" value="X">
           <label class="dropdown__value" for="committee-type-checkbox-X">Party - Nonqualified</label>
@@ -124,7 +124,7 @@
 </div>
 
 <div class="filter">
-  <fieldset class="js-checkbox-filters">
+  <fieldset class="js-dropdown">
     <legend class="label" for="committee_type">Independent Expenditure Committees</legend>
     <ul class="dropdown__selected">
       <li>
@@ -133,7 +133,7 @@
       </li>
     </ul>
     <div class="dropdown">
-      <button class="js-toggle js-dropdown dropdown__button button--neutral" data-toggles="ie-dropdown" >More</button>
+      <button class="dropdown__button button--neutral">More</button>
       <div id="ie-dropdown" class="dropdown__panel" aria-hidden="true">
       <ul class="dropdown__list">
         <li class="dropdown__item">

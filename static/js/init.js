@@ -2,34 +2,40 @@
 
 /* global require, window, document */
 
+var KEYCODE_SLASH = 191;
+
 var $ = require('jquery');
 var _ = require('underscore');
 var keyboard = require('keyboardjs');
-var perfectScrollbar = require('perfect-scrollbar/jquery') ($);
 
+// Hack: Append jQuery to `window` for use by legacy libraries
+window.$ = window.jQuery = $;
+
+var terms = require('fec-style/js/terms');
 var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
+var dropdown = require('fec-style/js/dropdowns');
+var typeahead = require('fec-style/js/typeahead');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
 require('jquery.inputmask/dist/inputmask/jquery.inputmask.numeric.extensions.js');
 
-// Hack: Append jQuery to `window` for use by legacy libraries
-window.$ = window.jQuery = $;
-
 // Include vendor scripts
 require('./vendor/tablist');
 
 var filters = require('./modules/filters.js');
-var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
 
-typeahead.init();
 charts.init();
 
 var SLT_ACCORDION = '.js-accordion';
+
+$('.js-dropdown').each(function() {
+  new dropdown.Dropdown(this);
+})
 
 $(document).ready(function() {
     var $body,
@@ -58,7 +64,29 @@ $(document).ready(function() {
     }
 
     // Initialize glossary
-    new glossary.Glossary('#glossary', '#glossary-toggle');
+    new glossary.Glossary(terms, {body: '#glossary', toggle: '#glossary-toggle'});
+
+    // Initialize typeaheads
+    new typeahead.Typeahead('.js-search-input', $('.js-search-type').val());
+
+    // Focus search on "/"
+    $(document.body).on('keyup', function(e) {
+      e.preventDefault();
+      if (e.keyCode === KEYCODE_SLASH) {
+        $('.js-search-input:visible').first().focus();
+      }
+    });
+
+    // Initialize committee typeahead filters
+    // TODO(jmcarp) Refactor as component
+    $('.committee-typeahead-field').each(function(_, field) {
+      var $field = $(field);
+      var $input = $('#' + $field.attr('data-input'));
+      $field.typeahead({}, typeahead.datasets.committees);
+      $field.on('typeahead:selected', function(event, datum) {
+        $input.val(datum.id).change();
+      });
+    });
 
     // Inialize input masks
     $('[data-inputmask]').inputmask();
@@ -95,42 +123,6 @@ $(document).ready(function() {
             // Set focus back on the original triggering element
             $('.js-reveal[data-reveals="' + hideElement + '"]').removeClass('selected');
         }
-    });
-
-    function hideToggles() {
-        _.each($('[data-toggles]'), function(toggle) {
-            var $toggle = $(toggle);
-            $('#' + $toggle.data('toggles')).attr('aria-hidden', 'true');
-            $toggle.removeClass('active');
-        });
-    }
-
-    // Hide toggles on clicking outside toggle button or body
-    $(document.body).on('click', function(e) {
-      var $target = $(e.target);
-      if (!$('.js-toggle').has(e.target).length &&
-          !$('.js-checkbox-filters').has(e.target).length) {
-        hideToggles();
-      }
-    });
-
-    $('.js-toggle').on('click keypress', function(e) {
-        if (e.which === 13 || e.type === 'click') {
-            var $this = $(this);
-            var $toggleElement = $('#' + $this.data('toggles'));
-            if ($toggleElement.attr('aria-hidden') === 'true') {
-                hideToggles();
-                $toggleElement
-                    .attr('aria-hidden', false)
-                    .find('li:first-child input').focus();
-                $this.addClass('active');
-
-            } else {
-                $toggleElement.attr('aria-hidden', true);
-                $this.removeClass('active').focus();
-            }
-        }
-        e.preventDefault();
     });
 
     $(document.body).on('keyup', function(e) {
@@ -175,7 +167,7 @@ $(document).ready(function() {
 
     var $search = $('.js-search');
     $search.each(function() {
-      Search($(this));
+      new Search($(this));
     });
 
     // @if DEBUG
