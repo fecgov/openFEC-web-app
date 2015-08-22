@@ -46,12 +46,11 @@
     "url": "https://github.com/18F/openfec-web-app/issues"
   },
   "dependencies": {
-    "URIjs": "1.15.1",
+    "URIjs": "1.16.0",
     "chroma-js": "1.0.1",
     "d3": "3.5.5",
     "datatables": "1.10.7",
     "drmonty-datatables-responsive": "1.0.6",
-    "eventemitter2": "0.4.14",
     "fec-style": "git+https://github.com/18f/fec-style.git#master",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
@@ -61,8 +60,6 @@
     "keyboardjs": "0.4.2",
     "moment": "2.10.3",
     "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
-    "perfect-scrollbar": "0.6.2",
-    "querystring": "0.2.0",
     "topojson": "1.6.19",
     "underscore": "1.8.3",
     "watchify": "3.2.1"
