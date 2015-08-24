@@ -222,9 +222,7 @@ function modalAfterRender(template, api, data, response) {
 
   // Move the modal to the results div.
   $modal.appendTo($('#results'));
-  $table.find('tr').each(function(){
-    $(this).attr('tabindex', 0);
-  })
+  $table.find('tr').attr('tabindex', 0);
 
   $table.on('click keypress', '.js-panel-toggle tr', function(ev) {
     if (ev.which === 13 || ev.type === 'click') {
@@ -240,13 +238,13 @@ function modalAfterRender(template, api, data, response) {
       $('body').toggleClass('panel-active', true);
       var hideColumns = api.columns('.hide-panel');
       hideColumns.visible(false);
-      // Populate the pdf button if there is one 
+      // Populate the pdf button if there is one
       if ( response.results[index].pdf_url ) {
         $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
       } else {
         $modal.find('.js-pdf_url').remove();
       }
-      
+
       // Set focus on the close button
       $('.js-hide').focus();
 
@@ -255,7 +253,7 @@ function modalAfterRender(template, api, data, response) {
       if ($(document).width() < 980) {
         api.columns('.hide-panel-tablet').visible(false);
       }
-    } 
+    }
   });
 
   $modal.on('click', '.js-panel-close', function(ev) {
@@ -264,7 +262,7 @@ function modalAfterRender(template, api, data, response) {
     $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
     var hideColumns = api.columns('.hide-panel');
-    hideColumns.visible(true);    
+    hideColumns.visible(true);
     // When under $large-screen
     if ($(document).width() < 980) {
       api.columns('.hide-panel-tablet').visible(true);
