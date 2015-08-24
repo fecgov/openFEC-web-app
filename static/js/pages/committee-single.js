@@ -44,7 +44,7 @@ var sizeColumns = [
     data: 'total',
     width: '50%',
     className: 'all',
-    render: tables.buildTotalLink(function(row) {
+    render: tables.buildTotalLink('/receipts', function(row) {
       var info = sizeInfo[row.size];
       return {
         min_amount: info.limits[0],
@@ -67,7 +67,7 @@ var committeeColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink(function(row) {
+    render: tables.buildTotalLink('/receipts', function(row) {
       return {contributor_id: row.contributor_id};
     })
   }
@@ -90,8 +90,8 @@ var stateColumns = [
     data: 'total',
     width: '50%',
     className: 'all',
-    render: tables.buildTotalLink(function(row) {
-      return {contributor_state: row.contributor_state};
+    render: tables.buildTotalLink('/receipts', function(row) {
+      return {contributor_state: row.state};
     })
   },
 ];
@@ -102,7 +102,7 @@ var employerColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink(function(row) {
+    render: tables.buildTotalLink('/receipts', function(row) {
       return {contributor_employer: row.employer};
     })
   }
@@ -114,7 +114,7 @@ var occupationColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink(function(row) {
+    render: tables.buildTotalLink('/receipts', function(row) {
       return {contributor_occupation: row.occupation};
     })
   }
@@ -158,7 +158,7 @@ var disbursementRecipientColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink(function(row) {
+    render: tables.buildTotalLink('/disbursements', function(row) {
       return {recipient_name: row.recipient_name};
     })
   }
@@ -177,7 +177,7 @@ var disbursementRecipientIDColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink(function(row) {
+    render: tables.buildTotalLink('/disbursements', function(row) {
       return {recipient_id: row.recipient_id};
     })
   }

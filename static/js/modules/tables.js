@@ -86,7 +86,7 @@ function buildAggregateUrl(uri, cycle) {
   }).toString();
 }
 
-function buildTotalLink(getParams) {
+function buildTotalLink(path, getParams) {
   return function(data, type, row, meta) {
     var span = document.createElement('div');
     span.setAttribute('data-value', data);
@@ -94,7 +94,7 @@ function buildTotalLink(getParams) {
     var link = document.createElement('a');
     link.textContent = helpers.currency(data);
     link.setAttribute('title', 'View individual transactions');
-    var uri = URI('/receipts')
+    var uri = URI(path)
       .query({committee_id: row.committee_id})
       .addQuery(getParams(row));
     link.setAttribute('href', buildAggregateUrl(uri, row.cycle));
