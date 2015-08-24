@@ -19,6 +19,10 @@ var compactRules = [
   ['k', 3]
 ];
 
+_.templateSettings = {
+  interpolate: /\{\{(.+?)\}\}/g
+};
+
 function chooseRule(value) {
   return _.find(compactRules, function(rule) {
     return value >= Math.pow(10, rule[1]);
@@ -30,7 +34,7 @@ function compactNumber(value, rule) {
   return d3.round(value / divisor, 1).toString() + rule[0];
 }
 
-function stateMap($elm, data, width, height, max, addLegend) {
+function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
   var svg = d3.select($elm[0])
     .append('svg')
       .attr('width', width)
@@ -63,10 +67,17 @@ function stateMap($elm, data, width, height, max, addLegend) {
         return d.properties.name;
       })
       .attr('class', 'shape')
-      .attr('d', path);
+      .attr('d', path)
+    .on('mouseover', function(d) {
+      this.parentNode.appendChild(this);
+    });
 
   if (addLegend || typeof addLegend === 'undefined') {
     stateLegend(svg, scale, quantize, quantiles);
+  }
+
+  if (addTooltips) {
+    stateTooltips(svg, path, results);
   }
 }
 
@@ -103,6 +114,37 @@ function stateLegend(svg, scale, quantize, quantiles) {
     .attr('text-anchor', 'middle')
     .text(function(d) {
       return compactNumber(d, compactRule);
+    });
+}
+
+var tooltipTemplate = _.template(
+  '<div>{{ name }}</div>' +
+  '<div>{{ total }}</div>'
+);
+
+function stateTooltips(svg, path, results) {
+  var tooltip = d3.select('body').append('div')
+    .attr('id', 'map-tooltip')
+    .style('position', 'absolute')
+    .style('text-align', 'center')
+    .style('pointer-events', 'none')
+    .style('display', 'none');
+  svg.selectAll('path')
+    .on('mouseover', function(d) {
+      this.parentNode.appendChild(this);
+      var offset = $(this).offset();
+      var html = tooltipTemplate({
+        name: d.properties.name,
+        total: helpers.currency(results[d.properties.name])
+      });
+      tooltip
+        .style('display', 'block')
+        .style('left', parseInt(offset.left) + 'px')
+        .style('top', parseInt(offset.top) + 'px')
+        .html(html);
+    })
+    .on('mouseout', function(d) {
+      tooltip.style('display', 'none');
     });
 }
 

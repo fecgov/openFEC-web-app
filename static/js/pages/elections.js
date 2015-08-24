@@ -304,7 +304,7 @@ function drawStateMap($container, candidateId, cached) {
     cached[candidateId] = results;
     updateColorScale($container, cached);
     var max = mapMax(cached);
-    maps.stateMap($map, data, 400, 300, max, false);
+    maps.stateMap($map, data, 400, 300, max, false, true);
   });
 }
 
