@@ -9,41 +9,41 @@
 {% block body %}
   <div id="main" class="tab-interface">
     <header class="page-header slab slab--primary">
-      <h1 class="page-header__title">Committees</h1>
-      {{ search.search('page-header', 'committees') }}
+    <img class="page-header__icon" src="/static/img/i-committee--primary.svg" alt="Candidate icon">
+    <span class="h1 page-header__title">Committees</span>
+    {{ search.search('page-header', 'committees') }}
     </header>  
-    <header class="entity__header">
+    <header class="entity__header entity__header--primary">
       <div class="container">
-        <div class="entity__header--top row">
-            <span class="entity__id">ID: {{ committee_id }}</span>
+        <div class="entity__header__top">
             <h1 class="entity__name">{{ name }}</h1>
-            <span class="entity__type">
+            <span class="t-data entity__type">
               {{ committee_type_full }}
                - {{ designation_full }}
                {% if organization %} - {{ organization }}{% endif %}
-            </span>
+            </span><span class="t-data">ID: {{ committee_id }}</span>
         </div>
-        <div class="entity__header--bottom row">
+        <div class="entity__header__bottom">
           <ul class="entity__info">
             {% if party_full %}
             <li class="entity__term">
-              <h5 class="entity__term__label">Political Party</h5>
+              <span class="entity__term__label">Political Party</span>
               <span class="entity__term__data">{{ party_full }}</span>
             </li>
             {% endif %}
             <li class="entity__term">
-              <h5 class="entity__term__label">Treasurer</h5>
+              <span class="entity__term__label">Treasurer</span>
               <span class="entity__term__data">{{ treasurer_name }}</span>
             </li>
             {% if candidates %}
             <li class="entity__term">
-              <h5 class="entity__term__label">Related
+              <span class="entity__term__label">Related
                 {% if candidates|length > 1 %}
                   Candidates
                 {% else %}
                   Candidate
                 {% endif %}
-              </h5>
+              </span>
               <ul class="entity__term__data">
               {% for c in candidates %}
                 <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=cycle) }}">{{ c.name }}</a></li>
@@ -52,7 +52,7 @@
             </li>
             {% endif %}
             <li class="entity__term">
-              <h5 class="entity__term__label">Address</h5>
+              <span class="entity__term__label">Address</span>
               <span class="entity__term__data">{{ street_1 }}{% if street_2 %}<br>{{ street_2 }}{% endif %} <br> {{city}}, {{state}} {{zip}}</span>
             </li>
         </ul>
