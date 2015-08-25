@@ -1,0 +1,7 @@
+{% macro field(name, title, dataset='committees') %}
+<div class="filter js-typeahead-filter" id="{{ name }}-field" data-dataset="{{ dataset }}">
+  <label class="label" for="{{ name }}">{{ title }}</label>
+  <ul class="dropdown__selected"></ul>
+  <input type="text" name="{{ name }}">
+</div>
+{% endmacro %}
