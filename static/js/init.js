@@ -16,6 +16,7 @@ var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
 var typeahead = require('fec-style/js/typeahead');
+var typeaheadFilter = require('fec-style/js/typeahead-filter');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
@@ -35,6 +36,16 @@ var SLT_ACCORDION = '.js-accordion';
 
 $('.js-dropdown').each(function() {
   new dropdown.Dropdown(this);
+})
+
+$('.js-typeahead-filter').each(function() {
+    var dataKey = $(this).attr('data-dataset');
+    var datasetMap = {
+        candidates: typeahead.datasets.candidates,
+        committees: typeahead.datasets.committees
+    }
+    var dataset = datasetMap[dataKey];
+  new typeaheadFilter.TypeaheadFilter(this, dataset);
 })
 
 $(document).ready(function() {
@@ -75,17 +86,6 @@ $(document).ready(function() {
       if (e.keyCode === KEYCODE_SLASH) {
         $('.js-search-input:visible').first().focus();
       }
-    });
-
-    // Initialize committee typeahead filters
-    // TODO(jmcarp) Refactor as component
-    $('.committee-typeahead-field').each(function(_, field) {
-      var $field = $(field);
-      var $input = $('#' + $field.attr('data-input'));
-      $field.typeahead({}, typeahead.datasets.committees);
-      $field.on('typeahead:selected', function(event, datum) {
-        $input.val(datum.id).change();
-      });
     });
 
     // Inialize input masks
