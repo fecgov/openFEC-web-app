@@ -322,7 +322,7 @@ $(document).ready(function() {
   var $map = $('.state-map');
   var url = buildStateUrl($map);
   $.getJSON(url).done(function(data) {
-    maps.stateMap($map, data, 400, 400);
+    maps.stateMap($map, data, 400, 400, null, true, false);
   });
   events.on('state.table', function(params) {
     maps.highlightState($map, params.state);
