@@ -1,0 +1,12 @@
+{% macro field(name, title) %}
+
+<div id="{{ name }}-field" class="filter combo--search--mini">
+  <label class="label" for="{{ name }}">{{ title }}</label>
+  <input name="{{ name }}" type="text" class="combo__input committee-typeahead-field" data-input="committee_id">
+  <button type="button" class="button--remove button" data-removes="{{ name }}"><span class="u-visually-hidden">Remove</span></button>
+</div>
+<input type="hidden" name="committee_id" id="committee_id" />
+
+{% endmacro %}
+
+

@@ -1,5 +1,6 @@
 {% extends 'partials/filters.html' %}
 
+{% import 'macros/filters/typeahead.html' as typeahead %}
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/date.html' as date %}
@@ -8,8 +9,7 @@ Filter Disbursements
 {% endblock %}
 
 {% block filters %}
-{{ text.field('_committee_id', 'From Committee', {'class': 'committee-typeahead-field', 'data-input': 'committee_id'}) }}
-<input type="hidden" name="committee_id" id="committee_id" />
+{{ typeahead.field('_committee_id', 'Committee') }}
 <h4 class="filters__subheader">Recipient Information</h4>
 {{ text.field('recipient_name', 'Receipient Name') }}
 {{ text.field('recipient_city', 'City') }}
