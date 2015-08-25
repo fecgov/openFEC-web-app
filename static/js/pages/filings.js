@@ -58,5 +58,6 @@ $(document).ready(function() {
   tables.initTable($table, $form, 'filings', {}, columns, tables.offsetCallbacks, {
     // Order by receipt date descending
     order: [[4, 'desc']],
+    useFilters: true
   });
 });
