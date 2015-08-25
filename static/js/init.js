@@ -36,17 +36,13 @@ var SLT_ACCORDION = '.js-accordion';
 
 $('.js-dropdown').each(function() {
   new dropdown.Dropdown(this);
-})
+});
 
 $('.js-typeahead-filter').each(function() {
-    var dataKey = $(this).attr('data-dataset');
-    var datasetMap = {
-        candidates: typeahead.datasets.candidates,
-        committees: typeahead.datasets.committees
-    }
-    var dataset = datasetMap[dataKey];
+  var key = $(this).data('dataset');
+  var dataset = typeahead.datasets[key];
   new typeaheadFilter.TypeaheadFilter(this, dataset);
-})
+});
 
 $(document).ready(function() {
     var $body,
