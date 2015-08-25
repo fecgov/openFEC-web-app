@@ -292,6 +292,7 @@ $(document).ready(function() {
           dom: 't<"results-info results-info--bottom meta-box"lfrip>',
           // Order by receipt date descending
           order: [[4, 'desc']],
+          useFilters: true
         });
         break;
       case 'disbursements-by-purpose':
