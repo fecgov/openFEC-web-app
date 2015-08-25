@@ -2,31 +2,33 @@
 {% import 'macros/null.html' as null %}
 
   <div class="content__section">
-    <h2 class="content__section__heading" id="section-1-heading" tabindex="0">Candidate Committees for {% include 'partials/cycle-select.html' %}</h2>
-    <p>Candidates receive and spend money through committees. To find out who they've raised from or what they spend on, click on an individual committee.</p>
+    <h2 class="content__section__heading">Financial Summary {% include 'partials/cycle-select.html' %}</h2>
+    <p>Candidates receive and spend money through committees.</p>
   </div>
   {% if committees_authorized %}
 
   <div class="content__section">
     <figure class="usa-width-one-half">
+      <h3 class="t-ruled--bottom">Totals</h3>
       <div>
         <h5 class="term t-data-header" data-term="Total Receipts">Total Receipts</h5>
-        <span class="t-display--sans t-block">{{ null.null( aggregate.receipts | currency ) }}</span>
+        <span class="t-big-data">{{ null.null( aggregate.receipts | currency ) }}</span>
       </div>
       <div >
         <h5 class="term t-data-header" data-term="Total Disbursements">Total Disbursements</h5>
-        <span class="t-display--sans t-block">{{ null.null( aggregate.disbursements | currency ) }}</span>
+        <span class="t-big-data">{{ null.null( aggregate.disbursements | currency ) }}</span>
       </div>  
       <div>
         <h5 class="term t-data-header" data-term="Ending Cash on Hand">Ending Cash on Hand</h5>
-        <span class="t-display--sans t-block">{{ null.null( aggregate.cash | currency ) }}</span>
+        <span class="t-big-data">{{ null.null( aggregate.cash | currency ) }}</span>
       </div>          
       <div>
         <h5 class="term t-data-header" data-term="Debt">Debt</h5>
-        <span class="t-display--sans t-block">{{ null.null( aggregate.debt | currency ) }}</span>
+        <span class="t-big-data">{{ null.null( aggregate.debt | currency ) }}</span>
       </div>
     </figure>
     <div class="usa-width-one-half">
+      <h3 class="t-ruled--bottom">Sources</h3>
       <h4><span class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</span></h4>
       <!-- <img class="icon--complex u-float-right" alt="Committee icon" src="/static/img/i-committee--primary.svg"> -->
       {% for committee in committee_groups['P'] %}
@@ -41,6 +43,9 @@
             <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a>
           </div>
         </div>
+        <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
+          <img src="/static/img/i-arrow-right--primary-contrast.svg" alt="Arrow pointing to the right">
+        </a>
       </div>
       {% endfor %}
       {% if committee_groups['A'] | length > 0 %}
@@ -57,6 +62,9 @@
               <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a>
             </div>          
           </div>
+          <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
+            <img src="/static/img/i-arrow-right--neutral-contrast.svg" alt="Arrow pointing to the right">
+          </a>          
         </div>
         {% endfor %}
       {% endif %}
@@ -66,8 +74,8 @@
 
 
 {% if committee_groups['J'] %}
-  <div class="content__section content__section--ruled">
-    <h4><span class="term" data-term="Joint Fundraising Committee">Joint Fundraising Committees</span></h4>
+  <div class="content__section">
+    <h2 class="content__section__heading"><span class="term" data-term="Joint Fundraising Committee">Joint Fundraising Committees</span></h2>
     <p>Below, is a list of the candidate’s joint fundraising committees—in joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed. Click the links to see more information about a particular committee.</p>
     <ul class="list--bulleted">
       {% for committee in committee_groups['J'] %}
