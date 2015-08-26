@@ -2,7 +2,6 @@
 
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
-{% import 'macros/filters/amendment-indicator.html' as amendment %}
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/date.html' as date %}
 
@@ -16,7 +15,7 @@ Filter Filings
 
 {{ text.field('report_year', 'Report Year') }}
 
-{{ amendment.amendment_indicator() }}
+{% include 'partials/filters/amendment-indicator.html' %}
 {% include 'partials/filters/primary-general.html' %}
 {% include 'partials/filters/report-type.html' %}
 
