@@ -31,7 +31,6 @@
     </figure>   
     <div class="usa-width-one-half">
       <h3 class="t-ruled--bottom">Campaign Committees</h3>
-      <!-- <h4><span class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</span></h4> -->
       {% for committee in committee_groups['P'] %}
       <div class="callout callout--primary">
         <div class="callout__content">
@@ -54,7 +53,6 @@
       </div>
       {% endfor %}
       {% if committee_groups['A'] | length > 0 %}
-        <!-- <h4><span class="term" data-term="Authorized Committee">Additional Authorized Committees</span></h4> -->
         {% for committee in committee_groups['A'] %}
         <div class="callout callout--neutral">
           <div class="callout__content">
