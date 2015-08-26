@@ -64,7 +64,8 @@ $(document).ready(function() {
     }),
     {
       order: [[5, 'desc']],
-      pagingType: 'simple'
+      pagingType: 'simple',
+      useFilters: true
     }
   );
 });

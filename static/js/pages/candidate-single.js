@@ -32,7 +32,7 @@ var columns = [
 ];
 
 $(document).ready(function() {
-  var $table = $('table.data-table');
+  var $table = $('table[data-type="filing"]');
   var $form = $('#category-filters');
   var candidateId = $table.attr('data-candidate');
   var path = ['candidate', candidateId, 'filings'].join('/');
