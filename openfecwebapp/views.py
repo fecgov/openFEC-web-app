@@ -55,10 +55,10 @@ def aggregate_committees(committees):
     for each in committees:
         totals = each['totals'][0] if each['totals'] else {}
         reports = each['reports'][0] if each['reports'] else {}
-        ret['receipts'] += totals.get('receipts', 0)
-        ret['disbursements'] += totals.get('disbursements', 0)
-        ret['cash'] += reports.get('cash_on_hand_end_period', 0)
-        ret['debt'] += reports.get('debts_owed_by_committee', 0)
+        ret['receipts'] += totals.get('receipts') or 0
+        ret['disbursements'] += totals.get('disbursements') or 0
+        ret['cash'] += reports.get('cash_on_hand_end_period') or 0
+        ret['debt'] += reports.get('debts_owed_by_committee') or 0
     return ret
 
 
