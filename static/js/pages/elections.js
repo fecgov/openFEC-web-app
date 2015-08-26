@@ -190,7 +190,7 @@ var defaultOpts = {
   searching: false,
   serverSide: false,
   lengthChange: false,
-  dom: '<"results-info meta-box results-info--top"lfrip>t<"results-info meta-box"ip>',
+  dom: tables.simpleDOM,
 };
 
 function destroyTable($table) {

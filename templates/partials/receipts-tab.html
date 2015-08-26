@@ -4,15 +4,13 @@
 
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
-    <div class="page-section__intro">
-      <div class="section__intro__left">
-        <h2 class="section-heading" id="section-2-heading">Money Received by the Committee {% include 'partials/cycle-select.html' %}  </h2>
-      </div>
-      <div class="section__intro__right card card--primary">
+    <div class="content__section">
+      <h2 class="content__section__heading" id="section-2-heading">Money Received by the Committee {% include 'partials/cycle-select.html' %}  </h2>
+      <div class="card card--primary">
         <a href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle, is_individual='true') }}">View all receipts &raquo;</a>
       </div>
     </div>
-    <div class="page-subsection">
+    <div class="content__section">
       <h3>Money received from individuals</h3>
       <fieldset class="toggles">
         <legend class="label">Compare by:</legend>
@@ -100,7 +98,7 @@
         </div>
       </div> 
     </div>
-    <div class="page-subsection page-subsection--ruled">
+    <div class="content__section content__section--ruled">
       <h3>Money received from other committees</h3>
       <div class="row">
         <div id="by-committee">

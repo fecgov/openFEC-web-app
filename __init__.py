@@ -111,7 +111,7 @@ app.jinja_env.globals.update({
     'cycle_start': cycle_start,
     'cycle_end': cycle_end,
     'election_url': get_election_url,
-    'states': sorted(constants.states.items(), key=lambda pair: pair[0]),
+    'constants': constants,
     'districts': DISTRICTS,
     'cycles': range(utils.current_cycle(), START_YEAR, -2),
 })

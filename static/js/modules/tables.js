@@ -14,6 +14,8 @@ require('drmonty-datatables-responsive');
 var filters = require('./filters');
 var helpers = require('./helpers');
 
+var simpleDOM = 't<"results-info"ip>';
+
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
 
@@ -409,6 +411,7 @@ var seekCallbacks = {
 };
 
 module.exports = {
+  simpleDOM: simpleDOM,
   yearRange: yearRange,
   buildCycle: buildCycle,
   buildAggregateUrl: buildAggregateUrl,

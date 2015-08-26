@@ -9,40 +9,30 @@
 {% include "partials/hero.html" %}
 <section class="main" aria-labelledby="browse-heading">
   <div class="container">
-    <div class="card card--wide card--tiled">
-      <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
-      <div class="card__content">
-        <h3><a href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates &raquo;</a></h3>
+    <div class="row tiled-cards--2-wide">
+      <div class="card card--wide">
+        <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
+        <div class="card__content">
+          <h3><a href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates &raquo;</a></h3>
+        </div>
       </div>
-    </div>
-    <div class="card card--wide card--tiled">
-      <img class="card__image icon--complex" src="/static/img/i-committee.svg" alt="Icon representing committees">
-      <div class="card__content">
-        <h3><a href="{{ url_for('committees', cycle=default_cycles) }}">Committees &raquo;</a></h3>
+      <div class="card card--wide">
+        <img class="card__image icon--complex" src="/static/img/i-committee.svg" alt="Icon representing committees">
+        <div class="card__content">
+          <h3><a href="{{ url_for('committees', cycle=default_cycles) }}">Committees &raquo;</a></h3>
+        </div>
+      </div>    
+      <div class="card card--wide">
+        <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
+        <div class="card__content">
+          <h3><a href="{{ url_for('receipts')}}">Receipts &raquo;</a></h3>
+        </div>
       </div>
-    </div>
-    <div class="card card--wide card--tiled">
-      <div class="card__content">
-        <h3><a href="{{ url_for('filings')}}">Filings &raquo;</a></h3>
-      </div>
-      <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
-    </div>    
-    <div class="card card--wide card--tiled">
-      <div class="card__content">
-        <h3><a href="/elections">Elections &raquo;</a></h3>
-      </div>
-      <img class="card__image icon--complex" src="/static/img/i-committee.svg" alt="Icon representing committees">
-    </div>     
-    <div class="card card--wide card--tiled">
-      <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
-      <div class="card__content">
-        <h3><a href="{{ url_for('receipts')}}">Receipts &raquo;</a></h3>
-      </div>
-    </div>
-    <div class="card card--wide card--tiled">
-      <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
-      <div class="card__content">
-        <h3><a href="{{ url_for('disbursements')}}">Disbursements &raquo;</a></h3>
+      <div class="card card--wide">
+        <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
+        <div class="card__content">
+          <h3><a href="{{ url_for('disbursements')}}">Disbursements &raquo;</a></h3>
+        </div>
       </div>
     </div>       
 </section>
