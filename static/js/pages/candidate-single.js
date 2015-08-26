@@ -28,7 +28,6 @@ var columns = [
     },
   },
   tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
-  tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet', orderable: false}),
 ];
 
 $(document).ready(function() {
@@ -39,5 +38,6 @@ $(document).ready(function() {
   tables.initTableDeferred($table, $form, path, {}, columns, tables.offsetCallbacks, {
     // Order by receipt date descending
     order: [[2, 'desc']],
+    dom: tables.simpleDOM,
   });
 });

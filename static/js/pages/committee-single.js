@@ -13,10 +13,8 @@ var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 var decoders = require('../modules/decoders');
 
-var singlePageTableDOM = 't<"results-info results-info--bottom meta-box"frip>';
-
 var tableOpts = {
-  dom: singlePageTableDOM,
+  dom: tables.simpleDOM,
   pagingType: 'simple',
   lengthChange: false,
   pageLength: 10,
@@ -223,7 +221,7 @@ $(document).ready(function() {
           query.cycle = cycle;
         }
         tables.initTableDeferred($table, null, path, query, committeeColumns, aggregateCallbacks, {
-          dom: singlePageTableDOM,
+          dom: tables.simpleDOM,
           order: [[1, 'desc']],
           pagingType: 'simple',
           lengthChange: false,
