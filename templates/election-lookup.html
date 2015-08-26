@@ -34,7 +34,7 @@
                 <legend class="label">Or search by state and district</legend>
                 <select id="state" name="state">
                   <option value="">Select state</option>
-                  {% for value, label in states %}
+                  {% for value, label in constants.states.items() %}
                   <option value="{{ value }}">{{ label }}</option>
                   {% endfor %}
                 </select>

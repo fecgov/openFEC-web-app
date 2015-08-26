@@ -1,0 +1,35 @@
+{% macro checkbox(name, value, label) %}
+<li class="dropdown__item">
+  <input id="{{ name }}-{{ value }}" name="{{ name }}" type="checkbox" value="{{ value }}">
+  <label class="dropdown__value" for="{{ name }}-{{ value }}">{{ label }}</label>
+</li>
+{% endmacro %}
+
+{% macro checkbox_list(name, options, css_class='dropdown__list') %}
+<ul class="{{ css_class }}">
+{% for value, label in options.items() %}
+  {{ checkbox(name, value, label) }}
+{% endfor %}
+</ul>
+{% endmacro %}
+
+{% macro checkbox_options(name, options) %}
+<div class="dropdown">
+  <button class="dropdown__button button--neutral">More</button>
+  <div id="{{ name }}-dropdown" class="dropdown__panel" aria-hidden="true">
+    {{ checkbox_list(name, options) }}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro checkbox_dropdown(name, label, selected={}, options={}) %}
+<div class="filter">
+  <fieldset class="js-dropdown">
+    <legend class="label" for="{{ name }}">{{ label }}<span class="any" aria-hidden="true">(Any)</span></legend>
+    {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
+    {% if options %}
+    {{ checkbox_options(name, options) }}
+    {% endif %}
+  </fieldset>
+</div>
+{% endmacro %}
