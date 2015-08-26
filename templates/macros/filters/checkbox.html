@@ -25,7 +25,7 @@
 {% macro checkbox_dropdown(name, label, selected={}, options={}) %}
 <div class="filter">
   <fieldset class="js-dropdown">
-    <legend class="label" for="{{ name }}">{{ label }}<span class="any" aria-hidden="true">(Any)</span></legend>
+    <legend class="label" for="{{ name }}">{{ label }}</legend>
     {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
     {% if options %}
     {{ checkbox_options(name, options) }}
