@@ -65,6 +65,9 @@ function ensureVisible($elm) {
 
 var activateFilter = function(opts) {
     var $field = $('#category-filters [name=' + opts.name + ']');
+    if ($field.data('temp')) {
+      $field = $('#' + $field.data('temp'));
+    }
     var $parent = $field.parent();
     if (opts.value) {
         $field.val(prepareValue($field, opts.value)).change();

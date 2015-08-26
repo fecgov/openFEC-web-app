@@ -5,9 +5,6 @@
     <div class="dropdown">
       <button class="dropdown__button button--neutral">More</button>
       <div id="district-dropdown" class="dropdown__panel" aria-hidden="true">
-        <div class="dropdown__search__container">
-          <input type="search" class="dropdown__search">
-        </div>
         <ul class="dropdown__list">
             {% for district in range(100) %}
             {% with formatted = '{0:02d}'.format(district) %}
