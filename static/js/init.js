@@ -55,7 +55,7 @@ $(document).ready(function() {
     if ( $pageControls.length > 0 ) {
         var scrollPos,
             controlsHeight,
-            controlsTop = $pageControls.offset().top + 200;
+            controlsTop = $pageControls.offset().top + 100;
         $(document).scroll(function(){
           scrollPos = $(window).scrollTop();
 
