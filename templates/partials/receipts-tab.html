@@ -9,7 +9,7 @@
         <h2 class="section-heading" id="section-2-heading">Money Received by the Committee {% include 'partials/cycle-select.html' %}  </h2>
       </div>
       <div class="section__intro__right card card--primary">
-        <a href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle) }}">View all receipts &raquo;</a>
+        <a href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle, is_individual='true') }}">View all receipts &raquo;</a>
       </div>
     </div>
     <div class="page-subsection">

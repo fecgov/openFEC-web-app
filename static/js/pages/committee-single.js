@@ -48,7 +48,8 @@ var sizeColumns = [
       var info = sizeInfo[row.size];
       return {
         min_amount: info.limits[0],
-        max_amount: info.limits[1]
+        max_amount: info.limits[1],
+        is_individual: 'true'
       };
     })
   }
@@ -68,7 +69,10 @@ var committeeColumns = [
     className: 'all',
     orderable: false,
     render: tables.buildTotalLink('/receipts', function(row) {
-      return {contributor_id: row.contributor_id};
+      return {
+        contributor_id: row.contributor_id,
+        is_individual: 'true'
+      };
     })
   }
 ];
@@ -91,7 +95,10 @@ var stateColumns = [
     width: '50%',
     className: 'all',
     render: tables.buildTotalLink('/receipts', function(row) {
-      return {contributor_state: row.state};
+      return {
+        contributor_state: row.state,
+        is_individual: 'true'
+      };
     })
   },
 ];
@@ -103,7 +110,10 @@ var employerColumns = [
     className: 'all',
     orderable: false,
     render: tables.buildTotalLink('/receipts', function(row) {
-      return {contributor_employer: row.employer};
+      return {
+        contributor_employer: row.employer,
+        is_individual: 'true'
+      };
     })
   }
 ];
@@ -115,7 +125,10 @@ var occupationColumns = [
     className: 'all',
     orderable: false,
     render: tables.buildTotalLink('/receipts', function(row) {
-      return {contributor_occupation: row.occupation};
+      return {
+        contributor_occupation: row.occupation,
+        is_individual: 'true'
+      };
     })
   }
 ];
