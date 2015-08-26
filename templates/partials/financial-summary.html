@@ -8,6 +8,27 @@
   {% if committees_authorized %}
 
   <div class="content__section">
+    <figure class="usa-width-one-half">
+      <h3 class="t-ruled--bottom">Combined Financial Totals</h3>
+      <div class="is-right-aligned">
+        <div>
+          <h5 class="term t-data-header" data-term="Total Receipts">Total Receipts</h5>
+          <span class="t-big-data">{{ null.null( aggregate.receipts | currency ) }}</span>
+        </div>
+        <div >
+          <h5 class="term t-data-header" data-term="Total Disbursements">Total Disbursements</h5>
+          <span class="t-big-data">{{ null.null( aggregate.disbursements | currency ) }}</span>
+        </div>  
+        <div>
+          <h5 class="term t-data-header" data-term="Ending Cash on Hand">Ending Cash on Hand</h5>
+          <span class="t-big-data">{{ null.null( aggregate.cash | currency ) }}</span>
+        </div>          
+        <div>
+          <h5 class="term t-data-header" data-term="Debt">Debt</h5>
+          <span class="t-big-data">{{ null.null( aggregate.debt | currency ) }}</span>
+        </div>
+      </div>
+    </figure>   
     <div class="usa-width-one-half">
       <h3 class="t-ruled--bottom">Campaign Committees</h3>
       <!-- <h4><span class="term" data-term="Principal Campaign Committee">Principal Campaign Committee</span></h4> -->
@@ -17,16 +38,19 @@
           <h4 class="callout__title">
             <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
           </h4>
-          <span class="term t-data" data-term="Principal Campaign Committee">Principal Campaign Committee</span>
-          <div class="callout__sublinks">
-            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received &raquo;</a> |
-            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent &raquo;</a> |
-            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a>
-          </div>
+          <span class="callout__subtitle">Principal Campaign Committee</span>
         </div>
-        <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
-          <img src="/static/img/i-arrow-right--primary-contrast.svg" alt="Arrow pointing to the right">
-        </a>
+        <div class="callout__action">
+          <span class="t-block t-data">View detailed data:</span>
+          <ul class="callout__sublinks">
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received &raquo;</a></li>
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent &raquo;</a></li>
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a></li>
+          </ul>        
+          <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
+            <img src="/static/img/i-arrow-right--primary-contrast.svg" alt="Arrow pointing to the right">
+          </a>
+        </div>
       </div>
       {% endfor %}
       {% if committee_groups['A'] | length > 0 %}
@@ -37,39 +61,23 @@
             <h4 class="callout__title">
               <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
             </h4>
-            <span class="term t-data" data-term="Authorized Campaign Committee">Authorized Campaign Committee</span>
-            <div class="callout__sublinks">
-              <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received &raquo;</a> |
-              <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent &raquo;</a> |
-              <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a>
-            </div>          
+            <span class="callout__subtitle">Authorized Campaign Committee</span>
           </div>
-          <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
-            <img src="/static/img/i-arrow-right--neutral-contrast.svg" alt="Arrow pointing to the right">
-          </a>          
+          <div class="callout__action">
+            <span class="t-block t-data">View detailed data:</span>
+            <ul class="callout__sublinks">
+              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received &raquo;</a></li>
+              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent &raquo;</a></li>
+              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a></li>
+            </ul>        
+            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
+              <img src="/static/img/i-arrow-right--neutral-contrast.svg" alt="Arrow pointing to the right">
+            </a>
+          </div>       
         </div>
         {% endfor %}
       {% endif %}
-    </div>
-    <figure class="usa-width-one-half">
-      <h3 class="t-ruled--bottom">Combined Financial Totals</h3>
-      <div>
-        <h5 class="term t-data-header" data-term="Total Receipts">Total Receipts</h5>
-        <span class="t-big-data">{{ null.null( aggregate.receipts | currency ) }}</span>
-      </div>
-      <div >
-        <h5 class="term t-data-header" data-term="Total Disbursements">Total Disbursements</h5>
-        <span class="t-big-data">{{ null.null( aggregate.disbursements | currency ) }}</span>
-      </div>  
-      <div>
-        <h5 class="term t-data-header" data-term="Ending Cash on Hand">Ending Cash on Hand</h5>
-        <span class="t-big-data">{{ null.null( aggregate.cash | currency ) }}</span>
-      </div>          
-      <div>
-        <h5 class="term t-data-header" data-term="Debt">Debt</h5>
-        <span class="t-big-data">{{ null.null( aggregate.debt | currency ) }}</span>
-      </div>
-    </figure>    
+    </div>   
   </div>
 
 {% if committee_groups['J'] %}
