@@ -11,7 +11,7 @@ from webargs import Arg
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sslify import SSLify
 from flask.ext.basicauth import BasicAuth
 
@@ -222,10 +222,14 @@ def election_lookup():
     return render_template('election-lookup.html')
 
 
-@app.route('/elections/<office>/<cycle>/')
-@app.route('/elections/<office>/<state>/<cycle>/')
-@app.route('/elections/<office>/<state>/<district>/<cycle>/')
+@app.route('/elections/<office>/<int:cycle>/')
+@app.route('/elections/<office>/<state>/<int:cycle>/')
+@app.route('/elections/<office>/<state>/<district>/<int:cycle>/')
 def elections(office, cycle, state=None, district=None):
+    if office.lower() not in ['president', 'senate', 'house']:
+        abort(404)
+    if state and state.upper() not in constants.states:
+        abort(404)
     return render_template(
         'elections.html',
         office=office,
