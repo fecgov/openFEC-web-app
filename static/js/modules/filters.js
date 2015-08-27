@@ -44,6 +44,15 @@ $('#filter-toggle').click(function(){
   }
 });
 
+// Adjust height on table draw
+$(document.body).on('draw.dt', function() {
+  var tableHeight = $('.datatable__container').height(),
+      filterHeight = $('.filters').height();
+  if ( tableHeight > filterHeight && $(document).width() > 980  ) {
+    $('.filters').height(tableHeight);
+  }
+})
+
 var prepareValue = function($elm, value) {
   if ($elm.attr('type') === 'checkbox') {
     return $.isArray(value) ? value : [value];
