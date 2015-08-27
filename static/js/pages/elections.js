@@ -450,5 +450,8 @@ $(document).ready(function() {
     initStateMaps(response.results);
   });
 
+  var districtMap = new maps.DistrictMap($('#election-map').get(0));
+  districtMap.load(context.election);
+
   initSpendingTables();
 });
