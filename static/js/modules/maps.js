@@ -16,6 +16,14 @@ var events = require('fec-style/js/events');
 var helpers = require('./helpers');
 var states = require('../us.json');
 
+var stateFeatures = topojson.feature(states, states.objects.units).features;
+var stateFeatureMap = _.chain(stateFeatures)
+  .map(function(feature) {
+    return [feature.properties.name, feature];
+  })
+  .object()
+  .value();
+
 var compactRules = [
   ['B', 9],
   ['M', 6],
@@ -61,7 +69,7 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
   var quantize = chroma.scale(['#fff', '#2678BA']).domain([0, max], quantiles);
   var map = svg.append('g')
     .selectAll('path')
-      .data(topojson.feature(states, states.objects.units).features)
+      .data(stateFeatures)
     .enter().append('path')
       .attr('fill', function(d) {
         return scale(results[d.properties.name] || 0);
@@ -170,12 +178,18 @@ function DistrictMap(elm) {
   this.overlay = null;
 }
 
-DistrictMap.prototype.load = function(state, district) {
-  var url = [districtUrl, state, district].join('/') + '.geojson';
-  $.getJSON(url).done(this.render.bind(this));
+DistrictMap.prototype.load = function(election) {
+  if (election.district) {
+    var url = [districtUrl, election.state, election.district].join('/') + '.geojson';
+    $.getJSON(url).done(this.render.bind(this));
+  } else {
+    var feature = stateFeatureMap[election.stateFull];
+    feature && this.render(feature);
+  }
 };
 
 DistrictMap.prototype.render = function(data) {
+  this.elm.setAttribute('aria-hidden', 'false');
   this.map = L.map(this.elm);
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
   this.overlay = L.geoJson(data).addTo(this.map);

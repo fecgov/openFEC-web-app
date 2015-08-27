@@ -22,8 +22,8 @@
           {% endif %}
         {% endif %}
       </div>
-      {% if district %}
-      <div id="election-map" style="height: 300px;"></div>
+      {% if state %}
+      <div id="election-map" aria-hidden="true" style="height: 300px;"></div>
       {% endif %}
     </div>
   </header>
@@ -59,6 +59,7 @@ var context = {
     cycle: {{ cycle }},
     office: '{{ office }}',
     state: '{{ state or '' }}',
+    stateFull: '{{ state_full or '' }}',
     district: '{{ district or '' }}'
   }
 };

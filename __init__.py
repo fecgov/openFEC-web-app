@@ -235,6 +235,7 @@ def elections(office, cycle, state=None, district=None):
         office=office,
         cycle=cycle,
         state=state,
+        state_full=constants.states[state.upper()] if state else None,
         district=district,
     )
 
