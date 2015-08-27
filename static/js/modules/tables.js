@@ -309,7 +309,7 @@ var defaultCallbacks = {
 
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
-  var $processing = $('<div class="processing">Loading...</div>');
+  var $processing = $('<div class="overlay is-loading"></div>');
   var $hideNullWidget = $(
     '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
     '<label for="null-checkbox" class="results-info__null">' +
