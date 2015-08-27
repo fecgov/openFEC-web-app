@@ -167,6 +167,7 @@ var districtUrl = '/static/json/districts';
 function DistrictMap(elm) {
   this.elm = elm;
   this.map = null;
+  this.overlay = null;
 }
 
 DistrictMap.prototype.load = function(state, district) {
@@ -175,10 +176,10 @@ DistrictMap.prototype.load = function(state, district) {
 };
 
 DistrictMap.prototype.render = function(data) {
-  var centroid = d3.geo.centroid(data);
-  this.map = L.map(this.elm).setView([centroid[1], centroid[0]], 10);
+  this.map = L.map(this.elm);
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  L.geoJson(data).addTo(this.map);
+  this.overlay = L.geoJson(data).addTo(this.map);
+  this.map.fitBounds(this.overlay.getBounds());
 };
 
 module.exports = {
