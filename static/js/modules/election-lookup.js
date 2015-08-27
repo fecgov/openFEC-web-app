@@ -45,10 +45,14 @@ function formatName(result) {
 }
 
 function formatElectionDate(result) {
-  return moment()
+  var date = moment()
     .year(result.cycle)
     .month('November')
-    .day('Monday')
+    .date(1);
+  while (date.format('E') !== '1') {
+    date = date.add(1, 'day');
+  }
+  return date
     .add(1, 'day')
     .format('MMMM Do, YYYY');
 }
