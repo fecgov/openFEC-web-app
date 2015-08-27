@@ -22,6 +22,7 @@
     "gulp-util": "^3.0.6",
     "mocha": "^2.2.5",
     "mochify": "^2.12.0",
+    "napa": "^1.2.0",
     "preprocessify": "0.0.3",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
@@ -29,6 +30,7 @@
     "watchify": "^3.2.1"
   },
   "scripts": {
+    "install": "napa",
     "build": "gulp build-js && gulp build-sass",
     "build-js": "gulp build-js",
     "build-sass": "gulp build-sass",
@@ -58,10 +60,15 @@
     "jquery": "2.1.4",
     "jquery.inputmask": "3.1.63",
     "keyboardjs": "0.4.2",
+    "leaflet": "0.7.3",
+    "leaflet-providers": "1.1.1",
     "moment": "2.10.3",
     "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
     "topojson": "1.6.19",
     "underscore": "1.8.3",
     "watchify": "3.2.1"
+  },
+  "napa": {
+    "congressional-districts": "benbalter/congressional-districts"
   }
 }

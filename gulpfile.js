@@ -29,17 +29,17 @@ gulp.task('copy-vendor-images', function() {
     .pipe(gulp.dest('./dist/images'));
 });
 
-gulp.task('copy-fonts', function() {
-  return gulp.src('./static/fonts/**/*')
-    .pipe(gulp.dest('./dist/fonts'));
-});
-
 gulp.task('copy-images', function() {
   return gulp.src(['./static/img/**/*', './node_modules/fec-style/img/**/*'])
     .pipe(gulp.dest('./dist/img'));
 });
 
-gulp.task('build-sass', ['copy-vendor-images', 'copy-fonts', 'copy-images'], function() {
+gulp.task('copy-maps', function() {
+  return gulp.src('./node_modules/congressional-districts/**/*')
+    .pipe(gulp.dest('./dist/json/districts'));
+});
+
+gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-maps'], function() {
   return gulp.src('./static/styles/*.scss')
     .pipe(rename(function(path) {
       path.dirname = './dist/styles';

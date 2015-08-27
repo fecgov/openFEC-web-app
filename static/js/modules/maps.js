@@ -8,6 +8,9 @@ var _ = require('underscore');
 var chroma = require('chroma-js');
 var topojson = require('topojson');
 
+var L = require('leaflet');
+require('leaflet-providers');
+
 var events = require('fec-style/js/events');
 
 var helpers = require('./helpers');
@@ -159,8 +162,28 @@ function highlightState($parent, state) {
   }
 }
 
+var districtUrl = '/static/json/districts';
+
+function DistrictMap(elm) {
+  this.elm = elm;
+  this.map = null;
+}
+
+DistrictMap.prototype.load = function(state, district) {
+  var url = [districtUrl, state, district].join('/') + '.geojson';
+  $.getJSON(url).done(this.render.bind(this));
+};
+
+DistrictMap.prototype.render = function(data) {
+  var centroid = d3.geo.centroid(data);
+  this.map = L.map(this.elm).setView([centroid[1], centroid[0]], 10);
+  L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
+  L.geoJson(data).addTo(this.map);
+};
+
 module.exports = {
   stateMap: stateMap,
   stateLegend: stateLegend,
-  highlightState: highlightState
+  highlightState: highlightState,
+  DistrictMap: DistrictMap
 };
