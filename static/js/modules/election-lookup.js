@@ -170,7 +170,12 @@ ElectionLookup.prototype.drawDistricts = function(results) {
       return encodeDistrict(result.state, result.district);
     })
     .value();
-  this.map.drawDistricts(encoded);
+  var state = this.$state.val();
+  var district = this.$district.val();
+  if (state && district) {
+    encoded.push(encodeDistrict(state, district));
+  }
+  this.map.drawDistricts(_.unique(encoded));
 };
 
 ElectionLookup.prototype.shouldSearch = function(serialized) {
