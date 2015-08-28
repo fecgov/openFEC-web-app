@@ -231,45 +231,52 @@ function modalAfterRender(template, api, data, response) {
       if ($(ev.target).is('a')) {
         return true;
       }
-      var $row = $(ev.target).closest('tr');
-      var index = api.row($row).index();
-      $modal.find('.js-panel-content').html(template(response.results[index]));
-      $modal.attr('aria-hidden', 'false');
-      $row.siblings().toggleClass('row-active', false);
-      $row.toggleClass('row-active', true);
-      $('body').toggleClass('panel-active', true);
-      var hideColumns = api.columns('.hide-panel');
-      hideColumns.visible(false);
-      // Populate the pdf button if there is one
-      if ( response.results[index].pdf_url ) {
-        $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
-      } else {
-        $modal.find('.js-pdf_url').remove();
-      }
+      if ( !$(ev.target).closest('td').hasClass('dataTables_empty') ) { 
+        var $row = $(ev.target).closest('tr');
+        var index = api.row($row).index();
+        $modal.find('.js-panel-content').html(template(response.results[index]));
+        $modal.attr('aria-hidden', 'false');
+        $row.siblings().toggleClass('row-active', false);
+        $row.toggleClass('row-active', true);
+        $('body').toggleClass('panel-active', true);
+        var hideColumns = api.columns('.hide-panel');
+        hideColumns.visible(false);
+        // Populate the pdf button if there is one
+        if ( response.results[index].pdf_url ) {
+          $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
+        } else {
+          $modal.find('.js-pdf_url').remove();
+        }
 
-      // Set focus on the close button
-      $('.js-hide').focus();
+        // Set focus on the close button
+        $('.js-hide').focus();
 
-      // When under $large-screen
-      // TODO figure way to share these values with CSS.
-      if ($(document).width() < 980) {
-        api.columns('.hide-panel-tablet').visible(false);
+        // When under $large-screen
+        // TODO figure way to share these values with CSS.
+        if ($(document).width() < 980) {
+          api.columns('.hide-panel-tablet').visible(false);
+        }
       }
     }
   });
 
   $modal.on('click', '.js-panel-close', function(ev) {
     ev.preventDefault();
+    hidePanel(api, $modal);
+  });
+}
+
+function hidePanel(api, $modal) {
     $('.row-active').focus();
     $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
-    var hideColumns = api.columns('.hide-panel');
-    hideColumns.visible(true);
-    // When under $large-screen
-    if ($(document).width() < 980) {
-      api.columns('.hide-panel-tablet').visible(true);
+    $modal.attr('aria-hidden', 'true');
+    api.columns('.hide-panel-tablet').visible(true);
+
+    if ($(document).width() > 980) {
+      api.columns('.hide-panel').visible(true);
     }
-  });
+
 }
 
 function barsAfterRender(template, api, data, response) {
@@ -295,12 +302,25 @@ var defaultCallbacks = {
   preprocess: mapResponse
 };
 
-function submitOnChange($form, api) {
+function updateOnChange($form, api) {
   function onChange(e) {
     e.preventDefault();
+    hidePanel(api, $('#datatable-modal'));
     api.ajax.reload();
   }
   $form.on('change', 'input,select', _.debounce(onChange, 250));
+}
+
+/**
+ * Adjust form height to match table; called after table redraw.
+ */
+function adjustFormHeight($table, $form) {
+  $form.height('');
+  var tableHeight = $table.closest('.datatable__container').height();
+  var filterHeight = $form.height();
+  if (tableHeight > filterHeight && $(document).width() > 980) {
+    $form.height(tableHeight);
+  }
 }
 
 var defaultCallbacks = {
@@ -309,7 +329,7 @@ var defaultCallbacks = {
 
 function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
   var draw;
-  var $processing = $('<div class="processing">Loading...</div>');
+  var $processing = $('<div class="overlay is-loading"></div>');
   var $hideNullWidget = $(
     '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
     '<label for="null-checkbox" class="results-info__null">' +
@@ -391,7 +411,8 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   $table.css('width', '100%');
   $table.find('tbody').addClass('js-panel-toggle');
   if ($form) {
-    submitOnChange($form, api);
+    updateOnChange($form, api);
+    $table.on('draw.dt', adjustFormHeight.bind(null, $table, $form));
   }
 }
 

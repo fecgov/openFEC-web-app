@@ -12,7 +12,7 @@ var columns = [
   {
     data: 'name',
     className: 'all',
-    width: '300px',
+    width: '280px',
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(data, '/committee/' + row.committee_id + tables.buildCycle(row), 'committee');
     }
