@@ -26,12 +26,18 @@ function decodeDistrict(district) {
   };
 }
 
+function truncate(value, digits) {
+  var multiplier = Math.pow(10, digits);
+  return Math.floor(value / multiplier) * multiplier;
+}
+
 /**
  * Find district feature matching `district`.
  */
 function findDistrict(district) {
   return _.find(districtFeatures.features, function(feature) {
-    return feature.id === district;
+    return feature.id === district ||
+      truncate(feature.id, 2) === district;
   });
 }
 
@@ -44,7 +50,7 @@ function findDistrict(district) {
 function findDistricts(districts) {
   return _.filter(districtFeatures.features, function(feature) {
     return districts.indexOf(feature.id) !== -1 ||
-      districts.indexOf(Math.floor(feature.id / 100) * 100) !== -1;
+      districts.indexOf(truncate(feature.id, 2)) !== -1;
   });
 }
 
