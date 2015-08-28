@@ -15,7 +15,7 @@ var districts = require('../districts.json');
 var districtFeatures = topojson.feature(districts, districts.objects.districts);
 
 function encodeDistrict(state, district) {
-  return parseInt(fips[state]) * 100 + (parseInt(district) || 0);
+  return parseInt(fips[state.toUpperCase()]) * 100 + (parseInt(district) || 0);
 }
 
 function decodeDistrict(district) {
@@ -33,6 +33,9 @@ function truncate(value, digits) {
 
 /**
  * Find district feature matching `district`.
+ * Note: To handle occasional irregularities in district numbering, include
+ *  districts that are exact matches, as well as district that match after
+ *  rounding to the nearest 100.
  */
 function findDistrict(district) {
   return _.find(districtFeatures.features, function(feature) {
