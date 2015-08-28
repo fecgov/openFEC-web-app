@@ -311,6 +311,18 @@ function updateOnChange($form, api) {
   $form.on('change', 'input,select', _.debounce(onChange, 250));
 }
 
+/**
+ * Adjust form height to match table; called after table redraw.
+ */
+function adjustFormHeight($table, $form) {
+  $form.height('');
+  var tableHeight = $table.closest('.datatable__container').height();
+  var filterHeight = $form.height();
+  if (tableHeight > filterHeight && $(document).width() > 980) {
+    $form.height(tableHeight);
+  }
+}
+
 var defaultCallbacks = {
   preprocess: mapResponse
 };
@@ -400,6 +412,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   $table.find('tbody').addClass('js-panel-toggle');
   if ($form) {
     updateOnChange($form, api);
+    $table.on('draw.dt', adjustFormHeight.bind(null, $table, $form));
   }
 }
 
