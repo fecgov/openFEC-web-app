@@ -6,21 +6,12 @@ var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
-var topojson = require('topojson');
-
-var s = require('underscore.string');
-_.mixin(s.exports());
 
 var L = require('leaflet');
 require('leaflet-providers');
 
 var helpers = require('./helpers');
-
-var fips = require('../fips.json');
-var fipsInverse = _.invert(fips);
-
-var districts = require('../districts.json');
-var districtFeatures = topojson.feature(districts, districts.objects.districts);
+var utils = require('./election-utils');
 
 var districtTemplate = require('../../templates/districts.hbs');
 var resultTemplate = require('../../templates/electionResult.hbs');
@@ -167,13 +158,13 @@ ElectionLookup.prototype.drawDistricts = function(results) {
       return result.state && result.district;
     })
     .map(function(result) {
-      return encodeDistrict(result.state, result.district);
+      return utils.encodeDistrict(result.state, result.district);
     })
     .value();
   var state = this.$state.val();
   var district = this.$district.val();
   if (state && district) {
-    encoded.push(encodeDistrict(state, district));
+    encoded.push(utils.encodeDistrict(state, district));
   }
   this.map.drawDistricts(_.unique(encoded));
 };
@@ -188,18 +179,6 @@ ElectionLookup.prototype.draw = function(results) {
   this.$resultsItems.html(resultTemplate(_.map(results, formatResult)));
 };
 
-function decodeDistrict(district) {
-  district = _.sprintf('%04d', district);
-  return {
-    state: fipsInverse[district.substring(0, 2)],
-    district: parseInt(district.substring(2, 4))
-  };
-}
-
-function encodeDistrict(state, district) {
-  return parseInt(fips[state]) * 100 + parseInt(district);
-}
-
 function ElectionLookupMap(elm, opts) {
   this.elm = elm;
   this.opts = opts;
@@ -210,7 +189,9 @@ function ElectionLookupMap(elm, opts) {
 }
 
 ElectionLookupMap.prototype.drawDistricts = function(districts) {
-  var features = districts ? this.filterDistricts(districts) : districtFeatures;
+  var features = districts ?
+    this.filterDistricts(districts) :
+    utils.districtFeatures;
   if (this.overlay) {
     this.map.removeLayer(this.overlay);
   }
@@ -227,10 +208,8 @@ ElectionLookupMap.prototype.drawDistricts = function(districts) {
 
 ElectionLookupMap.prototype.filterDistricts = function(districts) {
   return {
-    type: districtFeatures.type,
-    features: _.filter(districtFeatures.features, function(feature) {
-      return districts.indexOf(feature.id) !== -1;
-    })
+    type: utils.districtFeatures.type,
+    features: utils.findDistricts(districts)
   };
 };
 
@@ -242,7 +221,7 @@ ElectionLookupMap.prototype.handleClick = function(e) {
   this.map.removeLayer(this.overlay);
   this.drawDistricts([e.target.feature.id]);
   if (this.opts.handleSelect) {
-    var district = decodeDistrict(e.target.feature.id);
+    var district = utils.decodeDistrict(e.target.feature.id);
     this.opts.handleSelect(district.state, district.district);
   }
 };
