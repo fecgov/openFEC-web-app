@@ -102,9 +102,13 @@ ElectionLookup.prototype.init = function() {
   this.handleStateChange();
 };
 
+function hasOption($select, value) {
+  return $select.find('option[value="' + value + '"]').length > 0;
+}
+
 ElectionLookup.prototype.handleSelectMap = function(state, district) {
   this.$state.val(state).change();
-  if (district) {
+  if (district && hasOption(this.$district, district)) {
     this.$district.val(district).change();
   }
 };
@@ -163,9 +167,7 @@ ElectionLookup.prototype.drawDistricts = function(results) {
     .value();
   var state = this.$state.val();
   var district = this.$district.val();
-  if (state && district) {
-    encoded.push(utils.encodeDistrict(state, district));
-  }
+  encoded.push(utils.encodeDistrict(state, district));
   this.map.drawDistricts(_.unique(encoded));
 };
 
