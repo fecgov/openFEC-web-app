@@ -184,11 +184,15 @@ ElectionLookup.prototype.draw = function(results) {
 function ElectionLookupMap(elm, opts) {
   this.elm = elm;
   this.opts = opts;
+  this.init();
+}
+
+ElectionLookupMap.prototype.init = function() {
   this.map = L.map(this.elm);
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
   this.overlay = null;
   this.drawDistricts();
-}
+};
 
 ElectionLookupMap.prototype.drawDistricts = function(districts) {
   var features = districts ?

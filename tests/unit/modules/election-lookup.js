@@ -11,7 +11,7 @@ chai.use(sinonChai);
 var $ = require('jquery');
 var _ = require('underscore');
 
-var ElectionLookup = require('../../../static/js/modules/election-lookup').ElectionLookup;
+var lookup = require('../../../static/js/modules/election-lookup');
 
 _.extend(window, {
   API_LOCATION: '',
@@ -33,6 +33,11 @@ describe('election lookup', function() {
     $('body').append(this.$fixture);
   });
 
+  before(function() {
+    sinon.stub(lookup.ElectionLookupMap.prototype, 'init');
+    sinon.stub(lookup.ElectionLookupMap.prototype, 'drawDistricts');
+  });
+
   beforeEach(function() {
     this.$fixture.empty().append(
       '<div id="election-lookup">' +
@@ -45,9 +50,10 @@ describe('election lookup', function() {
         '<div class="results">' +
           '<div class="results-items"></div>' +
         '</div>' +
+        '<div class="election-map"></div>' +
       '</div>'
     );
-    this.el = new ElectionLookup('#election-lookup');
+    this.el = new lookup.ElectionLookup('#election-lookup');
   });
 
   it('should memorize its selector', function() {
@@ -98,7 +104,6 @@ describe('election lookup', function() {
       return $(elm).find('h4').text();
     }).get();
     expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
-    expect(this.el.hasResults).to.be.true;
   });
 
   describe('fetching ajax', function() {
