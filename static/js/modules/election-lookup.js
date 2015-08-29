@@ -6,6 +6,7 @@ var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
+var colorbrewer = require('colorbrewer');
 
 var L = require('leaflet');
 require('leaflet-providers');
@@ -73,6 +74,10 @@ function formatUrl(result) {
   return URI(path.join('/')).toString();
 }
 
+function hasOption($select, value) {
+  return $select.find('option[value="' + value + '"]').length > 0;
+}
+
 function ElectionLookup(selector) {
   this.$elm = $(selector);
   this.init();
@@ -80,6 +85,7 @@ function ElectionLookup(selector) {
 
 ElectionLookup.prototype.init = function() {
   this.districts = 0;
+  this.serialized = {};
 
   this.$search = this.$elm.find('.search');
   this.$form = this.$elm.find('form');
@@ -102,15 +108,14 @@ ElectionLookup.prototype.init = function() {
   this.handleStateChange();
 };
 
-function hasOption($select, value) {
-  return $select.find('option[value="' + value + '"]').length > 0;
-}
-
 ElectionLookup.prototype.handleSelectMap = function(state, district) {
-  this.$state.val(state).change();
+  this.$zip.val('');
+  this.$state.val(state);
+  this.updateDistricts(state);
   if (district && hasOption(this.$district, district)) {
-    this.$district.val(district).change();
+    this.$district.val(district);
   }
+  this.search();
 };
 
 ElectionLookup.prototype.getUrl = function(query) {
@@ -131,29 +136,35 @@ ElectionLookup.prototype.handleZipChange = function() {
 };
 
 ElectionLookup.prototype.handleStateChange = function() {
-  var value = this.$state.val();
   this.$zip.val('');
-  this.districts = context.districts[value] ? context.districts[value].districts : 0;
-  this.$district
-    .html(districtTemplate(_.range(1, this.districts + 1)))
-    .val('')
-    .prop('disabled', !(value && this.districts));
-  if (value && !this.districts) {
+  var state = this.$state.val();
+  this.updateDistricts(state);
+  if (state && !this.districts) {
     this.search();
   }
 };
 
-ElectionLookup.prototype.search = function(event) {
-  event && event.preventDefault();
+ElectionLookup.prototype.updateDistricts = function(state) {
+  state = state || this.$state.val();
+  this.$zip.val('');
+  this.districts = context.districts[state] ? context.districts[state].districts : 0;
+  this.$district
+    .html(districtTemplate(_.range(1, this.districts + 1)))
+    .val('')
+    .prop('disabled', !(state && this.districts));
+};
+
+ElectionLookup.prototype.search = function(e) {
+  e && e.preventDefault();
   var self = this;
   var serialized = self.serialize();
-  if (self.shouldSearch(serialized)) {
+  if (self.shouldSearch(serialized) && !_.isEqual(serialized, self.serialized)) {
     $.getJSON(self.getUrl(serialized)).done(function(response) {
       self.draw(response.results);
       self.drawDistricts(response.results);
     });
+    self.serialized = serialized;
   }
-  var url = self.getUrl(this.serialize());
 };
 
 ElectionLookup.prototype.drawDistricts = function(results) {
@@ -167,8 +178,13 @@ ElectionLookup.prototype.drawDistricts = function(results) {
     .value();
   var state = this.$state.val();
   var district = this.$district.val();
-  encoded.push(utils.encodeDistrict(state, district));
-  this.map.drawDistricts(_.unique(encoded));
+  if (state) {
+    encoded.push(utils.encodeDistrict(state, district));
+  }
+  encoded = _.unique(encoded);
+  if (encoded.length) {
+    this.map.drawDistricts(encoded);
+  }
 };
 
 ElectionLookup.prototype.shouldSearch = function(serialized) {
@@ -181,29 +197,59 @@ ElectionLookup.prototype.draw = function(results) {
   this.$resultsItems.html(resultTemplate(_.map(results, formatResult)));
 };
 
+var defaultOpts = {
+  colorScale: colorbrewer.Set1
+};
+
 function ElectionLookupMap(elm, opts) {
   this.elm = elm;
-  this.opts = opts;
+  this.opts = _.extend({}, defaultOpts, opts);
   this.init();
 }
 
 ElectionLookupMap.prototype.init = function() {
+  this.colors = null;
+  this.overlay = null;
+  this.districts = null;
   this.map = L.map(this.elm);
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  this.overlay = null;
   this.drawDistricts();
 };
 
-ElectionLookupMap.prototype.drawDistricts = function(districts) {
+ElectionLookupMap.prototype.setColors = function(features) {
+  var colorOptions = _.map(Object.keys(this.opts.colorScale), function(key) {
+    return parseInt(key);
+  });
+  var minColors = Math.min.apply(null, colorOptions);
+  var maxColors = Math.max.apply(null, colorOptions);
+  var numColors = Math.max(minColors, Math.min(features.length, maxColors));
+  this.colors = this.opts.colorScale[numColors];
+};
+
+ElectionLookupMap.prototype.updateFeatureColors = function(districts, features, opts) {
+  var self = this;
+  if (opts.reset && !_.isEqual(districts, this.districts)) {
+    _.each(features, function(feature, index) {
+      feature._color = self.colors[index % self.colors.length];
+    });
+  }
+  self.districts = districts;
+};
+
+ElectionLookupMap.prototype.drawDistricts = function(districts, opts) {
+  var self = this;
+  opts = _.extend({reset: true}, opts);
   var features = districts ?
     this.filterDistricts(districts) :
     utils.districtFeatures;
   if (this.overlay) {
     this.map.removeLayer(this.overlay);
   }
+  this.setColors(features.features);
+  this.updateFeatureColors(districts, features.features, opts);
   this.overlay = L.geoJson(
     features, {
-      onEachFeature: this.bindDistrictListener.bind(this)
+      onEachFeature: this.onEachFeature.bind(this)
   }).addTo(this.map);
   if (districts) {
     this.map.fitBounds(this.overlay.getBounds());
@@ -219,13 +265,14 @@ ElectionLookupMap.prototype.filterDistricts = function(districts) {
   };
 };
 
-ElectionLookupMap.prototype.bindDistrictListener = function(feature, layer) {
+ElectionLookupMap.prototype.onEachFeature = function(feature, layer) {
+  layer.setStyle({color: feature._color});
   layer.on('click', this.handleClick.bind(this));
 };
 
 ElectionLookupMap.prototype.handleClick = function(e) {
   this.map.removeLayer(this.overlay);
-  this.drawDistricts([e.target.feature.id]);
+  this.drawDistricts([e.target.feature.id], {reset: false});
   if (this.opts.handleSelect) {
     var district = utils.decodeDistrict(e.target.feature.id);
     this.opts.handleSelect(district.state, district.district);
