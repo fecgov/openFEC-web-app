@@ -1,7 +1,7 @@
 <section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
   <div class="container">
-    <div class="page-section__intro">
-      <h2 class="section-heading" id="section-1-heading">Candidate Comparison {% include 'partials/cycle-select.html' %}</h2>
+    <div class="section__heading">
+      <h2 class="heading__title" id="section-1-heading">Candidate Comparison {% include 'partials/cycle-select.html' %}</h2>
     </div>
     <div class="page-subsection">
       <h4>Active Candidates</h4>
@@ -18,27 +18,26 @@
         </thead>
       </table>
     </div>
-    <div class="page-subsection">
-      <div class="page-section__intro">
-        <h3>Fundraising Comparison</h3>
-        <p>Compare the source and nature of candidate receipts.</p>
-        <div id="comparison" class="meta-box filters--horizontal"></div>
-        <fieldset class="toggles">
-          <legend class="label">Compare by:</legend>
-          <label for="toggle-size">
-            <input id="toggle-size" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-size" checked>
-            <span class="button--primary">Contribution Size</span>
-          </label>
-          <label for="toggle-state">
-            <input id="toggle-state" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-state">
-            <span class="button--primary">Contribution Location</span>
-          </label>
-          <label for="toggle-contributor-type">
-            <input id="toggle-contributor-type" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-contributor-type">
-            <span class="button--primary">Contributor Type</span>
-          </label>
-        </fieldset>
-      </div>
+    <div class="content__section">
+      <h3>Fundraising Comparison</h3>
+      <p>Compare the source and nature of candidate receipts.</p>
+      <div id="comparison" class="meta-box filters--horizontal"></div>
+      <fieldset class="toggles">
+        <legend class="label">Compare by:</legend>
+        <label for="toggle-size">
+          <input id="toggle-size" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-size" checked>
+          <span class="button--primary">Contribution Size</span>
+        </label>
+        <label for="toggle-state">
+          <input id="toggle-state" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-state">
+          <span class="button--primary">Contribution Location</span>
+        </label>
+        <label for="toggle-contributor-type">
+          <input id="toggle-contributor-type" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-contributor-type">
+          <span class="button--primary">Contributor Type</span>
+        </label>
+      </fieldset>
+    </div>
 
       <div class="row">
         <div id="by-size" class="panel-toggle-element" aria-hidden="false">

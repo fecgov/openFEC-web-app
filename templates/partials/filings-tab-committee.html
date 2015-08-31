@@ -1,10 +1,8 @@
 <section class="main" id="section-4" role="tabpanel" aria-hidden="true" aria-labelledby="section-4-heading">
   <div class="container">
-    <div class="content__section">
-      <h2 class="content__section__heading" id="section-4-heading">Committee Filings {% include 'partials/cycle-select.html' %}</h2>
-      <div class="card card--primary">
-        <a href="{{ url_for('filings', committee_id=committee_id) }}">View all filings &raquo;</a>
-      </div>
+    <div class="section__heading">
+      <h2 class="heading__title" id="section-4-heading">Committee Filings {% include 'partials/cycle-select.html' %}</h2>
+      <a class="heading__action button--neutral button--browse" href="{{ url_for('filings', committee_id=committee_id) }}">View all filings &raquo;</a>
     </div>
     <div class="content__section">
       <div id="filters" class="filters--horizontal">

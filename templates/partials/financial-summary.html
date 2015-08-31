@@ -2,7 +2,9 @@
 {% import 'macros/null.html' as null %}
 
   <div class="content__section">
-    <h2 class="content__section__heading">Financial Summary {% include 'partials/cycle-select.html' %}</h2>
+    <div class="section__heading">
+      <h2 class="heading__title">Financial Summary {% include 'partials/cycle-select.html' %}</h2>
+    </div>
     <p class="usa-width-two-thirds">Candidates receive and spend money through committees. These are the <strong>combined financial totals</strong> for all of this candidate's authorized committees. You can learn more about each committee's fundraising and spending on its page.</p>
   </div>
   {% if committees_authorized %}
