@@ -32,12 +32,13 @@ function serializeObject($form) {
     .value();
 }
 
-function formatResult(result) {
+function formatResult(result, lookup) {
   return _.extend({}, result, {
     officeName: officeMap[result.office],
     electionName: formatName(result),
     electionDate: formatElectionDate(result),
-    url: formatUrl(result)
+    url: formatUrl(result),
+    color: formatColor(result, lookup)
   });
 }
 
@@ -72,6 +73,12 @@ function formatUrl(result) {
   }
   path = path.concat(result.cycle);
   return URI(path.join('/')).toString();
+}
+
+function formatColor(result, lookup) {
+  return lookup.map.colorMap ?
+    lookup.map.colorMap[utils.encodeDistrict(result.state, result.district)] || '#000000' :
+    '#000000';
 }
 
 function hasOption($select, value) {
@@ -160,8 +167,9 @@ ElectionLookup.prototype.search = function(e) {
   var serialized = self.serialize();
   if (self.shouldSearch(serialized) && !_.isEqual(serialized, self.serialized)) {
     $.getJSON(self.getUrl(serialized)).done(function(response) {
-      self.draw(response.results);
+      // Note: Update district color map before rendering results
       self.drawDistricts(response.results);
+      self.draw(response.results);
     });
     self.serialized = serialized;
   }
@@ -194,7 +202,7 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 };
 
 ElectionLookup.prototype.draw = function(results) {
-  this.$resultsItems.html(resultTemplate(_.map(results, formatResult)));
+  this.$resultsItems.html(resultTemplate(_.map(results, _.partial(formatResult, _, this))));
 };
 
 var defaultOpts = {
@@ -208,32 +216,12 @@ function ElectionLookupMap(elm, opts) {
 }
 
 ElectionLookupMap.prototype.init = function() {
-  this.colors = null;
   this.overlay = null;
   this.districts = null;
+  this.colorMap = null;
   this.map = L.map(this.elm);
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
   this.drawDistricts();
-};
-
-ElectionLookupMap.prototype.setColors = function(features) {
-  var colorOptions = _.map(Object.keys(this.opts.colorScale), function(key) {
-    return parseInt(key);
-  });
-  var minColors = Math.min.apply(null, colorOptions);
-  var maxColors = Math.max.apply(null, colorOptions);
-  var numColors = Math.max(minColors, Math.min(features.length, maxColors));
-  this.colors = this.opts.colorScale[numColors];
-};
-
-ElectionLookupMap.prototype.updateFeatureColors = function(districts, features, opts) {
-  var self = this;
-  if (opts.reset && !_.isEqual(districts, this.districts)) {
-    _.each(features, function(feature, index) {
-      feature._color = self.colors[index % self.colors.length];
-    });
-  }
-  self.districts = districts;
 };
 
 ElectionLookupMap.prototype.drawDistricts = function(districts, opts) {
@@ -245,8 +233,10 @@ ElectionLookupMap.prototype.drawDistricts = function(districts, opts) {
   if (this.overlay) {
     this.map.removeLayer(this.overlay);
   }
-  this.setColors(features.features);
-  this.updateFeatureColors(districts, features.features, opts);
+  if (opts.reset && !_.isEqual(districts, this.districts)) {
+    this.setColors(features.features);
+  }
+  this.districts = districts;
   this.overlay = L.geoJson(
     features, {
       onEachFeature: this.onEachFeature.bind(this)
@@ -265,8 +255,24 @@ ElectionLookupMap.prototype.filterDistricts = function(districts) {
   };
 };
 
+ElectionLookupMap.prototype.setColors = function(features) {
+  var colorOptions = _.map(Object.keys(this.opts.colorScale), function(key) {
+    return parseInt(key);
+  });
+  var minColors = Math.min.apply(null, colorOptions);
+  var maxColors = Math.max.apply(null, colorOptions);
+  var numColors = Math.max(minColors, Math.min(features.length, maxColors));
+  var colors = this.opts.colorScale[numColors];
+  this.colorMap = _.chain(features)
+    .map(function(feature, index) {
+      return [feature.id, colors[index % colors.length]];
+    })
+    .object()
+    .value();
+};
+
 ElectionLookupMap.prototype.onEachFeature = function(feature, layer) {
-  layer.setStyle({color: feature._color});
+  layer.setStyle({color: this.colorMap[feature.id]});
   layer.on('click', this.handleClick.bind(this));
 };
 
