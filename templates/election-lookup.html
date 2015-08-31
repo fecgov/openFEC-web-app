@@ -9,7 +9,7 @@
   <header class="page-header slab slab--primary">
     <h1 class="page-header__title">Elections</h1>
     {{ search.search('page-header', 'candidates') }}
-  </header>  
+  </header>
   <section class="main">
     <div class="container">
       <h2>Find Elections by Location</h2>
@@ -52,14 +52,12 @@
             </div>
           </form>
         </div>
-        <div class="main__content">
-          <div class="results">
+        <div class="row">
+          <div class="results usa-width-one-half">
             <h2>All Matching Districts</h2>
             <div class="results-items"></div>
           </div>
-        </div>        
-        <div class="chunk--half">
-          <div class="search-populated"></div>
+          <div class="election-map usa-width-one-half" style="height: 350px;"></div>
         </div>
       </div>
     </div>
