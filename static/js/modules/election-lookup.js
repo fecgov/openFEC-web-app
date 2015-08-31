@@ -32,6 +32,7 @@ function formatResult(result) {
     officeName: officeMap[result.office],
     electionName: formatName(result),
     electionDate: formatElectionDate(result),
+    incumbent: formatIncumbent(result),
     url: formatUrl(result)
   });
 }
@@ -55,6 +56,17 @@ function formatElectionDate(result) {
   return date
     .add(1, 'day')
     .format('MMMM Do, YYYY');
+}
+
+function formatIncumbent(result) {
+  if (result.incumbent_id) {
+    return {
+      name: result.incumbent_name,
+      url: '/candidate/' + result.incumbent_id
+    };
+  } else {
+    return null;
+  }
 }
 
 function formatUrl(result) {
