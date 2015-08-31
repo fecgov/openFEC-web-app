@@ -1,5 +1,5 @@
 {% if cycles %}
-  <select class="cycle-select js-cycle" aria-label="Two-Year Period" name="cycle">
+  <select class="cycle-select select--neutral js-cycle" aria-label="Two-Year Period" name="cycle">
   {% for each in cycles | restrict_cycles | sort(reverse=True) %}
     <option
         value="{{ each }}"
