@@ -227,12 +227,7 @@ $(document).ready(function() {
     switch ($table.attr('data-type')) {
       case 'committee-contributor':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');
-        query = {};
-        if (year) {
-          query.year = year;
-        } else {
-          query.cycle = cycle;
-        }
+        query = {cycle: cycle};
         tables.initTableDeferred($table, null, path, query, committeeColumns, aggregateCallbacks, {
           dom: tables.simpleDOM,
           order: [[1, 'desc']],
