@@ -132,18 +132,7 @@ var occupationColumns = [
 ];
 
 var filingsColumns = [
-  {
-    data: 'document_description',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      var anchor = document.createElement('a');
-      anchor.textContent = data;
-      anchor.setAttribute('href', row.pdf_url);
-      anchor.setAttribute('target', '_blank');
-      return anchor.outerHTML;
-    }
-  },
+  tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
   {
     data: 'amendment_indicator',
     className: 'min-desktop',
@@ -227,12 +216,7 @@ $(document).ready(function() {
     switch ($table.attr('data-type')) {
       case 'committee-contributor':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');
-        query = {};
-        if (year) {
-          query.year = year;
-        } else {
-          query.cycle = cycle;
-        }
+        query = {cycle: cycle};
         tables.initTableDeferred($table, null, path, query, committeeColumns, aggregateCallbacks, {
           dom: tables.simpleDOM,
           order: [[1, 'desc']],
