@@ -281,9 +281,9 @@ $(document).ready(function() {
             afterRender: filings.renderFilingsModal
           }),
           {
-            dom: 't<"results-info results-info--bottom meta-box"lfrip>',
+            dom: '<"panel__main"t><"results-info results-info--bottom meta-box"lfrip>',
             // Order by receipt date descending
-            order: [[4, 'desc']],
+            order: [[2, 'desc']],
             useFilters: true
           }
         );
