@@ -177,7 +177,7 @@ form_types = OrderedDict([
     ('F7', "Communication Costs - Corporations And Membership Orgs"),
     ('F8', "Debt Settlement Plan"),
     ('F9', "24-Hour Notice Of Disbursement/Obligations For Electioneering Communications"),
-    ('F10', "24-Hour Notice Of Expenditure From Candidate'S Personal Funds"),
+    ('F10', "24-Hour Notice Of Expenditure From Candidate's Personal Funds"),
     ('F13', "Donations Accepted For Inaugural Committee"),
     ('F99', "Miscellaneous Submission"),
     ('RFAI', "Request For Additional Information"),
