@@ -12,7 +12,7 @@ var columns = require('../modules/columns');
 var filingsColumns = columns.getColumns(
   columns.filings,
   [
-    'pdf_url', 'committee_name', 'candidate_name', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
+    'pdf_url', 'filer_name', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
     'total_receipts', 'total_disbursements', 'total_independent_expenditures',
     'modal_trigger'
   ]
@@ -27,7 +27,7 @@ $(document).ready(function() {
     }),
     {
       // Order by receipt date descending
-      order: [[4, 'desc']],
+      order: [[3, 'desc']],
       useFilters: true
   });
 });

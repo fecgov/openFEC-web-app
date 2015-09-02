@@ -9,20 +9,19 @@ var decoders = require('./decoders');
 
 var filings = {
   pdf_url: tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
-  committee_name: {
-    data: 'committee_name',
+  filer_name: {
+    data: 'committee_id',
     className: 'min-desktop',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.committee_id + tables.buildCycle(row), 'committee');
-    },
-  },
-  candidate_name: {
-    data: 'candidate_name',
-    className: 'min-desktop',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id + tables.buildCycle(row), 'candidate');
+      var cycle = tables.buildCycle(row);
+      if (row.candidate_name) {
+        return tables.buildEntityLink(row.candidate_name, '/candidate/' + row.candidate_id + cycle, 'candidate');
+      } else if (row.committee_name) {
+        return tables.buildEntityLink(row.committee_name, '/committee/' + row.candidate_id + cycle, 'committee');
+      } else {
+        return '';
+      }
     },
   },
   amendment_indicator: {

@@ -9,14 +9,14 @@ var columns = require('../modules/columns');
 
 var filingsColumns = columns.getColumns(
   columns.filings,
-  ['pdf_url', 'committee_name', 'candidate_name', 'receipt_date']
+  ['pdf_url', 'filer_name', 'receipt_date']
 );
 
 $(document).ready(function() {
   var $table = $('#results');
   tables.initTable($table, null, 'filings', {per_page: 10}, filingsColumns, tables.offsetCallbacks, {
     // Order by receipt date descending
-    order: [[3, 'desc']],
+    order: [[2, 'desc']],
     useFilters: false,
     dom: 't'
   });
