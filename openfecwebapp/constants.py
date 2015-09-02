@@ -155,11 +155,32 @@ report_types = OrderedDict([
     ('QSA', 'Semi-Annual only'),
     ('QYS', 'Jan 31 Year End (YE) report and Semi-Annual'),
     ('QYE', 'Semi-Annual only'),
-    ('QMS', 'July 31 Mid-Year (MY) reportand Semi-annual'),
+    ('QMS', 'July 31 Mid-Year (MY) report and Semi-annual'),
     ('M7S', 'July 20 (M7) Monthly report and Semi-Annual'),
     ('MSA', 'Semi-Annual only'),
     ('MYS', 'Jan 31 Year End (MYE) report and Semi-annual'),
     ('MSY', 'Semi-Annual only'),
+])
+
+form_types = OrderedDict([
+    ('F1', "Statement Of Organization"),
+    ('F1M', "Notification Of Multicandidate Status"),
+    ('F2', "Statement Of Candidacy"),
+    ('F24', "24/48 Hour Notice Of Independent Expenditures or Coordinated Expenditures"),
+    ('F3', "Receipts And Disbursements - Authorized Committee"),
+    ('F3P', "Receipts And Disbursements - Authorized Committee Presidential"),
+    ('F3X', "Receipts And Disbursements - Non-Authorized Committee"),
+    ('F3L', "Contributions Bundled By Lobbyist/Registrants And Lobbyist/Registrant PACs"),
+    ('F4', "Receipts And Disbursements - Convention Committee"),
+    ('F5', "Independent Expenditures Made And Contributions Received"),
+    ('F6', "48-Hour Notice Of Contributions/Loans Received"),
+    ('F7', "Communication Costs - Corporations And Membership Orgs"),
+    ('F8', "Debt Settlement Plan"),
+    ('F9', "24-Hour Notice Of Disbursement/Obligations For Electioneering Communications"),
+    ('F10', "24-Hour Notice Of Expenditure From Candidate'S Personal Funds"),
+    ('F13', "Donations Accepted For Inaugural Committee"),
+    ('F99', "Miscellaneous Submission"),
+    ('RFAI', "Request For Additional Information"),
 ])
 
 amendment_indicators = OrderedDict([
