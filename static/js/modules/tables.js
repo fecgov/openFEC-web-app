@@ -244,16 +244,17 @@ function modalRenderFactory(template, fetch) {
     var $modal = $('#datatable-modal');
 
     // Move the modal to the results div.
-    $modal.appendTo($('#results'));
+    $modal.appendTo($table);
     $table.find('tr').attr('tabindex', 0);
 
-    $table.on('click keypress', '.js-panel-toggle tr:has(.' + MODAL_TRIGGER_CLASS + ')', function(ev) {
-      if (ev.which === 13 || ev.type === 'click') {
-        if ($(ev.target).is('a')) {
+    $table.on('click keypress', '.js-panel-toggle tr:has(.' + MODAL_TRIGGER_CLASS + ')', function(e) {
+      if (e.which === 13 || e.type === 'click') {
+        var $target = $(e.target);
+        if ($target.is('a')) {
           return true;
         }
-        if ( !$(ev.target).closest('td').hasClass('dataTables_empty') ) {
-          var $row = $(ev.target).closest('tr');
+        if ( !$target.closest('td').hasClass('dataTables_empty') ) {
+          var $row = $target.closest('tr');
           var index = api.row($row).index();
           $.when(fetch(response.results[index])).done(function(fetched) {
             $modal.find('.js-panel-content').html(template(fetched));
@@ -284,8 +285,8 @@ function modalRenderFactory(template, fetch) {
       }
     });
 
-    $modal.on('click', '.js-panel-close', function(ev) {
-      ev.preventDefault();
+    $modal.on('click', '.js-panel-close', function(e) {
+      e.preventDefault();
       hidePanel(api, $modal);
     });
   };

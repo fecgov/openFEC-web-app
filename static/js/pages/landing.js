@@ -5,31 +5,16 @@
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
+var columns = require('../modules/columns');
 
-var columns = [
-  tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
-  {
-    data: 'committee_name',
-    className: 'min-desktop',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.committee_id + tables.buildCycle(row), 'committee');
-    },
-  },
-  {
-    data: 'candidate_name',
-    className: 'min-desktop',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id + tables.buildCycle(row), 'candidate');
-    },
-  },
-  tables.dateColumn({data: 'receipt_date', className: 'min-tablet', orderable: false}),
-];
+var filingsColumns = columns.getColumns(
+  columns.filings,
+  ['pdf_url', 'committee_name', 'candidate_name', 'receipt_date']
+);
 
 $(document).ready(function() {
   var $table = $('#results');
-  tables.initTable($table, null, 'filings', {per_page: 10}, columns, tables.offsetCallbacks, {
+  tables.initTable($table, null, 'filings', {per_page: 10}, filingsColumns, tables.offsetCallbacks, {
     // Order by receipt date descending
     order: [[3, 'desc']],
     useFilters: false,

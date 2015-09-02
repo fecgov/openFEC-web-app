@@ -6,74 +6,24 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
-var helpers = require('../modules/helpers');
-var decoders = require('../modules/decoders');
+var filings = require('../modules/filings');
+var columns = require('../modules/columns');
 
-var filingsTemplate = require('../../templates/filings.hbs');
-
-var columns = [
-  tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
-  {
-    data: 'committee_name',
-    className: 'min-desktop',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.committee_id + tables.buildCycle(row), 'committee');
-    },
-  },
-  {
-    data: 'candidate_name',
-    className: 'min-desktop',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id + tables.buildCycle(row), 'candidate');
-    },
-  },
-  {
-    data: 'amendment_indicator',
-    className: 'min-desktop',
-    render: function(data, type, row, meta) {
-      return decoders.amendments[data] || '';
-    },
-  },
-  tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
-  // this would be better as a range of dates, with the title "Coverage Period"
-  tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel', orderable: false}),
-  tables.currencyColumn({data: 'total_receipts', className: 'min-tablet hide-panel'}),
-  tables.currencyColumn({data: 'total_disbursements', className: 'min-tablet hide-panel'}),
-  tables.currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet hide-panel'}),
-  {
-    className: 'all',
-    width: '20px',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return row.form_type && row.form_type.match(/^F3/) ?
-        tables.MODAL_TRIGGER_HTML :
-        '';
-    }
-  }
-];
+var filingsColumns = columns.getColumns(
+  columns.filings,
+  [
+    'pdf_url', 'committee_name', 'candidate_name', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
+    'total_receipts', 'total_disbursements', 'total_independent_expenditures',
+    'modal_trigger'
+  ]
+);
 
 $(document).ready(function() {
   var $table = $('#results');
   var $form = $('#category-filters');
-  tables.initTable($table, $form, 'filings', {}, columns,
+  tables.initTable($table, $form, 'filings', {}, filingsColumns,
     _.extend({}, tables.offsetCallbacks, {
-      afterRender: tables.modalRenderFactory(
-        filingsTemplate,
-        function(row) {
-          var url = helpers.buildUrl(
-            ['committee', row.committee_id, 'reports'],
-            {beginning_image_number: row.beginning_image_number}
-          );
-          return $.getJSON(url).then(function(response) {
-            var result = response.results.length ?
-              response.results[0] :
-              {};
-            return _.extend({}, row, result);
-          });
-        }
-      )
+      afterRender: filings.renderFilingsModal
     }),
     {
       // Order by receipt date descending
