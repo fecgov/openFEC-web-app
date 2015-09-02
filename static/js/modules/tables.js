@@ -59,7 +59,7 @@ function mapFilters(filters) {
 var parsedFilters;
 
 function buildCycle(datum) {
-  if (parsedFilters.cycle) {
+  if (parsedFilters && parsedFilters.cycle) {
     var cycles = _.intersection(
       _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
       datum.cycles
@@ -128,6 +128,18 @@ function barColumn(formatter) {
       }
     }, opts);
   };
+}
+
+function urlColumn(attr, opts) {
+  return _.extend({
+    render: function(data, type, row, meta) {
+      var anchor = document.createElement('a');
+      anchor.textContent = data;
+      anchor.setAttribute('href', row[attr]);
+      anchor.setAttribute('target', '_blank');
+      return anchor.outerHTML;
+    }
+  }, opts);
 }
 
 var dateColumn = formattedColumn(helpers.datetime);
@@ -441,6 +453,7 @@ module.exports = {
   candidateColumn: candidateColumn,
   committeeColumn: committeeColumn,
   currencyColumn: currencyColumn,
+  urlColumn: urlColumn,
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
   modalAfterRender: modalAfterRender,

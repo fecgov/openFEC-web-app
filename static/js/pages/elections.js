@@ -62,18 +62,7 @@ var columns = [
   tables.barCurrencyColumn({data: 'total_receipts'}),
   tables.barCurrencyColumn({data: 'total_disbursements'}),
   tables.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
-  {
-    data: 'pdf_url',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      var anchor = document.createElement('a');
-      anchor.textContent = row.document_description;
-      anchor.setAttribute('href', data);
-      anchor.setAttribute('target', '_blank');
-      return anchor.outerHTML;
-    }
-  },
+  tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false})
 ];
 
 var sizeColumns = [

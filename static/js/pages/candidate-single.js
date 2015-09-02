@@ -8,18 +8,7 @@ var tables = require('../modules/tables');
 var decoders = require('../modules/decoders');
 
 var columns = [
-  {
-    data: 'document_description',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      var anchor = document.createElement('a');
-      anchor.textContent = data;
-      anchor.setAttribute('href', row.pdf_url);
-      anchor.setAttribute('target', '_blank');
-      return anchor.outerHTML;
-    }
-  },
+  tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
   {
     data: 'amendment_indicator',
     className: 'min-desktop',
