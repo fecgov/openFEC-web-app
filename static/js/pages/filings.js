@@ -48,7 +48,7 @@ var columns = [
     orderable: false,
     render: function(data, type, row, meta) {
       return row.form_type && row.form_type.match(/^F3/) ?
-        '<i class="icon arrow--right"></i>' :
+        tables.MODAL_TRIGGER_HTML :
         '';
     }
   }
