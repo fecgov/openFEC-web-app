@@ -82,10 +82,10 @@ def _detect_apps(blue, green):
 
 
 SPACE_URLS = {
-    'dev': [('cf.18f.us', 'fec-dev-web')],
-    'stage': [('cf.18f.us', 'fec-stage-web')],
+    'dev': [('18f.gov', 'fec-dev-web')],
+    'stage': [('18f.gov', 'fec-stage-web')],
     'prod': [
-        ('cf.18f.us', 'fec-prod-web'),
+        ('18f.gov', 'fec-prod-web'),
         ('open.fec.gov', None),
     ],
 }
