@@ -6,7 +6,13 @@
         {{ candidate.name }}
       </a>
     </h3>
-    <span class="result__years t-data">Election years: {{ candidate.election_years[0] }} - {{ candidate.election_years[-1] }}</span>
+    <span class="result__years t-data">
+      {% if candidate.election_years[0] != candidate.election_years[-1] %}
+        Election years: {{ candidate.election_years[0] }} - {{ candidate.election_years[-1] }}
+      {% else %}
+        Election years: {{ candidate.election_years[0] }}
+      {% endif %}
+    </span>
   </div>
   <div class="row">
     <ul class="result__column">
@@ -15,13 +21,7 @@
     </ul>
     <ul class="result__column">
       <li>State: {{ candidate.state or 'N/A' }}</li>
-      <li>
-          {% if candidate.office == 'P' %}
-            District: Nationwide
-          {% else %}
-            District: {{ candidate.district or 'N/A' }}
-          {% endif %}
-      </li>
+      <li>District: {{ candidate.district or 'N/A' }}</li>
     </ul>
     <div class="result__column">
       {% if candidate.principal_committees %}
