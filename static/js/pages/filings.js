@@ -38,10 +38,10 @@ var columns = [
   },
   tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
   // this would be better as a range of dates, with the title "Coverage Period"
-  tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet', orderable: false}),
-  tables.currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
-  tables.currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
-  tables.currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
+  tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel', orderable: false}),
+  tables.currencyColumn({data: 'total_receipts', className: 'min-tablet hide-panel'}),
+  tables.currencyColumn({data: 'total_disbursements', className: 'min-tablet hide-panel'}),
+  tables.currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet hide-panel'}),
   {
     className: 'all',
     width: '20px',
