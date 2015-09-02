@@ -49,7 +49,7 @@
       <span class="disclaimer__right">This site is in beta. <a title="Learn about this site's development" tabindex="0" href="https://18f.gsa.gov/dashboard/stages/#beta">Learn more.</a></span>
     </div>
     <div class="masthead">
-      <a class="site-title" href="{{ cms_url }}"><span class="u-visually-hidden">Federal Election Commission</span></a>
+      <a title="Home" href="{{ cms_url }}" class="site-title"><span class="u-visually-hidden">Federal Election Commission | United States of America</span></a>
       <ul class="utility-nav list--flat">
         <li class="utility-nav__item">About</li>
         <li class="utility-nav__item">Contact</li>
@@ -68,7 +68,7 @@
 <footer class="footer">
   <div class="container">
     <div class="seal">
-       <img class="seal__img" src="/static/img/seal--reversed@2x.png" alt="Seal of the Federal Election Commission">
+       <img class="seal__img" src="/static/img/seal--white.svg" alt="Seal of the Federal Election Commission">
     </div>
     <div class="address">
       <p class="address__title">Federal Election Commission</p>
@@ -94,10 +94,10 @@
 
       // anonymize user IPs (chops off the last IP triplet)
       ga('set', 'anonymizeIp', true);
-    
+
       // forces HTTPS even if the page were somehow loaded over http://
       ga('set', 'forceSSL', true);
-      
+
       ga('create', 'UA-48605964-22', 'auto');
       ga('send', 'pageview');
 

@@ -13,7 +13,7 @@ var columns = [
     data: 'recipient_name',
     orderable: false,
     className: 'all',
-    width: '300px',
+    width: '280px',
     render: function(data, type, row, meta) {
       var committee = row.recipient_committee;
       if (committee) {
@@ -24,8 +24,8 @@ var columns = [
     }
   },
   {data: 'recipient_state', orderable: false, className: 'min-desktop hide-panel'},
-  tables.currencyColumn({data: 'disbursement_amount', className: 'min-tablet'}),
-  tables.dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
+  tables.currencyColumn({data: 'disbursement_amount', className: 'min-tablet hide-panel-tablet'}),
+  tables.dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel-tablet'}),
   {data: 'disbursement_description', className: 'min-desktop hide-panel', orderable: false},
   {
     data: 'committee',

@@ -14,7 +14,12 @@ require('leaflet-providers');
 var events = require('fec-style/js/events');
 
 var helpers = require('./helpers');
+var utils = require('./election-utils');
+
 var states = require('../us.json');
+
+var districts = require('../districts.json');
+var districtFeatures = topojson.feature(districts, districts.objects.districts);
 
 var stateFeatures = topojson.feature(states, states.objects.units).features;
 var stateFeatureMap = _.chain(stateFeatures)
@@ -170,8 +175,6 @@ function highlightState($parent, state) {
   }
 }
 
-var districtUrl = '/static/json/districts';
-
 function DistrictMap(elm) {
   this.elm = elm;
   this.map = null;
@@ -179,13 +182,14 @@ function DistrictMap(elm) {
 }
 
 DistrictMap.prototype.load = function(election) {
+  var feature;
   if (election.district) {
-    var url = [districtUrl, election.state, election.district].join('/') + '.geojson';
-    $.getJSON(url).done(this.render.bind(this));
+    var encoded = utils.encodeDistrict(election.state, election.district);
+    feature = utils.findDistrict(encoded);
   } else {
-    var feature = stateFeatureMap[election.stateFull];
-    feature && this.render(feature);
+    feature = stateFeatureMap[election.stateFull];
   }
+  feature && this.render(feature);
 };
 
 DistrictMap.prototype.render = function(data) {
