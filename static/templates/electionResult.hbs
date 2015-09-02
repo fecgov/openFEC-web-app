@@ -1,7 +1,7 @@
 <div>
   {{#each this}}
   <div class="election-result box">
-    <h4>{{this.electionName}}</h4>
+    <h4 style="color: {{this.color}}">{{this.electionName}}</h4>
     <div>Next general election: {{this.electionDate}}</div>
     {{#if this.incumbent}}
     <div>Current officeholder: <a href="{{this.incumbent.url}}">{{this.incumbent.name}}</a></div>
