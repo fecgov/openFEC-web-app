@@ -59,7 +59,7 @@ function mapFilters(filters) {
 var parsedFilters;
 
 function buildCycle(datum) {
-  if (parsedFilters.cycle) {
+  if (parsedFilters && parsedFilters.cycle) {
     var cycles = _.intersection(
       _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
       datum.cycles

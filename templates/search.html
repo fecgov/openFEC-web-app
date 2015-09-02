@@ -7,33 +7,87 @@
 
 {% block body %}
 {% include "partials/hero.html" %}
-<section class="main" aria-labelledby="browse-heading">
+<section class="main">
   <div class="container">
+    <h2 class="h1 t-no-rules">How to view the data</h2>
     <div class="row tiled-cards--2-wide">
       <div class="card card--wide">
-        <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
+        <div class="card__image__container">
+          <img class="card__image icon--complex" src="/static/img/i-candidates--neutral.svg"  alt="Icon representing candidates">
+        </div>
         <div class="card__content">
-          <h3><a href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates &raquo;</a></h3>
+          <h2 class="card__title">Candidate data</h2>
+          <ul class="card__links list--bulleted">
+            <li><a href="{{ url_for('candidates', cycle=2016, office='P') }}">All 2016 presidential candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', cycle=2016, office='S') }}">All 2016 senate candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', cycle=2016, office='H') }}">All 2016 house candidates &raquo;</a></li>
+          </ul>
+          <a class="button--neutral button--browse" href="{{ url_for('candidates', cycle=default_cycles) }}">All candidate data</a>
         </div>
       </div>
       <div class="card card--wide">
-        <img class="card__image icon--complex" src="/static/img/i-committee.svg" alt="Icon representing committees">
+        <div class="card__image__container">
+          <img class="card__image icon--complex" src="/static/img/i-committees--neutral.svg" alt="Icon representing committees">
+        </div>
         <div class="card__content">
-          <h3><a href="{{ url_for('committees', cycle=default_cycles) }}">Committees &raquo;</a></h3>
+          <h2 class="card__title">Committee data</h2>
+          <ul class="card__links list--bulleted">
+            <li><a href="{{ url_for('committees', cycle=2016) }}">Most recent committees &raquo;</a></li>
+            <li><a>All PACs active 2015-2016 &raquo;</a></li>
+            <li><a>All Independent Expenditure Committees active 2015-2016 &raquo;</a></li>
+          </ul>          
+          <a class="button--neutral button--browse" href="{{ url_for('committees', cycle=default_cycles) }}">All committee data</a>
         </div>
       </div>    
       <div class="card card--wide">
-        <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
+        <div class="card__image__container">
+          <img class="card__image icon--complex" src="/static/img/i-receipts--neutral.svg"  alt="Icon representing receipts">
+        </div>
         <div class="card__content">
-          <h3><a href="{{ url_for('receipts')}}">Receipts &raquo;</a></h3>
+          <h2 class="card__title">Receipt data</h2>
+          <ul class="card__links list--bulleted">
+            <li><a href="{{ url_for('receipts', is_individual='true', min_date='1/01/2015', max_date='12/31/2015') }}">Top contributions from individuals this year &raquo;</a></li>
+          </ul>          
+          <a class="button--neutral button--browse" href="{{ url_for('receipts')}}">All receipt data</a>
         </div>
       </div>
       <div class="card card--wide">
-        <img class="card__image icon--complex" src="/static/img/i-committee.svg"  alt="Icon representing candidates">
+        <div class="card__image__container">
+          <img class="card__image icon--complex" src="/static/img/i-disbursements--neutral.svg"  alt="Icon representing disbursements">
+        </div>
         <div class="card__content">
-          <h3><a href="{{ url_for('disbursements')}}">Disbursements &raquo;</a></h3>
+          <h2 class="card__title">Disbursement Data</h2>
+          <ul class="card__links list--bulleted">
+            <li><a href="{{ url_for('disbursements', is_individual='true', min_date='1/01/2015', max_date='12/31/2015') }}">Disbursements from committees this year &raquo;</a></li>
+          </ul>             
+          <a class="button--neutral button--browse" href="{{ url_for('disbursements')}}">All disbursement data</a>
         </div>
       </div>
-    </div>       
+    </div>
+
+    <div class="content__section--extra">
+      <div class="row">
+        <div class="icon-heading">
+          <img class="icon-heading__image" src="/static/img/i-filings--primary.svg" alt="Icon representing filings">
+          <h2 class="icon-heading__title">Most recent filings submitted</h2>
+        </div>
+        <a class="u-float-right button--neutral button--browse" href="{{ url_for('filings') }}">All filing data</a>
+      </div>
+      <table id="results" class="data-table" data-type="filing-table">
+        <thead>
+          <tr>
+            <th scope="col">Document</th>
+            <th scope="col">Filer Name</th>
+            <th scope="col">Candidate Name</th>
+            <th scope="col">Receipt Date</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>       
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/landing.js'] }}"></script>
 {% endblock %}
