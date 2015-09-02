@@ -189,10 +189,13 @@ DistrictMap.prototype.load = function(election) {
 };
 
 DistrictMap.prototype.render = function(data) {
+  var style = {
+    color: '#36BDBB'
+  }
   this.elm.setAttribute('aria-hidden', 'false');
   this.map = L.map(this.elm);
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  this.overlay = L.geoJson(data).addTo(this.map);
+  this.overlay = L.geoJson(data, {style: style}).addTo(this.map);
   this.map.fitBounds(this.overlay.getBounds());
 };
 

@@ -8,6 +8,8 @@ var URI = require('URIjs');
 var _ = require('underscore');
 var chroma = require('chroma-js');
 
+var dropdown = require('fec-style/js/dropdowns');
+
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
@@ -131,9 +133,13 @@ function refreshTables() {
 function drawComparison(results) {
   _.each(_.first(results, 10), function(result) {
     result._checked = true;
-  });
+  });  
   var $comparison = $('#comparison');
   $comparison.html(comparisonTemplate(results));
+  var comparisonDropdown = new dropdown.Dropdown($('#comparison .js-dropdown'));
+  $('#comparison input:checked').each(function(){
+    comparisonDropdown.selectItem($(this));
+  })
   $comparison.on('change', 'input[type="checkbox"]', refreshTables);
   refreshTables();
 }
@@ -417,6 +423,7 @@ function initSpendingTables() {
     if (opts) {
       tables.initTableDeferred($table, null, opts.path, helpers.filterNull(context.election), opts.columns, tables.offsetCallbacks, {
         order: [[0, 'desc']],
+        dom: tables.simpleDOM,
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
