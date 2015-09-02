@@ -6,24 +6,26 @@
 
 {% block body %}
 <div class="tab-interface">
-  <header class="page-header slab slab--primary">
-    <h1 class="page-header__title">Elections</h1>
+  <header class="page-header page-header--primary">
+    <span class="page-header__title">Elections & Canididates by Location</span>
     {{ search.search('page-header', 'candidates') }}
   </header>
-  <header class="page-header entity__header page-header--dark">
+  <header class="entity__header entity__header--map entity__header--primary">
     <div class="container">
-      <div class="entity__header--top row">
-        {% if office == 'president' %}
-          <h1 class="entity__name">{{ cycle }} Presidential Election</h1>
-        {% else %}
-          <h1 class="entity__name">{{ cycle }} {{ office|title }} Election: {{ state|fmt_state_full }}</h1>
-          {% if district %}
-            <h2>United States House District {{ district }}</h2>
+      <div class="entity__header--info">
+        <div class="entity__header--top row">
+          {% if office == 'president' %}
+            <h1 class="entity__name">{{ cycle }} Presidential Election</h1>
+          {% else %}
+            <h1 class="entity__name">U.S. {{ office|title }} Election: {{ state|fmt_state_full }}</h1>
+            {% if district %}
+              <h2>United States House District {{ district }}</h2>
+            {% endif %}
           {% endif %}
-        {% endif %}
+        </div>
       </div>
       {% if state %}
-      <div id="election-map" aria-hidden="true" style="height: 300px;"></div>
+      <div id="election-map" class="map" aria-hidden="true"></div>
       {% endif %}
     </div>
   </header>
