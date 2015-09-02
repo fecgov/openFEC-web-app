@@ -60,7 +60,7 @@ $(document).ready(function() {
     {},
     columns,
     _.extend(tables.seekCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, disbursementTemplate)
+      afterRender: tables.modalRenderFactory(disbursementTemplate)
     }),
     {
       order: [[3, 'desc']],

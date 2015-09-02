@@ -47,8 +47,8 @@ $(document).ready(function() {
     'candidates',
     {},
     columns,
-    _.extend(tables.offsetCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, candidatesTemplate)
+    _.extend({}, tables.offsetCallbacks, {
+      afterRender: tables.modalRenderFactory(candidatesTemplate)
     }),
     {useFilters: true}
   );

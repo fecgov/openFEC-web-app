@@ -44,7 +44,7 @@ $(document).ready(function() {
     {},
     columns,
     _.extend(tables.offsetCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, committeesTemplate)
+      afterRender: tables.modalRenderFactory(committeesTemplate)
     }),
     {useFilters: true}
   );});
