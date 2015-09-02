@@ -11,19 +11,18 @@ var decoders = require('../modules/decoders');
 var columns = [
   tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
   {
-    data: 'committee_name',
+    data: 'committee_id',
     className: 'min-desktop',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.committee_id + tables.buildCycle(row), 'committee');
-    },
-  },
-  {
-    data: 'candidate_name',
-    className: 'min-desktop',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id + tables.buildCycle(row), 'candidate');
+      var cycle = tables.buildCycle(row);
+      if (row.candidate_name) {
+        return tables.buildEntityLink(row.candidate_name, '/candidate/' + row.candidate_id + cycle, 'candidate');
+      } else if (row.committee_name) {
+        return tables.buildEntityLink(row.committee_name, '/committee/' + row.candidate_id + cycle, 'committee');
+      } else {
+        return '';
+      }
     },
   },
   {
@@ -46,7 +45,7 @@ $(document).ready(function() {
   var $form = $('#category-filters');
   tables.initTable($table, $form, 'filings', {}, columns, tables.offsetCallbacks, {
     // Order by receipt date descending
-    order: [[4, 'desc']],
+    order: [[3, 'desc']],
     useFilters: true
   });
 });
