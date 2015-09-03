@@ -238,7 +238,7 @@ var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
 var MODAL_TRIGGER_HTML = '<i class="icon arrow--right"></li>';
 
 function modalRenderRow(row, data, index) {
-  row.classList.add(MODAL_TRIGGER_CLASS);
+  row.classList.add(MODAL_TRIGGER_CLASS, 'row--has-panel');
 }
 
 function modalRenderFactory(template, fetch) {
