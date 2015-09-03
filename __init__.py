@@ -237,7 +237,18 @@ def elections(office, cycle, state=None, district=None):
         state=state,
         state_full=constants.states[state.upper()] if state else None,
         district=district,
+        title=election_title(cycle, office, state, district),
     )
+
+
+def election_title(cycle, office, state=None, district=None):
+    base = ' '.join([str(cycle), 'Election', 'United States', office.capitalize()])
+    parts = [base]
+    if state:
+        parts.append(constants.states[state.upper()])
+    if district:
+        parts.append('District {0}'.format(district))
+    return ' - '.join(parts)
 
 
 @app.errorhandler(404)

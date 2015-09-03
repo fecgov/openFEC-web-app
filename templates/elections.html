@@ -2,24 +2,14 @@
 
 {{ cycle }} Election - United States {{ office|title }} {% if state %} - {{ state|fmt_state_full }} {% if district %} - District {{ district }} {% endif %} {% endif %}
 
-{% if state %}
-  {% if district %}
-    {% set title = cycle ~ ' Election'  ~ ' United States ' ~ office|title ~ ' - ' ~ state|fmt_state_full ~ ' - ' ~ 'District ' ~ district %}
-  {% else %}
-    {% set title = cycle ~ ' Election'  ~ ' United States ' ~ office|title ~ ' - ' ~ state|fmt_state_full %}
-  {% endif %}
-{% else %}
-    {% set title = cycle ~ ' Election'  ~ ' United States ' ~ office|title %}
-{% endif %}
-
 {% block title %}
-  {{ title }} 
+  {{ title }}
 {% endblock %}
 
 {% block body %}
 <div class="tab-interface">
   <header class="page-header page-header--primary">
-    <span class="page-header__title">Elections &amp; Canididates by Location</span>
+    <span class="page-header__title">Elections &amp; Candidates by Location</span>
     {{ search.search('page-header', 'candidates') }}
   </header>
   <header class="entity__header {% if office != 'president' %}entity__header--map{% endif %} entity__header--primary">

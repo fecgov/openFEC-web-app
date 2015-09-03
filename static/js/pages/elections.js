@@ -122,13 +122,13 @@ function refreshTables() {
 function drawComparison(results) {
   _.each(_.first(results, 10), function(result) {
     result._checked = true;
-  });  
+  });
   var $comparison = $('#comparison');
   $comparison.html(comparisonTemplate(results));
   var comparisonDropdown = new dropdown.Dropdown($('#comparison .js-dropdown'));
   $('#comparison input:checked').each(function(){
     comparisonDropdown.selectItem($(this));
-  })
+  });
   $comparison.on('change', 'input[type="checkbox"]', refreshTables);
   refreshTables();
 }
@@ -447,7 +447,10 @@ $(document).ready(function() {
     initStateMaps(response.results);
   });
 
-  var districtMap = new maps.DistrictMap($('#election-map').get(0));
+  var districtMap = new maps.DistrictMap(
+    $('#election-map').get(0),
+    {color: '#36BDBB'}
+  );
   districtMap.load(context.election);
 
   initSpendingTables();
