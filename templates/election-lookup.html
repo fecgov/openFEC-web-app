@@ -1,0 +1,77 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Election Lookup
+{% endblock %}
+
+{% block body %}
+<div class="entity">
+  <header class="page-header slab slab--primary">
+    <h1 class="page-header__title">Elections</h1>
+    {{ search.search('page-header', 'candidates') }}
+  </header>  
+  <section class="main">
+    <div class="container">
+      <h2>Find Elections by Location</h2>
+      <div id="election-lookup" class="row">
+        <div class="filters--horizontal">
+          <h4 class="filter__header">New Search</h4>
+          <form>
+            <div class="filter">
+              <label for="cycle" class="label">Election cycle</label>
+              <select id="cycle" name="cycle">
+                {% for cycle in cycles %}
+                <option value="{{ cycle }}">{{ cycle }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="filter">
+              <label for="zip" class="label">Search by zip code</label>
+              <input type="text" id="zip" name="zip" placeholder="e.g. 10001">
+            </div>
+            <div class="filter">
+              <fieldset>
+                <legend class="label">Or search by state and district</legend>
+                <select id="state" name="state">
+                  <option value="">Select state</option>
+                  {% for value, label in constants.states.items() %}
+                  <option value="{{ value }}">{{ label }}</option>
+                  {% endfor %}
+                </select>
+                <div>
+                  <select id="district" name="district">
+                    <option value="">Select district</option>
+                    {% for value in range(1, 100) %}
+                    {% with formatted = '{0:02d}'.format(value) %}
+                    <option value="{{ formatted }}">{{ formatted }}</option>
+                    {% endwith %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </fieldset>
+            </div>
+          </form>
+        </div>
+        <div class="main__content">
+          <div class="results">
+            <h2>All Matching Districts</h2>
+            <div class="results-items"></div>
+          </div>
+        </div>        
+        <div class="chunk--half">
+          <div class="search-populated"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/election-lookup.js'] }}"></script>
+<script>
+var context = {
+  districts: {{ districts | json | safe }}
+};
+</script>
+{% endblock %}

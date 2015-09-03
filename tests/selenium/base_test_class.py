@@ -1,5 +1,4 @@
 import os
-import time
 import logging
 import unittest
 
@@ -7,10 +6,12 @@ import pytest
 from nose.plugins.attrib import attr
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
 
 from openfecwebapp.sauce import SauceClient
+
+from tests.selenium import utils
 
 
 # Silence Selenium logs
@@ -38,25 +39,16 @@ drivers = {
     'remote': lambda cls: webdriver.Remote(
         desired_capabilities={
             'name': cls.__name__,
+            'screen-resolution': '1280x1024',
             'build': os.getenv('TRAVIS_BUILD_NUMBER'),
             'tunnel-identifier': os.getenv('TRAVIS_JOB_NUMBER'),
-            'platform': os.getenv('FEC_SAUCE_PLATFORM', 'Mac OS X 10.9'),
+            'platform': os.getenv('FEC_SAUCE_PLATFORM', 'Mac OS X 10.8'),
             'browserName': os.getenv('FEC_SAUCE_BROWSER', 'chrome'),
             'version': os.getenv('FEC_SAUCE_VERSION', ''),
         },
         command_executor=sauce_url,
     ),
 }
-
-
-def wait_for_ajax(driver, timeout=10, interval=0.1):
-    elapsed = 0
-    while True:
-        active = driver.execute_script('return $.active === 0')
-        if active or elapsed > timeout:
-            break
-        time.sleep(interval)
-        elapsed += interval
 
 
 @attr('selenium')
@@ -67,7 +59,7 @@ class BaseTest(unittest.TestCase):
     def setUpClass(cls):
         driver = os.getenv('FEC_SELENIUM_DRIVER', 'phantomjs')
         cls.driver = drivers[driver](cls)
-        cls.driver.maximize_window()
+        cls.driver.set_window_size(2000, 1000)
         cls.driver.implicitly_wait(5)
         cls.base_url = 'http://localhost:3000'
 
@@ -84,6 +76,9 @@ class BaseTest(unittest.TestCase):
 
     def getMain(self):
         return self.driver.find_element_by_tag_name('main')
+
+    def getGlossary(self):
+        return self.driver.find_element_by_id('glossary')
 
     def elementExistsByClassName(self, name):
         try:
@@ -112,36 +107,49 @@ class SearchPageTestCase(BaseTest):
         return [row.find_elements_by_tag_name('td')[index].text
                 for row in data.find_elements_by_tag_name('tr')]
 
-    def checkFilter(self, name, entry, index, result, refresh=True, click=False):
+    def check_filter(self, name, value, column, result, refresh=True, expand=True):
         if refresh:
             self.driver.get(self.url)
+        self.click_filter(name, value, expand=expand)
+        self.check_filter_results(column, result)
 
-        div = self.getFilterDivByName(name)
-        select = div.find_element_by_tag_name('select')
-        # Hack: In some cases, `send_keys` will fail with Chrome; allow clicking on <option> directly
-        # TODO(jmcarp): Replace with a cleaner solution
-        if click:
-            select.find_element_by_css_selector('[value=' + result + ']').click()
-        else:
-            select.send_keys(entry)
-        select.send_keys(Keys.ENTER)
-        # Refresh containing div to avoid stale reference error
-        div = self.getFilterDivByName(name)
-        close_buttons = div.find_elements_by_xpath(
-            './/button[contains(@class, "button--remove")]'
+    def click_filter(self, name, value, expand=True):
+        div = self.driver.find_element_by_xpath(''.join([
+            '//*[@name="' + name + '"]',
+            '/ancestor::fieldset',
+            '/parent::div[contains(@class, "filter")]',
+        ]))
+        checkbox = div.find_element_by_css_selector(
+            'input[type="checkbox"][value="' + value + '"]'
         )
-        self.assertEqual(len(close_buttons), 1)
-        self.driver.find_element_by_id('category-filters').submit()
-        self.check_filter_results(index, result)
+        label = checkbox.find_element_by_xpath('following-sibling::label')
+        # Ensure performance bar doesn't block clicks
+        self.driver.execute_script('$(".perfBar-bar").hide()')
+        if expand:
+            try:
+                button = div.find_element_by_css_selector('button.dropdown__button')
+            except NoSuchElementException:
+                button = None
+            if button:
+                utils.try_until(lambda: button.click())
+        # Handle probabilistic checkbox click failures in Chrome
+        checked = bool(checkbox.get_attribute('checked'))
+        utils.try_until(
+            lambda: label.click(),
+            condition=lambda: bool(checkbox.get_attribute('checked')) != checked,
+        )
 
     def check_filter_results(self, index, result):
-        wait_for_ajax(self.driver)
-        values = [
+        utils.wait_for_event(self.driver, 'draw.dt', 'draw', timeout=0.5)
+        # Handle stale reference errors in Chrome
+        get_values = lambda: [
             row.find_elements_by_tag_name('td')[index].text
-            for row in self.driver.find_elements_by_css_selector('tbody tr')
+            for row in self.driver.find_elements_by_css_selector('tbody tr[role="row"]')
         ]
+        values = utils.try_until(get_values, errors=(StaleElementReferenceException, ))
         if callable(result):
             for value in values:
                 self.assertTrue(result(value))
         else:
-            self.assertFalse({result}.difference(values))
+            result = set([result]) if not isinstance(result, set) else result
+            self.assertTrue(result.issuperset(values))

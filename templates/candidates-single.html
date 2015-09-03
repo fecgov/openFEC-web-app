@@ -5,38 +5,43 @@
 {% endblock %}
 
 {% block body %}
-<div class="entity candidate tab-interface">
-  <header class="page-header entity__header page-header--dark">
+
+<div class="tab-interface">
+  <header class="page-header slab slab--primary">
+    <img class="page-header__icon" src="/static/img/i-candidate--primary.svg" alt="Candidate icon">
+    <span class="h1 page-header__title">Candidates</span>
+    {{ search.search('page-header', 'candidates') }}
+  </header>  
+  <header class="entity__header entity__header--neutral">
     <div class="container">
-      <div class="entity__header--top row">
-        <span class="entity__id">ID: {{ candidate_id }}</span>
+      <div class="entity__header__top">
         <h1 class="entity__name">{{ name }}</h1>
-        <span class="entity__type"><img class="category-icon" width="20" height="20" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates">Candidate for {{ office_full }}</span>
+        <span class="t-data entity__type">Candidate for {{ office_full }}</span><span class="t-data">ID: {{ candidate_id }}</span>
       </div>
-      <div class="entity__header--bottom row">
+      <div class="entity__header__bottom">
         <ul class="entity__info">
           <li class="entity__term">
-            <h5 class="entity__term__label"><a class="term" data-term="Party">Party</a></h5>
+            <span class="entity__term__label"><a class="term" data-term="Party">Party</a></span>
             <span class="entity__term__data">{{ party_full }}</span>
           </li>
           <li class="entity__term">
-            <h5 class="entity__term__label"><a class="term" data-term="Status">Status</a></h5>
+            <span class="entity__term__label"><a class="term" data-term="Status">Status</a></span>
             <span class="entity__term__data">{% if incumbent_challenge_full %}{{ incumbent_challenge_full|title }}{% endif %}</span>
           </li>
           <li class="entity__term">
-            <h5 class="entity__term__label">District</h5>
+            <span class="entity__term__label">District</span>
             <span class="entity__term__data">
               {% if district %}
-              <a href="{{ url_for('candidates', state=state, district=district, cycle=max(cycles)) }}">{{ state }} - {{ district }}</a>
+              <a href="{{ election_url(context(), cycle) }}">{{ state }} - {{ district }}</a>
               {% else %}
-              <a href="{{ url_for('candidates', state=state, cycle=max(cycles)) }}">{{ state }}</a>
+              <a href="{{ election_url(context(), cycle) }}">{{ state }}</a>
               {% endif %}
             </span>
           </li>
           <li class="entity__term">
-            <h5 class="entity__term__label">
+            <span class="entity__term__label">
               <a class="term" data-term="Principal Campaign Committee">Principal Committee</a>
-            </h5>
+            </span>
             {% for c in committee_groups['P'] %}
             <p class="entity__term__data">
               <a href="{{ url_for('committee_page', c_id=c.committee_id, cycle=cycle) }}">{{ c.name }}</a>
@@ -44,10 +49,10 @@
             {% endfor %}
           </li>
           <li class="entity__term">
-            <h5 class="entity__term__label">Elections</h5>
+            <span class="entity__term__label">Elections</span>
             <ul class="entity__term__data">
             {% for year in election_years %}
-              <span value="{{ year }}">{{ year }}{% if loop.last == false %},{% endif %}</span>
+              <a href="{{ election_url(context(), year) }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
             {% endfor %}
             </ul>
           </li>
@@ -55,49 +60,24 @@
       </div>
     </div>
   </header>
-  <div class="page-controls page-controls--dark sticky">
+  <div class="page-controls page-controls--neutral">
     <div class="page-controls__top">
       <div class="container">
-        <span class="page-controls__title"><img class="category-icon" width="16" height="16" src="/static/img/icon-candidate--white.svg" alt="Icon representing candidates"> {{ name }}</span>
-      </div>
-    </div>
-    <div class="page-controls__bottom">
-      <div class="container">
-        {% if cycles %}
-          <div class="time-period">
-            <label for="cycle">Two-Year Period</label>
-            <select name="cycle" id="cycle" data-id="{{ candidate_id }}" data-type="candidate">
-            {% for each in range(max(cycles), min(cycles) - 2, -2) | restrict_cycles %}
-              <option
-                  value="{{ each }}"
-                  {% if each == cycle %}selected{% endif %}
-                >{{ each | fmt_year_range }}</option>
-            {% endfor %}
-            </select>
-        </div>
-        {% endif %}
-         <nav class="page-tabs">
-            <ul role="tablist">
-              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
-              <li role="presentation" class="page-tabs__item"><a role="tab" tabindex="-1" aria-controls="panel2" href="#section-2">Filings</a></li>
-            </ul>
-        </nav>
+        <span class="page-controls__title">{{ name }}</span>
       </div>
     </div>
   </div>
 
-  <section class="page-section" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-header">
+  <section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
     <div class="container">
       {% include 'partials/financial-summary.html' %}
+      {% include 'partials/filings-tab-candidate.html' %}
     </div>
   </section>
-
-  {% include 'partials/filings-tab.html' %}
-
 </div>
 
 {% endblock %}
 
 {% block scripts %}
-  <script src="/static/js/vendor/tablist.js"></script>
+<script src="/{{ assets['dist/js/pages/candidate-single.js'] }}"></script>
 {% endblock %}

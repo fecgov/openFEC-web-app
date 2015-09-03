@@ -2,56 +2,90 @@
 
 /* global require, window, document */
 
+var KEYCODE_SLASH = 191;
+
 var $ = require('jquery');
+var _ = require('underscore');
 var keyboard = require('keyboardjs');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
 
+var terms = require('fec-style/js/terms');
+var glossary = require('fec-style/js/glossary');
+var accordion = require('fec-style/js/accordion');
+var dropdown = require('fec-style/js/dropdowns');
+var typeahead = require('fec-style/js/typeahead');
+var typeaheadFilter = require('fec-style/js/typeahead-filter');
+
+require('jquery.inputmask');
+require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
+require('jquery.inputmask/dist/inputmask/jquery.inputmask.numeric.extensions.js');
+
 // Include vendor scripts
 require('./vendor/tablist');
 
-var accordion = require('./modules/accordion');
 var filters = require('./modules/filters.js');
-var typeahead = require('./modules/typeahead.js');
 var charts = require('./modules/charts.js');
-var glossary = require('./modules/glossary.js');
 var Search = require('./modules/search');
-var tables = require('./modules/tables');
+var toggle = require('./modules/toggle');
 
-filters.init();
-typeahead.init();
-glossary.init();
 charts.init();
-tables.init();
 
 var SLT_ACCORDION = '.js-accordion';
+
+$('.js-dropdown').each(function() {
+  new dropdown.Dropdown(this);
+});
+
+$('.js-typeahead-filter').each(function() {
+  var key = $(this).data('dataset');
+  var dataset = typeahead.datasets[key];
+  new typeaheadFilter.TypeaheadFilter(this, dataset);
+});
 
 $(document).ready(function() {
     var $body,
         $pageControls;
     $body = $('body');
-    $pageControls = $('.page-controls.sticky');
+    $pageControls = $('.page-controls');
     $body.addClass('js-initialized');
 
     // Sticky page controls
     if ( $pageControls.length > 0 ) {
         var scrollPos,
             controlsHeight,
-            controlsTop = $pageControls.offset().top;
+            controlsTop = $pageControls.offset().top + 100;
         $(document).scroll(function(){
           scrollPos = $(window).scrollTop();
 
           if (scrollPos >= controlsTop) {
             controlsHeight = $pageControls.height();
-            $body.addClass('controls--fixed');
+            $pageControls.addClass('is-fixed');
             $body.css('padding-top', controlsHeight);
           } else {
-            $body.removeClass('controls--fixed');
+            $pageControls.removeClass('is-fixed');
             $body.css('padding-top', 0);
           }
         });
     }
+
+    // Initialize glossary
+    new glossary.Glossary(terms, {body: '#glossary', toggle: '#glossary-toggle'});
+
+    // Initialize typeaheads
+    new typeahead.Typeahead('.js-search-input', $('.js-search-type').val());
+
+    // Focus search on "/"
+    $(document.body).on('keyup', function(e) {
+      e.preventDefault();
+      if (e.keyCode === KEYCODE_SLASH) {
+        $('.js-search-input:visible').first().focus();
+      }
+    });
+
+    // Inialize input masks
+    $('[data-inputmask]').inputmask();
 
     // Reveal containers
     if ( $('.js-reveal-container').length > 0 ) {
@@ -74,8 +108,7 @@ $(document).ready(function() {
         if (e.which === 13 || e.type === 'click') {
             var revealElement = $(this).data('reveals');
             $('#' + revealElement).attr('aria-hidden', false);
-            // Set focus to the first input
-            $('#' + revealElement + ' input:first-of-type').focus();
+            $(this).addClass('selected');
         }
     });
 
@@ -84,7 +117,7 @@ $(document).ready(function() {
             var hideElement = $(this).data('hides');
             $('#' + hideElement).attr('aria-hidden', true);
             // Set focus back on the original triggering element
-            $('.js-reveal[data-reveals="' + hideElement + '"]').focus();
+            $('.js-reveal[data-reveals="' + hideElement + '"]').removeClass('selected');
         }
     });
 
@@ -99,14 +132,15 @@ $(document).ready(function() {
     });
 
     // Notice close-state persistence
-    if (typeof window.sessionStorage !== 'undefined') {
-        if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
-            $('#notice').attr('aria-hidden', true);
-            $('#notice-reveal').addClass('u-visible');
-        } else {
-            $('#notice').attr('aria-hidden', false);
-        }
-    }
+    // Commenting out for now
+    // if (typeof window.sessionStorage !== 'undefined') {
+    //     if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
+    //         $('#notice').attr('aria-hidden', true);
+    //         $('#notice-reveal').addClass('u-visible');
+    //     } else {
+    //         $('#notice').attr('aria-hidden', false);
+    //     }
+    // }
 
     $("#notice-close").on('click keypress', function(e){
         if (e.which === 13 || e.type === 'click') {
@@ -129,11 +163,14 @@ $(document).ready(function() {
 
     var $search = $('.js-search');
     $search.each(function() {
-      Search($(this));
+      new Search($(this));
     });
 
     // @if DEBUG
     var perf = require('./modules/performance');
     perf.bar();
     // @endif
+
+    filters.init();
+    toggle.init();
 });

@@ -1,10 +1,22 @@
 openfec-web-app
 ===============
-[![Build Status](https://travis-ci.org/18F/openFEC-web-app.svg?branch=develop)](https://travis-ci.org/18F/openFEC-web-app)
-[![Code Climate](https://codeclimate.com/github/18F/openFEC-web-app/badges/gpa.svg)](https://codeclimate.com/github/18F/openFEC-web-app)
-[![Test Coverage](http://codecov.io/github/18F/openFEC-web-app/coverage.svg?branch=develop)](http://codecov.io/github/18F/openFEC-web-app?branch=develop)
 
-See also http://github.com/18F/openFEC.
+**Develop**
+[![Build Status](https://img.shields.io/travis/18F/openFEC-web-app/develop.svg)](https://travis-ci.org/18F/openFEC-web-app)
+[![Test Coverage](https://img.shields.io/codecov/c/github/18F/openFEC-web-app/develop.svg)](https://codecov.io/github/18F/openFEC-web-app)
+
+**Master**
+[![Build Status](https://img.shields.io/travis/18F/openFEC-web-app/master.svg)](https://travis-ci.org/18F/openFEC-web-app)
+[![Test Coverage](https://img.shields.io/codecov/c/github/18F/openFEC-web-app/master.svg)](https://codecov.io/github/18F/openFEC-web-app)
+[![Code Climate](https://img.shields.io/codeclimate/github/18F/openFEC-web-app.svg)](https://codeclimate.com/github/18F/openFEC-web-app)
+[![Dependencies](https://img.shields.io/gemnasium/18F/openFEC-web-app.svg)](https://gemnasium.com/18F/openFEC-web-app)
+
+## Our Repos
+
+* [fec](https://github.com/18F/fec) - A discussion forum where we can discuss the project.
+* [openfec](https://github.com/18F/openfec) - Where the API work happens. We also use this as the central repo to create issues related to each sprint and our backlog here. If you're interested in contribution, please look for "help wanted" tags or ask!
+* [openfec-web-app](https://github.com/18f/openfec-web-app) - Where the campaign finance web app work happens. Note that issues and discussion tend to happen in the other repos.
+* [fec-alpha](https://github.com/18F/fec-alpha) - A place to explore and evolve a new site for the Federal Election Commission.
 
 ### Installing
 This application is in [Flask](http://flask.pocoo.org/). Client side features are managed using [Browserify](http://browserify.org/) and [npm](https://www.npmjs.org/).
@@ -42,6 +54,18 @@ Then start the server:
 
     $ python __init__.py
 
+To run the server in debug mode set:
+
+    $ export FEC_WEB_DEBUG=true
+
+To use styles served from a custom location (e.g., if developing against a local `fec-style`):
+
+    $ export FEC_WEB_STYLE_URL=http://localhost:8080/css/styles.css
+
+To be able to have links between this app and a local installation of the cms:
+
+    $ export FEC_CMS_URL=http://localhost:8000
+    
 If you'd like the app to cache API requests it makes, use the `--cached` flag:
 
     $ python __init__.py --cached
@@ -67,10 +91,18 @@ Compile Sass as changes are made:
 
 See directions in the 18F/openFEC repo.
 
+#### Caching
+
+To avoid repeated requests to the OpenFEC API, the webapp can store recent API responses
+in a small in-memory cache. The cache can be enabled by setting the `FEC_WEB_CACHE`
+environment variable; the size of the cache, in items, is controlled by the
+`FEC_WEB_CACHE_SIZE` environment variable. When the cache is enabled, views may
+be stale for up to the cache duration set by the API.
+
 ### Run Tests
 #### Unit Tests
 
-    $ py.test openfecwebapp/tests
+    $ py.test
 
 #### Browser Tests
 First, install [PhantomJS](http://phantomjs.org/).
@@ -87,7 +119,7 @@ Run development app server:
 
 While app is running, run tests:
 
-    $ py.test openfecwebapp/tests --selenium
+    $ py.test --selenium
 
 If the development API is down or for testing with feature branches of the API,
 a local API server can be used:

@@ -1,31 +1,33 @@
+import re
 import http
+import json
+import locale
+import logging
+import datetime
 
 import furl
+import jinja2
 from webargs import Arg
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sslify import SSLify
 from flask.ext.basicauth import BasicAuth
 
 from openfecwebapp import utils
 from openfecwebapp import config
+from openfecwebapp import constants
 from openfecwebapp.views import render_search_results, render_candidate, render_committee
 from openfecwebapp.api_caller import load_search_results, load_with_nested
-
-import jinja2
-import json
-import locale
-import logging
-import re
 
 
 locale.setlocale(locale.LC_ALL, '')
 
 START_YEAR = 1979
+DISTRICTS = json.load(open('./data/districts.json'))
 
-app = Flask(__name__)
+app = Flask(__name__, static_path='/static', static_folder='dist')
 
 # ===== configure logging =====
 logger = logging.getLogger(__name__)
@@ -72,6 +74,24 @@ def series_group_has_data(groups, keys):
     )
 
 
+def cycle_start(value):
+    return datetime.datetime(value - 1, 1, 1)
+
+
+def cycle_end(value):
+    return datetime.datetime(value, 12, 31)
+
+
+def get_election_url(candidate, cycle):
+    return url_for(
+        'elections',
+        office=candidate['office_full'].lower(),
+        state=candidate['state'] if candidate['state'] != 'US' else None,
+        district=candidate['district'],
+        cycle=cycle,
+    )
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -79,6 +99,8 @@ app.jinja_env.globals.update({
     'api_version': config.api_version,
     'api_key': config.api_key_public,
     'use_analytics': config.use_analytics,
+    'style_url': config.style_url,
+    'cms_url': config.cms_url,
     'context': get_context,
     'absolute_url': get_absolute_url,
     'contact_email': '18F-FEC@gsa.gov',
@@ -86,17 +108,29 @@ app.jinja_env.globals.update({
     'series_has_data': series_has_data,
     'group_has_data': group_has_data,
     'series_group_has_data': series_group_has_data,
+    'cycle_start': cycle_start,
+    'cycle_end': cycle_end,
+    'election_url': get_election_url,
+    'constants': constants,
+    'districts': DISTRICTS,
+    'cycles': range(utils.current_cycle(), START_YEAR, -2),
 })
 
 
 try:
-    app.jinja_env.globals['assets'] = json.load(open('./rev-manifest.json'))
+    assets = json.load(open('./rev-manifest.json'))
 except OSError:
     logger.error(
         'Manifest "rev-manifest.json" not found. Did you remember to run '
         '"npm run build"?'
     )
     raise
+# Hack: Rename paths from "dist" to "static"
+# TODO(jmcarp) Find a better solution
+app.jinja_env.globals['assets'] = {
+    key: value.replace('dist', 'static')
+    for key, value in assets.items()
+}
 
 
 @app.route('/')
@@ -161,7 +195,49 @@ def candidates():
 
 @app.route('/committees')
 def committees():
-    return render_template('committees.html', result_type='committees')
+    return render_template(
+        'committees.html',
+        result_type='committees',
+        dates=utils.date_ranges(),
+    )
+
+
+@app.route('/receipts')
+def receipts():
+    return render_template('receipts.html', dates=utils.date_ranges())
+
+
+@app.route('/disbursements')
+def disbursements():
+    return render_template('disbursements.html', dates=utils.date_ranges())
+
+
+@app.route('/filings')
+def filings():
+    return render_template('filings.html', result_type='committees')
+
+
+@app.route('/elections/')
+def election_lookup():
+    return render_template('election-lookup.html')
+
+
+@app.route('/elections/<office>/<int:cycle>/')
+@app.route('/elections/<office>/<state>/<int:cycle>/')
+@app.route('/elections/<office>/<state>/<district>/<int:cycle>/')
+def elections(office, cycle, state=None, district=None):
+    if office.lower() not in ['president', 'senate', 'house']:
+        abort(404)
+    if state and state.upper() not in constants.states:
+        abort(404)
+    return render_template(
+        'elections.html',
+        office=office,
+        cycle=cycle,
+        state=state,
+        state_full=constants.states[state.upper()] if state else None,
+        district=district,
+    )
 
 
 @app.errorhandler(404)
@@ -179,6 +255,16 @@ def currency_filter(num, grouping=True):
     if isinstance(num, (int, float)):
         return locale.currency(num, grouping=grouping)
     return None
+
+
+@app.template_filter('date')
+def date_filter(value, fmt='%m/%d/%Y'):
+    return value.strftime(fmt)
+
+
+@app.template_filter('json')
+def json_filter(value):
+    return json.dumps(value)
 
 
 def _unique(values):
@@ -221,7 +307,7 @@ def date_filter_md(date_str):
 @app.template_filter()
 def fmt_year_range(year):
     if type(year) == int:
-        return "{} - {}".format(year - 1, year)
+        return "{}–{}".format(year - 1, year)
     return None
 
 
@@ -235,6 +321,10 @@ def fmt_report_desc(report_full_description):
 def restrict_cycles(value, start_year=START_YEAR):
     return [each for each in value if start_year <= each <= utils.current_cycle()]
 
+
+@app.template_filter()
+def fmt_state_full(value):
+    return constants.states[value.upper()]
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.

@@ -1,0 +1,7 @@
+<div>
+  <h4>Candidates to compare:</h4>
+  {{#each this}}
+    <input id="checkbox-{{ this.candidate_id }}" type="checkbox" data-id="{{this.candidate_id}}" data-name="{{this.candidate_name}}" {{#if this._checked}}checked{{/if}}>
+    <label for="checkbox-{{ this.candidate_id }}">{{this.candidate_name}}</label>
+  {{/each}}
+</div>

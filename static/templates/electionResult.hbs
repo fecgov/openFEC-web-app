@@ -1,0 +1,9 @@
+<div>
+  {{#each this}}
+  <div class="election-result box">
+    <h4>{{this.electionName}}</h4>
+    <div>{{ cycle }} General Election: {{this.electionDate}}</div>
+    <div><a href="{{this.url}}">View all current candidates &raquo;</a></div>
+  </div>
+  {{/each}}
+</div>

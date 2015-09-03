@@ -11,13 +11,13 @@ class CommitteesPageTests(SearchPageTestCase):
     def testCommitteesPageLoads(self):
         self.driver.get(self.url)
         self.assertEqual(
-            self.driver.find_element_by_tag_name('h1').text,
+            self.driver.find_element_by_class_name('tst-page-title').text,
             'Committees')
 
     def testCommitteesFilterSideBar(self):
         self.driver.get(self.url)
         filters = self.driver.find_element_by_id('filters')
-        self.assertIn('side-panel--open', filters.get_attribute('class'))
+        self.assertIn('is-open', filters.get_attribute('class'))
 
     @unittest.skip('Will fail unless we ensure that subset data includes "pork"')
     def testCommitteeNameFilter(self):
@@ -31,18 +31,16 @@ class CommitteesPageTests(SearchPageTestCase):
             self.assertIn('pork', row.text.lower())
 
     def testCommitteePartyFilter(self):
-        self.checkFilter(
-            'party', 'republican party', 3, 'Republican Party')
+        self.check_filter('party', 'REP', 3, 'Republican Party')
 
     def testCommitteeStateFilter(self):
-        self.checkFilter('state', 'oregon', 2, 'OR')
+        self.check_filter('state', 'CA', 2, 'CA')
 
     def testCommitteeTypeFilter(self):
-        self.checkFilter('committee_type', 'pr', 5, 'Presidential')
+        self.check_filter('committee_type', 'P', 5, 'Presidential')
 
     def testCommitteeDesignationFilter(self):
-        self.checkFilter(
-            'designation', 'a', 6, 'Authorized by a candidate')
+        self.check_filter('designation', 'B', 6, 'Lobbyist/Registrant PAC')
 
     def testCommitteeOrgTypeFilter(self):
-        self.checkFilter('organization_type', 'corp', 4, 'Corporation')
+        self.check_filter('organization_type', 'C', 7, 'Corporation')

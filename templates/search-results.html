@@ -1,18 +1,34 @@
 {% extends "layouts/main.html" %}
+{% set hide_header_search = true %}
 
 {% block title %}
     Search results for "{{query}}"
 {% endblock %}
 
 {% block body %}
-<div class="container">
-  <section class="data page-section">
-    {% if not results %}
-      <h4>Sorry, no results</h4>
-    {% else %}
-    <h1>Search Results</h1>
-    <div class="chunk--two-thirds tst-search_results">
+
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title">Search Results</h1>
+</header>
+
+<div class="main">
+  <div class="container">
+    <section class="main__content tst-search_results">
       {% include 'partials/search-results-controls.html' %}
+        
+        {% if not results %}
+          <div class="message message--alert">
+            <h4>Sorry, there are no results for your search "{{ query }}"</h4>
+            <p>Try browsing one of the following datasets:</p>
+            <ul class="list--flat">
+              <li><a class="button--primary" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a></li>
+              <li><a class="button--primary" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a></li>
+              <li><a class="button--primary" href="{{ url_for('filings') }}">Filings</a></li>
+              <li><a class="button--primary" href="{{ url_for('receipts') }}">Receipts</a></li>
+              <li><a class="button--primary" href="{{ url_for('disbursements') }}">Disbursements</a></li>
+            </ul>
+          </div>
+        {% else %}
 
         {% if result_type == 'committees' %}
           {% with committees=results %}
@@ -49,11 +65,11 @@
 
         {% include 'partials/search-results-controls.html' %}
 
-      </div>
-      <div class="chunk--third">
-        <div class="box meta-box">
-          <div class="box__portion">
-            <h5 class="box__title">Explore {{ result_type | title }}</h5>
+      </section>
+      <aside class="sidebar">
+        <div class="card">
+          <div class="">
+            <h5 class="">Explore {{ result_type | title }}</h5>
             <p>Trying to sort through a lot of results? Or want to explore
               similar {{ result_type }}? Try exploring all {{ result_type }}.
             </p>
@@ -70,7 +86,7 @@
           </div>
         </div>
 
-        <div class="box meta-box">
+        <div class="card">
           <div class="box__portion">
             {% if result_type == 'candidates' %} 
               {% set other_type = 'committees' %}
@@ -88,14 +104,15 @@
               </a>
             </p>
             <hr></hr>
-            <p class="text--note u-no-margin">
+            <p class="t-note">
               Looking for all committees authorized to a certain candidate? View the
               candidate's page to see them all.
             </p>
           </div>
         </div>
-      </div>
+      </aside>
     {% endif %}
-  </section>
+  </div>
 </div>
+
 {% endblock %}

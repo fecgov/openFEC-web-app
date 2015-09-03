@@ -1,0 +1,39 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/date.html' as date %}
+
+{% block heading %}
+Filter Receipts
+{% endblock %}
+
+{% block filters %}
+<div class="filter">
+  <fieldset>
+    <legend class="label">Restrict contributions</legend>
+    <ul>
+      <li>
+        <input id="is-individual" name="is_individual" type="checkbox" value="true" checked>
+        <label for="is-individual">Unique only</label>
+      </li>
+    </ul>
+  </fieldset>
+</div>
+
+{{ typeahead.field('committee_id', 'Committee') }}
+
+<h3 class="filters__subheader">Contributor Information</h3>
+{{ text.field('contributor_city', 'City') }}
+{{ states.field('contributor_state') }}
+{{ text.field('contributor_employer', 'Employer') }}
+{{ text.field('contributor_occupation', 'Occupation') }}
+
+<h3 class="filters__subheader">Transaction Information</h3>
+{{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+{{ date.field('receipt_date', 'Receipt Date', dates ) }}
+
+{% endblock %}

@@ -1,40 +1,25 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-    Browse Committees
+  Browse Committees
 {% endblock %}
 
 {% block body %}
 
-<header class="page-header page-header--dark">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-committee--white.svg" alt="Icon representing committees"> Committees</h1>
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title tst-page-title">Committees</h1>
 </header>
 
-<section class="results-content">
-  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
-  <div id="filters" class="side-panel side-panel--left">
-    <h4>Filter Committees</h4>
-    <form id="category-filters">
-        <div class="field" id="q-field">
-            <label for="q">Name</label>
-            <input type="text" name="q" id="q" />
-            <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
-        </div>
-
-        {% include 'partials/filters/election-years.html' %}
-        {% include 'partials/filters/parties.html' %}
-        {% include 'partials/filters/states.html' %}
-        {% include 'partials/filters/committee-types.html' %}
-        {% include 'partials/filters/designations.html' %}
-        {% include 'partials/filters/organization-types.html' %}
-
-        <div class="field">
-          <button type="submit" class="primary">Apply filters</button>
-        </div>
-    </form>
-  </div>
-  <div id="committees" class="results-container">
+<section class="main__content--full">
+  {% include 'partials/committee-filter.html' %}
+  <div id="committees" class="datatable__container">
     {% include 'partials/committees-table.html' %}
   </div>
 </section>
+{% include 'partials/datatable-modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/committees.js'] }}"></script>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse Receipts
+{% endblock %}
+
+{% block body %}
+
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title">Receipts</h1>
+</header>
+
+<section class="main__content--full">
+  {% include "partials/receipts-filter.html" %}
+  <div id="committees" class="datatable__container">
+    {% include 'partials/receipts-table.html' %}
+  </div>
+</section>
+
+{% include 'partials/datatable-modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/{{ assets['dist/js/pages/receipts.js'] }}"></script>
+{% endblock %}

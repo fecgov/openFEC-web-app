@@ -73,3 +73,8 @@ def load_cmte_financials(committee_id, **filters):
         'reports': reports['results'],
         'totals': totals['results'],
     }
+
+
+def load_cmte_aggregates(committee_id, aggregate, cycle):
+    response = _call_api('committee', committee_id, 'schedules', 'schedule_a', aggregate, cycle=cycle)
+    return response['results']

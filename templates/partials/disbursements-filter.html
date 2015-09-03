@@ -1,0 +1,23 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/date.html' as date %}
+{% block heading %}
+Filter Disbursements
+{% endblock %}
+
+{% block filters %}
+{{ typeahead.field('committee_id', 'Committee') }}
+
+<h4 class="filters__subheader">Recipient Information</h4>
+{{ text.field('recipient_name', 'Receipient Name') }}
+{{ text.field('recipient_city', 'City') }}
+{{ states.field('recipient_state')}}
+<h4 class="filters__subheader">Transaction Information</h4>
+{{ text.field('disbursement_description', 'Purpose') }}
+{{ text.field('min_amount', 'Minimum Expenditure') }}
+{{ text.field('max_amount', 'Maximum Expenditure') }}
+{{ date.field('disbursement_date', 'Disbursement Date', dates ) }}
+{% endblock %}

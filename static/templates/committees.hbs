@@ -1,0 +1,31 @@
+<div class="panel__row">
+  <h4><a href="/candidate/{{committee_id}}">{{name}}</a></h4>
+  <table>
+    <tr>
+      <td>Designation</td>
+      <td>{{designation_full}}</td>
+    </tr>
+    <tr>
+      <td>Type</td>
+      <td>{{committee_type_full}}</td>
+    </tr>
+    <tr>
+      <td>Political Party</td>
+      <td>{{party_full}}</td>
+    </tr> 
+    {{#if organization_type_full}}
+    <tr>
+      <td>Organization Type</td>
+      <td>{{organization_type_full}}</td>
+    </tr>  
+    {{/if}}
+    <tr>
+      <td>Treasurer</td>
+      <td>{{treasurer_name}}</td>
+    </tr> 
+    <tr>
+      <td>State</td>
+      <td>{{state}}</td>
+    </tr>              
+  </table>
+</div>
