@@ -314,7 +314,7 @@ function mapMax(cached) {
 
 function appendStateMap($parent, results, cached) {
   var ids = _.pluck(results, 'candidate_id');
-  var displayed = $parent.find('.state-map select').map(function(_, select) {
+  var displayed = $parent.find('.candidate-select').map(function(_, select) {
     return $(select).val();
   }).get();
   var value = _.find(ids, function(each) {
@@ -332,8 +332,8 @@ function updateButtonsDisplay($parent) {
   var $maps = $parent.find('.state-map');
   var showAdd = $maps.length < MAX_MAPS ? 'block' : 'none';
   var showRemove = $maps.length > 1 ? 'block' : 'none';
-  $parent.closest('#state-maps').find('.add-map').css('display', showAdd);
-  $parent.find('.state-map button').css('display', showRemove);
+  $parent.find('.js-add-map').css('display', showAdd);
+  $parent.find('.js-remove-map').css('display', showRemove);
 }
 
 function updateColorScale($container, cached) {
@@ -369,15 +369,16 @@ function initStateMaps(results) {
   var cached = {};
   var $stateMaps = $('#state-maps');
   var $choropleths = $stateMaps.find('.choropleths');
-  $stateMaps.find('.add-map').on('click', function(e) {
-    appendStateMap($choropleths, results, cached);
-  });
+  appendStateMap($choropleths, results, cached);
   $choropleths.on('change', 'select', function(e) {
     var $target = $(e.target);
     var $parent = $target.closest('.state-map');
     drawStateMap($parent, $target.val(), cached);
   });
-  $choropleths.on('click', 'button', function(e) {
+  $choropleths.on('click', '.js-add-map', function(e){
+    appendStateMap($choropleths, results, cached);
+  })
+  $choropleths.on('click', '.js-remove-map', function(e) {
     var $target = $(e.target);
     var $parent = $target.closest('.state-map');
     var $container = $parent.closest('#state-maps');
