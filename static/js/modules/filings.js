@@ -8,10 +8,21 @@ var _ = require('underscore');
 var tables = require('./tables');
 var helpers = require('../modules/helpers');
 
-var template = require('../../templates/filings.hbs');
+var candidateTemplate = require('../../templates/filings/candidate.hbs');
+var pacTemplate = require('../../templates/filings/pac.hbs');
+
+var templates = {
+  F3: candidateTemplate,
+  F3P: candidateTemplate,
+  F3X: pacTemplate
+};
+
+function resolveTemplate(row) {
+  return templates[row.form_type](row);
+}
 
 var renderModal = tables.modalRenderFactory(
-  template,
+  resolveTemplate,
   function(row) {
     var url = helpers.buildUrl(
       ['committee', row.committee_id, 'reports'],
@@ -27,7 +38,7 @@ var renderModal = tables.modalRenderFactory(
 );
 
 function renderRow(row, data, index) {
-  if (data.form_type && data.form_type.match(/^F3/)) {
+  if (data.form_type && data.form_type.match(/^F3[XP]?$/)) {
     row.classList.add(tables.MODAL_TRIGGER_CLASS);
   }
 }
