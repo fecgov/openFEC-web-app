@@ -2,7 +2,6 @@ import datetime
 import collections
 
 from flask import render_template
-from werkzeug.exceptions import abort
 
 from openfecwebapp import api_caller
 
@@ -22,9 +21,7 @@ def to_date(committee, cycle):
     return min(datetime.datetime.now().year, cycle)
 
 
-def render_committee(data, candidates=None, cycle=None):
-    committee = get_first_result_or_raise_500(data)
-
+def render_committee(committee, candidates=None, cycle=None):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
@@ -62,11 +59,9 @@ def aggregate_committees(committees):
     return ret
 
 
-def render_candidate(data, committees, cycle):
-    results = get_first_result_or_raise_500(data)
-
+def render_candidate(candidate, committees, cycle):
     # candidate fields will be top-level in the template
-    tmpl_vars = results
+    tmpl_vars = candidate
 
     tmpl_vars['cycle'] = cycle
     tmpl_vars['result_type'] = 'candidates'
@@ -86,12 +81,3 @@ def render_candidate(data, committees, cycle):
     tmpl_vars['aggregate'] = aggregate_committees(committees_authorized)
 
     return render_template('candidates-single.html', **tmpl_vars)
-
-
-def get_first_result_or_raise_500(data):
-    # not handling error at api module because sometimes its ok to
-    # not get data back - like with search results
-    if not data.get('results'):
-        abort(500)
-    else:
-        return data['results'][0]
