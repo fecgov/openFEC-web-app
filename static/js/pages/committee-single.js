@@ -278,9 +278,10 @@ $(document).ready(function() {
         var $form = $('#category-filters');
         tables.initTableDeferred($table, $form, 'committee/' + committeeId + '/filings', {}, filingsColumns,
           _.extend({}, tables.offsetCallbacks, {
-            afterRender: filings.renderFilingsModal
+            afterRender: filings.renderModal
           }),
           {
+            rowCallback: filings.renderRow,
             dom: '<"panel__main"t><"results-info results-info--bottom meta-box"lfrip>',
             // Order by receipt date descending
             order: [[2, 'desc']],

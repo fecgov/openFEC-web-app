@@ -23,9 +23,10 @@ $(document).ready(function() {
   var $form = $('#category-filters');
   tables.initTable($table, $form, 'filings', {}, filingsColumns,
     _.extend({}, tables.offsetCallbacks, {
-      afterRender: filings.renderFilingsModal
+      afterRender: filings.renderModal
     }),
     {
+      rowCallback: filings.renderRow,
       // Order by receipt date descending
       order: [[3, 'desc']],
       useFilters: true

@@ -65,7 +65,8 @@ $(document).ready(function() {
     {
       order: [[5, 'desc']],
       pagingType: 'simple',
-      useFilters: true
+      useFilters: true,
+      rowCallback: tables.modalRenderRow
     }
   );
 });

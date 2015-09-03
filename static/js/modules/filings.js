@@ -8,10 +8,10 @@ var _ = require('underscore');
 var tables = require('./tables');
 var helpers = require('../modules/helpers');
 
-var filingsTemplate = require('../../templates/filings.hbs');
+var template = require('../../templates/filings.hbs');
 
-var renderFilingsModal = tables.modalRenderFactory(
-  filingsTemplate,
+var renderModal = tables.modalRenderFactory(
+  template,
   function(row) {
     var url = helpers.buildUrl(
       ['committee', row.committee_id, 'reports'],
@@ -26,6 +26,13 @@ var renderFilingsModal = tables.modalRenderFactory(
   }
 );
 
+function renderRow(row, data, index) {
+  if (data.form_type && data.form_type.match(/^F3/)) {
+    row.classList.add(tables.MODAL_TRIGGER_CLASS);
+  }
+}
+
 module.exports = {
-  renderFilingsModal: renderFilingsModal
+  renderModal: renderModal,
+  renderRow: renderRow
 };

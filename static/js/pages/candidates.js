@@ -50,6 +50,9 @@ $(document).ready(function() {
     _.extend({}, tables.offsetCallbacks, {
       afterRender: tables.modalRenderFactory(candidatesTemplate)
     }),
-    {useFilters: true}
+    {
+      useFilters: true,
+      rowCallback: tables.modalRenderRow
+    }
   );
 });

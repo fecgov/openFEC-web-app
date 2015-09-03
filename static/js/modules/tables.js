@@ -234,8 +234,12 @@ function identity(value) {
   return value;
 }
 
-var MODAL_TRIGGER_CLASS = 'js-modal-trigger';
-var MODAL_TRIGGER_HTML = '<i class="icon arrow--right ' + MODAL_TRIGGER_CLASS + '"></li>';
+var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
+var MODAL_TRIGGER_HTML = '<i class="icon arrow--right"></li>';
+
+function modalRenderRow(row, data, index) {
+  row.classList.add(MODAL_TRIGGER_CLASS);
+}
 
 function modalRenderFactory(template, fetch) {
   fetch = fetch || identity;
@@ -247,7 +251,7 @@ function modalRenderFactory(template, fetch) {
     $modal.appendTo($table);
     $table.find('tr').attr('tabindex', 0);
 
-    $table.on('click keypress', '.js-panel-toggle tr:has(.' + MODAL_TRIGGER_CLASS + ')', function(e) {
+    $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, function(e) {
       if (e.which === 13 || e.type === 'click') {
         var $target = $(e.target);
         if ($target.is('a')) {
@@ -471,6 +475,7 @@ module.exports = {
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
   barsAfterRender: barsAfterRender,
+  modalRenderRow: modalRenderRow,
   modalRenderFactory: modalRenderFactory,
   MODAL_TRIGGER_CLASS: MODAL_TRIGGER_CLASS,
   MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
