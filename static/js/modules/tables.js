@@ -230,52 +230,70 @@ function mapQuerySeek(api, data) {
   );
 }
 
-function modalAfterRender(template, api, data, response) {
-  var $table = $(api.table().node()),
-      $modal = $('#datatable-modal');
+function identity(value) {
+  return value;
+}
 
-  // Move the modal to the results div.
-  $modal.appendTo($('#results'));
-  $table.find('tr').attr('tabindex', 0);
+var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
+var MODAL_TRIGGER_HTML = '<i class="icon arrow--right"></li>';
 
-  $table.on('click keypress', '.js-panel-toggle tr', function(ev) {
-    if (ev.which === 13 || ev.type === 'click') {
-      if ($(ev.target).is('a')) {
-        return true;
-      }
-      if ( !$(ev.target).closest('td').hasClass('dataTables_empty') ) { 
-        var $row = $(ev.target).closest('tr');
-        var index = api.row($row).index();
-        $modal.find('.js-panel-content').html(template(response.results[index]));
-        $modal.attr('aria-hidden', 'false');
-        $row.siblings().toggleClass('row-active', false);
-        $row.toggleClass('row-active', true);
-        $('body').toggleClass('panel-active', true);
-        var hideColumns = api.columns('.hide-panel');
-        hideColumns.visible(false);
-        // Populate the pdf button if there is one
-        if ( response.results[index].pdf_url ) {
-          $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
-        } else {
-          $modal.find('.js-pdf_url').remove();
+function modalRenderRow(row, data, index) {
+  row.classList.add(MODAL_TRIGGER_CLASS);
+}
+
+function modalRenderFactory(template, fetch) {
+  fetch = fetch || identity;
+  return function(api, data, response) {
+    var $table = $(api.table().node());
+    var $modal = $('#datatable-modal');
+
+    // Move the modal to the results div.
+    $modal.appendTo($table);
+    $table.find('tr').attr('tabindex', 0);
+
+    $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, function(e) {
+      if (e.which === 13 || e.type === 'click') {
+        var $target = $(e.target);
+        if ($target.is('a')) {
+          return true;
         }
+        if ( !$target.closest('td').hasClass('dataTables_empty') ) {
+          var $row = $target.closest('tr');
+          var index = api.row($row).index();
+          $.when(fetch(response.results[index])).done(function(fetched) {
+            $modal.find('.js-panel-content').html(template(fetched));
+            $modal.attr('aria-hidden', 'false');
+            $row.siblings().toggleClass('row-active', false);
+            $row.toggleClass('row-active', true);
+            $('body').toggleClass('panel-active', true);
+            var hideColumns = api.columns('.hide-panel');
+            hideColumns.visible(false);
 
-        // Set focus on the close button
-        $('.js-hide').focus();
+            // Populate the pdf button if there is one
+            if (fetched.pdf_url) {
+              $modal.find('.js-pdf_url').attr('href', fetched.pdf_url);
+            } else {
+              $modal.find('.js-pdf_url').remove();
+            }
 
-        // When under $large-screen
-        // TODO figure way to share these values with CSS.
-        if ($(document).width() < 980) {
-          api.columns('.hide-panel-tablet').visible(false);
+            // Set focus on the close button
+            $('.js-hide').focus();
+
+            // When under $large-screen
+            // TODO figure way to share these values with CSS.
+            if ($(document).width() < 980) {
+              api.columns('.hide-panel-tablet').visible(false);
+            }
+          });
         }
       }
-    }
-  });
+    });
 
-  $modal.on('click', '.js-panel-close', function(ev) {
-    ev.preventDefault();
-    hidePanel(api, $modal);
-  });
+    $modal.on('click', '.js-panel-close', function(e) {
+      e.preventDefault();
+      hidePanel(api, $modal);
+    });
+  };
 }
 
 function hidePanel(api, $modal) {
@@ -456,8 +474,11 @@ module.exports = {
   urlColumn: urlColumn,
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
-  modalAfterRender: modalAfterRender,
   barsAfterRender: barsAfterRender,
+  modalRenderRow: modalRenderRow,
+  modalRenderFactory: modalRenderFactory,
+  MODAL_TRIGGER_CLASS: MODAL_TRIGGER_CLASS,
+  MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
   offsetCallbacks: offsetCallbacks,
   seekCallbacks: seekCallbacks,
   initTable: initTable,

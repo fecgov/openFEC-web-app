@@ -45,7 +45,7 @@ var columns = [
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon arrow--right"></i>';
+      return tables.MODAL_TRIGGER_HTML;
     }
   }
 ];
@@ -60,12 +60,13 @@ $(document).ready(function() {
     {},
     columns,
     _.extend(tables.seekCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, disbursementTemplate)
+      afterRender: tables.modalRenderFactory(disbursementTemplate)
     }),
     {
       order: [[3, 'desc']],
       pagingType: 'simple',
-      useFilters: true
+      useFilters: true,
+      rowCallback: tables.modalRenderRow
     }
   );
 });

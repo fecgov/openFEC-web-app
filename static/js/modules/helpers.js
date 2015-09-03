@@ -1,7 +1,8 @@
 'use strict';
 
-/* global require, module, Intl */
+/* global require, module, Intl, API_LOCATION, API_VERSION, API_KEY */
 
+var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
 var Handlebars = require('hbsfy/runtime');
@@ -42,9 +43,18 @@ function filterNull(params) {
     .value();
 }
 
+function buildUrl(path, query) {
+  return URI(API_LOCATION)
+    .path([API_VERSION].concat(path).join('/'))
+    .addQuery({api_key: API_KEY})
+    .addQuery(query)
+    .toString();
+}
+
 module.exports = {
   currency: currency,
   datetime: datetime,
   cycleDates: cycleDates,
-  filterNull: filterNull
+  filterNull: filterNull,
+  buildUrl: buildUrl
 };

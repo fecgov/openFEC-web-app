@@ -29,7 +29,7 @@ var columns = [
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon arrow--right"></i>';
+      return tables.MODAL_TRIGGER_HTML;
     }
   }
 ];
@@ -44,7 +44,10 @@ $(document).ready(function() {
     {},
     columns,
     _.extend(tables.offsetCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, committeesTemplate)
+      afterRender: tables.modalRenderFactory(committeesTemplate)
     }),
-    {useFilters: true}
+    {
+      useFilters: true,
+      rowCallback: tables.modalRenderRow
+    }
   );});

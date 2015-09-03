@@ -10,8 +10,8 @@ var events = require('fec-style/js/events');
 
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
-var helpers = require('../modules/helpers');
-var decoders = require('../modules/decoders');
+var filings = require('../modules/filings');
+var columns = require('../modules/columns');
 
 var tableOpts = {
   dom: tables.simpleDOM,
@@ -131,21 +131,14 @@ var occupationColumns = [
   }
 ];
 
-var filingsColumns = [
-  tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
-  {
-    data: 'amendment_indicator',
-    className: 'min-desktop',
-    render: function(data) {
-      return decoders.amendments[data] || '';
-    },
-  },
-  tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
-  tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet', orderable: false}),
-  tables.currencyColumn({data: 'total_receipts', className: 'min-tablet'}),
-  tables.currencyColumn({data: 'total_disbursements', className: 'min-tablet'}),
-  tables.currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet'}),
-];
+var filingsColumns = columns.getColumns(
+  columns.filings,
+  [
+    'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
+    'total_receipts', 'total_disbursements', 'total_independent_expenditures',
+    'modal_trigger'
+  ]
+);
 
 var disbursementPurposeColumns = [
   {data: 'purpose', className: 'all', orderable: false},
@@ -283,12 +276,18 @@ $(document).ready(function() {
         break;
       case 'filing':
         var $form = $('#category-filters');
-        tables.initTableDeferred($table, $form, 'committee/' + committeeId + '/filings', {}, filingsColumns, tables.offsetCallbacks, {
-          dom: 't<"results-info results-info--bottom meta-box"lfrip>',
-          // Order by receipt date descending
-          order: [[4, 'desc']],
-          useFilters: true
-        });
+        tables.initTableDeferred($table, $form, 'committee/' + committeeId + '/filings', {}, filingsColumns,
+          _.extend({}, tables.offsetCallbacks, {
+            afterRender: filings.renderModal
+          }),
+          {
+            rowCallback: filings.renderRow,
+            dom: '<"panel__main"t><"results-info results-info--bottom meta-box"lfrip>',
+            // Order by receipt date descending
+            order: [[2, 'desc']],
+            useFilters: true
+          }
+        );
         break;
       case 'disbursements-by-purpose':
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'].join('/');

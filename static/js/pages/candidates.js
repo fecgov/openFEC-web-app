@@ -33,7 +33,7 @@ var columns = [
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon arrow--right"></i>';
+      return tables.MODAL_TRIGGER_HTML;
     }
   }
 ];
@@ -47,9 +47,12 @@ $(document).ready(function() {
     'candidates',
     {},
     columns,
-    _.extend(tables.offsetCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, candidatesTemplate)
+    _.extend({}, tables.offsetCallbacks, {
+      afterRender: tables.modalRenderFactory(candidatesTemplate)
     }),
-    {useFilters: true}
+    {
+      useFilters: true,
+      rowCallback: tables.modalRenderRow
+    }
   );
 });
