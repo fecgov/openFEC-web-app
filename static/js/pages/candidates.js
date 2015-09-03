@@ -1,4 +1,4 @@
-'use strict';
+https://github.com/18F/openFEC-web-app/pull/581#issuecomment-137597693'use strict';
 
 /* global require, document */
 
@@ -29,7 +29,7 @@ var columns = [
   {data: 'state', className: 'min-desktop hide-panel'},
   {data: 'district', className: 'min-desktop hide-panel'},
   {
-    className: 'all',
+    className: 'all u-no-padding',
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {

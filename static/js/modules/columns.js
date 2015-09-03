@@ -37,7 +37,7 @@ var filings = {
   total_disbursements: tables.currencyColumn({data: 'total_disbursements', className: 'min-tablet hide-panel'}),
   total_independent_expenditures: tables.currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet hide-panel'}),
   modal_trigger: {
-    className: 'all',
+    className: 'all u-no-padding',
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {

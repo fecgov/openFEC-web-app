@@ -25,7 +25,7 @@ var columns = [
   {data: 'designation_full', className: 'min-tablet hide-panel'},
   {data: 'organization_type_full', className: 'min-desktop hide-panel'},
   {
-    className: 'all',
+    className: 'all u-no-padding',
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {

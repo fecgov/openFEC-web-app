@@ -41,7 +41,7 @@ var columns = [
     }
   },
   {
-    className: 'all',
+    className: 'all u-no-padding',
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
