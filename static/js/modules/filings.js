@@ -39,7 +39,7 @@ var renderModal = tables.modalRenderFactory(
 
 function renderRow(row, data, index) {
   if (data.form_type && data.form_type.match(/^F3[XP]?$/)) {
-    row.classList.add(tables.MODAL_TRIGGER_CLASS);
+    row.classList.add(tables.MODAL_TRIGGER_CLASS, 'row--has-panel');
   }
 }
 
