@@ -74,6 +74,10 @@ def series_group_has_data(groups, keys):
     )
 
 
+def get_cycles():
+    return range(utils.current_cycle(), START_YEAR, -2)
+
+
 def cycle_start(value):
     return datetime.datetime(value - 1, 1, 1)
 
@@ -113,7 +117,7 @@ app.jinja_env.globals.update({
     'election_url': get_election_url,
     'constants': constants,
     'districts': DISTRICTS,
-    'cycles': range(utils.current_cycle(), START_YEAR, -2),
+    'cycles': get_cycles(),
 })
 
 
@@ -230,10 +234,14 @@ def elections(office, cycle, state=None, district=None):
         abort(404)
     if state and state.upper() not in constants.states:
         abort(404)
+    cycles = get_cycles()
+    if office.lower() == 'president':
+        cycles = [each for each in cycles if each % 4 == 0]
     return render_template(
         'elections.html',
         office=office,
         cycle=cycle,
+        cycles=cycles,
         state=state,
         state_full=constants.states[state.upper()] if state else None,
         district=district,
