@@ -2,8 +2,10 @@
   <div class="container">
     <h2 class="content__section__heading" id="section-1-heading">Candidate Comparison</h2>
     <div class="content__section">
-      <h3>All candidates in this election</h3>
-      <p>Totals reflect the sum total reported by all of a candidate's authorized committees.</p>
+      <div class="results-info">
+        <h3 class="results-info__title">All candidates in this election</h3>
+        <span class="t-block">Totals reflect the sum total reported by all of a candidate's authorized committees.</span>
+      </div>
       <table id="results" class="data-table" data-type="candidates">
         <thead>
           <th role="col">Candidate</th>
@@ -20,7 +22,7 @@
       <div class="content__section__heading">
         <h2>Fundraising Comparison</h2>
         <p>Compare the source and nature of candidate receipts.</p>
-        <div id="comparison" class="meta-box filters--horizontal"></div>
+        <div id="comparison" class="filters--horizontal"></div>
         <fieldset class="toggles">
           <legend class="label">Compare by:</legend>
           <label for="toggle-size">
@@ -40,7 +42,9 @@
 
       <div class="row">
         <div id="by-size" class="panel-toggle-element" aria-hidden="false">
-          <h3>Receipts by size</h3>
+          <div class="results-info">
+            <h3 class="results-info__title">Contributions by size</h3>
+          </div>        
           <table class="data-table" data-type="by-size">
             <thead>
               <th scope="col">Candidate</th>
@@ -56,17 +60,19 @@
 
       <div class="row">
         <div id="by-state" class="panel-toggle-element" aria-hidden="true">
-          <div class="figure__title">
-            <h3>Receipts by state</h3>
-            <fieldset class="toggles toggles--small">
-              <legend class="label">Toggle view:</legend>
+          <div class="results-info">
+            <div class="usa-width-two-thirds">
+              <h3 class="results-info__title">Contributions by locaion</h3>
+              <span class="t-block">The total amount of contributions from individuals received from each state.</span>
+            </div>
+            <fieldset class="toggles toggles--small u-float-right" aria-label="Toggle view">
               <label for="toggle-table">
                 <input id="toggle-table" type="radio" class="panel-toggle-control" name="state-view" value="state-table" checked>
-                <span class="button--neutral button--small">Table</span>
+                <span class="button--empty button--small button--table">Table</span>
               </label>
               <label for="toggle-map">
                 <input id="toggle-map" type="radio" class="panel-toggle-control" name="state-view" value="state-maps">
-                <span class="button--neutral button--small">Map</span>
+                <span class="button--empty button--small button--map">Map</span>
               </label>
             </fieldset>
           </div>
@@ -76,16 +82,21 @@
             </table>
           </div>
           <div id="state-maps" class="panel-toggle-element" aria-hidden="true'">
-            <button class="add-map button--primary">Compare Candidates</button>
-            <div class="legend"><svg></svg></div>
             <div class="choropleths row"></div>
+            <div class="legend">            
+              <span class="t-sans t-block">Total amount received from state:</span>
+              <svg></svg>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="row">
         <div id="by-contributor-type" class="panel-toggle-element" aria-hidden="true">
-          <h3>Receipts by type of contributor</h3>
+          <div class="results-info">
+            <h3 class="results-info__title">Contributions by time</h3>
+            <span class="t-block">Contributions received fro, individuals vs. those received from all other types of entity.</span>
+          </div>        
           <table class="data-table" data-type="by-type">
             <thead>
               <th scope="col">Candidate</th>
