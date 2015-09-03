@@ -1,4 +1,4 @@
-https://github.com/18F/openFEC-web-app/pull/581#issuecomment-137597693'use strict';
+'use strict';
 
 /* global require, document */
 
