@@ -37,6 +37,7 @@ function formatResult(result, lookup) {
     officeName: officeMap[result.office],
     electionName: formatName(result),
     electionDate: formatElectionDate(result),
+    url: formatUrl(result),
     incumbent: formatIncumbent(result),
     color: formatColor(result, lookup)
   });
