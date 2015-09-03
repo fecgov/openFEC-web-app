@@ -124,7 +124,7 @@ function drawComparison(results) {
     result._checked = true;
   });
   var $comparison = $('#comparison');
-  $comparison.html(comparisonTemplate(results));
+  $comparison.prepend(comparisonTemplate(results));
   var comparisonDropdown = new dropdown.Dropdown($('#comparison .js-dropdown'));
   $('#comparison input:checked').each(function(){
     comparisonDropdown.selectItem($(this));

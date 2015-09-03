@@ -4,7 +4,6 @@
 <section class="main" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
   <div class="container">
     <div class="section__heading">
-      <h2 class="heading__title" id="section-3-heading">
         Money Spent by this Committee
         {{ select.cycle_select(cycles, cycle) }}
       </h2>
@@ -17,7 +16,7 @@
           ) }}">All disbursements data
       </a>
     </div>
-    <div class="row">
+    <div class="row filters--horizontal">
       <fieldset class="toggles section__intro__left">
         <legend class="label">Compare by:</legend>
         <label for="toggle-purpose">
@@ -26,59 +25,44 @@
         </label>
         <label for="toggle-recipient">
           <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />
-          <span class="button--neutral">Recipient Name</span>
-        </label>
-        <label for="toggle-id">
-          <input id="toggle-id" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient-id" />
-          <span class="button--neutral">Recipient Committee</span>
+          <span class="button--neutral">Recipient</span>
         </label>
       </fieldset>
-      <div id="by-purpose" class="panel-toggle-element box" aria-hidden="false">
-        <h4>Disbursements by Purpose</h4>
-        <table
-            class="data-table"
-            data-type="disbursements-by-purpose"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
-          >
-          <thead>
-            <th scope="col">Purpose</th>
-            <th scope="col">Total Received</th>
-          </thead>
-        </table>
-        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
+    </div>
+    <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Disbursements by Purpose</h3>
       </div>
+      <table
+          class="data-table"
+          data-type="disbursements-by-purpose"
+          data-committee="{{ committee.committee_id }}"
+          data-cycle="{{ cycle }}"
+        >
+        <thead>
+          <th scope="col">Purpose</th>
+          <th scope="col">Total Received</th>
+        </thead>
+      </table>
+      {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
+    </div>
 
-      <div id="by-recipient" class="panel-toggle-element box" aria-hidden="false">
-        <h4>Disbursements by Recipient Name</h4>
-        <table
-            class="data-table"
-            data-type="disbursements-by-recipient"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
-          >
-          <thead>
-            <th scope="col">Recipient</th>
-            <th scope="col">Total Received</th>
-          </thead>
-        </table>
-        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
+    <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Disbursements by Recipient</h3>
       </div>
-
-      <div id="by-recipient-id" class="panel-toggle-element box" aria-hidden="false">
-        <h4>Disbursements by Recipient Committee (if applicable)</h4>
-        <table
-            class="data-table"
-            data-type="disbursements-by-recipient-id"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
-          >
-          <thead>
-            <th scope="col">Recipient Committee</th>
-            <th scope="col">Total Received</th>
-          </thead>
-        </table>
-      </div>
+      <table
+          class="data-table"
+          data-type="disbursements-by-recipient"
+          data-committee="{{ committee.committee_id }}"
+          data-cycle="{{ cycle }}"
+        >
+        <thead>
+          <th scope="col">Recipient</th>
+          <th scope="col">Total Received</th>
+        </thead>
+      </table>
+      {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
     </div>
   </div>
 </section>
