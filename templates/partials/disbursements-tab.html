@@ -12,7 +12,7 @@
           ) }}">All disbursements data
       </a>
     </div>
-    <div class="row">
+    <div class="row filters--horizontal">
       <fieldset class="toggles section__intro__left">
         <legend class="label">Compare by:</legend>
         <label for="toggle-purpose">
@@ -24,41 +24,41 @@
           <span class="button--neutral">Recipient</span>
         </label>
       </fieldset>
-      <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
-        <div class="results-info">
-          <h3 class="results-info__title">Disbursements by Purpose</h3>
-        </div>
-        <table
-            class="data-table"
-            data-type="disbursements-by-purpose"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
-          >
-          <thead>
-            <th scope="col">Purpose</th>
-            <th scope="col">Total Received</th>
-          </thead>
-        </table>
-        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
+    </div>
+    <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Disbursements by Purpose</h3>
       </div>
+      <table
+          class="data-table"
+          data-type="disbursements-by-purpose"
+          data-committee="{{ committee.committee_id }}"
+          data-cycle="{{ cycle }}"
+        >
+        <thead>
+          <th scope="col">Purpose</th>
+          <th scope="col">Total Received</th>
+        </thead>
+      </table>
+      {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
+    </div>
 
-      <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
-        <div class="results-info">
-          <h3 class="results-info__title">Disbursements by Recipient</h3>
-        </div>
-        <table
-            class="data-table"
-            data-type="disbursements-by-recipient"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
-          >
-          <thead>
-            <th scope="col">Recipient</th>
-            <th scope="col">Total Received</th>
-          </thead>
-        </table>
-        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
+    <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Disbursements by Recipient</h3>
       </div>
+      <table
+          class="data-table"
+          data-type="disbursements-by-recipient"
+          data-committee="{{ committee.committee_id }}"
+          data-cycle="{{ cycle }}"
+        >
+        <thead>
+          <th scope="col">Recipient</th>
+          <th scope="col">Total Received</th>
+        </thead>
+      </table>
+      {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
     </div>
   </div>
 </section>
