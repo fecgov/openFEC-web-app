@@ -11,7 +11,7 @@
 {% endmacro %}
 
 {% if series_group_has_data(reports, ('total_receipts_period', 'total_disbursements_period')) %}
-<div class="row">
+<div class="content__section--extra">
   <figure class="chart-container chart--r-d">
     <div class="chart__header">
       <h4 class="chart__title">Receipts and Disbursements</h4>
@@ -26,7 +26,7 @@
 </div>
 {% endif %}
 {% if series_group_has_data(reports, ('cash_on_hand_end_period', 'debts_owed_by_committee')) %}
-<div class="row">
+<div class="content__section--extra">
   <figure class="chart-container chart--c-d">
     <div class="chart__header">
       <h4 class="chart__title">Cash and Debt</h4>

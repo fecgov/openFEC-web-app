@@ -318,9 +318,10 @@ function barsAfterRender(template, api, data, response) {
   var max = _.max(values);
   $cols.after(function() {
     var width = 100 * parseFloat($(this).attr('data-value')) / max;
-    return $('<div>')
-      .addClass('value-bar')
-      .css('width', _.max([width, 1]) + '%');
+    var bar = '<div class="bar-container">' +
+                '<div class="value-bar" style="width: ' + width + '%">' +
+                '</div></div>';
+    return bar;
   });
 }
 

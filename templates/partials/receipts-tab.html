@@ -5,11 +5,10 @@
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
     <div class="section__heading">
-      <h2 class="heading__title" id="section-2-heading">Money Received by the Committee {% include 'partials/cycle-select.html' %}  </h2>
+      <h2 class="heading__title" id="section-2-heading">Money received from individuals {% include 'partials/cycle-select.html' %}  </h2>
       <a class="heading__action button--neutral button--browse" href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle, is_individual='true') }}">All receipts data</a>
     </div>
     <div class="content__section">
-      <h3>Money received from individuals</h3>
       <fieldset class="toggles">
         <legend class="label">Compare by:</legend>
         <label for="toggle-state">
@@ -30,8 +29,10 @@
         </label>
       </fieldset>
       <div class="row">
-        <div id="by-state" class="panel-toggle-element box">
-          <h4>Receipts by State</h4>
+        <div id="by-state" class="panel-toggle-element">
+          <div class="results-info">
+            <h3 class="results-info__title">Receipts by State</h3>
+          </div>
           <div class="usa-width-one-half">
             <table
                 class="data-table"
@@ -50,9 +51,10 @@
           </div>
         </div>
         
-        <div id="by-contribution-size" class="panel-toggle-element box" aria-hidden="true">
-          <h4>Receipts by Size</h4>
-          <table
+        <div id="by-contribution-size" class="panel-toggle-element" aria-hidden="true">
+          <div class="results-info">
+            <h3 class="results-info__title">Receipts by Size</h3>
+          </div>          <table
              class="data-table"
              data-type="contribution-size"
              data-committee="{{ committee.committee_id }}"
@@ -63,8 +65,10 @@
             </thead>
           </table>
         </div>
-        <div id="by-employer" class="panel-toggle-element box" aria-hidden="true">
-          <h4>Receipts by Individual's Employer</h4>
+        <div id="by-employer" class="panel-toggle-element" aria-hidden="true">
+          <div class="results-info">
+            <h3 class="results-info__title">Receipts by Individual's Employer</h3>
+          </div>          
           <table
               class="data-table"
               data-type="receipts-by-employer"
@@ -79,8 +83,10 @@
           {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}
         </div>
 
-        <div id="by-occupation" class="panel-toggle-element box" aria-hidden="true">
-          <h4>Receipts by Individual's Occupation</h4>
+        <div id="by-occupation" class="panel-toggle-element" aria-hidden="true">
+          <div class="results-info">
+            <h3 class="results-info__title">Receipts by Individual's Occupation</h3>
+          </div>
           <table
               class="data-table"
               data-type="receipts-by-occupation"
@@ -95,24 +101,6 @@
           {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}      
         </div>
       </div> 
-    </div>
-    <div class="content__section content__section--ruled">
-      <h3>Money received from other committees</h3>
-      <div class="row">
-        <div id="by-committee">
-          <table
-             class="data-table"
-             data-type="committee-contributor"
-             data-committee="{{ committee.committee_id }}"
-             data-cycle="{{ cycle }}"
-             {% if year %}data-year"{{ year }}"{% endif %}>
-            <thead>
-              <th scope="col">Committee</th>
-              <th scope="col">Total Contributed</th>
-            </thead>
-          </table>
-        </div>
-      </div>
     </div>
   </div>
 </section>
