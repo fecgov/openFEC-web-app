@@ -21,7 +21,7 @@
 
 {% macro chart_series(bars, value_key, orient='vertical', tooltip=default_tooltip, attr={}) %}
 {% if series_has_data(bars, value_key) %}
-<div class="chart-series chart-series--{{ orient }} {{ attr.class|default('') }}">
+<div class="chart-series chart-series--{{ orient }} {{ attr.class|default('') }} value-bar">
   {% for bar in bars %}
     {{ chart_bar(bar[value_key], value_key, tooltip=tooltip, attr={}) }}
   {% endfor %}
