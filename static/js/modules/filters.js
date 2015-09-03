@@ -79,18 +79,37 @@ var activateFilter = function(opts) {
     }
 };
 
-var bindFilters = function() {
-    var cycleSelect = $('.js-cycle');
-    cycleSelect.each(function(){
-      var $this = $(this);
-      $this.change(function() {
-        window.location.href = URI(window.location.href)
-          .removeQuery('cycle')
-          .addQuery({cycle: $this.val()})
-          .toString();
-      });
+function bindFilters() {
+  var cycleSelect = $('.js-cycle');
+  cycleSelect.each(function(){
+    var $this = $(this);
+    var callback = $this.data('cycle-location') === 'path' ?
+      addCyclePath :
+      addCycleQuery;
+    $this.change(function() {
+      window.location.href = callback($this.val());
     });
-};
+  });
+}
+
+function addCycleQuery(cycle) {
+  return URI(window.location.href)
+    .removeQuery('cycle')
+    .addQuery({cycle: cycle})
+    .toString();
+}
+
+function addCyclePath(cycle) {
+  var uri = URI(window.location.href);
+  var path = uri.path()
+    .replace(/^\/|\/$/g, '')
+    .split('/')
+    .slice(0, -1)
+    .concat([cycle])
+    .join('/')
+    .concat('/');
+  return uri.path(path).toString();
+}
 
 function getFields() {
   return _.chain($('div#filters :input[name]'))

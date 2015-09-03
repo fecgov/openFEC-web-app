@@ -1,5 +1,6 @@
+{% macro cycle_select(cycles, cycle, location='query') %}
 {% if cycles %}
-  <select class="cycle-select select--neutral js-cycle" aria-label="Two-Year Period" name="cycle">
+  <select class="cycle-select select--neutral js-cycle" aria-label="Two-Year Period" name="cycle" data-cycle-location="{{ location }}">
   {% for each in cycles | restrict_cycles | sort(reverse=True) %}
     <option
         value="{{ each }}"
@@ -7,4 +8,5 @@
       >{{ each | fmt_year_range }}</option>
   {% endfor %}
   </select>
-{% endif %}  
+{% endif %}
+{% endmacro %}

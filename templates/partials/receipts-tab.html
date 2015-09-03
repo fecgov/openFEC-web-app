@@ -1,11 +1,15 @@
 {% import 'macros/null.html' as null %}
 {% import 'macros/charts.html' as charts %}
+{% import 'macros/cycle-select.html' as select %}
 {% import 'macros/disclaimer.html' as disclaimer %}
 
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
     <div class="section__heading">
-      <h2 class="heading__title" id="section-2-heading">Money Received by the Committee {% include 'partials/cycle-select.html' %}  </h2>
+      <h2 class="heading__title" id="section-2-heading">
+        Money Received by the Committee
+        {{ select.cycle_select(cycles, cycle) }}
+      </h2>
       <a class="heading__action button--neutral button--browse" href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle, is_individual='true') }}">All receipts data</a>
     </div>
     <div class="content__section">
@@ -49,7 +53,7 @@
             <div class="state-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
           </div>
         </div>
-        
+
         <div id="by-contribution-size" class="panel-toggle-element box" aria-hidden="true">
           <h4>Receipts by Size</h4>
           <table
@@ -92,9 +96,9 @@
               <th scope="col">Total Contributed</th>
             </thead>
           </table>
-          {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}      
+          {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}
         </div>
-      </div> 
+      </div>
     </div>
     <div class="content__section content__section--ruled">
       <h3>Money received from other committees</h3>
