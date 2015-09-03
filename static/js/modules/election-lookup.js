@@ -38,7 +38,8 @@ function formatResult(result, lookup) {
     electionName: formatName(result),
     electionDate: formatElectionDate(result),
     incumbent: formatIncumbent(result),
-    color: formatColor(result, lookup)
+    color: formatColor(result, lookup),
+    url: formatUrl(result),
   });
 }
 

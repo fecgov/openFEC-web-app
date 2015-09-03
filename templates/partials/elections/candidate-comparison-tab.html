@@ -1,6 +1,11 @@
+{% import 'macros/cycle-select.html' as select %}
+
 <section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
   <div class="container">
-    <h2 class="content__section__heading" id="section-1-heading">Candidate Comparison</h2>
+    <h2 class="content__section__heading" id="section-1-heading">
+      Candidate Comparison
+      {{ select.cycle_select(cycles, cycle, 'path') }}
+    </h2>
     <div class="content__section">
       <div class="results-info results-info--simple">
         <h3 class="results-info__title">All candidates in this election</h3>

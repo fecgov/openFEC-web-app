@@ -1,8 +1,12 @@
+{% import 'macros/cycle-select.html' as select %}
 {% import 'macros/disclaimer.html' as disclaimer %}
+
 <section class="main" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
   <div class="container">
     <div class="section__heading">
-      <h2 class="heading__title" id="section-3-heading">Money spent by this committee {% include 'partials/cycle-select.html' %}  </h2>
+        Money Spent by this Committee
+        {{ select.cycle_select(cycles, cycle) }}
+      </h2>
       <a class="heading__action button--neutral button--browse"
           href="{{ url_for(
             'disbursements',

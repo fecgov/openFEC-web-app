@@ -1,7 +1,12 @@
+{% import 'macros/cycle-select.html' as select %}
+
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
     <div class="content__section">
-      <h2 class="section__heading" id="section-2-heading">Outside Spending</h2>
+      <h2 class="section__heading" id="section-2-heading">
+        Outside Spending
+        {{ select.cycle_select(cycles, cycle, 'path') }}
+      </h2>
     </div>
 
     <div class="content__section">
