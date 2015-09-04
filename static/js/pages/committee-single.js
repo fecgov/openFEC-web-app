@@ -276,13 +276,15 @@ $(document).ready(function() {
         break;
       case 'filing':
         var $form = $('#category-filters');
-        tables.initTableDeferred($table, $form, 'committee/' + committeeId + '/filings', {}, filingsColumns,
+        path = ['committee', committeeId, 'filings'].join('/');
+        query = {cycle: parseInt(cycle)};
+        tables.initTableDeferred($table, $form, path, query, filingsColumns,
           _.extend({}, tables.offsetCallbacks, {
             afterRender: filings.renderModal
           }),
           {
             rowCallback: filings.renderRow,
-            dom: '<"panel__main"t><"results-info results-info--bottom meta-box"lfrip>',
+            dom: '<"panel__main"t><"results-info results-info--bottom"frip>',
             // Order by receipt date descending
             order: [[2, 'desc']],
             useFilters: true
