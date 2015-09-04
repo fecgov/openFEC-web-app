@@ -1,16 +1,23 @@
 <div class="row">
   <fieldset class="js-dropdown">
   <legend class="label" for="candidate-list">Candidates to compare:</legend>
-    <ul class="dropdown__selected list--flat"></ul>
+    <ul class="dropdown__selected list--flat">
+      {{#each this.selected}}
+      <li class="dropdown__item">
+        <input id="checkbox-{{ this.candidate_id }}" name="candidate-list" type="checkbox" data-id="{{this.candidate_id}}" data-name="{{this.candidate_name}}" checked>
+        <label class="dropdown__value" for="checkbox-{{ this.candidate_id }}">{{this.candidate_name}}</label>
+      </li>
+      {{/each}}
+    </ul>
     <div class="dropdown">
       <button class="dropdown__button button--neutral">More</button>
       <div class="dropdown__panel" aria-hidden="true">
         <ul class="dropdown__list">
-          {{#each this}}
-              <li class="dropdown__item">
-                <input id="checkbox-{{ this.candidate_id }}" name="candidate-list" type="checkbox" data-id="{{this.candidate_id}}" data-name="{{this.candidate_name}}" {{#if this._checked}}checked{{/if}}>
-                <label class="dropdown__value" for="checkbox-{{ this.candidate_id }}">{{this.candidate_name}}</label>
-              </li>
+          {{#each this.options}}
+          <li class="dropdown__item">
+            <input id="checkbox-{{ this.candidate_id }}" name="candidate-list" type="checkbox" data-id="{{this.candidate_id}}" data-name="{{this.candidate_name}}">
+            <label class="dropdown__value" for="checkbox-{{ this.candidate_id }}">{{this.candidate_name}}</label>
+          </li>
           {{/each}}
         </ul>
       </div>
