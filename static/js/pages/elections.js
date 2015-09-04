@@ -120,15 +120,10 @@ function refreshTables() {
 }
 
 function drawComparison(results) {
-  _.each(_.first(results, 10), function(result) {
-    result._checked = true;
-  });
   var $comparison = $('#comparison');
-  $comparison.prepend(comparisonTemplate(results));
-  var comparisonDropdown = new dropdown.Dropdown($('#comparison .js-dropdown'));
-  $('#comparison input:checked').each(function(){
-    comparisonDropdown.selectItem($(this));
-  });
+  var context = {selected: results.slice(0, 10), options: results.slice(10)};
+  $comparison.prepend(comparisonTemplate(context));
+ new dropdown.Dropdown($comparison.find('.js-dropdown'));
   $comparison.on('change', 'input[type="checkbox"]', refreshTables);
   refreshTables();
 }
