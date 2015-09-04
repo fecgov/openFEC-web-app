@@ -1,12 +1,21 @@
 <div>
   {{#each this}}
-  <div class="election-result box">
-    <h4 style="color: {{this.color}}">{{this.electionName}}</h4>
-    <div>Next general election: {{this.electionDate}}</div>
+  <div class="result">
+    <h3 style="color: {{this.color}}"><a href="{{this.url}}">{{this.electionName}}</a></h3>
+    <div class="row">
+      <span class="result__term">Next general election:</span>
+      <span class="result__definition">{{this.electionDate}}</span>
+    </div>
     {{#if this.incumbent}}
-    <div>Current officeholder: <a href="{{this.incumbent.url}}">{{this.incumbent.name}}</a></div>
+    <div class="row">
+      <span class="result__term">Current officeholder:</span>
+      <a class="result__definition" href="{{this.incumbent.url}}">{{this.incumbent.name}}</a>
+      </div>
     {{/if}}
-    <div>Current candidates: <a href="{{this.url}}">View all &raquo;</a></div>
+    <div class="row">
+      <span class="result__term">Current candidates:</span>
+      <a class="result__definition" href="{{this.url}}">View all &raquo;</a>
+    </div>
   </div>
   {{/each}}
 </div>

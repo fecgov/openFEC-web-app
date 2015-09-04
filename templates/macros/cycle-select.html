@@ -1,6 +1,6 @@
-{% macro cycle_select(cycles, cycle, location='query') %}
+{% macro cycle_select(cycles, cycle, location='query', id='cycle-select') %}
 {% if cycles %}
-  <select class="cycle-select select--neutral js-cycle" aria-label="Two-Year Period" name="cycle" data-cycle-location="{{ location }}">
+  <select id="{{ id }}" class="cycle-select select--neutral js-cycle" aria-label="Two-Year Period" name="cycle" data-cycle-location="{{ location }}">
   {% for each in cycles | restrict_cycles | sort(reverse=True) %}
     <option
         value="{{ each }}"

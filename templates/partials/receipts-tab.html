@@ -8,7 +8,7 @@
     <div class="section__heading">
       <h2 class="heading__title" id="section-2-heading">
         Money Received by the Committee
-        {{ select.cycle_select(cycles, cycle) }}
+        {{ select.cycle_select(cycles, cycle, id="cycle-2") }}
       </h2>
       <a class="heading__action button--neutral button--browse" href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle, is_individual='true') }}">All receipts data</a>
     </div>
