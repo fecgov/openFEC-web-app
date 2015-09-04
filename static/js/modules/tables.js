@@ -70,13 +70,18 @@ function buildCycle(datum) {
   }
 }
 
-function buildEntityLink(data, url, category) {
+function buildEntityLink(data, url, category, incumbent) {
   var anchor = document.createElement('a');
   anchor.textContent = data;
   anchor.setAttribute('href', url);
   anchor.setAttribute('title', data);
   anchor.setAttribute('data-category', category);
   anchor.classList.add('single-link');
+
+  if (incumbent === 'Incumbent') {
+    anchor.classList.add('is-incumbent');
+  }
+
   return anchor.outerHTML;
 }
 
