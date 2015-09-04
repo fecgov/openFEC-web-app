@@ -98,10 +98,11 @@ describe('election lookup', function() {
       {cycle: 2016, office: 'S', state: 'NJ'},
       {cycle: 2016, office: 'H', state: 'NJ', district: '09'}
     ];
+    this.el.serialized = {cycle: '2016', state: 'NJ', district: '09'};
     this.el.draw(results);
-    var $rendered = this.el.$resultsItems.find('.election-result');
+    var $rendered = this.el.$resultsItems.find('.result');
     var titles = $rendered.map(function(idx, elm) {
-      return $(elm).find('h4').text();
+      return $(elm).find('h3').text();
     }).get();
     expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
   });

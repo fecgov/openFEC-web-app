@@ -220,7 +220,7 @@ ElectionLookup.prototype.draw = function(results) {
 
 ElectionLookup.prototype.getTitle = function() {
   var params = this.serialized;
-  var title = params.cycle.toString() + ' candidates';
+  var title = params.cycle + ' candidates';
   if (params.zip) {
     title += ' in zip code ' + params.zip;
   } else {
