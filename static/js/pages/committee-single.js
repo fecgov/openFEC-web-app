@@ -204,12 +204,11 @@ $(document).ready(function() {
     var $table = $(table);
     var committeeId = $table.attr('data-committee');
     var cycle = $table.attr('data-cycle');
-    var year = $table.attr('data-year');
-    var path, query;
+    var query = {cycle: cycle};
+    var path;
     switch ($table.attr('data-type')) {
       case 'committee-contributor':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');
-        query = {cycle: cycle};
         tables.initTableDeferred($table, null, path, query, committeeColumns, aggregateCallbacks, {
           dom: tables.simpleDOM,
           order: [[1, 'desc']],
@@ -221,7 +220,6 @@ $(document).ready(function() {
         break;
       case 'contribution-size':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_size'].join('/');
-        query = {cycle: cycle};
         tables.initTableDeferred($table, null, path, query, sizeColumns, aggregateCallbacks, {
           dom: 't',
           order: [[1, 'desc']],
@@ -233,7 +231,7 @@ $(document).ready(function() {
         break;
       case 'receipts-by-state':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'].join('/');
-        query = {cycle: parseInt(cycle), per_page: 99, hide_null: true};
+        query = _.extend(query, {per_page: 99, hide_null: true});
         tables.initTableDeferred($table, null, path, query, stateColumns, aggregateCallbacks,
           _.extend(
             {},
@@ -262,14 +260,12 @@ $(document).ready(function() {
         break;
       case 'receipts-by-employer':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'].join('/');
-        query = {cycle: parseInt(cycle)};
         tables.initTableDeferred($table, null, path, query, employerColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
         break;
       case 'receipts-by-occupation':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'].join('/');
-        query = {cycle: parseInt(cycle)};
         tables.initTableDeferred($table, null, path, query, occupationColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
@@ -277,7 +273,6 @@ $(document).ready(function() {
       case 'filing':
         var $form = $('#category-filters');
         path = ['committee', committeeId, 'filings'].join('/');
-        query = {cycle: parseInt(cycle)};
         tables.initTableDeferred($table, $form, path, query, filingsColumns,
           _.extend({}, tables.offsetCallbacks, {
             afterRender: filings.renderModal
@@ -293,21 +288,18 @@ $(document).ready(function() {
         break;
       case 'disbursements-by-purpose':
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'].join('/');
-        query = {cycle: parseInt(cycle)};
         tables.initTableDeferred($table, null, path, query, disbursementPurposeColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
         break;
       case 'disbursements-by-recipient':
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'].join('/');
-        query = {cycle: parseInt(cycle)};
         tables.initTableDeferred($table, null, path, query, disbursementRecipientColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
         break;
       case 'disbursements-by-recipient-id':
         path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'].join('/');
-        query = {cycle: parseInt(cycle)};
         tables.initTableDeferred($table, null, path, query, disbursementRecipientIDColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
