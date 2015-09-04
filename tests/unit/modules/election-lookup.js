@@ -102,7 +102,7 @@ describe('election lookup', function() {
     this.el.draw(results);
     var $rendered = this.el.$resultsItems.find('.result');
     var titles = $rendered.map(function(idx, elm) {
-      return $(elm).find('h3').text();
+      return $(elm).find('h3').text().trim();
     }).get();
     expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
   });
