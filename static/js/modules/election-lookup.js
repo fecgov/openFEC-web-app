@@ -111,8 +111,8 @@ ElectionLookup.prototype.init = function() {
   this.$zip = this.$form.find('[name="zip"]');
   this.$state = this.$form.find('[name="state"]');
   this.$district = this.$form.find('[name="district"]');
-  this.$results = this.$elm.find('.results');
   this.$resultsItems = this.$elm.find('.results-items');
+  this.$resultsTitle = this.$elm.find('.results-title');
 
   this.$map = $('.election-map');
   this.map = new ElectionLookupMap(this.$map.get(0), {
@@ -215,6 +215,21 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 
 ElectionLookup.prototype.draw = function(results) {
   this.$resultsItems.html(resultTemplate(_.map(results, _.partial(formatResult, _, this))));
+  this.$resultsTitle.text(this.getTitle());
+};
+
+ElectionLookup.prototype.getTitle = function() {
+  var params = this.serialized;
+  var title = params.cycle.toString() + ' candidates';
+  if (params.zip) {
+    title += ' in zip code ' + params.zip;
+  } else {
+    title += ' in ' + params.state;
+    if (params.district && params.district !== '00') {
+       title += ', district ' + params.district;
+    }
+  }
+  return title;
 };
 
 var defaultOpts = {
