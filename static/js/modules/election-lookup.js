@@ -216,6 +216,32 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 ElectionLookup.prototype.draw = function(results) {
   this.$resultsItems.html(resultTemplate(_.map(results, _.partial(formatResult, _, this))));
   this.$resultsTitle.text(this.getTitle());
+  this.updateLocations();
+};
+
+/**
+ * Fetch location image if not cached, then add to relevant districts
+ */
+ElectionLookup.prototype.updateLocations = function() {
+  var self = this;
+  var svg = self.$svg || $.get('/static/img/i-map--primary.svg').then(function(document) {
+    self.$svg = $(document.querySelector('svg'));
+    return self.$svg;
+  });
+  $.when(svg).done(self.drawLocations.bind(self));
+};
+
+/**
+ * Append highlighted location images to relevant districts
+ * @param {jQuery} $svg - SVG element
+ */
+ElectionLookup.prototype.drawLocations = function($svg) {
+  this.$resultsItems.find('[data-color]').each(function(_, elm) {
+    var $elm = $(elm);
+    var $clone = $svg.clone();
+    $clone.find('path').css('fill', $elm.data('color'));
+    $elm.prepend($clone);
+  });
 };
 
 ElectionLookup.prototype.getTitle = function() {
