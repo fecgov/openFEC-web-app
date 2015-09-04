@@ -171,7 +171,7 @@ var disbursementRecipientIDColumns = [
     className: 'all',
     orderable: false,
     render: tables.buildTotalLink('/disbursements', function(row) {
-      return {recipient_id: row.recipient_id};
+      return {recipient_committee_id: row.recipient_id};
     })
   }
 ];
