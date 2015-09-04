@@ -16,6 +16,7 @@ var lookup = require('../../../static/js/modules/election-lookup');
 _.extend(window, {
   API_LOCATION: '',
   API_VERSION: '/v1',
+  API_KEY: '12345'
 });
 
 _.extend(window, {
@@ -131,7 +132,7 @@ describe('election lookup', function() {
       this.el.search();
       expect($.ajax).to.have.been.called;
       var call = $.ajax.getCall(0);
-      expect(call.args[0].url).to.equal('/v1/elections/search?cycle=2016&zip=19041');
+      expect(call.args[0].url).to.equal('/v1/elections/search/?api_key=12345&cycle=2016&zip=19041');
       expect(this.el.draw).to.have.been.calledWith(this.response.results);
     });
 

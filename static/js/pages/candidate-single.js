@@ -23,7 +23,7 @@ $(document).ready(function() {
   var $table = $('table[data-type="filing"]');
   var $form = $('#category-filters');
   var candidateId = $table.attr('data-candidate');
-  var path = ['candidate', candidateId, 'filings'].join('/');
+  var path = ['candidate', candidateId, 'filings'];
   tables.initTableDeferred($table, $form, path, {}, columns, tables.offsetCallbacks, {
     // Order by receipt date descending
     order: [[2, 'desc']],
