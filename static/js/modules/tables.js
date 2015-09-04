@@ -122,7 +122,7 @@ function barColumn(formatter) {
       render: function(data, type, row, meta) {
         var span = document.createElement('div');
         span.textContent = formatter(_.max([data, 0]));
-        span.setAttribute('data-value', data);
+        span.setAttribute('data-value', data || 0);
         span.setAttribute('data-row', meta.row);
         return span.outerHTML;
       }
@@ -319,10 +319,9 @@ function barsAfterRender(template, api, data, response) {
   $cols.after(function() {
     var value = $(this).attr('data-value');
     var width = 100 * parseFloat(value) / max;
-    var bar = '<div class="bar-container">' +
-                '<div class="value-bar" style="width: ' + width + '%">' +
-                '</div></div>';
-    return bar;
+    return '<div class="bar-container">' +
+      '<div class="value-bar" style="width: ' + width + '%"></div>' +
+    '</div>';
   });
 }
 
