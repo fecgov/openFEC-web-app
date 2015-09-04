@@ -79,16 +79,20 @@ var activateFilter = function(opts) {
     }
 };
 
-function bindFilters() {
+function initCycleFilters() {
   var cycleSelect = $('.js-cycle');
-  cycleSelect.each(function(){
-    var $this = $(this);
-    var callback = $this.data('cycle-location') === 'path' ?
-      addCyclePath :
-      addCycleQuery;
-    $this.change(function() {
-      window.location.href = callback($this.val());
-    });
+  var callbacks = {
+    path: addCyclePath,
+    query: addCycleQuery
+  };
+  cycleSelect.each(function(_, elm) {
+    var $elm = $(elm);
+    var callback = callbacks[$elm.data('cycle-location')];
+    if (callback) {
+      $elm.change(function() {
+        window.location.href = callback($elm.val());
+      });
+    }
   });
 }
 
@@ -184,7 +188,7 @@ function bindDateFilters() {
 
 module.exports = {
   init: function() {
-    bindFilters();
+    initCycleFilters();
     // if the page was loaded with filters set in the query string
     activateInitialFilters();
     bindDateFilters();
