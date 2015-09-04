@@ -80,4 +80,10 @@ def render_candidate(candidate, committees, cycle):
     tmpl_vars['committees_authorized'] = committees_authorized
     tmpl_vars['aggregate'] = aggregate_committees(committees_authorized)
 
+    tmpl_vars['elections'] = sorted(
+        zip(candidate['election_years'], candidate['election_districts']),
+        key=lambda pair: pair[0],
+        reverse=True,
+    )
+
     return render_template('candidates-single.html', **tmpl_vars)
