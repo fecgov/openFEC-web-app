@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document */
 
 var d3 = require('d3');
 var $ = require('jquery');

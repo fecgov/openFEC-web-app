@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, document, context, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, document, context */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -138,10 +138,7 @@ ElectionLookup.prototype.handleSelectMap = function(state, district) {
 };
 
 ElectionLookup.prototype.getUrl = function(query) {
-  return URI(API_LOCATION)
-    .path([API_VERSION, 'elections', 'search'].join('/'))
-    .query(query)
-    .toString();
+  return helpers.buildUrl(['elections', 'search'], query);
 };
 
 ElectionLookup.prototype.serialize = function() {

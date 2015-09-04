@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -359,7 +359,7 @@ var defaultCallbacks = {
   preprocess: mapResponse
 };
 
-function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
+function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   var draw;
   var $processing = $('<div class="overlay is-loading"></div>');
   var $hideNullWidget = $(
@@ -404,11 +404,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       query.sort = mapSort(data.order, columns);
       $processing.show();
       $.getJSON(
-        URI(API_LOCATION)
-        .path([API_VERSION, baseUrl].join('/'))
-        .addQuery(baseQuery || {})
-        .addQuery(query)
-        .toString()
+        helpers.buildUrl(path, _.extend({}, query, baseQuery || {}))
       ).done(function(response) {
         callbacks.handleResponse(api, data, response);
         callback(callbacks.preprocess(response));
