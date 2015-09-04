@@ -35,7 +35,7 @@
     "watch": "gulp watch-js & gulp watch-sass",
     "watch-js": "gulp watch-js",
     "watch-sass": "gulp watch-sass",
-    "test": "gulp test"
+    "test": "mochify --transform [ hbsfy ] ./tests/**/*.js"
   },
   "repository": {
     "type": "git",

@@ -118,9 +118,3 @@ gulp.task('build-js', function() {
   .bundle()
   .pipe(callback('static/js/common.js'));
 });
-
-gulp.task('test', function() {
-  return mochify('./tests/unit/**/*.js')
-    .transform(hbsfy)
-    .bundle();
-});
