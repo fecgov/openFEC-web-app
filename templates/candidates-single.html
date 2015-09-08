@@ -51,8 +51,8 @@
           <li class="entity__term">
             <span class="entity__term__label">Elections</span>
             <ul class="entity__term__data">
-            {% for year in election_years %}
-              <a href="{{ election_url(context(), year) }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
+            {% for year, district in elections %}
+              <a href="{{ election_url(context(), year, district) }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
             {% endfor %}
             </ul>
           </li>

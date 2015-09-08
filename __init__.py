@@ -85,12 +85,12 @@ def cycle_end(value):
     return datetime.datetime(value, 12, 31)
 
 
-def get_election_url(candidate, cycle):
+def get_election_url(candidate, cycle, district=None):
     return url_for(
         'elections',
         office=candidate['office_full'].lower(),
         state=candidate['state'] if candidate['state'] != 'US' else None,
-        district=candidate['district'],
+        district=district or candidate['district'],
         cycle=cycle,
     )
 
