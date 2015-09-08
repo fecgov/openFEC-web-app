@@ -134,15 +134,15 @@ function stateLegend(svg, scale, quantize, quantiles) {
 }
 
 var tooltipTemplate = _.template(
-  '<div>{{ name }}</div>' +
-  '<div>{{ total }}</div>'
+  '<div class="tooltip__title">{{ name }}</div>' +
+  '<div class="tooltip__value">{{ total }}</div>'
 );
 
 function stateTooltips(svg, path, results) {
   var tooltip = d3.select('body').append('div')
     .attr('id', 'map-tooltip')
+    .attr('class', 'tooltip')
     .style('position', 'absolute')
-    .style('text-align', 'center')
     .style('pointer-events', 'none')
     .style('display', 'none');
   svg.selectAll('path')
