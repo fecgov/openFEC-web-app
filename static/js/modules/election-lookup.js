@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, document, context */
+/* global require, module, window, document, context */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -111,6 +111,7 @@ ElectionLookup.prototype.init = function() {
   this.$zip = this.$form.find('[name="zip"]');
   this.$state = this.$form.find('[name="state"]');
   this.$district = this.$form.find('[name="district"]');
+  this.$cycle = this.$form.find('[name="cycle"]');
   this.$resultsItems = this.$elm.find('.results-items');
   this.$resultsTitle = this.$elm.find('.results-title');
 
@@ -123,8 +124,9 @@ ElectionLookup.prototype.init = function() {
   this.$state.on('change', this.handleStateChange.bind(this));
   this.$form.on('change', 'input,select', this.search.bind(this));
   this.$form.on('submit', this.search.bind(this));
+  $(window).on('popstate', this.handlePopState.bind(this));
 
-  this.handleStateChange();
+  this.handlePopState();
 };
 
 ElectionLookup.prototype.handleSelectMap = function(state, district) {
@@ -170,8 +172,9 @@ ElectionLookup.prototype.updateDistricts = function(state) {
     .prop('disabled', !(state && this.districts));
 };
 
-ElectionLookup.prototype.search = function(e) {
+ElectionLookup.prototype.search = function(e, opts) {
   e && e.preventDefault();
+  opts = _.extend({pushState: true}, opts || {});
   var self = this;
   var serialized = self.serialize();
   if (self.shouldSearch(serialized) && !_.isEqual(serialized, self.serialized)) {
@@ -181,7 +184,19 @@ ElectionLookup.prototype.search = function(e) {
       self.draw(response.results);
     });
     self.serialized = serialized;
+    if (opts.pushState) {
+      window.history.pushState(serialized, null, URI('').query(serialized).toString());
+    }
   }
+};
+
+ElectionLookup.prototype.handlePopState = function() {
+  var params = URI.parseQuery(window.location.search);
+  this.$zip.val(params.zip);
+  this.$state.val(params.state);
+  this.$district.val(params.district);
+  this.$cycle.val(params.cycle || this.$cycle.val());
+  this.search(null, {pushState: false});
 };
 
 ElectionLookup.prototype.drawDistricts = function(results) {
