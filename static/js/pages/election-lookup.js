@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, document, context, API_LOCATION, API_VERSION, API_KEY */
+/* global require, document */
 
 var $ = require('jquery');
 var lookup = require('../modules/election-lookup');

@@ -9,6 +9,7 @@ var expect = chai.expect;
 chai.use(sinonChai);
 
 var $ = require('jquery');
+var URI = require('URIjs');
 var _ = require('underscore');
 
 var lookup = require('../../../static/js/modules/election-lookup');
@@ -16,6 +17,7 @@ var lookup = require('../../../static/js/modules/election-lookup');
 _.extend(window, {
   API_LOCATION: '',
   API_VERSION: '/v1',
+  API_KEY: '12345'
 });
 
 _.extend(window, {
@@ -53,6 +55,7 @@ describe('election lookup', function() {
         '<div class="election-map"></div>' +
       '</div>'
     );
+    window.history.pushState({}, null, '/');
     this.el = new lookup.ElectionLookup('#election-lookup');
   });
 
@@ -102,7 +105,7 @@ describe('election lookup', function() {
     this.el.draw(results);
     var $rendered = this.el.$resultsItems.find('.result');
     var titles = $rendered.map(function(idx, elm) {
-      return $(elm).find('h3').text();
+      return $(elm).find('h3').text().trim();
     }).get();
     expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
   });
@@ -127,17 +130,31 @@ describe('election lookup', function() {
 
     it('should fetch search results', function() {
       sinon.stub(this.el, 'draw');
-      $('#election-lookup [name="zip"]').val('19041');
+      this.el.$zip.val('19041');
       this.el.search();
       expect($.ajax).to.have.been.called;
       var call = $.ajax.getCall(0);
-      expect(call.args[0].url).to.equal('/v1/elections/search?cycle=2016&zip=19041');
+      var uri = URI(call.args[0].url);
+      expect(uri.path()).to.equal('/v1/elections/search/');
+      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', cycle: '2016', zip: '19041'});
+      expect(URI.parseQuery(window.location.search)).to.deep.equal({cycle: '2016', zip: '19041'});
       expect(this.el.draw).to.have.been.calledWith(this.response.results);
+    });
+
+    it('should update form and search on popstate', function() {
+      sinon.stub(this.el, 'draw');
+      window.history.pushState({}, null, '?cycle=2016&zip=19041');
+      this.el.handlePopState();
+      expect(this.el.$zip.val()).to.equal('19041');
+      expect($.ajax).to.have.been.called;
+      var call = $.ajax.getCall(0);
+      var uri = URI(call.args[0].url);
+      expect(uri.path()).to.equal('/v1/elections/search/');
+      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', cycle: '2016', zip: '19041'});
     });
 
     it('should skip search if missing params', function() {
       sinon.stub(this.el, 'draw');
-      $('#election-lookup [name="state"]').val('VA').change();
       this.el.search();
       expect($.ajax).not.to.have.been.called;
       expect(this.el.draw).not.to.have.been.called;

@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, document */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -11,6 +11,7 @@ var events = require('fec-style/js/events');
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
 var filings = require('../modules/filings');
+var helpers = require('../modules/helpers');
 var columns = require('../modules/columns');
 
 var tableOpts = {
@@ -171,26 +172,16 @@ var disbursementRecipientIDColumns = [
     className: 'all',
     orderable: false,
     render: tables.buildTotalLink('/disbursements', function(row) {
-      return {recipient_id: row.recipient_id};
+      return {recipient_committee_id: row.recipient_id};
     })
   }
 ];
 
 function buildStateUrl($elm) {
-  return URI(API_LOCATION)
-    .path([
-      API_VERSION,
-      'committee',
-      $elm.data('committee-id'),
-      'schedules',
-      'schedule_a',
-      'by_state'
-    ].join('/'))
-    .query({
-      cycle: $elm.data('cycle'),
-      per_page: 99
-    })
-    .toString();
+  return helpers.buildUrl(
+    ['committee', $elm.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
+    {cycle: $elm.data('cycle'), per_page: 99}
+  );
 }
 
 var aggregateCallbacks = _.extend(
@@ -208,7 +199,7 @@ $(document).ready(function() {
     var path;
     switch ($table.attr('data-type')) {
       case 'committee-contributor':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'].join('/');
+        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'];
         tables.initTableDeferred($table, null, path, query, committeeColumns, aggregateCallbacks, {
           dom: tables.simpleDOM,
           order: [[1, 'desc']],
@@ -219,7 +210,7 @@ $(document).ready(function() {
         });
         break;
       case 'contribution-size':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_size'].join('/');
+        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_size'];
         tables.initTableDeferred($table, null, path, query, sizeColumns, aggregateCallbacks, {
           dom: 't',
           order: [[1, 'desc']],
@@ -230,7 +221,7 @@ $(document).ready(function() {
         });
         break;
       case 'receipts-by-state':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'].join('/');
+        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'];
         query = _.extend(query, {per_page: 99, hide_null: true});
         tables.initTableDeferred($table, null, path, query, stateColumns, aggregateCallbacks,
           _.extend(
@@ -259,20 +250,20 @@ $(document).ready(function() {
         });
         break;
       case 'receipts-by-employer':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'].join('/');
+        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'];
         tables.initTableDeferred($table, null, path, query, employerColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
         break;
       case 'receipts-by-occupation':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'].join('/');
+        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'];
         tables.initTableDeferred($table, null, path, query, occupationColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
         break;
       case 'filing':
         var $form = $('#category-filters');
-        path = ['committee', committeeId, 'filings'].join('/');
+        path = ['committee', committeeId, 'filings'];
         tables.initTableDeferred($table, $form, path, query, filingsColumns,
           _.extend({}, tables.offsetCallbacks, {
             afterRender: filings.renderModal
@@ -287,19 +278,19 @@ $(document).ready(function() {
         );
         break;
       case 'disbursements-by-purpose':
-        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'].join('/');
+        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'];
         tables.initTableDeferred($table, null, path, query, disbursementPurposeColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
         break;
       case 'disbursements-by-recipient':
-        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'].join('/');
+        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'];
         tables.initTableDeferred($table, null, path, query, disbursementRecipientColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));
         break;
       case 'disbursements-by-recipient-id':
-        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'].join('/');
+        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'];
         tables.initTableDeferred($table, null, path, query, disbursementRecipientIDColumns, aggregateCallbacks, _.extend({}, tableOpts, {
           order: [[1, 'desc']],
         }));

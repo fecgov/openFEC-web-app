@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document, context, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document, context */
 
 var d3 = require('d3');
 var $ = require('jquery');
@@ -193,13 +193,10 @@ function destroyTable($table) {
 function buildUrl(selected, path) {
   var query = {
     cycle: context.election.cycle,
-    candidate_id: _.pluck(selected, 'candidate_id')
+    candidate_id: _.pluck(selected, 'candidate_id'),
+    per_page: 0
   };
-  return URI(API_LOCATION)
-    .path([API_VERSION, path].join('/'))
-    .addQuery(query)
-    .addQuery({per_page: 0})
-    .toString();
+  return helpers.buildUrl(path, query);
 }
 
 function drawSizeTable(selected) {
@@ -208,7 +205,7 @@ function drawSizeTable(selected) {
     return [result.candidate_id, result];
   }));
   $.getJSON(
-    buildUrl(selected, 'schedules/schedule_a/by_size/by_candidate')
+    buildUrl(selected, ['schedules', 'schedule_a', 'by_size', 'by_candidate'])
   ).done(function(response) {
     var data = mapSize(response, primary);
     $table.dataTable(_.extend({
@@ -226,7 +223,7 @@ function drawStateTable(selected) {
     return [result.candidate_id, result];
   }));
   $.getJSON(
-    buildUrl(selected, 'schedules/schedule_a/by_state/by_candidate')
+    buildUrl(selected, ['schedules', 'schedule_a', 'by_state', 'by_candidate'])
   ).done(function(response) {
     destroyTable($table);
     // Clear headers
@@ -252,7 +249,7 @@ function drawTypeTable(selected) {
     return [result.candidate_id, result];
   }));
   $.getJSON(
-    buildUrl(selected, 'schedules/schedule_a/by_contributor_type/by_candidate')
+    buildUrl(selected, ['schedules', 'schedule_a', 'by_contributor_type', 'by_candidate'])
   ).done(function(response) {
     var data = mapType(response, primary);
     $table.dataTable(_.extend({
@@ -265,20 +262,10 @@ function drawTypeTable(selected) {
 }
 
 function drawStateMap($container, candidateId, cached) {
-  var url = URI(API_LOCATION)
-    .path([
-      API_VERSION,
-      'schedules',
-      'schedule_a',
-      'by_state',
-      'by_candidate'
-    ].join('/'))
-    .query({
-      cycle: context.election.cycle,
-      candidate_id: candidateId,
-      per_page: 99
-    })
-    .toString();
+  var url = helpers.buildUrl(
+    ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
+    {cycle: context.election.cycle, candidate_id: candidateId, per_page: 99}
+  );
   var $map = $container.find('.state-map-choropleth');
   $map.html('');
   $.getJSON(url).done(function(data) {
@@ -386,15 +373,15 @@ function initStateMaps(results) {
 
 var tableOpts = {
   'independent-expenditures': {
-    path: ['schedules', 'schedule_e', 'by_candidate'].join('/'),
+    path: ['schedules', 'schedule_e', 'by_candidate'],
     columns: independentExpenditureColumns
   },
   'communication-costs': {
-    path: ['communication_costs', 'by_candidate'].join('/'),
+    path: ['communication_costs', 'by_candidate'],
     columns: communicationCostColumns
   },
   'electioneering': {
-    path: ['electioneering_costs', 'by_candidate'].join('/'),
+    path: ['electioneering_costs', 'by_candidate'],
     columns: electioneeringColumns
   },
 };
@@ -426,11 +413,10 @@ $(document).ready(function() {
     })
     .object()
     .value();
-  var url = URI(API_LOCATION)
-    .path([API_VERSION, 'elections'].join('/'))
-    .addQuery(query)
-    .addQuery({per_page: 0})
-    .toString();
+  var url = helpers.buildUrl(
+    ['elections'],
+    _.extend(query, {per_page: 0})
+  );
   $.getJSON(url).done(function(response) {
     $table.dataTable(_.extend({}, defaultOpts, {
       columns: columns,

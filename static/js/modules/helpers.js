@@ -45,7 +45,7 @@ function filterNull(params) {
 
 function buildUrl(path, query) {
   return URI(API_LOCATION)
-    .path([API_VERSION].concat(path).join('/'))
+    .path(Array.prototype.concat(API_VERSION, path, '').join('/'))
     .addQuery({api_key: API_KEY})
     .addQuery(query)
     .toString();
