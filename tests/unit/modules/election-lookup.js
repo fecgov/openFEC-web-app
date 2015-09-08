@@ -138,7 +138,6 @@ describe('election lookup', function() {
 
     it('should skip search if missing params', function() {
       sinon.stub(this.el, 'draw');
-      $('#election-lookup [name="state"]').val('VA').change();
       this.el.search();
       expect($.ajax).not.to.have.been.called;
       expect(this.el.draw).not.to.have.been.called;

@@ -205,9 +205,7 @@ ElectionLookup.prototype.drawDistricts = function(results) {
 };
 
 ElectionLookup.prototype.shouldSearch = function(serialized) {
-  return serialized.zip ||
-    (serialized.state && serialized.district) ||
-    (serialized.state && this.districts === 0);
+  return serialized.zip || serialized.state;
 };
 
 ElectionLookup.prototype.draw = function(results) {
