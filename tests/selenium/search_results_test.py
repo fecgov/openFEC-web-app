@@ -45,7 +45,7 @@ class SearchResultsPageTests(SearchPageTestCase):
     def test_search_results_page_link_candidates(self):
         self.url.args.update({'search': self.candidate, 'search_type': 'candidates'})
         self.driver.get(self.url.url)
-        elms = self.driver.find_elements_by_css_selector('.tst-search_results .tst-result-link')
+        elms = self.driver.find_elements_by_css_selector('.tst-search_results .result__title .tst-result-link')
         self.assertTrue(elms)
         self.assertTrue(all([
             candidate_url_re.search(elm.get_attribute('href'))
