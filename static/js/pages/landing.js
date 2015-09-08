@@ -6,6 +6,7 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
+var lookup = require('../modules/election-lookup');
 
 var filingsColumns = columns.getColumns(
   columns.filings,
@@ -20,4 +21,6 @@ $(document).ready(function() {
     useFilters: false,
     dom: 't'
   });
+
+  new lookup.ElectionLookupPreview('#election-preview');
 });
