@@ -16,6 +16,7 @@ var utils = require('./election-utils');
 
 var districtTemplate = require('../../templates/districts.hbs');
 var resultTemplate = require('../../templates/electionResult.hbs');
+var zipWarningTemplate = require('../../templates/electionZipWarning.hbs');
 
 var officeMap = {
   P: 'President',
@@ -225,8 +226,18 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 
 ElectionLookup.prototype.draw = function(results) {
   this.$resultsItems.html(resultTemplate(_.map(results, _.partial(formatResult, _, this))));
+  if (this.serialized.zip) {
+    this.drawZipWarning();
+  }
   this.$resultsTitle.text(this.getTitle());
   this.updateLocations();
+};
+
+ElectionLookup.prototype.drawZipWarning = function() {
+  var houseResults = this.$resultsItems.find('.result[data-office="H"]');
+  if (houseResults.length > 1) {
+    houseResults.eq(0).before(zipWarningTemplate(this.serialized));
+  }
 };
 
 /**
