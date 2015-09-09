@@ -62,8 +62,24 @@ var electionColumns = [
   },
   {data: 'incumbent_challenge_full', className: 'min-tablet'},
   {data: 'party_full', className: 'min-tablet'},
-  tables.barCurrencyColumn({data: 'total_receipts'}),
-  tables.barCurrencyColumn({data: 'total_disbursements'}),
+  {
+    data: 'total_receipts',
+    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
+      return {
+        committee_id: row.committee_ids,
+        cycle: context.election.cycle
+      };
+    })
+  },
+  {
+    data: 'total_disbursements',
+    render: tables.buildTotalLink('/disbursements', function(data, type, row, meta) {
+      return {
+        committee_id: row.committee_ids,
+        cycle: context.election.cycle
+      };
+    })
+  },
   tables.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
   tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false})
 ];
