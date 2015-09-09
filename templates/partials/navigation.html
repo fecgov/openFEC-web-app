@@ -3,15 +3,15 @@
   <label for="nav-toggle" class="site-nav__button site-nav__button--left">Menu</label>
   <ul id="site-menu" class="site-nav__list">
     <li class="site-nav__item site-nav__item--with-dropdown">
-      <a href="/" class="site-nav__link is-current">Campaign Finance Data</a>
+      <a href="/" class="site-nav__link is-current">Campaign finance data</a>
       <input class="nav-toggle__input" id="dropdown-toggle-1" type="checkbox">
-      <label for="dropdown-toggle-1" class="site-nav__link nav-toggle__label">Campaign Finance Data</label>
+      <label for="dropdown-toggle-1" class="site-nav__link nav-toggle__label">Campaign finance data</label>
       <ul class="site-nav__dropdown">
-        <li class="site-nav__item">
-          <a class="site-nav__link" href="/">Search for candidates &raquo;</a>
+        <li class="site-nav__item u-under-lg-only">
+          <a class="site-nav__link" href="/">Campaign finance data home &raquo;</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="/elections">Search by ZIP code &raquo;</a>
+          <a class="site-nav__link" href="/elections">Search elections by location &raquo;</a>
         </li>
         <li class="site-nav__item">
           <a class="site-nav__link" href="{{ url_for('candidates', cycle=default_cycles) }}">Browse candidates &raquo;</a>
@@ -30,18 +30,8 @@
         </li>
       </ul>
     </li>
-    <li class="site-nav__item site-nav__item--with-dropdown">
-      <a href="{{ cms_url }}/registration-and-reporting" class="site-nav__link">Registration &amp; Reporting</a>
-      <input class="nav-toggle__input" id="dropdown-toggle-2" type="checkbox">
-      <label for="dropdown-toggle-2" class="site-nav__link nav-toggle__label">Registration &amp; Reporting</label>
-      <ul class="site-nav__dropdown">
-        <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ cms_url }}/registration-and-reporting">Registration &amp; Reporting Home</a>
-        </li>
-        <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ cms_url }}/registration-options">Registration Options</a>
-        </li>
-      </ul>
+    <li class="site-nav__item">
+      <a href="{{ cms_url }}/registration-and-reporting" class="site-nav__link">Registration &amp; reporting</a>
     </li>
     <li class="site-nav__item">
       <a href="#" class="site-nav__link is-disabled">Calendar</a>
