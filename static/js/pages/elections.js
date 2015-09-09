@@ -56,10 +56,9 @@ var columns = [
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
+      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate', row.incumbent_challenge_full);
     }
   },
-  {data: 'incumbent_challenge_full', className: 'min-tablet'},
   {data: 'party_full', className: 'min-tablet'},
   tables.barCurrencyColumn({data: 'total_receipts'}),
   tables.barCurrencyColumn({data: 'total_disbursements'}),
