@@ -22,29 +22,21 @@ var tableOpts = {
   useHideNull: false
 };
 
-var sizeInfo = {
-  0: {limits: [0, 199.99], label: 'Under $200'},
-  200: {limits: [200, 499.99], label: '$200 - $499'},
-  500: {limits: [500, 999.99], label: '$500 - $999'},
-  1000: {limits: [1000, 1999.99], label: '$1000 - $1999'},
-  2000: {limits: [2000, null], label: 'Over $2000'},
-};
-
 var sizeColumns = [
   {
     data: 'size',
     width: '50%',
     className: 'all',
     render: function(data, type, row, meta) {
-      return sizeInfo[data].label;
+      return columns.sizeInfo[data].label;
     }
   },
   {
     data: 'total',
     width: '50%',
     className: 'all',
-    render: tables.buildTotalLink('/receipts', function(row) {
-      var info = sizeInfo[row.size];
+    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
+      var info = columns.sizeInfo[row.size];
       return {
         min_amount: info.limits[0],
         max_amount: info.limits[1],
@@ -67,7 +59,7 @@ var committeeColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink('/receipts', function(row) {
+    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         contributor_id: row.contributor_id,
         is_individual: 'true'
@@ -93,7 +85,7 @@ var stateColumns = [
     data: 'total',
     width: '50%',
     className: 'all',
-    render: tables.buildTotalLink('/receipts', function(row) {
+    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         contributor_state: row.state,
         is_individual: 'true'
@@ -108,7 +100,7 @@ var employerColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink('/receipts', function(row) {
+    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         contributor_employer: row.employer,
         is_individual: 'true'
@@ -123,7 +115,7 @@ var occupationColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink('/receipts', function(row) {
+    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         contributor_occupation: row.occupation,
         is_individual: 'true'
@@ -152,7 +144,7 @@ var disbursementRecipientColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink('/disbursements', function(row) {
+    render: tables.buildTotalLink('/disbursements', function(data, type, row, meta) {
       return {recipient_name: row.recipient_name};
     })
   }
@@ -171,7 +163,7 @@ var disbursementRecipientIDColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
-    render: tables.buildTotalLink('/disbursements', function(row) {
+    render: tables.buildTotalLink('/disbursements', function(data, type, row, meta) {
       return {recipient_committee_id: row.recipient_id};
     })
   }
