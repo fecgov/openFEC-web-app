@@ -7,6 +7,7 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
 var lookup = require('../modules/election-lookup');
+var summary = require('../modules/election-summary');
 
 var filingsColumns = columns.getColumns(
   columns.filings,
@@ -23,4 +24,5 @@ $(document).ready(function() {
   });
 
   new lookup.ElectionLookupPreview('#election-preview');
+  new summary.ElectionSummary('#election-summary', {cycle: 2016, office: 'president'});
 });
