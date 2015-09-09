@@ -66,45 +66,68 @@
       </div>
     </div>
 
-    <div class="row">
-      <div id="election-preview">
-        <form action="{{ url_for('election_lookup') }}">
-          <div class="search-controls__row">
+    <div class="content__section--extra">
+      <div id="election-preview" class="widget widget--neutral">
+        <div class="row">
+          <div class="icon-heading">
+            <img class="icon-heading__image" src="/static/img/i-elections--primary.svg" alt="Icon representing filings">
+            <h2 class="icon-heading__title widget__title"><span class="t-short">Find elections by location</span></h2>
+          </div>
+        </div>
+        <form action="{{ url_for('election_lookup') }}" class="widget__content">
+          <div class="row">
             <label class="label" for="cycle-select">Choose an election cycle</label>
             {{ select.cycle_select(cycles, location='form') }}
           </div>
-          <div class="search-controls__row">
-            <div class="search-controls__either">
-              <label for="zip" class="label">Find by zip code</label>
-              <div class="combo combo--search">
-                <input class="combo__input" type="text" id="zip" name="zip" placeholder="e.g. 10001">
-                <button type="submit" class="combo__button button--search button--neutral"><span class="u-visually-hidden">Search</span></button>
-              </div>
+          <div class="row content__section--ruled">
+            <label for="zip" class="label">Find by zip code</label>
+            <div class="combo combo--search">
+              <input class="combo__input" type="text" id="zip" name="zip" placeholder="e.g. 10001">
+              <button type="submit" class="combo__button button--search button--primary-contrast"><span class="u-visually-hidden">Search</span></button>
             </div>
-            <div class="search-controls__or">or</div>
-            <div class="search-controls__either">
-              <span class="label">Find by state and district</span>
-              <div class="row">
-                <select class="form-element--inline" id="state" name="state" aria-label="Select a state">
-                  <option value="">Select state</option>
-                  {% for value, label in constants.states.items() %}
-                  <option value="{{ value }}">{{ label }}</option>
-                  {% endfor %}
-                </select>
-                <select class="form-element--inline" id="district" name="district" aria-label="Select a district">
-                  <option value="">Select district</option>
-                  {% for value in range(1, 100) %}
-                  {% with formatted = '{0:02d}'.format(value) %}
-                  <option value="{{ formatted }}">{{ formatted }}</option>
-                  {% endwith %}
-                  {% endfor %}
-                </select>
-                <button type="submit" class="form-element--inline button--search button--neutral"><span class="u-visually-hidden">Search</span></button>
-              </div>
-            </div>
+          </div>
+          <div class="search-controls__or">or</div>
+          <div class="content__section">
+            <span class="label">Find by state and district</span>
+            <select class="form-element--inline" id="state" name="state" aria-label="Select a state">
+              <option value="">Select state</option>
+              {% for value, label in constants.states.items() %}
+              <option value="{{ value }}">{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="row">
+            <select class="form-element--inline" id="district" name="district" aria-label="Select a district">
+              <option value="">Select district</option>
+              {% for value in range(1, 100) %}
+              {% with formatted = '{0:02d}'.format(value) %}
+              <option value="{{ formatted }}">{{ formatted }}</option>
+              {% endwith %}
+              {% endfor %}
+            </select>
+            <button type="submit" class="form-element--inline button--search button--primary-contrast"><span class="u-visually-hidden">Search</span></button>
           </div>
         </div>
       </form>
+
+      <div class="widget widget--neutral">
+        <h2 class="widget__title"><span class="t-short">Right now in the 2016 presidential election:</span></h2>
+        <div class="widget__content">
+          <div>
+            <h5 class="t-data-header">Candidates Running</h5>
+            <span class="t-big-data">[number]</span>
+          </div>
+          <div>
+            <h5 class="t-data-header">Funds raised</h5>
+            <span class="t-big-data">$[number]</span>
+          </div>        
+          <div>
+            <h5 class="t-data-header">Funds spent</h5>
+            <span class="t-big-data">$[number]</span>
+          </div>
+          <a href="" class="button--election button--neutral">Compare candidates in this election</a>                    
+        </div>
+      </div>
     </div>
 
     <div class="content__section--extra">
