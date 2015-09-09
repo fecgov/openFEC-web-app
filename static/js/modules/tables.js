@@ -70,7 +70,8 @@ function buildCycle(datum) {
   }
 }
 
-function buildEntityLink(data, url, category, incumbent) {
+function buildEntityLink(data, url, category, opts) {
+  opts = opts || {};
   var anchor = document.createElement('a');
   anchor.textContent = data;
   anchor.setAttribute('href', url);
@@ -78,7 +79,7 @@ function buildEntityLink(data, url, category, incumbent) {
   anchor.setAttribute('data-category', category);
   anchor.classList.add('single-link');
 
-  if (incumbent === 'Incumbent') {
+  if (opts.isIncumbent) {
     anchor.classList.add('is-incumbent');
   }
 

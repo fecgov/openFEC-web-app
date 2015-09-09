@@ -56,7 +56,12 @@ var columns = [
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate', row.incumbent_challenge_full);
+      return tables.buildEntityLink(
+        data,
+        '/candidate/' + row.candidate_id,
+        'candidate',
+        {isIncumbent: row.incumbent_challenge_full === 'Incumbent'}
+      );
     }
   },
   {data: 'party_full', className: 'min-tablet'},
