@@ -12,6 +12,7 @@ var dropdown = require('fec-style/js/dropdowns');
 
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
+var columns = require('../modules/columns');
 var helpers = require('../modules/helpers');
 
 var comparisonTemplate = require('../../templates/comparison.hbs');
@@ -50,7 +51,7 @@ var electioneeringColumns = [
   tables.candidateColumn({data: 'candidate', orderable: false})
 ];
 
-var columns = [
+var electionColumns = [
   {
     data: 'candidate_name',
     className: 'all',
@@ -67,6 +68,31 @@ var columns = [
   tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false})
 ];
 
+function makeCommitteeColumn(opts, factory) {
+  return _.extend({}, {
+    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
+      var column = meta.settings.aoColumns[meta.col].data;
+      return _.extend({
+        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids,
+        cycle: context.election.cycle
+      }, factory(data, type, row, meta, column));
+    })
+  }, opts);
+}
+
+var makeSizeColumn = _.partial(makeCommitteeColumn, _, function(data, type, row, meta, column) {
+  var limits = columns.sizeInfo[column].limits;
+  return {
+    min_amount: limits[0],
+    max_amount: limits[1],
+    is_individual: 'true'
+  };
+});
+
+var makeTypeColumn = _.partial(makeCommitteeColumn, _, function(data, type, row, meta, column) {
+  return {contributor_type: column};
+});
+
 var sizeColumns = [
   {
     data: 'candidate_name',
@@ -76,11 +102,11 @@ var sizeColumns = [
       return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
     }
   },
-  tables.barCurrencyColumn({data: '0'}),
-  tables.barCurrencyColumn({data: '200'}),
-  tables.barCurrencyColumn({data: '500'}),
-  tables.barCurrencyColumn({data: '1000'}),
-  tables.barCurrencyColumn({data: '2000'})
+  makeSizeColumn({data: '0'}),
+  makeSizeColumn({data: '200'}),
+  makeSizeColumn({data: '500'}),
+  makeSizeColumn({data: '1000'}),
+  makeSizeColumn({data: '2000'})
 ];
 
 var typeColumns = [
@@ -91,14 +117,23 @@ var typeColumns = [
       return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
     }
   },
-  tables.barCurrencyColumn({data: 'individual'}),
-  tables.barCurrencyColumn({data: 'committee'}),
+  makeTypeColumn({data: 'individual'}),
+  makeTypeColumn({data: 'committee'})
 ];
 
 var stateColumn = {'data': 'state'};
 function stateColumns(results) {
   var columns = _.map(results, function(result) {
-    return tables.barCurrencyColumn({data: result.candidate_id});
+    return makeCommitteeColumn(
+      {data: result.candidate_id},
+      function(data, type, row, meta, column) {
+        return {
+          contributor_state: row.state,
+          committee_id: (context.candidates[column] || {}).committee_ids,
+          is_individual: 'true'
+        };
+      }
+    );
   });
   return [stateColumn].concat(columns);
 }
@@ -420,13 +455,19 @@ $(document).ready(function() {
   );
   $.getJSON(url).done(function(response) {
     $table.dataTable(_.extend({}, defaultOpts, {
-      columns: columns,
+      columns: electionColumns,
       data: response.results,
       order: [[3, 'desc']]
     }));
     drawComparison(response.results);
     initStateMaps(response.results);
-  });
+    context.candidates = _.chain(response.results)
+      .map(function(candidate) {
+        return [candidate.candidate_id, candidate];
+      })
+      .object()
+      .value();
+    });
 
   var districtMap = new maps.DistrictMap(
     $('#election-map').get(0),
