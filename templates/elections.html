@@ -9,7 +9,7 @@
 {% block body %}
 <div class="tab-interface">
   <header class="page-header page-header--primary">
-    <span class="page-header__title">Elections &amp; Candidates by Location</span>
+    <span class="page-header__title">Elections and candidates by location</span>
     {{ search.search('page-header', 'candidates') }}
   </header>
   <header class="entity__header {% if office != 'president' %}entity__header--map{% endif %} entity__header--primary">
@@ -17,9 +17,9 @@
       <div class="entity__header--info">
         <div class="entity__header--top row">
           {% if office == 'president' %}
-            <h1 class="entity__name">{{ cycle }} Presidential Election</h1>
+            <h1 class="entity__name">{{ cycle }} Presidential election</h1>
           {% else %}
-            <h1 class="entity__name">U.S. {{ office|title }} Election: {{ state|fmt_state_full }}</h1>
+            <h1 class="entity__name">U.S. {{ office|title }} election: {{ state|fmt_state_full }}</h1>
             {% if district %}
               <h2>United States House District {{ district }}</h2>
             {% endif %}
@@ -42,8 +42,8 @@
       <div class="container">
         <nav class="page-tabs">
           <ul class="list--flat" role="tablist" data-name="tab">
-            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="comparison" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Candidate Comparison</a></li>
-            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="spending" tabindex="-1" aria-controls="panel2" href="#section-2">Outside Spending</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="comparison" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Candidate comparison</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="spending" tabindex="-1" aria-controls="panel2" href="#section-2">Outside spending</a></li>
           </ul>
         </nav>
       </div>
