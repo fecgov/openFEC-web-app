@@ -6,6 +6,7 @@ var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
+var topojson = require('topojson');
 var colorbrewer = require('colorbrewer');
 
 var L = require('leaflet');
@@ -14,7 +15,10 @@ require('leaflet-providers');
 var helpers = require('./helpers');
 var utils = require('./election-utils');
 
+var states = require('../us.json');
 var districts = require('../stateDistricts.json');
+
+var stateFeatures = topojson.feature(states, states.objects.units).features;
 
 var districtTemplate = require('../../templates/districts.hbs');
 var resultTemplate = require('../../templates/electionResult.hbs');
@@ -306,6 +310,12 @@ ElectionLookupPreview.prototype.init = function() {
   this.handleStateChange();
 };
 
+var FEATURE_TYPES = {
+  STATES: 1,
+  DISTRICTS: 2
+};
+var STATE_ZOOM_THRESHOLD = 4;
+
 var defaultOpts = {
   colorScale: colorbrewer.Set1
 };
@@ -321,12 +331,28 @@ ElectionLookupMap.prototype.init = function() {
   this.districts = null;
   this.colorMap = null;
   this.map = L.map(this.elm);
+  this.map.on('zoomend', this.handleZoom.bind(this));
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  this.drawDistricts();
+  this.drawStates();
+  this.map.setView([37.8, -96], 3);
+};
+
+ElectionLookupMap.prototype.drawStates = function() {
+  if (this.featureType === FEATURE_TYPES.STATES) { return; }
+  this.featureType = FEATURE_TYPES.STATES;
+  if (this.overlay) {
+    this.map.removeLayer(this.overlay);
+  }
+  this.districts = null;
+  this.setColors(stateFeatures);
+  this.overlay = L.geoJson(stateFeatures, {
+    onEachFeature: this.onEachState.bind(this)
+  }).addTo(this.map);
 };
 
 ElectionLookupMap.prototype.drawDistricts = function(districts, opts) {
-  var self = this;
+  if (this.featureType === FEATURE_TYPES.DISTRICTS && !districts) { return; }
+  this.featureType = FEATURE_TYPES.DISTRICTS;
   opts = _.extend({reset: true}, opts);
   var features = districts ?
     this.filterDistricts(districts) :
@@ -340,12 +366,10 @@ ElectionLookupMap.prototype.drawDistricts = function(districts, opts) {
   this.districts = districts;
   this.overlay = L.geoJson(
     features, {
-      onEachFeature: this.onEachFeature.bind(this)
+      onEachFeature: this.onEachDistrict.bind(this)
   }).addTo(this.map);
   if (districts) {
     this.map.fitBounds(this.overlay.getBounds());
-  } else {
-    this.map.setView([37.8, -96], 3);
   }
 };
 
@@ -372,17 +396,38 @@ ElectionLookupMap.prototype.setColors = function(features) {
     .value();
 };
 
-ElectionLookupMap.prototype.onEachFeature = function(feature, layer) {
+ElectionLookupMap.prototype.onEachState = function(feature, layer) {
   layer.setStyle({color: this.colorMap[feature.id]});
-  layer.on('click', this.handleClick.bind(this));
+  layer.on('click', this.handleStateClick.bind(this));
 };
 
-ElectionLookupMap.prototype.handleClick = function(e) {
+ElectionLookupMap.prototype.handleStateClick = function(e) {
+  if (this.opts.handleSelect) {
+    var state = utils.decodeState(e.target.feature.id.substring(2, 4));
+    this.opts.handleSelect(state);
+  }
+};
+
+ElectionLookupMap.prototype.onEachDistrict = function(feature, layer) {
+  layer.setStyle({color: this.colorMap[feature.id]});
+  layer.on('click', this.handleDistrictClick.bind(this));
+};
+
+ElectionLookupMap.prototype.handleDistrictClick = function(e) {
   this.map.removeLayer(this.overlay);
   this.drawDistricts([e.target.feature.id], {reset: false});
   if (this.opts.handleSelect) {
     var district = utils.decodeDistrict(e.target.feature.id);
     this.opts.handleSelect(district.state, district.district);
+  }
+};
+
+ElectionLookupMap.prototype.handleZoom = function(e) {
+  var zoom = e.target.getZoom();
+  if (zoom <= STATE_ZOOM_THRESHOLD) {
+    this.drawStates();
+  } else if (!this.districts) {
+    this.drawDistricts();
   }
 };
 
