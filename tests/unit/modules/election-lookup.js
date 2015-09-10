@@ -110,6 +110,12 @@ describe('election lookup', function() {
     expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
   });
 
+  it('should show no results warning on no results', function() {
+    this.el.draw([]);
+    expect(this.el.$resultsItems.text()).to.contain("Can't find your zip code?");
+    expect(this.el.$resultsTitle.text()).to.equal('');
+  });
+
   describe('fetching ajax', function() {
     beforeEach(function() {
       this.response = {
