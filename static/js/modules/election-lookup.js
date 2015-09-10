@@ -104,6 +104,32 @@ function hasOption($select, value) {
   return $select.find('option[value="' + value + '"]').length > 0;
 }
 
+function getStatePalette(scale) {
+  var colorOptions = _.map(Object.keys(scale), function(key) {
+    return parseInt(key);
+  });
+  return scale[_.max(colorOptions)];
+}
+
+function getDistrictPalette(scale) {
+  var colorOptions = _.map(Object.keys(scale), function(key) {
+    return parseInt(key);
+  });
+  var minColors = Math.min.apply(null, colorOptions);
+  var maxColors = Math.max.apply(null, colorOptions);
+  return _.chain(utils.districtFeatures.features)
+    .groupBy(function(feature) {
+      var district = utils.decodeDistrict(feature.id);
+      return district.state;
+    })
+    .map(function(features, state) {
+      var numColors = Math.max(minColors, Math.min(features.length, maxColors));
+      return [state, scale[numColors]];
+    })
+    .object()
+    .value();
+}
+
 var ElectionFormMixin = {
   handleZipChange: function() {
     this.$state.val('');
@@ -329,12 +355,13 @@ function ElectionLookupMap(elm, opts) {
 ElectionLookupMap.prototype.init = function() {
   this.overlay = null;
   this.districts = null;
-  this.colorMap = null;
   this.map = L.map(this.elm);
   this.map.on('zoomend', this.handleZoom.bind(this));
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  this.drawStates();
+  this.statePalette = getStatePalette(this.opts.colorScale);
+  this.districtPalette = getDistrictPalette(this.opts.colorScale);
   this.map.setView([37.8, -96], 3);
+  this.drawStates();
 };
 
 ElectionLookupMap.prototype.drawStates = function() {
@@ -344,33 +371,46 @@ ElectionLookupMap.prototype.drawStates = function() {
     this.map.removeLayer(this.overlay);
   }
   this.districts = null;
-  this.setColors(stateFeatures);
+  // this.setColors(stateFeatures);
   this.overlay = L.geoJson(stateFeatures, {
     onEachFeature: this.onEachState.bind(this)
   }).addTo(this.map);
 };
 
-ElectionLookupMap.prototype.drawDistricts = function(districts, opts) {
+ElectionLookupMap.prototype.drawDistricts = function(districts) {
   if (this.featureType === FEATURE_TYPES.DISTRICTS && !districts) { return; }
   this.featureType = FEATURE_TYPES.DISTRICTS;
-  opts = _.extend({reset: true}, opts);
   var features = districts ?
     this.filterDistricts(districts) :
     utils.districtFeatures;
   if (this.overlay) {
     this.map.removeLayer(this.overlay);
   }
-  if (opts.reset && !_.isEqual(districts, this.districts)) {
-    this.setColors(features.features);
-  }
   this.districts = districts;
-  this.overlay = L.geoJson(
-    features, {
-      onEachFeature: this.onEachDistrict.bind(this)
+  this.overlay = L.geoJson(features, {
+    onEachFeature: this.onEachDistrict.bind(this)
   }).addTo(this.map);
   if (districts) {
     this.map.fitBounds(this.overlay.getBounds());
   }
+  this.drawBackgroundDistricts(districts);
+};
+
+ElectionLookupMap.prototype.drawBackgroundDistricts = function(districts) {
+  if (!districts) { return; }
+  var states = _.chain(districts)
+    .map(function(district) {
+      return Math.floor(district / 100);
+    })
+    .unique()
+    .value();
+  var stateDistricts = _.filter(utils.districtFeatures.features, function(feature) {
+    return states.indexOf(Math.floor(feature.id / 100)) !== -1 &&
+      districts.indexOf(feature.id) === -1;
+  });
+  L.geoJson(stateDistricts, {
+    onEachFeature: _.partial(this.onEachDistrict.bind(this), _, _, {color: '#bbbbbb'})
+  }).addTo(this.overlay);
 };
 
 ElectionLookupMap.prototype.filterDistricts = function(districts) {
@@ -380,27 +420,6 @@ ElectionLookupMap.prototype.filterDistricts = function(districts) {
   };
 };
 
-ElectionLookupMap.prototype.setColors = function(features) {
-  var colorOptions = _.map(Object.keys(this.opts.colorScale), function(key) {
-    return parseInt(key);
-  });
-  var minColors = Math.min.apply(null, colorOptions);
-  var maxColors = Math.max.apply(null, colorOptions);
-  var numColors = Math.max(minColors, Math.min(features.length, maxColors));
-  var colors = this.opts.colorScale[numColors];
-  this.colorMap = _.chain(features)
-    .map(function(feature, index) {
-      return [feature.id, colors[index % colors.length]];
-    })
-    .object()
-    .value();
-};
-
-ElectionLookupMap.prototype.onEachState = function(feature, layer) {
-  layer.setStyle({color: this.colorMap[feature.id]});
-  layer.on('click', this.handleStateClick.bind(this));
-};
-
 ElectionLookupMap.prototype.handleStateClick = function(e) {
   if (this.opts.handleSelect) {
     var state = utils.decodeState(e.target.feature.id.substring(2, 4));
@@ -408,14 +427,25 @@ ElectionLookupMap.prototype.handleStateClick = function(e) {
   }
 };
 
-ElectionLookupMap.prototype.onEachDistrict = function(feature, layer) {
-  layer.setStyle({color: this.colorMap[feature.id]});
+ElectionLookupMap.prototype.onEachState = function(feature, layer) {
+  var state = parseInt(feature.id.substring(2, 4));
+  var color = this.statePalette[state % this.statePalette.length];
+  layer.setStyle({color: color});
+  layer.on('click', this.handleStateClick.bind(this));
+};
+
+ElectionLookupMap.prototype.onEachDistrict = function(feature, layer, opts) {
+  opts = opts || {};
+  var decoded = utils.decodeDistrict(feature.id);
+  var palette = this.districtPalette[decoded.state];
+  var color = palette[decoded.district % palette.length];
+  layer.setStyle({color: opts.color || color});
   layer.on('click', this.handleDistrictClick.bind(this));
 };
 
 ElectionLookupMap.prototype.handleDistrictClick = function(e) {
   this.map.removeLayer(this.overlay);
-  this.drawDistricts([e.target.feature.id], {reset: false});
+  this.drawDistricts([e.target.feature.id]);
   if (this.opts.handleSelect) {
     var district = utils.decodeDistrict(e.target.feature.id);
     this.opts.handleSelect(district.state, district.district);
