@@ -176,6 +176,23 @@ function buildStateUrl($elm) {
   );
 }
 
+function highlightRowAndState($map, $table, state, scroll) {
+  var $scrollBody = $table.closest('.dataTables_scrollBody');
+  var $row = $scrollBody.find('span[data-state="' + state + '"]');
+
+  if ($row.length > 0) {
+    maps.highlightState($('.state-map'), state);
+    $scrollBody.find('.row-active').removeClass('row-active');
+    $row.parents('tr').addClass('row-active');
+    if (scroll) {
+      $scrollBody.animate({
+        scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
+      }, 500);
+    }
+  }
+
+}
+
 var aggregateCallbacks = _.extend(
   {afterRender: tables.barsAfterRender.bind(undefined, undefined)},
   tables.offsetCallbacks
@@ -229,16 +246,8 @@ $(document).ready(function() {
           )
         );
         events.on('state.map', function(params) {
-          var $scrollBody = $table.closest('.dataTables_scrollBody');
-          var $row = $scrollBody.find('span[data-state="' + params.state + '"]');
-          if ($row.length > 0) {
-            maps.highlightState($('.state-map'), params.state);
-            $scrollBody.find('.row-active').removeClass('row-active');
-            $row.parents('tr').addClass('row-active');
-            $scrollBody.animate({
-              scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
-            }, 500);
-          }
+          var $map = $('.state-map');
+          highlightRowAndState($map, $table, params.state, true)
         });
         $table.on('click', 'tr', function(e) {
           events.emit('state.table', {state: $(this).find('span[data-state]').attr('data-state')});
@@ -300,7 +309,7 @@ $(document).ready(function() {
     maps.stateMap($map, data, 400, 400, null, true, false);
   });
   events.on('state.table', function(params) {
-    maps.highlightState($map, params.state);
+    highlightRowAndState($map, $('.data-table'), params.state, false);
   });
   $map.on('click', 'path[data-state]', function(e) {
     var state = $(this).attr('data-state');
