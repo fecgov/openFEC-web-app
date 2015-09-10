@@ -14,7 +14,12 @@ var columns = [
     className: 'all',
     width: '280px',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id + tables.buildCycle(row), 'candidate');
+      return tables.buildEntityLink(
+        data,
+        '/candidate/' + row.candidate_id + tables.buildCycle(row),
+        'candidate',
+        {isIncumbent: row.incumbent_challenge_full === 'Incumbent'}
+      );
     }
   },
   {data: 'office_full', className: 'min-tablet hide-panel'},

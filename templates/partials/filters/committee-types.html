@@ -20,6 +20,33 @@
 
 <div class="filter">
   <fieldset class="js-dropdown">
+    <legend class="label" for="committee_type">Independent Expenditure Committees</legend>
+    <ul class="dropdown__selected">
+      <li>
+        <input id="committee-type-checkbox-O" type="checkbox" name="committee_type" value="O">
+        <label class="dropdown__value" for="committee-type-checkbox-O">Super PAC (Independent Expenditure-Only)</label>
+      </li>
+    </ul>
+    <div class="dropdown">
+      <button class="dropdown__button button--neutral">More</button>
+      <div id="ie-dropdown" class="dropdown__panel" aria-hidden="true">
+      <ul class="dropdown__list">
+        <li class="dropdown__item">
+          <input id="committee-type-checkbox-U" type="checkbox" name="committee_type" value="U">
+          <label class="dropdown__value" for="committee-type-checkbox-U">Single Candidate Independent Expenditure</label>
+        </li>
+        <li class="dropdown__item">
+          <input id="committee-type-checkbox-I" type="checkbox" name="committee_type" value="I">
+          <label class="dropdown__value" for="committee-type-checkbox-I">Independent Expenditor (Person or Group)</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</fieldset>
+</div>
+
+<div class="filter">
+  <fieldset class="js-dropdown">
     <legend class="label" for="committee_type">PACs</legend>
     <ul class="dropdown__selected"></ul>
     <div class="dropdown">
@@ -121,31 +148,4 @@
       </ul>
     </div>
   </fieldset>
-</div>
-
-<div class="filter">
-  <fieldset class="js-dropdown">
-    <legend class="label" for="committee_type">Independent Expenditure Committees</legend>
-    <ul class="dropdown__selected">
-      <li>
-        <input id="committee-type-checkbox-O" type="checkbox" name="committee_type" value="O">
-        <label class="dropdown__value" for="committee-type-checkbox-O">Super PAC (Independent Expenditure-Only)</label>
-      </li>
-    </ul>
-    <div class="dropdown">
-      <button class="dropdown__button button--neutral">More</button>
-      <div id="ie-dropdown" class="dropdown__panel" aria-hidden="true">
-      <ul class="dropdown__list">
-        <li class="dropdown__item">
-          <input id="committee-type-checkbox-U" type="checkbox" name="committee_type" value="U">
-          <label class="dropdown__value" for="committee-type-checkbox-U">Single Candidate Independent Expenditure</label>
-        </li>
-        <li class="dropdown__item">
-          <input id="committee-type-checkbox-I" type="checkbox" name="committee_type" value="I">
-          <label class="dropdown__value" for="committee-type-checkbox-I">Independent Expenditor (Person or Group)</label>
-        </li>
-      </ul>
-    </div>
-  </div>
-</fieldset>
 </div>

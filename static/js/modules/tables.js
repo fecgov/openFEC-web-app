@@ -70,13 +70,19 @@ function buildCycle(datum) {
   }
 }
 
-function buildEntityLink(data, url, category) {
+function buildEntityLink(data, url, category, opts) {
+  opts = opts || {};
   var anchor = document.createElement('a');
   anchor.textContent = data;
   anchor.setAttribute('href', url);
   anchor.setAttribute('title', data);
   anchor.setAttribute('data-category', category);
   anchor.classList.add('single-link');
+
+  if (opts.isIncumbent) {
+    anchor.classList.add('is-incumbent');
+  }
+
   return anchor.outerHTML;
 }
 
@@ -96,10 +102,11 @@ function buildTotalLink(path, getParams) {
     var link = document.createElement('a');
     link.textContent = helpers.currency(data);
     link.setAttribute('title', 'View individual transactions');
+    var params = getParams(data, type, row, meta);
     var uri = URI(path)
-      .query({committee_id: row.committee_id})
-      .addQuery(getParams(row));
-    link.setAttribute('href', buildAggregateUrl(uri, row.cycle));
+      .addQuery({committee_id: row.committee_id})
+      .addQuery(params);
+    link.setAttribute('href', buildAggregateUrl(uri, _.extend({}, row, params).cycle));
     span.appendChild(link);
     return span.outerHTML;
   };
