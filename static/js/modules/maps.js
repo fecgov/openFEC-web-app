@@ -70,8 +70,8 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
   );
   var quantiles = 4;
   max = max || _.max(_.pluck(data.results, 'total'));
-  var scale = chroma.scale(['#fff', '#2678BA']).domain([0, max]);
-  var quantize = chroma.scale(['#fff', '#2678BA']).domain([0, max], quantiles);
+  var scale = chroma.scale(['#fff', '#36BDBB']).domain([0, max]);
+  var quantize = chroma.scale(['#fff', '#36BDBB']).domain([0, max], quantiles);
   var map = svg.append('g')
     .selectAll('path')
       .data(stateFeatures)
