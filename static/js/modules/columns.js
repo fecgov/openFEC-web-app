@@ -26,7 +26,7 @@ var filings = {
       if (row.candidate_name) {
         return tables.buildEntityLink(row.candidate_name, '/candidate/' + row.candidate_id + cycle, 'candidate');
       } else if (row.committee_name) {
-        return tables.buildEntityLink(row.committee_name, '/committee/' + row.candidate_id + cycle, 'committee');
+        return tables.buildEntityLink(row.committee_name, '/committee/' + row.committee_id + cycle, 'committee');
       } else {
         return '';
       }

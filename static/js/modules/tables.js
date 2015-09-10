@@ -140,11 +140,15 @@ function barColumn(formatter) {
 function urlColumn(attr, opts) {
   return _.extend({
     render: function(data, type, row, meta) {
-      var anchor = document.createElement('a');
-      anchor.textContent = data;
-      anchor.setAttribute('href', row[attr]);
-      anchor.setAttribute('target', '_blank');
-      return anchor.outerHTML;
+      if (row[attr]) {
+        var anchor = document.createElement('a');
+        anchor.textContent = data;
+        anchor.setAttribute('href', row[attr]);
+        anchor.setAttribute('target', '_blank');
+        return anchor.outerHTML;
+      } else {
+        return data;
+      }
     }
   }, opts);
 }
