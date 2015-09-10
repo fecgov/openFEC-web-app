@@ -10,13 +10,6 @@
       <a class="heading__action button--neutral button--browse" href="{{ url_for('filings', committee_id=committee_id) }}">All filings</a>
     </div>
     <div class="content__section">
-      <div id="filters" class="filters--horizontal">
-        <form id="category-filters">
-          {% include 'partials/filters/amendment-indicator.html' %}
-          {% include 'partials/filters/primary-general.html' %}
-          {% include 'partials/filters/report-type.html' %}
-        </form>
-      </div>
       <table class="data-table" data-type="filing" data-cycle="{{ cycle }}" data-committee="{{ committee_id }}" width="100%" class="responsive">
         <thead>
           <tr>

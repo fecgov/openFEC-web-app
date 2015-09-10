@@ -2,6 +2,36 @@
 
 {{ checkbox.checkbox_dropdown(
   'report_type',
-  'Report Type',
-  options=constants.report_types,
+  'Monthly Reports',
+  options=constants.monthly_reports,
+) }}
+
+{{ checkbox.checkbox_dropdown(
+  'report_type',
+  'Quarterly Reports',
+  options=constants.quarterly_reports,
+) }}
+
+{{ checkbox.checkbox_dropdown(
+  'report_type',
+  'Semi-Annual Reports',
+  options=constants.semiannual_reports,
+) }}
+
+{{ checkbox.checkbox_dropdown(
+  'report_type',
+  'Election Sensitive Reports',
+  options=constants.election_sensitive_reports,
+) }}
+
+{{ checkbox.checkbox_dropdown(
+  'report_type',
+  'Bundling Reports',
+  options=constants.bundling_reports,
+) }}
+
+{{ checkbox.checkbox_dropdown(
+  'report_type',
+  'Other Reports',
+  options=constants.other_reports,
 ) }}
