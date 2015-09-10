@@ -231,11 +231,14 @@ $(document).ready(function() {
         events.on('state.map', function(params) {
           var $scrollBody = $table.closest('.dataTables_scrollBody');
           var $row = $scrollBody.find('span[data-state="' + params.state + '"]');
-          $scrollBody.find('.active').removeClass('active');
-          $row.parents('tr').addClass('active');
-          $scrollBody.animate({
-            scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
-          }, 500);
+          if ($row.length > 0) {
+            maps.highlightState($('.state-map'), params.state);
+            $scrollBody.find('.row-active').removeClass('row-active');
+            $row.parents('tr').addClass('row-active');
+            $scrollBody.animate({
+              scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
+            }, 500);
+          }
         });
         $table.on('click', 'tr', function(e) {
           events.emit('state.table', {state: $(this).find('span[data-state]').attr('data-state')});
@@ -301,7 +304,6 @@ $(document).ready(function() {
   });
   $map.on('click', 'path[data-state]', function(e) {
     var state = $(this).attr('data-state');
-    maps.highlightState($map, state);
     events.emit('state.map', {state: state});
   });
 });

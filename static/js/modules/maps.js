@@ -85,7 +85,10 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
       .attr('class', 'shape')
       .attr('d', path)
     .on('mouseover', function(d) {
-      this.parentNode.appendChild(this);
+      if (results.hasOwnProperty(d.properties.name)) {
+        this.parentNode.appendChild(this);
+        this.classList.add('state--hover')
+      }
     });
 
   if (addLegend || typeof addLegend === 'undefined') {
