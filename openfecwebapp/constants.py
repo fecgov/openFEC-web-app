@@ -109,8 +109,7 @@ parties_extended = OrderedDict([
     ('USP', "U.S. People's Party"),
 ])
 
-report_types = OrderedDict([
-    ('M1', 'January Monthly'),
+monthly_reports = OrderedDict([
     ('M2', 'February Monthly'),
     ('M3', 'March Monthly'),
     ('M4', 'April Monthly'),
@@ -123,11 +122,21 @@ report_types = OrderedDict([
     ('M11', 'November Monthly'),
     ('M12', 'December Monthly'),
     ('YE', 'Year-end'),
+])
+
+quarterly_reports = OrderedDict([
     ('Q1', 'April Quarterly'),
     ('Q2', 'July Quarterly'),
     ('Q3', 'October Quarterly'),
+    ('YE', 'Year-end'),    
+])
+
+semiannual_reports = OrderedDict([
     ('MY', 'Mid-year Report'),
     ('YE', 'Year-end'),    
+])
+
+election_sensitive_reports = OrderedDict([
     ('12P', 'Pre-Primary'),
     ('12C', 'Pre-Convention'),
     ('12G', 'Pre-General'),
@@ -139,18 +148,14 @@ report_types = OrderedDict([
     ('30P', 'Post-Primary'),
     ('60D', 'Post-Convention'),
     ('10D', 'Pre-Election (10D)'),
-    ('10G', 'Pre-General (10G)'),
-    ('10P', 'Pre-Primary (10P)'),
-    ('10R', 'Pre-Runoff (10R)'),
-    ('10S', 'Pre-Special (10S)'),
     ('30D', 'Post-Election (30D)'),
-    ('TER', 'Termination'),
-    ('24', '24-Hour Notification'),
-    ('48', '48-Hour Notification'),
-    ('90D', 'Post-Inaugural'),
-    ('90S', 'Post-Inaugural Supplement'),
-    ('CA', 'Comprehensive Amendment'),
-    ('ADJ', 'Comprehensive Adjusted Amendment'),
+    ('10G', 'Pre-General (last used: 1982)'),
+    ('10P', 'Pre-Primary (last used: 1982)'),
+    ('10R', 'Pre-Runoff (last used: 1980)'),
+    ('10S', 'Pre-Special (last used: 1980)'),
+])
+
+bundling_reports = OrderedDict([
     ('M7S', 'July Monthly / Semi-Annual'),
     ('MSA', 'Monthly Semi-Annual Mid-Year'),
     ('MSY', 'Monthly Semi-Annual Year-End'),
@@ -162,6 +167,16 @@ report_types = OrderedDict([
     ('QMS', 'Quarterly Mid-Year / Semi-Annual'),
 ])
 
+other_reports = OrderedDict([    
+    ('TER', 'Termination'),
+    ('24', '24-Hour Notification'),
+    ('48', '48-Hour Notification'),
+    ('90D', 'Post-Inaugural'),
+    ('90S', 'Post-Inaugural Supplement'),
+    ('CA', 'Comprehensive Amendment'),
+    ('ADJ', 'Comprehensive Adjusted Amendment'),
+])
+
 form_types = OrderedDict([
     ('F1', "Statements Of Organization"),
     ('F1M', "Multicandidate Status"),
@@ -171,8 +186,8 @@ form_types = OrderedDict([
     ('F3X', "PAC and Party Financial Reports"),
     ('F3L', "Bundled Contributions Reports"),
     ('F4', "Convention Financial Reports"),
-    ('F5', "Independent Expenditure Reports and Notices"),
-    ('F24', "24/48 Hour Notice Of Independent Expenditures or Coordinated Expenditures"),
+    ('F5', "Independent Expenditure Reports and Notices (by a person or group)"),
+    ('F24', "Independent Expenditure Reports and Notices (by a registered committee)"),
     ('F6', "Contributions and Loans Notices"),
     ('F7', "Communication Cost Reports"),
     ('F8', "Debt Settlement Plans"),
