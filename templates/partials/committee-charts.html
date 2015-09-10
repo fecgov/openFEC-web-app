@@ -11,10 +11,10 @@
 {% endmacro %}
 
 {% if series_group_has_data(reports, ('total_receipts_period', 'total_disbursements_period')) %}
-<div class="row">
+<div class="content__section--extra">
   <figure class="chart-container chart--r-d">
     <div class="chart__header">
-      <h4 class="chart__title">Receipts and Disbursements</h4>
+      <h3 class="chart__title">Receipts and Disbursements</h3>
       <ul class="chart__key list--flat">
         <li class="chart__key__item"><span class="swatch data--receipts"></span> Total Receipts</li>
         <li class="chart__key__item"><span class="swatch data--disbursements"></span> Total Disbursements</li>
@@ -26,10 +26,10 @@
 </div>
 {% endif %}
 {% if series_group_has_data(reports, ('cash_on_hand_end_period', 'debts_owed_by_committee')) %}
-<div class="row">
+<div class="content__section">
   <figure class="chart-container chart--c-d">
     <div class="chart__header">
-      <h4 class="chart__title">Cash and Debt</h4>
+      <h3 class="chart__title">Cash and Debt</h3>
       <ul class="chart__key list--flat">
         <li class="chart__key__item"><span class="swatch data--cash"></span> Ending Cash on Hand</li>
         <li class="chart__key__item"><span class="swatch data--debt"></span> Debt</li>

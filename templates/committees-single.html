@@ -1,5 +1,6 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/missing.html' as missing %}
+{% import 'macros/cycle-select.html' as select %}
 {% import 'macros/null.html' as null %}
 
 {% block title %}
@@ -8,9 +9,9 @@
 
 {% block body %}
   <div id="main" class="tab-interface">
-    <header class="page-header slab slab--primary">
+    <header class="page-header page-header--primary">
     <img class="page-header__icon" src="/static/img/i-committee--primary.svg" alt="Candidate icon">
-    <span class="h1 page-header__title">Committees</span>
+    <span class="page-header__title">Committees</span>
     {{ search.search('page-header', 'committees') }}
     </header>  
     <header class="entity__header entity__header--primary">
@@ -69,9 +70,10 @@
           <nav class="page-tabs">
             <ul class="list--flat" role="tablist" data-name="tab">
               <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial Summary</a></li>
-              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="receipts" tabindex="-1" aria-controls="panel2" href="#section-2">Receipts</a></li>
+              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="receipts" tabindex="-1" aria-controls="panel2" href="#section-2">Receipts from Individuals</a></li>
               <li role="presentation" class="page-tabs__item"><a role="tab" data-name="disbursements" tabindex="-1" aria-controls="panel3" href="#section-3">Disbursements</a></li>
-              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="filings" tabindex="-1" aria-controls="panel4" href="#section-4">Filings</a></li>
+              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="transfers" tabindex="-1" aria-controls="panel4" href="#section-4">Between Committees</a></li>
+              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="filings" tabindex="-1" aria-controls="panel5" href="#section-5">Filings</a></li>
             </ul>
           </nav>
         </div>
@@ -84,9 +86,11 @@
         <div class="totals-table__cell">{{ pretty_name }} </div>
         <div class="totals-table__cell">{{ null.null(value | currency) }}</div>
         <div class="totals-table__cell totals-table__cell--bar">
-          {{ charts.chart_bar(value|default(0),
-                              pretty_name,
-                              tooltip=None) }}
+          <div class="bar-container">
+            {{ charts.chart_bar(value|default(0),
+                                pretty_name,
+                                tooltip=None) }}
+          </div>
         </div>
       </div>
     {% endmacro %}
@@ -120,13 +124,18 @@
     <section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
       <div class="container">
         <div class="content__section">
-          <h2 class="content__section__heading" id="section-1-heading">Financial Summary {% include 'partials/cycle-select.html' %}</h2>
+          <div class="section__heading">
+            <h2 class="heading__title" id="section-1-heading">
+              Financial Summary
+              {{ select.cycle_select(cycles, cycle) }}
+            </h2>
+          </div>
           <p>Get the full picture of all of the money received and spent by this committee.</p>
         </div>
         {% if reports and totals %}
-          <div class="slab">
+          <div class="content__section">
               {% with committee=context() %}
-            <h3>Detailed Summary {{ reports.0.cycle-1 }} - {{ reports.0.cycle }}</h3>
+            <h3 class="results-info results-info--simple results-info__title">Detailed Summary {{ reports.0.cycle-1 }} - {{ reports.0.cycle }}</h3>
             <div class="js-accordion">
             {% if committee_type == 'P' %}
               {% include 'partials/committee-totals-presidential.html' %}
@@ -139,14 +148,12 @@
             {% endif %}
             </div>
 
-          <div class="slab">
             {% if committee_type != 'I'  %}
               {% include 'partials/committee-charts.html' %}
             {% else %}
               {% include 'partials/ie-chart.html' %}
             {% endif %}
             {% endwith %}
-          </div>
         {% else %}
 
           {{ missing.missing_financials('committee', cycle) }}
@@ -158,6 +165,7 @@
     {% with committee=context() %}
     {% include 'partials/receipts-tab.html' %}
     {% include 'partials/disbursements-tab.html' %}
+    {% include 'partials/between-committees-tab.html' %}
     {% include 'partials/filings-tab-committee.html' %}
     {% endwith %}
   </div>

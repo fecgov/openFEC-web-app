@@ -1,3 +1,5 @@
+import os
+
 import git
 from invoke import run
 from invoke import task
@@ -13,6 +15,17 @@ def add_hooks():
 def remove_hooks():
     run('rm .git/hooks/post-merge')
     run('rm .git/hooks/post-checkout')
+
+
+@task
+def changelog():
+    if not os.getenv('CHANGELOG_GITHUB_TOKEN'):
+        print(
+            'GitHub token not found. For configuration instructions, see '
+            'https://github.com/skywinder/github-changelog-generator#github-token'
+        )
+        return
+    run('github_changelog_generator -u 18F -p openfec-web-app', pty=True)
 
 
 def _detect_prod(repo, branch):

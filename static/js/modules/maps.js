@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document */
 
 var d3 = require('d3');
 var $ = require('jquery');
@@ -14,7 +14,12 @@ require('leaflet-providers');
 var events = require('fec-style/js/events');
 
 var helpers = require('./helpers');
+var utils = require('./election-utils');
+
 var states = require('../us.json');
+
+var districts = require('../districts.json');
+var districtFeatures = topojson.feature(districts, districts.objects.districts);
 
 var stateFeatures = topojson.feature(states, states.objects.units).features;
 var stateFeatureMap = _.chain(stateFeatures)
@@ -129,15 +134,15 @@ function stateLegend(svg, scale, quantize, quantiles) {
 }
 
 var tooltipTemplate = _.template(
-  '<div>{{ name }}</div>' +
-  '<div>{{ total }}</div>'
+  '<div class="tooltip__title">{{ name }}</div>' +
+  '<div class="tooltip__value">{{ total }}</div>'
 );
 
 function stateTooltips(svg, path, results) {
   var tooltip = d3.select('body').append('div')
     .attr('id', 'map-tooltip')
+    .attr('class', 'tooltip')
     .style('position', 'absolute')
-    .style('text-align', 'center')
     .style('pointer-events', 'none')
     .style('display', 'none');
   svg.selectAll('path')
@@ -170,29 +175,29 @@ function highlightState($parent, state) {
   }
 }
 
-var districtUrl = '/static/json/districts';
-
-function DistrictMap(elm) {
+function DistrictMap(elm, style) {
   this.elm = elm;
+  this.style = style;
   this.map = null;
   this.overlay = null;
 }
 
 DistrictMap.prototype.load = function(election) {
+  var feature;
   if (election.district) {
-    var url = [districtUrl, election.state, election.district].join('/') + '.geojson';
-    $.getJSON(url).done(this.render.bind(this));
+    var encoded = utils.encodeDistrict(election.state, election.district);
+    feature = utils.findDistrict(encoded);
   } else {
-    var feature = stateFeatureMap[election.stateFull];
-    feature && this.render(feature);
+    feature = stateFeatureMap[election.stateFull];
   }
+  feature && this.render(feature);
 };
 
 DistrictMap.prototype.render = function(data) {
   this.elm.setAttribute('aria-hidden', 'false');
   this.map = L.map(this.elm);
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  this.overlay = L.geoJson(data).addTo(this.map);
+  this.overlay = L.geoJson(data, {style: this.style}).addTo(this.map);
   this.map.fitBounds(this.overlay.getBounds());
 };
 

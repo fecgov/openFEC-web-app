@@ -1,4 +1,5 @@
 {% extends "layouts/main.html" %}
+{% import 'macros/search.html' as search %}
 {% set hide_header_search = true %}
 
 {% block title %}
@@ -7,111 +8,59 @@
 
 {% block body %}
 
+{% if result_type == 'committees' %}
+{% set alt_type = 'candidates' %}
+{% else %}
+{% set alt_type = 'committees' %}
+{% endif %}
+
 <header class="page-header slab slab--primary">
-  <h1 class="page-header__title">Search Results</h1>
+  <span class="page-header__title">Search Results</span>
 </header>
 
 <div class="main">
   <div class="container">
-    <section class="main__content tst-search_results">
-      {% include 'partials/search-results-controls.html' %}
-        
-        {% if not results %}
-          <div class="message message--alert">
-            <h4>Sorry, there are no results for your search "{{ query }}"</h4>
-            <p>Try browsing one of the following datasets:</p>
-            <ul class="list--flat">
-              <li><a class="button--primary" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a></li>
-              <li><a class="button--primary" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a></li>
-              <li><a class="button--primary" href="{{ url_for('filings') }}">Filings</a></li>
-              <li><a class="button--primary" href="{{ url_for('receipts') }}">Receipts</a></li>
-              <li><a class="button--primary" href="{{ url_for('disbursements') }}">Disbursements</a></li>
-            </ul>
-          </div>
-        {% else %}
+    <h1 class="t-ruled--bold">Search</h1>
+    <div class="row">
+      <section class="main__content tst-search_results">
+          <h4 class="label">Select a category</h4>
+          {{ search.search('results', result_type, query, 'button--neutral') }}
 
-        {% if result_type == 'committees' %}
-          {% with committees=results %}
-            {% for committee in committees %}
-              <div class="box">
-                {% include 'partials/search-results-committee.html' %}
+          {% if results %}
+            {% if results|length >= 20 %}
+              <div class="results__count message message--alert"> 
+                Showing first 20 results. 
+                <a href="{{ url_for(result_type, name=query) }}">View all &raquo;</a>
               </div>
-            {% endfor %}
-          {% endwith %}
-        {% else %}
-          {% with candidates=results %}
-            {% for candidate in candidates %}
-              <div class="box">
-                <div class="box__header">
-                  <span class="text--medium">
-                    Election years: {{ candidate.election_years[0] }} -
-                    {{ candidate.election_years[-1] }}
-                  </span>
-                  {% if current_cycle in candidate.election_years %}
-                    <span class="text--medium color-activity box__right">
-                      Currently active (TODO)</span>
-                  {% endif %}
-                </div>
-                {% include 'partials/search-results-candidate.html' %}
-                {% if candidate.principal_committees %}
-                {% with committee=candidate.principal_committees[0] %}
-                  {% include "partials/search-results-committee.html" %}
-                {% endwith %}
-                {% endif %}
-              </div>
-            {% endfor %}
-          {% endwith %}
-        {% endif %}
-
-        {% include 'partials/search-results-controls.html' %}
-
-      </section>
-      <aside class="sidebar">
-        <div class="card">
-          <div class="">
-            <h5 class="">Explore {{ result_type | title }}</h5>
-            <p>Trying to sort through a lot of results? Or want to explore
-              similar {{ result_type }}? Try exploring all {{ result_type }}.
-            </p>
-            <p>
-              <a href="{{ url_for(result_type, q=query) }}">
-                Filter results &raquo;
-              </a>
-            </p>
-            <p>
-              <a href="{{ url_for( result_type ) }}">
-                View all {{ result_type }} &raquo;
-              </a>
-            </p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="box__portion">
-            {% if result_type == 'candidates' %} 
-              {% set other_type = 'committees' %}
-            {% else %}  
-              {% set other_type = 'candidates' %}
+            {% endif %}          
+            <h2 class="results__title">Results:</h2>
+            {% if result_type == 'committees' %}
+              {% with committees=results %}
+                {% for committee in committees %}
+                  {% include 'partials/search-results-committee.html' %}
+                {% endfor %}
+              {% endwith %}
+            {% else %}
+              {% with candidates=results %}
+                {% for candidate in candidates %}
+                    {% include 'partials/search-results-candidate.html' %}
+                {% endfor %}
+              {% endwith %}
             {% endif %}
-            <h5 class="box__title">Explore {{ other_type | title }}</h5>
-            <p>Not finding what you're looking for? Try searching through 
-              {{ other_type }}.
-            </p>
-            <p>
-              <a href="{{ url_for('search', search=query,
-                  search_type=other_type) }}">
-                Search for {{ other_type }} named "{{ query }}"
-              </a>
-            </p>
-            <hr></hr>
-            <p class="t-note">
-              Looking for all committees authorized to a certain candidate? View the
-              candidate's page to see them all.
-            </p>
+        </section>
+        <aside class="sidebar">
+          <div class="card">
+            <a class="button--neutral" href="{{ url_for(result_type) }}">Filter these results &raquo;</a>
+            <div class="card__content card__content--small">
+              <p>Trying to sort through a lot of results? Or want to explore
+                similar {{ result_type }}? Try exploring all {{ result_type }}.
+              </p>
+            </div>
           </div>
-        </div>
-      </aside>
-    {% endif %}
+        </aside>
+      {% endif %}
+      </div>
+    {% include 'partials/search-results-alternatives.html' %}
   </div>
 </div>
 

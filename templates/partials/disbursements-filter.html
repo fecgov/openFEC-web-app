@@ -12,7 +12,8 @@ Filter Disbursements
 {{ typeahead.field('committee_id', 'Committee') }}
 
 <h4 class="filters__subheader">Recipient Information</h4>
-{{ text.field('recipient_name', 'Receipient Name') }}
+{{ typeahead.field('recipient_committee_id', 'Recipient (committee)') }}
+{{ text.field('recipient_name', 'Recipient (non-committee)') }}
 {{ text.field('recipient_city', 'City') }}
 {{ states.field('recipient_state')}}
 <h4 class="filters__subheader">Transaction Information</h4>

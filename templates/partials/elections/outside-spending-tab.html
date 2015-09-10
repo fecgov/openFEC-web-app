@@ -1,11 +1,18 @@
+{% import 'macros/cycle-select.html' as select %}
+
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
-    <div class="page-section__intro">
-      <h2 class="section-heading" id="section-2-heading">Outside Spending {% include 'partials/cycle-select.html' %}</h2>
+    <div class="content__section">
+      <h2 class="section__heading" id="section-2-heading">
+        Outside Spending
+        {{ select.cycle_select(cycles, cycle, 'path', id="cycle-2") }}
+      </h2>
     </div>
 
-    <div class="page-subsection">
-      <h3>Independent Expenditures</h3>
+    <div class="content__section">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Independent Expenditures</h3>
+      </div>
       <table class="data-table" data-type="independent-expenditures">
         <thead>
           <th scope="col">Amount</th>
@@ -16,8 +23,10 @@
       </table>
     </div>
 
-    <div class="page-subsection">
-      <h3>Communication Costs</h3>
+    <div class="content__section--extra">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Communication Costs</h3>
+      </div>
       <table class="data-table" data-type="communication-costs">
         <thead>
           <th scope="col">Amount</th>
@@ -28,8 +37,10 @@
       </table>
     </div>
 
-    <div class="page-subsection">
-      <h3>Electioneering</h3>
+    <div class="content__section">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Electioneering</h3>
+      </div>
       <table class="data-table" data-type="electioneering">
         <thead>
           <th scope="col">Amount</th>

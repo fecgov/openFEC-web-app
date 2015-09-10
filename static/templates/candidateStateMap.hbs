@@ -1,11 +1,12 @@
-<div class="state-map chunk--half">
-  <select>
+<div class="state-map">
+  <select class="candidate-select">
   {{#each this}}
     <option value="{{ this.candidate_id }}">
       {{ this.candidate_name }}
     </option>
   {{/each}}
   </select>
-  <button class="button--unstyled"><i class="ti-close"></i></button>
+  <button class="js-add-map button button--neutral button--two-candidates">View two candidates</button>
+  <button class="js-remove-map button button--close button--close--primary" title="Remove map"><span class="u-visually-hidden">Hide map</span></button>
   <div class="state-map-choropleth"></div>
 </div>

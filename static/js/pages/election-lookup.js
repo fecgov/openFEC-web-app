@@ -1,10 +1,10 @@
 'use strict';
 
-/* global require, module, document, context, API_LOCATION, API_VERSION, API_KEY */
+/* global require, document */
 
 var $ = require('jquery');
-var ElectionLookup = require('../modules/election-lookup').ElectionLookup;
+var lookup = require('../modules/election-lookup');
 
 $(document).ready(function() {
-  new ElectionLookup('#election-lookup');
+  new lookup.ElectionLookup('#election-lookup');
 });

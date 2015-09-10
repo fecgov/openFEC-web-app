@@ -1,8 +1,14 @@
 {% import 'macros/missing.html' as missing %}
+{% import 'macros/cycle-select.html' as select %}
 {% import 'macros/null.html' as null %}
 
   <div class="content__section">
-    <h2 class="content__section__heading">Financial Summary {% include 'partials/cycle-select.html' %}</h2>
+    <div class="section__heading">
+      <h2 class="heading__title">
+        Financial Summary
+        {{ select.cycle_select(cycles, cycle, id="cycle-1") }}
+      </h2>
+    </div>
     <p class="usa-width-two-thirds">Candidates receive and spend money through committees. These are the <strong>combined financial totals</strong> for all of this candidate's authorized committees. You can learn more about each committee's fundraising and spending on its page.</p>
   </div>
   {% if committees_authorized %}
@@ -18,17 +24,17 @@
         <div >
           <h5 class="term t-data-header" data-term="Total Disbursements">Total Disbursements</h5>
           <span class="t-big-data">{{ null.null( aggregate.disbursements | currency ) }}</span>
-        </div>  
+        </div>
         <div>
           <h5 class="term t-data-header" data-term="Ending Cash on Hand">Ending Cash on Hand</h5>
           <span class="t-big-data">{{ null.null( aggregate.cash | currency ) }}</span>
-        </div>          
+        </div>
         <div>
           <h5 class="term t-data-header" data-term="Debt">Debt</h5>
           <span class="t-big-data">{{ null.null( aggregate.debt | currency ) }}</span>
         </div>
       </div>
-    </figure>   
+    </figure>
     <div class="usa-width-one-half">
       <h3 class="t-ruled--bottom">Campaign Committees</h3>
       {% for committee in committee_groups['P'] %}
@@ -45,7 +51,7 @@
             <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received &raquo;</a></li>
             <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent &raquo;</a></li>
             <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a></li>
-          </ul>        
+          </ul>
           <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
             <img src="/static/img/i-arrow-right--primary-contrast.svg" alt="Arrow pointing to the right">
           </a>
@@ -67,15 +73,15 @@
               <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received &raquo;</a></li>
               <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent &raquo;</a></li>
               <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a></li>
-            </ul>        
+            </ul>
             <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
               <img src="/static/img/i-arrow-right--neutral-contrast.svg" alt="Arrow pointing to the right">
             </a>
-          </div>       
+          </div>
         </div>
         {% endfor %}
       {% endif %}
-    </div>   
+    </div>
   </div>
 
 {% if committee_groups['J'] %}
@@ -89,7 +95,7 @@
       <li>
           <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}"><h5>{{ committee.name }}</h5></a>
       </li>
-      {% endfor %}    
+      {% endfor %}
     </ul>
   </div>
 {% endif %}

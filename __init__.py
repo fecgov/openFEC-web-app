@@ -25,7 +25,6 @@ from openfecwebapp.api_caller import load_search_results, load_with_nested
 locale.setlocale(locale.LC_ALL, '')
 
 START_YEAR = 1979
-DISTRICTS = json.load(open('./data/districts.json'))
 
 app = Flask(__name__, static_path='/static', static_folder='dist')
 
@@ -74,6 +73,10 @@ def series_group_has_data(groups, keys):
     )
 
 
+def get_cycles():
+    return range(utils.current_cycle(), START_YEAR, -2)
+
+
 def cycle_start(value):
     return datetime.datetime(value - 1, 1, 1)
 
@@ -82,12 +85,12 @@ def cycle_end(value):
     return datetime.datetime(value, 12, 31)
 
 
-def get_election_url(candidate, cycle):
+def get_election_url(candidate, cycle, district=None):
     return url_for(
         'elections',
         office=candidate['office_full'].lower(),
         state=candidate['state'] if candidate['state'] != 'US' else None,
-        district=candidate['district'],
+        district=district or candidate['district'],
         cycle=cycle,
     )
 
@@ -112,8 +115,7 @@ app.jinja_env.globals.update({
     'cycle_end': cycle_end,
     'election_url': get_election_url,
     'constants': constants,
-    'districts': DISTRICTS,
-    'cycles': range(utils.current_cycle(), START_YEAR, -2),
+    'cycles': get_cycles(),
 })
 
 
@@ -230,14 +232,29 @@ def elections(office, cycle, state=None, district=None):
         abort(404)
     if state and state.upper() not in constants.states:
         abort(404)
+    cycles = get_cycles()
+    if office.lower() == 'president':
+        cycles = [each for each in cycles if each % 4 == 0]
     return render_template(
         'elections.html',
         office=office,
         cycle=cycle,
+        cycles=cycles,
         state=state,
         state_full=constants.states[state.upper()] if state else None,
         district=district,
+        title=election_title(cycle, office, state, district),
     )
+
+
+def election_title(cycle, office, state=None, district=None):
+    base = ' '.join([str(cycle), 'Election', 'United States', office.capitalize()])
+    parts = [base]
+    if state:
+        parts.append(constants.states[state.upper()])
+    if district:
+        parts.append('District {0}'.format(district))
+    return ' - '.join(parts)
 
 
 @app.errorhandler(404)

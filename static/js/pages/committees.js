@@ -25,11 +25,11 @@ var columns = [
   {data: 'designation_full', className: 'min-tablet hide-panel'},
   {data: 'organization_type_full', className: 'min-desktop hide-panel'},
   {
-    className: 'all',
+    className: 'all u-no-padding',
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon arrow--right"></i>';
+      return tables.MODAL_TRIGGER_HTML;
     }
   }
 ];
@@ -44,7 +44,10 @@ $(document).ready(function() {
     {},
     columns,
     _.extend(tables.offsetCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, committeesTemplate)
+      afterRender: tables.modalRenderFactory(committeesTemplate)
     }),
-    {useFilters: true}
+    {
+      useFilters: true,
+      rowCallback: tables.modalRenderRow
+    }
   );});

@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -59,7 +59,7 @@ function mapFilters(filters) {
 var parsedFilters;
 
 function buildCycle(datum) {
-  if (parsedFilters.cycle) {
+  if (parsedFilters && parsedFilters.cycle) {
     var cycles = _.intersection(
       _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
       datum.cycles
@@ -70,13 +70,19 @@ function buildCycle(datum) {
   }
 }
 
-function buildEntityLink(data, url, category) {
+function buildEntityLink(data, url, category, opts) {
+  opts = opts || {};
   var anchor = document.createElement('a');
   anchor.textContent = data;
   anchor.setAttribute('href', url);
   anchor.setAttribute('title', data);
   anchor.setAttribute('data-category', category);
   anchor.classList.add('single-link');
+
+  if (opts.isIncumbent) {
+    anchor.classList.add('is-incumbent');
+  }
+
   return anchor.outerHTML;
 }
 
@@ -96,10 +102,11 @@ function buildTotalLink(path, getParams) {
     var link = document.createElement('a');
     link.textContent = helpers.currency(data);
     link.setAttribute('title', 'View individual transactions');
+    var params = getParams(data, type, row, meta);
     var uri = URI(path)
-      .query({committee_id: row.committee_id})
-      .addQuery(getParams(row));
-    link.setAttribute('href', buildAggregateUrl(uri, row.cycle));
+      .addQuery({committee_id: row.committee_id})
+      .addQuery(params);
+    link.setAttribute('href', buildAggregateUrl(uri, _.extend({}, row, params).cycle));
     span.appendChild(link);
     return span.outerHTML;
   };
@@ -121,13 +128,29 @@ function barColumn(formatter) {
     return _.extend({
       render: function(data, type, row, meta) {
         var span = document.createElement('div');
-        span.textContent = formatter(data);
-        span.setAttribute('data-value', data);
+        span.textContent = formatter(_.max([data, 0]));
+        span.setAttribute('data-value', data || 0);
         span.setAttribute('data-row', meta.row);
         return span.outerHTML;
       }
     }, opts);
   };
+}
+
+function urlColumn(attr, opts) {
+  return _.extend({
+    render: function(data, type, row, meta) {
+      if (row[attr]) {
+        var anchor = document.createElement('a');
+        anchor.textContent = data;
+        anchor.setAttribute('href', row[attr]);
+        anchor.setAttribute('target', '_blank');
+        return anchor.outerHTML;
+      } else {
+        return data;
+      }
+    }
+  }, opts);
 }
 
 var dateColumn = formattedColumn(helpers.datetime);
@@ -218,52 +241,70 @@ function mapQuerySeek(api, data) {
   );
 }
 
-function modalAfterRender(template, api, data, response) {
-  var $table = $(api.table().node()),
-      $modal = $('#datatable-modal');
+function identity(value) {
+  return value;
+}
 
-  // Move the modal to the results div.
-  $modal.appendTo($('#results'));
-  $table.find('tr').attr('tabindex', 0);
+var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
+var MODAL_TRIGGER_HTML = '<i class="icon arrow--right"></li>';
 
-  $table.on('click keypress', '.js-panel-toggle tr', function(ev) {
-    if (ev.which === 13 || ev.type === 'click') {
-      if ($(ev.target).is('a')) {
-        return true;
-      }
-      if ( !$(ev.target).closest('td').hasClass('dataTables_empty') ) { 
-        var $row = $(ev.target).closest('tr');
-        var index = api.row($row).index();
-        $modal.find('.js-panel-content').html(template(response.results[index]));
-        $modal.attr('aria-hidden', 'false');
-        $row.siblings().toggleClass('row-active', false);
-        $row.toggleClass('row-active', true);
-        $('body').toggleClass('panel-active', true);
-        var hideColumns = api.columns('.hide-panel');
-        hideColumns.visible(false);
-        // Populate the pdf button if there is one
-        if ( response.results[index].pdf_url ) {
-          $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
-        } else {
-          $modal.find('.js-pdf_url').remove();
+function modalRenderRow(row, data, index) {
+  row.classList.add(MODAL_TRIGGER_CLASS, 'row--has-panel');
+}
+
+function modalRenderFactory(template, fetch) {
+  fetch = fetch || identity;
+  return function(api, data, response) {
+    var $table = $(api.table().node());
+    var $modal = $('#datatable-modal');
+
+    // Move the modal to the results div.
+    $modal.appendTo($table);
+    $table.find('tr').attr('tabindex', 0);
+
+    $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, function(e) {
+      if (e.which === 13 || e.type === 'click') {
+        var $target = $(e.target);
+        if ($target.is('a')) {
+          return true;
         }
+        if ( !$target.closest('td').hasClass('dataTables_empty') ) {
+          var $row = $target.closest('tr');
+          var index = api.row($row).index();
+          $.when(fetch(response.results[index])).done(function(fetched) {
+            $modal.find('.js-panel-content').html(template(fetched));
+            $modal.attr('aria-hidden', 'false');
+            $row.siblings().toggleClass('row-active', false);
+            $row.toggleClass('row-active', true);
+            $('body').toggleClass('panel-active', true);
+            var hideColumns = api.columns('.hide-panel');
+            hideColumns.visible(false);
 
-        // Set focus on the close button
-        $('.js-hide').focus();
+            // Populate the pdf button if there is one
+            if (fetched.pdf_url) {
+              $modal.find('.js-pdf_url').attr('href', fetched.pdf_url);
+            } else {
+              $modal.find('.js-pdf_url').remove();
+            }
 
-        // When under $large-screen
-        // TODO figure way to share these values with CSS.
-        if ($(document).width() < 980) {
-          api.columns('.hide-panel-tablet').visible(false);
+            // Set focus on the close button
+            $('.js-hide').focus();
+
+            // When under $large-screen
+            // TODO figure way to share these values with CSS.
+            if ($(document).width() < 980) {
+              api.columns('.hide-panel-tablet').visible(false);
+            }
+          });
         }
       }
-    }
-  });
+    });
 
-  $modal.on('click', '.js-panel-close', function(ev) {
-    ev.preventDefault();
-    hidePanel(api, $modal);
-  });
+    $modal.on('click', '.js-panel-close', function(e) {
+      e.preventDefault();
+      hidePanel(api, $modal);
+    });
+  };
 }
 
 function hidePanel(api, $modal) {
@@ -287,10 +328,11 @@ function barsAfterRender(template, api, data, response) {
   });
   var max = _.max(values);
   $cols.after(function() {
-    var width = 100 * parseFloat($(this).attr('data-value')) / max;
-    return $('<div>')
-      .addClass('value-bar')
-      .css('width', _.max([width, 1]) + '%');
+    var value = $(this).attr('data-value');
+    var width = 100 * parseFloat(value) / max;
+    return '<div class="bar-container">' +
+      '<div class="value-bar" style="width: ' + width + '%"></div>' +
+    '</div>';
   });
 }
 
@@ -327,7 +369,7 @@ var defaultCallbacks = {
   preprocess: mapResponse
 };
 
-function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
+function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   var draw;
   var $processing = $('<div class="overlay is-loading"></div>');
   var $hideNullWidget = $(
@@ -372,11 +414,7 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       query.sort = mapSort(data.order, columns);
       $processing.show();
       $.getJSON(
-        URI(API_LOCATION)
-        .path([API_VERSION, baseUrl].join('/'))
-        .addQuery(baseQuery || {})
-        .addQuery(query)
-        .toString()
+        helpers.buildUrl(path, _.extend({}, query, baseQuery || {}))
       ).done(function(response) {
         callbacks.handleResponse(api, data, response);
         callback(callbacks.preprocess(response));
@@ -441,10 +479,14 @@ module.exports = {
   candidateColumn: candidateColumn,
   committeeColumn: committeeColumn,
   currencyColumn: currencyColumn,
+  urlColumn: urlColumn,
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
-  modalAfterRender: modalAfterRender,
   barsAfterRender: barsAfterRender,
+  modalRenderRow: modalRenderRow,
+  modalRenderFactory: modalRenderFactory,
+  MODAL_TRIGGER_CLASS: MODAL_TRIGGER_CLASS,
+  MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
   offsetCallbacks: offsetCallbacks,
   seekCallbacks: seekCallbacks,
   initTable: initTable,
