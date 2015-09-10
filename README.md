@@ -126,6 +126,12 @@ a local API server can be used:
 
     $ unset FEC_WEB_API_URL
 
+#### Building changelogs
+
+    $ gem install github_changelog_generator
+    $ export CHANGELOG_GITHUB_TOKEN=<...>
+    $ invoke changelog
+
 #### Git Hooks
 
 This repo includes optional post-merge and post-checkout hooks to ensure that
