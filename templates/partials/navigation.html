@@ -8,30 +8,33 @@
       <label for="dropdown-toggle-1" class="site-nav__link nav-toggle__label">Campaign finance data</label>
       <ul class="site-nav__dropdown">
         <li class="site-nav__item u-under-lg-only">
-          <a class="site-nav__link" href="/">Campaign finance data home &raquo;</a>
+          <a class="site-nav__link" href="/">Campaign finance data home</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="/elections">Search elections by location &raquo;</a>
+          <a class="site-nav__link" href="/elections">Search elections by location</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('candidates', cycle=default_cycles) }}">Browse candidates &raquo;</a>
+          <span class="h3 site-nav__subtitle">Browse:</span>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('committees', cycle=default_cycles) }}">Browse committees &raquo;</a>
+          <a class="site-nav__link" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('filings') }}">Browse filings &raquo;</a>
+          <a class="site-nav__link" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('receipts', is_individual='true') }}">Browse receipts &raquo;</a>
+          <a class="site-nav__link" href="{{ url_for('filings') }}">Filings</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('disbursements') }}">Browse disbursements &raquo;</a>
+          <a class="site-nav__link" href="{{ url_for('receipts', is_individual='true') }}">Receipts</a>
+        </li>
+        <li class="site-nav__item">
+          <a class="site-nav__link" href="{{ url_for('disbursements') }}">Disbursements</a>
         </li>
       </ul>
     </li>
     <li class="site-nav__item">
-      <a href="{{ cms_url }}/registration-and-reporting" class="site-nav__link">Registration &amp; reporting</a>
+      <a href="{{ cms_url }}/registration-and-reporting" class="site-nav__link">Registration and reporting</a>
     </li>
     <li class="site-nav__item">
       <a href="#" class="site-nav__link is-disabled">Calendar</a>

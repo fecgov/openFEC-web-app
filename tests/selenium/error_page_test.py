@@ -16,6 +16,6 @@ class ErrorPageTests(BaseTest):
         self.driver.get(self.url)
         main = self.driver.find_element_by_tag_name('main')
         main.find_element_by_class_name('js-search-input').send_keys('obama')
-        main.find_element_by_class_name('button--primary').click()
+        main.find_element_by_class_name('button--search').click()
 
         self.elementExistsByClassName('tst-search_results')
