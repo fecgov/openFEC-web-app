@@ -39,7 +39,7 @@
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Receipts by State</h3>
           </div>
-          <div class="usa-width-one-half">
+          <div class="map-table">
             <table
                 class="data-table"
                 data-type="receipts-by-state"
@@ -52,8 +52,9 @@
               </thead>
             </table>
           </div>
-          <div class="usa-width-one-half">
-            <div class="state-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}"></div>
+          <div class="map-panel">
+            <div class="state-map" data-committee-id="{{ committee.committee_id }}" data-cycle="{{ cycle }}">
+            </div>
           </div>
         </div>
 
