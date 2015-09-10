@@ -92,7 +92,8 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
     });
 
   if (addLegend || typeof addLegend === 'undefined') {
-    stateLegend(svg, scale, quantize, quantiles);
+    var legendSVG = d3.select('.legend-container svg');
+    stateLegend(legendSVG, scale, quantize, quantiles);
   }
 
   if (addTooltips) {
@@ -113,7 +114,7 @@ function stateLegend(svg, scale, quantize, quantiles) {
     .attr('x', function(d, i) {
       return i * legendWidth + (legendWidth - legendBar) / 2;
     })
-    .attr('y', 20)
+    .attr('y', 0)
     .attr('width', legendBar)
     .attr('height', 20)
     .style('fill', function(d) {
@@ -126,7 +127,7 @@ function stateLegend(svg, scale, quantize, quantiles) {
     .attr('x', function(d, i) {
       return (i + 0.5) * legendWidth;
     })
-    .attr('y', 50)
+    .attr('y', 30)
     .attr('width', legendWidth)
     .attr('height', 20)
     .attr('font-size', '10px')

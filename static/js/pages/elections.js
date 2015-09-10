@@ -396,7 +396,7 @@ function updateColorScale($container, cached) {
       });
   });
   $container.find('.legend svg g').remove();
-  var svg = d3.select($container.get(0)).select('.legend svg');
+  var svg = d3.select($container.get(0)).select('.legend-container svg');
   if (isFinite(max)) {
     maps.stateLegend(svg, scale, quantize, 4);
   }
