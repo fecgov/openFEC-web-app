@@ -26,6 +26,11 @@ function decodeDistrict(district) {
   };
 }
 
+function decodeState(state) {
+  state = _.sprintf('%02d', parseInt(state));
+  return fipsInverse[state];
+}
+
 function truncate(value, digits) {
   var multiplier = Math.pow(10, digits);
   return Math.floor(value / multiplier) * multiplier;
@@ -62,5 +67,6 @@ module.exports = {
   findDistricts: findDistricts,
   districtFeatures: districtFeatures,
   encodeDistrict: encodeDistrict,
-  decodeDistrict: decodeDistrict
+  decodeDistrict: decodeDistrict,
+  decodeState: decodeState
 };
