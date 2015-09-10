@@ -346,6 +346,10 @@ var defaultOpts = {
   colorScale: colorbrewer.Set1
 };
 
+var boundsOverrides = {
+  200: {coords: [64.06, -152.23], zoom: 3}
+};
+
 function ElectionLookupMap(elm, opts) {
   this.elm = elm;
   this.opts = _.extend({}, defaultOpts, opts);
@@ -371,7 +375,6 @@ ElectionLookupMap.prototype.drawStates = function() {
     this.map.removeLayer(this.overlay);
   }
   this.districts = null;
-  // this.setColors(stateFeatures);
   this.overlay = L.geoJson(stateFeatures, {
     onEachFeature: this.onEachState.bind(this)
   }).addTo(this.map);
@@ -390,10 +393,20 @@ ElectionLookupMap.prototype.drawDistricts = function(districts) {
   this.overlay = L.geoJson(features, {
     onEachFeature: this.onEachDistrict.bind(this)
   }).addTo(this.map);
-  if (districts) {
+  this.updateBounds(districts);
+  this.drawBackgroundDistricts(districts);
+};
+
+ElectionLookupMap.prototype.updateBounds = function(districts) {
+  var rule = _.find(boundsOverrides, function(rule, district) {
+    return districts.indexOf(parseInt(district)) !== -1;
+  });
+  if (rule) {
+    this.map.setView(rule.coords, rule.zoom);
+  }
+  else if (districts) {
     this.map.fitBounds(this.overlay.getBounds());
   }
-  this.drawBackgroundDistricts(districts);
 };
 
 ElectionLookupMap.prototype.drawBackgroundDistricts = function(districts) {
