@@ -8,7 +8,7 @@ var URI = require('URIjs');
 var helpers = require('./helpers');
 
 function buildUrl(opts) {
-  var parts = [opts.office, opts.state, opts.district, opts.cycle]
+  var parts = ['elections', opts.office, opts.state, opts.district, opts.cycle]
     .filter(function(part) {
       return !!part;
     })
