@@ -35,6 +35,8 @@ var compactRules = [
   ['k', 3]
 ];
 
+var colorScale = ['#fff', '#36BDBB'];
+
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
 };
@@ -70,8 +72,8 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
   );
   var quantiles = 4;
   max = max || _.max(_.pluck(data.results, 'total'));
-  var scale = chroma.scale(['#fff', '#36BDBB']).domain([0, max]);
-  var quantize = chroma.scale(['#fff', '#36BDBB']).domain([0, max], quantiles);
+  var scale = chroma.scale(colorScale).domain([0, max]);
+  var quantize = chroma.scale(colorScale).domain([0, max], quantiles);
   var map = svg.append('g')
     .selectAll('path')
       .data(stateFeatures)
@@ -85,9 +87,9 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
       .attr('class', 'shape')
       .attr('d', path)
     .on('mouseover', function(d) {
-      if (results.hasOwnProperty(d.properties.name)) {
+      if (results[d.properties.name]) {
         this.parentNode.appendChild(this);
-        this.classList.add('state--hover')
+        this.classList.add('state--hover');
       }
     });
 
@@ -207,6 +209,7 @@ DistrictMap.prototype.render = function(data) {
 
 module.exports = {
   stateMap: stateMap,
+  colorScale: colorScale,
   stateLegend: stateLegend,
   highlightState: highlightState,
   DistrictMap: DistrictMap
