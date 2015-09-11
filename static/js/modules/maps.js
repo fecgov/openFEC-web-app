@@ -70,8 +70,8 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
   );
   var quantiles = 4;
   max = max || _.max(_.pluck(data.results, 'total'));
-  var scale = chroma.scale(['#fff', '#2678BA']).domain([0, max]);
-  var quantize = chroma.scale(['#fff', '#2678BA']).domain([0, max], quantiles);
+  var scale = chroma.scale(['#fff', '#36BDBB']).domain([0, max]);
+  var quantize = chroma.scale(['#fff', '#36BDBB']).domain([0, max], quantiles);
   var map = svg.append('g')
     .selectAll('path')
       .data(stateFeatures)
@@ -85,11 +85,15 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
       .attr('class', 'shape')
       .attr('d', path)
     .on('mouseover', function(d) {
-      this.parentNode.appendChild(this);
+      if (results.hasOwnProperty(d.properties.name)) {
+        this.parentNode.appendChild(this);
+        this.classList.add('state--hover')
+      }
     });
 
   if (addLegend || typeof addLegend === 'undefined') {
-    stateLegend(svg, scale, quantize, quantiles);
+    var legendSVG = d3.select('.legend-container svg');
+    stateLegend(legendSVG, scale, quantize, quantiles);
   }
 
   if (addTooltips) {
@@ -110,7 +114,7 @@ function stateLegend(svg, scale, quantize, quantiles) {
     .attr('x', function(d, i) {
       return i * legendWidth + (legendWidth - legendBar) / 2;
     })
-    .attr('y', 20)
+    .attr('y', 0)
     .attr('width', legendBar)
     .attr('height', 20)
     .style('fill', function(d) {
@@ -123,7 +127,7 @@ function stateLegend(svg, scale, quantize, quantiles) {
     .attr('x', function(d, i) {
       return (i + 0.5) * legendWidth;
     })
-    .attr('y', 50)
+    .attr('y', 30)
     .attr('width', legendWidth)
     .attr('height', 20)
     .attr('font-size', '10px')

@@ -13,7 +13,7 @@ var columns = [
     data: 'contributor',
     orderable: false,
     className: 'all',
-    width: '280px',
+    width: '20%',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
