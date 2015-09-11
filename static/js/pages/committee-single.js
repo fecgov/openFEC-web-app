@@ -306,7 +306,7 @@ $(document).ready(function() {
   var $map = $('.state-map');
   var url = buildStateUrl($map);
   $.getJSON(url).done(function(data) {
-    maps.stateMap($map, data, 400, 300, null, true, false);
+    maps.stateMap($map, data, 400, 300, null, null, true, false);
   });
   events.on('state.table', function(params) {
     highlightRowAndState($map, $('.data-table'), params.state, false);

@@ -36,7 +36,7 @@ var compactRules = [
   ['', 0]
 ];
 
-var colorScale = ['#fff', '#36BDBB'];
+var colorScale = ['#cef1f0', '#36BDBB'];
 
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
@@ -53,7 +53,7 @@ function compactNumber(value, rule) {
   return d3.round(value / divisor, 1).toString() + rule[0];
 }
 
-function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
+function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
   var svg = d3.select($elm[0])
     .append('svg')
       .attr('width', width)
@@ -72,9 +72,16 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
     {}
   );
   var quantiles = 4;
-  max = max || _.max(_.pluck(data.results, 'total'));
-  var scale = chroma.scale(colorScale).domain([0, max]);
-  var quantize = d3.scale.linear().domain([0, max]);
+  var totals = _.chain(data.results)
+    .pluck('total')
+    .filter(function(value) {
+      return !!value;
+    })
+    .value();
+  min = min || _.min(totals);
+  max = max || _.max(totals);
+  var scale = chroma.scale(colorScale).domain([min, max]);
+  var quantize = d3.scale.linear().domain([min, max]);
   var map = svg.append('g')
     .selectAll('path')
       .data(stateFeatures)
@@ -126,7 +133,7 @@ function stateLegend(svg, scale, quantize, quantiles) {
     });
 
   // Add legend text
-  var compactRule = chooseRule(ticks[Math.floor(quantiles / 2)]);
+  var compactRule = chooseRule(ticks[Math.ceil(ticks.length / 2)]);
   legend.append('text')
     .attr('x', function(d, i) {
       return (i + 0.5) * legendWidth;
@@ -159,7 +166,7 @@ function stateTooltips(svg, path, results) {
       var offset = $(this).offset();
       var html = tooltipTemplate({
         name: d.properties.name,
-        total: helpers.currency(results[d.properties.name])
+        total: helpers.currency(results[d.properties.name] || 0)
       });
       tooltip
         .style('display', 'block')
