@@ -12,7 +12,7 @@ class LandingPageTests(BaseTest):
         self.driver.get(self.url)
         self.assertEqual(
             self.driver.find_element_by_class_name('tst-page-title').text,
-            'Explore Campaign Finance Data')
+            'Explore campaign finance data')
 
     def testMainSearch(self):
         self.driver.get(self.url)

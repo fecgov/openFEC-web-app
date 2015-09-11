@@ -5,18 +5,18 @@
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/date.html' as date %}
 {% block heading %}
-Filter Disbursements
+Filter disbursements
 {% endblock %}
 
 {% block filters %}
 {{ typeahead.field('committee_id', 'Committee') }}
 
-<h4 class="filters__subheader">Recipient Information</h4>
+<h4 class="filters__subheader">Recipient information</h4>
 {{ typeahead.field('recipient_committee_id', 'Recipient (committee)') }}
 {{ text.field('recipient_name', 'Recipient (non-committee)') }}
 {{ text.field('recipient_city', 'City') }}
 {{ states.field('recipient_state')}}
-<h4 class="filters__subheader">Transaction Information</h4>
+<h4 class="filters__subheader">Transaction information</h4>
 {{ text.field('disbursement_description', 'Purpose') }}
 {{ text.field('min_amount', 'Minimum Expenditure') }}
 {{ text.field('max_amount', 'Maximum Expenditure') }}

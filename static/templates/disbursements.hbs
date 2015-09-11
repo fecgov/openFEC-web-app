@@ -1,8 +1,8 @@
 <div class="panel__row">
-  <h4>Recipient Information</h4>
+  <h4>Recipient information</h4>
   <table>
     <tr>
-      <td>Recipient Name</td>
+      <td>Recipient name</td>
       {{#if recipient}}
         <td><a href="/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
       {{else}}
@@ -10,21 +10,21 @@
       {{/if}}
     </tr>
     <tr>
-      <td>Recipient City & State</td>
+      <td>Recipient city and state</td>
       <td>{{ recipient_city }}, {{ recipient_state }}, {{ recipient_zip }}</td>
     </tr>
   </table>
 </div>
 
 <div class="panel__row">
-  <h4>Transaction Information</h4>
+  <h4>Transaction information</h4>
   <table>
     <tr>
       <td>Amount</td>
       <td>{{{ currency disbursement_amount }}}</td>
     </tr>
     <tr>
-      <td>Receipt Date</td>
+      <td>Receipt date</td>
       <td>{{{ datetime disbursement_date }}}</td>
     </tr>
     <tr>
@@ -37,7 +37,7 @@
     </tr>
     {{#if election_type_full }}
     <tr>
-      <td>Election Type</td>
+      <td>Election type</td>
       <td>{{ election_type_full }}</td>
     </tr>
     {{/if}}
@@ -45,7 +45,7 @@
 </div>
 
 <div class="panel__row">
-  <h4>Committee Information</h4>
+  <h4>Committee information</h4>
   <table>
     <tr>
       <td>Name</td>
@@ -66,7 +66,7 @@
       <td>{{committee.treasurer_name}}</a></td>
     </tr>
     <tr>
-      <td>Committee City & State</td>
+      <td>Committee city and state</td>
       <td>{{ committee.city }}, {{ committee.state }}, {{ committee.zip }}</td>
     </tr>
   </table>
