@@ -16,6 +16,11 @@ var helpers = require('./helpers');
 
 var simpleDOM = 't<"results-info"ip>';
 
+// Only show table after draw 
+$(document.body).on('draw.dt', function(){
+  $('.datatable__container').css('opacity', '1');
+})
+
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
 
