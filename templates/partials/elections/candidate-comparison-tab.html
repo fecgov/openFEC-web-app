@@ -3,7 +3,7 @@
 <section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
   <div class="container">
     <h2 class="content__section__heading" id="section-1-heading">
-      Candidate Comparison
+      Candidate comparison
       {{ select.cycle_select(cycles, cycle, 'path', id="cycle-1") }}
     </h2>
     <div class="content__section">
@@ -20,16 +20,16 @@
         <thead>
           <th role="col">Candidate</th>
           <th role="col">Party</th>
-          <th role="col">Total Receipts</th>
-          <th role="col">Total Disbursements</th>
-          <th role="col">Cash on Hand</th>
-          <th role="col">Most Recent Report</th>
+          <th role="col">Total receipts</th>
+          <th role="col">Total disbursements</th>
+          <th role="col">Cash on hand</th>
+          <th role="col">Most recent report</th>
         </thead>
       </table>
     </div>
     <div class="content__section--extra">
       <div class="content__section__heading">
-        <h2>Fundraising Comparison</h2>
+        <h2>Fundraising comparison</h2>
         <p>Compare the source and nature of candidate receipts.</p>
         <div id="comparison" class="filters--horizontal">
           <div class="row">
@@ -37,15 +37,15 @@
               <legend class="label">Compare by:</legend>
               <label for="toggle-size">
                 <input id="toggle-size" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-size" checked>
-                <span class="button--neutral">Contribution Size</span>
+                <span class="button--neutral">Contribution size</span>
               </label>
               <label for="toggle-state">
                 <input id="toggle-state" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-state">
-                <span class="button--neutral">Contribution Location</span>
+                <span class="button--neutral">Contribution location</span>
               </label>
               <label for="toggle-contributor-type">
                 <input id="toggle-contributor-type" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-contributor-type">
-                <span class="button--neutral">Contributor Type</span>
+                <span class="button--neutral">Contributor type</span>
               </label>
             </fieldset>
           </div>
@@ -60,11 +60,11 @@
           <table class="data-table" data-type="by-size">
             <thead>
               <th scope="col">Candidate</th>
-              <th scope="col">$200 & Under</th>
+              <th scope="col">$200 and Under</th>
               <th scope="col">$200.01 - $499.99</th>
               <th scope="col">$500 - $999.99</th>
               <th scope="col">$1,000 - $1,999.99</th>
-              <th scope="col">$2,000 +</th>
+              <th scope="col">$2,000+</th>
             </thead>
           </table>
         </div>
@@ -95,9 +95,11 @@
           </div>
           <div id="state-maps" class="panel-toggle-element" aria-hidden="true'">
             <div class="choropleths row"></div>
-            <div class="legend">
-              <span class="t-sans t-block">Total amount received from state:</span>
-              <svg></svg>
+            <div class="row">
+              <div class="legend-container">
+                <span class="t-block">Total amount received from state:</span>
+                <svg></svg>
+              </div>
             </div>
           </div>
         </div>

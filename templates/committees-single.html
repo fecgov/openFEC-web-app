@@ -4,7 +4,7 @@
 {% import 'macros/null.html' as null %}
 
 {% block title %}
-    {{ name }} - Committee Overview
+    {{ name }} - Committee overview
 {% endblock %}
 
 {% block body %}
@@ -28,7 +28,7 @@
           <ul class="entity__info">
             {% if party_full %}
             <li class="entity__term">
-              <span class="entity__term__label">Political Party</span>
+              <span class="entity__term__label">Political party</span>
               <span class="entity__term__data">{{ party_full }}</span>
             </li>
             {% endif %}
@@ -40,9 +40,9 @@
             <li class="entity__term">
               <span class="entity__term__label">Related
                 {% if candidates|length > 1 %}
-                  Candidates
+                  candidates
                 {% else %}
-                  Candidate
+                  candidate
                 {% endif %}
               </span>
               <ul class="entity__term__data">

@@ -270,7 +270,7 @@ ElectionLookup.prototype.draw = function(results) {
     this.updateLocations();
   } else {
     this.$resultsTitle.text('');
-    this.$resultsItems.html(noResultsTemplate({}));
+    this.$resultsItems.html(noResultsTemplate(this.serialized));
   }
 };
 

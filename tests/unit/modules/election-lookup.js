@@ -110,9 +110,17 @@ describe('election lookup', function() {
     expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
   });
 
-  it('should show no results warning on no results', function() {
+  it('should show no results warning on no results by zip', function() {
+    this.el.serialized = {cycle: '2016', zip: '19041'};
     this.el.draw([]);
-    expect(this.el.$resultsItems.text()).to.contain("Can't find your zip code?");
+    expect(this.el.$resultsItems.text()).to.contain("We can't find any results for this ZIP code");
+    expect(this.el.$resultsTitle.text()).to.equal('');
+  });
+
+  it('should show no results warning on no results by state', function() {
+    this.el.serialized = {cycle: '2016', state: 'VI'};
+    this.el.draw([]);
+    expect(this.el.$resultsItems.text()).to.contain("We can't find any results for this location");
     expect(this.el.$resultsTitle.text()).to.equal('');
   });
 
