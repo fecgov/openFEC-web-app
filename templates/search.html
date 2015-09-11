@@ -85,31 +85,43 @@
               <label class="label" for="cycle-select">Choose an election cycle</label>
               {{ select.cycle_select(cycles, location='form') }}
             </div>
-            <div class="row content__section--ruled">
-              <label for="zip" class="label">Find by ZIP code</label>
-              <input class="form-element--inline" type="text" id="zip" name="zip" placeholder="e.g. 10001">
-              <button type="submit" class="form-element--inline button--search--text button--primary-contrast">Search</button>
-            </div>
-            <div class="search-controls__or">or</div>
-            <div class="content__section">
-              <span class="label">Find by state and district</span>
-              <select class="form-element--inline" id="state" name="state" aria-label="Select a state">
-                <option value="">Select state</option>
-                {% for value, label in constants.states.items() %}
-                <option value="{{ value }}">{{ label }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="row">
-              <select class="form-element--inline" id="district" name="district" aria-label="Select a district">
-                <option value="">Select district</option>
-                {% for value in range(1, 100) %}
-                {% with formatted = '{0:02d}'.format(value) %}
-                <option value="{{ formatted }}">{{ formatted }}</option>
-                {% endwith %}
-                {% endfor %}
-              </select>
-              <button type="submit" class="form-element--inline button--search--text button--primary-contrast">Search</button>
+            <div class="search-controls__row">
+              <div class="search-controls__either">
+                <div class="row">
+                  <label for="zip" class="label">Find by ZIP code</label>
+                  <div class="search-controls__zip">
+                    <input type="text" inputmode="numeric" id="zip" name="zip" placeholder="e.g. 10001">
+                  </div>
+                  <div class="search-controls__submit">
+                    <button type="submit" class="button--search--text button--primary-contrast">Search</button>
+                  </div>
+                </div>
+              </div>
+              <div class="search-controls__or search-controls__or--vertical">or</div>
+              <div class="search-controls__either">
+                <span class="label">Find by state and district</span>
+                <div class="search-controls__state">
+                  <select id="state" name="state" aria-label="Select a state">
+                    <option value="">Select state</option>
+                    {% for value, label in constants.states.items() %}
+                    <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="search-controls__district">
+                  <select id="district" name="district" aria-label="Select a district">
+                    <option value="">Select district</option>
+                    {% for value in range(1, 100) %}
+                    {% with formatted = '{0:02d}'.format(value) %}
+                    <option value="{{ formatted }}">{{ formatted }}</option>
+                    {% endwith %}
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="search-controls__submit">
+                  <button type="submit" class="button--search--text button--primary-contrast">Search</button>
+                </div>
+              </div>
             </div>
           </form>
         </div>
