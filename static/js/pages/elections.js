@@ -384,8 +384,8 @@ function updateColorScale($container, cached) {
     }
   });
   var max = mapMax(cached);
-  var scale = chroma.scale(['#fff', '#2678BA']).domain([0, max]);
-  var quantize = chroma.scale(['#fff', '#2678BA']).domain([0, max], 4);
+  var scale = chroma.scale(maps.colorScale).domain([0, max]);
+  var quantize = chroma.scale(maps.colorScale).domain([0, max], 4);
   $container.closest('#state-maps').find('.state-map').each(function(_, elm) {
     var $elm = $(elm);
     var results = cached[$elm.find('select').val()];
@@ -396,7 +396,7 @@ function updateColorScale($container, cached) {
       });
   });
   $container.find('.legend svg g').remove();
-  var svg = d3.select($container.get(0)).select('.legend svg');
+  var svg = d3.select($container.get(0)).select('.legend-container svg');
   if (isFinite(max)) {
     maps.stateLegend(svg, scale, quantize, 4);
   }

@@ -96,6 +96,7 @@ function buildAggregateUrl(uri, cycle) {
 
 function buildTotalLink(path, getParams) {
   return function(data, type, row, meta) {
+    data = data || 0;
     var span = document.createElement('div');
     span.setAttribute('data-value', data);
     span.setAttribute('data-row', meta.row);

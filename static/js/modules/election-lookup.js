@@ -23,6 +23,7 @@ var stateFeatures = topojson.feature(states, states.objects.units).features;
 var districtTemplate = require('../../templates/districts.hbs');
 var resultTemplate = require('../../templates/electionResult.hbs');
 var zipWarningTemplate = require('../../templates/electionZipWarning.hbs');
+var noResultsTemplate = require('../../templates/electionNoResults.hbs');
 
 var officeMap = {
   P: 'President',
@@ -260,12 +261,17 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 };
 
 ElectionLookup.prototype.draw = function(results) {
-  this.$resultsItems.html(resultTemplate(_.map(results, _.partial(formatResult, _, this))));
-  if (this.serialized.zip) {
-    this.drawZipWarning();
+  if (results.length) {
+    this.$resultsItems.html(resultTemplate(_.map(results, _.partial(formatResult, _, this))));
+    if (this.serialized.zip) {
+      this.drawZipWarning();
+    }
+    this.$resultsTitle.text(this.getTitle());
+    this.updateLocations();
+  } else {
+    this.$resultsTitle.text('');
+    this.$resultsItems.html(noResultsTemplate(this.serialized));
   }
-  this.$resultsTitle.text(this.getTitle());
-  this.updateLocations();
 };
 
 ElectionLookup.prototype.drawZipWarning = function() {
