@@ -15,7 +15,7 @@ var terms = require('fec-style/js/terms');
 var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
-var siteNav = require('fec-style/js/site_nav');
+var siteNav = require('fec-style/js/site-nav');
 var typeahead = require('fec-style/js/typeahead');
 var typeaheadFilter = require('fec-style/js/typeahead-filter');
 
