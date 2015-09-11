@@ -137,7 +137,7 @@ function stateLegend(svg, scale, quantize, quantiles) {
     .attr('font-size', '10px')
     .attr('text-anchor', 'middle')
     .text(function(d) {
-      return compactNumber(d, compactRule);
+      return '$' + compactNumber(d, compactRule).toString();
     });
 }
 
