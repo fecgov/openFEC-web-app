@@ -386,7 +386,7 @@ function updateColorScale($container, cached) {
   var max = mapMax(cached);
   var scale = chroma.scale(maps.colorScale).domain([0, max]);
   var quantize = chroma.scale(maps.colorScale).domain([0, max], 4);
-  $container.closest('#state-maps').find('.state-map').each(function(_, elm) {
+  $container.find('.state-map').each(function(_, elm) {
     var $elm = $(elm);
     var results = cached[$elm.find('select').val()];
     d3.select($elm.find('g')[0])
@@ -395,7 +395,7 @@ function updateColorScale($container, cached) {
         return scale(results[d.properties.name] || 0);
       });
   });
-  $container.find('.legend svg g').remove();
+  $container.find('.legend-container svg g').remove();
   var svg = d3.select($container.get(0)).select('.legend-container svg');
   if (isFinite(max)) {
     maps.stateLegend(svg, scale, quantize, 4);
