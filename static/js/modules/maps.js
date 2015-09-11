@@ -32,7 +32,8 @@ var stateFeatureMap = _.chain(stateFeatures)
 var compactRules = [
   ['B', 9],
   ['M', 6],
-  ['k', 3]
+  ['k', 3],
+  ['', 0]
 ];
 
 var colorScale = ['#fff', '#36BDBB'];
@@ -73,7 +74,7 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
   var quantiles = 4;
   max = max || _.max(_.pluck(data.results, 'total'));
   var scale = chroma.scale(colorScale).domain([0, max]);
-  var quantize = chroma.scale(colorScale).domain([0, max], quantiles);
+  var quantize = d3.scale.linear().domain([0, max]);
   var map = svg.append('g')
     .selectAll('path')
       .data(stateFeatures)
@@ -107,8 +108,9 @@ function stateLegend(svg, scale, quantize, quantiles) {
   // Add legend swatches
   var legendWidth = 40;
   var legendBar = 35;
+  var ticks = quantize.ticks(quantiles);
   var legend = svg.selectAll('g.legend')
-    .data(quantize.domain())
+    .data(ticks)
     .enter()
       .append('g')
       .attr('class', 'legend');
@@ -124,7 +126,7 @@ function stateLegend(svg, scale, quantize, quantiles) {
     });
 
   // Add legend text
-  var compactRule = chooseRule(quantize.domain()[Math.floor(quantiles / 2)]);
+  var compactRule = chooseRule(ticks[Math.floor(quantiles / 2)]);
   legend.append('text')
     .attr('x', function(d, i) {
       return (i + 0.5) * legendWidth;
