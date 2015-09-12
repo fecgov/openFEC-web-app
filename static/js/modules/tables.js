@@ -263,9 +263,9 @@ function modalRenderFactory(template, fetch) {
   return function(api, data, response) {
     var $table = $(api.table().node());
     var $modal = $('#datatable-modal');
-
+    var $main = $table.closest('.panel__main')
     // Move the modal to the results div.
-    $modal.appendTo($table);
+    $modal.appendTo($main);
     $table.find('tr').attr('tabindex', 0);
 
     $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, function(e) {
@@ -318,7 +318,10 @@ function hidePanel(api, $modal) {
     $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
     $modal.attr('aria-hidden', 'true');
-    api.columns('.hide-panel-tablet').visible(true);
+
+    if ($(document).width() > 640) {
+      api.columns('.hide-panel-tablet').visible(true);
+    }
 
     if ($(document).width() > 980) {
       api.columns('.hide-panel').visible(true);
