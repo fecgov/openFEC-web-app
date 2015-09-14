@@ -89,7 +89,11 @@ function refreshTabs() {
     var $target = query[name] ?
       $tabs.find('[role="tab"][data-name="' + query[name] + '"]') :
       $tabs.find('[role="tab"]').eq(0);
-    show($target);
+    if ($target.length) {
+      show($target);
+    } else {
+      $('[role="tabpanel"]').attr('aria-hidden', null);
+    }
   });
 }
 
