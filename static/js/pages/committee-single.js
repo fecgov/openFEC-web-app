@@ -275,6 +275,7 @@ $(document).ready(function() {
           {
             rowCallback: filings.renderRow,
             dom: '<"panel__main"t><"results-info results-info--bottom"frip>',
+            pagingType: 'simple',
             // Order by receipt date descending
             order: [[2, 'desc']],
             useFilters: true

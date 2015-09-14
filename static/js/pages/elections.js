@@ -236,6 +236,7 @@ var defaultOpts = {
   serverSide: false,
   lengthChange: false,
   dom: tables.simpleDOM,
+  pagingType: 'simple'
 };
 
 function destroyTable($table) {
@@ -477,7 +478,7 @@ $(document).ready(function() {
     $table.dataTable(_.extend({}, defaultOpts, {
       columns: electionColumns,
       data: response.results,
-      order: [[3, 'desc']]
+      order: [[2, 'desc']]
     }));
     drawComparison(response.results);
     initStateMaps(response.results);
