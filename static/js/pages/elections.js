@@ -281,21 +281,22 @@ function drawStateTable(selected) {
   $.getJSON(
     buildUrl(selected, ['schedules', 'schedule_a', 'by_state', 'by_candidate'])
   ).done(function(response) {
-    destroyTable($table);
-    // Clear headers
-    $table.find('thead').html('');
     var data = mapState(response, primary);
+    // Populate headers with correct text
+    var headerLabels = ['State'].concat(_.pluck(selected, 'candidate_name'));
+    $table.find('thead tr')
+      .empty()
+      .append(_.map(headerLabels, function(label) {
+        return $('<th>').text(label);
+      }));
+    destroyTable($table);
     $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(selected),
-      order: [[1, 'desc']]
+      order: [[1, 'desc']],
+      scrollX: true
     }, defaultOpts));
     tables.barsAfterRender(null, $table.DataTable());
-    // Populate headers with correct text
-    var headerLabels = ['State'].concat(_.pluck(selected, 'candidate_name'));
-    $table.find('th').each(function(index, elm) {
-      $(elm).text(headerLabels[index]);
-    });
   });
 }
 
