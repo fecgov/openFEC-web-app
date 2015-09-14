@@ -2,39 +2,39 @@
 <html lang="en">
 <head>
 
-    <title>{% block title %}{% endblock %} - OpenFEC</title>
-    {% set title = self.title() %}
+  <title>{% block title %}{% endblock %} - OpenFEC</title>
+  {% set title = self.title() %}
 
-    {% include 'partials/meta-tags.html' %}
+  {% include 'partials/meta-tags.html' %}
 
-    <link rel="stylesheet" href="/{{ assets['dist/styles/styles.css'] }}" />
+  <link rel="stylesheet" href="/{{ assets['dist/styles/styles.css'] }}" />
 
-    {% if style_url %}
-    <link rel="stylesheet" href="{{ style_url }}" />
-    {% else %}
-    <link rel="stylesheet" href="/{{ assets['dist/styles/fec.css'] }}" />
-    {% endif %}
-    {% if api_location %}
-    <script>
-        API_LOCATION = "{{api_location}}";
-        API_VERSION = "{{api_version}}";
-        API_KEY = "{{api_key}}";
+  {% if style_url %}
+  <link rel="stylesheet" href="{{ style_url }}" />
+  {% else %}
+  <link rel="stylesheet" href="/{{ assets['dist/styles/fec.css'] }}" />
+  {% endif %}
+  {% if api_location %}
+  <script>
+    API_LOCATION = "{{api_location}}";
+    API_VERSION = "{{api_version}}";
+    API_KEY = "{{api_key}}";
 
-        function trackMetric(name, imagesSelector) {
-          if (imagesSelector) {
-            var images = document.querySelectorAll(imagesSelector);
-            if (images && images.length) {
-              for (var i = 0, ilen = images.length; i < ilen; i++) {
-                images[i].addEventListener('load', function() {
-                  window.performance.mark(name);
-                });
-              }
-            }
+    function trackMetric(name, imagesSelector) {
+      if (imagesSelector) {
+        var images = document.querySelectorAll(imagesSelector);
+        if (images && images.length) {
+          for (var i = 0, ilen = images.length; i < ilen; i++) {
+            images[i].addEventListener('load', function() {
+              window.performance.mark(name);
+            });
           }
-          window.performance.mark(name);
         }
-    </script>
-    {% endif %}
+      }
+      window.performance.mark(name);
+    }
+  </script>
+  {% endif %}
 </head>
 <body>
 {% import 'macros/search.html' as search %}
@@ -62,13 +62,13 @@
 
   {% block header %}{% endblock %}
   <main id="main" {% if section %} data-section="{{section}}"{% endif %} tabindex="0">
-      {% block body %}{% endblock %}
+    {% block body %}{% endblock %}
   </main>
 
 <footer class="footer">
   <div class="container">
     <div class="seal">
-       <img class="seal__img" src="/static/img/seal--white.svg" alt="Seal of the Federal Election Commission">
+      <img class="seal__img" src="/static/img/seal--white.svg" alt="Seal of the Federal Election Commission">
     </div>
     <div class="address">
       <p class="address__title">Federal Election Commission</p>
@@ -86,22 +86,18 @@
 {% block scripts %}{% endblock %}
 
 {% if use_analytics %}
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      // anonymize user IPs (chops off the last IP triplet)
-      ga('set', 'anonymizeIp', true);
-
-      // forces HTTPS even if the page were somehow loaded over http://
-      ga('set', 'forceSSL', true);
-
-      ga('create', 'UA-48605964-22', 'auto');
-      ga('send', 'pageview');
-
-    </script>
+    ga('set', 'anonymizeIp', true);
+    ga('set', 'forceSSL', true);
+    ga('create', 'UA-48605964-22', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=GSA"></script>
 {% endif %}
 
 </body>
