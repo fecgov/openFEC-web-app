@@ -236,6 +236,7 @@ var defaultOpts = {
   serverSide: false,
   lengthChange: false,
   dom: tables.simpleDOM,
+  scrollX: true
 };
 
 function destroyTable($table) {
@@ -293,8 +294,7 @@ function drawStateTable(selected) {
     $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(selected),
-      order: [[1, 'desc']],
-      scrollX: true
+      order: [[1, 'desc']]
     }, defaultOpts));
     tables.barsAfterRender(null, $table.DataTable());
   });
@@ -455,7 +455,8 @@ function initSpendingTables() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false
+        useHideNull: false,
+        scrollX: true
       });
     }
   });
