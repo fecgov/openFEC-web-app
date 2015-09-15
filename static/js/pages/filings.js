@@ -13,8 +13,7 @@ var filingsColumns = columns.getColumns(
   columns.filings,
   [
     'pdf_url', 'filer_name', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
-    'total_receipts', 'total_disbursements', 'total_independent_expenditures',
-    'modal_trigger'
+    'total_receipts', 'total_disbursements', 'modal_trigger'
   ]
 );
 
