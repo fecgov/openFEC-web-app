@@ -35,6 +35,7 @@ var sizeColumns = [
     data: 'total',
     width: '50%',
     className: 'all',
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       var info = columns.sizeInfo[row.size];
       return {
@@ -59,6 +60,7 @@ var committeeColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         contributor_id: row.contributor_id,
@@ -85,6 +87,7 @@ var stateColumns = [
     data: 'total',
     width: '50%',
     className: 'all',
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         contributor_state: row.state,
@@ -100,6 +103,7 @@ var employerColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         contributor_employer: row.employer,
@@ -115,6 +119,7 @@ var occupationColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         contributor_occupation: row.occupation,
@@ -144,6 +149,7 @@ var disbursementRecipientColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/disbursements', function(data, type, row, meta) {
       return {recipient_name: row.recipient_name};
     })
@@ -163,6 +169,7 @@ var disbursementRecipientIDColumns = [
     data: 'total',
     className: 'all',
     orderable: false,
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/disbursements', function(data, type, row, meta) {
       return {recipient_committee_id: row.recipient_id};
     })
