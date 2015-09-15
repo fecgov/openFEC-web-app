@@ -48,6 +48,7 @@ $(document).ready(function() {
     }),
     {
       useFilters: true,
+      order: [[4, 'desc']],
       rowCallback: tables.modalRenderRow
     }
   );});
