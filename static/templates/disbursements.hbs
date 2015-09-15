@@ -1,8 +1,8 @@
 <div class="panel__row">
-  <h4>Recipient information</h4>
+  <h4 class="panel__title">Recipient information</h4>
   <table>
     <tr>
-      <td>Recipient name</td>
+      <td class="panel__term">Recipient name</td>
       {{#if recipient}}
         <td><a href="/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
       {{else}}
@@ -10,34 +10,34 @@
       {{/if}}
     </tr>
     <tr>
-      <td>Recipient city and state</td>
+      <td class="panel__term">Recipient city and state</td>
       <td>{{ recipient_city }}, {{ recipient_state }}, {{ recipient_zip }}</td>
     </tr>
   </table>
 </div>
 
 <div class="panel__row">
-  <h4>Transaction information</h4>
+  <h4 class="panel__title">Transaction information</h4>
   <table>
     <tr>
-      <td>Amount</td>
+      <td class="panel__term">Amount</td>
       <td>{{{ currency disbursement_amount }}}</td>
     </tr>
     <tr>
-      <td>Receipt date</td>
+      <td class="panel__term">Receipt date</td>
       <td>{{{ datetime disbursement_date }}}</td>
     </tr>
     <tr>
-      <td>Memo</td>
+      <td class="panel__term">Memo</td>
       <td>{{ memo_text }}</td>
     </tr>
     <tr>
-      <td>Description</td>
+      <td class="panel__term">Description</td>
       <td>{{ disbursement_description }}</td>
     </tr>
     {{#if election_type_full }}
     <tr>
-      <td>Election type</td>
+      <td class="panel__term">Election type</td>
       <td>{{ election_type_full }}</td>
     </tr>
     {{/if}}
@@ -45,28 +45,28 @@
 </div>
 
 <div class="panel__row">
-  <h4>Committee information</h4>
+  <h4 class="panel__title">Committee information</h4>
   <table>
     <tr>
-      <td>Name</td>
+      <td class="panel__term">Name</td>
       <td><a href="/committee/{{committee_id}}">{{committee.name}}</a></td>
     </tr>
     <tr>
-      <td>Designation</td>
+      <td class="panel__term">Designation</td>
       <td>{{committee.designation_full}}</a></td>
     </tr>
     {{#if committee.type}}
     <tr>
-      <td>Type</td>
+      <td class="panel__term">Type</td>
       <td>{{committee.type_full}}</a></td>
     </tr>
     {{/if}}
     <tr>
-      <td>Treasurer</td>
+      <td class="panel__term">Treasurer</td>
       <td>{{committee.treasurer_name}}</a></td>
     </tr>
     <tr>
-      <td>Committee city and state</td>
+      <td class="panel__term">Committee city and state</td>
       <td>{{ committee.city }}, {{ committee.state }}, {{ committee.zip }}</td>
     </tr>
   </table>

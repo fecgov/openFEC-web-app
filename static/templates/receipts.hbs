@@ -1,8 +1,8 @@
 <div class="panel__row">
-  <h4>Contributor information</h4>
+  <h4 class="panel__title">Contributor information</h4>
   <table>
     <tr>
-      <td>Name</td>
+      <td class="panel__term">Name</td>
       {{#if contributor}}
         <td><a href="/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
       {{else}}
@@ -10,63 +10,59 @@
       {{/if}}
     </tr>
     <tr>
-      <td>City and state</td>
+      <td class="panel__term">City and state</td>
       <td>{{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}</td>
     </tr>
     <tr>
-      <td>Occupation</td>
+      <td class="panel__term">Occupation</td>
       <td>{{ contributor_occupation }}</td>
     </tr>
     <tr>
-      <td>Year to date</td>
+      <td class="panel__term">Year to date</td>
       <td>{{{ currency contributor_aggregate_ytd }}}</td>
     </tr>
   </table>
 </div>
 
 <div class="panel__row">
-  <h4>Contribution information</h4>
+  <h4 class="panel__title">Contribution information</h4>
   <table>
     <tr>
-      <td>Amount</td>
+      <td class="panel__term">Amount</td>
       <td>{{{ currency contribution_receipt_amount }}}</td>
     </tr>
     <tr>
-      <td>Receipt date</td>
+      <td class="panel__term">Receipt date</td>
       <td>{{{ datetime contribution_receipt_date }}}</td>
     </tr>
     <tr>
-      <td>Memo</td>
+      <td class="panel__term">Memo</td>
       <td>{{ memo_text }}</td>
     </tr>
     <tr>
-      <td>Election type</td>
-      <td>{{ election_type_full }}</td>
-    </tr>
-    <tr>
-      <td>Type</td>
+      <td class="panel__term">Election type</td>
       <td>{{ election_type_full }}</td>
     </tr>
   </table>
 </div>
 
 <div class="panel__row">
-  <h4>Recipient information</h4>
+  <h4 class="panel__title">Recipient information</h4>
   <table>
     <tr>
-      <td>Committee</td>
+      <td class="panel__term">Committee</td>
       <td><a href="/committee/{{ committee.committee_id }}/">{{ committee.name }}</a></td>
     </tr>
     <tr>
-      <td>Political party</td>
+      <td class="panel__term">Political party</td>
       <td>{{ committee.party_full }}</td>
     </tr>
     <tr>
-      <td>Type</td>
+      <td class="panel__term">Type</td>
       <td>{{ committee.committee_type_full }}</td>
     </tr>
     <tr>
-      <td>State</td>
+      <td class="panel__term">State</td>
       <td>{{ committee.state_full }}</td>
     </tr>
   </table>
