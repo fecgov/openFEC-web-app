@@ -13,7 +13,7 @@ intl.__addLocaleData(locale);
 
 function currency(value) {
   if (!isNaN(parseInt(value))) {
-    return '$' + Intl.NumberFormat(undefined, {minimumFractionDigits: 2}).format(value);
+    return '$' + Intl.NumberFormat().format(value);
   } else {
     return null;
   }
