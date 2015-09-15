@@ -236,7 +236,8 @@ var defaultOpts = {
   serverSide: false,
   lengthChange: false,
   dom: tables.simpleDOM,
-  scrollX: true
+  scrollX: true,
+  pagingType: 'simple'
 };
 
 function destroyTable($table) {
@@ -336,9 +337,25 @@ function drawStateMap($container, candidateId, cached) {
     );
     cached[candidateId] = results;
     updateColorScale($container, cached);
+    var min = mapMin(cached);
     var max = mapMax(cached);
-    maps.stateMap($map, data, 400, 300, max, false, true);
+    maps.stateMap($map, data, 400, 300, min, max, false, true);
   });
+}
+
+function mapMin(cached) {
+  return _.chain(cached)
+    .map(function(value, key) {
+      return _.chain(value)
+        .values()
+        .filter(function(value) {
+          return !!value;
+        })
+        .min()
+        .value();
+    })
+    .min()
+    .value();
 }
 
 function mapMax(cached) {
@@ -384,9 +401,10 @@ function updateColorScale($container, cached) {
       delete cached[key];
     }
   });
+  var min = mapMin(cached);
   var max = mapMax(cached);
-  var scale = chroma.scale(maps.colorScale).domain([0, max]);
-  var quantize = d3.scale.linear().domain([0, max]);
+  var scale = chroma.scale(maps.colorScale).domain([min, max]);
+  var quantize = d3.scale.linear().domain([min, max]);
   $container.find('.state-map').each(function(_, elm) {
     var $elm = $(elm);
     var results = cached[$elm.find('select').val()];
@@ -479,7 +497,7 @@ $(document).ready(function() {
     $table.dataTable(_.extend({}, defaultOpts, {
       columns: electionColumns,
       data: response.results,
-      order: [[3, 'desc']]
+      order: [[2, 'desc']]
     }));
     drawComparison(response.results);
     initStateMaps(response.results);

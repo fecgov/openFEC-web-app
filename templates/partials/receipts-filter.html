@@ -7,7 +7,7 @@
 {% import 'macros/filters/date.html' as date %}
 
 {% block heading %}
-Filter Receipts
+Filter receipts
 {% endblock %}
 
 {% block filters %}
@@ -38,7 +38,7 @@ Filter Receipts
 
 {{ typeahead.field('committee_id', 'Committee') }}
 
-<h3 class="filters__subheader">Contributor Information</h3>
+<h3 class="filters__subheader">Contributor information</h3>
 {{ typeahead.field('contributor_id', 'Contributor Name (committee)') }}
 {{ text.field('contributor_name', 'Contributor Name (non-committee)') }}
 {{ text.field('contributor_city', 'City') }}
@@ -46,7 +46,7 @@ Filter Receipts
 {{ text.field('contributor_employer', 'Employer') }}
 {{ text.field('contributor_occupation', 'Occupation') }}
 
-<h3 class="filters__subheader">Transaction Information</h3>
+<h3 class="filters__subheader">Transaction information</h3>
 {{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
 {{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
 {{ date.field('receipt_date', 'Receipt Date', dates ) }}

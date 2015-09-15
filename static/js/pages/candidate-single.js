@@ -28,5 +28,6 @@ $(document).ready(function() {
     // Order by receipt date descending
     order: [[2, 'desc']],
     dom: tables.simpleDOM,
+    pagingType: 'simple'
   });
 });

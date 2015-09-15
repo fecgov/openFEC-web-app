@@ -96,9 +96,8 @@ function formatUrl(result) {
 }
 
 function formatColor(result, lookup) {
-  return lookup.map.colorMap ?
-    lookup.map.colorMap[utils.encodeDistrict(result.state, result.district)] || '#000000' :
-    '#000000';
+  var palette = lookup.map.districtPalette[result.state] || {};
+  return palette[result.district % palette.length] || '#000000';
 }
 
 function hasOption($select, value) {
@@ -359,6 +358,8 @@ var boundsOverrides = {
 function ElectionLookupMap(elm, opts) {
   this.elm = elm;
   this.opts = _.extend({}, defaultOpts, opts);
+  this.statePalette = getStatePalette(this.opts.colorScale);
+  this.districtPalette = getDistrictPalette(this.opts.colorScale);
   this.init();
 }
 
@@ -368,8 +369,6 @@ ElectionLookupMap.prototype.init = function() {
   this.map = L.map(this.elm);
   this.map.on('zoomend', this.handleZoom.bind(this));
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  this.statePalette = getStatePalette(this.opts.colorScale);
-  this.districtPalette = getDistrictPalette(this.opts.colorScale);
   this.map.setView([37.8, -96], 3);
   this.drawStates();
 };
