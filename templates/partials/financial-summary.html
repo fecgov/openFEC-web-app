@@ -36,7 +36,7 @@
         <p>
           Coverage period:
           {% if aggregate.start_date and aggregate.end_date %}
-          {{ aggregate.start_date | date(default='?') }}–{{ aggregate.end_date | date }}
+          {{ aggregate.start_date | date }}–{{ aggregate.end_date | date }}
           {% else %}
           <a class='term' data-term='None'>None</a>
           {% endif %}
