@@ -236,7 +236,6 @@ var defaultOpts = {
   serverSide: false,
   lengthChange: false,
   dom: tables.simpleDOM,
-  scrollX: true,
   pagingType: 'simple'
 };
 
@@ -473,8 +472,7 @@ function initSpendingTables() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false,
-        scrollX: true
+        useHideNull: false
       });
     }
   });
