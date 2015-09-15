@@ -25,10 +25,10 @@
     </li>
   </ul>
   <div class="date-range-input">
-    <label for="min_date">From</label>
-    <input type="text" id="min_date" name="min_date" data-inputmask="'alias': 'mm/dd/yyyy'">
-    <label for="max_date">To</label>
-    <input type="text" id="max_date" name="max_date" data-inputmask="'alias': 'mm/dd/yyyy'">
+    <label for="min_{{ name }}">From</label>
+    <input type="text" id="min_{{ name }}" name="min_{{ name }}" class="js-min-date" data-inputmask="'alias': 'mm/dd/yyyy'">
+    <label for="max_{{ name }}">To</label>
+    <input type="text" id="max_{{ name }}" name="max_{{ name }}" class="js-max-date" data-inputmask="'alias': 'mm/dd/yyyy'">
   </div>
 </div>
 
