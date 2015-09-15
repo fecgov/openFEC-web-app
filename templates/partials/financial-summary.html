@@ -5,7 +5,7 @@
   <div class="content__section">
     <div class="section__heading">
       <h2 class="heading__title">
-        Financial Summary
+        Financial summary
         {{ select.cycle_select(cycles, cycle, id="cycle-1") }}
       </h2>
     </div>
@@ -15,18 +15,18 @@
 
   <div class="content__section">
     <figure class="usa-width-one-half">
-      <h3 class="t-ruled--bottom">Combined Financial Totals</h3>
+      <h3 class="t-ruled--bottom">Combined financial totals</h3>
       <div class="is-right-aligned">
         <div>
-          <h5 class="term t-data-header" data-term="Total Receipts">Total Receipts</h5>
+          <h5 class="term t-data-header" data-term="Total Receipts">Total receipts</h5>
           <span class="t-big-data">{{ null.null( aggregate.receipts | currency ) }}</span>
         </div>
         <div >
-          <h5 class="term t-data-header" data-term="Total Disbursements">Total Disbursements</h5>
+          <h5 class="term t-data-header" data-term="Total Disbursements">Total disbursements</h5>
           <span class="t-big-data">{{ null.null( aggregate.disbursements | currency ) }}</span>
         </div>
         <div>
-          <h5 class="term t-data-header" data-term="Ending Cash on Hand">Ending Cash on Hand</h5>
+          <h5 class="term t-data-header" data-term="Ending Cash on Hand">Ending cash on hand</h5>
           <span class="t-big-data">{{ null.null( aggregate.cash | currency ) }}</span>
         </div>
         <div>
@@ -44,14 +44,14 @@
       </div>
     </figure>
     <div class="usa-width-one-half">
-      <h3 class="t-ruled--bottom">Campaign Committees</h3>
+      <h3 class="t-ruled--bottom">Campaign committees</h3>
       {% for committee in committee_groups['P'] %}
       <div class="callout callout--primary">
         <div class="callout__content">
           <h4 class="callout__title">
             <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
           </h4>
-          <span class="callout__subtitle">Principal Campaign Committee</span>
+          <span class="callout__subtitle">Principal campaign committee</span>
         </div>
         <div class="callout__action">
           <span class="t-block t-data">View detailed data:</span>
@@ -73,7 +73,7 @@
             <h4 class="callout__title">
               <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
             </h4>
-            <span class="callout__subtitle">Authorized Campaign Committee</span>
+            <span class="callout__subtitle">Authorized campaign committee</span>
           </div>
           <div class="callout__action">
             <span class="t-block t-data">View detailed data:</span>
@@ -94,7 +94,7 @@
 
 {% if committee_groups['J'] %}
   <div class="content__section">
-    <h2 class="content__section__heading"><span class="term" data-term="Joint Fundraising Committee">Joint Fundraising Committees</span></h2>
+    <h2 class="content__section__heading"><span class="term" data-term="Joint Fundraising Committee">Joint fundraising committees</span></h2>
     <div class="row">
       <p class="usa-width-two-thirds">In joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed.</p>
     </div>
