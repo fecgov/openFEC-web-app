@@ -32,23 +32,23 @@ var supportOpposeColumn = {
   }
 };
 var independentExpenditureColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
   supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', orderable: false}),
+  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'}),
 ];
 
 var communicationCostColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
   supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', orderable: false})
+  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'})
 ];
 
 var electioneeringColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
-  tables.candidateColumn({data: 'candidate', orderable: false})
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
+  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'})
 ];
 
 var electionColumns = [
@@ -65,7 +65,7 @@ var electionColumns = [
       );
     }
   },
-  {data: 'party_full', className: 'min-tablet'},
+  {data: 'party_full', className: 'all'},
   {
     data: 'total_receipts',
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
@@ -236,6 +236,7 @@ var defaultOpts = {
   serverSide: false,
   lengthChange: false,
   dom: tables.simpleDOM,
+  pagingType: 'simple'
 };
 
 function destroyTable($table) {
@@ -281,21 +282,21 @@ function drawStateTable(selected) {
   $.getJSON(
     buildUrl(selected, ['schedules', 'schedule_a', 'by_state', 'by_candidate'])
   ).done(function(response) {
-    destroyTable($table);
-    // Clear headers
-    $table.find('thead').html('');
     var data = mapState(response, primary);
+    // Populate headers with correct text
+    var headerLabels = ['State'].concat(_.pluck(selected, 'candidate_name'));
+    $table.find('thead tr')
+      .empty()
+      .append(_.map(headerLabels, function(label) {
+        return $('<th>').text(label);
+      }));
+    destroyTable($table);
     $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(selected),
       order: [[1, 'desc']]
     }, defaultOpts));
     tables.barsAfterRender(null, $table.DataTable());
-    // Populate headers with correct text
-    var headerLabels = ['State'].concat(_.pluck(selected, 'candidate_name'));
-    $table.find('th').each(function(index, elm) {
-      $(elm).text(headerLabels[index]);
-    });
   });
 }
 
@@ -335,9 +336,25 @@ function drawStateMap($container, candidateId, cached) {
     );
     cached[candidateId] = results;
     updateColorScale($container, cached);
+    var min = mapMin(cached);
     var max = mapMax(cached);
-    maps.stateMap($map, data, 400, 300, max, false, true);
+    maps.stateMap($map, data, 400, 300, min, max, false, true);
   });
+}
+
+function mapMin(cached) {
+  return _.chain(cached)
+    .map(function(value, key) {
+      return _.chain(value)
+        .values()
+        .filter(function(value) {
+          return !!value;
+        })
+        .min()
+        .value();
+    })
+    .min()
+    .value();
 }
 
 function mapMax(cached) {
@@ -383,9 +400,10 @@ function updateColorScale($container, cached) {
       delete cached[key];
     }
   });
+  var min = mapMin(cached);
   var max = mapMax(cached);
-  var scale = chroma.scale(maps.colorScale).domain([0, max]);
-  var quantize = d3.scale.linear().domain([0, max]);
+  var scale = chroma.scale(maps.colorScale).domain([min, max]);
+  var quantize = d3.scale.linear().domain([min, max]);
   $container.find('.state-map').each(function(_, elm) {
     var $elm = $(elm);
     var results = cached[$elm.find('select').val()];
@@ -477,7 +495,7 @@ $(document).ready(function() {
     $table.dataTable(_.extend({}, defaultOpts, {
       columns: electionColumns,
       data: response.results,
-      order: [[3, 'desc']]
+      order: [[2, 'desc']]
     }));
     drawComparison(response.results);
     initStateMaps(response.results);

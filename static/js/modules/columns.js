@@ -19,7 +19,7 @@ var filings = {
   pdf_url: tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
   filer_name: {
     data: 'committee_id',
-    className: 'min-desktop',
+    className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
       var cycle = tables.buildCycle(row);

@@ -275,6 +275,7 @@ $(document).ready(function() {
           {
             rowCallback: filings.renderRow,
             dom: '<"panel__main"t><"results-info results-info--bottom"frip>',
+            pagingType: 'simple',
             // Order by receipt date descending
             order: [[2, 'desc']],
             useFilters: true
@@ -306,7 +307,7 @@ $(document).ready(function() {
   var $map = $('.state-map');
   var url = buildStateUrl($map);
   $.getJSON(url).done(function(data) {
-    maps.stateMap($map, data, 400, 300, null, true, false);
+    maps.stateMap($map, data, 400, 300, null, null, true, true);
   });
   events.on('state.table', function(params) {
     highlightRowAndState($map, $('.data-table'), params.state, false);
