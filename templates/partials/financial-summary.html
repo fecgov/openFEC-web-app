@@ -33,7 +33,14 @@
           <h5 class="term t-data-header" data-term="Debt">Debt</h5>
           <span class="t-big-data">{{ null.null( aggregate.debt | currency ) }}</span>
         </div>
-        <p>Coverage Period {{ aggregate.start_date }}  {{ aggregate.end_date }}</p>
+        <p>
+          Coverage period:
+          {% if aggregate.start_date and aggregate.end_date %}
+          {{ aggregate.start_date | date(default='?') }}–{{ aggregate.end_date | date }}
+          {% else %}
+          <a class='term' data-term='None'>None</a>
+          {% endif %}
+        </p>
       </div>
     </figure>
     <div class="usa-width-one-half">
