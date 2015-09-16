@@ -173,13 +173,13 @@ $('.filter input[type="text"]').on('keypress', function(e) {
 function bindDateFilters() {
   $('.date-choice-field').each(function(_, field) {
     var $field = $(field);
-    var $minDate = $field.find('[name="min_date"]');
-    var $maxDate = $field.find('[name="max_date"]');
+    var $minDate = $field.find('.js-min-date');
+    var $maxDate = $field.find('.js-max-date');
     $field.on('change', '[type="radio"]', function(e) {
       var $input = $(e.target);
       if ($input.attr('data-min-date')) {
-        $minDate.val($input.attr('data-min-date'));
-        $maxDate.val($input.attr('data-max-date'));
+        $minDate.val($input.data('min-date'));
+        $maxDate.val($input.data('max-date'));
       }
       $minDate.focus();
     });

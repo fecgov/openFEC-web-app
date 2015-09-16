@@ -40,6 +40,11 @@ $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   }
 });
 
+// Only show table after draw 
+$(document.body).on('draw.dt', function(){
+  $('.datatable__container').css('opacity', '1');
+})
+
 function yearRange(first, last) {
   if (first === last) {
     return first;

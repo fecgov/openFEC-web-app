@@ -216,7 +216,11 @@ def disbursements():
 
 @app.route('/filings')
 def filings():
-    return render_template('filings.html', result_type='committees')
+    return render_template(
+        'filings.html',
+        dates=utils.date_ranges(),
+        result_type='committees',
+    )
 
 
 @app.route('/elections/')

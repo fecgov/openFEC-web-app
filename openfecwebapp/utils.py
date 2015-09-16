@@ -38,7 +38,6 @@ def date_ranges():
     today = datetime.date.today()
     quarter = math.floor((today.month - 1) / 3)
     return {
-        'today': (today, today),
         'month': (
             today.replace(day=1),
             today.replace(day=calendar.monthrange(today.year, today.month)[1]),
