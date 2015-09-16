@@ -49,6 +49,6 @@ Filter receipts
 <h3 class="filters__subheader">Transaction information</h3>
 {{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
 {{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-{{ date.field('receipt_date', 'Receipt Date', dates ) }}
+{{ date.field('date', 'Receipt Date', dates ) }}
 
 {% endblock %}
