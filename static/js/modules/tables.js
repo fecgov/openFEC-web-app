@@ -270,19 +270,21 @@ function modalRenderFactory(template, fetch) {
   return function(api, data, response) {
     var $table = $(api.table().node());
     var $modal = $('#datatable-modal');
-    var $main = $table.closest('.panel__main')
+    var $main = $table.closest('.panel__main');
     // Move the modal to the results div.
     $modal.appendTo($main);
     $table.find('tr').attr('tabindex', 0);
 
     $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, function(e) {
       if (e.which === 13 || e.type === 'click') {
+        // Note: Use `currentTarget` to get parent row, since the target column
+        // may have been moved since the triggering event
+        var $row = $(e.currentTarget);
         var $target = $(e.target);
         if ($target.is('a')) {
           return true;
         }
-        if ( !$target.closest('td').hasClass('dataTables_empty') ) {
-          var $row = $target.closest('tr');
+        if (!$target.closest('td').hasClass('dataTables_empty')) {
           var index = api.row($row).index();
           $.when(fetch(response.results[index])).done(function(fetched) {
             $modal.find('.js-panel-content').html(template(fetched));
@@ -333,7 +335,6 @@ function hidePanel(api, $modal) {
     if ($(document).width() > 980) {
       api.columns('.hide-panel').visible(true);
     }
-
 }
 
 function barsAfterRender(template, api, data, response) {
