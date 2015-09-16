@@ -56,10 +56,10 @@ def aggregate_committees(committees):
         ret['disbursements'] += totals.get('disbursements') or 0
         ret['cash'] += reports.get('cash_on_hand_end_period') or 0
         ret['debt'] += reports.get('debts_owed_by_committee') or 0
-        if not ret['start_date'] or reports.get('coverage_start_date') < ret['start_date']:
-            ret['start_date'] = reports.get('coverage_start_date')
-        if not ret['end_date'] or reports.get('coverage_end_date') > ret['end_date']:
-            ret['end_date'] = reports.get('coverage_end_date')
+        if not ret['start_date'] or totals.get('coverage_start_date') < ret['start_date']:
+            ret['start_date'] = totals.get('coverage_start_date')
+        if not ret['end_date'] or totals.get('coverage_end_date') > ret['end_date']:
+            ret['end_date'] = totals.get('coverage_end_date')
     return ret
 
 
