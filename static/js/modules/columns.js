@@ -9,9 +9,9 @@ var decoders = require('./decoders');
 
 var sizeInfo = {
   0: {limits: [0, 199.99], label: 'Under $200'},
-  200: {limits: [200, 499.99], label: '$200 - $499'},
-  500: {limits: [500, 999.99], label: '$500 - $999'},
-  1000: {limits: [1000, 1999.99], label: '$1000 - $1999'},
+  200: {limits: [200, 499.99], label: '$200—$499'},
+  500: {limits: [500, 999.99], label: '$500—$999'},
+  1000: {limits: [1000, 1999.99], label: '$1000—$1999'},
   2000: {limits: [2000, null], label: 'Over $2000'},
 };
 
@@ -19,7 +19,7 @@ var filings = {
   pdf_url: tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
   filer_name: {
     data: 'committee_id',
-    className: 'min-desktop',
+    className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
       var cycle = tables.buildCycle(row);

@@ -1,31 +1,33 @@
 <div class="panel__row">
-  <h4>Candidate: <a href="/candidate/{{candidate_id}}">{{name}}</a></h4>
+  <div class="panel__heading">
+    <h4 class="panel__title"><a href="/candidate/{{candidate_id}}">{{name}}</a></h4>
+  </div>
   <table>
     <tr>
-      <td>Office</td>
+      <td class="panel__term">Office</td>
       <td>{{office_full}}</td>
     </tr>
     <tr>
-      <td>Election years</td>
+      <td class="panel__term">Election years</td>
       <td>{{election_years}}</td>
     </tr>
     <tr>
-      <td>Political party</td>
+      <td class="panel__term">Political party</td>
       <td>{{party_full}}</td>
     </tr>
     <tr>
-      <td>Status</td>
+      <td class="panel__term">Status</td>
       <td>{{incumbent_challenge_full}}</td>
     </tr>
     {{#if state}}
     <tr>
-      <td>State</td>
+      <td class="panel__term">State</td>
       <td>{{state}}</td>
     </tr>
     {{/if}}
     {{#if district}}
     <tr>
-      <td>District</td>
+      <td class="panel__term">District</td>
       <td>{{district}}</td>
     </tr>
     {{/if}}

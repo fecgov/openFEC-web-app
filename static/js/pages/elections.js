@@ -32,23 +32,23 @@ var supportOpposeColumn = {
   }
 };
 var independentExpenditureColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
   supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', orderable: false}),
+  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'}),
 ];
 
 var communicationCostColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
   supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', orderable: false})
+  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'})
 ];
 
 var electioneeringColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
-  tables.candidateColumn({data: 'candidate', orderable: false})
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
+  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'})
 ];
 
 var electionColumns = [
@@ -65,7 +65,7 @@ var electionColumns = [
       );
     }
   },
-  {data: 'party_full', className: 'min-tablet'},
+  {data: 'party_full', className: 'all'},
   {
     data: 'total_receipts',
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
@@ -294,8 +294,7 @@ function drawStateTable(selected) {
     $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(selected),
-      order: [[1, 'desc']],
-      scrollX: true
+      order: [[1, 'desc']]
     }, defaultOpts));
     tables.barsAfterRender(null, $table.DataTable());
   });

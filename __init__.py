@@ -278,9 +278,17 @@ def currency_filter(num, grouping=True):
     return None
 
 
+def ensure_date(value):
+    if isinstance(value, (datetime.date, datetime.datetime)):
+        return value
+    return parse_date(value)
+
+
 @app.template_filter('date')
 def date_filter(value, fmt='%m/%d/%Y'):
-    return value.strftime(fmt)
+    if value is None:
+        return None
+    return ensure_date(value).strftime(fmt)
 
 
 @app.template_filter('json')
@@ -309,20 +317,6 @@ def fmt_chart_ticks(group, keys):
         values = _unique(values)
         return ' – '.join(values)
     return _fmt_chart_tick(group[keys])
-
-
-@app.template_filter('date_sm')
-def date_filter_sm(date_str):
-    if not date_str:
-        return ''
-    return parse_date(date_str).strftime('%m/%y')
-
-
-@app.template_filter('date_md')
-def date_filter_md(date_str):
-    if not date_str:
-        return ''
-    return parse_date(date_str).strftime('%b %Y')
 
 
 @app.template_filter()
