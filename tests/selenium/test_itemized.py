@@ -42,9 +42,9 @@ class TestReceipts(SearchPageTestCase):
 
         # Sort on amount
         toggle_sort(self.driver, 4)
-        check_sort(self.driver, 4, parse_amount, reverse=False)
-        toggle_sort(self.driver, 4)
         check_sort(self.driver, 4, parse_amount, reverse=True)
+        toggle_sort(self.driver, 4)
+        check_sort(self.driver, 4, parse_amount, reverse=False)
 
 
 class TestDisbursements(SearchPageTestCase):
@@ -62,6 +62,6 @@ class TestDisbursements(SearchPageTestCase):
 
         # Sort on amount
         toggle_sort(self.driver, 2)
-        check_sort(self.driver, 2, parse_amount, reverse=False)
-        toggle_sort(self.driver, 2)
         check_sort(self.driver, 2, parse_amount, reverse=True)
+        toggle_sort(self.driver, 2)
+        check_sort(self.driver, 2, parse_amount, reverse=False)

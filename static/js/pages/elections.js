@@ -68,6 +68,7 @@ var electionColumns = [
   {data: 'party_full', className: 'all'},
   {
     data: 'total_receipts',
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       return {
         committee_id: row.committee_ids,
@@ -77,6 +78,7 @@ var electionColumns = [
   },
   {
     data: 'total_disbursements',
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/disbursements', function(data, type, row, meta) {
       return {
         committee_id: row.committee_ids,
@@ -90,6 +92,7 @@ var electionColumns = [
 
 function makeCommitteeColumn(opts, factory) {
   return _.extend({}, {
+    orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
       var column = meta.settings.aoColumns[meta.col].data;
       return _.extend({

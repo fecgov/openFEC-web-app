@@ -123,9 +123,10 @@ function buildTotalLink(path, getParams) {
   };
 }
 
-function formattedColumn(formatter) {
+function formattedColumn(formatter, defaultOpts) {
+  defaultOpts = defaultOpts || {};
   return function(opts) {
-    return _.extend({
+    return _.extend({}, defaultOpts, {
       render: function(data, type, row, meta) {
         return formatter(data);
       }
@@ -137,6 +138,7 @@ function barColumn(formatter) {
   formatter = formatter || function(value) { return value; };
   return function(opts) {
     return _.extend({
+      orderSequence: ['desc', 'asc'],
       render: function(data, type, row, meta) {
         var span = document.createElement('div');
         span.textContent = formatter(_.max([data, 0]));
@@ -164,8 +166,8 @@ function urlColumn(attr, opts) {
   }, opts);
 }
 
-var dateColumn = formattedColumn(helpers.datetime);
-var currencyColumn = formattedColumn(helpers.currency);
+var dateColumn = formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc']});
+var currencyColumn = formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = barColumn(helpers.currency);
 
 var candidateColumn = formattedColumn(function(data) {
