@@ -24,7 +24,6 @@ var columns = [
   },
   {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
-  {data: 'contributor_occupation', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet'}),
   tables.dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel-tablet'}),
   {
@@ -63,7 +62,7 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(donationTemplate)
     }),
     {
-      order: [[5, 'desc']],
+      order: [[4, 'desc']],
       pagingType: 'simple',
       useFilters: true,
       rowCallback: tables.modalRenderRow
