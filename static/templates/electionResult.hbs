@@ -11,15 +11,8 @@
       <span class="result__term">Next general election:</span>
       <span class="result__definition">{{this.electionDate}}</span>
     </div>
-    {{#if this.incumbent}}
     <div class="row">
-      <span class="result__term">Current officeholder:</span>
-      <a class="result__definition" href="{{this.incumbent.url}}">{{this.incumbent.name}}</a>
-      </div>
-    {{/if}}
-    <div class="row">
-      <span class="result__term">Current candidates:</span>
-      <a class="result__definition" href="{{this.url}}">View all &raquo;</a>
+      <a class="result__term" href="{{this.url}}">Compare candidates</a>
     </div>
   </div>
   {{/each}}
