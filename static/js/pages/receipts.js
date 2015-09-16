@@ -13,7 +13,7 @@ var columns = [
     data: 'contributor',
     orderable: false,
     className: 'all',
-    width: '280px',
+    width: '200px',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
@@ -24,14 +24,13 @@ var columns = [
   },
   {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
-  {data: 'contributor_occupation', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet'}),
   tables.dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel-tablet'}),
   {
     data: 'committee',
     orderable: false,
     className: 'min-desktop hide-panel',
-    width: '30%',
+    width: '250px',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
@@ -63,7 +62,7 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(donationTemplate)
     }),
     {
-      order: [[5, 'desc']],
+      order: [[4, 'desc']],
       pagingType: 'simple',
       useFilters: true,
       rowCallback: tables.modalRenderRow
