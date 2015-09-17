@@ -14,7 +14,9 @@ Filter filings
 {{ typeahead.field('committee_id', 'Committee') }}
 {{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
 
-{{ date.field('receipt_date', 'Receipt Date', dates ) }}
+{% include 'partials/filters/election-years.html' %}
+
+{{ date.field('receipt_date', 'Receipt date', dates ) }}
 
 {% include 'partials/filters/amendment-indicator.html' %}
 {% include 'partials/filters/primary-general.html' %}
