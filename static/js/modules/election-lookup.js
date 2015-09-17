@@ -405,7 +405,7 @@ ElectionLookupMap.prototype.drawDistricts = function(districts) {
 };
 
 ElectionLookupMap.prototype.updateBounds = function(districts) {
-  var rule = _.find(boundsOverrides, function(rule, district) {
+  var rule = districts && _.find(boundsOverrides, function(rule, district) {
     return districts.indexOf(parseInt(district)) !== -1;
   });
   if (rule) {
