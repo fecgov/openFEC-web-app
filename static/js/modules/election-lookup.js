@@ -15,10 +15,10 @@ require('leaflet-providers');
 var helpers = require('./helpers');
 var utils = require('./election-utils');
 
-var states = require('../us.json');
-var districts = require('../stateDistricts.json');
+var states = require('../data/us-states-10m.json');
+var districts = require('../data/stateDistricts.json');
 
-var stateFeatures = topojson.feature(states, states.objects.units).features;
+var stateFeatures = topojson.feature(states, states.objects.states).features;
 
 var districtTemplate = require('../../templates/districts.hbs');
 var resultTemplate = require('../../templates/electionResult.hbs');
@@ -440,14 +440,13 @@ ElectionLookupMap.prototype.filterDistricts = function(districts) {
 
 ElectionLookupMap.prototype.handleStateClick = function(e) {
   if (this.opts.handleSelect) {
-    var state = utils.decodeState(e.target.feature.id.substring(2, 4));
+    var state = utils.decodeState(e.target.feature.id);
     this.opts.handleSelect(state);
   }
 };
 
 ElectionLookupMap.prototype.onEachState = function(feature, layer) {
-  var state = parseInt(feature.id.substring(2, 4));
-  var color = this.statePalette[state % this.statePalette.length];
+  var color = this.statePalette[feature.id % this.statePalette.length];
   layer.setStyle({color: color});
   layer.on('click', this.handleStateClick.bind(this));
 };

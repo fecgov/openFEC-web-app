@@ -13,21 +13,16 @@ require('leaflet-providers');
 
 var events = require('fec-style/js/events');
 
+var fips = require('./fips');
 var helpers = require('./helpers');
 var utils = require('./election-utils');
 
-var states = require('../us.json');
+var states = require('../data/us-states-10m.json');
 
-var districts = require('../districts.json');
+var districts = require('../data/districts.json');
 var districtFeatures = topojson.feature(districts, districts.objects.districts);
 
-var stateFeatures = topojson.feature(states, states.objects.units).features;
-var stateFeatureMap = _.chain(stateFeatures)
-  .map(function(feature) {
-    return [feature.properties.name, feature];
-  })
-  .object()
-  .value();
+var stateFeatures = topojson.feature(states, states.objects.states).features;
 
 var compactRules = [
   ['B', 9],
@@ -66,7 +61,9 @@ function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
   var results = _.reduce(
     data.results,
     function(acc, val) {
-      acc[val.state_full] = val.total;
+      var row = fips.fipsByState[val.state] || {};
+      var code = row.STATE ? parseInt(row.STATE) : null;
+      acc[code] = val.total;
       return acc;
     },
     {}
@@ -87,15 +84,15 @@ function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
       .data(stateFeatures)
     .enter().append('path')
       .attr('fill', function(d) {
-        return scale(results[d.properties.name] || 0);
+        return scale(results[d.id] || 0);
       })
       .attr('data-state', function(d) {
-        return d.properties.name;
+        return fips.fipsByCode[d.id].STATE_NAME;
       })
       .attr('class', 'shape')
       .attr('d', path)
     .on('mouseover', function(d) {
-      if (results[d.properties.name]) {
+      if (results[d.id]) {
         this.parentNode.appendChild(this);
         this.classList.add('state--hover');
       }
@@ -165,8 +162,8 @@ function stateTooltips(svg, path, results) {
       this.parentNode.appendChild(this);
       var offset = $(this).offset();
       var html = tooltipTemplate({
-        name: d.properties.name,
-        total: helpers.currency(results[d.properties.name] || 0)
+        name: fips.fipsByCode[d.id].STATE_NAME,
+        total: helpers.currency(results[d.id] || 0)
       });
       tooltip
         .style('display', 'block')
@@ -203,7 +200,7 @@ DistrictMap.prototype.load = function(election) {
     var encoded = utils.encodeDistrict(election.state, election.district);
     feature = utils.findDistrict(encoded);
   } else {
-    feature = stateFeatureMap[election.stateFull];
+    feature = fipsByState[parseInt(election.state)];
   }
   feature && this.render(feature);
 };
