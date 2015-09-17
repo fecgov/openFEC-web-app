@@ -368,7 +368,7 @@ ElectionLookupMap.prototype.init = function() {
   this.overlay = null;
   this.districts = null;
   this.map = L.map(this.elm);
-  this.map.on('zoomend', this.handleZoom.bind(this));
+  this.map.on('viewreset', this.handleReset.bind(this));
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
   if (this.opts.drawStates) {
     this.map.setView([37.8, -96], 3);
@@ -408,6 +408,7 @@ ElectionLookupMap.prototype.updateBounds = function(districts) {
   var rule = districts && _.find(boundsOverrides, function(rule, district) {
     return districts.indexOf(parseInt(district)) !== -1;
   });
+  this._viewReset = !!(rule || districts);
   if (rule) {
     this.map.setView(rule.coords, rule.zoom);
   }
@@ -471,7 +472,11 @@ ElectionLookupMap.prototype.handleDistrictClick = function(e) {
   }
 };
 
-ElectionLookupMap.prototype.handleZoom = function(e) {
+ElectionLookupMap.prototype.handleReset = function(e) {
+  if (this._viewReset) {
+    this._viewReset = false;
+    return;
+  }
   var zoom = e.target.getZoom();
   if (zoom <= STATE_ZOOM_THRESHOLD) {
     this.drawStates();
