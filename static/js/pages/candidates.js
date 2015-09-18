@@ -17,8 +17,7 @@ var columns = [
       return tables.buildEntityLink(
         data,
         '/candidate/' + row.candidate_id + tables.buildCycle(row),
-        'candidate',
-        {isIncumbent: row.incumbent_challenge_full === 'Incumbent'}
+        'candidate'
       );
     }
   },
