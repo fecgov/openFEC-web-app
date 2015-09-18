@@ -26,29 +26,28 @@ var supportOpposeMap = {
 };
 var supportOpposeColumn = {
   data: 'support_oppose_indicator',
-  orderable: false,
   render: function(data, type, row, meta) {
     return supportOpposeMap[data] || 'Unknown';
   }
 };
 var independentExpenditureColumns = [
   tables.currencyColumn({data: 'total', className: 'all'}),
-  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
+  tables.committeeColumn({data: 'committee', className: 'all'}),
   supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'}),
+  tables.candidateColumn({data: 'candidate', className: 'all'}),
 ];
 
 var communicationCostColumns = [
   tables.currencyColumn({data: 'total', className: 'all'}),
-  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
+  tables.committeeColumn({data: 'committee', className: 'all'}),
   supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'})
+  tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var electioneeringColumns = [
   tables.currencyColumn({data: 'total', className: 'all'}),
-  tables.committeeColumn({data: 'committee', orderable: false, className: 'all'}),
-  tables.candidateColumn({data: 'candidate', orderable: false, className: 'all'})
+  tables.committeeColumn({data: 'committee', className: 'all'}),
+  tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var electionColumns = [
