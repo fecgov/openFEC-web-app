@@ -76,7 +76,7 @@ $(document).ready(function() {
     }
 
     // Initialize glossary
-    new glossary.Glossary(terms, {body: '#glossary', toggle: '#glossary-toggle'});
+    new glossary.Glossary(terms, {body: '#glossary'});
 
     // Initialize typeaheads
     new typeahead.Typeahead('.js-search-input', $('.js-search-type').val());
