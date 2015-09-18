@@ -156,7 +156,7 @@ var tooltipTemplate = _.template(
 function stateTooltips(svg, path, results) {
   var tooltip = d3.select('body').append('div')
     .attr('id', 'map-tooltip')
-    .attr('class', 'tooltip')
+    .attr('class', 'tooltip tooltip--above')
     .style('position', 'absolute')
     .style('pointer-events', 'none')
     .style('display', 'none');

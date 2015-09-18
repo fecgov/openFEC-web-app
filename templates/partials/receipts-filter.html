@@ -31,8 +31,11 @@ Filter receipts
     <legend class="label">Restrict contributions</legend>
     <ul>
       <li>
-        <input id="is-individual" name="is_individual" type="checkbox" value="true" checked>
-        <label for="is-individual">Unique only</label>
+        <input id="is-individual" name="is_individual" type="checkbox" value="true" class="tooltip-trigger" aria-describedby="unique-tooltip" checked>
+        <label for="is-individual" class="tooltip-trigger">Unique only</label>
+        <div id="unique-tooltip" role="tooltip" class="tooltip tooltip--under">
+          <p class="tooltip__content">Some transactions — such as earmarked contributions and partnership contributions — are reported more than once for clarity on the printed page but can lead to confusion when viewed as data online. Use the unique only filter to remove these extra transactions.</p>
+        </div>
       </li>
     </ul>
   </fieldset>
