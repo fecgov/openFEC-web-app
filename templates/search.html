@@ -36,8 +36,8 @@
           <h2 class="card__title">Committee data</h2>
           <ul class="card__links list--bulleted">
             <li><a href="{{ url_for('committees', cycle=2016) }}">Most recent committees &raquo;</a></li>
-            <li><a>All PACs active 2015-2016 &raquo;</a></li>
-            <li><a>All independent expenditure committees active 2015-2016 &raquo;</a></li>
+            <li><a href="{{ url_for('committees', cycle=2016, designation=['B', 'D'], committee_type=['N','Q', 'V', 'W']) }}">All PACs active 2015-2016 &raquo;</a></li>
+            <li><a href="{{ url_for('committees', cycle=2016, committee_type=['I','O', 'U']) }}">All independent expenditure committees active 2015-2016 &raquo;</a></li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('committees', cycle=default_cycles) }}">All committee data</a>
         </div>
@@ -50,7 +50,7 @@
         <div class="card__content">
           <h2 class="card__title">Receipt data</h2>
           <ul class="card__links list--bulleted">
-            <li><a href="{{ url_for('receipts', is_individual='true', min_date='1/01/2015', max_date='12/31/2015') }}">Top contributions from individuals this year &raquo;</a></li>
+            <li><a href="{{ url_for('receipts', is_individual='true', contributor_type='individual', min_date='1/01/2015', max_date='12/31/2015') }}">Contributions from individuals this year &raquo;</a></li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('receipts')}}">All receipt data</a>
         </div>
