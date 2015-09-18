@@ -82,6 +82,7 @@ def render_candidate(candidate, committees, cycle):
 
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized
+    tmpl_vars['committee_ids'] = [committee['committee_id'] for committee in committees_authorized]
     tmpl_vars['aggregate'] = aggregate_committees(committees_authorized)
 
     tmpl_vars['elections'] = sorted(

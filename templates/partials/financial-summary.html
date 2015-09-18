@@ -41,6 +41,22 @@
           <a class='term' data-term='None'>None</a>
           {% endif %}
         </p>
+        <p>
+          {% if aggregate.receipts != 0 or
+            aggregate.disbursements != 0 or
+            aggregate.cash != 0 or
+            aggregate.debt != 0
+           %}
+             <a href="{{ url_for('filings',
+               amendment_indicator='N',
+               form_type=['F3', 'F3P'],
+               committee_id=committee_ids,
+               cycle=cycle,
+               ) }}">
+               View source forms
+             </a>
+           {% endif %}
+        </p>
       </div>
     </figure>
     <div class="usa-width-one-half">
