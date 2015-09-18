@@ -13,15 +13,6 @@ Filter receipts
 {% block filters %}
 <div class="filter">
   <fieldset>
-    <legend class="label">Restrict contributions</legend>
-    <ul>
-      <li>
-        <input id="is-individual" name="is_individual" type="checkbox" value="true" checked>
-        <label for="is-individual">Unique only</label>
-      </li>
-    </ul>
-  </fieldset>
-  <fieldset>
     <legend class="label">Show contributions from</legend>
     <ul>
       <li>
@@ -31,6 +22,17 @@ Filter receipts
       <li>
         <input id="contributor-type-committee" name="contributor_type" type="checkbox" value="committee">
         <label for="contributor-type-committee">Committees</label>
+      </li>
+    </ul>
+  </fieldset>
+</div>
+<div class="filter">
+  <fieldset>
+    <legend class="label">Restrict contributions</legend>
+    <ul>
+      <li>
+        <input id="is-individual" name="is_individual" type="checkbox" value="true" checked>
+        <label for="is-individual">Unique only</label>
       </li>
     </ul>
   </fieldset>

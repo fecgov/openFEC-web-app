@@ -146,7 +146,24 @@ var activateInitialFilters = function() {
     }
 };
 
-// Clearing the selects
+var clearFilters = function() {
+  var fields = getFields();
+  _.each(fields, function(key) {
+    activateFilter({
+      name: key,
+      value: null
+    })
+  });
+};
+
+// Clearing the filters
+$('.js-clear-filters').on('click keypress', function(e){
+  if (e.which === 13 || e.type === 'click') {
+    clearFilters();
+    $(this).focus();
+  }
+})
+
 $('.button--remove').click(function(e){
     e.preventDefault();
     var removes = $(this).data('removes');
