@@ -61,7 +61,7 @@
   </header>
 
   {% block header %}{% endblock %}
-  <main id="main" {% if section %} data-section="{{section}}"{% endif %} tabindex="0">
+  <main id="main" {% if section %} data-section="{{section}}"{% endif %} tabindex="-1">
     {% block body %}{% endblock %}
   </main>
 
