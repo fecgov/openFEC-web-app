@@ -143,7 +143,7 @@ def search():
         results = load_search_results(query, result_type)
         return render_search_results(results, query, result_type)
     else:
-        return render_template('search.html', page='home')
+        return render_template('search.html', page='home', dates=utils.date_ranges())
 
 
 @app.route('/api')
