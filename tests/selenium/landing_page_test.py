@@ -23,7 +23,7 @@ class LandingPageTests(BaseTest):
 
     def testGlossaryToggle(self):
         self.driver.get(self.url)
-        self.driver.find_element_by_id('glossary-toggle').click()
+        self.driver.find_element_by_css_selector('.js-glossary-toggle').click()
         glossary = self.getGlossary()
         self.assertIn('is-open', glossary.get_attribute('class'))
         hide = glossary.find_element_by_css_selector('.toggle')
@@ -33,7 +33,7 @@ class LandingPageTests(BaseTest):
 
     def testGlossarySearch(self):
         self.driver.get(self.url)
-        self.driver.find_element_by_id('glossary-toggle').click()
+        self.driver.find_element_by_css_selector('.js-glossary-toggle').click()
         glossary = self.getGlossary()
         glossary.find_element_by_id('glossary-search').send_keys('candidate id')
         glossary.find_element_by_id('glossary-search').send_keys(K.ARROW_DOWN)
