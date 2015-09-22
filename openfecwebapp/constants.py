@@ -69,7 +69,7 @@ parties_extended = OrderedDict([
     ('AMP', 'American Party'),
     ('APF', "American People's Freedom Party"),
     ('CIT', "Citizens' Party"),
-    ('CMP', 'Commonwealth Party of the U.S.'),
+    ('CMP', 'Commonwealth Party of the US'),
     ('COM', 'Communist Party'),
     ('CRV', 'Conservative Party'),
     ('CST', 'Constitutional'),
@@ -83,7 +83,7 @@ parties_extended = OrderedDict([
     ('ICD', 'Independent Conserv. Democratic'),
     ('IGD', 'Industrial Government Party'),
     ('IND', 'Independent'),
-    ('LAB', 'U.S. Labor Party'),
+    ('LAB', 'US Labor Party'),
     ('LBL', 'Liberal Party'),
     ('LBR', 'Labor Party'),
     ('LBU', 'Liberty Union Party'),
@@ -106,7 +106,7 @@ parties_extended = OrderedDict([
     ('THD', 'Theo-Dem'),
     ('TWR', 'Taxpayers Without Representation'),
     ('TX', 'Taxpayers'),
-    ('USP', "U.S. People's Party"),
+    ('USP', "US People's Party"),
 ])
 
 monthly_reports = OrderedDict([
