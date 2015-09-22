@@ -2,7 +2,7 @@
   <div class="section__heading">
     <h2 class="heading__title">All candidate filings</h2>
   </div>
-  <div class="row">  
+  <div class="row">
     <p class="usa-width-two-thirds">Candidates are required to file a <strong>Statement of Candidacy</strong> every time they run for office. Financial reports from committees are available on committee pages.</p>
   </div>
   <table class="data-table" data-type="filing" data-candidate="{{ candidate_id }}">
@@ -11,6 +11,17 @@
         <th scope="col">Document</th>
         <th scope="col">Amendment indicator</th>
         <th scope="col">Receipt date</th>
+      </tr>
+    </thead>
+  </table>
+
+  <table class="data-table" data-type="independent-expenditure" data-candidate="{{ candidate_id }}">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Committee</th>
+        <th scope="col">Support/Oppose</th>
       </tr>
     </thead>
   </table>

@@ -5,29 +5,48 @@
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
+var columns = require('../modules/columns');
 var decoders = require('../modules/decoders');
 
-var columns = [
+var filingsColumns = [
   tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
-  {
-    data: 'amendment_indicator',
-    className: 'min-desktop',
-    render: function(data) {
-      return decoders.amendments[data] || '';
-    },
-  },
+  columns.amendmentIndicatorColumn,
   tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
 ];
 
-$(document).ready(function() {
+var expendituresColumns = [
+  tables.dateColumn({data: 'expenditure_date'}),
+  tables.currencyColumn({data: 'expenditure_amount'}),
+  tables.committeeColumn({data: 'committee', className: 'all'}),
+  columns.supportOpposeColumn
+];
+
+function initFilingsTable() {
   var $table = $('table[data-type="filing"]');
-  var $form = $('#category-filters');
   var candidateId = $table.attr('data-candidate');
   var path = ['candidate', candidateId, 'filings'];
-  tables.initTableDeferred($table, $form, path, {}, columns, tables.offsetCallbacks, {
+  tables.initTableDeferred($table, null, path, {}, filingsColumns, tables.offsetCallbacks, {
     // Order by receipt date descending
     order: [[2, 'desc']],
     dom: tables.simpleDOM,
     pagingType: 'simple'
   });
+}
+
+function initExpendituresTable() {
+  var $table = $('table[data-type="independent-expenditure"]');
+  var candidateId = $table.attr('data-candidate');
+  var path = ['schedules', 'schedule_e'];
+  var query = {candidate_id: candidateId};
+  tables.initTableDeferred($table, null, path, query, expendituresColumns, tables.seekCallbacks, {
+    // Order by receipt date descending
+    order: [[0, 'desc']],
+    dom: tables.simpleDOM,
+    pagingType: 'simple'
+  });
+}
+
+$(document).ready(function() {
+  initFilingsTable();
+  initExpendituresTable();
 });
