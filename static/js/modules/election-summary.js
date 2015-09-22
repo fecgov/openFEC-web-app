@@ -21,7 +21,6 @@ function ElectionSummary(selector, opts) {
   this.$elm = $(selector);
   this.opts = opts;
 
-  this.$count = this.$elm.find('.js-count');
   this.$receipts = this.$elm.find('.js-receipts');
   this.$disbursements = this.$elm.find('.js-disbursements');
   this.$expenditures = this.$elm.find('.js-expenditures');
@@ -36,7 +35,6 @@ ElectionSummary.prototype.fetch = function() {
 };
 
 ElectionSummary.prototype.draw = function(response) {
-  this.$count.text(response.count);
   this.$receipts.text(helpers.currency(response.receipts));
   this.$disbursements.text(helpers.currency(response.disbursements));
   this.$expenditures.text(helpers.currency(response.independent_expenditures));
