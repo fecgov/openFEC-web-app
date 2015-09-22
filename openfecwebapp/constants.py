@@ -101,7 +101,7 @@ parties_extended = OrderedDict([
     ('REF', 'Reform Party'),
     ('RTL', 'Right to Life'),
     ('SLP', 'Socialist Labor Party'),
-    ('SUS', 'Socialist Party U.S.A.'),
+    ('SUS', 'Socialist Party USA'),
     ('SWP', 'Socialist Workers Party'),
     ('THD', 'Theo-Dem'),
     ('TWR', 'Taxpayers Without Representation'),
