@@ -66,14 +66,20 @@
         <span class="page-controls__title">{{ name }}</span>
       </div>
     </div>
+    <div class="page-controls__bottom">
+      <div class="container">
+        <nav class="page-tabs">
+          <ul class="page-tabs__list" role="tablist" data-name="tab">
+            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial summary</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="other-spending" tabindex="-1" aria-controls="panel2" href="#section-2">Other spending</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
 
-  <section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
-    <div class="container">
-      {% include 'partials/financial-summary.html' %}
-      {% include 'partials/filings-tab-candidate.html' %}
-    </div>
-  </section>
+  {% include 'partials/candidate/financial-summary.html' %}
+  {% include 'partials/candidate/other-spending-tab.html' %}
 </div>
 
 {% endblock %}
