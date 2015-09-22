@@ -74,8 +74,8 @@
             <li>
               <a href="{{ url_for(
                 'disbursements',
-                min_date=dates['year'][0] | date,
-                max_date=dates['year'][1] | date)
+                min_date=dates['year'][0] | date(fmt='%m-%d-%Y'),
+                max_date=dates['year'][1] | date(fmt='%m-%d-%Y'))
               }}">Disbursements from committees this year &raquo;</a>
             </li>
           </ul>
