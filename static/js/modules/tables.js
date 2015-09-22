@@ -259,7 +259,7 @@ function identity(value) {
 }
 
 var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
-var MODAL_TRIGGER_HTML = '<i class="icon arrow--right"></li>';
+var MODAL_TRIGGER_HTML = '<button class="js-panel-button icon arrow--right"><span class="u-visually-hidden">Toggle details</span></button>';
 
 function modalRenderRow(row, data, index) {
   row.classList.add(MODAL_TRIGGER_CLASS, 'row--has-panel');
@@ -273,7 +273,6 @@ function modalRenderFactory(template, fetch) {
     var $main = $table.closest('.panel__main');
     // Move the modal to the results div.
     $modal.appendTo($main);
-    $table.find('tr').attr('tabindex', 0);
 
     $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, function(e) {
       if (e.which === 13 || e.type === 'click') {
@@ -321,16 +320,16 @@ function modalRenderFactory(template, fetch) {
     });
 
     /* Set focus to highlighted row on blurring anchors if tabbing out of the panel */
-    $modal.on('blur', 'a', function(e) {
+    $modal.on('blur', 'a, button', function(e) {
       if (!$modal.has(e.relatedTarget).length) {
-        $('.row-active').focus();
+        $('.row-active .js-panel-button').focus();
       }
     });
   };
 }
 
 function hidePanel(api, $modal) {
-    $('.row-active').focus();
+    $('.row-active .js-panel-button').focus();
     $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
     $modal.attr('aria-hidden', 'true');
