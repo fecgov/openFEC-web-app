@@ -19,7 +19,7 @@
           {% if office == 'president' %}
             <h1 class="entity__name">{{ cycle }} Presidential election</h1>
           {% else %}
-            <h1 class="entity__name">U.S. {{ office|title }} election: {{ state|fmt_state_full }}</h1>
+            <h1 class="entity__name">US {{ office|title }} election: {{ state|fmt_state_full }}</h1>
             {% if district %}
               <h2>United States House District {{ district }}</h2>
             {% endif %}
