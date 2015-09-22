@@ -50,7 +50,15 @@
         <div class="card__content">
           <h2 class="card__title">Receipt data</h2>
           <ul class="card__links list--bulleted">
-            <li><a href="{{ url_for('receipts', is_individual='true', contributor_type='individual', min_date=dates['year'][0] | date, max_date=dates['year'][1] | date) }}">Contributions from individuals this year &raquo;</a></li>
+            <li>
+              <a href="{{ url_for(
+                'receipts',
+                is_individual='true',
+                contributor_type='individual',
+                min_date=dates['year'][0] | date(fmt='%m-%d-%Y'),
+                max_date=dates['year'][1] | date(fmt='%m-%d-%Y')
+              ) }}">Contributions from individuals this year &raquo;</a>
+            </li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('receipts')}}">All receipt data</a>
         </div>
@@ -63,7 +71,13 @@
         <div class="card__content">
           <h2 class="card__title">Disbursement data</h2>
           <ul class="card__links list--bulleted">
-            <li><a href="{{ url_for('disbursements', min_date=dates['year'][0] | date, max_date=dates['year'][1] | date) }}">Disbursements from committees this year &raquo;</a></li>
+            <li>
+              <a href="{{ url_for(
+                'disbursements',
+                min_date=dates['year'][0] | date(fmt='%m-%d-%Y'),
+                max_date=dates['year'][1] | date(fmt='%m-%d-%Y'))
+              }}">Disbursements from committees this year &raquo;</a>
+            </li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('disbursements') }}">All disbursement data</a>
         </div>

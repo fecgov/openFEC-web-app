@@ -11,8 +11,8 @@
           href="{{ url_for(
             'disbursements',
             committee_id=committee_id,
-            min_date=cycle_start(cycle).strftime('%m/%d/%Y'),
-            max_date=cycle_end(cycle).strftime('%m/%d/%Y'),
+            min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y'),
           ) }}">All disbursements data
       </a>
     </div>
