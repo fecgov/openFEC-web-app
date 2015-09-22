@@ -111,10 +111,6 @@ var makeSizeColumn = _.partial(makeCommitteeColumn, _, function(data, type, row,
   };
 });
 
-var makeTypeColumn = _.partial(makeCommitteeColumn, _, function(data, type, row, meta, column) {
-  return {contributor_type: column};
-});
-
 var sizeColumns = [
   {
     data: 'candidate_name',
@@ -129,18 +125,6 @@ var sizeColumns = [
   makeSizeColumn({data: '500'}),
   makeSizeColumn({data: '1000'}),
   makeSizeColumn({data: '2000'})
-];
-
-var typeColumns = [
-  {
-    data: 'candidate_name',
-    className: 'all',
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
-    }
-  },
-  makeTypeColumn({data: 'individual'}),
-  makeTypeColumn({data: 'committee'})
 ];
 
 var stateColumn = {'data': 'state'};
@@ -172,7 +156,6 @@ function refreshTables() {
   if (selected.length > 0) {
     drawSizeTable(selected);
     drawStateTable(selected);
-    drawTypeTable(selected);
   }
 }
 
@@ -296,24 +279,6 @@ function drawStateTable(selected) {
     $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(selected),
-      order: [[1, 'desc']]
-    }, defaultOpts));
-    tables.barsAfterRender(null, $table.DataTable());
-  });
-}
-
-function drawTypeTable(selected) {
-  var $table = $('table[data-type="by-type"]');
-  var primary = _.object(_.map(selected, function(result) {
-    return [result.candidate_id, result];
-  }));
-  $.getJSON(
-    buildUrl(selected, ['schedules', 'schedule_a', 'by_contributor_type', 'by_candidate'])
-  ).done(function(response) {
-    var data = mapType(response, primary);
-    $table.dataTable(_.extend({
-      data: data,
-      columns: typeColumns,
       order: [[1, 'desc']]
     }, defaultOpts));
     tables.barsAfterRender(null, $table.DataTable());

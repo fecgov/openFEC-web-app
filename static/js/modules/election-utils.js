@@ -8,27 +8,25 @@ var topojson = require('topojson');
 var s = require('underscore.string');
 _.mixin(s.exports());
 
-var fips = require('../fips.json');
-var fipsInverse = _.invert(fips);
+var fips = require('./fips');
 
-var districts = require('../districts.json');
+var districts = require('../data/districts.json');
 var districtFeatures = topojson.feature(districts, districts.objects.districts);
 
 function encodeDistrict(state, district) {
-  return parseInt(fips[state.toUpperCase()]) * 100 + (parseInt(district) || 0);
+  return fips.fipsByState[state.toUpperCase()].STATE * 100 + (parseInt(district) || 0);
 }
 
 function decodeDistrict(district) {
   district = _.sprintf('%04d', district);
   return {
-    state: fipsInverse[district.substring(0, 2)],
+    state: fips.fipsByCode[parseInt(district.substring(0, 2))].STUSAB,
     district: parseInt(district.substring(2, 4))
   };
 }
 
 function decodeState(state) {
-  state = _.sprintf('%02d', parseInt(state));
-  return fipsInverse[state];
+  return fips.fipsByCode[parseInt(state)].STUSAB;
 }
 
 function truncate(value, digits) {
