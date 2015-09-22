@@ -10,9 +10,8 @@
       <a class="heading__action button--neutral button--browse" href="{{ url_for('filings', committee_id=committee_id) }}">All filings</a>
     </div>
     <div class="content__section">
-      <table class="data-table" data-type="filing" data-cycle="{{ cycle }}" data-committee="{{ committee_id }}" width="100%" class="responsive">
+      <table class="data-table" data-type="filing" data-cycle="{{ cycle }}" data-committee="{{ committee_id }}">
         <thead>
-          <tr>
           <th scope="col">Document</th>
           <th scope="col">Amendment indicator</th>
           <th scope="col">Receipt date</th>
@@ -21,7 +20,6 @@
           <th scope="col">Total disbursement</th>
           <th scope="col">Total independent expenditures</th>
           <th scope="col"></th>
-          </tr>
         </thead>
       </table>
     </div>
