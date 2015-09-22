@@ -319,6 +319,13 @@ function modalRenderFactory(template, fetch) {
       e.preventDefault();
       hidePanel(api, $modal);
     });
+
+    /* Set focus to highlighted row on blurring anchors if tabbing out of the panel */
+    $modal.on('blur', 'a', function(e) {
+      if (!$modal.has(e.relatedTarget).length) {
+        $('.row-active').focus();
+      }
+    });
   };
 }
 

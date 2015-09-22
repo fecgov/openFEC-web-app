@@ -83,7 +83,6 @@ $(document).ready(function() {
 
     // Focus search on "/"
     $(document.body).on('keyup', function(e) {
-      e.preventDefault();
       if (e.keyCode === KEYCODE_SLASH) {
         $('.js-search-input:visible').first().focus();
       }
