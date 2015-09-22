@@ -3,7 +3,6 @@
 /* global require, document */
 
 var $ = require('jquery');
-var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
@@ -16,10 +15,9 @@ var filingsColumns = [
 ];
 
 var expendituresColumns = [
-  tables.dateColumn({data: 'expenditure_date'}),
-  tables.currencyColumn({data: 'expenditure_amount'}),
-  tables.committeeColumn({data: 'committee', className: 'all', orderable: false}),
-  _.extend({}, columns.supportOpposeColumn, {orderable: false})
+  tables.currencyColumn({data: 'total'}),
+  tables.committeeColumn({data: 'committee', className: 'all'}),
+  columns.supportOpposeColumn
 ];
 
 function initFilingsTable() {
@@ -36,12 +34,12 @@ function initFilingsTable() {
 
 function initExpendituresTable() {
   var $table = $('table[data-type="independent-expenditure"]');
-  var path = ['schedules', 'schedule_e'];
+  var path = ['schedules', 'schedule_e', 'by_candidate'];
   var query = {
     candidate_id: $table.data('candidate'),
     cycle: $table.data('cycle')
   };
-  tables.initTableDeferred($table, null, path, query, expendituresColumns, tables.seekCallbacks, {
+  tables.initTableDeferred($table, null, path, query, expendituresColumns, tables.offsetCallbacks, {
     // Order by receipt date descending
     order: [[0, 'desc']],
     dom: tables.simpleDOM,
