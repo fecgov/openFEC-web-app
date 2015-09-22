@@ -6,6 +6,10 @@ var $ = require('jquery');
 module.exports = {
   init: function() {
     $(document).ready(function() {
+      $('.toggles input').each(function(){
+        $(this).attr('aria-controls', $(this).attr('value'));
+      })
+
       $('.panel-toggle-control').on('change', function(e) {
         var $elm = $(e.target);
         $('[name="' + $elm.attr('name') + '"]').each(function(idx, input) {
