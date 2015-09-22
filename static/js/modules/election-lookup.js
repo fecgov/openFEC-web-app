@@ -15,10 +15,10 @@ require('leaflet-providers');
 var helpers = require('./helpers');
 var utils = require('./election-utils');
 
-var states = require('../us.json');
-var districts = require('../stateDistricts.json');
+var states = require('../data/us-states-10m.json');
+var districts = require('../data/stateDistricts.json');
 
-var stateFeatures = topojson.feature(states, states.objects.units).features;
+var stateFeatures = topojson.feature(states, states.objects.states).features;
 
 var districtTemplate = require('../../templates/districts.hbs');
 var resultTemplate = require('../../templates/electionResult.hbs');
@@ -173,11 +173,6 @@ ElectionLookup.prototype.init = function() {
   this.$resultsItems = this.$elm.find('.results-items');
   this.$resultsTitle = this.$elm.find('.results-title');
 
-  this.$map = $('.election-map');
-  this.map = new ElectionLookupMap(this.$map.get(0), {
-    handleSelect: this.handleSelectMap.bind(this)
-  });
-
   this.$zip.on('change', this.handleZipChange.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
   this.$form.on('change', 'input,select', this.search.bind(this));
@@ -186,6 +181,12 @@ ElectionLookup.prototype.init = function() {
 
   this.handleStateChange();
   this.handlePopState();
+
+  this.$map = $('.election-map');
+  this.map = new ElectionLookupMap(this.$map.get(0), {
+    drawStates: _.isEmpty(this.serialized),
+    handleSelect: this.handleSelectMap.bind(this)
+  });
 };
 
 ElectionLookup.prototype.handleSelectMap = function(state, district) {
@@ -367,10 +368,11 @@ ElectionLookupMap.prototype.init = function() {
   this.overlay = null;
   this.districts = null;
   this.map = L.map(this.elm);
-  this.map.on('zoomend', this.handleZoom.bind(this));
+  this.map.on('viewreset', this.handleReset.bind(this));
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  this.map.setView([37.8, -96], 3);
-  this.drawStates();
+  if (this.opts.drawStates) {
+    this.map.setView([37.8, -96], 3);
+  }
 };
 
 ElectionLookupMap.prototype.drawStates = function() {
@@ -403,9 +405,10 @@ ElectionLookupMap.prototype.drawDistricts = function(districts) {
 };
 
 ElectionLookupMap.prototype.updateBounds = function(districts) {
-  var rule = _.find(boundsOverrides, function(rule, district) {
+  var rule = districts && _.find(boundsOverrides, function(rule, district) {
     return districts.indexOf(parseInt(district)) !== -1;
   });
+  this._viewReset = !!(rule || districts);
   if (rule) {
     this.map.setView(rule.coords, rule.zoom);
   }
@@ -440,14 +443,13 @@ ElectionLookupMap.prototype.filterDistricts = function(districts) {
 
 ElectionLookupMap.prototype.handleStateClick = function(e) {
   if (this.opts.handleSelect) {
-    var state = utils.decodeState(e.target.feature.id.substring(2, 4));
+    var state = utils.decodeState(e.target.feature.id);
     this.opts.handleSelect(state);
   }
 };
 
 ElectionLookupMap.prototype.onEachState = function(feature, layer) {
-  var state = parseInt(feature.id.substring(2, 4));
-  var color = this.statePalette[state % this.statePalette.length];
+  var color = this.statePalette[feature.id % this.statePalette.length];
   layer.setStyle({color: color});
   layer.on('click', this.handleStateClick.bind(this));
 };
@@ -470,7 +472,11 @@ ElectionLookupMap.prototype.handleDistrictClick = function(e) {
   }
 };
 
-ElectionLookupMap.prototype.handleZoom = function(e) {
+ElectionLookupMap.prototype.handleReset = function(e) {
+  if (this._viewReset) {
+    this._viewReset = false;
+    return;
+  }
   var zoom = e.target.getZoom();
   if (zoom <= STATE_ZOOM_THRESHOLD) {
     this.drawStates();
