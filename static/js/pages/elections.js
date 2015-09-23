@@ -10,6 +10,7 @@ var chroma = require('chroma-js');
 
 var dropdown = require('fec-style/js/dropdowns');
 
+var fips = require('../modules/fips');
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
@@ -286,7 +287,9 @@ function drawStateMap($container, candidateId, cached) {
     var results = _.reduce(
       data.results,
       function(acc, val) {
-        acc[val.state_full] = val.total;
+        var row = fips.fipsByState[val.state] || {};
+        var code = row.STATE ? parseInt(row.STATE) : null;
+        acc[code] = val.total;
         return acc;
       },
       {}
@@ -367,7 +370,7 @@ function updateColorScale($container, cached) {
     d3.select($elm.find('g')[0])
       .selectAll('path')
       .attr('fill', function(d) {
-        return scale(results[d.properties.name] || 0);
+        return results[d.id] ? scale(results[d.id]) : maps.colorZero;
       });
   });
   $container.find('.legend-container svg g').remove();
@@ -389,7 +392,7 @@ function initStateMaps(results) {
   });
   $choropleths.on('click', '.js-add-map', function(e){
     appendStateMap($choropleths, results, cached);
-  })
+  });
   $choropleths.on('click', '.js-remove-map', function(e) {
     var $target = $(e.target);
     var $parent = $target.closest('.state-map');
