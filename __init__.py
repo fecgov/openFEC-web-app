@@ -106,7 +106,7 @@ app.jinja_env.globals.update({
     'cms_url': config.cms_url,
     'context': get_context,
     'absolute_url': get_absolute_url,
-    'contact_email': '18F-FEC@gsa.gov',
+    'contact_email': 'betafeedback@fec.gov',
     'default_cycles': _get_default_cycles(),
     'series_has_data': series_has_data,
     'group_has_data': group_has_data,
