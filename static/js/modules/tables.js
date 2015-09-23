@@ -16,7 +16,7 @@ var helpers = require('./helpers');
 
 var simpleDOM = 't<"results-info"ip>';
 
-// Only show table after draw 
+// Only show table after draw
 $(document.body).on('draw.dt', function(){
   $('.datatable__container').css('opacity', '1');
 })
@@ -40,7 +40,7 @@ $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   }
 });
 
-// Only show table after draw 
+// Only show table after draw
 $(document.body).on('draw.dt', function(){
   $('.datatable__container').css('opacity', '1');
 })
@@ -259,7 +259,9 @@ function identity(value) {
 }
 
 var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
-var MODAL_TRIGGER_HTML = '<button class="js-panel-button icon arrow--right"><span class="u-visually-hidden">Toggle details</span></button>';
+var MODAL_TRIGGER_HTML = '<button class="js-panel-button icon arrow--right">' +
+  '<span class="u-visually-hidden">Toggle details</span>' +
+'</button>';
 
 function modalRenderRow(row, data, index) {
   row.classList.add(MODAL_TRIGGER_CLASS, 'row--has-panel');
