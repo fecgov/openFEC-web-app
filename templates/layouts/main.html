@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-  <title>{% block title %}{% endblock %} - OpenFEC</title>
+  <title>{% block title %}{% endblock %} - beta.FEC.gov</title>
   {% set title = self.title() %}
 
   {% include 'partials/meta-tags.html' %}
@@ -40,7 +40,7 @@
 {% import 'macros/search.html' as search %}
 {% include 'partials/browser-warning.html' %}
 {% include 'partials/javascript-warning.html' %}
-<a href="#main" class="skip-nav">skip navigation</a>
+<a class="skip-nav" tabindex="0">skip navigation</a>
 
   <header class="site-header">
     <div class="disclaimer">
@@ -61,7 +61,7 @@
   </header>
 
   {% block header %}{% endblock %}
-  <main id="main" {% if section %} data-section="{{section}}"{% endif %} tabindex="-1">
+  <main id="main" {% if section %} data-section="{{section}}"{% endif %}>
     {% block body %}{% endblock %}
   </main>
 
