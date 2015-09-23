@@ -45,17 +45,17 @@ Filter receipts
 {{ typeahead.field('committee_id', 'Committee') }}
 
 <h3 class="filters__subheader">Contributor information</h3>
-{{ typeahead.field('contributor_id', 'Contributor Name (committee)') }}
-{{ text.field('contributor_name', 'Contributor Name (non-committee)') }}
+{{ typeahead.field('contributor_id', 'Contributor name (committee)') }}
+{{ text.field('contributor_name', 'Contributor name (non-committee)') }}
 {{ text.field('contributor_city', 'City') }}
 {{ states.field('contributor_state') }}
 {{ text.field('contributor_employer', 'Employer') }}
 {{ text.field('contributor_occupation', 'Occupation') }}
 
 <h3 class="filters__subheader">Transaction information</h3>
-{{ text.field('min_amount', 'Minimum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-{{ text.field('max_amount', 'Maximum Contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-{{ date.field('date', 'Receipt Date', dates ) }}
+{{ text.field('min_amount', 'Minimum contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+{{ date.field('date', 'Receipt date', dates ) }}
 <p>Receipts are reported periodically, according to the filer's filing schedule.</p>
 
 {% endblock %}
