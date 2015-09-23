@@ -24,7 +24,11 @@
       <td>{{{ currency disbursement_amount }}}</td>
     </tr>
     <tr>
-      <td class="panel__term">Receipt date</td>
+      <td class="panel__term">Description</td>
+      <td>{{ disbursement_description }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Disbursement date</td>
       <td>{{{ datetime disbursement_date }}}</td>
     </tr>
     <tr>
@@ -32,8 +36,8 @@
       <td>{{ memo_text }}</td>
     </tr>
     <tr>
-      <td class="panel__term">Description</td>
-      <td>{{ disbursement_description }}</td>
+      <td class="panel__term">Memo code</td>
+      <td>{{ memo_code }}</td>
     </tr>
     {{#if election_type_full }}
     <tr>
@@ -42,6 +46,20 @@
     </tr>
     {{/if}}
   </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Filing information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Receipt date</td>
+      <td>{{{ datetime receipt_date }}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">View report page</td>
+      <td><a href="{{{ pdf_url }}}" target="_blank">View on fec.gov</a></td>
+    </tr>
+ </table>
 </div>
 
 <div class="panel__row">
