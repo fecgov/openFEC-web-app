@@ -24,12 +24,12 @@
       <td>{{{ currency disbursement_amount }}}</td>
     </tr>
     <tr>
-      <td class="panel__term">Description</td>
-      <td>{{ disbursement_description }}</td>
-    </tr>
-    <tr>
       <td class="panel__term">Disbursement date</td>
       <td>{{{ datetime disbursement_date }}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Description</td>
+      <td>{{ disbursement_description }}</td>
     </tr>
     <tr>
       <td class="panel__term">Memo</td>
@@ -37,7 +37,7 @@
     </tr>
     <tr>
       <td class="panel__term">Memo code</td>
-      <td>{{ memo_code }}</td>
+      <td>{{ memoed_subtotal }}</td>
     </tr>
     {{#if election_type_full }}
     <tr>
