@@ -20,27 +20,17 @@ var candidateStateMapTemplate = require('../../templates/candidateStateMap.hbs')
 
 var MAX_MAPS = 2;
 
-var supportOpposeMap = {
-  S: 'Support',
-  O: 'Oppose',
-};
-var supportOpposeColumn = {
-  data: 'support_oppose_indicator',
-  render: function(data, type, row, meta) {
-    return supportOpposeMap[data] || 'Unknown';
-  }
-};
 var independentExpenditureColumns = [
   tables.currencyColumn({data: 'total', className: 'all'}),
   tables.committeeColumn({data: 'committee', className: 'all'}),
-  supportOpposeColumn,
+  columns.supportOpposeColumn,
   tables.candidateColumn({data: 'candidate', className: 'all'}),
 ];
 
 var communicationCostColumns = [
   tables.currencyColumn({data: 'total', className: 'all'}),
   tables.committeeColumn({data: 'committee', className: 'all'}),
-  supportOpposeColumn,
+  columns.supportOpposeColumn,
   tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
 

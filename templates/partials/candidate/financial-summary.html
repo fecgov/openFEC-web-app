@@ -2,6 +2,8 @@
 {% import 'macros/cycle-select.html' as select %}
 {% import 'macros/null.html' as null %}
 
+<section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
+  <div class="container">
   <div class="content__section">
     <div class="section__heading">
       <h2 class="heading__title">
@@ -129,3 +131,24 @@
   {{ missing.missing_financials('candidate', cycle) }}
 
 {% endif %}
+
+<div class="content__section">
+  <div class="section__heading">
+    <h2 class="heading__title">All candidate filings</h2>
+  </div>
+  <div class="row">
+    <p class="usa-width-two-thirds">Candidates are required to file a <strong>Statement of Candidacy</strong> every time they run for office. Financial reports from committees are available on committee pages.</p>
+  </div>
+  <table class="data-table" data-type="filing" data-candidate="{{ candidate_id }}">
+    <thead>
+      <tr>
+        <th scope="col">Document</th>
+        <th scope="col">Amendment indicator</th>
+        <th scope="col">Receipt date</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+
+  </div>
+</section>

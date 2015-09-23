@@ -15,6 +15,26 @@ var sizeInfo = {
   2000: {limits: [2000, null], label: 'Over $2000'},
 };
 
+var supportOpposeMap = {
+  S: 'Support',
+  O: 'Oppose',
+};
+
+var supportOpposeColumn = {
+  data: 'support_oppose_indicator',
+  render: function(data, type, row, meta) {
+    return supportOpposeMap[data] || 'Unknown';
+  }
+};
+
+var amendmentIndicatorColumn = {
+  data: 'amendment_indicator',
+  className: 'min-desktop',
+  render: function(data) {
+    return decoders.amendments[data] || '';
+  },
+};
+
 var filings = {
   pdf_url: tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
   filer_name: {
@@ -32,13 +52,7 @@ var filings = {
       }
     },
   },
-  amendment_indicator: {
-    data: 'amendment_indicator',
-    className: 'min-desktop',
-    render: function(data, type, row, meta) {
-      return decoders.amendments[data] || '';
-    },
-  },
+  amendment_indicator: amendmentIndicatorColumn,
   receipt_date: tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
   coverage_end_date: tables.dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel', orderable: false}),
   total_receipts: tables.currencyColumn({data: 'total_receipts', className: 'min-tablet hide-panel'}),
@@ -65,5 +79,7 @@ function getColumns (columns, keys) {
 module.exports = {
   filings: filings,
   sizeInfo: sizeInfo,
-  getColumns: getColumns
+  getColumns: getColumns,
+  supportOpposeColumn: supportOpposeColumn,
+  amendmentIndicatorColumn: amendmentIndicatorColumn
 };
