@@ -268,6 +268,7 @@ function modalRenderRow(row, data, index) {
 }
 
 function modalRenderFactory(template, fetch) {
+  var callback;
   fetch = fetch || identity;
   return function(api, data, response) {
     var $table = $(api.table().node());
@@ -276,7 +277,8 @@ function modalRenderFactory(template, fetch) {
     // Move the modal to the results div.
     $modal.appendTo($main);
 
-    $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, function(e) {
+    $table.off('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, callback);
+    callback = function(e) {
       if (e.which === 13 || e.type === 'click') {
         // Note: Use `currentTarget` to get parent row, since the target column
         // may have been moved since the triggering event
@@ -314,7 +316,8 @@ function modalRenderFactory(template, fetch) {
           });
         }
       }
-    });
+    };
+    $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, callback);
 
     $modal.on('click', '.js-panel-close', function(e) {
       e.preventDefault();
