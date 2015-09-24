@@ -16,6 +16,7 @@ var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
 var siteNav = require('fec-style/js/site-nav');
+var skipNav = require('fec-style/js/skip-nav');
 var typeahead = require('fec-style/js/typeahead');
 var typeaheadFilter = require('fec-style/js/typeahead-filter');
 
@@ -48,6 +49,8 @@ $('.js-typeahead-filter').each(function() {
   var dataset = typeahead.datasets[key];
   new typeaheadFilter.TypeaheadFilter(this, dataset);
 });
+
+new skipNav.Skipnav('.skip-nav', 'main');
 
 $(document).ready(function() {
     var $body,
