@@ -16,7 +16,7 @@
 {% macro checkbox_options(name, options) %}
 <div class="dropdown">
   <button type="button" class="dropdown__button button--neutral">More</button>
-  <div id="{{ name }}-dropdown" class="dropdown__panel" aria-hidden="true">
+  <div class="dropdown__panel" aria-hidden="true">
     {{ checkbox_list(name, options) }}
   </div>
 </div>

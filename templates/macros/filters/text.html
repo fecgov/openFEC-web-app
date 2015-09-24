@@ -2,7 +2,7 @@
 <div class="filter" id="{{ name }}-field">
   <label class="label" for="{{ name }}">{{ title }}</label>
   <div class="input--removable">
-    <input type="text" name="{{ name }}"
+    <input id="{{ name }}" type="text" name="{{ name }}"
       {% for attr, value in attrs.items() %}
         {{ attr }}="{{ value }}"
       {% endfor %}
