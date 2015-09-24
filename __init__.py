@@ -95,6 +95,24 @@ def get_election_url(candidate, cycle, district=None):
     )
 
 
+try:
+    assets = json.load(open('./rev-manifest.json'))
+except OSError:
+    logger.error(
+        'Manifest "rev-manifest.json" not found. Did you remember to run '
+        '"npm run build"?'
+    )
+    raise
+
+assets = {
+    key: value.replace('dist', '')
+    for key, value in assets.items()
+}
+
+def asset_for(path):
+    return url_for('static', filename=assets[path].lstrip('/'))
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -116,23 +134,9 @@ app.jinja_env.globals.update({
     'election_url': get_election_url,
     'constants': constants,
     'cycles': get_cycles(),
+    'assets': assets,
+    'asset_for': asset_for,
 })
-
-
-try:
-    assets = json.load(open('./rev-manifest.json'))
-except OSError:
-    logger.error(
-        'Manifest "rev-manifest.json" not found. Did you remember to run '
-        '"npm run build"?'
-    )
-    raise
-# Hack: Rename paths from "dist" to "static"
-# TODO(jmcarp) Find a better solution
-app.jinja_env.globals['assets'] = {
-    key: value.replace('dist', 'static')
-    for key, value in assets.items()
-}
 
 
 @app.route('/')
@@ -362,6 +366,9 @@ if not config.test:
     app.config['BASIC_AUTH_PASSWORD'] = config.password
     app.config['BASIC_AUTH_FORCE'] = True
     basic_auth = BasicAuth(app)
+
+
+app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 
 
 if __name__ == '__main__':
