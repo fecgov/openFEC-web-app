@@ -16,9 +16,10 @@
   {% endif %}
   {% if api_location %}
   <script>
-    API_LOCATION = "{{api_location}}";
-    API_VERSION = "{{api_version}}";
-    API_KEY = "{{api_key}}";
+    BASE_PATH = '{{ base_path() }}';
+    API_LOCATION = '{{ api_location }}';
+    API_VERSION = '{{ api_version }}';
+    API_KEY = '{{ api_key }}';
 
     function trackMetric(name, imagesSelector) {
       if (imagesSelector) {

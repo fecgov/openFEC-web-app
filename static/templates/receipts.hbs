@@ -4,7 +4,7 @@
     <tr>
       <td class="panel__term">Name</td>
       {{#if contributor}}
-        <td><a href="/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
+        <td><a href="{{basePath}}committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
       {{else}}
         <td>{{contributor_name}}</td>
       {{/if}}
@@ -20,7 +20,7 @@
     <tr>
       <td class="panel__term">Employer</td>
       <td>{{ contributor_employer }}</td>
-    </tr>    
+    </tr>
     <tr>
       <td class="panel__term">Year to date</td>
       <td>{{{ currency contributor_aggregate_ytd }}}</td>
@@ -55,7 +55,7 @@
   <table>
     <tr>
       <td class="panel__term">Committee</td>
-      <td><a href="/committee/{{ committee.committee_id }}/">{{ committee.name }}</a></td>
+      <td><a href="{{basePath}}committee/{{ committee.committee_id }}/">{{ committee.name }}</a></td>
     </tr>
     <tr>
       <td class="panel__term">Political party</td>

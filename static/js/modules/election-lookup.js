@@ -92,7 +92,7 @@ function formatUrl(result) {
     path = path.concat(result.district);
   }
   path = path.concat(result.cycle);
-  return URI(path.join('/')).toString();
+  return helpers.buildAppUrl(path);
 }
 
 function formatColor(result, lookup) {

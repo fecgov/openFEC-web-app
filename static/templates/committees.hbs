@@ -1,6 +1,6 @@
 <div class="panel__row">
   <div class="panel__heading">
-    <h4 class="panel__title"><a href="/committee/{{committee_id}}">{{name}}</a></h4>
+    <h4 class="panel__title"><a href="{{basePath}}committee/{{committee_id}}">{{name}}</a></h4>
   </div>
   <table>
     <tr>
@@ -14,20 +14,20 @@
     <tr>
       <td class="panel__term">Political Party</td>
       <td>{{party_full}}</td>
-    </tr> 
+    </tr>
     {{#if organization_type_full}}
     <tr>
       <td class="panel__term">Organization Type</td>
       <td>{{organization_type_full}}</td>
-    </tr>  
+    </tr>
     {{/if}}
     <tr>
       <td class="panel__term">Treasurer</td>
       <td>{{treasurer_name}}</td>
-    </tr> 
+    </tr>
     <tr>
       <td class="panel__term">State</td>
       <td>{{state}}</td>
-    </tr>              
+    </tr>
   </table>
 </div>
