@@ -28,7 +28,8 @@ function initFilingsTable() {
     // Order by receipt date descending
     order: [[2, 'desc']],
     dom: tables.simpleDOM,
-    pagingType: 'simple'
+    pagingType: 'simple',
+    hideEmpty: true
   });
 }
 
@@ -43,7 +44,8 @@ function initExpendituresTable() {
     // Order by receipt date descending
     order: [[0, 'desc']],
     dom: tables.simpleDOM,
-    pagingType: 'simple'
+    pagingType: 'simple',
+    hideEmpty: true
   });
 }
 

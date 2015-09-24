@@ -17,9 +17,9 @@ var helpers = require('./helpers');
 var simpleDOM = 't<"results-info"ip>';
 
 // Only show table after draw
-$(document.body).on('draw.dt', function(){
+$(document.body).on('draw.dt', function() {
   $('.datatable__container').css('opacity', '1');
-})
+});
 
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
@@ -41,9 +41,9 @@ $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
 });
 
 // Only show table after draw
-$(document.body).on('draw.dt', function(){
+$(document.body).on('draw.dt', function() {
   $('.datatable__container').css('opacity', '1');
-})
+});
 
 function yearRange(first, last) {
   if (first === last) {
@@ -427,7 +427,6 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
       }
       var query = _.extend(
         callbacks.mapQuery(api, data),
-        {api_key: API_KEY},
         parsedFilters || {}
       );
       if (useHideNull) {
@@ -444,6 +443,9 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
         callbacks.handleResponse(api, data, response);
         callback(callbacks.preprocess(response));
         callbacks.afterRender(api, data, response);
+        if (opts.hideEmpty) {
+          hideEmpty(api, data, response);
+        }
       }).always(function() {
         $processing.hide();
       });
@@ -476,6 +478,20 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   if ($form) {
     updateOnChange($form, api);
     $table.on('draw.dt', adjustFormHeight.bind(null, $table, $form));
+  }
+}
+
+/**
+ * Replace a `DataTable` with placeholder text if no results found. Should only
+ * be used with unfiltered tables, else tables may be destroyed on restrictive
+ * filtering.
+ */
+function hideEmpty(api, data, response) {
+  if (!response.pagination.count) {
+    api.destroy();
+    var $table = $(api.table().node());
+    $table.before('No data found.');
+    $table.remove();
   }
 }
 
