@@ -50,7 +50,7 @@ $('.js-typeahead-filter').each(function() {
   new typeaheadFilter.TypeaheadFilter(this, dataset);
 });
 
-new skipNav.Skipnav('.skip-nav');
+new skipNav.Skipnav('.skip-nav', 'main');
 
 $(document).ready(function() {
     var $body,
