@@ -7,8 +7,8 @@ from .base_test_class import SearchPageTestCase
 from tests.selenium import utils
 
 
-candidate_url_re = re.compile('\/candidate\/\w+$')
-committee_url_re = re.compile('\/committee\/\w+$')
+candidate_url_re = re.compile('\/candidate\/\w+\/$')
+committee_url_re = re.compile('\/committee\/\w+\/$')
 
 
 class SearchResultsPageTests(SearchPageTestCase):
