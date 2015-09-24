@@ -114,7 +114,7 @@ def asset_for(path):
 
 
 def get_base_path():
-    return request.headers.get('X-Script-Name', '/')
+    return request.headers.get('X-Script-Name', '')
 
 
 app.jinja_env.globals.update({

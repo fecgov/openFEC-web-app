@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
+var helpers = require('../modules/helpers');
 var donationTemplate = require('../../templates/receipts.hbs');
 
 var columns = [
@@ -16,7 +17,11 @@ var columns = [
     width: '200px',
     render: function(data, type, row, meta) {
       if (data) {
-        return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+        return tables.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
       } else {
         return row.contributor_name;
       }
@@ -33,7 +38,11 @@ var columns = [
     width: '250px',
     render: function(data, type, row, meta) {
       if (data) {
-        return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+        return tables.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
       } else {
         return '';
       }

@@ -46,9 +46,9 @@ function filterNull(params) {
 }
 
 function buildAppUrl(path, query) {
-  return URI(BASE_PATH)
-    .path(Array.prototype.concat('', path, '').join('/'))
-    .addQuery(query)
+  return URI()
+    .path(Array.prototype.concat(BASE_PATH, path || [], '').join('/'))
+    .addQuery(query || {})
     .toString();
 }
 

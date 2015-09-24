@@ -4,7 +4,7 @@
     <tr>
       <td class="panel__term">Recipient name</td>
       {{#if recipient}}
-        <td><a href="{{basePath}}committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
+        <td><a href="{{basePath}}/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
       {{else}}
         <td>{{recipient_name}}</td>
       {{/if}}
@@ -49,7 +49,7 @@
   <table>
     <tr>
       <td class="panel__term">Name</td>
-      <td><a href="{{basePath}}committee/{{committee_id}}">{{committee.name}}</a></td>
+      <td><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
     </tr>
     <tr>
       <td class="panel__term">Designation</td>

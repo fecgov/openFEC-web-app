@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
+var helpers = require('../modules/helpers');
 var disbursementTemplate = require('../../templates/disbursements.hbs');
 
 var columns = [
@@ -17,7 +18,11 @@ var columns = [
     render: function(data, type, row, meta) {
       var committee = row.recipient_committee;
       if (committee) {
-        return tables.buildEntityLink(committee.name, '/committee/' + committee.committee_id, 'committee');
+        return tables.buildEntityLink(
+          committee.name,
+          helpers.buildAppUrl(['committee', committee.committee_id]),
+          'committee'
+        );
       } else {
         return data;
       }
@@ -34,7 +39,11 @@ var columns = [
     width: '30%',
     render: function(data, type, row, meta) {
       if (data) {
-        return tables.buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+        return tables.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
       } else {
         return '';
       }
