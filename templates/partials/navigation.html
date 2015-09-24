@@ -3,15 +3,15 @@
   <label for="nav-toggle" class="site-nav__button site-nav__button--left">Menu</label>
   <ul id="site-menu" class="site-nav__list">
     <li class="site-nav__item site-nav__item--with-dropdown">
-      <a href="/" class="site-nav__link is-current">Campaign finance data</a>
+      <a href="{{ url_for('search') }}" class="site-nav__link is-current">Campaign finance data</a>
       <input class="nav-toggle__input js-toggle" id="dropdown-toggle-1" type="checkbox">
       <label for="dropdown-toggle-1" class="site-nav__link nav-toggle__label">Campaign finance data</label>
       <ul class="site-nav__dropdown">
         <li class="site-nav__item u-under-lg-only">
-          <a class="site-nav__link" href="/">Campaign finance data home</a>
+          <a class="site-nav__link" href="{{ url_for('search') }}">Campaign finance data home</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="/elections">Find candidates running near you</a>
+          <a class="site-nav__link" href="{{ url_for('election_lookup') }}">Find candidates running near you</a>
         </li>
         <li class="site-nav__item">
           <span class="h3 site-nav__subtitle">Browse:</span>
