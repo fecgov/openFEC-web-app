@@ -20,7 +20,7 @@
     <tr>
       <td class="panel__term">Employer</td>
       <td>{{ contributor_employer }}</td>
-    </tr>    
+    </tr>
     <tr>
       <td class="panel__term">Year to date</td>
       <td>{{{ currency contributor_aggregate_ytd }}}</td>
@@ -48,6 +48,20 @@
       <td>{{ election_type_full }}</td>
     </tr>
   </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Filing information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Filing date</td>
+      <td>{{{ datetime receipt_date }}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">View report page</td>
+      <td><a href="{{{ pdf_url }}}" target="_blank">View on fec.gov</a></td>
+    </tr>
+ </table>
 </div>
 
 <div class="panel__row">
