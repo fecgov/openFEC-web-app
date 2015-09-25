@@ -369,7 +369,9 @@ ElectionLookupMap.prototype.init = function() {
   this.districts = null;
   this.map = L.map(this.elm);
   this.map.on('viewreset', this.handleReset.bind(this));
-  L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
+  this.tileLayer = L.tileLayer.provider('Stamen.TonerLite');
+  this.tileLayer.on('tileload', this.handleTileLoad.bind(this));
+  this.tileLayer.addTo(this.map);
   if (this.opts.drawStates) {
     this.map.setView([37.8, -96], 3);
   }
@@ -446,6 +448,10 @@ ElectionLookupMap.prototype.handleStateClick = function(e) {
     var state = utils.decodeState(e.target.feature.id);
     this.opts.handleSelect(state);
   }
+};
+
+ElectionLookupMap.prototype.handleTileLoad = function(e) {
+  e.tile.setAttribute('alt', 'Map tile image');
 };
 
 ElectionLookupMap.prototype.onEachState = function(feature, layer) {
