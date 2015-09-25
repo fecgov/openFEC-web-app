@@ -432,7 +432,8 @@ function initSpendingTables() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false
+        useHideNull: false,
+        hideEmpty: true
       });
     }
   });
