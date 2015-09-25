@@ -7,18 +7,19 @@
 
   {% include 'partials/meta-tags.html' %}
 
-  <link rel="stylesheet" href="/{{ assets['dist/styles/styles.css'] }}" />
+  <link rel="stylesheet" href="{{ asset_for('dist/styles/styles.css') }}" />
 
   {% if style_url %}
   <link rel="stylesheet" href="{{ style_url }}" />
   {% else %}
-  <link rel="stylesheet" href="/{{ assets['dist/styles/fec.css'] }}" />
+  <link rel="stylesheet" href="{{ asset_for('dist/styles/fec.css') }}" />
   {% endif %}
   {% if api_location %}
   <script>
-    API_LOCATION = "{{api_location}}";
-    API_VERSION = "{{api_version}}";
-    API_KEY = "{{api_key}}";
+    BASE_PATH = '{{ base_path() }}';
+    API_LOCATION = '{{ api_location }}';
+    API_VERSION = '{{ api_version }}';
+    API_KEY = '{{ api_key }}';
 
     function trackMetric(name, imagesSelector) {
       if (imagesSelector) {
@@ -81,8 +82,8 @@
 
 {% include './partials/glossary.html' %}
 
-<script src="/{{ assets['dist/js/common.js'] }}"></script>
-<script src="/{{ assets['dist/js/init.js'] }}"></script>
+<script src="{{ asset_for('dist/js/common.js') }}"></script>
+<script src="{{ asset_for('dist/js/init.js') }}"></script>
 {% block scripts %}{% endblock %}
 
 {% if use_analytics %}

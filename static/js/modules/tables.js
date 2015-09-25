@@ -70,15 +70,15 @@ function mapFilters(filters) {
 
 var parsedFilters;
 
-function buildCycle(datum) {
+function getCycle(datum) {
   if (parsedFilters && parsedFilters.cycle) {
     var cycles = _.intersection(
       _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
       datum.cycles
     );
-    return '?cycle=' + _.max(cycles);
+    return {cycle: _.max(cycles)};
   } else {
-    return '';
+    return {};
   }
 }
 
@@ -174,7 +174,7 @@ var barCurrencyColumn = barColumn(helpers.currency);
 
 var candidateColumn = formattedColumn(function(data) {
   if (data) {
-    return buildEntityLink(data.name, '/candidate/' + data.candidate_id, 'candidate');
+    return buildEntityLink(data.name, helpers.buildAppUrl(['candidate', data.candidate_id]), 'candidate');
   } else {
     return '';
   }
@@ -182,7 +182,7 @@ var candidateColumn = formattedColumn(function(data) {
 
 var committeeColumn = formattedColumn(function(data) {
   if (data) {
-    return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+    return buildEntityLink(data.name, helpers.buildAppUrl(['committee', data.committee_id]), 'committee');
   } else {
     return '';
   }
@@ -506,7 +506,7 @@ var seekCallbacks = {
 module.exports = {
   simpleDOM: simpleDOM,
   yearRange: yearRange,
-  buildCycle: buildCycle,
+  getCycle: getCycle,
   buildAggregateUrl: buildAggregateUrl,
   buildTotalLink: buildTotalLink,
   buildEntityLink: buildEntityLink,

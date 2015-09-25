@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
+var helpers = require('../modules/helpers');
 var candidatesTemplate = require('../../templates/candidates.hbs');
 
 var columns = [
@@ -16,7 +17,7 @@ var columns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        '/candidate/' + row.candidate_id + tables.buildCycle(row),
+        helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row)),
         'candidate'
       );
     }

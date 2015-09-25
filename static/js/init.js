@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, window, document */
+/* global require, window, document, BASE_PATH */
 
 var KEYCODE_SLASH = 191;
 
@@ -82,7 +82,11 @@ $(document).ready(function() {
     new glossary.Glossary(terms, {body: '#glossary'});
 
     // Initialize typeaheads
-    new typeahead.Typeahead('.js-search-input', $('.js-search-type').val());
+    new typeahead.Typeahead(
+      '.js-search-input',
+      $('.js-search-type').val(),
+      BASE_PATH
+    );
 
     // Focus search on "/"
     $(document.body).on('keyup', function(e) {

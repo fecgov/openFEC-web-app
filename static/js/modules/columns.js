@@ -5,6 +5,7 @@
 var _ = require('underscore');
 
 var tables = require('./tables');
+var helpers = require('./helpers');
 var decoders = require('./decoders');
 
 var sizeInfo = {
@@ -42,11 +43,19 @@ var filings = {
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      var cycle = tables.buildCycle(row);
+      var cycle = tables.getCycle(row);
       if (row.candidate_name) {
-        return tables.buildEntityLink(row.candidate_name, '/candidate/' + row.candidate_id + cycle, 'candidate');
+        return tables.buildEntityLink(
+          row.candidate_name,
+          helpers.buildAppUrl(['candidate', row.candidate_id], cycle),
+          'candidate'
+        );
       } else if (row.committee_name) {
-        return tables.buildEntityLink(row.committee_name, '/committee/' + row.committee_id + cycle, 'committee');
+        return tables.buildEntityLink(
+          row.committee_name,
+          helpers.buildAppUrl(['committee', row.committee_id], cycle),
+          'committee'
+        );
       } else {
         return '';
       }

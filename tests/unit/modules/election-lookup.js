@@ -12,9 +12,8 @@ var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 
-var lookup = require('../../../static/js/modules/election-lookup');
-
 _.extend(window, {
+  BASE_PATH: '/',
   API_LOCATION: '',
   API_VERSION: '/v1',
   API_KEY: '12345'
@@ -28,6 +27,8 @@ _.extend(window, {
     }
   }
 });
+
+var lookup = require('../../../static/js/modules/election-lookup');
 
 describe('election lookup', function() {
   before(function() {

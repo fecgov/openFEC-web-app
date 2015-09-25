@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, Intl, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, Intl, BASE_PATH, API_LOCATION, API_VERSION, API_KEY */
 
 var URI = require('URIjs');
 var _ = require('underscore');
@@ -26,6 +26,8 @@ function datetime(value) {
 }
 Handlebars.registerHelper('datetime', datetime);
 
+Handlebars.registerHelper('basePath', BASE_PATH);
+
 function cycleDates(year) {
   return {
     min: '01-01-' + (year - 1),
@@ -43,6 +45,13 @@ function filterNull(params) {
     .value();
 }
 
+function buildAppUrl(path, query) {
+  return URI()
+    .path(Array.prototype.concat(BASE_PATH, path || [], '').join('/'))
+    .addQuery(query || {})
+    .toString();
+}
+
 function buildUrl(path, query) {
   return URI(API_LOCATION)
     .path(Array.prototype.concat(API_VERSION, path, '').join('/'))
@@ -56,5 +65,6 @@ module.exports = {
   datetime: datetime,
   cycleDates: cycleDates,
   filterNull: filterNull,
+  buildAppUrl: buildAppUrl,
   buildUrl: buildUrl
 };

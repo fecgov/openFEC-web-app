@@ -95,6 +95,28 @@ def get_election_url(candidate, cycle, district=None):
     )
 
 
+try:
+    assets = json.load(open('./rev-manifest.json'))
+except OSError:
+    logger.error(
+        'Manifest "rev-manifest.json" not found. Did you remember to run '
+        '"npm run build"?'
+    )
+    raise
+
+assets = {
+    key: value.replace('dist', '')
+    for key, value in assets.items()
+}
+
+def asset_for(path):
+    return url_for('static', filename=assets[path].lstrip('/'))
+
+
+def get_base_path():
+    return request.headers.get('X-Script-Name', '')
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -116,23 +138,10 @@ app.jinja_env.globals.update({
     'election_url': get_election_url,
     'constants': constants,
     'cycles': get_cycles(),
+    'assets': assets,
+    'asset_for': asset_for,
+    'base_path': get_base_path,
 })
-
-
-try:
-    assets = json.load(open('./rev-manifest.json'))
-except OSError:
-    logger.error(
-        'Manifest "rev-manifest.json" not found. Did you remember to run '
-        '"npm run build"?'
-    )
-    raise
-# Hack: Rename paths from "dist" to "static"
-# TODO(jmcarp) Find a better solution
-app.jinja_env.globals['assets'] = {
-    key: value.replace('dist', 'static')
-    for key, value in assets.items()
-}
 
 
 @app.route('/')
@@ -146,7 +155,7 @@ def search():
         return render_template('search.html', page='home', dates=utils.date_ranges())
 
 
-@app.route('/api')
+@app.route('/api/')
 def api():
     """Redirect to API as described at
     https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
@@ -154,7 +163,7 @@ def api():
     return redirect(config.api_location, http.client.MOVED_PERMANENTLY)
 
 
-@app.route('/developers')
+@app.route('/developers/')
 def developers():
     """Redirect to developer portal as described at
     https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
@@ -164,7 +173,7 @@ def developers():
     return redirect(url.url, http.client.MOVED_PERMANENTLY)
 
 
-@app.route('/candidate/<c_id>')
+@app.route('/candidate/<c_id>/')
 @use_kwargs({
     'cycle': Arg(int),
 })
@@ -177,7 +186,7 @@ def candidate_page(c_id, cycle=None):
     return render_candidate(candidate, committees, cycle)
 
 
-@app.route('/committee/<c_id>')
+@app.route('/committee/<c_id>/')
 @use_kwargs({
     'cycle': Arg(int),
 })
@@ -190,12 +199,12 @@ def committee_page(c_id, cycle=None):
     return render_committee(committee, candidates, cycle)
 
 
-@app.route('/candidates')
+@app.route('/candidates/')
 def candidates():
     return render_template('candidates.html', result_type='candidates')
 
 
-@app.route('/committees')
+@app.route('/committees/')
 def committees():
     return render_template(
         'committees.html',
@@ -204,17 +213,17 @@ def committees():
     )
 
 
-@app.route('/receipts')
+@app.route('/receipts/')
 def receipts():
     return render_template('receipts.html', dates=utils.date_ranges())
 
 
-@app.route('/disbursements')
+@app.route('/disbursements/')
 def disbursements():
     return render_template('disbursements.html', dates=utils.date_ranges())
 
 
-@app.route('/filings')
+@app.route('/filings/')
 def filings():
     return render_template(
         'filings.html',
@@ -362,6 +371,9 @@ if not config.test:
     app.config['BASIC_AUTH_PASSWORD'] = config.password
     app.config['BASIC_AUTH_FORCE'] = True
     basic_auth = BasicAuth(app)
+
+
+app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 
 
 if __name__ == '__main__':

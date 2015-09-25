@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
+var helpers = require('../modules/helpers');
 var committeesTemplate = require('../../templates/committees.hbs');
 
 var columns = [
@@ -14,7 +15,11 @@ var columns = [
     className: 'all',
     width: '280px',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.committee_id + tables.buildCycle(row), 'committee');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['committee', row.committee_id], tables.getCycle(row)),
+        'committee'
+      );
     }
   },
   {data: 'treasurer_name', className: 'min-desktop hide-panel'},
