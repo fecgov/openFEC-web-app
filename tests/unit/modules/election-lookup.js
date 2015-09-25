@@ -50,7 +50,7 @@ describe('election lookup', function() {
           '<input name="district" />' +
         '</form>' +
         '<div class="results">' +
-          '<div class="results-items"></div>' +
+          '<div class="js-results-items"></div>' +
         '</div>' +
         '<div class="election-map"></div>' +
       '</div>'

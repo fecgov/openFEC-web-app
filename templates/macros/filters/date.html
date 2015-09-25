@@ -1,31 +1,33 @@
 {% macro field(name, label, dates) %}
 
 <div class="filter date-choice-field" id="{{ name }}">
-  <label for="{{ name }}" class="label">{{ label }}</label>
-  <ul>
-    <li>
-      <input id="radio-2" name="{{ name }}" type="radio" data-min-date={{ dates['month'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['month'][1] | date(fmt='%m-%d-%Y') }}>
-      <label for="radio-2">This month</label>
-    </li>
-    <li>
-      <input id="radio-3" name="{{ name }}" type="radio" data-min-date={{ dates['quarter'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['quarter'][1] | date(fmt='%m-%d-%Y') }}>
-      <label for="radio-3">This quarter</label>
-    </li>
-    <li>
-      <input id="radio-4" name="{{ name }}" type="radio" data-min-date={{ dates['year'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['year'][1] | date(fmt='%m-%d-%Y') }}>
-      <label for="radio-4">This year</label>
-    </li>
-    <li>
-      <input id="radio-5" name="{{ name }}" type="radio">
-      <label for="radio-5">Custom</label>
-    </li>
-  </ul>
-  <div class="date-range-input">
-    <label for="min_{{ name }}">From</label>
-    <input type="text" id="min_{{ name }}" name="min_{{ name }}" class="js-min-date" data-inputmask="'alias': 'mm-dd-yyyy'">
-    <label for="max_{{ name }}">To</label>
-    <input type="text" id="max_{{ name }}" name="max_{{ name }}" class="js-max-date" data-inputmask="'alias': 'mm-dd-yyyy'">
-  </div>
+  <fieldset>
+    <legend for="{{ name }}" class="label">{{ label }}</legend>
+    <ul>
+      <li>
+        <input id="radio-2" name="{{ name }}" type="radio" data-min-date={{ dates['month'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['month'][1] | date(fmt='%m-%d-%Y') }}>
+        <label for="radio-2">This month</label>
+      </li>
+      <li>
+        <input id="radio-3" name="{{ name }}" type="radio" data-min-date={{ dates['quarter'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['quarter'][1] | date(fmt='%m-%d-%Y') }}>
+        <label for="radio-3">This quarter</label>
+      </li>
+      <li>
+        <input id="radio-4" name="{{ name }}" type="radio" data-min-date={{ dates['year'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['year'][1] | date(fmt='%m-%d-%Y') }}>
+        <label for="radio-4">This year</label>
+      </li>
+      <li>
+        <input id="radio-5" name="{{ name }}" type="radio">
+        <label for="radio-5">Custom</label>
+      </li>
+    </ul>
+    <div class="date-range-input">
+      <label for="min_{{ name }}">From</label>
+      <input type="text" id="min_{{ name }}" name="min_{{ name }}" class="js-min-date" data-inputmask="'alias': 'mm-dd-yyyy'">
+      <label for="max_{{ name }}">To</label>
+      <input type="text" id="max_{{ name }}" name="max_{{ name }}" class="js-max-date" data-inputmask="'alias': 'mm-dd-yyyy'">
+    </div>
+  </fieldset>
 </div>
 
 {% endmacro %}

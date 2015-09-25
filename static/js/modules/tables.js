@@ -7,6 +7,7 @@ var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
 var tabs = require('../vendor/tablist');
+var accessibility = require('fec-style/js/accessibility');
 
 require('datatables');
 require('drmonty-datatables-responsive');
@@ -19,6 +20,7 @@ var simpleDOM = 't<"results-info"ip>';
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
   $('.datatable__container').css('opacity', '1');
+  $('.dataTable tbody td:first-child').attr('scope','row');
 });
 
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
@@ -263,6 +265,7 @@ function modalRenderRow(row, data, index) {
 }
 
 function modalRenderFactory(template, fetch) {
+  var callback;
   fetch = fetch || identity;
   return function(api, data, response) {
     var $table = $(api.table().node());
@@ -270,8 +273,10 @@ function modalRenderFactory(template, fetch) {
     var $main = $table.closest('.panel__main');
     // Move the modal to the results div.
     $modal.appendTo($main);
+    $modal.css('display', 'block');
 
-    $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, function(e) {
+    $table.off('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, callback);
+    callback = function(e) {
       if (e.which === 13 || e.type === 'click') {
         // Note: Use `currentTarget` to get parent row, since the target column
         // may have been moved since the triggering event
@@ -288,6 +293,7 @@ function modalRenderFactory(template, fetch) {
             $row.siblings().toggleClass('row-active', false);
             $row.toggleClass('row-active', true);
             $('body').toggleClass('panel-active', true);
+            accessibility.restoreTabindex($modal);
             var hideColumns = api.columns('.hide-panel');
             hideColumns.visible(false);
 
@@ -309,7 +315,8 @@ function modalRenderFactory(template, fetch) {
           });
         }
       }
-    });
+    };
+    $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, callback);
 
     $modal.on('click', '.js-panel-close', function(e) {
       e.preventDefault();
@@ -338,6 +345,8 @@ function hidePanel(api, $modal) {
     if ($(document).width() > 980) {
       api.columns('.hide-panel').visible(true);
     }
+
+    accessibility.removeTabindex($modal);
 }
 
 function barsAfterRender(template, api, data, response) {

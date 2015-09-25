@@ -121,19 +121,16 @@ monthly_reports = OrderedDict([
     ('M10', 'October monthly'),
     ('M11', 'November monthly'),
     ('M12', 'December monthly'),
-    ('YE', 'Year end'),
 ])
 
 quarterly_reports = OrderedDict([
     ('Q1', 'April quarterly'),
     ('Q2', 'July quarterly'),
     ('Q3', 'October quarterly'),
-    ('YE', 'Year end'),    
 ])
 
 semiannual_reports = OrderedDict([
     ('MY', 'Mid-year report'),
-    ('YE', 'Year end'),    
 ])
 
 election_sensitive_reports = OrderedDict([

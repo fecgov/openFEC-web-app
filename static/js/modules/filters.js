@@ -8,6 +8,7 @@ var URI = require('URIjs');
 
 var events = require('fec-style/js/events');
 var accordion = require('fec-style/js/accordion');
+var accessibility = require('fec-style/js/accessibility');
 
 // are the panels open?
 var open = false;
@@ -17,6 +18,7 @@ var openFilterPanel = function() {
   $('.filters').addClass('is-open');
   $('#filter-toggle').addClass('is-active')
     .find('.filters__toggle__text').html('Hide filters');
+  accessibility.restoreTabindex($('#category-filters'));
   open = true;
 };
 
@@ -26,6 +28,7 @@ var closeFilterPanel = function() {
   $('#filter-toggle').removeClass('is-active')
     .find('.filters__toggle__text').html('Show filters');
   $('#results tr:first-child').focus();
+  accessibility.removeTabindex($('#category-filters'));
   open = false;
 };
 

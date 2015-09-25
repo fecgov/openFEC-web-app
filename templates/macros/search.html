@@ -4,7 +4,7 @@
 {% endif %}
 <form id="{{ location }}-search" action="/" autocomplete="off" class="search__container js-search">
   <div class="combo combo--search {{ size }}">
-    <select class="search__select js-search-type" name="search_type">
+    <select class="search__select js-search-type" name="search_type" aria-label="Select a search type">
       <option value="candidates"
         {% if result_type != 'committees' %}
           selected
@@ -17,11 +17,11 @@
       >Committees</option>
     </select>
     <input class="js-search-input combo__input tst-search-input" type="text" name="search"
-    aria-label="Search {{ result_type }}"
-    placeholder="Search {{ result_type }}" autocomplete="off"
+    aria-label="Search for {{ result_type }}"
+    placeholder="Search for {{ result_type }}" autocomplete="off"
     autocorrect="off" autocapitalize="off" spellcheck="false"
     value="{{ query or '' }}">
-    <button class="combo__button button--search tst-search-submit {{ button_color }}">
+    <button type="submit" class="combo__button button--search tst-search-submit {{ button_color }}">
       <span class="u-visually-hidden">Search</span>
     </button>
   </div>

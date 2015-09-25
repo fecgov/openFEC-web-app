@@ -31,7 +31,8 @@ var compactRules = [
   ['', 0]
 ];
 
-var colorScale = ['#cef1f0', '#36BDBB'];
+var colorZero = '#fffff9';
+var colorScale = ['#c1eded', '#278887'];
 
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
@@ -84,7 +85,7 @@ function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
       .data(stateFeatures)
     .enter().append('path')
       .attr('fill', function(d) {
-        return scale(results[d.id] || 0);
+        return results[d.id] ? scale(results[d.id]) : colorZero;
       })
       .attr('data-state', function(d) {
         return fips.fipsByCode[d.id].STATE_NAME;
@@ -200,7 +201,7 @@ DistrictMap.prototype.load = function(election) {
     var encoded = utils.encodeDistrict(election.state, election.district);
     feature = utils.findDistrict(encoded);
   } else {
-    feature = fipsByState[parseInt(election.state)];
+    feature = fips.fipsByState[parseInt(election.state)];
   }
   feature && this.render(feature);
 };
@@ -215,6 +216,7 @@ DistrictMap.prototype.render = function(data) {
 
 module.exports = {
   stateMap: stateMap,
+  colorZero: colorZero,
   colorScale: colorScale,
   stateLegend: stateLegend,
   highlightState: highlightState,

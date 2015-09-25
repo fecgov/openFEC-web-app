@@ -170,8 +170,8 @@ ElectionLookup.prototype.init = function() {
   this.$state = this.$form.find('[name="state"]');
   this.$district = this.$form.find('[name="district"]').prop('disabled', true);
   this.$cycle = this.$form.find('[name="cycle"]');
-  this.$resultsItems = this.$elm.find('.results-items');
-  this.$resultsTitle = this.$elm.find('.results-title');
+  this.$resultsItems = this.$elm.find('.js-results-items');
+  this.$resultsTitle = this.$elm.find('.js-results-title');
 
   this.$zip.on('change', this.handleZipChange.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
