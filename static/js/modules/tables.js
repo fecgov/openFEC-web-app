@@ -485,7 +485,7 @@ function hideEmpty(api, data, response) {
   if (!response.pagination.count) {
     api.destroy();
     var $table = $(api.table().node());
-    $table.before('No data found.');
+    $table.before('<div class="message message--alert">No data found.</div>');
     $table.remove();
   }
 }

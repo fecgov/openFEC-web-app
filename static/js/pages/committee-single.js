@@ -223,7 +223,8 @@ $(document).ready(function() {
           pagingType: 'simple',
           lengthChange: false,
           pageLength: 10,
-          useHideNull: false
+          useHideNull: false,
+          hideEmpty: true
         });
         break;
       case 'contribution-size':
@@ -234,7 +235,8 @@ $(document).ready(function() {
           pagingType: 'simple',
           lengthChange: false,
           pageLength: 10,
-          useHideNull: false
+          useHideNull: false,
+          hideEmpty: true
         });
         break;
       case 'receipts-by-state':
@@ -255,7 +257,7 @@ $(document).ready(function() {
         );
         events.on('state.map', function(params) {
           var $map = $('.state-map');
-          highlightRowAndState($map, $table, params.state, true)
+          highlightRowAndState($map, $table, params.state, true);
         });
         $table.on('click', 'tr', function(e) {
           events.emit('state.table', {state: $(this).find('span[data-state]').attr('data-state')});
@@ -274,9 +276,8 @@ $(document).ready(function() {
         }));
         break;
       case 'filing':
-        var $form = $('#category-filters');
         path = ['committee', committeeId, 'filings'];
-        tables.initTableDeferred($table, $form, path, query, filingsColumns,
+        tables.initTableDeferred($table, null, path, query, filingsColumns,
           _.extend({}, tables.offsetCallbacks, {
             afterRender: filings.renderModal
           }),
@@ -286,7 +287,8 @@ $(document).ready(function() {
             pagingType: 'simple',
             // Order by receipt date descending
             order: [[2, 'desc']],
-            useFilters: true
+            useFilters: true,
+            hideEmpty: true
           }
         );
         break;
