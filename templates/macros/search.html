@@ -2,7 +2,7 @@
 {% if location == 'hero' %}
   {% set size = 'combo--search--large' %}
 {% endif %}
-<form id="{{ location }}-search" action="/" autocomplete="off" class="search__container js-search">
+<form id="{{ location }}-search" action="{{ url_for('search') }}" autocomplete="off" class="search__container js-search">
   <div class="combo combo--search {{ size }}">
     <select class="search__select js-search-type" name="search_type">
       <option value="candidates"
