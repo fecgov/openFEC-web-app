@@ -107,7 +107,9 @@
           <span>{{ null.null( value | currency ) }}</span>
         </div>
         {% if accordion %}
-          <button class="button button--primary accordion__button js-accordion_button"><span class="js-accordion_text u-visually-hidden"></span></button>
+          <button class="button button--primary accordion__button js-accordion_button">
+            <span class="js-accordion_text u-visually-hidden" data-show="Show {{ pretty_name }}" data-hide="Hide {{ pretty_name }}"></span>
+          </button>
         {% endif %}
       </div>
     {% endmacro %}
