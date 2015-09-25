@@ -15,7 +15,7 @@ var open = false;
 
 var openFilterPanel = function() {
   $('body').addClass('is-showing-filters');
-  $('.filters').addClass('is-open').attr('tabindex','0');
+  $('.filters').addClass('is-open');
   $('#filter-toggle').addClass('is-active')
     .find('.filters__toggle__text').html('Hide filters');
   accessibility.restoreTabindex($('#category-filters'));
