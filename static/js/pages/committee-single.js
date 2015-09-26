@@ -96,7 +96,7 @@ var stateColumns = [
 ];
 
 var employerColumns = [
-  {data: 'employer', className: 'all', orderable: false},
+  {data: 'employer', className: 'all', orderable: false, defaultContent: 'NOT REPORTED'},
   {
     data: 'total',
     className: 'all',
@@ -112,7 +112,7 @@ var employerColumns = [
 ];
 
 var occupationColumns = [
-  {data: 'occupation', className: 'all', orderable: false},
+  {data: 'occupation', className: 'all', orderable: false, defaultContent: 'NOT REPORTED'},
   {
     data: 'total',
     className: 'all',
