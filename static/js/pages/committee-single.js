@@ -63,10 +63,7 @@ var committeeColumns = [
     orderable: false,
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
-      return {
-        contributor_id: row.contributor_id,
-        is_individual: 'true'
-      };
+      return {contributor_id: row.contributor_id};
     })
   }
 ];
