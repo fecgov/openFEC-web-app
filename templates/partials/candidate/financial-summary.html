@@ -79,7 +79,7 @@
             <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a></li>
           </ul>
           <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
-            <img src="/static/img/i-arrow-right--primary-contrast.svg" alt="Arrow pointing to the right">
+            <img src="{{ url_for('static', filename='img/i-arrow-right--primary-contrast.svg') }}" alt="Arrow pointing to the right">
           </a>
         </div>
       </div>
@@ -101,7 +101,7 @@
               <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed &raquo;</a></li>
             </ul>
             <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}" class="callout__icon button">
-              <img src="/static/img/i-arrow-right--neutral-contrast.svg" alt="Arrow pointing to the right">
+              <img src="{{ url_for('static', filename='img/i-arrow-right--neutral-contrast.svg') }}" alt="Arrow pointing to the right">
             </a>
           </div>
         </div>
