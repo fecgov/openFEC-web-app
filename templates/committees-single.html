@@ -68,7 +68,7 @@
           <nav class="page-tabs">
             <ul class="page-tabs__list" role="tablist" data-name="tab">
               {% if committee_type not in ['C', 'E'] %}
-                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial summary</a></li>
+                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" href="#section-1">Financial summary</a></li>
                 <li role="presentation" class="page-tabs__item"><a role="tab" data-name="receipts" tabindex="0" aria-controls="panel2" href="#section-2">Receipts from individuals</a></li>
                 <li role="presentation" class="page-tabs__item"><a role="tab" data-name="disbursements" tabindex="0" aria-controls="panel3" href="#section-3">Disbursements</a></li>
                 <li role="presentation" class="page-tabs__item"><a role="tab" data-name="between-committees" tabindex="0" aria-controls="panel4" href="#section-4">Between committees</a></li>
@@ -125,6 +125,7 @@
 
     {% with committee=context() %}
       {% if committee_type not in ['C', 'E'] %}
+        {% include 'partials/loading-tab.html' %}
         {% include 'partials/committee/financial-summary.html' %}
         {% include 'partials/committee/receipts-tab.html' %}
         {% include 'partials/committee/disbursements-tab.html' %}
