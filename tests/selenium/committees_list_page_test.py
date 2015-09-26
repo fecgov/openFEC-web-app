@@ -11,8 +11,9 @@ class CommitteesPageTests(SearchPageTestCase):
     def testCommitteesPageLoads(self):
         self.driver.get(self.url)
         self.assertEqual(
-            self.driver.find_element_by_class_name('tst-page-title').text,
-            'Committees')
+            self.driver.find_element_by_class_name('tst-page-title').text.lower(),
+            'committees',
+        )
 
     def testCommitteesFilterSideBar(self):
         self.driver.get(self.url)
