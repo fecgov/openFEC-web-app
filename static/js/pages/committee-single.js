@@ -37,7 +37,7 @@ var sizeColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
+    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
       var info = columns.sizeInfo[row.size];
       return {
         min_amount: info.limits[0],
@@ -62,7 +62,7 @@ var committeeColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
+    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
       return {
         contributor_id: row.contributor_id,
         is_individual: 'true'
@@ -89,7 +89,7 @@ var stateColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
+    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
       return {
         contributor_state: row.state,
         is_individual: 'true'
@@ -105,7 +105,7 @@ var employerColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
+    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
       return {
         contributor_employer: row.employer,
         is_individual: 'true'
@@ -121,7 +121,7 @@ var occupationColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink('/receipts', function(data, type, row, meta) {
+    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
       return {
         contributor_occupation: row.occupation,
         is_individual: 'true'
@@ -151,7 +151,7 @@ var disbursementRecipientColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink('/disbursements', function(data, type, row, meta) {
+    render: tables.buildTotalLink(['disbursements'], function(data, type, row, meta) {
       return {recipient_name: row.recipient_name};
     })
   }
@@ -171,7 +171,7 @@ var disbursementRecipientIDColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink('/disbursements', function(data, type, row, meta) {
+    render: tables.buildTotalLink(['disbursements'], function(data, type, row, meta) {
       return {recipient_committee_id: row.recipient_id};
     })
   }

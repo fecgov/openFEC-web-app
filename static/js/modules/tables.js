@@ -93,12 +93,12 @@ function buildEntityLink(data, url, category, opts) {
   return anchor.outerHTML;
 }
 
-function buildAggregateUrl(uri, cycle) {
+function buildAggregateUrl(cycle) {
   var dates = helpers.cycleDates(cycle);
-  return uri.addQuery({
+  return {
     min_date: dates.min,
     max_date: dates.max
-  }).toString();
+  };
 }
 
 function buildTotalLink(path, getParams) {
@@ -111,10 +111,12 @@ function buildTotalLink(path, getParams) {
     link.textContent = helpers.currency(data);
     link.setAttribute('title', 'View individual transactions');
     var params = getParams(data, type, row, meta);
-    var uri = URI(path)
-      .addQuery({committee_id: row.committee_id})
-      .addQuery(params);
-    link.setAttribute('href', buildAggregateUrl(uri, _.extend({}, row, params).cycle));
+    var uri = helpers.buildAppUrl(path, _.extend(
+      {committee_id: row.committee_id},
+      buildAggregateUrl(_.extend({}, row, params).cycle),
+      params
+    ));
+    link.setAttribute('href', uri);
     span.appendChild(link);
     return span.outerHTML;
   };
@@ -518,7 +520,6 @@ module.exports = {
   simpleDOM: simpleDOM,
   yearRange: yearRange,
   getCycle: getCycle,
-  buildAggregateUrl: buildAggregateUrl,
   buildTotalLink: buildTotalLink,
   buildEntityLink: buildEntityLink,
   candidateColumn: candidateColumn,
