@@ -76,7 +76,7 @@ function formatIncumbent(result) {
   if (result.incumbent_id) {
     return {
       name: result.incumbent_name,
-      url: '/candidate/' + result.incumbent_id
+      url: helpers.buildAppUrl(['candidate', result.incumbent_id])
     };
   } else {
     return null;
@@ -84,7 +84,7 @@ function formatIncumbent(result) {
 }
 
 function formatUrl(result) {
-  var path = ['/elections', officeMap[result.office].toLowerCase()];
+  var path = ['elections', officeMap[result.office].toLowerCase()];
   if (['S', 'H'].indexOf(result.office) !== -1) {
     path = path.concat(result.state);
   }
