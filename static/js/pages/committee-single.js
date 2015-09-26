@@ -54,7 +54,11 @@ var committeeColumns = [
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.contributor_id, 'committee');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['committee', row.contributor_id]),
+        'committee'
+      );
     }
   },
   {
