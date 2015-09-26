@@ -70,7 +70,7 @@
       <div class="container">
         <nav class="page-tabs">
           <ul class="page-tabs__list" role="tablist" data-name="tab">
-            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" aria-selected="true" href="#section-1">Financial summary</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" href="#section-1">Financial summary</a></li>
             <li role="presentation" class="page-tabs__item"><a role="tab" data-name="other-spending" tabindex="0" aria-controls="panel2" href="#section-2">Other spending</a></li>
           </ul>
         </nav>
@@ -78,6 +78,7 @@
     </div>
   </div>
 
+  {% include 'partials/loading-tab.html' %}
   {% include 'partials/candidate/financial-summary.html' %}
   {% include 'partials/candidate/other-spending-tab.html' %}
 </div>
