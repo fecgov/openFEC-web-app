@@ -29,7 +29,7 @@
             <span class="entity__term__data">{% if incumbent_challenge_full %}{{ incumbent_challenge_full|title }}{% endif %}</span>
           </li>
           <li class="entity__term">
-            <span class="entity__term__label">District</span>
+            <span class="entity__term__label"><span class="term" data-term="District">District</span></span>
             <span class="entity__term__data">
               {% if district %}
               <a href="{{ election_url(context(), cycle) }}">{{ state }} - {{ district }}</a>
