@@ -73,6 +73,7 @@ def date_ranges():
     """
     today = datetime.date.today()
     quarter = math.floor((today.month - 1) / 3)
+    cycle = current_cycle()
     return {
         'month': (
             today.replace(day=1),
@@ -91,5 +92,17 @@ def date_ranges():
                 day=calendar.monthrange(today.year, 12)[1],
                 month=12,
             ),
-        )
+        ),
+        'cycle': (
+            datetime.date(
+                year=cycle - 1,
+                month=1,
+                day=1,
+            ),
+            datetime.date(
+                year=cycle,
+                month=12,
+                day=calendar.monthrange(cycle, 12)[1],
+            ),
+        ),
     }
