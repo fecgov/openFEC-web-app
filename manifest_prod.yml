@@ -14,6 +14,7 @@ env:
   FEC_WEB_PRODUCTION: True
   NEW_RELIC_APP_NAME: OpenFEC Web (production)
   FEC_WEB_API_URL: https://api.open.fec.gov/
+  FEC_CMS_URL: https://beta.fec.gov
   FEC_WEB_SERVER_NAME: open.fec.gov
   FEC_WEB_GOOGLE_ANALYTICS: true
   FEC_FORCE_HTTPS: true
