@@ -44,7 +44,7 @@ gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-maps'], func
     .pipe(rename(function(path) {
       path.dirname = './dist/styles';
     }))
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(!production, sourcemaps.init()))
     .pipe(sass({
       includePaths: Array.prototype.concat(
         './static/styles',
@@ -52,7 +52,7 @@ gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-maps'], func
       )
     }).on('error', sass.logError))
     .pipe(rev())
-    .pipe(sourcemaps.write())
+    .pipe(gulpif(!production, sourcemaps.write()))
     .pipe(gulpif(production, minifyCss()))
     .pipe(gulp.dest('.'))
     .pipe(rev.manifest({merge: true}))
