@@ -4,7 +4,7 @@
 <section class="main" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
   <div class="container">
     <div class="section__heading">
-        Money Spent by this Committee
+        Money spent by this committee
         {{ select.cycle_select(cycles, cycle, id="cycle-3") }}
       </h2>
       <a class="heading__action button--neutral button--browse"
@@ -31,7 +31,7 @@
     </div>
     <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
       <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Disbursements by Purpose</h3>
+        <h3 class="results-info__title">Disbursements by purpose</h3>
       </div>
       <table
           class="data-table"
@@ -41,7 +41,7 @@
         >
         <thead>
           <th scope="col">Purpose</th>
-          <th scope="col">Total Received</th>
+          <th scope="col">Total received</th>
         </thead>
       </table>
       {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
@@ -49,7 +49,7 @@
 
     <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
       <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Disbursements by Recipient</h3>
+        <h3 class="results-info__title">Disbursements by recipient</h3>
       </div>
       <table
           class="data-table"
@@ -59,7 +59,7 @@
         >
         <thead>
           <th scope="col">Recipient</th>
-          <th scope="col">Total Received</th>
+          <th scope="col">Total received</th>
         </thead>
       </table>
       {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
