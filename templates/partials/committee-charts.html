@@ -32,7 +32,7 @@
       <h3 class="chart__title">Cash and debt</h3>
       <ul class="chart__key list--flat">
         <li class="chart__key__item"><span class="swatch data--cash"></span> <span class="term" data-term="Ending cash on hand">Ending cash on hand</span></li>
-        <li class="chart__key__item"><span class="swatch data--debt"></span> Debt</li>
+        <li class="chart__key__item"><span class="swatch data--debt"></span> <span class="term" data-term="Debt">Debt</span></li>
       </ul>
     </div>
     {{ charts.chart_series_grouped(reports | reverse | list, ('cash_on_hand_end_period', 'debts_owed_by_committee'),
