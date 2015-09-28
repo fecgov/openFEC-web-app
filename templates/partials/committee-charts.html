@@ -17,7 +17,7 @@
       <h3 class="chart__title">Receipts and disbursements</h3>
       <ul class="chart__key list--flat">
         <li class="chart__key__item"><span class="swatch data--receipts"></span> <span class="term" data-term="Total receipts">Total receipts</span></li>
-        <li class="chart__key__item"><span class="swatch data--disbursements"></span> Total disbursements</li>
+        <li class="chart__key__item"><span class="swatch data--disbursements"></span><span class="term" data-term="Total disbursements">Total disbursements</span></li>
       </ul>
     </div>
     {{ charts.chart_series_grouped(reports | reverse | list, ('total_receipts_period', 'total_disbursements_period'),
