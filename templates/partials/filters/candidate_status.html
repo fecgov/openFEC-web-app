@@ -1,0 +1,7 @@
+{% import 'macros/filters/checkbox.html' as checkbox %}
+
+{{ checkbox.checkbox_dropdown(
+  'candidate_status',
+  'Candidates raising more than $5,000',
+  selected=constants.candidate_status,
+) }}
