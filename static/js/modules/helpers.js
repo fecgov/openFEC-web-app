@@ -5,6 +5,7 @@
 var URI = require('URIjs');
 var _ = require('underscore');
 var moment = require('moment');
+var decoders = require('./decoders');
 var Handlebars = require('hbsfy/runtime');
 
 var intl = require('intl');
@@ -24,7 +25,21 @@ function datetime(value) {
   var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
   return parsed.isValid() ? parsed.format('MM-DD-YYYY') : null;
 }
+
+function prettyDatetime(value) {
+  var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
+  return parsed.isValid() ? parsed.format('MMM D, YYYY') : null;
+}
+
+function amendmentDecoder(value) {
+  return decoders.amendments[value];
+}
+
 Handlebars.registerHelper('datetime', datetime);
+
+Handlebars.registerHelper('amendmentDecoder', amendmentDecoder);
+
+Handlebars.registerHelper('prettyDatetime', prettyDatetime);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
 
@@ -63,6 +78,8 @@ function buildUrl(path, query) {
 module.exports = {
   currency: currency,
   datetime: datetime,
+  prettyDatetime: prettyDatetime,
+  amendmentDecoder: amendmentDecoder,
   cycleDates: cycleDates,
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,

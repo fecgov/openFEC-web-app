@@ -1,8 +1,24 @@
 <div class="panel__row">
   <div class="panel__heading">
-    <h4 class="panel__title">{{document_description}}</h4>
-    <span class="panel__subtitle">Report coverage: {{datetime coverage_start_date}} - {{datetime coverage_end_date}}</h5>
+    <h4 class="panel__title">{{document_description}} report</h4>
+    <span class="panel__subtitle t-bold"><a href="{{basePath}}/committee/{{committee_id}}">{{ committee_name }}</a></span>
   </div>
+  <table>
+    <tr>
+      <td class="panel__term" scope="row">Report coverage</td>
+      <td>{{prettyDatetime coverage_start_date}} - {{prettyDatetime coverage_end_date}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term" scope="row">Receipt date</td>
+      <td>{{ prettyDatetime receipt_date }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term" scope="row">Amendment indicator</td>
+      <td>{{ amendmentDecoder amendment_indicator }}</td>
+    </tr>
+  </table>
+</div>
+<div class="panel__row">
   <table>
     <tr>
       <td class="panel__term">Total receipts</td>
