@@ -4,14 +4,14 @@
     <tr>
       <td class="panel__term">Recipient name</td>
       {{#if recipient}}
-        <td><a href="{{basePath}}/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
+        <td class="panel__data"><a href="{{basePath}}/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
       {{else}}
-        <td>{{recipient_name}}</td>
+        <td class="panel__data">{{recipient_name}}</td>
       {{/if}}
     </tr>
     <tr>
       <td class="panel__term">Recipient city and state</td>
-      <td>{{ recipient_city }}, {{ recipient_state }}, {{ recipient_zip }}</td>
+      <td class="panel__data">{{ recipient_city }}, {{ recipient_state }}, {{ recipient_zip }}</td>
     </tr>
   </table>
 </div>
@@ -21,32 +21,32 @@
   <table>
     <tr>
       <td class="panel__term">Amount</td>
-      <td>{{{ currency disbursement_amount }}}</td>
+      <td class="panel__data">{{{ currency disbursement_amount }}}</td>
     </tr>
     <tr>
       <td class="panel__term">Disbursement date</td>
-      <td>{{{ datetime disbursement_date }}}</td>
+      <td class="panel__data">{{{ datetime disbursement_date }}}</td>
     </tr>
     <tr>
       <td class="panel__term">Filing date</td>
-      <td>{{{ datetime receipt_date }}}</td>
+      <td class="panel__data">{{{ datetime receipt_date }}}</td>
     </tr>
     <tr>
       <td class="panel__term">Description</td>
-      <td>{{ disbursement_description }}</td>
+      <td class="panel__data">{{ disbursement_description }}</td>
     </tr>
     <tr>
       <td class="panel__term">Memo</td>
-      <td>{{ memo_text }}</td>
+      <td class="panel__data">{{ memo_text }}</td>
     </tr>
     <tr>
       <td class="panel__term">Memo code</td>
-      <td>{{ memoed_subtotal }}</td>
+      <td class="panel__data">{{ memoed_subtotal }}</td>
     </tr>
     {{#if election_type_full }}
     <tr>
       <td class="panel__term">Election type</td>
-      <td>{{ election_type_full }}</td>
+      <td class="panel__data">{{ election_type_full }}</td>
     </tr>
     {{/if}}
   </table>
@@ -63,25 +63,25 @@
   <table>
     <tr>
       <td class="panel__term">Name</td>
-      <td><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
+      <td class="panel__data"><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
     </tr>
     <tr>
       <td class="panel__term">Designation</td>
-      <td>{{committee.designation_full}}</a></td>
+      <td class="panel__data">{{committee.designation_full}}</a></td>
     </tr>
     {{#if committee.type}}
     <tr>
       <td class="panel__term">Type</td>
-      <td>{{committee.type_full}}</a></td>
+      <td class="panel__data">{{committee.type_full}}</a></td>
     </tr>
     {{/if}}
     <tr>
       <td class="panel__term">Treasurer</td>
-      <td>{{committee.treasurer_name}}</a></td>
+      <td class="panel__data">{{committee.treasurer_name}}</a></td>
     </tr>
     <tr>
       <td class="panel__term">Committee city and state</td>
-      <td>{{ committee.city }}, {{ committee.state }}, {{ committee.zip }}</td>
+      <td class="panel__data">{{ committee.city }}, {{ committee.state }}, {{ committee.zip }}</td>
     </tr>
   </table>
 </div>
