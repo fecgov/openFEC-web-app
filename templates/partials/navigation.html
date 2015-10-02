@@ -7,28 +7,28 @@
       <label for="dropdown-toggle-1" class="site-nav__link nav-toggle__label">Campaign finance data</label>
       <ul class="site-nav__dropdown">
         <li class="site-nav__item u-under-lg-only">
-          <a class="site-nav__link" href="{{ url_for('search') }}">Campaign finance data home</a>
+          <a class="t-bold site-nav__link" href="{{ url_for('search') }}">Campaign finance data home</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('election_lookup') }}">Find candidates running near you</a>
+          <span class="t-bold site-nav__subtitle">Browse:</span>
         </li>
         <li class="site-nav__item">
-          <span class="h3 site-nav__subtitle">Browse:</span>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('filings') }}">Filings</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('filings') }}">Filings</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('receipts', is_individual='true') }}">Receipts</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('receipts', is_individual='true') }}">Receipts</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('disbursements') }}">Disbursements</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('disbursements') }}">Disbursements</a>
+          <a class="t-bold site-nav__link" href="{{ url_for('election_lookup') }}">Find candidates by location</a>
         </li>
       </ul>
     </li>
