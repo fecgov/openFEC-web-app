@@ -7,7 +7,7 @@ import datetime
 
 import furl
 import jinja2
-from webargs import Arg
+from webargs import fields
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
 
@@ -17,9 +17,9 @@ from flask.ext.basicauth import BasicAuth
 from werkzeug.contrib.fixers import ProxyFix
 
 from openfecwebapp import utils
+from openfecwebapp import views
 from openfecwebapp import config
 from openfecwebapp import constants
-from openfecwebapp.views import render_search_results, render_candidate, render_committee
 from openfecwebapp.api_caller import load_search_results, load_with_nested
 
 
@@ -151,7 +151,7 @@ def search():
     if query:
         result_type = request.args.get('search_type') or 'candidates'
         results = load_search_results(query, result_type)
-        return render_search_results(results, query, result_type)
+        return views.render_search_results(results, query, result_type)
     else:
         return render_template('search.html', page='home', dates=utils.date_ranges())
 
@@ -176,7 +176,7 @@ def developers():
 
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
-    'cycle': Arg(int),
+    'cycle': fields.Int(),
 })
 def candidate_page(c_id, cycle=None):
     """Fetch and render data for candidate detail page.
@@ -184,12 +184,12 @@ def candidate_page(c_id, cycle=None):
     :param int cycle: Optional cycle for associated committees and financials.
     """
     candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle)
-    return render_candidate(candidate, committees, cycle)
+    return views.render_candidate(candidate, committees, cycle)
 
 
 @app.route('/committee/<c_id>/')
 @use_kwargs({
-    'cycle': Arg(int),
+    'cycle': fields.Int(),
 })
 def committee_page(c_id, cycle=None):
     """Fetch and render data for committee detail page.
@@ -197,7 +197,7 @@ def committee_page(c_id, cycle=None):
     :param int cycle: Optional cycle for financials.
     """
     committee, candidates, cycle = load_with_nested('committee', c_id, 'candidates', cycle)
-    return render_committee(committee, candidates, cycle)
+    return views.render_committee(committee, candidates, cycle)
 
 
 @app.route('/candidates/')
@@ -259,6 +259,9 @@ def elections(office, cycle, state=None, district=None):
         district=district,
         title=election_title(cycle, office, state, district),
     )
+
+
+app.add_url_rule('/issue/', view_func=views.GithubView.as_view('issue'))
 
 
 def election_title(cycle, office, state=None, district=None):

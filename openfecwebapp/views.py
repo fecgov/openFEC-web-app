@@ -1,8 +1,16 @@
 import datetime
 import collections
 
-from flask import render_template
+import furl
 
+from flask.views import MethodView
+from flask import request, render_template, jsonify
+
+from webargs import fields
+from webargs.flaskparser import use_kwargs
+from marshmallow import ValidationError
+
+from openfecwebapp import config
 from openfecwebapp import api_caller
 
 
@@ -92,3 +100,27 @@ def render_candidate(candidate, committees, cycle):
     )
 
     return render_template('candidates-single.html', **tmpl_vars)
+
+
+from github3 import login
+from werkzeug.utils import cached_property
+
+def validate_referer(referer):
+    if furl.furl(referer).host != furl.furl(request.url).host:
+        raise ValidationError('Invalid referer.')
+
+class GithubView(MethodView):
+
+    @cached_property
+    def repo(self):
+        client = login(token=config.github_token)
+        return client.repository('18F', 'openFEC')
+
+    @use_kwargs({
+        'referer': fields.Url(required=True, validate=validate_referer, location='headers'),
+        'comment': fields.Str(required=True),
+    })
+    def post(self, referer, comment):
+        title = 'User feedback on {}: {}...'.format(referer, comment[:10])
+        self.repo.create_issue(title, body=comment)
+        return jsonify({'status': 'Issue created'})
