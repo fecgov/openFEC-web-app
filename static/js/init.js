@@ -1,11 +1,10 @@
 'use strict';
 
-/* global require, window, document, BASE_PATH */
+/* global window, document, BASE_PATH */
 
 var KEYCODE_SLASH = 191;
 
 var $ = require('jquery');
-var _ = require('underscore');
 var keyboard = require('keyboardjs');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
