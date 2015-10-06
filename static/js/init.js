@@ -31,6 +31,7 @@ var filters = require('./modules/filters.js');
 var charts = require('./modules/charts.js');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
+var feedback = require('./modules/feedback');
 
 charts.init();
 
@@ -87,6 +88,9 @@ $(document).ready(function() {
       $('.js-search-type').val(),
       BASE_PATH
     );
+
+    // Initialize feedback
+    new feedback.FeedbackWidget('#feedback');
 
     // Focus search on "/"
     $(document.body).on('keyup', function(e) {
