@@ -6,15 +6,15 @@
   <table>
     <tr>
       <td class="panel__term" scope="row">Report coverage</td>
-      <td class="panel__data">{{prettyDatetime coverage_start_date}} - {{prettyDatetime coverage_end_date}}</td>
+      <td class="panel__data">{{datetime coverage_start_date pretty=true}} - {{datetime coverage_end_date pretty=true}}</td>
     </tr>
     <tr>
       <td class="panel__term" scope="row">Receipt date</td>
-      <td class="panel__data">{{ prettyDatetime receipt_date }}</td>
+      <td class="panel__data">{{ datetime receipt_date pretty=true }}</td>
     </tr>
     <tr>
       <td class="panel__term" scope="row">Amendment indicator</td>
-      <td class="panel__data">{{ amendmentDecoder amendment_indicator }}</td>
+      <td class="panel__data">{{ decodeAmendment amendment_indicator }}</td>
     </tr>
   </table>
 </div>

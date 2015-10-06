@@ -21,25 +21,19 @@ function currency(value) {
 }
 Handlebars.registerHelper('currency', currency);
 
-function datetime(value) {
+function datetime(value, pretty) {
+  var format = pretty ? 'MMM D, YYYY' : 'MM-DD-YYYY';
   var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
-  return parsed.isValid() ? parsed.format('MM-DD-YYYY') : null;
+  return parsed.isValid() ? parsed.format(format) : null;
 }
 
-function prettyDatetime(value) {
-  var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
-  return parsed.isValid() ? parsed.format('MMM D, YYYY') : null;
-}
-
-function amendmentDecoder(value) {
+function decodeAmendment(value) {
   return decoders.amendments[value];
 }
 
 Handlebars.registerHelper('datetime', datetime);
 
-Handlebars.registerHelper('amendmentDecoder', amendmentDecoder);
-
-Handlebars.registerHelper('prettyDatetime', prettyDatetime);
+Handlebars.registerHelper('decodeAmendment', decodeAmendment);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
 
@@ -78,8 +72,7 @@ function buildUrl(path, query) {
 module.exports = {
   currency: currency,
   datetime: datetime,
-  prettyDatetime: prettyDatetime,
-  amendmentDecoder: amendmentDecoder,
+  decodeAmendment: decodeAmendment,
   cycleDates: cycleDates,
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,
