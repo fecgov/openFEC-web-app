@@ -212,7 +212,6 @@ candidate_status = OrderedDict([
     ('C', 'Statutory candidate'),
 ])
 candidate_status_extended = OrderedDict([
-    ('C', 'Statutory candidate'),
     ('F', 'Future candidate'),
     ('N', 'Not yet a candidate'),
     ('P', 'Statutory candidate in prior cycle'),
