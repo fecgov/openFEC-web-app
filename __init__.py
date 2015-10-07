@@ -14,6 +14,7 @@ from dateutil.parser import parse as parse_date
 from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sslify import SSLify
 from flask.ext.basicauth import BasicAuth
+from werkzeug.contrib.fixers import ProxyFix
 
 from openfecwebapp import utils
 from openfecwebapp import config
@@ -374,6 +375,7 @@ if not config.test:
 
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
 if __name__ == '__main__':
