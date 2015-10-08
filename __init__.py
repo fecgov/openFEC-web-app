@@ -7,7 +7,7 @@ import datetime
 
 import furl
 import jinja2
-from webargs import Arg
+from webargs import fields
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
 
@@ -176,7 +176,7 @@ def developers():
 
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
-    'cycle': Arg(int),
+    'cycle': fields.Int(),
 })
 def candidate_page(c_id, cycle=None):
     """Fetch and render data for candidate detail page.
@@ -189,7 +189,7 @@ def candidate_page(c_id, cycle=None):
 
 @app.route('/committee/<c_id>/')
 @use_kwargs({
-    'cycle': Arg(int),
+    'cycle': fields.Int(),
 })
 def committee_page(c_id, cycle=None):
     """Fetch and render data for committee detail page.
