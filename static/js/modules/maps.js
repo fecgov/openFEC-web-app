@@ -1,7 +1,5 @@
 'use strict';
 
-/* global require, module, window, document */
-
 var d3 = require('d3');
 var $ = require('jquery');
 var _ = require('underscore');
@@ -11,18 +9,19 @@ var topojson = require('topojson');
 var L = require('leaflet');
 require('leaflet-providers');
 
-var events = require('fec-style/js/events');
-
 var fips = require('./fips');
 var helpers = require('./helpers');
 var utils = require('./election-utils');
 
 var states = require('../data/us-states-10m.json');
 
-var districts = require('../data/districts.json');
-var districtFeatures = topojson.feature(districts, districts.objects.districts);
-
 var stateFeatures = topojson.feature(states, states.objects.states).features;
+var stateFeatureMap = _.chain(stateFeatures)
+  .map(function(feature) {
+    return [feature.id, feature];
+  })
+  .object()
+  .value();
 
 var compactRules = [
   ['B', 9],
@@ -80,7 +79,7 @@ function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
   max = max || _.max(totals);
   var scale = chroma.scale(colorScale).domain([min, max]);
   var quantize = d3.scale.linear().domain([min, max]);
-  var map = svg.append('g')
+  svg.append('g')
     .selectAll('path')
       .data(stateFeatures)
     .enter().append('path')
@@ -201,7 +200,8 @@ DistrictMap.prototype.load = function(election) {
     var encoded = utils.encodeDistrict(election.state, election.district);
     feature = utils.findDistrict(encoded);
   } else {
-    feature = fips.fipsByState[parseInt(election.state)];
+    var state = fips.fipsByState[election.state].STATE;
+    feature = stateFeatureMap[state];
   }
   feature && this.render(feature);
 };
