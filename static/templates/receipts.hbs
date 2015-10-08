@@ -4,26 +4,26 @@
     <tr>
       <td class="panel__term">Name</td>
       {{#if contributor}}
-        <td><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
+        <td class="panel__data"><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
       {{else}}
-        <td>{{contributor_name}}</td>
+        <td class="panel__data">{{contributor_name}}</td>
       {{/if}}
     </tr>
     <tr>
       <td class="panel__term">City and state</td>
-      <td>{{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}</td>
+      <td class="panel__data">{{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}</td>
     </tr>
     <tr>
       <td class="panel__term">Occupation</td>
-      <td>{{ contributor_occupation }}</td>
+      <td class="panel__data">{{ contributor_occupation }}</td>
     </tr>
     <tr>
       <td class="panel__term">Employer</td>
-      <td>{{ contributor_employer }}</td>
+      <td class="panel__data">{{ contributor_employer }}</td>
     </tr>
     <tr>
       <td class="panel__term">Year to date</td>
-      <td>{{{ currency contributor_aggregate_ytd }}}</td>
+      <td class="panel__data">{{{ currency contributor_aggregate_ytd }}}</td>
     </tr>
   </table>
 </div>
@@ -33,23 +33,23 @@
   <table>
     <tr>
       <td class="panel__term">Amount</td>
-      <td>{{{ currency contribution_receipt_amount }}}</td>
+      <td class="panel__data">{{{ currency contribution_receipt_amount }}}</td>
     </tr>
     <tr>
       <td class="panel__term">Receipt date</td>
-      <td>{{{ datetime contribution_receipt_date }}}</td>
+      <td class="panel__data">{{{ datetime contribution_receipt_date }}}</td>
     </tr>
     <tr>
       <td class="panel__term">Filing date</td>
-      <td>{{{ datetime receipt_date }}}</td>
+      <td class="panel__data">{{{ datetime receipt_date }}}</td>
     </tr>
     <tr>
       <td class="panel__term">Memo</td>
-      <td>{{ memo_text }}</td>
+      <td class="panel__data">{{ memo_text }}</td>
     </tr>
     <tr>
       <td class="panel__term">Election type</td>
-      <td>{{ election_type_full }}</td>
+      <td class="panel__data">{{ election_type_full }}</td>
     </tr>
   </table>
 </div>
@@ -59,19 +59,19 @@
   <table>
     <tr>
       <td class="panel__term">Committee</td>
-      <td><a href="{{basePath}}/committee/{{ committee.committee_id }}/">{{ committee.name }}</a></td>
+      <td class="panel__data"><a href="{{basePath}}/committee/{{ committee.committee_id }}/">{{ committee.name }}</a></td>
     </tr>
     <tr>
       <td class="panel__term"><span class="term" data-term="party">Political party</span></td>
-      <td>{{ committee.party_full }}</td>
+      <td class="panel__data">{{ committee.party_full }}</td>
     </tr>
     <tr>
       <td class="panel__term">Type</td>
-      <td>{{ committee.committee_type_full }}</td>
+      <td class="panel__data">{{ committee.committee_type_full }}</td>
     </tr>
     <tr>
       <td class="panel__term">State</td>
-      <td>{{ committee.state_full }}</td>
+      <td class="panel__data">{{ committee.state_full }}</td>
     </tr>
   </table>
 </div>
