@@ -30,7 +30,7 @@ var supportOpposeColumn = {
 
 var amendmentIndicatorColumn = {
   data: 'amendment_indicator',
-  className: 'min-desktop',
+  className: 'hide-panel min-desktop',
   render: function(data) {
     return decoders.amendments[data] || '';
   },
