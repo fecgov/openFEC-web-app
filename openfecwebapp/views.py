@@ -10,6 +10,9 @@ from webargs import fields
 from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
 
+from github3 import login
+from werkzeug.utils import cached_property
+
 from openfecwebapp import config
 from openfecwebapp import api_caller
 
@@ -102,9 +105,6 @@ def render_candidate(candidate, committees, cycle):
     return render_template('candidates-single.html', **tmpl_vars)
 
 
-from github3 import login
-from werkzeug.utils import cached_property
-
 def validate_referer(referer):
     if furl.furl(referer).host != furl.furl(request.url).host:
         raise ValidationError('Invalid referer.')
@@ -114,13 +114,20 @@ class GithubView(MethodView):
     @cached_property
     def repo(self):
         client = login(token=config.github_token)
-        return client.repository('18F', 'openFEC')
+        return client.repository('18F', 'fec')
 
     @use_kwargs({
-        'referer': fields.Url(required=True, validate=validate_referer, location='headers'),
-        'comment': fields.Str(required=True),
+        'referer': fields.Url(
+            required=True,
+            validate=validate_referer,
+            location='headers',
+        ),
+        'action': fields.Str(),
+        'response': fields.Str(),
+        'feedback': fields.Str(),
     })
-    def post(self, referer, comment):
-        title = 'User feedback on {}: {}...'.format(referer, comment[:10])
-        self.repo.create_issue(title, body=comment)
-        return jsonify({'status': 'Issue created'})
+    def post(self, **kwargs):
+        title = 'User feedback on {}'.format(kwargs['referer'])
+        body = render_template('feedback.html', headers=request.headers, **kwargs)
+        self.repo.create_issue(title, body=body)
+        return jsonify({'status': 'Issue created'}), 201

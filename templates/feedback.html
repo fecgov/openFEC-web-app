@@ -1,0 +1,18 @@
+{% if action %}
+## What were you doing?
+{{ action }}
+{% endif %}
+
+{% if response %}
+## What happened?
+{{ response }}
+{% endif %}
+
+{% if feedback %}
+## Feedback
+{{ feedback }}
+{% endif %}
+
+## Details
+* URL: {{ referer }}
+* User Agent: {{ headers['User-Agent'] }}
