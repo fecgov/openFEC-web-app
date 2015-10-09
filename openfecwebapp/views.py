@@ -10,7 +10,7 @@ from webargs import fields
 from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
 
-from github3 import login
+import github3
 from werkzeug.utils import cached_property
 
 from openfecwebapp import config
@@ -113,7 +113,7 @@ class GithubView(MethodView):
 
     @cached_property
     def repo(self):
-        client = login(token=config.github_token)
+        client = github3.login(token=config.github_token)
         return client.repository('18F', 'fec')
 
     @use_kwargs({
