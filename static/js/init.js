@@ -16,6 +16,7 @@ var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
 var siteNav = require('fec-style/js/site-nav');
 var skipNav = require('fec-style/js/skip-nav');
+var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
 var typeaheadFilter = require('fec-style/js/typeahead-filter');
 
@@ -30,7 +31,7 @@ var filters = require('./modules/filters.js');
 var charts = require('./modules/charts.js');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
-var feedback = require('./modules/feedback');
+var helpers = require('./modules/helpers');
 
 charts.init();
 
@@ -89,7 +90,7 @@ $(document).ready(function() {
     );
 
     // Initialize feedback
-    new feedback.FeedbackWidget('#feedback');
+    new feedback.Feedback(helpers.buildAppUrl(['issue']));
 
     // Focus search on "/"
     $(document.body).on('keyup', function(e) {
@@ -180,10 +181,11 @@ $(document).ready(function() {
       new Search($(this));
     });
 
-    // @if DEBUG
-    var perf = require('./modules/performance');
-    perf.bar();
-    // @endif
+    // TODO: Restore
+    // // @if DEBUG
+    // var perf = require('./modules/performance');
+    // perf.bar();
+    // // @endif
 
     filters.init();
     toggle.init();
