@@ -6,6 +6,7 @@ import github3
 from flask import url_for
 
 from __init__ import app
+from openfecwebapp import config
 
 @pytest.yield_fixture
 def client():
@@ -46,6 +47,9 @@ class TestGithub:
 
     def test_submit(self, client, mock_login, mock_client, mock_repo):
         referer = 'http://localhost:5000'
+        mock_issue = mock.Mock()
+        mock_issue.to_json.return_value = {'body': 'it broke'}
+        mock_repo.create_issue.return_value = mock_issue
         res = client.post_json(
             url_for('issue'),
             {
@@ -55,10 +59,11 @@ class TestGithub:
             headers={'referer': referer}
         )
         assert res.status_code == 201
-        mock_login.assert_called_with(token=None)
+        mock_login.assert_called_with(token=config.github_token)
         mock_client.repository.assert_called_with('18F', 'fec')
         assert len(mock_repo.create_issue.call_args_list) == 1
         args, kwargs = mock_repo.create_issue.call_args
         assert referer in args[0]
         assert 'i tried to use it' in kwargs['body']
         assert 'but nothing happened' in kwargs['body']
+        assert res.json == {'body': 'it broke'}

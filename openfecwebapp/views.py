@@ -129,5 +129,5 @@ class GithubView(MethodView):
     def post(self, **kwargs):
         title = 'User feedback on {}'.format(kwargs['referer'])
         body = render_template('feedback.html', headers=request.headers, **kwargs)
-        self.repo.create_issue(title, body=body)
-        return jsonify({'status': 'Issue created'}), 201
+        issue = self.repo.create_issue(title, body=body)
+        return jsonify(issue.to_json()), 201
