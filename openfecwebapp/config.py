@@ -35,3 +35,5 @@ test = os.getenv('FEC_WEB_TEST')
 # used to include the Google Analytics tracking script
 # set to a non-empty string in your environment if you want to use Analytics
 use_analytics = bool(os.getenv('FEC_WEB_GOOGLE_ANALYTICS'))
+
+github_token = os.getenv('FEC_GITHUB_TOKEN')
