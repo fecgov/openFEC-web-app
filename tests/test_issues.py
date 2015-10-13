@@ -33,14 +33,27 @@ class TestGithub:
         return login
 
     def test_missing_referer(self, client):
-        res = client.post_json(url_for('issue'), {}, expect_errors=True)
+        res = client.post_json(
+            url_for('issue'),
+            {'feedback': 'i like it'},
+            expect_errors=True,
+        )
         assert res.status_code == 422
 
     def test_invalid_referer(self, client):
         res = client.post_json(
             url_for('issue'),
-            {},
+            {'feedback': 'i do not like it'},
             headers={'referer': 'http://fec.gov'},
+            expect_errors=True,
+        )
+        assert res.status_code == 422
+
+    def test_missing_input(self, client):
+        res = client.post_json(
+            url_for('issue'),
+            {},
+            headers={'referer': 'http://localhost:5000'},
             expect_errors=True,
         )
         assert res.status_code == 422
@@ -56,7 +69,7 @@ class TestGithub:
                 'action': 'i tried to use it',
                 'response': 'but nothing happened',
             },
-            headers={'referer': referer}
+            headers={'referer': referer},
         )
         assert res.status_code == 201
         mock_login.assert_called_with(token=config.github_token)

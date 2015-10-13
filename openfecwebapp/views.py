@@ -127,6 +127,10 @@ class GithubView(MethodView):
         'feedback': fields.Str(),
     })
     def post(self, **kwargs):
+        if not any([kwargs['action'], kwargs['response'], kwargs['feedback']]):
+            return jsonify({
+                'message': 'Must provide one of "action", "response", or "feedback".',
+            }), 422
         title = 'User feedback on {}'.format(kwargs['referer'])
         body = render_template('feedback.html', headers=request.headers, **kwargs)
         issue = self.repo.create_issue(title, body=body)
