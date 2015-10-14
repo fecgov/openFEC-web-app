@@ -182,10 +182,10 @@ $(document).ready(function() {
     });
 
     // TODO: Restore
-    // // @if DEBUG
+    // @if DEBUG
     // var perf = require('./modules/performance');
     // perf.bar();
-    // // @endif
+    // @endif
 
     filters.init();
     toggle.init();
