@@ -1,5 +1,14 @@
-{% macro cycle_select(cycles, cycle=none, location='query', id='cycle-select') %}
+{% macro cycle_select(cycles, cycle=none, location='query', id='cycle-select', tooltip='true') %}
 {% if cycles %}
+  {% if tooltip %}
+    <label for="{{ id }}" class="tooltip-trigger">Two-year period</label>
+    <div id="unique-tooltip" role="tooltip" class="tooltip tooltip--under">
+      <div class="tooltip__content">
+        <p>This site groups data in two-year periods— if a candidate or committee has been active more than two years, this page won't show all their data. We're working on a four-year view for presidential data and a six-year view for Senate data. But we need your feedback.</p>
+        <p>See the <a href="https://github.com/18f/fec/issues" target="_blank">latest designs on GitHub</a>, and let us know what you think. You can also leave comments using the feedback button at the bottom of this page.</p>
+      </div>
+    </div>
+  {% endif %}
   <select id="{{ id }}" class="cycle-select select--neutral js-cycle" aria-label="Two-Year Period" name="cycle" data-cycle-location="{{ location }}">
   {% for each in cycles | restrict_cycles | sort(reverse=True) %}
     <option

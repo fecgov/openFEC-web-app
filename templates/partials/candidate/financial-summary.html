@@ -8,8 +8,10 @@
     <div class="section__heading">
       <h2 class="heading__title">
         Financial summary
-        {{ select.cycle_select(cycles, cycle, id="cycle-1") }}
       </h2>
+      <div class="heading__cycle">
+        {{ select.cycle_select(cycles, cycle, id="cycle-1") }}
+      </div>
     </div>
     <p class="usa-width-two-thirds">Candidates receive and spend money through committees. These are the <strong>combined financial totals</strong> for all of this candidate's authorized committees. You can learn more about each committee's fundraising and spending on its page.</p>
   </div>
