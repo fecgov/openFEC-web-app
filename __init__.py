@@ -1,3 +1,4 @@
+import os
 import re
 import http
 import json
@@ -379,8 +380,15 @@ if not config.test:
     basic_auth = BasicAuth(app)
 
 
-auth = hmacauth.HmacAuth(hashlib.sha1, config.hmac_secret, 'X-Signature', config.hmac_headers)
-app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
+if not os.getenv('FEC_WEB_TEST'):
+    auth = hmacauth.HmacAuth(
+        digest=hashlib.sha1,
+        secret_key=config.hmac_secret,
+        signature_header='X-Signature',
+        headers=config.hmac_headers,
+    )
+    app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
+
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
