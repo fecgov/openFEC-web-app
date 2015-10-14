@@ -16,8 +16,8 @@ env:
     - FEC_SELENIUM_DRIVER="remote"
     - secure: "cmEueYaeTjqjnql7Vfk/qeZCIMfQRZLsEIA1WackpB5PQJxTAXfTFN6zq4r1LgYTxoOLGFi8s9a3zUJpJ7Nz+IYTEult/ehyW4mqbcYE1zodGDb55AllkmlvdYPbxKf0dJvGnMpcIqvgtAsKHGogOmBGEEc0uoiV3FFx1GvKCnM="
     - secure: "HjtrA4/I9b8m8ySCyL4VjJMmFyuYWrvZKWVSQFMCN7CklLXbn+UBdUl41Dk5ZUKijBZpLmrC4RSEJh8bFO6n0IbEvpGsmdL1FgqhBekPc1jfvzbOzjRvpKYuXtyzQcPv+FpBGXo9NydSh2OqEyNms2YBk9tZkRnhu/6G+10385o="
-    - secure: "ChKakRzKKt9zXEundwZK3HIcsKk4T7TUyGZp1gVFs0AbAUwcKB846k2BocP8um77SNzcGVAma8fa0CBX8bR03YNl8Ko8zPWzvqqqj6n0gkSEYWbP7HEWV+tGAD2PCYcItfU409Mbzgv6E2BfGjsGEroX3nuHnMK176NjxrUb6gc="
-    - secure: "F45t8tPX/Zdih2ZlT9wJVWtyJcxGwe1jtt6u136ASA/dHRyjg3lQfbUJcJiZG7Im3LTsgaAMnwSHOTWdIy5Ym/GKv58W8nyMC6IuNEsycosg6GE+/n8W4bBa8APMM5DqBkwsV2AbVzYiH9ktfs63Wg0HHsuWQp0F5yLndNKscGI="
+    - secure: "H7oyl5s7ZcmP/0Nf4jGkoTe7qov3kTu1e6QbeXmTS2yENoetI7tFBtMG0QYNBVPmu3QK64mA+VpnDdTa3+hXF6yjXkqEBq//f5/47ZIf5Z7lGyyFdefNH1KKumfDJoQQ2LA2m5ENOvDP6iR/3S4C6798Dc5Zt37t7yPhwj4D+7Q="
+    - secure: "hT2S6JTWsSU+qPzxnsNJxBanOu2obvbF7LNVUQKkdL22HV69vqUJxuEyccmwgcyN2gKzsK2aQOtDlwxYPM/7taRcmhG53RlPYVPRvlYZn7E3glAn9lWZYLWgYxRvYuZjmcithVDGLhNYu0nytmJPaF6Rve2xBaVODTytfDusbqE="
 
 # This matrix runs n+1 jobs: one for each in `include`, and one with no non-global
 # environment variables set. This allows the build that does not use Sauce Labs

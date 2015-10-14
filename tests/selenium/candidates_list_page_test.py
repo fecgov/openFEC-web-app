@@ -63,7 +63,7 @@ class CandidatesPageTests(SearchPageTestCase):
     def test_candidate_filter_history(self):
         self.check_filter('state', 'AL', 4, 'AL')
         self.assertIn('state=AL', self.driver.current_url)
-        self.check_filter('state', 'AR', 4, {'AL', 'AR'}, refresh=False)
+        self.check_filter('state', 'AR', 4, {'AL', 'AR'}, refresh=False, expand=False)
         self.assertIn('state=AL', self.driver.current_url)
         self.assertIn('state=AR', self.driver.current_url)
 
