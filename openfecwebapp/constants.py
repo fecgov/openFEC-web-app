@@ -164,7 +164,7 @@ bundling_reports = OrderedDict([
     ('QMS', 'Quarterly mid year/semiannual'),
 ])
 
-other_reports = OrderedDict([    
+other_reports = OrderedDict([
     ('TER', 'Termination'),
     ('24', '24-hour notification'),
     ('48', '48-hour notification'),
@@ -206,4 +206,14 @@ amendment_indicators_extended = OrderedDict([
     ('C', 'Consolidated'),
     ('M', 'Multicandidate'),
     ('S', 'Secondary'),
+])
+
+candidate_status = OrderedDict([
+    ('C', 'Statutory candidate'),
+])
+candidate_status_extended = OrderedDict([
+    ('F', 'Future candidate'),
+    ('N', 'Not yet a candidate'),
+    ('P', 'Statutory candidate in prior cycle'),
+
 ])
