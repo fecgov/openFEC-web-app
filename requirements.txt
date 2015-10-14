@@ -22,3 +22,5 @@ pytest>=2.7.0
 pytest-cov>=1.8.1
 selenium>=2.45.0
 WebTest>=2.0.18
+
+git+https://github.com/jmcarp/hmac_authentication_py.git@respect-script-name
