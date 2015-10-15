@@ -16,8 +16,8 @@
   </div>
   <div class="row">
     <ul class="result__column">
-      <li>Office Sought: {{ candidate.office_full }}</li>
-      <li>Party: {{ candidate.party_full }}</li>
+      <li>Office sought: {{ candidate.office_full }}</li>
+      <li><span class="term" data-term="party">Party:</span> {{ candidate.party_full }}</li>
     </ul>
     <ul class="result__column">
       <li>State: {{ candidate.state or 'N/A' }}</li>
@@ -26,7 +26,7 @@
     <div class="result__column">
       {% if candidate.principal_committees %}
         {% with committee=candidate.principal_committees[0] %}
-        <span class="t-block t-bold">Principal Campaign Committee:</span>
+        <span class="t-block t-bold">Principal campaign committee:</span>
           <a class="tst-result-link" title="{{ committee.name }}"
               href="{{ url_for('committee_page', c_id=committee.committee_id) }}">
               {{ committee.name }}

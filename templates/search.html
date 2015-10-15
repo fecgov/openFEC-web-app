@@ -107,14 +107,14 @@
       <div class="card card--wide">
         <div class="card__image__container">
           <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-committees--neutral.svg') }}" alt="Icon representing committees">
-          <h2 class="card__title">Committee data</h2>
+          <h2 class="card__title"><span class="term" data-term="Committee">Committee</span> data</h2>
         </div>
         <div class="card__content">
           <h2 class="card__title">Committee data</h2>
           <ul class="card__links list--bulleted">
             <li><a href="{{ url_for('committees', cycle=2016) }}">Most recent committees &raquo;</a></li>
-            <li><a href="{{ url_for('committees', cycle=2016, designation=['B', 'D'], committee_type=['N', 'Q', 'V', 'W']) }}">All PACs active 2015–2016 &raquo;</a></li>
-            <li><a href="{{ url_for('committees', cycle=2016, committee_type=['I', 'O', 'U']) }}">All independent expenditure committees active 2015–2016 &raquo;</a></li>
+            <li><a href="{{ url_for('committees', cycle=2016, designation=['B', 'D'], committee_type=['N', 'Q', 'V', 'W']) }}">All PACs active 2015-2016 &raquo;</a></li>
+            <li><a href="{{ url_for('committees', cycle=2016, committee_type=['I', 'O', 'U']) }}">All <span class="term" data-term="Independent expenditure">independent expenditure</span> committees active 2015-2016 &raquo;</a></li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('committees', cycle=default_cycles) }}">All committee data</a>
         </div>
