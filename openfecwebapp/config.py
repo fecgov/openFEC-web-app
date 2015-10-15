@@ -22,6 +22,7 @@ password = os.getenv('FEC_WEB_PASSWORD', '')
 # you can only give a var a string using set-env with Cloud Foundry
 # set FEC_WEB_DEBUG to any string but an empty one if you want debug on
 debug = bool(os.getenv('FEC_WEB_DEBUG'))
+staging = bool(os.getenv('FEC_WEB_STAGING'))
 production = bool(os.getenv('FEC_WEB_PRODUCTION'))
 
 # Whether the app should force HTTPS/HSTS.
