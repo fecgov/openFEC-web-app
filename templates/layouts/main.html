@@ -39,16 +39,7 @@
 </head>
 <body>
 {% import 'macros/search.html' as search %}
-{% include 'partials/browser-warning.html' %}
-{% include 'partials/javascript-warning.html' %}
-{% if not production %}
-<div class="banner">
-  <div class="container">
-    <span class="t-block t-bold is-centered">STAGING</span>
-    <span class="t-block is-centered">This site is for testing new ideas and code. View the most accurate data on the <a href="https://beta.fec.gov">live site</a>.</span>
-  </div>
-</div>
-{% endif %}
+{% include 'partials/warnings.html' %}
 
 <a href="#main" class="skip-nav" tabindex="0">skip navigation</a>
 
