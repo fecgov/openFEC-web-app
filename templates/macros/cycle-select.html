@@ -1,6 +1,6 @@
-{% macro cycle_select(cycles, cycle=none, location='query', id='cycle-select', tooltip='true') %}
+{% macro cycle_select(cycles, cycle=none, location='query', id='cycle-select', tooltip=True) %}
 {% if cycles %}
-  {% if tooltip == 'true' %}
+  {% if tooltip %}
     <div class="tooltip__container">
       <label for="{{ id }}" class="label tooltip__trigger">View data for:</label>
       <div role="tooltip" class="tooltip tooltip--under">
