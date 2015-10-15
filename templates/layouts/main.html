@@ -41,8 +41,7 @@
 {% import 'macros/search.html' as search %}
 {% include 'partials/browser-warning.html' %}
 {% include 'partials/javascript-warning.html' %}
-
-{% if FEC_WEB_PRODUCTION != true %}
+{% if production != "true" %}
 <div class="banner">
   <div class="container">
     <span class="t-block t-bold is-centered">STAGING</span>

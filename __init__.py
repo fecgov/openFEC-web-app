@@ -142,6 +142,7 @@ app.jinja_env.globals.update({
     'assets': assets,
     'asset_for': asset_for,
     'base_path': get_base_path,
+    'production': config.production
 })
 
 
