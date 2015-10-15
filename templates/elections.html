@@ -1,4 +1,5 @@
 {% extends 'layouts/main.html' %}
+{% import 'macros/cycle-select.html' as select %}
 
 {{ cycle }} Election - United States {{ office|title }} {% if state %} - {{ state|fmt_state_full }} {% if district %} - District {{ district }} {% endif %} {% endif %}
 
@@ -15,15 +16,23 @@
   <header class="entity__header {% if office != 'president' %}entity__header--map{% endif %} entity__header--primary">
     <div class="container">
       <div class="entity__header--info">
-        <div class="entity__header--top row">
+        <div class="entity__header__top row">
           {% if office == 'president' %}
-            <h1 class="entity__name">{{ cycle }} Presidential election</h1>
+            <h1 class="entity__name">US President</h1>
+            <span class="t-data">{{ cycle }} Presidential election</span>
           {% else %}
-            <h1 class="entity__name">US {{ office|title }} election: {{ state|fmt_state_full }}</h1>
+            <h1 class="entity__name">{{ state|fmt_state_full }}
             {% if district %}
-              <h2>United States House District {{ district }}</h2>
+              District {{ district }}
             {% endif %}
+            </h1>
+            <span class="t-data">{{ cycle }} {{ office|title }} Election</span>
           {% endif %}
+        </div>
+        <div class="entity__header__bottom row">
+          <div class="entity__info">
+            {{ select.cycle_select(cycles, cycle, 'path') }}
+          </div>
         </div>
       </div>
       {% if state %}
