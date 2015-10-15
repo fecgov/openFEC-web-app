@@ -17,5 +17,4 @@ env:
   FEC_WEB_API_URL: https://api.open.fec.gov/
   FEC_CMS_URL: https://beta.fec.gov
   FEC_WEB_GOOGLE_ANALYTICS: "true"
-  FEC_FORCE_HTTPS: "true"
   FEC_WEB_CACHE: "true"
