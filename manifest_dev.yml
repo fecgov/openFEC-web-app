@@ -8,4 +8,4 @@ env:
   NEW_RELIC_APP_NAME: OpenFEC Web (development)
   FEC_WEB_API_URL: https://fec-dev-api.18f.gov
   FEC_CMS_URL: https://fec-proxy.18f.gov
-  FEC_WEB_DEBUG: True
+  FEC_WEB_DEBUG: "true"
