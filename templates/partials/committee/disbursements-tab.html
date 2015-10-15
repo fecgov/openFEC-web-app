@@ -4,7 +4,7 @@
   <div class="container">
     <div class="section__heading">
       <h2 class="heading__title" id="section-2-heading">
-        Money spent by this <span class="term" data-term="Committee">committee</span>
+        Money spent by this committee - {{ cycle|fmt_year_range }}
       </h2>
       <a class="heading__action button--neutral button--browse"
           href="{{ url_for(

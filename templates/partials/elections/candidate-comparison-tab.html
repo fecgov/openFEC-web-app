@@ -1,11 +1,8 @@
-{% import 'macros/cycle-select.html' as select %}
-
 <section class="main" id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
   <div class="container">
-    <h2 class="content__section__heading" id="section-1-heading">
-      Candidate comparison
-      {{ select.cycle_select(cycles, cycle, 'path', id='cycle-1', tooltip=False) }}
-    </h2>
+    <div class="section__heading">
+      <h2 class="section__title" id="section-1-heading">Candidate comparison for {{ cycle|fmt_year_range }}</h2>
+    </div>
     <div class="content__section">
       <div class="results-info results-info--simple">
         <h3 class="results-info__title">All candidates in this election</h3>
