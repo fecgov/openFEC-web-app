@@ -1,5 +1,4 @@
 {% import 'macros/missing.html' as missing %}
-{% import 'macros/cycle-select.html' as select %}
 {% import 'macros/null.html' as null %}
 
 <section class="main" id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
@@ -9,9 +8,6 @@
       <h2 class="heading__title">
         Financial summary
       </h2>
-      <div class="heading__cycle">
-        {{ select.cycle_select(cycles, cycle, id="cycle-1") }}
-      </div>
     </div>
     <p class="usa-width-two-thirds">Candidates receive and spend money through committees. These are the <strong>combined financial totals</strong> for all of this candidate's authorized committees. You can learn more about each committee's fundraising and spending on its page.</p>
   </div>

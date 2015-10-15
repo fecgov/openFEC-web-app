@@ -1,6 +1,5 @@
 {% import 'macros/null.html' as null %}
 {% import 'macros/charts.html' as charts %}
-{% import 'macros/cycle-select.html' as select %}
 {% import 'macros/disclaimer.html' as disclaimer %}
 
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
@@ -8,7 +7,6 @@
     <div class="section__heading">
       <h2 class="heading__title" id="section-2-heading">
         Money Received by the Committee
-        {{ select.cycle_select(cycles, cycle, id="cycle-2") }}
       </h2>
       <a class="heading__action button--neutral button--browse" href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle, is_individual='true') }}">All receipts data</a>
     </div>
@@ -65,7 +63,7 @@
         <div id="by-contribution-size" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Receipts by Size</h3>
-          </div>          
+          </div>
           <table
              class="data-table"
              data-type="contribution-size"
@@ -80,7 +78,7 @@
         <div id="by-employer" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Receipts by Individual's Employer</h3>
-          </div>          
+          </div>
           <table
               class="data-table"
               data-type="receipts-by-employer"
