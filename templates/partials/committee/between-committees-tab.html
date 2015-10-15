@@ -7,14 +7,14 @@
     </div>
     <div class="row filters--horizontal">
       <fieldset class="toggles section__intro__left">
-        <legend class="label" for="transfers">Compare by:</legend>
+        <legend class="label" for="transfers">Group by:</legend>
         <label for="toggle-from">
           <input id="toggle-from" type="radio" class="panel-toggle-control" name="transfers" value="from-committees" checked>
-          <span class="button--neutral">Receipts from Committees</span>
+          <span class="button--neutral">Receipts from committees</span>
         </label>
         <label for="toggle-to">
           <input id="toggle-to" type="radio" class="panel-toggle-control" name="transfers" value="to-committees">
-          <span class="button--neutral">Disbursements to Committees</span>
+          <span class="button--neutral">Disbursements to committees</span>
         </label>
       </fieldset>
     </div>
@@ -29,7 +29,7 @@
          data-cycle="{{ cycle }}">
         <thead>
           <th scope="col">Committee</th>
-          <th scope="col">Total Contributed</th>
+          <th scope="col">Total contributed</th>
         </thead>
       </table>
     </div>
@@ -44,8 +44,8 @@
           data-cycle="{{ cycle }}"
         >
         <thead>
-          <th scope="col">Recipient Committee</th>
-          <th scope="col">Total Received</th>
+          <th scope="col">Recipient committee</th>
+          <th scope="col">Total received</th>
         </thead>
       </table>
     </div>

@@ -17,7 +17,7 @@
     </div>
     <div class="row filters--horizontal">
       <fieldset class="toggles section__intro__left">
-        <legend class="label">Compare by:</legend>
+        <legend class="label">Group by:</legend>
         <label for="toggle-purpose">
           <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />
           <span class="button--neutral">Purpose</span>
@@ -30,7 +30,7 @@
     </div>
     <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
       <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Disbursements by Purpose</h3>
+        <h3 class="results-info__title">Disbursements by purpose</h3>
       </div>
       <table
           class="data-table"
@@ -40,7 +40,7 @@
         >
         <thead>
           <th scope="col">Purpose</th>
-          <th scope="col">Total Received</th>
+          <th scope="col">Total received</th>
         </thead>
       </table>
       {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
@@ -48,7 +48,7 @@
 
     <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
       <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Disbursements by Recipient</h3>
+        <h3 class="results-info__title">Disbursements by recipient</h3>
       </div>
       <table
           class="data-table"
@@ -58,7 +58,7 @@
         >
         <thead>
           <th scope="col">Recipient</th>
-          <th scope="col">Total Received</th>
+          <th scope="col">Total received</th>
         </thead>
       </table>
       {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
