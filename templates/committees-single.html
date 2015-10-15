@@ -1,5 +1,6 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/null.html' as null %}
+{% import 'macros/cycle-select.html' as select %}
 
 {% block title %}
     {{ name }} - committee overview
@@ -14,13 +15,18 @@
     </header>
     <header class="entity__header entity__header--primary">
       <div class="container">
-        <div class="entity__header__top">
+        <div class="entity__header__top row">
+          <div class="usa-width-three-fourths">
             <h1 class="entity__name">{{ name }}</h1>
             <span class="t-data entity__type">
               {{ committee_type_full }}
                - {{ designation_full }}
                {% if organization %} - {{ organization }}{% endif %}
             </span><span class="t-data">ID: {{ committee_id }}</span>
+          </div>
+          <div class="usa-width-one-fourth">
+            {{ select.cycle_select(cycles, cycle) }}
+          </div>
         </div>
         <div class="entity__header__bottom">
           <ul class="entity__info">

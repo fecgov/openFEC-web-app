@@ -1,6 +1,8 @@
 ---
 path: .
 memory: 512M
+timeout: 180
+domain: 18f.gov
 stack: cflinuxfs2
 buildpack: "https://github.com/ddollar/heroku-buildpack-multi.git"
 env:

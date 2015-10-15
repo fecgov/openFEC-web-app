@@ -1,6 +1,5 @@
 {% import 'macros/null.html' as null %}
 {% import 'macros/charts.html' as charts %}
-{% import 'macros/cycle-select.html' as select %}
 {% import 'macros/disclaimer.html' as disclaimer %}
 
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
@@ -8,14 +7,13 @@
     <div class="section__heading">
       <h2 class="heading__title" id="section-2-heading">
         Money received by the <span class="term" data-term="Committee">committee</span>
-        {{ select.cycle_select(cycles, cycle, id="cycle-2") }}
       </h2>
       <a class="heading__action button--neutral button--browse" href="{{ url_for('receipts', committee_id=committee_id, cycle=cycle, is_individual='true') }}">All receipts data</a>
     </div>
     <div class="content__section">
       <div class="row filters--horizontal">
         <fieldset class="toggles">
-          <legend class="label">Compare by:</legend>
+          <legend class="label">Group by:</legend>
           <label for="toggle-state">
             <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
             <span class="button--neutral">Contributor state</span>
@@ -65,22 +63,22 @@
         <div id="by-contribution-size" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Receipts by size</h3>
-          </div>          
+          </div>
           <table
              class="data-table"
              data-type="contribution-size"
              data-committee="{{ committee.committee_id }}"
              data-cycle="{{ cycle }}">
             <thead>
-              <th scope="col">Contribution Size</th>
-              <th scope="col">Total Contributed</th>
+              <th scope="col">Contribution size</th>
+              <th scope="col">Total contributed</th>
             </thead>
           </table>
         </div>
         <div id="by-employer" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Receipts by individual's employer</h3>
-          </div>          
+          </div>
           <table
               class="data-table"
               data-type="receipts-by-employer"

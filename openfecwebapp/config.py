@@ -8,7 +8,6 @@ host = os.getenv('FEC_WEB_HOST', '0.0.0.0')
 port = os.getenv('FEC_WEB_PORT', '3000')
 api_key = os.getenv('FEC_WEB_API_KEY', '')
 api_key_public = os.getenv('FEC_WEB_API_KEY_PUBLIC', '')
-server_name = os.getenv('FEC_WEB_SERVER_NAME')
 cache = os.getenv('FEC_WEB_CACHE')
 cache_size = int(os.getenv('FEC_WEB_CACHE_SIZE', 1000))
 
@@ -35,3 +34,5 @@ test = os.getenv('FEC_WEB_TEST')
 # used to include the Google Analytics tracking script
 # set to a non-empty string in your environment if you want to use Analytics
 use_analytics = bool(os.getenv('FEC_WEB_GOOGLE_ANALYTICS'))
+
+github_token = os.getenv('FEC_GITHUB_TOKEN')

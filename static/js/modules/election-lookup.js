@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document */
+/* global window */
 
 var $ = require('jquery');
 var URI = require('URIjs');
