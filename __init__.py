@@ -360,10 +360,6 @@ if config.force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
 
 
-if config.server_name:
-    app.config['SERVER_NAME'] = config.server_name
-
-
 if config.production:
     app.config['PREFERRED_URL_SCHEME'] = 'https'
 
