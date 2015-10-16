@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document, context */
+/* global document, context */
 
 var d3 = require('d3');
 var $ = require('jquery');
@@ -267,7 +267,7 @@ function drawStateMap($container, candidateId, cached) {
     var results = _.reduce(
       data.results,
       function(acc, val) {
-        var row = fips.fipsByState[val.state] || {};
+        var row = fips.fipsByState[val.state.toUpperCase()] || {};
         var code = row.STATE ? parseInt(row.STATE) : null;
         acc[code] = val.total;
         return acc;
