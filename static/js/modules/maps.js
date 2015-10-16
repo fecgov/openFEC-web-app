@@ -199,7 +199,7 @@ DistrictMap.prototype.load = function(election) {
   if (election.district) {
     var encoded = utils.encodeDistrict(election.state, election.district);
     feature = utils.findDistrict(encoded);
-  } else {
+  } else if (election.state) {
     var state = fips.fipsByState[election.state].STATE;
     feature = stateFeatureMap[state];
   }

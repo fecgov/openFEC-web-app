@@ -211,3 +211,9 @@ amendment_indicators_extended = OrderedDict([
 candidate_status = OrderedDict([
     ('C', 'Statutory candidate'),
 ])
+candidate_status_extended = OrderedDict([
+    ('F', 'Future candidate'),
+    ('N', 'Not yet a candidate'),
+    ('P', 'Statutory candidate in prior cycle'),
+
+])

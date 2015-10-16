@@ -1,8 +1,9 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/null.html' as null %}
+{% import 'macros/cycle-select.html' as select %}
 
 {% block title %}
-    {{ name }} - Committee overview
+    {{ name }} - committee overview
 {% endblock %}
 
 {% block body %}
@@ -14,19 +15,24 @@
     </header>
     <header class="entity__header entity__header--primary">
       <div class="container">
-        <div class="entity__header__top">
+        <div class="entity__header__top row">
+          <div class="usa-width-three-fourths">
             <h1 class="entity__name">{{ name }}</h1>
             <span class="t-data entity__type">
               {{ committee_type_full }}
                - {{ designation_full }}
                {% if organization %} - {{ organization }}{% endif %}
             </span><span class="t-data">ID: {{ committee_id }}</span>
+          </div>
+          <div class="usa-width-one-fourth">
+            {{ select.cycle_select(cycles, cycle) }}
+          </div>
         </div>
         <div class="entity__header__bottom">
           <ul class="entity__info">
             {% if party_full %}
             <li class="entity__term">
-              <span class="entity__term__label">Political party</span>
+              <span class="entity__term__label"><span class="term" data-term="Party">Political party</span></span>
               <span class="entity__term__data">{{ party_full }}</span>
             </li>
             {% endif %}

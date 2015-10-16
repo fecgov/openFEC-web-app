@@ -8,7 +8,84 @@
 
 {% block body %}
 {% include "partials/hero.html" %}
-<section class="main">
+<section class="main" style="padding-top: 0">
+  <div class="slab slab--neutral">
+    <div class="container">
+      <div id="election-preview" class="widget widget--neutral">
+        <div class="row">
+          <div class="icon-heading">
+            <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-elections--primary.svg') }}" alt="Icon representing filings">
+            <h2 class="icon-heading__title widget__title"><span class="t-short">Find candidates running near you</span></h2>
+          </div>
+        </div>
+        <form action="{{ url_for('election_lookup') }}" class="widget__content">
+          <div class="row u-visually-hidden">
+            <label class="label" for="cycle-select">Choose an election cycle</label>
+            {{ select.cycle_select(cycles, location='form', tooltip=False) }}
+          </div>
+          <div class="row">
+            <div class="row">
+              <label for="zip" class="label">Find by ZIP code</label>
+              <div class="search-controls__zip">
+                <input type="text" inputmode="numeric" id="zip" name="zip" placeholder="e.g. 10001">
+              </div>
+              <div class="search-controls__submit">
+                <button type="submit" class="button--search--text button--primary-contrast">Search</button>
+              </div>
+            </div>
+          </div>
+          <div class="search-controls__or">or</div>
+          <div class="row">
+            <fieldset>
+              <legend class="label">Find by state and district</legend>
+              <div class="search-controls__state">
+                <select id="state" name="state" aria-label="Select a state">
+                  <option value="">Select state</option>
+                  {% for value, label in constants.states.items() %}
+                  <option value="{{ value }}">{{ label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="search-controls__district">
+                <select id="district" name="district" aria-label="Select a district">
+                  <option value="">Select district</option>
+                  {% for value in range(1, 100) %}
+                  {% with formatted = '{0:02d}'.format(value) %}
+                  <option value="{{ formatted }}">{{ formatted }}</option>
+                  {% endwith %}
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="search-controls__submit">
+                <button type="submit" class="button--search--text button--primary-contrast">Search</button>
+              </div>
+            </fieldset>
+          </div>
+        </form>
+      </div>
+
+      <div id="election-summary" class="widget widget--neutral">
+        <h2 class="widget__title"><span class="t-short">So far in the 2016 presidential election:</span></h2>
+        <div class="widget__content">
+          <div>
+            <h5 class="t-data-header">Funds raised</h5>
+            <span class="t-big-data js-receipts"></span>
+          </div>
+          <div>
+            <h5 class="t-data-header">Funds spent</h5>
+            <span class="t-big-data js-disbursements"></span>
+          </div>
+          <div>
+            <h5 class="t-data-header">Independent expenditures</h5>
+            <span class="t-big-data js-expenditures"></span>
+          </div>
+          <a class="button--election button--neutral js-election-url">Compare candidates in this election</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="content__section--extra">
   <div class="container">
     <h2 class="h1 t-no-rules">How to view the data</h2>
     <div class="row tiled-cards--2-wide">
@@ -20,24 +97,24 @@
         <div class="card__content">
           <h2 class="card__title">Candidate data</h2>
           <ul class="card__links list--bulleted">
-            <li><a href="{{ url_for('candidates', cycle=2016, office='P') }}">All 2016 presidential candidates &raquo;</a></li>
-            <li><a href="{{ url_for('candidates', cycle=2016, office='S') }}">All 2016 Senate candidates &raquo;</a></li>
-            <li><a href="{{ url_for('candidates', cycle=2016, office='H') }}">All 2016 House candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', cycle=2016, office='P', candidate_status=['C', 'P', 'F']) }}">2016 presidential candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', cycle=2016, office='S', candidate_status=['C', 'P', 'F']) }}">2016 Senate candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', cycle=2016, office='H', candidate_status=['C', 'P', 'F']) }}">2016 House candidates &raquo;</a></li>
           </ul>
-          <a class="button--neutral button--browse" href="{{ url_for('candidates', cycle=default_cycles) }}">All candidate data</a>
+          <a class="button--neutral button--browse" href="{{ url_for('candidates', cycle=default_cycles, candidate_status=['C', 'P', 'F']) }}">Candidate data</a>
         </div>
       </div>
       <div class="card card--wide">
         <div class="card__image__container">
           <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-committees--neutral.svg') }}" alt="Icon representing committees">
-          <h2 class="card__title">Committee data</h2>
+          <h2 class="card__title"><span class="term" data-term="Committee">Committee</span> data</h2>
         </div>
         <div class="card__content">
           <h2 class="card__title">Committee data</h2>
           <ul class="card__links list--bulleted">
             <li><a href="{{ url_for('committees', cycle=2016) }}">Most recent committees &raquo;</a></li>
             <li><a href="{{ url_for('committees', cycle=2016, designation=['B', 'D'], committee_type=['N', 'Q', 'V', 'W']) }}">All PACs active 2015-2016 &raquo;</a></li>
-            <li><a href="{{ url_for('committees', cycle=2016, committee_type=['I', 'O', 'U']) }}">All independent expenditure committees active 2015-2016 &raquo;</a></li>
+            <li><a href="{{ url_for('committees', cycle=2016, committee_type=['I', 'O', 'U']) }}">All <span class="term" data-term="Independent expenditure">independent expenditure</span> committees active 2015-2016 &raquo;</a></li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('committees', cycle=default_cycles) }}">All committee data</a>
         </div>
@@ -80,83 +157,6 @@
             </li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('disbursements') }}">All disbursement data</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="content__section--extra">
-    <div class="slab slab--neutral">
-      <div class="container">
-        <div id="election-preview" class="widget widget--neutral">
-          <div class="row">
-            <div class="icon-heading">
-              <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-elections--primary.svg') }}" alt="Icon representing filings">
-              <h2 class="icon-heading__title widget__title"><span class="t-short">Find candidates running near you</span></h2>
-            </div>
-          </div>
-          <form action="{{ url_for('election_lookup') }}" class="widget__content">
-            <div class="row">
-              <label class="label" for="cycle-select">Choose an election cycle</label>
-              {{ select.cycle_select(cycles, location='form') }}
-            </div>
-            <div class="row">
-              <div class="row">
-                <label for="zip" class="label">Find by ZIP code</label>
-                <div class="search-controls__zip">
-                  <input type="text" inputmode="numeric" id="zip" name="zip" placeholder="e.g. 10001">
-                </div>
-                <div class="search-controls__submit">
-                  <button type="submit" class="button--search--text button--primary-contrast">Search</button>
-                </div>
-              </div>
-            </div>
-            <div class="search-controls__or">or</div>
-            <div class="row">
-              <fieldset>
-                <legend class="label">Find by state and district</legend>
-                <div class="search-controls__state">
-                  <select id="state" name="state" aria-label="Select a state">
-                    <option value="">Select state</option>
-                    {% for value, label in constants.states.items() %}
-                    <option value="{{ value }}">{{ label }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-                <div class="search-controls__district">
-                  <select id="district" name="district" aria-label="Select a district">
-                    <option value="">Select district</option>
-                    {% for value in range(1, 100) %}
-                    {% with formatted = '{0:02d}'.format(value) %}
-                    <option value="{{ formatted }}">{{ formatted }}</option>
-                    {% endwith %}
-                    {% endfor %}
-                  </select>
-                </div>
-                <div class="search-controls__submit">
-                  <button type="submit" class="button--search--text button--primary-contrast">Search</button>
-                </div>
-              </fieldset>
-            </div>
-          </form>
-        </div>
-
-        <div id="election-summary" class="widget widget--neutral">
-          <h2 class="widget__title"><span class="t-short">So far in the 2016 presidential election:</span></h2>
-          <div class="widget__content">
-            <div>
-              <h5 class="t-data-header">Funds raised</h5>
-              <span class="t-big-data js-receipts"></span>
-            </div>
-            <div>
-              <h5 class="t-data-header">Funds spent</h5>
-              <span class="t-big-data js-disbursements"></span>
-            </div>
-            <div>
-              <h5 class="t-data-header">Independent expenditures</h5>
-              <span class="t-big-data js-expenditures"></span>
-            </div>
-            <a class="button--election button--neutral js-election-url">Compare candidates in this election</a>
-          </div>
         </div>
       </div>
     </div>
