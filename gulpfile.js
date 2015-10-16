@@ -1,4 +1,4 @@
-/* global require */
+/* global require, process */
 
 var _ = require('underscore');
 
@@ -20,7 +20,7 @@ var uglify = require('gulp-uglify');
 
 
 var debug = !!process.env.FEC_WEB_DEBUG;
-var production = !!process.env.FEC_WEB_PRODUCTION;
+var production = ['stage', 'prod'].indexOf(process.env.FEC_WEB_ENVIRONMENT) !== -1;
 
 // TODO(jmcarp) Restore `watch-js`
 // gulp.task('watch-js', bundle.bind(this, true));

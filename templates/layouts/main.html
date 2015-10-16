@@ -37,7 +37,7 @@
   </script>
   {% endif %}
 </head>
-<body {% if not production %}class="has-banner"{% endif %}>
+<body {% if environment != 'prod' %}class="has-banner"{% endif %}>
 {% import 'macros/search.html' as search %}
 {% include 'partials/warnings.html' %}
 

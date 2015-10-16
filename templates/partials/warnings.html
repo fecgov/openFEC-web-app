@@ -19,15 +19,10 @@
 </div>
 <![endif]-->
 
-{% if not production %}
+{% if environment != 'prod' %}
 <div class="banner">
   <div class="container">
-    {% if staging %}
-      {% set environment = 'STAGING' %}
-    {% else %}
-      {% set environment = 'DEVELOP' %}
-    {% endif %}
-    <span class="t-block t-bold is-centered">{{ environment }}</span>
+    <span class="t-block t-bold is-centered">{{ 'STAGING' if environment == 'stage' else 'DEVELOP' }}</span>
     <span class="t-block is-centered">This site is for testing new ideas and code. View the most accurate data on the <a href="https://beta.fec.gov">live site</a>.</span>
   </div>
 </div>
