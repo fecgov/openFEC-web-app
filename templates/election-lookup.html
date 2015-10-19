@@ -15,7 +15,7 @@
       <form>
         <div class="search-controls__row">
           <label class="label" for="cycle-select">Choose an election cycle</label>
-          {{ select.cycle_select(cycles, location='form') }}
+          {{ select.cycle_select(cycles, location='form', tooltip=False) }}
         </div>
         <div class="search-controls__row">
           <div class="search-controls__either">
@@ -32,7 +32,7 @@
           <div class="search-controls__or search-controls__or--vertical">or</div>
           <div class="search-controls__either">
             <fieldset>
-              <legend class="label">Find by state and district</span></legend>
+              <legend class="label">Find by state and <span class="term" data-term="District">district</span></span></legend>
               <div class="search-controls__state">
                 <select id="state" name="state" aria-label="Select a state">
                   <option value="">Select state</option>

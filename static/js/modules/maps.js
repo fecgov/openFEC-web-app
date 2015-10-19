@@ -199,9 +199,11 @@ DistrictMap.prototype.load = function(election) {
   if (election.district) {
     var encoded = utils.encodeDistrict(election.state, election.district);
     feature = utils.findDistrict(encoded);
-  } else {
-    var state = fips.fipsByState[election.state].STATE;
-    feature = stateFeatureMap[state];
+  } else if (election.state) {
+    var state = fips.fipsByState[election.state.toUpperCase()];
+    if (state) {
+      feature = stateFeatureMap[state.STATE];
+    }
   }
   feature && this.render(feature);
 };

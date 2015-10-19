@@ -1,4 +1,5 @@
 {% extends 'layouts/main.html' %}
+{% import 'macros/cycle-select.html' as select %}
 
 {% block title %}
     {{ name }} - Candidate overview
@@ -14,9 +15,14 @@
   </header>
   <header class="entity__header entity__header--neutral">
     <div class="container">
-      <div class="entity__header__top">
-        <h1 class="entity__name">{{ name }}</h1>
-        <span class="t-data entity__type">Candidate for {{ office_full }}</span><span class="t-data">ID: {{ candidate_id }}</span>
+      <div class="entity__header__top row">
+        <div class="usa-width-three-fourths">
+          <h1 class="entity__name">{{ name }}</h1>
+          <span class="t-data entity__type">Candidate for {{ office_full }}</span><span class="t-data">ID: {{ candidate_id }}</span>
+        </div>
+        <div class="usa-width-one-fourth">
+          {{ select.cycle_select(cycles, cycle, id="cycle-1") }}
+        </div>
       </div>
       <div class="entity__header__bottom">
         <ul class="entity__info">
@@ -29,7 +35,7 @@
             <span class="entity__term__data">{% if incumbent_challenge_full %}{{ incumbent_challenge_full|title }}{% endif %}</span>
           </li>
           <li class="entity__term">
-            <span class="entity__term__label">District</span>
+            <span class="entity__term__label"><span class="term" data-term="District">District</span></span>
             <span class="entity__term__data">
               {% if district %}
               <a href="{{ election_url(context(), cycle) }}">{{ state }} - {{ district }}</a>

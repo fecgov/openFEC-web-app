@@ -1,10 +1,9 @@
 'use strict';
 
-/* global require, module, window, document, context */
+/* global document, context */
 
 var d3 = require('d3');
 var $ = require('jquery');
-var URI = require('URIjs');
 var _ = require('underscore');
 var chroma = require('chroma-js');
 
@@ -49,7 +48,7 @@ var electionColumns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        '/candidate/' + row.candidate_id,
+        helpers.buildAppUrl(['candidate', row.candidate_id]),
         'candidate',
         {isIncumbent: row.incumbent_challenge_full === 'Incumbent'}
       );
@@ -154,7 +153,7 @@ function drawComparison(results) {
   var $comparison = $('#comparison');
   var context = {selected: results.slice(0, 10), options: results.slice(10)};
   $comparison.prepend(comparisonTemplate(context));
- new dropdown.Dropdown($comparison.find('.js-dropdown'));
+  new dropdown.Dropdown($comparison.find('.js-dropdown'));
   $comparison.on('change', 'input[type="checkbox"]', refreshTables);
   refreshTables();
 }
@@ -184,25 +183,6 @@ function mapState(response, primary) {
   return _.map(_.pairs(groups), function(pair) {
     return _.extend(
       pair[1], {state: pair[0]});
-  });
-}
-
-function mapType(response, primary) {
-  var groups = {};
-  var typeMap = {
-    true: 'individual',
-    false: 'committee'
-  };
-  _.each(response.results, function(result) {
-    groups[result.candidate_id] = groups[result.candidate_id] || {};
-    groups[result.candidate_id][typeMap[result.individual]] = result.total;
-  });
-  return _.map(_.pairs(groups), function(pair) {
-    return _.extend(
-      pair[1], {
-        candidate_id: pair[0],
-        candidate_name: primary[pair[0]].candidate_name
-      });
   });
 }
 
@@ -287,7 +267,7 @@ function drawStateMap($container, candidateId, cached) {
     var results = _.reduce(
       data.results,
       function(acc, val) {
-        var row = fips.fipsByState[val.state] || {};
+        var row = fips.fipsByState[val.state.toUpperCase()] || {};
         var code = row.STATE ? parseInt(row.STATE) : null;
         acc[code] = val.total;
         return acc;

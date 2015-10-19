@@ -1,0 +1,29 @@
+<noscript>
+  <div style="background-color: #DB4857; padding: 20px;">
+    <h2 style="color: #ffffff">Javascript Required</h2>
+    <p style="color: #ffffff"><a href="{{ url_for('search') }}">betaFEC</a> uses Javascript to provide the best possible user experience. Please enable Javascript in your browser or visit fec.gov.</p>
+    <p style="color: #ffffff">
+      <a style="color: #ffffff; text-decoration: underline" target="_blank"
+          href="http://enable-javascript.com/">
+        Learn how to enable Javascript in your browser
+      </a>
+    </p>
+  </div>
+</noscript>
+
+<!--[if lt IE 10]>
+<div style="background-color: #DB4857; padding: 20px;">
+  <h2 style="color: #ffffff">Your browser is outdated</h2>
+  <p style="color: #ffffff">You're using an older version of Internet Explorer. Please update or switch to another browser like Chrome, Firefox, or Safari for a better experience.</p>
+  <p style="color: #ffffff"><a style="color: #ffffff; text-decoration: underline" target="_blank" href="http://browsehappy.com/">Learn how to update your browser.</a></p>
+</div>
+<![endif]-->
+
+{% if environment != 'prod' %}
+<div class="banner">
+  <div class="container">
+    <span class="t-block t-bold is-centered">{{ 'STAGING' if environment == 'stage' else 'DEVELOPMENT' }}</span>
+    <span class="t-block is-centered">This site is for testing new ideas and code. View the most accurate data on the <a href="https://beta.fec.gov">live site</a>.</span>
+  </div>
+</div>
+{% endif %}

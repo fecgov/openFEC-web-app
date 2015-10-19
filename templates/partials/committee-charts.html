@@ -16,8 +16,8 @@
     <div class="chart__header">
       <h3 class="chart__title">Receipts and disbursements</h3>
       <ul class="chart__key list--flat">
-        <li class="chart__key__item"><span class="swatch data--receipts"></span> Total receipts</li>
-        <li class="chart__key__item"><span class="swatch data--disbursements"></span> Total disbursements</li>
+        <li class="chart__key__item"><span class="swatch data--receipts"></span>Total receipts</li>
+        <li class="chart__key__item"><span class="swatch data--disbursements"></span>Total disbursements</li>
       </ul>
     </div>
     {{ charts.chart_series_grouped(reports | reverse | list, ('total_receipts_period', 'total_disbursements_period'),
@@ -31,8 +31,8 @@
     <div class="chart__header">
       <h3 class="chart__title">Cash and debt</h3>
       <ul class="chart__key list--flat">
-        <li class="chart__key__item"><span class="swatch data--cash"></span> Ending cash on hand</li>
-        <li class="chart__key__item"><span class="swatch data--debt"></span> Debt</li>
+        <li class="chart__key__item"><span class="swatch data--cash"></span>Ending cash on hand</li>
+        <li class="chart__key__item"><span class="swatch data--debt"></span>Debt</li>
       </ul>
     </div>
     {{ charts.chart_series_grouped(reports | reverse | list, ('cash_on_hand_end_period', 'debts_owed_by_committee'),

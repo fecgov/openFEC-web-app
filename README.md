@@ -110,7 +110,7 @@ First, install [PhantomJS](http://phantomjs.org/).
 Configure development environment:
 
     $ unset FEC_WEB_API_KEY
-    $ export FEC_WEB_API_URL=http://fec-dev-api.cf.18f.us
+    $ export FEC_WEB_API_URL=http://fec-dev-api.18f.gov
     $ export FEC_WEB_TEST=true
 
 Run development app server:

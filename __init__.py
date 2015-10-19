@@ -145,6 +145,7 @@ app.jinja_env.globals.update({
     'assets': assets,
     'asset_for': asset_for,
     'base_path': get_base_path,
+    'environment': config.environment,
 })
 
 
@@ -363,11 +364,7 @@ if config.force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
 
 
-if config.server_name:
-    app.config['SERVER_NAME'] = config.server_name
-
-
-if config.production:
+if config.environment in ['stage', 'prod']:
     app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 
