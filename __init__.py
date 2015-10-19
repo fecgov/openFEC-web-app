@@ -1,4 +1,3 @@
-import os
 import re
 import http
 import json
@@ -377,7 +376,7 @@ if not config.test:
     basic_auth = BasicAuth(app)
 
 
-if not os.getenv('FEC_WEB_TEST'):
+if config.environment == 'prod':
     auth = hmacauth.HmacAuth(
         digest=hashlib.sha1,
         secret_key=config.hmac_secret,
