@@ -101,7 +101,7 @@
             <li><a href="{{ url_for('candidates', cycle=2016, office='S') }}">All 2016 Senate candidates &raquo;</a></li>
             <li><a href="{{ url_for('candidates', cycle=2016, office='H') }}">All 2016 House candidates &raquo;</a></li>
           </ul>
-          <a class="button--neutral button--browse" href="{{ url_for('candidates', cycle=default_cycles, candidate_status=['C', 'P', 'F']) }}">Candidate data</a>
+          <a class="button--neutral button--browse" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidate data</a>
         </div>
       </div>
       <div class="card card--wide">
