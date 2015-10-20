@@ -97,9 +97,9 @@
         <div class="card__content">
           <h2 class="card__title">Candidate data</h2>
           <ul class="card__links list--bulleted">
-            <li><a href="{{ url_for('candidates', cycle=2016, office='P', candidate_status=['C', 'P', 'F']) }}">2016 presidential candidates &raquo;</a></li>
-            <li><a href="{{ url_for('candidates', cycle=2016, office='S', candidate_status=['C', 'P', 'F']) }}">2016 Senate candidates &raquo;</a></li>
-            <li><a href="{{ url_for('candidates', cycle=2016, office='H', candidate_status=['C', 'P', 'F']) }}">2016 House candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', cycle=default_cycles, office='P') }}">2016 presidential candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', cycle=default_cycles, office='S') }}">2016 Senate candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', cycle=default_cycles, office='H') }}">2016 House candidates &raquo;</a></li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('candidates', cycle=default_cycles, candidate_status=['C', 'P', 'F']) }}">Candidate data</a>
         </div>
