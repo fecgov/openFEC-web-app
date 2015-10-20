@@ -47,5 +47,6 @@ function sortQuery(query) {
 
 module.exports = {
   init: init,
+  sortQuery: sortQuery,
   pageView: pageView
 };
