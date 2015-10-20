@@ -207,11 +207,8 @@ function ensureArray(value) {
   return _.isArray(value) ? value : [value];
 }
 
-function compareQuery(first, second) {
-  var keys = _.keys(first);
-  if (!_.isEqual(keys.sort(), _.keys(second).sort())) {
-    return false;
-  }
+function compareQuery(first, second, keys) {
+  keys = keys || _.union(_.keys(first), _.keys(second));
   var different = _.find(keys, function(key) {
     return !_.isEqual(
       ensureArray(first[key]).sort(),
@@ -223,9 +220,10 @@ function compareQuery(first, second) {
 
 function pushQuery(params) {
   var query = URI.parseQuery(window.location.search);
-  if (!compareQuery(query, params)) {
+  var fields = filters.getFields();
+  if (!compareQuery(query, params, fields)) {
     // Clear and update filter fields
-    _.each(filters.getFields(), function(field) {
+    _.each(fields, function(field) {
       delete query[field];
     });
     params = _.extend(query, params);

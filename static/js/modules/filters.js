@@ -155,7 +155,7 @@ var clearFilters = function() {
     activateFilter({
       name: key,
       value: null
-    })
+    });
   });
 };
 
