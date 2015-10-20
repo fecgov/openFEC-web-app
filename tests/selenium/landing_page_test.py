@@ -26,9 +26,7 @@ class LandingPageTests(BaseTest):
         self.driver.find_element_by_css_selector('.js-glossary-toggle').click()
         glossary = self.getGlossary()
         self.assertIn('is-open', glossary.get_attribute('class'))
-        hide = glossary.find_element_by_css_selector('.toggle')
-        WebDriverWait(self.driver, 1).until(lambda driver: hide.is_displayed())
-        hide.click()
+        self.driver.find_element_by_tag_name('body').send_keys(K.ESCAPE)
         self.assertNotIn('is-open', glossary.get_attribute('class'))
 
     def testGlossarySearch(self):

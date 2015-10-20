@@ -5,6 +5,7 @@ services:
 # Must provide FEC_WEB_USERNAME, FEC_WEB_PASSWORD, FEC_GITHUB_TOKEN, NEW_RELIC_LICENSE_KEY
   - fec-creds-dev
 env:
+  FEC_WEB_ENVIRONMENT: "dev"
   NEW_RELIC_APP_NAME: OpenFEC Web (development)
   FEC_WEB_API_URL: https://fec-dev-api.18f.gov
   FEC_CMS_URL: https://fec-proxy.18f.gov

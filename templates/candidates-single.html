@@ -37,7 +37,7 @@
           <li class="entity__term">
             <span class="entity__term__label"><span class="term" data-term="District">District</span></span>
             <span class="entity__term__data">
-              {% if district %}
+              {% if district and district != '00' %}
               <a href="{{ election_url(context(), cycle) }}">{{ state }} - {{ district }}</a>
               {% else %}
               <a href="{{ election_url(context(), cycle) }}">{{ state }}</a>
