@@ -27,11 +27,12 @@ require('jquery.inputmask/dist/inputmask/jquery.inputmask.numeric.extensions.js'
 // Include vendor scripts
 require('./vendor/tablist');
 
-var filters = require('./modules/filters.js');
-var charts = require('./modules/charts.js');
+var charts = require('./modules/charts');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
+var filters = require('./modules/filters');
 var helpers = require('./modules/helpers');
+var analytics = require('./modules/analytics');
 
 charts.init();
 
@@ -185,6 +186,11 @@ $(document).ready(function() {
     // @if DEBUG
     // var perf = require('./modules/performance');
     // perf.bar();
+    // @endif
+
+    // @if ANALYTICS
+    analytics.init();
+    analytics.pageView();
     // @endif
 
     filters.init();
