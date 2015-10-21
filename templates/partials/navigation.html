@@ -13,7 +13,7 @@
           <span class="t-bold site-nav__subtitle">Browse:</span>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link site-nav__sublink" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('candidates', cycle=default_cycles, candidate_status=['C', 'P', 'F']) }}">Candidates</a>
         </li>
         <li class="site-nav__item">
           <a class="site-nav__link site-nav__sublink" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a>
