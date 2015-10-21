@@ -20,6 +20,7 @@ var uglify = require('gulp-uglify');
 
 
 var debug = !!process.env.FEC_WEB_DEBUG;
+var analytics = !!process.env.FEC_WEB_GOOGLE_ANALYTICS;
 var production = ['stage', 'prod'].indexOf(process.env.FEC_WEB_ENVIRONMENT) !== -1;
 
 // TODO(jmcarp) Restore `watch-js`
@@ -115,7 +116,10 @@ gulp.task('build-js', function() {
     opts: {global: true},
     debug: debug
   })
-  .transform(preprocessify({DEBUG: debug}))
+  .transform(preprocessify({
+    DEBUG: debug,
+    ANALYTICS: analytics
+  }))
   .transform({global: true}, stringify(['.html']))
   .transform(hbsfy)
   .bundle()
