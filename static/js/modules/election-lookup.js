@@ -13,6 +13,7 @@ var L = require('leaflet');
 require('leaflet-providers');
 
 var helpers = require('./helpers');
+var analytics = require('./analytics');
 var utils = require('./election-utils');
 
 var states = require('../data/us-states-10m.json');
@@ -222,6 +223,7 @@ ElectionLookup.prototype.search = function(e, opts) {
     self.serialized = serialized;
     if (opts.pushState) {
       window.history.pushState(serialized, null, URI('').query(serialized).toString());
+      analytics.pageView();
     }
   }
 };
