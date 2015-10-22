@@ -72,7 +72,7 @@ var filings = {
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return row.form_type && row.form_type.match(/^F3/) ?
+      return row.form_type && ['F3', 'F3P', 'F3X'].indexOf(row.form_type) !== -1 ?
         tables.MODAL_TRIGGER_HTML :
         '';
     }
