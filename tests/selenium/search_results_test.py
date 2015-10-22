@@ -17,7 +17,7 @@ class SearchResultsPageTests(SearchPageTestCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.driver.get(cls.base_url + '/candidates/?candidate_status=C')
+        cls.driver.get(cls.base_url + '/candidates')
         utils.wait_for_event(cls.driver, 'draw.dt', 'draw')
         cls.candidate = cls.driver.find_element_by_css_selector(
             'a[data-category="candidate"]'
