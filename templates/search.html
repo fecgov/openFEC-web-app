@@ -114,7 +114,7 @@
           <ul class="card__links list--bulleted">
             <li><a href="{{ url_for('committees', cycle=2016) }}">Most recent committees &raquo;</a></li>
             <li><a href="{{ url_for('committees', cycle=2016, designation=['B', 'D'], committee_type=['N', 'Q', 'V', 'W']) }}">All PACs active 2015-2016 &raquo;</a></li>
-            <li><a href="{{ url_for('committees', cycle=2016, committee_type=['I', 'O', 'U']) }}">All <span class="term" data-term="Independent expenditure">independent expenditure</span> committees active 2015-2016 &raquo;</a></li>
+            <li><a href="{{ url_for('committees', cycle=2016, committee_type=['I', 'O', 'U']) }}">All independent expenditure committees active 2015-2016 &raquo;</a></li>
           </ul>
           <a class="button--neutral button--browse" href="{{ url_for('committees', cycle=default_cycles) }}">All committee data</a>
         </div>
@@ -167,7 +167,7 @@
       <div class="row t-ruled--bottom">
         <div class="icon-heading">
           <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-filings--primary.svg') }}" alt="Icon representing filings">
-          <h2 class="icon-heading__title">Most recent filings submitted</h2>
+          <h2 class="icon-heading__title">10 most recent filings submitted</h2>
         </div>
         <a class="u-float-right button--neutral button--browse" href="{{ url_for('filings') }}">All filing data</a>
       </div>
