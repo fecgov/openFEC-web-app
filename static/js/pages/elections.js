@@ -83,22 +83,17 @@ function makeCommitteeColumn(opts, factory) {
   return _.extend({}, {
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
+      row.cycle = context.election.cycle;
       var column = meta.settings.aoColumns[meta.col].data;
       return _.extend({
-        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids,
-        cycle: context.election.cycle
+        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids
       }, factory(data, type, row, meta, column));
     })
   }, opts);
 }
 
 var makeSizeColumn = _.partial(makeCommitteeColumn, _, function(data, type, row, meta, column) {
-  var limits = columns.sizeInfo[column].limits;
-  return {
-    min_amount: limits[0],
-    max_amount: limits[1],
-    is_individual: 'true'
-  };
+  return columns.getSizeParams(column);
 });
 
 var sizeColumns = [
@@ -267,7 +262,8 @@ function drawStateMap($container, candidateId, cached) {
     var results = _.reduce(
       data.results,
       function(acc, val) {
-        var row = fips.fipsByState[val.state.toUpperCase()] || {};
+        var state = val.state ? val.state.toUpperCase() : val.state;
+        var row = fips.fipsByState[state] || {};
         var code = row.STATE ? parseInt(row.STATE) : null;
         acc[code] = val.total;
         return acc;
