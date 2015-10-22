@@ -31,10 +31,10 @@ Inputmask.extendAliases({
     groupSeparator: ',',
     alias: 'numeric',
     placeholder: '0',
-    autoGroup: !0,
+    autoGroup: true,
     digits: 2,
-    digitsOptional: !1,
-    clearMaskOnLostFocus: !1
+    digitsOptional: true,
+    clearMaskOnLostFocus: false
   }
 });
 

@@ -6,7 +6,6 @@ var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
 
-var events = require('fec-style/js/events');
 var accordion = require('fec-style/js/accordion');
 var accessibility = require('fec-style/js/accessibility');
 
@@ -165,7 +164,7 @@ $('.js-clear-filters').on('click keypress', function(e){
     clearFilters();
     $(this).focus();
   }
-})
+});
 
 $('.button--remove').click(function(e){
     e.preventDefault();
