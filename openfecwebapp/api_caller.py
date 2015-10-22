@@ -66,7 +66,7 @@ def load_cmte_financials(committee_id, **filters):
     filters.update({
         'per_page': MAX_FINANCIALS_COUNT,
         'report_type': filters.get('report_type', []) + ['-TER'],
-        'amended': 'false',
+        'is_amended': 'false',
     })
 
     reports = _call_api('committee', committee_id, 'reports', **filters)
