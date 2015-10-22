@@ -70,7 +70,7 @@ var electionColumns = [
         }
       );
       var anchor = document.createElement('a');
-      anchor.textContent = 'Link';
+      anchor.textContent = 'View';
       anchor.setAttribute('href', url);
       anchor.setAttribute('target', '_blank');
       return anchor.outerHTML;
