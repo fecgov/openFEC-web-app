@@ -3,6 +3,8 @@ import functools
 
 from .base_test_class import SearchPageTestCase
 
+from tests.selenium import utils
+
 
 class CandidatesPageTests(SearchPageTestCase):
 
@@ -12,13 +14,14 @@ class CandidatesPageTests(SearchPageTestCase):
     def testCandidatesPageLoads(self):
         self.driver.get(self.url)
         self.assertEqual(
-            self.driver.find_element_by_tag_name('h1').text,
-            'Candidates')
+            self.driver.find_element_by_class_name('tst-page-title').text.lower(),
+            'candidates',
+        )
 
     def testCandidatesFilterSideBar(self):
         self.driver.get(self.url)
         filters = self.driver.find_element_by_id('filters')
-        self.assertIn('side-panel--open', filters.get_attribute('class'))
+        self.assertIn('is-open', filters.get_attribute('class'))
 
     @unittest.skip('Will fail unless we ensure that subset data includes Mark Alliegro')
     def testCandidateNameFilter(self):
@@ -43,29 +46,43 @@ class CandidatesPageTests(SearchPageTestCase):
                 lower, upper = parts
                 return (lower <= entry <= upper) or (lower <= entry + 1 <= upper)
             return False
-        self.checkFilter('cycle', '2013', 2, functools.partial(checker, 2013))
+        self.check_filter('cycle', '2014', 2, functools.partial(checker, 2013))
 
     def testCandidatePartyFilter(self):
-        self.checkFilter(
-            'party', 'republican party', 3, 'Republican Party')
+        self.check_filter('party', 'REP', 3, 'Republican Party')
 
     def testCandidateStateFilter(self):
-        self.checkFilter('state', 'penn', 4, 'PA')
+        self.check_filter('state', 'AL', 4, 'AL')
 
     def testCandidateDistrictFilter(self):
-        self.checkFilter('district', '10', 5, '10')
+        self.check_filter('district', '01', 5, '01')
 
     def testCandidateOfficeFilter(self):
-        self.checkFilter('office', 'P', 1, 'President')
+        self.check_filter('office', 'P', 1, 'President')
 
     def test_candidate_filter_history(self):
-        self.checkFilter('state', 'penn', 4, 'PA')
-        self.assertTrue(self.driver.current_url.endswith('state=PA'))
-        self.checkFilter('state', 'tex', 4, 'TX', refresh=False, click=True)
-        self.assertTrue(self.driver.current_url.endswith('state=TX'))
+        self.check_filter('state', 'AL', 4, 'AL')
+        self.assertIn('state=AL', self.driver.current_url)
+        self.check_filter('state', 'AR', 4, {'AL', 'AR'}, refresh=False, expand=False)
+        self.assertIn('state=AL', self.driver.current_url)
+        self.assertIn('state=AR', self.driver.current_url)
+
+        # Test back behavior
         self.driver.back()
-        self.check_filter_results(4, 'PA')
-        self.assertTrue(self.driver.current_url.endswith('state=PA'))
+        self.check_filter_results(4, 'AL')
+        self.assertIn('state=AL', self.driver.current_url)
+        self.assertNotIn('state=AR', self.driver.current_url)
+        self.assertIn('state=AL', self.driver.current_url)
+
+        # Test forward behavior
         self.driver.forward()
-        self.check_filter_results(4, 'TX')
-        self.assertTrue(self.driver.current_url.endswith('state=TX'))
+        self.check_filter_results(4, {'AL', 'AR'})
+        self.assertIn('state=AL', self.driver.current_url)
+        self.assertIn('state=AR', self.driver.current_url)
+
+        # Uncheck filters and verify empty query string
+        self.click_filter('state', 'AR', expand=False)
+        self.click_filter('state', 'AL', expand=False)
+        utils.wait_for_event(self.driver, 'draw.dt', 'draw')
+        self.assertNotIn('state=AL', self.driver.current_url)
+        self.assertNotIn('state=AR', self.driver.current_url)

@@ -1,0 +1,18 @@
+<div id="filters" class="filters">
+  <button id="filter-toggle" data-slide="left" class="filters__toggle">
+    <span class="filters__toggle__text">Show filters</span>
+  </button>
+  <div class="filters__hider">
+    <h2 class="filter__header">
+      {% block heading %}
+      Filter {{ result_type }}
+      {% endblock %}
+    </h2>
+    <form id="category-filters">
+      {% block message %}{% endblock %}
+      {% include 'partials/filters/filter-buttons.html' %}
+      {% block filters %}{% endblock %}
+      {% include 'partials/filters/filter-buttons.html' %}
+    </form>
+  </div>
+</div>

@@ -2,12 +2,13 @@
 
 var $ = require('jquery');
 
-var events = require('./events.js');
+var events = require('fec-style/js/events.js');
 
 var defaultOpts = {
   placeHolderOptions: {
-    'candidates': 'Enter a candidate name',
-    'committees': 'Enter a committee name'}
+    'candidates': 'Search candidates',
+    'committees': 'Search committees'
+  }
 };
 
 function onSelectChange($input, updatedText) {
@@ -15,8 +16,8 @@ function onSelectChange($input, updatedText) {
 };
 
 var Search = function($el, opts) {
-  var $select = $el.find('select'),
-      $input = $el.find('input'),
+  var $select = $el.find('.js-search-type'),
+      $input = $el.find('input[type="text"]'),
       settings = $.extend( {}, defaultOpts, opts);
 
   if (settings.placeHolderOptions) {

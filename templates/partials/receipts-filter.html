@@ -1,0 +1,70 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/date.html' as date %}
+
+{% block heading %}
+Filter receipts
+{% endblock %}
+
+{% block message %}
+<div class="message message--info message--small">
+  <p>Due to the large number of transactions, records begin in 2011.</p>
+</div>
+{% endblock %}
+
+{% block filters %}
+<div class="filter">
+  <fieldset>
+    <legend class="label">Show contributions from</legend>
+    <ul>
+      <li>
+        <input id="contributor-type-individual" name="contributor_type" type="checkbox" value="individual">
+        <label for="contributor-type-individual">Individuals</label>
+      </li>
+      <li>
+        <input id="contributor-type-committee" name="contributor_type" type="checkbox" value="committee">
+        <label for="contributor-type-committee">Committees</label>
+      </li>
+    </ul>
+  </fieldset>
+</div>
+<div class="filter">
+  <fieldset>
+    <legend class="label">Restrict contributions</legend>
+    <ul>
+      <li>
+        <div class="tooltip__container">
+          <input id="is-individual" name="is_individual" type="checkbox" value="true" class="tooltip-trigger" aria-describedby="unique-tooltip" checked>
+          <label for="is-individual" class="tooltip__trigger">Unique only</label>
+          <div id="unique-tooltip" role="tooltip" class="tooltip tooltip--under">
+            <p class="tooltip__content">Some transactions — such as earmarked contributions and partnership contributions — are reported more than once for clarity on the printed page but can lead to confusion when viewed as data online. Use the unique only filter to remove these extra transactions.</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </fieldset>
+</div>
+
+{{ typeahead.field('committee_id', 'Committee') }}
+
+<h3 class="filters__subheader">Contributor information</h3>
+{{ typeahead.field('contributor_id', 'Contributor name (committee)') }}
+{{ text.field('contributor_name', 'Contributor name (non-committee)') }}
+{{ text.field('contributor_city', 'City') }}
+{{ states.field('contributor_state') }}
+{{ text.field('contributor_employer', 'Employer') }}
+{{ text.field('contributor_occupation', 'Occupation') }}
+
+<h3 class="filters__subheader">Transaction information</h3>
+{{ text.field('min_amount', 'Minimum contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+{{ date.field('date', 'Receipt date', dates ) }}
+<div class="message message--info message--small">
+  <p>Receipts are reported periodically, according to the filer's reporting schedule. Receipts are updated as they’re processed— that time can vary.</p>
+</div>
+
+{% endblock %}

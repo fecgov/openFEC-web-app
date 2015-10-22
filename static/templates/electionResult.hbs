@@ -1,0 +1,26 @@
+<div>
+  {{#each this}}
+  <div class="result" data-office="{{this.office}}">
+    <h3>
+      {{#if this.district}}
+      <span data-color="{{this.color}}"></span>
+      {{/if}}
+      <a href="{{this.url}}">{{this.electionName}}</a>
+    </h3>
+    <div class="row">
+      <span class="result__term">Next general election:</span>
+      <span class="result__definition">{{this.electionDate}}</span>
+    </div>
+    {{#if this.incumbent}}
+    <div class="row">
+      <span class="result__term">Current officeholder:</span>
+      <a class="result__definition" href="{{this.incumbent.url}}">{{this.incumbent.name}}</a>
+      </div>
+    {{/if}}
+    <div class="row">
+      <span class="result__term">Current candidates:</span>
+      <a class="result__definition" href="{{this.url}}">View all &raquo;</a>
+    </div>
+  </div>
+  {{/each}}
+</div>

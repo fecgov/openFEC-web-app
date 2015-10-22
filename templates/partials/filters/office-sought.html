@@ -1,10 +1,19 @@
-<div class="field">
-    <label for="office">Office Sought</label>
-    <select name="office" id="office" data-placeholder="Select an office">
-        <option></option>
-        <option value="H">House</option>
-        <option value="P">President</option>
-        <option value="S">Senate</option>
-    </select>
-    <button type="button" class="button--remove" data-removes="office"><i class="ti-close"></i></button>
+<div class="filter">
+    <fieldset>
+      <legend class="label" for="office">Office Sought</legend>
+      <ul>
+        <li>
+          <input id="cycle-checkbox-p" name="office" type="checkbox" value="P">
+          <label for="cycle-checkbox-p">President</label>
+        </li>
+        <li>
+          <input id="cycle-checkbox-s" name="office" type="checkbox" value="S">
+          <label for="cycle-checkbox-s">Senate</label>
+        </li>
+        <li>
+          <input id="cycle-checkbox-h" name="office" type="checkbox" value="H">
+          <label for="cycle-checkbox-h">House</label>
+        </li>
+      </ul>
+    </fieldset>
 </div>

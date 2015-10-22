@@ -1,0 +1,33 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/date.html' as date %}
+{% block heading %}
+Filter disbursements
+{% endblock %}
+
+{% block message %}
+<div class="message message--info message--small">
+  <p>Due to the large number of transactions, records begin in 2011.</p>
+</div>
+{% endblock %}
+
+{% block filters %}
+{{ typeahead.field('committee_id', 'Committee') }}
+
+<h4 class="filters__subheader">Recipient information</h4>
+{{ typeahead.field('recipient_committee_id', 'Recipient (committee)') }}
+{{ text.field('recipient_name', 'Recipient (non-committee)') }}
+{{ text.field('recipient_city', 'City') }}
+{{ states.field('recipient_state')}}
+<h4 class="filters__subheader">Transaction information</h4>
+{{ text.field('disbursement_description', 'Purpose') }}
+{{ text.field('min_amount', 'Minimum expenditure') }}
+{{ text.field('max_amount', 'Maximum expenditure') }}
+{{ date.field('date', 'Disbursement date', dates ) }}
+<div class="message message--info message--small">
+  <p>Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</p>
+</div>
+{% endblock %}

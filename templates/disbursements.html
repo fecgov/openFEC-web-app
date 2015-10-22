@@ -1,0 +1,26 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse disbursements
+{% endblock %}
+
+{% block body %}
+
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title">Disbursements</h1>
+</header>
+
+<section class="main__content--full">
+  {% include 'partials/disbursements-filter.html' %}
+  <div id="committees" class="datatable__container">
+    {% include 'partials/disbursements-table.html' %}
+  </div>
+</section>
+
+{% include 'partials/datatable-modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_for('dist/js/pages/disbursements.js') }}"></script>
+{% endblock %}

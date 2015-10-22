@@ -1,40 +1,26 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-   Browse Candidates
+  Browse candidates
 {% endblock %}
 
 {% block body %}
 
-<header class="page-header page-header--dark">
-  <h1><img width="32" height="32" class="category-icon" src="/static/img/icon-candidate--white.svg" alt="Icon representing committees"> Candidates</h1>
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title tst-page-title">Candidates</h1>
 </header>
 
-<section class="results-content">
-  <button id="filter-toggle" data-slide="left"><i class="ti-plus"></i>Show Filters</button>
-  <div id="filters" class="side-panel side-panel--left">
-    <form id="category-filters">
-      <h4>Filter Candidates</h4>
-        <div class="field" id="q-field">
-          <label for="q">Name</label>
-          <input type="text" name="q" />
-          <button type="button" class="button--remove" data-removes="q"><i class="ti-close"></i></button>
-        </div>
-
-        {% include 'partials/filters/election-years.html' %}
-        {% include 'partials/filters/parties.html' %}
-        {% include 'partials/filters/states.html' %}
-        {% include 'partials/filters/districts.html' %}
-        {% include 'partials/filters/office-sought.html' %}
-
-      <div class="field">
-        <button type="submit" class="primary">Apply filters</button>
-      </div>
-    </form>
-  </div>
-
-  <div id="candidates" class="results-container">
-      {% include 'partials/candidates-table.html' %}
+<section class="main__content--full">
+  {% include 'partials/candidates-filter.html' %}
+  <div id="candidates" class="datatable__container">
+    {% include 'partials/candidates-table.html' %}
   </div>
 </section>
+
+{% include 'partials/datatable-modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_for('dist/js/pages/candidates.js') }}"></script>
 {% endblock %}

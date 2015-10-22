@@ -1,14 +1,3 @@
-// Include vendor styles
-@import "themify-icons";
-@import "datatables/media/css/jquery.dataTables";
-@import "drmonty-datatables-responsive/css/dataTables.responsive";
+// Put overrides here and vendor styles here
 
-@import "bourbon";
-@import "neat";
-
-@import "font-family";
-@import "grid-settings";
-
-@import "_base/base";
-@import "_layout/layout";
-@import "_components/components";
+@import "leaflet/dist/leaflet";

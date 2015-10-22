@@ -1,12 +1,21 @@
-<div class="field">
-    <label for="district">District</label>
-    <select name="district" id="district" data-placeholder="Select a district">
-        <option></option>
-        {% for district in range(100) %}
-        {% with formatted = '{0:02d}'.format(district) %}
-        <option value={{ formatted }}>{{ formatted }}</option>
-        {% endwith %}
-        {% endfor %}
-    </select>
-    <button type="button" class="button--remove" data-removes="district"><i class="ti-close"></i></button>
+<div class="filter">
+  <fieldset class="js-dropdown">
+    <legend class="label" for="district"><span class="term" data-term="District">District</span></legend>
+    <ul class="dropdown__selected"></ul>
+    <div class="dropdown">
+      <button type="button" class="dropdown__button button--neutral">More</button>
+      <div id="district-dropdown" class="dropdown__panel" aria-hidden="true">
+        <ul class="dropdown__list">
+            {% for district in range(100) %}
+            {% with formatted = '{0:02d}'.format(district) %}
+              <li class="dropdown__item">
+                <input id="district-checkbox-{{ formatted }}" name="district" type="checkbox" value="{{ formatted }}">
+                <label class="dropdown__value" for="district-checkbox-{{ formatted }}">{{ formatted }}</label>
+              </li>
+            {% endwith %}
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </fieldset>
 </div>
