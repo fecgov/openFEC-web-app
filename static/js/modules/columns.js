@@ -16,6 +16,18 @@ var sizeInfo = {
   2000: {limits: [2000, null], label: 'Over $2000'},
 };
 
+function getSizeParams(size) {
+  var limits = sizeInfo[size].limits;
+  var params = {is_individual: 'true'};
+  if (limits[0] !== null) {
+    params.min_amount = helpers.currency(limits[0]);
+  }
+  if (limits[1] !== null) {
+    params.max_amount = helpers.currency(limits[1]);
+  }
+  return params;
+}
+
 var supportOpposeMap = {
   S: 'Support',
   O: 'Oppose',
@@ -89,6 +101,7 @@ module.exports = {
   filings: filings,
   sizeInfo: sizeInfo,
   getColumns: getColumns,
+  getSizeParams: getSizeParams,
   supportOpposeColumn: supportOpposeColumn,
   amendmentIndicatorColumn: amendmentIndicatorColumn
 };

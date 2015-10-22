@@ -1,6 +1,6 @@
 'use strict';
 
-/* global window, document, BASE_PATH */
+/* global window, document, Inputmask, BASE_PATH */
 
 var KEYCODE_SLASH = 191;
 
@@ -21,8 +21,22 @@ var typeahead = require('fec-style/js/typeahead');
 var typeaheadFilter = require('fec-style/js/typeahead-filter');
 
 require('jquery.inputmask');
-require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
-require('jquery.inputmask/dist/inputmask/jquery.inputmask.numeric.extensions.js');
+require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
+require('jquery.inputmask/dist/inputmask/inputmask.numeric.extensions.js');
+
+// Remove extra padding in currency mask
+Inputmask.extendAliases({
+  currency: {
+    prefix: '$',
+    groupSeparator: ',',
+    alias: 'numeric',
+    placeholder: '0',
+    autoGroup: true,
+    digits: 2,
+    digitsOptional: true,
+    clearMaskOnLostFocus: false
+  }
+});
 
 // Include vendor scripts
 require('./vendor/tablist');

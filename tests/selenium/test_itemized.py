@@ -6,7 +6,7 @@ from tests.selenium.base_test_class import SearchPageTestCase
 
 
 def parse_amount(value):
-    cleaned = value.lstrip('$').replace(',', '')
+    cleaned = value.replace('$', '').replace(',', '')
     return float(cleaned)
 
 

@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, Intl, BASE_PATH, API_LOCATION, API_VERSION, API_KEY */
+/* global Intl, BASE_PATH, API_LOCATION, API_VERSION, API_KEY */
 
 var URI = require('URIjs');
 var _ = require('underscore');
@@ -12,9 +12,10 @@ var intl = require('intl');
 var locale = require('intl/locale-data/json/en-US.json');
 intl.__addLocaleData(locale);
 
+var currencyFormatter = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
 function currency(value) {
   if (!isNaN(parseInt(value))) {
-    return '$' + Intl.NumberFormat().format(value);
+    return currencyFormatter.format(value);
   } else {
     return null;
   }

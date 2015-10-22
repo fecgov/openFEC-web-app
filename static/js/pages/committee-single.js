@@ -1,9 +1,8 @@
 'use strict';
 
-/* global require, module, document */
+/* global document */
 
 var $ = require('jquery');
-var URI = require('URIjs');
 var _ = require('underscore');
 
 var events = require('fec-style/js/events');
@@ -38,12 +37,7 @@ var sizeColumns = [
     className: 'all',
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
-      var info = columns.sizeInfo[row.size];
-      return {
-        min_amount: info.limits[0],
-        max_amount: info.limits[1],
-        is_individual: 'true'
-      };
+      return columns.getSizeParams(row.size);
     })
   }
 ];
