@@ -5,7 +5,6 @@
 var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
-var moment = require('moment');
 var tabs = require('../vendor/tablist');
 var accessibility = require('fec-style/js/accessibility');
 
@@ -14,6 +13,7 @@ require('drmonty-datatables-responsive');
 
 var filters = require('./filters');
 var helpers = require('./helpers');
+var analytics = require('./analytics');
 
 var simpleDOM = 't<"results-info"ip>';
 
@@ -231,6 +231,7 @@ function pushQuery(params) {
     params = _.extend(query, params);
     var queryString = URI('').query(params).toString();
     window.history.pushState(params, queryString, queryString || window.location.pathname);
+    analytics.pageView();
   }
 }
 

@@ -3,10 +3,13 @@
 -----------------------------------------------------------------------------------------
 */
 
+var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 
 var events = require('fec-style/js/events');
+
+var analytics = require('../modules/analytics');
 
 // The class for the container div
 
@@ -43,6 +46,7 @@ function show($target, push) {
     );
     var search = URI('').query(query).toString();
     window.history.pushState(query, search, search || window.location.pathname);
+    analytics.pageView();
   }
 
   events.emit('tabs.show.' + value, {$tab: $target, $panel: $panel});
