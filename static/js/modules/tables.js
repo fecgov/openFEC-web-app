@@ -104,20 +104,24 @@ function buildAggregateUrl(cycle) {
 function buildTotalLink(path, getParams) {
   return function(data, type, row, meta) {
     data = data || 0;
+    var params = getParams(data, type, row, meta);
     var span = document.createElement('div');
     span.setAttribute('data-value', data);
     span.setAttribute('data-row', meta.row);
-    var link = document.createElement('a');
-    link.textContent = helpers.currency(data);
-    link.setAttribute('title', 'View individual transactions');
-    var params = getParams(data, type, row, meta);
-    var uri = helpers.buildAppUrl(path, _.extend(
-      {committee_id: row.committee_id},
-      buildAggregateUrl(_.extend({}, row, params).cycle),
-      params
-    ));
-    link.setAttribute('href', uri);
-    span.appendChild(link);
+    if (params) {
+      var link = document.createElement('a');
+      link.textContent = helpers.currency(data);
+      link.setAttribute('title', 'View individual transactions');
+      var uri = helpers.buildAppUrl(path, _.extend(
+        {committee_id: row.committee_id},
+        buildAggregateUrl(_.extend({}, row, params).cycle),
+        params
+      ));
+      link.setAttribute('href', uri);
+      span.appendChild(link);
+    } else {
+      span.textContent = helpers.currency(data);
+    }
     return span.outerHTML;
   };
 }
