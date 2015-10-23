@@ -101,10 +101,14 @@ var employerColumns = [
     orderable: false,
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
-      return {
-        contributor_employer: row.employer,
-        is_individual: 'true'
-      };
+      if (row.employer) {
+        return {
+          contributor_employer: row.employer,
+          is_individual: 'true'
+        };
+      } else {
+        return null;
+      }
     })
   }
 ];
@@ -117,10 +121,14 @@ var occupationColumns = [
     orderable: false,
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
-      return {
-        contributor_occupation: row.occupation,
-        is_individual: 'true'
-      };
+      if (row.occupation) {
+        return {
+          contributor_occupation: row.occupation,
+          is_individual: 'true'
+        };
+      } else {
+        return null;
+      }
     })
   }
 ];
