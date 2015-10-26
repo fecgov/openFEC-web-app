@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window */
+/* global window */
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -9,42 +9,59 @@ var URI = require('URIjs');
 var accordion = require('fec-style/js/accordion');
 var accessibility = require('fec-style/js/accessibility');
 
-// are the panels open?
-var open = false;
-
-var openFilterPanel = function() {
-  $('body').addClass('is-showing-filters');
-  $('.filters').addClass('is-open');
-  $('#filter-toggle').addClass('is-active')
-    .find('.filters__toggle__text').html('Hide filters');
-  accessibility.restoreTabindex($('#category-filters'));
-  open = true;
+var defaultOptions = {
+  body: '.filters',
+  form: '#category-filters',
+  toggle: '#filter-toggle'
 };
 
-var closeFilterPanel = function() {
-  $('body').removeClass('is-showing-filters');
-  $('.filters.is-open').removeClass('is-open');
-  $('#filter-toggle').removeClass('is-active')
-    .find('.filters__toggle__text').html('Show filters');
-  $('#results tr:first-child').focus();
-  accessibility.removeTabindex($('#category-filters'));
-  open = false;
-};
+function FilterPanel(options) {
+  this.isOpen = false;
+  this.options = _.extend({}, defaultOptions, options);
 
-// Keep in sync with styles/grid-settings.scss.
-// TODO find better way to sync with scss.
-if ($('body').width() > 768) {
-  open = true;
-  openFilterPanel();
+  this.$body = $(this.options.body);
+  this.$form = $(this.options.form);
+  this.$toggle = $(this.options.toggle);
+
+  this.$toggle.on('click', this.toggle.bind(this));
+
+  this.adjust();
 }
 
-$('#filter-toggle').click(function(){
-  if ( open === true ) {
-    closeFilterPanel();
+FilterPanel.prototype.adjust = function() {
+  if ($('body').width() > 768) {
+    this.show();
   } else {
-    openFilterPanel();
+    this.hide();
   }
-});
+};
+
+FilterPanel.prototype.show = function() {
+  this.$body.addClass('is-open');
+  this.$toggle.addClass('is-active');
+  this.$toggle.find('.filters__toggle__text').html('Hide filters');
+  accessibility.restoreTabindex(this.$form);
+  $('body').addClass('is-showing-filters');
+  this.isOpen = true;
+};
+
+FilterPanel.prototype.hide = function() {
+  this.$body.removeClass('is-open');
+  this.$toggle.removeClass('is-active');
+  this.$toggle.find('.filters__toggle__text').html('Show filters');
+  $('#results tr:first-child').focus();
+  accessibility.removeTabindex(this.$form);
+  $('body').removeClass('is-showing-filters');
+  this.isOpen = false;
+};
+
+FilterPanel.prototype.toggle = function() {
+  if (this.isOpen) {
+    this.hide();
+  } else {
+    this.show();
+  }
+};
 
 var prepareValue = function($elm, value) {
   if ($elm.attr('type') === 'checkbox') {
@@ -211,7 +228,9 @@ module.exports = {
     // if the page was loaded with filters set in the query string
     activateInitialFilters();
     bindDateFilters();
+    new FilterPanel();
   },
   getFields: getFields,
-  activateInitialFilters: activateInitialFilters
+  activateInitialFilters: activateInitialFilters,
+  FilterPanel: FilterPanel
 };
