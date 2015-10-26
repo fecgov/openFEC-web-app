@@ -5,6 +5,7 @@ import furl
 
 from flask.views import MethodView
 from flask import request, render_template, jsonify
+from flask.ext.cors import cross_origin
 
 from webargs import fields
 from webargs.flaskparser import use_kwargs
@@ -110,6 +111,8 @@ def validate_referer(referer):
         raise ValidationError('Invalid referer.')
 
 class GithubView(MethodView):
+
+    decorators = [cross_origin()]
 
     @cached_property
     def repo(self):
