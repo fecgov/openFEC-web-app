@@ -14,7 +14,13 @@
   "nonew": true,
   "predef": [
     "require",
-    "module"
+    "module",
+    "describe",
+    "before",
+    "beforeEach",
+    "after",
+    "afterEach",
+    "it"
   ],
   "quotmark": true,
   "trailing": true,
