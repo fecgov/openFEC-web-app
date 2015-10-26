@@ -61,6 +61,7 @@ def groupby(values, keygetter):
 
 def aggregate_committees(committees):
     ret = collections.defaultdict(int)
+    start_dates, end_dates = [], []
     for each in committees:
         totals = each['totals'][0] if each['totals'] else {}
         reports = each['reports'][0] if each['reports'] else {}
@@ -68,10 +69,12 @@ def aggregate_committees(committees):
         ret['disbursements'] += totals.get('disbursements') or 0
         ret['cash'] += reports.get('cash_on_hand_end_period') or 0
         ret['debt'] += reports.get('debts_owed_by_committee') or 0
-        if not ret['start_date'] or totals.get('coverage_start_date') < ret['start_date']:
-            ret['start_date'] = totals.get('coverage_start_date')
-        if not ret['end_date'] or totals.get('coverage_end_date') > ret['end_date']:
-            ret['end_date'] = totals.get('coverage_end_date')
+        if totals.get('coverage_start_date'):
+            start_dates.append(totals['coverage_start_date'])
+        if totals.get('coverage_end_date'):
+            end_dates.append(totals['coverage_end_date'])
+    ret['start_date'] = min(start_dates) if start_dates else None
+    ret['end_date'] = min(end_dates) if end_dates else None
     return ret
 
 
