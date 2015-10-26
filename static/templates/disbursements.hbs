@@ -1,73 +1,87 @@
 <div class="panel__row">
-  <h4>Recipient Information</h4>
+  <h4 class="panel__title">Recipient information</h4>
   <table>
     <tr>
-      <td>Receipient Name</td>
+      <td class="panel__term">Recipient name</td>
       {{#if recipient}}
-        <td><a href="/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
+        <td class="panel__data"><a href="{{basePath}}/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
       {{else}}
-        <td>{{recipient_name}}</td>
+        <td class="panel__data">{{recipient_name}}</td>
       {{/if}}
     </tr>
     <tr>
-      <td>Recipient City & State</td>
-      <td>{{ recipient_city }}, {{ recipient_state }}, {{ recipient_zip }}</td>
+      <td class="panel__term">Recipient city and state</td>
+      <td class="panel__data">{{ recipient_city }}, {{ recipient_state }}, {{ recipient_zip }}</td>
     </tr>
   </table>
 </div>
 
 <div class="panel__row">
-  <h4>Transaction Information</h4>
+  <h4 class="panel__title">Transaction information</h4>
   <table>
     <tr>
-      <td>Amount</td>
-      <td>{{{ currency disbursement_amount }}}</td>
+      <td class="panel__term">Amount</td>
+      <td class="panel__data">{{{ currency disbursement_amount }}}</td>
     </tr>
     <tr>
-      <td>Receipt Date</td>
-      <td>{{{ datetime disbursement_date }}}</td>
+      <td class="panel__term">Disbursement date</td>
+      <td class="panel__data">{{{ datetime disbursement_date }}}</td>
     </tr>
     <tr>
-      <td>Memo</td>
-      <td>{{ memo_text }}</td>
+      <td class="panel__term">Filing date</td>
+      <td class="panel__data">{{{ datetime receipt_date }}}</td>
     </tr>
     <tr>
-      <td>Description</td>
-      <td>{{ disbursement_description }}</td>
+      <td class="panel__term">Description</td>
+      <td class="panel__data">{{ disbursement_description }}</td>
     </tr>
-    {{#if election_type_full }}  
     <tr>
-      <td>Election Type</td>
-      <td>{{ election_type_full }}</td>
+      <td class="panel__term">Memo</td>
+      <td class="panel__data">{{ memo_text }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Memo code</td>
+      <td class="panel__data">{{ memoed_subtotal }}</td>
+    </tr>
+    {{#if election_type_full }}
+    <tr>
+      <td class="panel__term">Election type</td>
+      <td class="panel__data">{{ election_type_full }}</td>
     </tr>
     {{/if}}
   </table>
 </div>
 
 <div class="panel__row">
-  <h4>Committee Information</h4>
+  <h4 class="panel__title">Filing information</h4>
+  <table>
+ </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Committee information</h4>
   <table>
     <tr>
-      <td>Name</td>
-      <td><a href="/committee/{{committee_id}}">{{committee.name}}</a></td>
+      <td class="panel__term">Name</td>
+      <td class="panel__data"><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
     </tr>
     <tr>
-      <td>Designation</td>
-      <td>{{committee.designation_full}}</a></td>
+      <td class="panel__term">Designation</td>
+      <td class="panel__data">{{committee.designation_full}}</a></td>
     </tr>
-    {{#if committee.type }}
+    {{#if committee.type}}
     <tr>
-      <td>Type</td>
-      <td>{{committee.type_full}}</a></td>
-    </tr>  
+      <td class="panel__term">Type</td>
+      <td class="panel__data">{{committee.type_full}}</a></td>
+    </tr>
     {{/if}}
     <tr>
-      <td>Treasurer</td>
-      <td>{{committee.treasurer_name}}</a></td>
-    </tr>            
+      <td class="panel__term">Treasurer</td>
+      <td class="panel__data">{{committee.treasurer_name}}</a></td>
+    </tr>
     <tr>
-      <td>Committee City & State</td>
-      <td>{{ committee.city }}, {{ committee.state }}, {{ committee.zip }}</td>
-    </tr>    
+      <td class="panel__term">Committee city and state</td>
+      <td class="panel__data">{{ committee.city }}, {{ committee.state }}, {{ committee.zip }}</td>
+    </tr>
   </table>
 </div>

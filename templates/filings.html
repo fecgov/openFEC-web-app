@@ -1,7 +1,7 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-    {{ name }} - Filings
+    Browse filings
 {% endblock %}
 
 {% block body %}
@@ -17,8 +17,10 @@
   </div>
 </section>
 
+{% include 'partials/datatable-modal.html' %}
+
 {% endblock %}
 
 {% block scripts %}
-<script src="/{{ assets['dist/js/pages/filings.js'] }}"></script>
+<script src="{{ asset_for('dist/js/pages/filings.js') }}"></script>
 {% endblock %}

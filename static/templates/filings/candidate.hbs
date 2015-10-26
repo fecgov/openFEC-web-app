@@ -1,0 +1,72 @@
+<div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title">{{document_description}} report</h4>
+    <span class="panel__subtitle t-bold"><a href="{{basePath}}/committee/{{committee_id}}">{{ committee_name }}</a></span>
+  </div>
+  <table>
+    <tr>
+      <td class="panel__term" scope="row">Report coverage</td>
+      <td class="panel__data">{{datetime coverage_start_date pretty=true}} - {{datetime coverage_end_date pretty=true}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term" scope="row">Receipt date</td>
+      <td class="panel__data">{{ datetime receipt_date pretty=true }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term" scope="row">Amendment indicator</td>
+      <td class="panel__data">{{ decodeAmendment amendment_indicator }}</td>
+    </tr>
+  </table>
+</div>
+<div class="panel__row">
+  <table>
+    <tr>
+      <td class="panel__term">Total receipts</td>
+      <td class="panel__data">{{{currency total_receipts_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Total disbursements</td>
+      <td class="panel__data">{{{currency total_disbursements_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Transfers to authorized committees</td>
+      <td class="panel__data">{{{currency transfers_to_other_authorized_committee_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Individual contributions</td>
+      <td class="panel__data">{{{currency total_individual_contributions_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Itemized individual contributions</td>
+      <td class="panel__data">{{{currency individual_itemized_contributions_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Unitemized individual contributions</td>
+      <td class="panel__data">{{{currency individual_unitemized_contributions_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Loan repayments</td>
+      <td class="panel__data">{{{currency total_loan_repayments_made_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Beginning cash on hand</td>
+      <td class="panel__data">{{{currency cash_on_hand_beginning_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Ending cash on hand</td>
+      <td class="panel__data">{{{currency cash_on_hand_end_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Net contributions</td>
+      <td class="panel__data">{{{currency net_contributions_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Net operating expenditures</td>
+      <td class="panel__data">{{{currency net_operating_expenditures_period}}}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Debts owed by committee</td>
+      <td class="panel__data">{{{currency debts_owed_by_committee}}}</td>
+    </tr>
+  </table>
+</div>

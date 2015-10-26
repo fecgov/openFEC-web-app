@@ -3,45 +3,17 @@
 -----------------------------------------------------------------------------------------
 */
 
+var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 
 var events = require('fec-style/js/events');
 
+var analytics = require('../modules/analytics');
+
 // The class for the container div
 
 var $container = '.tab-interface';
-
-// Change focus between tabs with arrow keys
-
-$('[role="tab"]').on('keydown', function(e) {
-
-  // define current, previous and next (possible) tabs
-
-  var $original = $(this);
-  var $prev = $(this).parents('li').prev().children('[role="tab"]');
-  var $next = $(this).parents('li').next().children('[role="tab"]');
-  var $target;
-
-  // find the direction (prev or next)
-
-  switch (e.keyCode) {
-    case 37:
-      $target = $prev;
-      break;
-    case 39:
-      $target = $next;
-      break;
-    default:
-      $target = false;
-      break;
-  }
-
-  if ($target && $target.length) {
-    show($target, true);
-    $target.focus();
-  }
-});
 
 // Handle click on tab to show + focus tabpanel
 
@@ -53,12 +25,10 @@ $('[role="tab"]').on('click', function(e) {
 function show($target, push) {
   // Toggle tabs
   $('[role="tab"]').attr({
-    'tabindex': '-1',
     'aria-selected': null
   });
   $target.attr({
     'aria-selected': 'true',
-    'tabindex': '0'
   });
 
   // Toggle panels
@@ -76,6 +46,7 @@ function show($target, push) {
     );
     var search = URI('').query(query).toString();
     window.history.pushState(query, search, search || window.location.pathname);
+    analytics.pageView();
   }
 
   events.emit('tabs.show.' + value, {$tab: $target, $panel: $panel});
@@ -89,7 +60,11 @@ function refreshTabs() {
     var $target = query[name] ?
       $tabs.find('[role="tab"][data-name="' + query[name] + '"]') :
       $tabs.find('[role="tab"]').eq(0);
-    show($target);
+    if ($target.length) {
+      show($target);
+    } else {
+      $('[role="tabpanel"]').attr('aria-hidden', null);
+    }
   });
 }
 

@@ -1,15 +1,18 @@
 'use strict';
 
-/* global require, module, window, document, context, API_LOCATION, API_VERSION, API_KEY */
+/* global document, context */
 
 var d3 = require('d3');
 var $ = require('jquery');
-var URI = require('URIjs');
 var _ = require('underscore');
 var chroma = require('chroma-js');
 
+var dropdown = require('fec-style/js/dropdowns');
+
+var fips = require('../modules/fips');
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
+var columns = require('../modules/columns');
 var helpers = require('../modules/helpers');
 
 var comparisonTemplate = require('../../templates/comparison.hbs');
@@ -17,64 +20,82 @@ var candidateStateMapTemplate = require('../../templates/candidateStateMap.hbs')
 
 var MAX_MAPS = 2;
 
-var supportOpposeMap = {
-  S: 'Support',
-  O: 'Oppose',
-};
-var supportOpposeColumn = {
-  data: 'support_oppose_indicator',
-  orderable: false,
-  render: function(data, type, row, meta) {
-    return supportOpposeMap[data] || 'Unknown';
-  }
-};
 var independentExpenditureColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
-  supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', orderable: false}),
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', className: 'all'}),
+  columns.supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', className: 'all'}),
 ];
 
 var communicationCostColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
-  supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', orderable: false})
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', className: 'all'}),
+  columns.supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var electioneeringColumns = [
-  tables.currencyColumn({data: 'total', className: 'min-tablet'}),
-  tables.committeeColumn({data: 'committee', orderable: false}),
-  tables.candidateColumn({data: 'candidate', orderable: false})
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.committeeColumn({data: 'committee', className: 'all'}),
+  tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
-var columns = [
+var electionColumns = [
   {
     data: 'candidate_name',
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['candidate', row.candidate_id]),
+        'candidate',
+        {isIncumbent: row.incumbent_challenge_full === 'Incumbent'}
+      );
     }
   },
-  {data: 'incumbent_challenge_full', className: 'min-tablet'},
-  {data: 'party_full', className: 'min-tablet'},
-  tables.barCurrencyColumn({data: 'total_receipts'}),
-  tables.barCurrencyColumn({data: 'total_disbursements'}),
+  {data: 'party_full', className: 'all'},
+  tables.currencyColumn({data: 'total_receipts', orderSequence: ['desc', 'asc']}),
+  tables.currencyColumn({data: 'total_disbursements', orderSequence: ['desc', 'asc']}),
   tables.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
   {
-    data: 'pdf_url',
-    className: 'all',
-    orderable: false,
     render: function(data, type, row, meta) {
+      var dates = helpers.cycleDates(context.election.cycle);
+      var url = helpers.buildAppUrl(
+        ['filings'],
+        {
+          committee_id: row.committee_ids,
+          min_receipt_date: dates.min,
+          max_receipt_date: dates.max
+        }
+      );
       var anchor = document.createElement('a');
-      anchor.textContent = row.document_description;
-      anchor.setAttribute('href', data);
+      anchor.textContent = 'View';
+      anchor.setAttribute('href', url);
       anchor.setAttribute('target', '_blank');
       return anchor.outerHTML;
-    }
-  },
+    },
+    className: 'all',
+    orderable: false,
+  }
 ];
+
+function makeCommitteeColumn(opts, factory) {
+  return _.extend({}, {
+    orderSequence: ['desc', 'asc'],
+    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
+      row.cycle = context.election.cycle;
+      var column = meta.settings.aoColumns[meta.col].data;
+      return _.extend({
+        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids
+      }, factory(data, type, row, meta, column));
+    })
+  }, opts);
+}
+
+var makeSizeColumn = _.partial(makeCommitteeColumn, _, function(data, type, row, meta, column) {
+  return columns.getSizeParams(column);
+});
 
 var sizeColumns = [
   {
@@ -85,29 +106,26 @@ var sizeColumns = [
       return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
     }
   },
-  tables.barCurrencyColumn({data: '0'}),
-  tables.barCurrencyColumn({data: '200'}),
-  tables.barCurrencyColumn({data: '500'}),
-  tables.barCurrencyColumn({data: '1000'}),
-  tables.barCurrencyColumn({data: '2000'})
-];
-
-var typeColumns = [
-  {
-    data: 'candidate_name',
-    className: 'all',
-    render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
-    }
-  },
-  tables.barCurrencyColumn({data: 'individual'}),
-  tables.barCurrencyColumn({data: 'committee'}),
+  makeSizeColumn({data: '0'}),
+  makeSizeColumn({data: '200'}),
+  makeSizeColumn({data: '500'}),
+  makeSizeColumn({data: '1000'}),
+  makeSizeColumn({data: '2000'})
 ];
 
 var stateColumn = {'data': 'state'};
 function stateColumns(results) {
   var columns = _.map(results, function(result) {
-    return tables.barCurrencyColumn({data: result.candidate_id});
+    return makeCommitteeColumn(
+      {data: result.candidate_id},
+      function(data, type, row, meta, column) {
+        return {
+          contributor_state: row.state,
+          committee_id: (context.candidates[column] || {}).committee_ids,
+          is_individual: 'true'
+        };
+      }
+    );
   });
   return [stateColumn].concat(columns);
 }
@@ -124,16 +142,14 @@ function refreshTables() {
   if (selected.length > 0) {
     drawSizeTable(selected);
     drawStateTable(selected);
-    drawTypeTable(selected);
   }
 }
 
 function drawComparison(results) {
-  _.each(_.first(results, 10), function(result) {
-    result._checked = true;
-  });
   var $comparison = $('#comparison');
-  $comparison.html(comparisonTemplate(results));
+  var context = {selected: results.slice(0, 10), options: results.slice(10)};
+  $comparison.prepend(comparisonTemplate(context));
+  new dropdown.Dropdown($comparison.find('.js-dropdown'));
   $comparison.on('change', 'input[type="checkbox"]', refreshTables);
   refreshTables();
 }
@@ -166,31 +182,13 @@ function mapState(response, primary) {
   });
 }
 
-function mapType(response, primary) {
-  var groups = {};
-  var typeMap = {
-    true: 'individual',
-    false: 'committee'
-  };
-  _.each(response.results, function(result) {
-    groups[result.candidate_id] = groups[result.candidate_id] || {};
-    groups[result.candidate_id][typeMap[result.individual]] = result.total;
-  });
-  return _.map(_.pairs(groups), function(pair) {
-    return _.extend(
-      pair[1], {
-        candidate_id: pair[0],
-        candidate_name: primary[pair[0]].candidate_name
-      });
-  });
-}
-
 var defaultOpts = {
   destroy: true,
   searching: false,
   serverSide: false,
   lengthChange: false,
   dom: tables.simpleDOM,
+  pagingType: 'simple'
 };
 
 function destroyTable($table) {
@@ -204,13 +202,10 @@ function destroyTable($table) {
 function buildUrl(selected, path) {
   var query = {
     cycle: context.election.cycle,
-    candidate_id: _.pluck(selected, 'candidate_id')
+    candidate_id: _.pluck(selected, 'candidate_id'),
+    per_page: 0
   };
-  return URI(API_LOCATION)
-    .path([API_VERSION, path].join('/'))
-    .addQuery(query)
-    .addQuery({per_page: 0})
-    .toString();
+  return helpers.buildUrl(path, query);
 }
 
 function drawSizeTable(selected) {
@@ -219,7 +214,7 @@ function drawSizeTable(selected) {
     return [result.candidate_id, result];
   }));
   $.getJSON(
-    buildUrl(selected, 'schedules/schedule_a/by_size/by_candidate')
+    buildUrl(selected, ['schedules', 'schedule_a', 'by_size', 'by_candidate'])
   ).done(function(response) {
     var data = mapSize(response, primary);
     $table.dataTable(_.extend({
@@ -237,38 +232,20 @@ function drawStateTable(selected) {
     return [result.candidate_id, result];
   }));
   $.getJSON(
-    buildUrl(selected, 'schedules/schedule_a/by_state/by_candidate')
+    buildUrl(selected, ['schedules', 'schedule_a', 'by_state', 'by_candidate'])
   ).done(function(response) {
-    destroyTable($table);
-    // Clear headers
-    $table.find('thead').html('');
     var data = mapState(response, primary);
+    // Populate headers with correct text
+    var headerLabels = ['State'].concat(_.pluck(selected, 'candidate_name'));
+    $table.find('thead tr')
+      .empty()
+      .append(_.map(headerLabels, function(label) {
+        return $('<th>').text(label);
+      }));
+    destroyTable($table);
     $table.dataTable(_.extend({
       data: data,
       columns: stateColumns(selected),
-      order: [[1, 'desc']]
-    }, defaultOpts));
-    tables.barsAfterRender(null, $table.DataTable());
-    // Populate headers with correct text
-    var headerLabels = ['State'].concat(_.pluck(selected, 'candidate_name'));
-    $table.find('th').each(function(index, elm) {
-      $(elm).text(headerLabels[index]);
-    });
-  });
-}
-
-function drawTypeTable(selected) {
-  var $table = $('table[data-type="by-type"]');
-  var primary = _.object(_.map(selected, function(result) {
-    return [result.candidate_id, result];
-  }));
-  $.getJSON(
-    buildUrl(selected, 'schedules/schedule_a/by_contributor_type/by_candidate')
-  ).done(function(response) {
-    var data = mapType(response, primary);
-    $table.dataTable(_.extend({
-      data: data,
-      columns: typeColumns,
       order: [[1, 'desc']]
     }, defaultOpts));
     tables.barsAfterRender(null, $table.DataTable());
@@ -276,36 +253,45 @@ function drawTypeTable(selected) {
 }
 
 function drawStateMap($container, candidateId, cached) {
-  var url = URI(API_LOCATION)
-    .path([
-      API_VERSION,
-      'schedules',
-      'schedule_a',
-      'by_state',
-      'by_candidate'
-    ].join('/'))
-    .query({
-      cycle: context.election.cycle,
-      candidate_id: candidateId,
-      per_page: 99
-    })
-    .toString();
+  var url = helpers.buildUrl(
+    ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
+    {cycle: context.election.cycle, candidate_id: candidateId, per_page: 99}
+  );
   var $map = $container.find('.state-map-choropleth');
   $map.html('');
   $.getJSON(url).done(function(data) {
     var results = _.reduce(
       data.results,
       function(acc, val) {
-        acc[val.state_full] = val.total;
+        var state = val.state ? val.state.toUpperCase() : val.state;
+        var row = fips.fipsByState[state] || {};
+        var code = row.STATE ? parseInt(row.STATE) : null;
+        acc[code] = val.total;
         return acc;
       },
       {}
     );
     cached[candidateId] = results;
     updateColorScale($container, cached);
+    var min = mapMin(cached);
     var max = mapMax(cached);
-    maps.stateMap($map, data, 400, 300, max, false, true);
+    maps.stateMap($map, data, 400, 300, min, max, false, true);
   });
+}
+
+function mapMin(cached) {
+  return _.chain(cached)
+    .map(function(value, key) {
+      return _.chain(value)
+        .values()
+        .filter(function(value) {
+          return !!value;
+        })
+        .min()
+        .value();
+    })
+    .min()
+    .value();
 }
 
 function mapMax(cached) {
@@ -319,7 +305,7 @@ function mapMax(cached) {
 
 function appendStateMap($parent, results, cached) {
   var ids = _.pluck(results, 'candidate_id');
-  var displayed = $parent.find('.state-map select').map(function(_, select) {
+  var displayed = $parent.find('.candidate-select').map(function(_, select) {
     return $(select).val();
   }).get();
   var value = _.find(ids, function(each) {
@@ -337,8 +323,8 @@ function updateButtonsDisplay($parent) {
   var $maps = $parent.find('.state-map');
   var showAdd = $maps.length < MAX_MAPS ? 'block' : 'none';
   var showRemove = $maps.length > 1 ? 'block' : 'none';
-  $parent.closest('#state-maps').find('.add-map').css('display', showAdd);
-  $parent.find('.state-map button').css('display', showRemove);
+  $parent.find('.js-add-map').css('display', showAdd);
+  $parent.find('.js-remove-map').css('display', showRemove);
 }
 
 function updateColorScale($container, cached) {
@@ -351,20 +337,21 @@ function updateColorScale($container, cached) {
       delete cached[key];
     }
   });
+  var min = mapMin(cached);
   var max = mapMax(cached);
-  var scale = chroma.scale(['#fff', '#2678BA']).domain([0, max]);
-  var quantize = chroma.scale(['#fff', '#2678BA']).domain([0, max], 4);
-  $container.closest('#state-maps').find('.state-map').each(function(_, elm) {
+  var scale = chroma.scale(maps.colorScale).domain([min, max]);
+  var quantize = d3.scale.linear().domain([min, max]);
+  $container.find('.state-map').each(function(_, elm) {
     var $elm = $(elm);
     var results = cached[$elm.find('select').val()];
     d3.select($elm.find('g')[0])
       .selectAll('path')
       .attr('fill', function(d) {
-        return scale(results[d.properties.name] || 0);
+        return results[d.id] ? scale(results[d.id]) : maps.colorZero;
       });
   });
-  $container.find('.legend svg g').remove();
-  var svg = d3.select($container.get(0)).select('.legend svg');
+  $container.find('.legend-container svg g').remove();
+  var svg = d3.select($container.get(0)).select('.legend-container svg');
   if (isFinite(max)) {
     maps.stateLegend(svg, scale, quantize, 4);
   }
@@ -374,15 +361,16 @@ function initStateMaps(results) {
   var cached = {};
   var $stateMaps = $('#state-maps');
   var $choropleths = $stateMaps.find('.choropleths');
-  $stateMaps.find('.add-map').on('click', function(e) {
-    appendStateMap($choropleths, results, cached);
-  });
+  appendStateMap($choropleths, results, cached);
   $choropleths.on('change', 'select', function(e) {
     var $target = $(e.target);
     var $parent = $target.closest('.state-map');
     drawStateMap($parent, $target.val(), cached);
   });
-  $choropleths.on('click', 'button', function(e) {
+  $choropleths.on('click', '.js-add-map', function(e){
+    appendStateMap($choropleths, results, cached);
+  });
+  $choropleths.on('click', '.js-remove-map', function(e) {
     var $target = $(e.target);
     var $parent = $target.closest('.state-map');
     var $container = $parent.closest('#state-maps');
@@ -396,15 +384,15 @@ function initStateMaps(results) {
 
 var tableOpts = {
   'independent-expenditures': {
-    path: ['schedules', 'schedule_e', 'by_candidate'].join('/'),
+    path: ['schedules', 'schedule_e', 'by_candidate'],
     columns: independentExpenditureColumns
   },
   'communication-costs': {
-    path: ['communication_costs', 'by_candidate'].join('/'),
+    path: ['communication_costs', 'by_candidate'],
     columns: communicationCostColumns
   },
   'electioneering': {
-    path: ['electioneering_costs', 'by_candidate'].join('/'),
+    path: ['electioneering_costs', 'by_candidate'],
     columns: electioneeringColumns
   },
 };
@@ -417,10 +405,12 @@ function initSpendingTables() {
     if (opts) {
       tables.initTableDeferred($table, null, opts.path, helpers.filterNull(context.election), opts.columns, tables.offsetCallbacks, {
         order: [[0, 'desc']],
+        dom: tables.simpleDOM,
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false
+        useHideNull: false,
+        hideEmpty: true
       });
     }
   });
@@ -435,22 +425,30 @@ $(document).ready(function() {
     })
     .object()
     .value();
-  var url = URI(API_LOCATION)
-    .path([API_VERSION, 'elections'].join('/'))
-    .addQuery(query)
-    .addQuery({per_page: 0})
-    .toString();
+  var url = helpers.buildUrl(
+    ['elections'],
+    _.extend(query, {per_page: 0})
+  );
   $.getJSON(url).done(function(response) {
     $table.dataTable(_.extend({}, defaultOpts, {
-      columns: columns,
+      columns: electionColumns,
       data: response.results,
-      order: [[3, 'desc']]
+      order: [[2, 'desc']]
     }));
     drawComparison(response.results);
     initStateMaps(response.results);
-  });
+    context.candidates = _.chain(response.results)
+      .map(function(candidate) {
+        return [candidate.candidate_id, candidate];
+      })
+      .object()
+      .value();
+    });
 
-  var districtMap = new maps.DistrictMap($('#election-map').get(0));
+  var districtMap = new maps.DistrictMap(
+    $('#election-map').get(0),
+    {color: '#36BDBB'}
+  );
   districtMap.load(context.election);
 
   initSpendingTables();

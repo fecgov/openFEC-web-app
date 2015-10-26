@@ -1,6 +1,8 @@
 ---
 path: .
 memory: 512M
+timeout: 180
+domain: 18f.gov
 stack: cflinuxfs2
 buildpack: "https://github.com/ddollar/heroku-buildpack-multi.git"
 env:
@@ -8,6 +10,7 @@ env:
   NPM_CONFIG_PRODUCTION: "false"
   NEW_RELIC_CONFIG_FILE: newrelic.ini
   NEW_RELIC_LOG: stdout
+  FEC_FORCE_HTTPS: "true"
 applications:
 - name: web-a
 - name: web-b

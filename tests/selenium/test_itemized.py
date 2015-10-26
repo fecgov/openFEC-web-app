@@ -6,7 +6,7 @@ from tests.selenium.base_test_class import SearchPageTestCase
 
 
 def parse_amount(value):
-    cleaned = value.lstrip('$').replace(',', '')
+    cleaned = value.replace('$', '').replace(',', '')
     return float(cleaned)
 
 
@@ -36,15 +36,15 @@ class TestReceipts(SearchPageTestCase):
         self.driver.get(self.url)
 
         # Sort on date
-        check_sort(self.driver, 5, parse_date, reverse=True)
-        toggle_sort(self.driver, 5)
-        check_sort(self.driver, 5, parse_date, reverse=False)
+        check_sort(self.driver, 4, parse_date, reverse=True)
+        toggle_sort(self.driver, 4)
+        check_sort(self.driver, 4, parse_date, reverse=False)
 
         # Sort on amount
-        toggle_sort(self.driver, 4)
-        check_sort(self.driver, 4, parse_amount, reverse=False)
-        toggle_sort(self.driver, 4)
-        check_sort(self.driver, 4, parse_amount, reverse=True)
+        toggle_sort(self.driver, 3)
+        check_sort(self.driver, 3, parse_amount, reverse=True)
+        toggle_sort(self.driver, 3)
+        check_sort(self.driver, 3, parse_amount, reverse=False)
 
 
 class TestDisbursements(SearchPageTestCase):
@@ -62,6 +62,6 @@ class TestDisbursements(SearchPageTestCase):
 
         # Sort on amount
         toggle_sort(self.driver, 2)
-        check_sort(self.driver, 2, parse_amount, reverse=False)
-        toggle_sort(self.driver, 2)
         check_sort(self.driver, 2, parse_amount, reverse=True)
+        toggle_sort(self.driver, 2)
+        check_sort(self.driver, 2, parse_amount, reverse=False)

@@ -1,52 +1,56 @@
-<nav class="site-nav">
-  <button class="site-nav__button site-nav__button--left">Navigation</button>
+<nav class="site-nav js-site-nav">
+  <button for="nav-toggle" class="js-nav-toggle site-nav__button site-nav__button--left" aria-controls="site-menu">Menu</button>
   <ul id="site-menu" class="site-nav__list">
-    <li class="site-nav__item">
-      <a href="/" class="site-nav__link is-current">Campaign Finance Data</a>
+    <li class="site-nav__item site-nav__item--with-dropdown">
+      <a href="{{ url_for('search') }}" class="site-nav__link is-current">Campaign finance data</a>
+      <input class="nav-toggle__input js-toggle" id="dropdown-toggle-1" type="checkbox">
+      <label for="dropdown-toggle-1" class="site-nav__link nav-toggle__label">Campaign finance data</label>
       <ul class="site-nav__dropdown">
-        <li class="site-nav__item">
-          <a class="site-nav__link" href="/">Search for candidates &raquo;</a>
+        <li class="site-nav__item u-under-lg-only">
+          <a class="t-bold site-nav__link" href="{{ url_for('search') }}">Campaign finance data home</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="/elections">Search by ZIP code &raquo;</a>
+          <span class="t-bold site-nav__subtitle">Browse:</span>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('candidates', cycle=default_cycles) }}">Browse candidates &raquo;</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('committees', cycle=default_cycles) }}">Browse committees &raquo;</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('filings') }}">Browse filings &raquo;</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('filings') }}">Filings</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('receipts', is_individual='true') }}">Browse receipts &raquo;</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('receipts', is_individual='true') }}">Receipts</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ url_for('disbursements') }}">Browse disbursements &raquo;</a>
+          <a class="site-nav__link site-nav__sublink site-nav__sublink--last" href="{{ url_for('disbursements') }}">Disbursements</a>
+        </li>
+        <li class="site-nav__item">
+          <a class="t-bold site-nav__link" href="{{ url_for('election_lookup') }}">Find candidates by location</a>
         </li>
       </ul>
     </li>
-    <li class="site-nav__item">
-      <a href="{{ cms_url }}/registration-and-reporting" class="site-nav__link">Reporting &amp; Registration</a>
-      <ul class="site-nav__dropdown">
-        <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ cms_url }}/registration-and-reporting">Reporting &amp; Registration Home</a>
-        </li>
-        <li class="site-nav__item">
-          <a class="site-nav__link" href="{{ cms_url }}/registration-options">Registration Options</a>
-        </li>
-      </ul>
+    <li class="site-nav__item is-disabled">
+      <a href="#" class="site-nav__link" tabindex="-1">(Registration and reporting)</a>
     </li>
-    <li class="site-nav__item">
-      <a href="#" class="site-nav__link is-disabled">Calendar</a>
+    <li class="site-nav__item is-disabled">
+      <a href="#" class="site-nav__link" tabindex="-1">(Calendar)</a>
     </li>
-    <li class="site-nav__item">
-      <a href="#" class="site-nav__link is-disabled">TBD</a>
+    <li class="site-nav__item is-disabled">
+      <a href="#" class="site-nav__link" tabindex="-1">(Page TBD)</a>
     </li>
-    <li class="site-nav__item">
-      <a href="#" class="site-nav__link is-disabled">TBD</a>
+    <li class="site-nav__item is-disabled">
+      <a href="#" class="site-nav__link" tabindex="-1">(Page TBD)</a>
+    </li>
+    <li class="site-nav__item utility-nav__item is-disabled">
+      <a href="#" class="site-nav__link">(About)</a>
+    </li>
+    <li class="site-nav__item utility-nav__item">
+      <a href="{{ cms_url }}/contact-us/" class="site-nav__link">Contact</a>
     </li>
   </ul>
-  <button id="glossary-toggle" title="View site glossary" class="button--neutral site-nav__button site-nav__button--right">Glossary</button>
-</nav>    
+  <a title="Home" href="{{ cms_url }}/" class="site-title"><span class="u-visually-hidden">Federal Election Commission | United States of America</span></a>
+  <button title="View site glossary" class="js-glossary-toggle button--neutral site-nav__button site-nav__button--right">Glossary</button>
+</nav>

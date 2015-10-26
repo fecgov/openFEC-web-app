@@ -1,9 +1,20 @@
 import datetime
 import collections
 
-from flask import render_template
-from werkzeug.exceptions import abort
+import furl
 
+from flask.views import MethodView
+from flask import request, render_template, jsonify
+from flask.ext.cors import cross_origin
+
+from webargs import fields
+from webargs.flaskparser import use_kwargs
+from marshmallow import ValidationError
+
+import github3
+from werkzeug.utils import cached_property
+
+from openfecwebapp import config
 from openfecwebapp import api_caller
 
 
@@ -22,9 +33,7 @@ def to_date(committee, cycle):
     return min(datetime.datetime.now().year, cycle)
 
 
-def render_committee(data, candidates=None, cycle=None):
-    committee = get_first_result_or_raise_500(data)
-
+def render_committee(committee, candidates=None, cycle=None):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
@@ -59,14 +68,16 @@ def aggregate_committees(committees):
         ret['disbursements'] += totals.get('disbursements') or 0
         ret['cash'] += reports.get('cash_on_hand_end_period') or 0
         ret['debt'] += reports.get('debts_owed_by_committee') or 0
+        if not ret['start_date'] or totals.get('coverage_start_date') < ret['start_date']:
+            ret['start_date'] = totals.get('coverage_start_date')
+        if not ret['end_date'] or totals.get('coverage_end_date') > ret['end_date']:
+            ret['end_date'] = totals.get('coverage_end_date')
     return ret
 
 
-def render_candidate(data, committees, cycle):
-    results = get_first_result_or_raise_500(data)
-
+def render_candidate(candidate, committees, cycle):
     # candidate fields will be top-level in the template
-    tmpl_vars = results
+    tmpl_vars = candidate
 
     tmpl_vars['cycle'] = cycle
     tmpl_vars['result_type'] = 'candidates'
@@ -83,15 +94,47 @@ def render_candidate(data, committees, cycle):
 
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized
+    tmpl_vars['committee_ids'] = [committee['committee_id'] for committee in committees_authorized]
     tmpl_vars['aggregate'] = aggregate_committees(committees_authorized)
+
+    tmpl_vars['elections'] = sorted(
+        zip(candidate['election_years'], candidate['election_districts']),
+        key=lambda pair: pair[0],
+        reverse=True,
+    )
 
     return render_template('candidates-single.html', **tmpl_vars)
 
 
-def get_first_result_or_raise_500(data):
-    # not handling error at api module because sometimes its ok to
-    # not get data back - like with search results
-    if not data.get('results'):
-        abort(500)
-    else:
-        return data['results'][0]
+def validate_referer(referer):
+    if furl.furl(referer).host != furl.furl(request.url).host:
+        raise ValidationError('Invalid referer.')
+
+class GithubView(MethodView):
+
+    decorators = [cross_origin()]
+
+    @cached_property
+    def repo(self):
+        client = github3.login(token=config.github_token)
+        return client.repository('18F', 'fec')
+
+    @use_kwargs({
+        'referer': fields.Url(
+            required=True,
+            validate=validate_referer,
+            location='headers',
+        ),
+        'action': fields.Str(),
+        'response': fields.Str(),
+        'feedback': fields.Str(),
+    })
+    def post(self, **kwargs):
+        if not any([kwargs['action'], kwargs['response'], kwargs['feedback']]):
+            return jsonify({
+                'message': 'Must provide one of "action", "response", or "feedback".',
+            }), 422
+        title = 'User feedback on {}'.format(kwargs['referer'])
+        body = render_template('feedback.html', headers=request.headers, **kwargs)
+        issue = self.repo.create_issue(title, body=body)
+        return jsonify(issue.to_json()), 201

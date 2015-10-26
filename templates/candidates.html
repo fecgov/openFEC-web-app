@@ -1,7 +1,7 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-  Browse Candidates
+  Browse candidates
 {% endblock %}
 
 {% block body %}
@@ -16,10 +16,11 @@
     {% include 'partials/candidates-table.html' %}
   </div>
 </section>
+
 {% include 'partials/datatable-modal.html' %}
 
 {% endblock %}
 
 {% block scripts %}
-<script src="/{{ assets['dist/js/pages/candidates.js'] }}"></script>
+<script src="{{ asset_for('dist/js/pages/candidates.js') }}"></script>
 {% endblock %}

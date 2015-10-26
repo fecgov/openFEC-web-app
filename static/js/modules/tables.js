@@ -1,20 +1,27 @@
 'use strict';
 
-/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
+/* global require, module, window, document */
 
 var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
-var moment = require('moment');
 var tabs = require('../vendor/tablist');
+var accessibility = require('fec-style/js/accessibility');
 
 require('datatables');
 require('drmonty-datatables-responsive');
 
 var filters = require('./filters');
 var helpers = require('./helpers');
+var analytics = require('./analytics');
 
 var simpleDOM = 't<"results-info"ip>';
+
+// Only show table after draw
+$(document.body).on('draw.dt', function() {
+  $('.datatable__container').css('opacity', '1');
+  $('.dataTable tbody td:first-child').attr('scope','row');
+});
 
 $.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
   var settings = this.context[0];
@@ -58,56 +65,71 @@ function mapFilters(filters) {
 
 var parsedFilters;
 
-function buildCycle(datum) {
-  if (parsedFilters.cycle) {
+function getCycle(datum) {
+  if (parsedFilters && parsedFilters.cycle) {
     var cycles = _.intersection(
       _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
       datum.cycles
     );
-    return '?cycle=' + _.max(cycles);
+    return {cycle: _.max(cycles)};
   } else {
-    return '';
+    return {};
   }
 }
 
-function buildEntityLink(data, url, category) {
+function buildEntityLink(data, url, category, opts) {
+  opts = opts || {};
   var anchor = document.createElement('a');
   anchor.textContent = data;
   anchor.setAttribute('href', url);
   anchor.setAttribute('title', data);
   anchor.setAttribute('data-category', category);
   anchor.classList.add('single-link');
+
+  if (opts.isIncumbent) {
+    anchor.classList.add('is-incumbent');
+  }
+
   return anchor.outerHTML;
 }
 
-function buildAggregateUrl(uri, cycle) {
+function buildAggregateUrl(cycle) {
   var dates = helpers.cycleDates(cycle);
-  return uri.addQuery({
+  return {
     min_date: dates.min,
     max_date: dates.max
-  }).toString();
+  };
 }
 
 function buildTotalLink(path, getParams) {
   return function(data, type, row, meta) {
+    data = data || 0;
+    var params = getParams(data, type, row, meta);
     var span = document.createElement('div');
     span.setAttribute('data-value', data);
     span.setAttribute('data-row', meta.row);
-    var link = document.createElement('a');
-    link.textContent = helpers.currency(data);
-    link.setAttribute('title', 'View individual transactions');
-    var uri = URI(path)
-      .query({committee_id: row.committee_id})
-      .addQuery(getParams(row));
-    link.setAttribute('href', buildAggregateUrl(uri, row.cycle));
-    span.appendChild(link);
+    if (params) {
+      var link = document.createElement('a');
+      link.textContent = helpers.currency(data);
+      link.setAttribute('title', 'View individual transactions');
+      var uri = helpers.buildAppUrl(path, _.extend(
+        {committee_id: row.committee_id},
+        buildAggregateUrl(_.extend({}, row, params).cycle),
+        params
+      ));
+      link.setAttribute('href', uri);
+      span.appendChild(link);
+    } else {
+      span.textContent = helpers.currency(data);
+    }
     return span.outerHTML;
   };
 }
 
-function formattedColumn(formatter) {
+function formattedColumn(formatter, defaultOpts) {
+  defaultOpts = defaultOpts || {};
   return function(opts) {
-    return _.extend({
+    return _.extend({}, defaultOpts, {
       render: function(data, type, row, meta) {
         return formatter(data);
       }
@@ -119,10 +141,11 @@ function barColumn(formatter) {
   formatter = formatter || function(value) { return value; };
   return function(opts) {
     return _.extend({
+      orderSequence: ['desc', 'asc'],
       render: function(data, type, row, meta) {
         var span = document.createElement('div');
-        span.textContent = formatter(data);
-        span.setAttribute('data-value', data);
+        span.textContent = formatter(_.max([data, 0]));
+        span.setAttribute('data-value', data || 0);
         span.setAttribute('data-row', meta.row);
         return span.outerHTML;
       }
@@ -130,13 +153,29 @@ function barColumn(formatter) {
   };
 }
 
-var dateColumn = formattedColumn(helpers.datetime);
-var currencyColumn = formattedColumn(helpers.currency);
+function urlColumn(attr, opts) {
+  return _.extend({
+    render: function(data, type, row, meta) {
+      if (row[attr]) {
+        var anchor = document.createElement('a');
+        anchor.textContent = data;
+        anchor.setAttribute('href', row[attr]);
+        anchor.setAttribute('target', '_blank');
+        return anchor.outerHTML;
+      } else {
+        return data;
+      }
+    }
+  }, opts);
+}
+
+var dateColumn = formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc']});
+var currencyColumn = formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = barColumn(helpers.currency);
 
 var candidateColumn = formattedColumn(function(data) {
   if (data) {
-    return buildEntityLink(data.name, '/candidate/' + data.candidate_id, 'candidate');
+    return buildEntityLink(data.name, helpers.buildAppUrl(['candidate', data.candidate_id]), 'candidate');
   } else {
     return '';
   }
@@ -144,7 +183,7 @@ var candidateColumn = formattedColumn(function(data) {
 
 var committeeColumn = formattedColumn(function(data) {
   if (data) {
-    return buildEntityLink(data.name, '/committee/' + data.committee_id, 'committee');
+    return buildEntityLink(data.name, helpers.buildAppUrl(['committee', data.committee_id]), 'committee');
   } else {
     return '';
   }
@@ -172,11 +211,8 @@ function ensureArray(value) {
   return _.isArray(value) ? value : [value];
 }
 
-function compareQuery(first, second) {
-  var keys = _.keys(first);
-  if (!_.isEqual(keys.sort(), _.keys(second).sort())) {
-    return false;
-  }
+function compareQuery(first, second, keys) {
+  keys = keys || _.union(_.keys(first), _.keys(second));
   var different = _.find(keys, function(key) {
     return !_.isEqual(
       ensureArray(first[key]).sort(),
@@ -188,14 +224,16 @@ function compareQuery(first, second) {
 
 function pushQuery(params) {
   var query = URI.parseQuery(window.location.search);
-  if (!compareQuery(query, params)) {
+  var fields = filters.getFields();
+  if (!compareQuery(query, params, fields)) {
     // Clear and update filter fields
-    _.each(filters.getFields(), function(field) {
+    _.each(fields, function(field) {
       delete query[field];
     });
     params = _.extend(query, params);
     var queryString = URI('').query(params).toString();
     window.history.pushState(params, queryString, queryString || window.location.pathname);
+    analytics.pageView();
   }
 }
 
@@ -218,65 +256,102 @@ function mapQuerySeek(api, data) {
   );
 }
 
-function modalAfterRender(template, api, data, response) {
-  var $table = $(api.table().node()),
-      $modal = $('#datatable-modal');
+function identity(value) {
+  return value;
+}
 
-  // Move the modal to the results div.
-  $modal.appendTo($('#results'));
-  $table.find('tr').attr('tabindex', 0);
+var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
+var MODAL_TRIGGER_HTML = '<button class="js-panel-button icon arrow--right">' +
+  '<span class="u-visually-hidden">Toggle details</span>' +
+'</button>';
 
-  $table.on('click keypress', '.js-panel-toggle tr', function(ev) {
-    if (ev.which === 13 || ev.type === 'click') {
-      if ($(ev.target).is('a')) {
-        return true;
-      }
-      if ( !$(ev.target).closest('td').hasClass('dataTables_empty') ) { 
-        var $row = $(ev.target).closest('tr');
-        var index = api.row($row).index();
-        $modal.find('.js-panel-content').html(template(response.results[index]));
-        $modal.attr('aria-hidden', 'false');
-        $row.siblings().toggleClass('row-active', false);
-        $row.toggleClass('row-active', true);
-        $('body').toggleClass('panel-active', true);
-        var hideColumns = api.columns('.hide-panel');
-        hideColumns.visible(false);
-        // Populate the pdf button if there is one
-        if ( response.results[index].pdf_url ) {
-          $modal.find('.js-pdf_url').attr('href', response.results[index].pdf_url);
-        } else {
-          $modal.find('.js-pdf_url').remove();
+function modalRenderRow(row, data, index) {
+  row.classList.add(MODAL_TRIGGER_CLASS, 'row--has-panel');
+}
+
+function modalRenderFactory(template, fetch) {
+  var callback;
+  fetch = fetch || identity;
+  return function(api, data, response) {
+    var $table = $(api.table().node());
+    var $modal = $('#datatable-modal');
+    var $main = $table.closest('.panel__main');
+    // Move the modal to the results div.
+    $modal.appendTo($main);
+    $modal.css('display', 'block');
+
+    $table.off('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, callback);
+    callback = function(e) {
+      if (e.which === 13 || e.type === 'click') {
+        // Note: Use `currentTarget` to get parent row, since the target column
+        // may have been moved since the triggering event
+        var $row = $(e.currentTarget);
+        var $target = $(e.target);
+        if ($target.is('a')) {
+          return true;
         }
+        if (!$target.closest('td').hasClass('dataTables_empty')) {
+          var index = api.row($row).index();
+          $.when(fetch(response.results[index])).done(function(fetched) {
+            $modal.find('.js-panel-content').html(template(fetched));
+            $modal.attr('aria-hidden', 'false');
+            $row.siblings().toggleClass('row-active', false);
+            $row.toggleClass('row-active', true);
+            $('body').toggleClass('panel-active', true);
+            accessibility.restoreTabindex($modal);
+            var hideColumns = api.columns('.hide-panel');
+            hideColumns.visible(false);
 
-        // Set focus on the close button
-        $('.js-hide').focus();
+            // Populate the pdf button if there is one
+            if (fetched.pdf_url) {
+              $modal.find('.js-pdf_url').attr('href', fetched.pdf_url);
+            } else {
+              $modal.find('.js-pdf_url').remove();
+            }
 
-        // When under $large-screen
-        // TODO figure way to share these values with CSS.
-        if ($(document).width() < 980) {
-          api.columns('.hide-panel-tablet').visible(false);
+            // Set focus on the close button
+            $('.js-hide').focus();
+
+            // When under $large-screen
+            // TODO figure way to share these values with CSS.
+            if ($(document).width() < 980) {
+              api.columns('.hide-panel-tablet').visible(false);
+            }
+          });
         }
       }
-    }
-  });
+    };
+    $table.on('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, callback);
 
-  $modal.on('click', '.js-panel-close', function(ev) {
-    ev.preventDefault();
-    hidePanel(api, $modal);
-  });
+    $modal.on('click', '.js-panel-close', function(e) {
+      e.preventDefault();
+      hidePanel(api, $modal);
+    });
+
+    /* Set focus to highlighted row on blurring anchors if tabbing out of the panel */
+    $modal.on('blur', 'a, button', function(e) {
+      if (!$modal.has(e.relatedTarget).length) {
+        $('.row-active .js-panel-button').focus();
+      }
+    });
+  };
 }
 
 function hidePanel(api, $modal) {
-    $('.row-active').focus();
+    $('.row-active .js-panel-button').focus();
     $('.js-panel-toggle tr').toggleClass('row-active', false);
     $('body').toggleClass('panel-active', false);
     $modal.attr('aria-hidden', 'true');
-    api.columns('.hide-panel-tablet').visible(true);
+
+    if ($(document).width() > 640) {
+      api.columns('.hide-panel-tablet').visible(true);
+    }
 
     if ($(document).width() > 980) {
       api.columns('.hide-panel').visible(true);
     }
 
+    accessibility.removeTabindex($modal);
 }
 
 function barsAfterRender(template, api, data, response) {
@@ -287,10 +362,11 @@ function barsAfterRender(template, api, data, response) {
   });
   var max = _.max(values);
   $cols.after(function() {
-    var width = 100 * parseFloat($(this).attr('data-value')) / max;
-    return $('<div>')
-      .addClass('value-bar')
-      .css('width', _.max([width, 1]) + '%');
+    var value = $(this).attr('data-value');
+    var width = 100 * parseFloat(value) / max;
+    return '<div class="bar-container">' +
+      '<div class="value-bar" style="width: ' + width + '%"></div>' +
+    '</div>';
   });
 }
 
@@ -327,7 +403,7 @@ var defaultCallbacks = {
   preprocess: mapResponse
 };
 
-function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) {
+function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   var draw;
   var $processing = $('<div class="overlay is-loading"></div>');
   var $hideNullWidget = $(
@@ -360,7 +436,6 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       }
       var query = _.extend(
         callbacks.mapQuery(api, data),
-        {api_key: API_KEY},
         parsedFilters || {}
       );
       if (useHideNull) {
@@ -372,15 +447,14 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
       query.sort = mapSort(data.order, columns);
       $processing.show();
       $.getJSON(
-        URI(API_LOCATION)
-        .path([API_VERSION, baseUrl].join('/'))
-        .addQuery(baseQuery || {})
-        .addQuery(query)
-        .toString()
+        helpers.buildUrl(path, _.extend({}, query, baseQuery || {}))
       ).done(function(response) {
         callbacks.handleResponse(api, data, response);
         callback(callbacks.preprocess(response));
         callbacks.afterRender(api, data, response);
+        if (opts.hideEmpty) {
+          hideEmpty(api, data, response);
+        }
       }).always(function() {
         $processing.hide();
       });
@@ -416,6 +490,20 @@ function initTable($table, $form, baseUrl, baseQuery, columns, callbacks, opts) 
   }
 }
 
+/**
+ * Replace a `DataTable` with placeholder text if no results found. Should only
+ * be used with unfiltered tables, else tables may be destroyed on restrictive
+ * filtering.
+ */
+function hideEmpty(api, data, response) {
+  if (!response.pagination.count) {
+    api.destroy();
+    var $table = $(api.table().node());
+    $table.before('<div class="message message--alert">No data found.</div>');
+    $table.remove();
+  }
+}
+
 function initTableDeferred($table) {
   var args = _.toArray(arguments);
   tabs.onShow($table, function() {
@@ -434,17 +522,20 @@ var seekCallbacks = {
 module.exports = {
   simpleDOM: simpleDOM,
   yearRange: yearRange,
-  buildCycle: buildCycle,
-  buildAggregateUrl: buildAggregateUrl,
+  getCycle: getCycle,
   buildTotalLink: buildTotalLink,
   buildEntityLink: buildEntityLink,
   candidateColumn: candidateColumn,
   committeeColumn: committeeColumn,
   currencyColumn: currencyColumn,
+  urlColumn: urlColumn,
   barCurrencyColumn: barCurrencyColumn,
   dateColumn: dateColumn,
-  modalAfterRender: modalAfterRender,
   barsAfterRender: barsAfterRender,
+  modalRenderRow: modalRenderRow,
+  modalRenderFactory: modalRenderFactory,
+  MODAL_TRIGGER_CLASS: MODAL_TRIGGER_CLASS,
+  MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
   offsetCallbacks: offsetCallbacks,
   seekCallbacks: seekCallbacks,
   initTable: initTable,

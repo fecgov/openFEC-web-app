@@ -1,22 +1,27 @@
 {% extends 'layouts/main.html' %}
+{% import 'macros/cycle-select.html' as select %}
 
 {% block title %}
-    {{ name }} - Candidate Overview
+    {{ name }} - Candidate overview
 {% endblock %}
 
 {% block body %}
 
 <div class="tab-interface">
-  <header class="page-header slab slab--primary">
-    <img class="page-header__icon" src="/static/img/i-candidate--primary.svg" alt="Candidate icon">
-    <span class="h1 page-header__title">Candidates</span>
+  <header class="page-header page-header--primary">
+    <span class="page-header__title">Candidates</span>
     {{ search.search('page-header', 'candidates') }}
-  </header>  
+  </header>
   <header class="entity__header entity__header--neutral">
     <div class="container">
-      <div class="entity__header__top">
-        <h1 class="entity__name">{{ name }}</h1>
-        <span class="t-data entity__type">Candidate for {{ office_full }}</span><span class="t-data">ID: {{ candidate_id }}</span>
+      <div class="entity__header__top row">
+        <div class="usa-width-three-fourths">
+          <h1 class="entity__name">{{ name }}</h1>
+          <span class="t-data entity__type">Candidate for {{ office_full }}</span><span class="t-data">ID: {{ candidate_id }}</span>
+        </div>
+        <div class="usa-width-one-fourth">
+          {{ select.cycle_select(cycles, cycle, id="cycle-1") }}
+        </div>
       </div>
       <div class="entity__header__bottom">
         <ul class="entity__info">
@@ -29,9 +34,9 @@
             <span class="entity__term__data">{% if incumbent_challenge_full %}{{ incumbent_challenge_full|title }}{% endif %}</span>
           </li>
           <li class="entity__term">
-            <span class="entity__term__label">District</span>
+            <span class="entity__term__label"><span class="term" data-term="District">District</span></span>
             <span class="entity__term__data">
-              {% if district %}
+              {% if district and district != '00' %}
               <a href="{{ election_url(context(), cycle) }}">{{ state }} - {{ district }}</a>
               {% else %}
               <a href="{{ election_url(context(), cycle) }}">{{ state }}</a>
@@ -40,7 +45,7 @@
           </li>
           <li class="entity__term">
             <span class="entity__term__label">
-              <a class="term" data-term="Principal Campaign Committee">Principal Committee</a>
+              <a class="term" data-term="Principal Campaign Committee">Principal committee</a>
             </span>
             {% for c in committee_groups['P'] %}
             <p class="entity__term__data">
@@ -51,8 +56,8 @@
           <li class="entity__term">
             <span class="entity__term__label">Elections</span>
             <ul class="entity__term__data">
-            {% for year in election_years %}
-              <a href="{{ election_url(context(), year) }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
+            {% for year, district in elections %}
+              <a href="{{ election_url(context(), year, district) }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
             {% endfor %}
             </ul>
           </li>
@@ -66,18 +71,25 @@
         <span class="page-controls__title">{{ name }}</span>
       </div>
     </div>
+    <div class="page-controls__bottom">
+      <div class="container">
+        <nav class="page-tabs">
+          <ul class="page-tabs__list" role="tablist" data-name="tab">
+            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" href="#section-1">Financial summary</a></li>
+            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="other-spending" tabindex="0" aria-controls="panel2" href="#section-2">Other spending</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
 
-  <section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
-    <div class="container">
-      {% include 'partials/financial-summary.html' %}
-      {% include 'partials/filings-tab-candidate.html' %}
-    </div>
-  </section>
+  {% include 'partials/loading-tab.html' %}
+  {% include 'partials/candidate/financial-summary.html' %}
+  {% include 'partials/candidate/other-spending-tab.html' %}
 </div>
 
 {% endblock %}
 
 {% block scripts %}
-<script src="/{{ assets['dist/js/pages/candidate-single.js'] }}"></script>
+<script src="{{ asset_for('dist/js/pages/candidate-single.js') }}"></script>
 {% endblock %}

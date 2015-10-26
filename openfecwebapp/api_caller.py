@@ -3,6 +3,8 @@ from urllib import parse
 
 import requests
 import cachecontrol
+from flask import abort
+from werkzeug.exceptions import NotFound
 
 from openfecwebapp import utils
 from openfecwebapp import config
@@ -44,7 +46,8 @@ def load_search_results(query, query_type='candidates'):
 
 
 def load_single_type(data_type, c_id, *path, **filters):
-    return _call_api(data_type, c_id, *path, **filters)
+    data = _call_api(data_type, c_id, *path, **filters)
+    return result_or_404(data)
 
 
 def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
@@ -53,8 +56,13 @@ def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
 
 def load_with_nested(primary_type, primary_id, secondary_type, cycle=None):
     path = ('history', str(cycle)) if cycle else ()
-    data = load_single_type(primary_type, primary_id, *path)
-    cycle = cycle or min(utils.current_cycle(), max(data['results'][0]['cycles']))
+    # Hack: If no history records are found, get the latest detail record
+    # TODO(jmcarp) Roll back once #875 is resolved
+    try:
+        data = load_single_type(primary_type, primary_id, *path)
+    except NotFound:
+        data = load_single_type(primary_type, primary_id)
+    cycle = cycle or min(utils.current_cycle(), max(data['cycles']))
     path = ('history', str(cycle))
     nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path)
     return data, nested_data['results'], cycle
@@ -63,7 +71,8 @@ def load_with_nested(primary_type, primary_id, secondary_type, cycle=None):
 def load_cmte_financials(committee_id, **filters):
     filters.update({
         'per_page': MAX_FINANCIALS_COUNT,
-        'report_type': filters.get('report_type', []) + ['-TER']
+        'report_type': filters.get('report_type', []) + ['-TER'],
+        'is_amended': 'false',
     })
 
     reports = _call_api('committee', committee_id, 'reports', **filters)
@@ -75,6 +84,7 @@ def load_cmte_financials(committee_id, **filters):
     }
 
 
-def load_cmte_aggregates(committee_id, aggregate, cycle):
-    response = _call_api('committee', committee_id, 'schedules', 'schedule_a', aggregate, cycle=cycle)
-    return response['results']
+def result_or_404(data):
+    if not data.get('results'):
+        abort(404)
+    return data['results'][0]

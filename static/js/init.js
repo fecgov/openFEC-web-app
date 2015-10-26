@@ -1,11 +1,10 @@
 'use strict';
 
-/* global require, window, document */
+/* global window, document, Inputmask, BASE_PATH */
 
 var KEYCODE_SLASH = 191;
 
 var $ = require('jquery');
-var _ = require('underscore');
 var keyboard = require('keyboardjs');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
@@ -15,20 +14,39 @@ var terms = require('fec-style/js/terms');
 var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
+var siteNav = require('fec-style/js/site-nav');
+var skipNav = require('fec-style/js/skip-nav');
+var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
 var typeaheadFilter = require('fec-style/js/typeahead-filter');
 
 require('jquery.inputmask');
-require('jquery.inputmask/dist/inputmask/jquery.inputmask.date.extensions.js');
-require('jquery.inputmask/dist/inputmask/jquery.inputmask.numeric.extensions.js');
+require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
+require('jquery.inputmask/dist/inputmask/inputmask.numeric.extensions.js');
+
+// Remove extra padding in currency mask
+Inputmask.extendAliases({
+  currency: {
+    prefix: '$',
+    groupSeparator: ',',
+    alias: 'numeric',
+    placeholder: '0',
+    autoGroup: true,
+    digits: 2,
+    digitsOptional: true,
+    clearMaskOnLostFocus: false
+  }
+});
 
 // Include vendor scripts
 require('./vendor/tablist');
 
-var filters = require('./modules/filters.js');
-var charts = require('./modules/charts.js');
+var charts = require('./modules/charts');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
+var filters = require('./modules/filters');
+var helpers = require('./modules/helpers');
+var analytics = require('./modules/analytics');
 
 charts.init();
 
@@ -38,11 +56,17 @@ $('.js-dropdown').each(function() {
   new dropdown.Dropdown(this);
 });
 
+$('.js-site-nav').each(function() {
+  new siteNav.SiteNav(this);
+});
+
 $('.js-typeahead-filter').each(function() {
   var key = $(this).data('dataset');
   var dataset = typeahead.datasets[key];
   new typeaheadFilter.TypeaheadFilter(this, dataset);
 });
+
+new skipNav.Skipnav('.skip-nav', 'main');
 
 $(document).ready(function() {
     var $body,
@@ -71,14 +95,20 @@ $(document).ready(function() {
     }
 
     // Initialize glossary
-    new glossary.Glossary(terms, {body: '#glossary', toggle: '#glossary-toggle'});
+    new glossary.Glossary(terms, {body: '#glossary'});
 
     // Initialize typeaheads
-    new typeahead.Typeahead('.js-search-input', $('.js-search-type').val());
+    new typeahead.Typeahead(
+      '.js-search-input',
+      $('.js-search-type').val(),
+      BASE_PATH
+    );
+
+    // Initialize feedback
+    new feedback.Feedback(helpers.buildAppUrl(['issue']));
 
     // Focus search on "/"
     $(document.body).on('keyup', function(e) {
-      e.preventDefault();
       if (e.keyCode === KEYCODE_SLASH) {
         $('.js-search-input:visible').first().focus();
       }
@@ -166,9 +196,15 @@ $(document).ready(function() {
       new Search($(this));
     });
 
+    // TODO: Restore
     // @if DEBUG
-    var perf = require('./modules/performance');
-    perf.bar();
+    // var perf = require('./modules/performance');
+    // perf.bar();
+    // @endif
+
+    // @if ANALYTICS
+    analytics.init();
+    analytics.pageView();
     // @endif
 
     filters.init();

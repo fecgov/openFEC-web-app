@@ -1,56 +1,63 @@
-<section class="main" id="section-1" role="tabpanel" aria-hidden="false" aria-labelledby="section-1-heading">
+<section class="main" id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
   <div class="container">
-    <div class="page-section__intro">
-      <h2 class="section-heading" id="section-1-heading">Candidate Comparison {% include 'partials/cycle-select.html' %}</h2>
+    <div class="section__heading">
+      <h2 class="section__title" id="section-1-heading">Candidate comparison for {{ cycle|fmt_year_range }}</h2>
     </div>
-    <div class="page-subsection">
-      <h4>Active Candidates</h4>
-      <p>Totals reflect the sum total reported by all of a candidate's authorized committees.</p>
-      <table id="results" class="data-table" data-type="candidates">
+    <div class="content__section">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">All candidates in this election</h3>
+        <div class="row">
+          <span class="t-block usa-width-three-fourths">Totals reflect the sum total reported by all of a candidate's authorized committees.</span>
+          <div class="usa-width-one-fourth is-right-aligned">
+            <span class="is-incumbent t-sans t-note">Incumbent</span>
+          </div>
+        </div>
+      </div>
+      <table id="results" class="data-table scrollX" data-type="candidates">
         <thead>
           <th role="col">Candidate</th>
-          <th role="col">Status</th>
           <th role="col">Party</th>
-          <th role="col">Total Receipts</th>
-          <th role="col">Total Disbursements</th>
-          <th role="col">Cash on Hand</th>
-          <th role="col">Most Recent Report</th>
+          <th role="col">Total receipts</th>
+          <th role="col">Total disbursements</th>
+          <th role="col">Cash on hand</th>
+          <th role="col">Source filings</th>
         </thead>
       </table>
     </div>
-    <div class="page-subsection">
-      <div class="page-section__intro">
-        <h3>Fundraising Comparison</h3>
+    <div class="content__section--extra">
+      <div class="content__section__heading">
+        <h2>Fundraising comparison</h2>
         <p>Compare the source and nature of candidate receipts.</p>
-        <div id="comparison" class="meta-box filters--horizontal"></div>
-        <fieldset class="toggles">
-          <legend class="label">Compare by:</legend>
-          <label for="toggle-size">
-            <input id="toggle-size" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-size" checked>
-            <span class="button--primary">Contribution Size</span>
-          </label>
-          <label for="toggle-state">
-            <input id="toggle-state" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-state">
-            <span class="button--primary">Contribution Location</span>
-          </label>
-          <label for="toggle-contributor-type">
-            <input id="toggle-contributor-type" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-contributor-type">
-            <span class="button--primary">Contributor Type</span>
-          </label>
-        </fieldset>
+        <div id="comparison" class="filters--horizontal">
+          <div class="row">
+            <fieldset class="toggles">
+              <legend class="label">Group by:</legend>
+              <label for="toggle-size">
+                <input id="toggle-size" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-size" checked>
+                <span class="button--neutral">Contribution size</span>
+              </label>
+              <label for="toggle-state">
+                <input id="toggle-state" type="radio" class="panel-toggle-control" name="election-aggregate" value="by-state">
+                <span class="button--neutral">Contribution location</span>
+              </label>
+            </fieldset>
+          </div>
+        </div>
       </div>
 
       <div class="row">
         <div id="by-size" class="panel-toggle-element" aria-hidden="false">
-          <h4>Receipts by size</h4>
-          <table class="data-table" data-type="by-size">
+          <div class="results-info results-info--simple">
+            <h3 class="results-info__title">Contributions by size</h3>
+          </div>
+          <table class="data-table scrollX" data-type="by-size">
             <thead>
               <th scope="col">Candidate</th>
-              <th scope="col">$200 & Under</th>
-              <th scope="col">$200.01 - $499.99</th>
-              <th scope="col">$500 - $999.99</th>
-              <th scope="col">$1,000 - $1,999.99</th>
-              <th scope="col">$2,000 +</th>
+              <th scope="col">$200 and under</th>
+              <th scope="col">$200.01—$499.99</th>
+              <th scope="col">$500—$999.99</th>
+              <th scope="col">$1,000—$1,999.99</th>
+              <th scope="col">$2,000+</th>
             </thead>
           </table>
         </div>
@@ -58,43 +65,36 @@
 
       <div class="row">
         <div id="by-state" class="panel-toggle-element" aria-hidden="true">
-          <div class="figure__title">
-            <h4>Receipts by state</h4>
-            <fieldset class="toggles toggles--small">
-              <legend class="label">Toggle view:</legend>
+          <div class="results-info results-info--simple">
+            <div class="usa-width-two-thirds">
+              <h3 class="results-info__title">Contributions by location</h3>
+              <span class="t-block">The total amount of contributions from individuals received from each state.</span>
+            </div>
+            <div class="toggles toggles--small map-toggles" aria-label="Toggle view">
               <label for="toggle-table">
                 <input id="toggle-table" type="radio" class="panel-toggle-control" name="state-view" value="state-table" checked>
-                <span class="button--neutral button--small">Table</span>
+                <span class="button--empty button--small button--table">Table</span>
               </label>
               <label for="toggle-map">
                 <input id="toggle-map" type="radio" class="panel-toggle-control" name="state-view" value="state-maps">
-                <span class="button--neutral button--small">Map</span>
+                <span class="button--empty button--small button--map">Map</span>
               </label>
-            </fieldset>
+            </div>
           </div>
           <div id="state-table">
-            <table class="data-table panel-toggle-element" data-type="by-state" aria-hidden="false">
-              <thead></thead>
+            <table class="data-table scrollX panel-toggle-element" data-type="by-state" aria-hidden="false">
+              <thead><tr></tr></thead>
             </table>
           </div>
           <div id="state-maps" class="panel-toggle-element" aria-hidden="true'">
-            <button class="add-map button--primary">Compare Candidates</button>
-            <div class="legend"><svg></svg></div>
             <div class="choropleths row"></div>
+            <div class="row">
+              <div class="legend-container">
+                <span class="t-block">Total amount received from state:</span>
+                <svg></svg>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div id="by-contributor-type" class="panel-toggle-element" aria-hidden="true">
-          <h4>Receipts by type of contributor</h4>
-          <table class="data-table" data-type="by-type">
-            <thead>
-              <th scope="col">Candidate</th>
-              <th scope="col">Individual</th>
-              <th scope="col">Committee</th>
-            </thead>
-          </table>
         </div>
       </div>
     </div>

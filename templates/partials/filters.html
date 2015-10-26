@@ -5,13 +5,14 @@
   <div class="filters__hider">
     <h2 class="filter__header">
       {% block heading %}
-      Filter {{ result_type | capitalize }}
+      Filter {{ result_type }}
       {% endblock %}
     </h2>
     <form id="category-filters">
+      {% block message %}{% endblock %}
+      {% include 'partials/filters/filter-buttons.html' %}
       {% block filters %}{% endblock %}
-      {% block submit %}
-      {% endblock %}
+      {% include 'partials/filters/filter-buttons.html' %}
     </form>
   </div>
 </div>

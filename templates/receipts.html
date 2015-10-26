@@ -1,7 +1,7 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-  Browse Receipts
+  Browse receipts
 {% endblock %}
 
 {% block body %}
@@ -22,5 +22,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/{{ assets['dist/js/pages/receipts.js'] }}"></script>
+<script src="{{ asset_for('dist/js/pages/receipts.js') }}"></script>
 {% endblock %}

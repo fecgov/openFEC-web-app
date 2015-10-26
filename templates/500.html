@@ -1,18 +1,19 @@
 {% extends "layouts/main.html" %}
+
 {% block body %}
-	<div class="container">
-		<section class="page-section">
-			<div class="meta-box error-container">
-			    <h1>Oops: We messed up</h1>
-			    <p class="text--lead">We just experienced a server issue. Please try reloading the page.</p>
-		        <div class="error-container__bottom">
-		            <h4>Still not working?</h4>
-                <a class="button" href="mailto:{{ contact_email }}">Contact support <i class="ti-email"></i></a>
-		       </div>
-			 </div>
-			 <nav class="error-nav">
-				 <a href="/" class="u-float-right">Return home &raquo;</a>
-			 </nav>
-		</section>
-	</div>
+<section class="content--blank">
+  <div class="container">
+    <div class="message message--alert message--big">
+      <div class="content__section">
+        <h1 class="message__title">Oops: We messed up</h1>
+        <p>We just experienced a server issue. Please try reloading the page.</p>
+      </div>
+      <div class="message--alert__bottom">
+        <h2>Still not working?</h2>
+        <p>Get support by <a href="mailto:{{ contact_email }}">emailing us</a> or <a href="https://github.com/18F/openFEC/issues">opening a GitHub issue</a>.</p>
+        <a href="{{ url_for('search') }}">Return home</a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

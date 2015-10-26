@@ -84,10 +84,7 @@ def _detect_apps(blue, green):
 SPACE_URLS = {
     'dev': [('18f.gov', 'fec-dev-web')],
     'stage': [('18f.gov', 'fec-stage-web')],
-    'prod': [
-        ('18f.gov', 'fec-prod-web'),
-        ('open.fec.gov', None),
-    ],
+    'prod': [('18f.gov', 'fec-prod-web')],
 }
 
 
@@ -105,7 +102,7 @@ def deploy(space=None, branch=None, yes=False):
 
     # Log in
     args = (
-        ('--a', 'https://api.18f.gov'),
+        ('--a', 'https://api.cloud.gov'),
         ('--u', '$FEC_CF_USERNAME'),
         ('--p', '$FEC_CF_PASSWORD'),
         ('--o', 'fec'),

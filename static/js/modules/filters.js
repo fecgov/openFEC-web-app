@@ -6,8 +6,8 @@ var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
 
-var events = require('fec-style/js/events');
 var accordion = require('fec-style/js/accordion');
+var accessibility = require('fec-style/js/accessibility');
 
 // are the panels open?
 var open = false;
@@ -17,6 +17,7 @@ var openFilterPanel = function() {
   $('.filters').addClass('is-open');
   $('#filter-toggle').addClass('is-active')
     .find('.filters__toggle__text').html('Hide filters');
+  accessibility.restoreTabindex($('#category-filters'));
   open = true;
 };
 
@@ -26,12 +27,13 @@ var closeFilterPanel = function() {
   $('#filter-toggle').removeClass('is-active')
     .find('.filters__toggle__text').html('Show filters');
   $('#results tr:first-child').focus();
+  accessibility.removeTabindex($('#category-filters'));
   open = false;
 };
 
 // Keep in sync with styles/grid-settings.scss.
 // TODO find better way to sync with scss.
-if ($('body').width() > 500) {
+if ($('body').width() > 768) {
   open = true;
   openFilterPanel();
 }
@@ -79,18 +81,41 @@ var activateFilter = function(opts) {
     }
 };
 
-var bindFilters = function() {
-    var cycleSelect = $('.js-cycle');
-    cycleSelect.each(function(){
-      var $this = $(this);
-      $this.change(function() {
-        window.location.href = URI(window.location.href)
-          .removeQuery('cycle')
-          .addQuery({cycle: $this.val()})
-          .toString();
+function initCycleFilters() {
+  var cycleSelect = $('.js-cycle');
+  var callbacks = {
+    path: addCyclePath,
+    query: addCycleQuery
+  };
+  cycleSelect.each(function(_, elm) {
+    var $elm = $(elm);
+    var callback = callbacks[$elm.data('cycle-location')];
+    if (callback) {
+      $elm.change(function() {
+        window.location.href = callback($elm.val());
       });
-    });
-};
+    }
+  });
+}
+
+function addCycleQuery(cycle) {
+  return URI(window.location.href)
+    .removeQuery('cycle')
+    .addQuery({cycle: cycle})
+    .toString();
+}
+
+function addCyclePath(cycle) {
+  var uri = URI(window.location.href);
+  var path = uri.path()
+    .replace(/^\/|\/$/g, '')
+    .split('/')
+    .slice(0, -1)
+    .concat([cycle])
+    .join('/')
+    .concat('/');
+  return uri.path(path).toString();
+}
 
 function getFields() {
   return _.chain($('div#filters :input[name]'))
@@ -123,7 +148,24 @@ var activateInitialFilters = function() {
     }
 };
 
-// Clearing the selects
+var clearFilters = function() {
+  var fields = getFields();
+  _.each(fields, function(key) {
+    activateFilter({
+      name: key,
+      value: null
+    });
+  });
+};
+
+// Clearing the filters
+$('.js-clear-filters').on('click keypress', function(e){
+  if (e.which === 13 || e.type === 'click') {
+    clearFilters();
+    $(this).focus();
+  }
+});
+
 $('.button--remove').click(function(e){
     e.preventDefault();
     var removes = $(this).data('removes');
@@ -150,13 +192,13 @@ $('.filter input[type="text"]').on('keypress', function(e) {
 function bindDateFilters() {
   $('.date-choice-field').each(function(_, field) {
     var $field = $(field);
-    var $minDate = $field.find('[name="min_date"]');
-    var $maxDate = $field.find('[name="max_date"]');
+    var $minDate = $field.find('.js-min-date');
+    var $maxDate = $field.find('.js-max-date');
     $field.on('change', '[type="radio"]', function(e) {
       var $input = $(e.target);
       if ($input.attr('data-min-date')) {
-        $minDate.val($input.attr('data-min-date'));
-        $maxDate.val($input.attr('data-max-date'));
+        $minDate.val($input.data('min-date'));
+        $maxDate.val($input.data('max-date'));
       }
       $minDate.focus();
     });
@@ -165,7 +207,7 @@ function bindDateFilters() {
 
 module.exports = {
   init: function() {
-    bindFilters();
+    initCycleFilters();
     // if the page was loaded with filters set in the query string
     activateInitialFilters();
     bindDateFilters();

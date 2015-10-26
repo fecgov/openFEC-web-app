@@ -14,10 +14,10 @@ env:
   global:
     - FEC_WEB_TEST="true"
     - FEC_SELENIUM_DRIVER="remote"
-    - secure: "Wvz5f/GyjVSooTCDtuTCgrBaiUR/idB0ikdDXWIAL02xpPaVMD0YQTVAE4WYJFEfX25APm79Bs+KHf2vKvUm/HGXfmGsRMb09dy8lVyCzdLuu9ISIH+0Udxj2qH1xdjZAqv8zuouc8N5aq24uMxFCqgxPi2kWnkieqbIw10HhQE="
-    - secure: "QMVCi+DS1BSdaWCmEQXurFDCWAijxJBEswY7s9RaGcTZRBmSsP5VR8uKDSANeRLZ509x3tXcw1X2OeqBFcyIzFi5WvF6oPcKahLrA6XrtjDYsMOBy9a2VDDqFH7ROI6G+99XTDNWoKmbjaO3AGhTGhIJWSf9T400T5imK0KMJB8="
-    - secure: "SKKeJG+Pc0xFyq0++/Cf0fMO4fZlK1H3CgedSGiQhwl3Rsh8QgXBhH+/YwWYAozmUNPkJCEuDdB2A1trBEPqkghAnjNdOXu2mwo5ANweu8M/HdafeeDP2klHB7bIieJ5GhUfrZ1/D/nVcE86mePFlx6Ymjdg2DtNUYBIWFs2xPs="
-    - secure: "UK4kK8mrj0AsYqL7ohK9wKMCTVSK0phyNw7sW2BynRJYTU3Xi073+m8mGiCvHGEULvriCtuysCsbh5iNUz5VQ/4RBQVOJdugzbWjbwEUzb6w1W5pXvwCRUufhGcr98odfNE09pZicfL0YjH84w/dqrlC3leeyaoF7bFqpaKWwqs="
+    - secure: "cmEueYaeTjqjnql7Vfk/qeZCIMfQRZLsEIA1WackpB5PQJxTAXfTFN6zq4r1LgYTxoOLGFi8s9a3zUJpJ7Nz+IYTEult/ehyW4mqbcYE1zodGDb55AllkmlvdYPbxKf0dJvGnMpcIqvgtAsKHGogOmBGEEc0uoiV3FFx1GvKCnM="
+    - secure: "HjtrA4/I9b8m8ySCyL4VjJMmFyuYWrvZKWVSQFMCN7CklLXbn+UBdUl41Dk5ZUKijBZpLmrC4RSEJh8bFO6n0IbEvpGsmdL1FgqhBekPc1jfvzbOzjRvpKYuXtyzQcPv+FpBGXo9NydSh2OqEyNms2YBk9tZkRnhu/6G+10385o="
+    - secure: "H7oyl5s7ZcmP/0Nf4jGkoTe7qov3kTu1e6QbeXmTS2yENoetI7tFBtMG0QYNBVPmu3QK64mA+VpnDdTa3+hXF6yjXkqEBq//f5/47ZIf5Z7lGyyFdefNH1KKumfDJoQQ2LA2m5ENOvDP6iR/3S4C6798Dc5Zt37t7yPhwj4D+7Q="
+    - secure: "hT2S6JTWsSU+qPzxnsNJxBanOu2obvbF7LNVUQKkdL22HV69vqUJxuEyccmwgcyN2gKzsK2aQOtDlwxYPM/7taRcmhG53RlPYVPRvlYZn7E3glAn9lWZYLWgYxRvYuZjmcithVDGLhNYu0nytmJPaF6Rve2xBaVODTytfDusbqE="
 
 # This matrix runs n+1 jobs: one for each in `include`, and one with no non-global
 # environment variables set. This allows the build that does not use Sauce Labs
@@ -70,7 +70,7 @@ script:
   # Run Python unit tests
   - if [[ -z $FEC_SAUCE_BROWSER ]]; then py.test; fi
   # Run Javascript unit tests
-  - if [[ -z $FEC_SAUCE_BROWSER ]]; then npm run test; fi
+  - if [[ -z $FEC_SAUCE_BROWSER ]]; then npm test; fi
   # Run Selenium tests if not pull request
   - if [[ $TRAVIS_PULL_REQUEST = 'false' && ! -z $FEC_SAUCE_BROWSER  ]]; then py.test --selenium; fi
 

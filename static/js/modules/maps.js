@@ -1,7 +1,5 @@
 'use strict';
 
-/* global require, module, window, document, API_LOCATION, API_VERSION, API_KEY */
-
 var d3 = require('d3');
 var $ = require('jquery');
 var _ = require('underscore');
@@ -11,15 +9,16 @@ var topojson = require('topojson');
 var L = require('leaflet');
 require('leaflet-providers');
 
-var events = require('fec-style/js/events');
-
+var fips = require('./fips');
 var helpers = require('./helpers');
-var states = require('../us.json');
+var utils = require('./election-utils');
 
-var stateFeatures = topojson.feature(states, states.objects.units).features;
+var states = require('../data/us-states-10m.json');
+
+var stateFeatures = topojson.feature(states, states.objects.states).features;
 var stateFeatureMap = _.chain(stateFeatures)
   .map(function(feature) {
-    return [feature.properties.name, feature];
+    return [feature.id, feature];
   })
   .object()
   .value();
@@ -27,8 +26,12 @@ var stateFeatureMap = _.chain(stateFeatures)
 var compactRules = [
   ['B', 9],
   ['M', 6],
-  ['k', 3]
+  ['k', 3],
+  ['', 0]
 ];
+
+var colorZero = '#ffffff';
+var colorScale = ['#c1eded', '#278887'];
 
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
@@ -45,7 +48,7 @@ function compactNumber(value, rule) {
   return d3.round(value / divisor, 1).toString() + rule[0];
 }
 
-function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
+function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
   var svg = d3.select($elm[0])
     .append('svg')
       .attr('width', width)
@@ -58,33 +61,46 @@ function stateMap($elm, data, width, height, max, addLegend, addTooltips) {
   var results = _.reduce(
     data.results,
     function(acc, val) {
-      acc[val.state_full] = val.total;
+      var row = fips.fipsByState[val.state] || {};
+      var code = row.STATE ? parseInt(row.STATE) : null;
+      acc[code] = val.total;
       return acc;
     },
     {}
   );
   var quantiles = 4;
-  max = max || _.max(_.pluck(data.results, 'total'));
-  var scale = chroma.scale(['#fff', '#2678BA']).domain([0, max]);
-  var quantize = chroma.scale(['#fff', '#2678BA']).domain([0, max], quantiles);
-  var map = svg.append('g')
+  var totals = _.chain(data.results)
+    .pluck('total')
+    .filter(function(value) {
+      return !!value;
+    })
+    .value();
+  min = min || _.min(totals);
+  max = max || _.max(totals);
+  var scale = chroma.scale(colorScale).domain([min, max]);
+  var quantize = d3.scale.linear().domain([min, max]);
+  svg.append('g')
     .selectAll('path')
       .data(stateFeatures)
     .enter().append('path')
       .attr('fill', function(d) {
-        return scale(results[d.properties.name] || 0);
+        return results[d.id] ? scale(results[d.id]) : colorZero;
       })
       .attr('data-state', function(d) {
-        return d.properties.name;
+        return fips.fipsByCode[d.id].STATE_NAME;
       })
       .attr('class', 'shape')
       .attr('d', path)
     .on('mouseover', function(d) {
-      this.parentNode.appendChild(this);
+      if (results[d.id]) {
+        this.parentNode.appendChild(this);
+        this.classList.add('state--hover');
+      }
     });
 
   if (addLegend || typeof addLegend === 'undefined') {
-    stateLegend(svg, scale, quantize, quantiles);
+    var legendSVG = d3.select('.legend-container svg');
+    stateLegend(legendSVG, scale, quantize, quantiles);
   }
 
   if (addTooltips) {
@@ -96,8 +112,9 @@ function stateLegend(svg, scale, quantize, quantiles) {
   // Add legend swatches
   var legendWidth = 40;
   var legendBar = 35;
+  var ticks = quantize.ticks(quantiles);
   var legend = svg.selectAll('g.legend')
-    .data(quantize.domain())
+    .data(ticks)
     .enter()
       .append('g')
       .attr('class', 'legend');
@@ -105,7 +122,7 @@ function stateLegend(svg, scale, quantize, quantiles) {
     .attr('x', function(d, i) {
       return i * legendWidth + (legendWidth - legendBar) / 2;
     })
-    .attr('y', 20)
+    .attr('y', 0)
     .attr('width', legendBar)
     .attr('height', 20)
     .style('fill', function(d) {
@@ -113,31 +130,31 @@ function stateLegend(svg, scale, quantize, quantiles) {
     });
 
   // Add legend text
-  var compactRule = chooseRule(quantize.domain()[Math.floor(quantiles / 2)]);
+  var compactRule = chooseRule(ticks[Math.ceil(ticks.length / 2)]);
   legend.append('text')
     .attr('x', function(d, i) {
       return (i + 0.5) * legendWidth;
     })
-    .attr('y', 50)
+    .attr('y', 30)
     .attr('width', legendWidth)
     .attr('height', 20)
     .attr('font-size', '10px')
     .attr('text-anchor', 'middle')
     .text(function(d) {
-      return compactNumber(d, compactRule);
+      return '$' + compactNumber(d, compactRule).toString();
     });
 }
 
 var tooltipTemplate = _.template(
-  '<div>{{ name }}</div>' +
-  '<div>{{ total }}</div>'
+  '<div class="tooltip__title">{{ name }}</div>' +
+  '<div class="tooltip__value">{{ total }}</div>'
 );
 
 function stateTooltips(svg, path, results) {
   var tooltip = d3.select('body').append('div')
     .attr('id', 'map-tooltip')
+    .attr('class', 'tooltip tooltip--above')
     .style('position', 'absolute')
-    .style('text-align', 'center')
     .style('pointer-events', 'none')
     .style('display', 'none');
   svg.selectAll('path')
@@ -145,8 +162,8 @@ function stateTooltips(svg, path, results) {
       this.parentNode.appendChild(this);
       var offset = $(this).offset();
       var html = tooltipTemplate({
-        name: d.properties.name,
-        total: helpers.currency(results[d.properties.name])
+        name: fips.fipsByCode[d.id].STATE_NAME,
+        total: helpers.currency(results[d.id] || 0)
       });
       tooltip
         .style('display', 'block')
@@ -170,34 +187,39 @@ function highlightState($parent, state) {
   }
 }
 
-var districtUrl = '/static/json/districts';
-
-function DistrictMap(elm) {
+function DistrictMap(elm, style) {
   this.elm = elm;
+  this.style = style;
   this.map = null;
   this.overlay = null;
 }
 
 DistrictMap.prototype.load = function(election) {
+  var feature;
   if (election.district) {
-    var url = [districtUrl, election.state, election.district].join('/') + '.geojson';
-    $.getJSON(url).done(this.render.bind(this));
-  } else {
-    var feature = stateFeatureMap[election.stateFull];
-    feature && this.render(feature);
+    var encoded = utils.encodeDistrict(election.state, election.district);
+    feature = utils.findDistrict(encoded);
+  } else if (election.state) {
+    var state = fips.fipsByState[election.state.toUpperCase()];
+    if (state) {
+      feature = stateFeatureMap[state.STATE];
+    }
   }
+  feature && this.render(feature);
 };
 
 DistrictMap.prototype.render = function(data) {
   this.elm.setAttribute('aria-hidden', 'false');
   this.map = L.map(this.elm);
   L.tileLayer.provider('Stamen.TonerLite').addTo(this.map);
-  this.overlay = L.geoJson(data).addTo(this.map);
+  this.overlay = L.geoJson(data, {style: this.style}).addTo(this.map);
   this.map.fitBounds(this.overlay.getBounds());
 };
 
 module.exports = {
   stateMap: stateMap,
+  colorZero: colorZero,
+  colorScale: colorScale,
   stateLegend: stateLegend,
   highlightState: highlightState,
   DistrictMap: DistrictMap

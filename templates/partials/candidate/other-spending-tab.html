@@ -1,0 +1,32 @@
+{% import 'macros/cycle-select.html' as select %}
+
+<section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
+  <div class="container">
+  <div class="content__section">
+    <div class="section__heading">
+      <h2 class="heading__title">
+        Other spending
+      </h2>
+    </div>
+    <p class="usa-width-two-thirds">This tab shows spending that opposes or supports this candidate. None of the funds are directly given to or spent by the candidate.</p>
+  </div>
+
+    <div class="content__section">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Independent expenditures</h3>
+      </div>
+      <table class="data-table" data-type="independent-expenditure" data-candidate="{{ candidate_id }}" data-cycle="{{ cycle }}">
+        <thead>
+          <tr>
+            <th scope="col">Amount</th>
+            <th scope="col">Spent by</th>
+            <th scope="col">Support/Oppose</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="datatable__note">
+        <p class="t-note">Note: These totals are drawn from quarterly, monthly and semi-annual reports. 24-hour and 48-hour independent expenditures reports are not included.</p>
+      </div>
+    </div>
+  </div>
+</section>

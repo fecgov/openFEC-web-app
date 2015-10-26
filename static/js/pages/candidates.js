@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
+var helpers = require('../modules/helpers');
 var candidatesTemplate = require('../../templates/candidates.hbs');
 
 var columns = [
@@ -14,7 +15,11 @@ var columns = [
     className: 'all',
     width: '280px',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id + tables.buildCycle(row), 'candidate');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row)),
+        'candidate'
+      );
     }
   },
   {data: 'office_full', className: 'min-tablet hide-panel'},
@@ -29,11 +34,11 @@ var columns = [
   {data: 'state', className: 'min-desktop hide-panel'},
   {data: 'district', className: 'min-desktop hide-panel'},
   {
-    className: 'all',
+    className: 'all u-no-padding',
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon arrow--right"></i>';
+      return tables.MODAL_TRIGGER_HTML;
     }
   }
 ];
@@ -47,9 +52,12 @@ $(document).ready(function() {
     'candidates',
     {},
     columns,
-    _.extend(tables.offsetCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, candidatesTemplate)
+    _.extend({}, tables.offsetCallbacks, {
+      afterRender: tables.modalRenderFactory(candidatesTemplate)
     }),
-    {useFilters: true}
+    {
+      useFilters: true,
+      rowCallback: tables.modalRenderRow
+    }
   );
 });

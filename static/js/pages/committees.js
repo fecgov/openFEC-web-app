@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 var tables = require('../modules/tables');
+var helpers = require('../modules/helpers');
 var committeesTemplate = require('../../templates/committees.hbs');
 
 var columns = [
@@ -14,7 +15,11 @@ var columns = [
     className: 'all',
     width: '280px',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.committee_id + tables.buildCycle(row), 'committee');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['committee', row.committee_id], tables.getCycle(row)),
+        'committee'
+      );
     }
   },
   {data: 'treasurer_name', className: 'min-desktop hide-panel'},
@@ -25,11 +30,11 @@ var columns = [
   {data: 'designation_full', className: 'min-tablet hide-panel'},
   {data: 'organization_type_full', className: 'min-desktop hide-panel'},
   {
-    className: 'all',
+    className: 'all u-no-padding',
     width: '20px',
     orderable: false,
     render: function(data, type, row, meta) {
-      return '<i class="icon arrow--right"></i>';
+      return tables.MODAL_TRIGGER_HTML;
     }
   }
 ];
@@ -44,7 +49,11 @@ $(document).ready(function() {
     {},
     columns,
     _.extend(tables.offsetCallbacks, {
-      afterRender: tables.modalAfterRender.bind(undefined, committeesTemplate)
+      afterRender: tables.modalRenderFactory(committeesTemplate)
     }),
-    {useFilters: true}
+    {
+      useFilters: true,
+      order: [[4, 'desc']],
+      rowCallback: tables.modalRenderRow
+    }
   );});

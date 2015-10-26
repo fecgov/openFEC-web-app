@@ -6,17 +6,23 @@
 {% import 'macros/filters/date.html' as date %}
 
 {% block heading %}
-Filter Filings
+Filter filings
 {% endblock %}
 
 {% block filters %}
 
 {{ typeahead.field('committee_id', 'Committee') }}
+{{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
 
-{{ text.field('report_year', 'Report Year') }}
+{% include 'partials/filters/election-years.html' %}
+
+{{ date.field('receipt_date', 'Receipt date', dates ) }}
 
 {% include 'partials/filters/amendment-indicator.html' %}
 {% include 'partials/filters/primary-general.html' %}
+{% include 'partials/filters/form-type.html' %}
+
+<h3 class="filters__subheader">Report type</h3>
 {% include 'partials/filters/report-type.html' %}
 
 {% endblock %}

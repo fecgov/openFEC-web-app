@@ -1,4 +1,4 @@
-/* global require */
+/* global require, process */
 
 var _ = require('underscore');
 
@@ -7,19 +7,21 @@ var browserify = require('browserify');
 
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
-var hbsfy = require('hbsfy');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var rev = require('gulp-rev');
 var preprocessify = require('preprocessify');
+var stringify = require('stringify');
+var hbsfy = require('hbsfy');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
-var mochify = require('mochify');
+
 
 var debug = !!process.env.FEC_WEB_DEBUG;
-var production = !!process.env.FEC_WEB_PRODUCTION;
+var analytics = !!process.env.FEC_WEB_GOOGLE_ANALYTICS;
+var production = ['stage', 'prod'].indexOf(process.env.FEC_WEB_ENVIRONMENT) !== -1;
 
 // TODO(jmcarp) Restore `watch-js`
 // gulp.task('watch-js', bundle.bind(this, true));
@@ -44,7 +46,7 @@ gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-maps'], func
     .pipe(rename(function(path) {
       path.dirname = './dist/styles';
     }))
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(!production, sourcemaps.init()))
     .pipe(sass({
       includePaths: Array.prototype.concat(
         './static/styles',
@@ -52,7 +54,7 @@ gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-maps'], func
       )
     }).on('error', sass.logError))
     .pipe(rev())
-    .pipe(sourcemaps.write())
+    .pipe(gulpif(!production, sourcemaps.write()))
     .pipe(gulpif(production, minifyCss()))
     .pipe(gulp.dest('.'))
     .pipe(rev.manifest({merge: true}))
@@ -111,16 +113,15 @@ gulp.task('build-js', function() {
   return browserify({
     entries: pages,
     plugin: [['factor-bundle', {outputs: _.map(pages, callback)}]],
+    opts: {global: true},
     debug: debug
   })
-  .transform(preprocessify({DEBUG: debug}))
+  .transform(preprocessify({
+    DEBUG: debug,
+    ANALYTICS: analytics
+  }))
+  .transform({global: true}, stringify(['.html']))
   .transform(hbsfy)
   .bundle()
   .pipe(callback('static/js/common.js'));
-});
-
-gulp.task('test', function() {
-  return mochify('./tests/unit/**/*.js')
-    .transform(hbsfy)
-    .bundle();
 });

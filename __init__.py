@@ -7,25 +7,25 @@ import datetime
 
 import furl
 import jinja2
-from webargs import Arg
+from webargs import fields
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
 
 from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sslify import SSLify
 from flask.ext.basicauth import BasicAuth
+from werkzeug.contrib.fixers import ProxyFix
 
 from openfecwebapp import utils
+from openfecwebapp import views
 from openfecwebapp import config
 from openfecwebapp import constants
-from openfecwebapp.views import render_search_results, render_candidate, render_committee
 from openfecwebapp.api_caller import load_search_results, load_with_nested
 
 
 locale.setlocale(locale.LC_ALL, '')
 
 START_YEAR = 1979
-DISTRICTS = json.load(open('./data/districts.json'))
 
 app = Flask(__name__, static_path='/static', static_folder='dist')
 
@@ -74,6 +74,10 @@ def series_group_has_data(groups, keys):
     )
 
 
+def get_cycles():
+    return range(utils.current_cycle(), START_YEAR, -2)
+
+
 def cycle_start(value):
     return datetime.datetime(value - 1, 1, 1)
 
@@ -82,14 +86,36 @@ def cycle_end(value):
     return datetime.datetime(value, 12, 31)
 
 
-def get_election_url(candidate, cycle):
+def get_election_url(candidate, cycle, district=None):
     return url_for(
         'elections',
         office=candidate['office_full'].lower(),
         state=candidate['state'] if candidate['state'] != 'US' else None,
-        district=candidate['district'],
+        district=district or candidate['district'],
         cycle=cycle,
     )
+
+
+try:
+    assets = json.load(open('./rev-manifest.json'))
+except OSError:
+    logger.error(
+        'Manifest "rev-manifest.json" not found. Did you remember to run '
+        '"npm run build"?'
+    )
+    raise
+
+assets = {
+    key: value.replace('dist', '')
+    for key, value in assets.items()
+}
+
+def asset_for(path):
+    return url_for('static', filename=assets[path].lstrip('/'))
+
+
+def get_base_path():
+    return request.headers.get('X-Script-Name', '')
 
 
 app.jinja_env.globals.update({
@@ -103,7 +129,7 @@ app.jinja_env.globals.update({
     'cms_url': config.cms_url,
     'context': get_context,
     'absolute_url': get_absolute_url,
-    'contact_email': '18F-FEC@gsa.gov',
+    'contact_email': 'betafeedback@fec.gov',
     'default_cycles': _get_default_cycles(),
     'series_has_data': series_has_data,
     'group_has_data': group_has_data,
@@ -112,25 +138,12 @@ app.jinja_env.globals.update({
     'cycle_end': cycle_end,
     'election_url': get_election_url,
     'constants': constants,
-    'districts': DISTRICTS,
-    'cycles': range(utils.current_cycle(), START_YEAR, -2),
+    'cycles': get_cycles(),
+    'assets': assets,
+    'asset_for': asset_for,
+    'base_path': get_base_path,
+    'environment': config.environment,
 })
-
-
-try:
-    assets = json.load(open('./rev-manifest.json'))
-except OSError:
-    logger.error(
-        'Manifest "rev-manifest.json" not found. Did you remember to run '
-        '"npm run build"?'
-    )
-    raise
-# Hack: Rename paths from "dist" to "static"
-# TODO(jmcarp) Find a better solution
-app.jinja_env.globals['assets'] = {
-    key: value.replace('dist', 'static')
-    for key, value in assets.items()
-}
 
 
 @app.route('/')
@@ -139,12 +152,12 @@ def search():
     if query:
         result_type = request.args.get('search_type') or 'candidates'
         results = load_search_results(query, result_type)
-        return render_search_results(results, query, result_type)
+        return views.render_search_results(results, query, result_type)
     else:
-        return render_template('search.html', page='home')
+        return render_template('search.html', page='home', dates=utils.date_ranges())
 
 
-@app.route('/api')
+@app.route('/api/')
 def api():
     """Redirect to API as described at
     https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
@@ -152,7 +165,7 @@ def api():
     return redirect(config.api_location, http.client.MOVED_PERMANENTLY)
 
 
-@app.route('/developers')
+@app.route('/developers/')
 def developers():
     """Redirect to developer portal as described at
     https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
@@ -162,9 +175,9 @@ def developers():
     return redirect(url.url, http.client.MOVED_PERMANENTLY)
 
 
-@app.route('/candidate/<c_id>')
+@app.route('/candidate/<c_id>/')
 @use_kwargs({
-    'cycle': Arg(int),
+    'cycle': fields.Int(),
 })
 def candidate_page(c_id, cycle=None):
     """Fetch and render data for candidate detail page.
@@ -172,12 +185,12 @@ def candidate_page(c_id, cycle=None):
     :param int cycle: Optional cycle for associated committees and financials.
     """
     candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle)
-    return render_candidate(candidate, committees, cycle)
+    return views.render_candidate(candidate, committees, cycle)
 
 
-@app.route('/committee/<c_id>')
+@app.route('/committee/<c_id>/')
 @use_kwargs({
-    'cycle': Arg(int),
+    'cycle': fields.Int(),
 })
 def committee_page(c_id, cycle=None):
     """Fetch and render data for committee detail page.
@@ -185,15 +198,15 @@ def committee_page(c_id, cycle=None):
     :param int cycle: Optional cycle for financials.
     """
     committee, candidates, cycle = load_with_nested('committee', c_id, 'candidates', cycle)
-    return render_committee(committee, candidates, cycle)
+    return views.render_committee(committee, candidates, cycle)
 
 
-@app.route('/candidates')
+@app.route('/candidates/')
 def candidates():
     return render_template('candidates.html', result_type='candidates')
 
 
-@app.route('/committees')
+@app.route('/committees/')
 def committees():
     return render_template(
         'committees.html',
@@ -202,19 +215,23 @@ def committees():
     )
 
 
-@app.route('/receipts')
+@app.route('/receipts/')
 def receipts():
     return render_template('receipts.html', dates=utils.date_ranges())
 
 
-@app.route('/disbursements')
+@app.route('/disbursements/')
 def disbursements():
     return render_template('disbursements.html', dates=utils.date_ranges())
 
 
-@app.route('/filings')
+@app.route('/filings/')
 def filings():
-    return render_template('filings.html', result_type='committees')
+    return render_template(
+        'filings.html',
+        dates=utils.date_ranges(),
+        result_type='committees',
+    )
 
 
 @app.route('/elections/')
@@ -230,14 +247,32 @@ def elections(office, cycle, state=None, district=None):
         abort(404)
     if state and state.upper() not in constants.states:
         abort(404)
+    cycles = get_cycles()
+    if office.lower() == 'president':
+        cycles = [each for each in cycles if each % 4 == 0]
     return render_template(
         'elections.html',
         office=office,
         cycle=cycle,
+        cycles=cycles,
         state=state,
         state_full=constants.states[state.upper()] if state else None,
         district=district,
+        title=election_title(cycle, office, state, district),
     )
+
+
+app.add_url_rule('/issue/', view_func=views.GithubView.as_view('issue'))
+
+
+def election_title(cycle, office, state=None, district=None):
+    base = ' '.join([str(cycle), 'Election', 'United States', office.capitalize()])
+    parts = [base]
+    if state:
+        parts.append(constants.states[state.upper()])
+    if district:
+        parts.append('District {0}'.format(district))
+    return ' - '.join(parts)
 
 
 @app.errorhandler(404)
@@ -257,9 +292,17 @@ def currency_filter(num, grouping=True):
     return None
 
 
+def ensure_date(value):
+    if isinstance(value, (datetime.date, datetime.datetime)):
+        return value
+    return parse_date(value)
+
+
 @app.template_filter('date')
 def date_filter(value, fmt='%m/%d/%Y'):
-    return value.strftime(fmt)
+    if value is None:
+        return None
+    return ensure_date(value).strftime(fmt)
 
 
 @app.template_filter('json')
@@ -290,20 +333,6 @@ def fmt_chart_ticks(group, keys):
     return _fmt_chart_tick(group[keys])
 
 
-@app.template_filter('date_sm')
-def date_filter_sm(date_str):
-    if not date_str:
-        return ''
-    return parse_date(date_str).strftime('%m/%y')
-
-
-@app.template_filter('date_md')
-def date_filter_md(date_str):
-    if not date_str:
-        return ''
-    return parse_date(date_str).strftime('%b %Y')
-
-
 @app.template_filter()
 def fmt_year_range(year):
     if type(year) == int:
@@ -332,11 +361,7 @@ if config.force_https:
     sslify = SSLify(app, permanent=True, age=31536000, subdomains=True)
 
 
-if config.server_name:
-    app.config['SERVER_NAME'] = config.server_name
-
-
-if config.production:
+if config.environment in ['stage', 'prod']:
     app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 
@@ -347,6 +372,10 @@ if not config.test:
     app.config['BASIC_AUTH_PASSWORD'] = config.password
     app.config['BASIC_AUTH_FORCE'] = True
     basic_auth = BasicAuth(app)
+
+
+app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
 if __name__ == '__main__':
