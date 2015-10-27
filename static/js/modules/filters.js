@@ -6,6 +6,11 @@ var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
 
+// Hack: Append jQuery to `window` for use by legacy libraries
+window.$ = window.jQuery = $;
+
+var typeahead = require('fec-style/js/typeahead');
+var typeaheadFilter = require('fec-style/js/typeahead-filter');
 var accessibility = require('fec-style/js/accessibility');
 
 var helpers = require('./helpers');
@@ -134,7 +139,32 @@ function Filter(elm) {
   this.$remove.on('click', this.handleClear.bind(this));
 
   this.name = this.$input.eq(0).attr('name');
+
+  this.initDates();
+  this.initTypeahead();
 }
+
+Filter.prototype.initDates = function() {
+  if (!this.$elm.hasClass('date-choice-field')) { return;  }
+  var $minDate = this.$elm.find('.js-min-date');
+  var $maxDate = this.$elm.find('.js-max-date');
+  this.$elm.on('change', '[type="radio"]', function(e) {
+    var $input = $(e.target);
+    if (!$input.is(':checked')) { return; }
+    if ($input.attr('data-min-date')) {
+      $minDate.val($input.data('min-date'));
+      $maxDate.val($input.data('max-date'));
+    }
+    $minDate.focus();
+  });
+};
+
+Filter.prototype.initTypeahead = function() {
+  if (!this.$elm.hasClass('js-typeahead-filter')) { return; }
+  var key = this.$elm.data('dataset');
+  var dataset = typeahead.datasets[key];
+  this.typeaheadFilter = new typeaheadFilter.TypeaheadFilter(this.$elm, dataset);
+};
 
 Filter.prototype.setValue = function(value) {
   var $input = this.$input.data('temp') ?
@@ -195,29 +225,9 @@ function addCyclePath(cycle) {
   return uri.path(path).toString();
 }
 
-/**
- * Initialize date picker filters
- */
-function bindDateFilters() {
-  $('.date-choice-field').each(function(_, field) {
-    var $field = $(field);
-    var $minDate = $field.find('.js-min-date');
-    var $maxDate = $field.find('.js-max-date');
-    $field.on('change', '[type="radio"]', function(e) {
-      var $input = $(e.target);
-      if ($input.attr('data-min-date')) {
-        $minDate.val($input.data('min-date'));
-        $maxDate.val($input.data('max-date'));
-      }
-      $minDate.focus();
-    });
-  });
-}
-
 module.exports = {
   init: function() {
     initCycleFilters();
-    bindDateFilters();
   },
   FilterPanel: FilterPanel
 };
