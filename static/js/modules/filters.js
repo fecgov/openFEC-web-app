@@ -6,8 +6,11 @@ var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
 
-var accordion = require('fec-style/js/accordion');
 var accessibility = require('fec-style/js/accessibility');
+
+var helpers = require('./helpers');
+
+var KEYCODE_ENTER = 13;
 
 var defaultOptions = {
   body: '.filters',
@@ -25,13 +28,18 @@ function FilterPanel(options) {
 
   this.$toggle.on('click', this.toggle.bind(this));
 
+  this.filterSet = new FilterSet(this.$form).activate();
+  if (!_.isEmpty(this.filterSet.serialize())) {
+    this.show();
+  }
+
   this.adjust();
 }
 
 FilterPanel.prototype.adjust = function() {
   if ($('body').width() > 768) {
     this.show();
-  } else {
+  } else if (!this.isOpen) {
     this.hide();
   }
 };
@@ -63,39 +71,92 @@ FilterPanel.prototype.toggle = function() {
   }
 };
 
-var prepareValue = function($elm, value) {
-  if ($elm.attr('type') === 'checkbox') {
-    return $.isArray(value) ? value : [value];
-  } else {
-    return value;
-  }
-  return $elm.attr('type') === 'checkbox' ? [value] : value;
-};
+function FilterSet(elm) {
+  this.$elm = $(elm);
+  this.$clear = this.$elm.find('.js-clear-filters');
 
-function ensureVisible($elm) {
-  if ($elm.is(':visible')) {
-    return;
-  }
-  var $accordion = $elm.closest('.js-accordion');
-  if ($accordion.length) {
-    accordion.showHeader($accordion.find('.js-accordion_header'));
-  }
+  this.$clear.on('click keypress', this.handleClear.bind(this));
+
+  this.fields = {};
 }
 
-var activateFilter = function(opts) {
-    var $field = $('#category-filters [name=' + opts.name + ']');
-    if ($field.data('temp')) {
-      $field = $('#' + $field.data('temp'));
+FilterSet.prototype.activate = function() {
+  var query = URI.parseQuery(window.location.search);
+  this.fields = _.chain(this.$elm.find('.filter'))
+    .map(function(elm) {
+      var filter = new Filter(elm);
+      filter.setValue(query[filter.name]);
+      return [filter.name, filter];
+    })
+    .object()
+    .value();
+  return this;
+};
+
+FilterSet.prototype.serialize = function() {
+  return _.reduce(this.$elm.serializeArray(), function(memo, val) {
+    if (val.value && val.name.slice(0, 1) !== '_') {
+      if (memo[val.name]) {
+        memo[val.name].push(val.value);
+      } else{
+        memo[val.name] = [val.value];
+      }
     }
-    var $parent = $field.parent();
-    if (opts.value) {
-        $field.val(prepareValue($field, opts.value)).change();
-        $parent.addClass('is-active');
-        ensureVisible($field);
-    } else {
-        $field.val(prepareValue($field, '')).change();
-        $parent.removeClass('is-active');
-    }
+    return memo;
+  }, {});
+};
+
+FilterSet.prototype.handleClear = function(e) {
+  if (e.which === KEYCODE_ENTER || e.type === 'click') {
+    this.clear();
+    $(e.target).focus();
+  }
+};
+
+FilterSet.prototype.clear = function() {
+  _.each(this.fields, function(field) {
+    field.setValue();
+  });
+};
+
+function prepareValue($elm, value) {
+  return $elm.attr('type') === 'checkbox' ?
+    helpers.ensureArray(value) :
+    value;
+}
+
+function Filter(elm) {
+  this.$elm = $(elm);
+  this.$input = this.$elm.find('input[name]');
+  this.$remove = this.$elm.find('.button--remove');
+
+  this.$input.on('change', this.handleChange.bind(this));
+  this.$remove.on('click', this.handleClear.bind(this));
+
+  this.name = this.$input.eq(0).attr('name');
+}
+
+Filter.prototype.setValue = function(value) {
+  var $input = this.$input.data('temp') ?
+    this.$elm.find('#' + this.$input.data('temp')) :
+    this.$input;
+  $input.val(prepareValue($input, value)).change();
+};
+
+Filter.prototype.handleClear = function() {
+  this.setValue();
+  this.$input.focus();
+};
+
+Filter.prototype.handleKeydown = function(e) {
+  if (e.which === KEYCODE_ENTER) {
+    e.preventDefault();
+    this.$input.change();
+  }
+};
+
+Filter.prototype.handleChange = function() {
+  this.$remove.css('display', this.$input.val() ? 'block' : 'none');
 };
 
 function initCycleFilters() {
@@ -134,75 +195,6 @@ function addCyclePath(cycle) {
   return uri.path(path).toString();
 }
 
-function getFields() {
-  return _.chain($('div#filters :input[name]'))
-    .map(function(input) {
-      return $(input).attr('name');
-    })
-    .filter(function(name) {
-      return name && name.slice(0, 1) !== '_';
-    })
-    .uniq()
-    .value();
-}
-
-var activateInitialFilters = function() {
-    // this activates dropdowns
-    // name filter is activated in the template
-    var open;
-    var qs = URI.parseQuery(window.location.search);
-    var fields = getFields();
-    _.each(fields, function(key) {
-      activateFilter({
-        name: key,
-        value: qs[key]
-      });
-      open = open || qs[key];
-    });
-
-    if (open) {
-      $('body').addClass('is-showing-filters');
-    }
-};
-
-var clearFilters = function() {
-  var fields = getFields();
-  _.each(fields, function(key) {
-    activateFilter({
-      name: key,
-      value: null
-    });
-  });
-};
-
-// Clearing the filters
-$('.js-clear-filters').on('click keypress', function(e){
-  if (e.which === 13 || e.type === 'click') {
-    clearFilters();
-    $(this).focus();
-  }
-});
-
-$('.button--remove').click(function(e){
-    e.preventDefault();
-    var removes = $(this).data('removes');
-    $('[name="' + removes + '"]').val('').trigger('change').focus();
-    $(this).css('display', 'none');
-});
-
-$('.filter input, .filter select').change(function(){
-    var $this = $(this);
-    $('[data-removes="' + $this.attr('name') + '"]')
-        .css('display', $this.val() ? 'block' : 'none');
-});
-
-$('.filter input[type="text"]').on('keypress', function(e) {
-    if (e.which === 13) {
-        $(this).change();
-        e.preventDefault();
-    }
-});
-
 /**
  * Initialize date picker filters
  */
@@ -225,12 +217,7 @@ function bindDateFilters() {
 module.exports = {
   init: function() {
     initCycleFilters();
-    // if the page was loaded with filters set in the query string
-    activateInitialFilters();
     bindDateFilters();
-    new FilterPanel();
   },
-  getFields: getFields,
-  activateInitialFilters: activateInitialFilters,
   FilterPanel: FilterPanel
 };

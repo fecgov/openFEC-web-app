@@ -50,19 +50,6 @@ function yearRange(first, last) {
   }
 }
 
-function mapFilters(filters) {
-  return _.reduce(filters, function(acc, val) {
-    if (val.value && val.name.slice(0, 1) !== '_') {
-      if (acc[val.name]) {
-        acc[val.name].push(val.value);
-      } else {
-        acc[val.name] = [val.value];
-      }
-    }
-    return acc;
-  }, {});
-}
-
 var parsedFilters;
 
 function getCycle(datum) {
@@ -207,16 +194,12 @@ function mapResponse(response) {
   };
 }
 
-function ensureArray(value) {
-  return _.isArray(value) ? value : [value];
-}
-
 function compareQuery(first, second, keys) {
   keys = keys || _.union(_.keys(first), _.keys(second));
   var different = _.find(keys, function(key) {
     return !_.isEqual(
-      ensureArray(first[key]).sort(),
-      ensureArray(second[key]).sort()
+      helpers.ensureArray(first[key]).sort(),
+      helpers.ensureArray(second[key]).sort()
     );
   });
   return !different;
@@ -224,7 +207,8 @@ function compareQuery(first, second, keys) {
 
 function pushQuery(params) {
   var query = URI.parseQuery(window.location.search);
-  var fields = filters.getFields();
+  // var fields = filters.getFields();
+  var fields = Object.keys(params);
   if (!compareQuery(query, params, fields)) {
     // Clear and update filter fields
     _.each(fields, function(field) {
@@ -415,6 +399,9 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   var useFilters = opts.useFilters;
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
   callbacks = _.extend({}, defaultCallbacks, callbacks);
+  if ($form) {
+    var filterPanel = new filters.FilterPanel();
+  }
   opts = _.extend({
     serverSide: true,
     searching: false,
@@ -430,9 +417,8 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
     ajax: function(data, callback, settings) {
       var api = this.api();
       if ($form) {
-        var filters = $form.serializeArray();
-        parsedFilters = mapFilters(filters);
-        pushQuery(parsedFilters);
+        pushQuery(filterPanel.filterSet.serialize());
+        parsedFilters = filterPanel.filterSet.serialize();
       }
       var query = _.extend(
         callbacks.mapQuery(api, data),
@@ -468,8 +454,8 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   if (useFilters) {
     // Update filters and data table on navigation
     $(window).on('popstate', function() {
-      filters.activateInitialFilters();
-      var tempFilters = mapFilters(filters);
+      filterPanel.filterSet.activate();
+      var tempFilters = filterPanel.filterSet.serialize();
       if (!_.isEqual(tempFilters, parsedFilters)) {
         api.ajax.reload();
       }
