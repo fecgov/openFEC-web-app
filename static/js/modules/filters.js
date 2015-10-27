@@ -229,5 +229,6 @@ module.exports = {
   init: function() {
     initCycleFilters();
   },
-  FilterPanel: FilterPanel
+  FilterPanel: FilterPanel,
+  FilterSet: FilterSet
 };
