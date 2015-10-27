@@ -1,11 +1,21 @@
 'use strict'
 
 var chai = require('chai');
+var sinon = require('sinon');
 var expect = chai.expect;
 
 var $ = require('jquery');
+var _ = require('underscore');
+
+_.extend(window, {
+  BASE_PATH: '/',
+  API_LOCATION: '',
+  API_VERSION: '/v1',
+  API_KEY: '12345'
+});
 
 var FilterPanel = require('../../../static/js/modules/filters').FilterPanel;
+var FilterSet = require('../../../static/js/modules/filters').FilterSet;
 
 function expectOpen(panel) {
   expect(panel.isOpen).to.be.true;
@@ -51,6 +61,12 @@ describe('filter panel', function() {
     expectOpen(this.panel);
     this.panel.$toggle.trigger('click');
     expectClosed(this.panel);
+  });
+
+  it('should start off open when contained filterset has values', function() {
+    sinon.stub(FilterSet.prototype, 'serialize').returns({name: 'jed'});
+    var panel = new FilterPanel();
+    expectOpen(panel);
   });
 
   it('should start off open on wide windows', function() {
