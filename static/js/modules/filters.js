@@ -89,8 +89,7 @@ FilterSet.prototype.activate = function() {
   var query = URI.parseQuery(window.location.search);
   this.fields = _.chain(this.$elm.find('.filter'))
     .map(function(elm) {
-      var filter = new Filter(elm);
-      filter.setValue(query[filter.name]);
+      var filter = new Filter(elm).fromQuery(query);
       return [filter.name, filter];
     })
     .object()
@@ -166,11 +165,29 @@ Filter.prototype.initTypeahead = function() {
   this.typeaheadFilter = new typeaheadFilter.TypeaheadFilter(this.$elm, dataset);
 };
 
+Filter.prototype.fromQuery = function(query) {
+  if (this.$elm.hasClass('date-choice-field')) {
+    this.setValue([
+      query['min_' + this.name],
+      query['max_' + this.name]
+    ]);
+  } else {
+    this.setValue(query[this.name]);
+  }
+  return this;
+};
+
 Filter.prototype.setValue = function(value) {
-  var $input = this.$input.data('temp') ?
-    this.$elm.find('#' + this.$input.data('temp')) :
-    this.$input;
-  $input.val(prepareValue($input, value)).change();
+  if (this.$elm.hasClass('date-choice-field')) {
+    value = helpers.ensureArray(value);
+    this.$elm.find('.js-min-date').val(value[0]);
+    this.$elm.find('.js-max-date').val(value[1]);
+  } else {
+    var $input = this.$input.data('temp') ?
+      this.$elm.find('#' + this.$input.data('temp')) :
+      this.$input;
+    $input.val(prepareValue($input, value)).change();
+  }
 };
 
 Filter.prototype.handleClear = function() {
@@ -230,5 +247,6 @@ module.exports = {
     initCycleFilters();
   },
   FilterPanel: FilterPanel,
-  FilterSet: FilterSet
+  FilterSet: FilterSet,
+  Filter: Filter
 };

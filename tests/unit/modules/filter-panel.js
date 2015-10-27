@@ -5,14 +5,8 @@ var sinon = require('sinon');
 var expect = chai.expect;
 
 var $ = require('jquery');
-var _ = require('underscore');
 
-_.extend(window, {
-  BASE_PATH: '/',
-  API_LOCATION: '',
-  API_VERSION: '/v1',
-  API_KEY: '12345'
-});
+require('../setup')();
 
 var FilterPanel = require('../../../static/js/modules/filters').FilterPanel;
 var FilterSet = require('../../../static/js/modules/filters').FilterSet;
@@ -63,15 +57,24 @@ describe('filter panel', function() {
     expectClosed(this.panel);
   });
 
-  it('should start off open when contained filterset has values', function() {
-    sinon.stub(FilterSet.prototype, 'serialize').returns({name: 'jed'});
-    var panel = new FilterPanel();
-    expectOpen(panel);
-  });
-
   it('should start off open on wide windows', function() {
     $('body').width(769);
     var panel = new FilterPanel();
     expectOpen(panel);
+  });
+
+  describe('interaction with filterset', function() {
+    beforeEach(function() {
+      sinon.stub(FilterSet.prototype, 'serialize').returns({name: 'jed'});
+    });
+
+    afterEach(function() {
+      FilterSet.prototype.serialize.restore();
+    });
+
+    it('should start off open when contained filterset has values', function() {
+      var panel = new FilterPanel();
+      expectOpen(panel);
+    });
   });
 });

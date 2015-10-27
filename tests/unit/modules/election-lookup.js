@@ -1,6 +1,6 @@
 'use strict'
 
-/* global require, window, describe, before, beforeEach, after, afterEach, it */
+/* global window */
 
 var chai = require('chai');
 var sinon = require('sinon');
@@ -12,12 +12,7 @@ var $ = require('jquery');
 var URI = require('URIjs');
 var _ = require('underscore');
 
-_.extend(window, {
-  BASE_PATH: '/',
-  API_LOCATION: '',
-  API_VERSION: '/v1',
-  API_KEY: '12345'
-});
+require('../setup')();
 
 _.extend(window, {
   context: {

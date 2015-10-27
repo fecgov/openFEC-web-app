@@ -4,14 +4,8 @@ var chai = require('chai');
 var expect = chai.expect;
 
 var $ = require('jquery');
-var _ = require('underscore');
 
-_.extend(window, {
-  BASE_PATH: '/',
-  API_LOCATION: '',
-  API_VERSION: '/v1',
-  API_KEY: '12345'
-});
+require('../setup')();
 
 var FilterSet = require('../../../static/js/modules/filters').FilterSet;
 
