@@ -89,7 +89,7 @@ FilterSet.prototype.activate = function() {
   var query = URI.parseQuery(window.location.search);
   this.fields = _.chain(this.$elm.find('.filter'))
     .map(function(elm) {
-      var filter = new Filter(elm).fromQuery(query);
+      var filter = makeFilter($(elm)).fromQuery(query);
       return [filter.name, filter];
     })
     .object()
@@ -129,6 +129,16 @@ function prepareValue($elm, value) {
     value;
 }
 
+function makeFilter($elm) {
+  if ($elm.hasClass('date-choice-field')) {
+    return new DateFilter($elm);
+  } else if ($elm.hasClass('js-typeahead-filter')) {
+    return new TypeaheadFilter($elm);
+  } else {
+    return new Filter($elm);
+  }
+}
+
 function Filter(elm) {
   this.$elm = $(elm);
   this.$input = this.$elm.find('input[name]');
@@ -138,56 +148,19 @@ function Filter(elm) {
   this.$remove.on('click', this.handleClear.bind(this));
 
   this.name = this.$input.eq(0).attr('name');
-
-  this.initDates();
-  this.initTypeahead();
 }
 
-Filter.prototype.initDates = function() {
-  if (!this.$elm.hasClass('date-choice-field')) { return;  }
-  var $minDate = this.$elm.find('.js-min-date');
-  var $maxDate = this.$elm.find('.js-max-date');
-  this.$elm.on('change', '[type="radio"]', function(e) {
-    var $input = $(e.target);
-    if (!$input.is(':checked')) { return; }
-    if ($input.attr('data-min-date')) {
-      $minDate.val($input.data('min-date'));
-      $maxDate.val($input.data('max-date'));
-    }
-    $minDate.focus();
-  });
-};
-
-Filter.prototype.initTypeahead = function() {
-  if (!this.$elm.hasClass('js-typeahead-filter')) { return; }
-  var key = this.$elm.data('dataset');
-  var dataset = typeahead.datasets[key];
-  this.typeaheadFilter = new typeaheadFilter.TypeaheadFilter(this.$elm, dataset);
-};
-
 Filter.prototype.fromQuery = function(query) {
-  if (this.$elm.hasClass('date-choice-field')) {
-    this.setValue([
-      query['min_' + this.name],
-      query['max_' + this.name]
-    ]);
-  } else {
-    this.setValue(query[this.name]);
-  }
+  this.setValue(query[this.name]);
   return this;
 };
 
 Filter.prototype.setValue = function(value) {
-  if (this.$elm.hasClass('date-choice-field')) {
-    value = helpers.ensureArray(value);
-    this.$elm.find('.js-min-date').val(value[0]);
-    this.$elm.find('.js-max-date').val(value[1]);
-  } else {
-    var $input = this.$input.data('temp') ?
-      this.$elm.find('#' + this.$input.data('temp')) :
-      this.$input;
-    $input.val(prepareValue($input, value)).change();
-  }
+  var $input = this.$input.data('temp') ?
+    this.$elm.find('#' + this.$input.data('temp')) :
+    this.$input;
+  $input.val(prepareValue($input, value)).change();
+  return this;
 };
 
 Filter.prototype.handleClear = function() {
@@ -205,6 +178,52 @@ Filter.prototype.handleKeydown = function(e) {
 Filter.prototype.handleChange = function() {
   this.$remove.css('display', this.$input.val() ? 'block' : 'none');
 };
+
+function DateFilter(elm) {
+  Filter.call(this, elm);
+
+  this.$minDate = this.$elm.find('.js-min-date');
+  this.$maxDate = this.$elm.find('.js-max-date');
+  this.$elm.on('change', this.handleRadioChange.bind(this));
+}
+
+DateFilter.prototype = Object.create(Filter.prototype);
+DateFilter.constructor = DateFilter;
+
+DateFilter.prototype.handleRadioChange = function(e) {
+  var $input = $(e.target);
+  if (!$input.is(':checked')) { return; }
+  if ($input.attr('data-min-date')) {
+    this.$minDate.val($input.data('min-date'));
+    this.$maxDate.val($input.data('max-date'));
+  }
+  this.$minDate.focus();
+};
+
+DateFilter.prototype.fromQuery = function(query) {
+  this.setValue([
+    query['min_' + this.name],
+    query['max_' + this.name]
+  ]);
+  return this;
+};
+
+DateFilter.prototype.setValue = function(value) {
+  value = helpers.ensureArray(value);
+  this.$minDate.val(value[0]);
+  this.$maxDate.val(value[1]);
+};
+
+function TypeaheadFilter(elm) {
+  Filter.call(this, elm);
+
+  var key = this.$elm.data('dataset');
+  var dataset = typeahead.datasets[key];
+  this.typeaheadFilter = new typeaheadFilter.TypeaheadFilter(this.$elm, dataset);
+}
+
+TypeaheadFilter.prototype = Object.create(Filter.prototype);
+TypeaheadFilter.constructor = TypeaheadFilter;
 
 function initCycleFilters() {
   var cycleSelect = $('.js-cycle');
@@ -246,6 +265,7 @@ module.exports = {
   init: function() {
     initCycleFilters();
   },
+  makeFilter: makeFilter,
   FilterPanel: FilterPanel,
   FilterSet: FilterSet,
   Filter: Filter

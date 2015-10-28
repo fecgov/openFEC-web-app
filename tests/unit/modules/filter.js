@@ -7,7 +7,7 @@ var $ = require('jquery');
 
 require('../setup')();
 
-var Filter = require('../../../static/js/modules/filters').Filter;
+var makeFilter = require('../../../static/js/modules/filters').makeFilter;
 
 function getChecked($input) {
   return $input.filter(function(idx, elm) {
@@ -33,7 +33,7 @@ describe('filter set', function() {
           '</div>' +
         '</div>'
       );
-      this.filter = new Filter(this.$fixture.find('.filter'));
+      this.filter = makeFilter(this.$fixture.find('.filter'));
     });
 
     it('locates dom elements', function() {
@@ -81,7 +81,7 @@ describe('filter set', function() {
           '</div>' +
         '</div>'
       );
-      this.filter = new Filter(this.$fixture.find('.filter'));
+      this.filter = makeFilter(this.$fixture.find('.filter'));
     });
 
     it('sets scalar values', function() {
@@ -112,7 +112,7 @@ describe('filter set', function() {
           '</div>' +
         '</div>'
       );
-      this.filter = new Filter(this.$fixture.find('.filter'));
+      this.filter = makeFilter(this.$fixture.find('.filter'));
     });
 
     it('pulls values from query', function() {
