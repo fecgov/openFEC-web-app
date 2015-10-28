@@ -35,7 +35,6 @@ var columns = [
     data: 'committee',
     orderable: false,
     className: 'min-desktop hide-panel',
-    width: '250px',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(
