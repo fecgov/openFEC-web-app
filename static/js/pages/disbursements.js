@@ -14,7 +14,7 @@ var columns = [
     data: 'recipient_name',
     orderable: false,
     className: 'all',
-    width: '280px',
+    width: '200px',
     render: function(data, type, row, meta) {
       var committee = row.recipient_committee;
       if (committee) {
@@ -28,7 +28,7 @@ var columns = [
       }
     }
   },
-  {data: 'recipient_state', orderable: false, className: 'min-desktop hide-panel'},
+  {data: 'recipient_state', width: '80px', orderable: false, className: 'min-desktop hide-panel'},
   tables.currencyColumn({data: 'disbursement_amount', className: 'min-tablet hide-panel-tablet'}),
   tables.dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel-tablet'}),
   {data: 'disbursement_description', className: 'min-desktop hide-panel', orderable: false},
@@ -36,7 +36,6 @@ var columns = [
     data: 'committee',
     orderable: false,
     className: 'min-tablet hide-panel',
-    width: '30%',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(
