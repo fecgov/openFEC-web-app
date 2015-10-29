@@ -200,6 +200,10 @@ $(document).ready(function() {
     analytics.pageView();
     // @endif
 
-    filters.init();
+    // Initialize cycle selects
+    $('.js-cycle').each(function(idx, elm) {
+      filters.makeCycleSelect($(elm));
+    });
+
     toggle.init();
 });

@@ -225,31 +225,39 @@ function TypeaheadFilter(elm) {
 TypeaheadFilter.prototype = Object.create(Filter.prototype);
 TypeaheadFilter.constructor = TypeaheadFilter;
 
-function initCycleFilters() {
-  var cycleSelect = $('.js-cycle');
-  var callbacks = {
-    path: addCyclePath,
-    query: addCycleQuery
-  };
-  cycleSelect.each(function(_, elm) {
-    var $elm = $(elm);
-    var callback = callbacks[$elm.data('cycle-location')];
-    if (callback) {
-      $elm.change(function() {
-        window.location.href = callback($elm.val());
-      });
-    }
-  });
+function CycleSelect(elm) {
+  this.$elm = $(elm);
+  this.$elm.on('change', this.handleChange.bind(this));
 }
 
-function addCycleQuery(cycle) {
+CycleSelect.prototype.handleChange = function() {
+  this.setUrl(this.nextUrl(this.$elm.val()));
+};
+
+CycleSelect.prototype.setUrl = function(url) {
+  window.location.href = url;
+};
+
+function QueryCycleSelect() {
+  CycleSelect.apply(this, _.toArray(arguments));
+}
+
+QueryCycleSelect.prototype = Object.create(CycleSelect.prototype);
+
+QueryCycleSelect.prototype.nextUrl = function(cycle) {
   return URI(window.location.href)
     .removeQuery('cycle')
     .addQuery({cycle: cycle})
     .toString();
+};
+
+function PathCycleSelect() {
+  CycleSelect.apply(this, _.toArray(arguments));
 }
 
-function addCyclePath(cycle) {
+PathCycleSelect.prototype = Object.create(CycleSelect.prototype);
+
+PathCycleSelect.prototype.nextUrl = function(cycle) {
   var uri = URI(window.location.href);
   var path = uri.path()
     .replace(/^\/|\/$/g, '')
@@ -259,12 +267,22 @@ function addCyclePath(cycle) {
     .join('/')
     .concat('/');
   return uri.path(path).toString();
+};
+
+function makeCycleSelect($elm) {
+  switch ($elm.data('cycle-location')) {
+  case 'query':
+    return new QueryCycleSelect($elm);
+  case 'path':
+    return new PathCycleSelect($elm);
+  }
 }
 
 module.exports = {
-  init: function() {
-    initCycleFilters();
-  },
+  CycleSelect: CycleSelect,
+  makeCycleSelect: makeCycleSelect,
+  QueryCycleSelect: QueryCycleSelect,
+  PathCycleSelect: PathCycleSelect,
   makeFilter: makeFilter,
   FilterPanel: FilterPanel,
   FilterSet: FilterSet,
