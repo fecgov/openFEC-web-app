@@ -11,7 +11,7 @@ var URI = require('URIjs');
 
 require('../setup')();
 
-var cycleSelect = require('../../../static/js/modules/filters');
+var CycleSelect = require('../../../static/js/modules/filters').CycleSelect;
 
 describe('filter set', function() {
   before(function() {
@@ -20,11 +20,11 @@ describe('filter set', function() {
   });
 
   beforeEach(function() {
-    sinon.stub(cycleSelect.CycleSelect.prototype, 'setUrl');
+    sinon.stub(CycleSelect.prototype, 'setUrl');
   });
 
   afterEach(function() {
-    cycleSelect.CycleSelect.prototype.setUrl.restore();
+    CycleSelect.prototype.setUrl.restore();
   });
 
   describe('query cycle select', function() {
@@ -36,12 +36,12 @@ describe('filter set', function() {
           '<option value="2016"></option>' +
         '</select>'
       );
-      this.cycleSelect = cycleSelect.makeCycleSelect($('#fixtures select'));
+      this.cycleSelect = CycleSelect.build($('#fixtures select'));
     });
 
     it('changes the query string on change', function() {
       this.cycleSelect.$elm.val('2014').change();
-      expect(cycleSelect.CycleSelect.prototype.setUrl).to.have.been.calledWith(window.location.href + '&cycle=2014');
+      expect(CycleSelect.prototype.setUrl).to.have.been.calledWith(window.location.href + '&cycle=2014');
     });
   });
 
@@ -54,14 +54,14 @@ describe('filter set', function() {
           '<option value="2016"></option>' +
         '</select>'
       );
-      this.cycleSelect = cycleSelect.makeCycleSelect($('#fixtures select'));
+      this.cycleSelect = CycleSelect.build($('#fixtures select'));
     });
 
     it('changes the query string on change', function() {
       this.cycleSelect.$elm.val('2014').change();
       var url = URI(window.location.href);
       url.path(url.path() + '2014/');
-      expect(cycleSelect.CycleSelect.prototype.setUrl).to.have.been.calledWith(url.toString());
+      expect(CycleSelect.prototype.setUrl).to.have.been.calledWith(url.toString());
     });
   });
 });

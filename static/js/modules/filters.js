@@ -89,7 +89,7 @@ FilterSet.prototype.activate = function() {
   var query = URI.parseQuery(window.location.search);
   this.fields = _.chain(this.$elm.find('.filter'))
     .map(function(elm) {
-      var filter = makeFilter($(elm)).fromQuery(query);
+      var filter = Filter.build($(elm)).fromQuery(query);
       return [filter.name, filter];
     })
     .object()
@@ -129,16 +129,6 @@ function prepareValue($elm, value) {
     value;
 }
 
-function makeFilter($elm) {
-  if ($elm.hasClass('date-choice-field')) {
-    return new DateFilter($elm);
-  } else if ($elm.hasClass('js-typeahead-filter')) {
-    return new TypeaheadFilter($elm);
-  } else {
-    return new Filter($elm);
-  }
-}
-
 function Filter(elm) {
   this.$elm = $(elm);
   this.$input = this.$elm.find('input[name]');
@@ -149,6 +139,16 @@ function Filter(elm) {
 
   this.name = this.$input.eq(0).attr('name');
 }
+
+Filter.build = function($elm) {
+  if ($elm.hasClass('date-choice-field')) {
+    return new DateFilter($elm);
+  } else if ($elm.hasClass('js-typeahead-filter')) {
+    return new TypeaheadFilter($elm);
+  } else {
+    return new Filter($elm);
+  }
+};
 
 Filter.prototype.fromQuery = function(query) {
   this.setValue(query[this.name]);
@@ -230,6 +230,15 @@ function CycleSelect(elm) {
   this.$elm.on('change', this.handleChange.bind(this));
 }
 
+CycleSelect.build = function($elm) {
+  switch ($elm.data('cycle-location')) {
+  case 'query':
+    return new QueryCycleSelect($elm);
+  case 'path':
+    return new PathCycleSelect($elm);
+  }
+};
+
 CycleSelect.prototype.handleChange = function() {
   this.setUrl(this.nextUrl(this.$elm.val()));
 };
@@ -269,21 +278,10 @@ PathCycleSelect.prototype.nextUrl = function(cycle) {
   return uri.path(path).toString();
 };
 
-function makeCycleSelect($elm) {
-  switch ($elm.data('cycle-location')) {
-  case 'query':
-    return new QueryCycleSelect($elm);
-  case 'path':
-    return new PathCycleSelect($elm);
-  }
-}
-
 module.exports = {
   CycleSelect: CycleSelect,
-  makeCycleSelect: makeCycleSelect,
   QueryCycleSelect: QueryCycleSelect,
   PathCycleSelect: PathCycleSelect,
-  makeFilter: makeFilter,
   FilterPanel: FilterPanel,
   FilterSet: FilterSet,
   Filter: Filter
