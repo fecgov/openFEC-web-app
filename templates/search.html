@@ -164,7 +164,10 @@
               }}">Disbursements from committees this year &raquo;</a>
             </li>
           </ul>
-          <a class="button--neutral button--browse" href="{{ url_for('disbursements') }}">All disbursement data</a>
+          <a
+              class="button--neutral button--browse"
+              href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}"
+            >All disbursement data</a>
         </div>
       </div>
     </div>

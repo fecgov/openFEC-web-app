@@ -25,7 +25,10 @@
           <a class="site-nav__link site-nav__sublink" href="{{ url_for('receipts', is_individual='true') }}">Receipts</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link site-nav__sublink site-nav__sublink--last" href="{{ url_for('disbursements') }}">Disbursements</a>
+          <a
+              class="site-nav__link site-nav__sublink site-nav__sublink--last"
+              href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">
+            Disbursements</a>
         </li>
         <li class="site-nav__item">
           <a class="t-bold site-nav__link" href="{{ url_for('election_lookup') }}">Find candidates by location</a>

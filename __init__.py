@@ -143,6 +143,7 @@ app.jinja_env.globals.update({
     'asset_for': asset_for,
     'base_path': get_base_path,
     'environment': config.environment,
+    'today': datetime.date.today,
 })
 
 
