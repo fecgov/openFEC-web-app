@@ -11,7 +11,7 @@
     <li><a class="button--browse button--neutral" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a></li>
     <li><a class="button--browse button--neutral" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a></li>
     <li><a class="button--browse button--neutral" href="{{ url_for('filings') }}">Filings</a></li>
-    <li><a class="button--browse button--neutral" href="{{ url_for('receipts') }}">Receipts</a></li>
+    <li><a class="button--browse button--neutral" href="{{ url_for('receipts', max_date=today() | date(fmt='%m-%d-%Y')) }}">Receipts</a></li>
     <li><a class="button--browse button--neutral" href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">Disbursements</a></li>
   </ul>
 </div>

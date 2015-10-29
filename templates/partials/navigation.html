@@ -22,7 +22,10 @@
           <a class="site-nav__link site-nav__sublink" href="{{ url_for('filings') }}">Filings</a>
         </li>
         <li class="site-nav__item">
-          <a class="site-nav__link site-nav__sublink" href="{{ url_for('receipts', is_individual='true') }}">Receipts</a>
+          <a
+              class="site-nav__link site-nav__sublink"
+              href="{{ url_for('receipts', is_individual='true', max_date=today() | date(fmt='%m-%d-%Y')) }}"
+            >Receipts</a>
         </li>
         <li class="site-nav__item">
           <a

@@ -145,7 +145,10 @@
               ) }}">Contributions from individuals this year &raquo;</a>
             </li>
           </ul>
-          <a class="button--neutral button--browse" href="{{ url_for('receipts')}}">All receipt data</a>
+          <a
+              class="button--neutral button--browse"
+              href="{{ url_for('receipts', max_date=today() | date(fmt='%m-%d-%Y')) }}"
+            >All receipt data</a>
         </div>
       </div>
       <div class="card card--wide">
