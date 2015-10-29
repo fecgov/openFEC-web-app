@@ -4,6 +4,7 @@
   "browser": true,
   "camelcase": true,
   "curly": true,
+  "expr": false,
   "forin": true,
   "immed": true,
   "latedef": "nofunc",
@@ -11,7 +12,7 @@
   "newcap": true,
   "noarg": true,
   "noempty": true,
-  "nonew": true,
+  "nonew": false,
   "predef": [
     "require",
     "module",
