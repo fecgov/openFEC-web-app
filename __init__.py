@@ -368,7 +368,7 @@ if config.environment in ['stage', 'prod']:
 
 # Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
 # for credentials over HTTP; h/t @noahkunin.
-if not config.test:
+if config.username and config.password:
     app.config['BASIC_AUTH_USERNAME'] = config.username
     app.config['BASIC_AUTH_PASSWORD'] = config.password
     app.config['BASIC_AUTH_FORCE'] = True
