@@ -82,17 +82,22 @@ function FilterSet(elm) {
 
   this.$clear.on('click keypress', this.handleClear.bind(this));
 
-  this.fields = {};
+  this.filters = {};
+  this.fields = [];
 }
 
 FilterSet.prototype.activate = function() {
   var query = URI.parseQuery(window.location.search);
-  this.fields = _.chain(this.$elm.find('.filter'))
+  this.filters = _.chain(this.$elm.find('.filter'))
     .map(function(elm) {
       var filter = Filter.build($(elm)).fromQuery(query);
       return [filter.name, filter];
     })
     .object()
+    .value();
+  this.fields = _.chain(this.filters)
+    .pluck('fields')
+    .flatten()
     .value();
   return this;
 };
@@ -118,8 +123,8 @@ FilterSet.prototype.handleClear = function(e) {
 };
 
 FilterSet.prototype.clear = function() {
-  _.each(this.fields, function(field) {
-    field.setValue();
+  _.each(this.filters, function(filter) {
+    filter.setValue();
   });
 };
 
@@ -138,6 +143,7 @@ function Filter(elm) {
   this.$remove.on('click', this.handleClear.bind(this));
 
   this.name = this.$input.eq(0).attr('name');
+  this.fields = [this.name];
 }
 
 Filter.build = function($elm) {
@@ -185,6 +191,8 @@ function DateFilter(elm) {
   this.$minDate = this.$elm.find('.js-min-date');
   this.$maxDate = this.$elm.find('.js-max-date');
   this.$elm.on('change', this.handleRadioChange.bind(this));
+
+  this.fields = ['min_' + this.name, 'max_' + this.name];
 }
 
 DateFilter.prototype = Object.create(Filter.prototype);

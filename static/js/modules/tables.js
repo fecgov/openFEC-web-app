@@ -205,10 +205,8 @@ function compareQuery(first, second, keys) {
   return !different;
 }
 
-function pushQuery(params) {
+function pushQuery(params, fields) {
   var query = URI.parseQuery(window.location.search);
-  // var fields = filters.getFields();
-  var fields = Object.keys(params);
   if (!compareQuery(query, params, fields)) {
     // Clear and update filter fields
     _.each(fields, function(field) {
@@ -417,7 +415,7 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
     ajax: function(data, callback, settings) {
       var api = this.api();
       if ($form) {
-        pushQuery(filterPanel.filterSet.serialize());
+        pushQuery(filterPanel.filterSet.serialize(), filterPanel.filterSet.fields);
         parsedFilters = filterPanel.filterSet.serialize();
       }
       var query = _.extend(

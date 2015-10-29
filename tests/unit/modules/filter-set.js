@@ -40,20 +40,22 @@ describe('filter set', function() {
   it('locates dom elements', function() {
     expect(this.filterSet.$elm.is('#fixtures form')).to.be.true;
     expect(this.filterSet.$clear.is('#fixtures .js-clear-filters')).to.be.true;
-    expect(this.filterSet.fields).to.deep.equal({});
+    expect(this.filterSet.filters).to.deep.equal({});
+    expect(this.filterSet.fields).to.deep.equal([]);
   });
 
   it('activates nested fields', function() {
     this.filterSet.activate();
-    expect(this.filterSet.fields).to.include.keys('name', 'cycle');
+    expect(this.filterSet.filters).to.include.keys('name', 'cycle');
+    expect(this.filterSet.fields).to.deep.equal(['name', 'cycle']);
   });
 
   it('sets initial values on nested fields', function() {
     window.history.replaceState({}, null, '?name=jed&cycle=2012&cycle=2014');
     this.filterSet.activate();
-    expect(this.filterSet.fields.name.$input.val()).to.equal('jed');
+    expect(this.filterSet.filters.name.$input.val()).to.equal('jed');
     expect(
-      this.filterSet.fields.cycle.$input.filter(function(idx, elm) {
+      this.filterSet.filters.cycle.$input.filter(function(idx, elm) {
         return $(elm).is(':checked');
       }).map(function(idx, elm) {
         return $(elm).val();
@@ -63,8 +65,8 @@ describe('filter set', function() {
 
   it('serializes form values', function() {
     this.filterSet.activate();
-    this.filterSet.fields.name.setValue('jed');
-    this.filterSet.fields.cycle.setValue(['2012', '2014']);
+    this.filterSet.filters.name.setValue('jed');
+    this.filterSet.filters.cycle.setValue(['2012', '2014']);
     expect(this.filterSet.serialize()).to.deep.equal({
       name: ['jed'],
       cycle: ['2012', '2014']
@@ -73,15 +75,15 @@ describe('filter set', function() {
 
   it('clears form values', function() {
     this.filterSet.activate();
-    this.filterSet.fields.name.setValue('jed');
-    this.filterSet.fields.cycle.setValue(['2012', '2014']);
+    this.filterSet.filters.name.setValue('jed');
+    this.filterSet.filters.cycle.setValue(['2012', '2014']);
     this.filterSet.clear();
     expect(this.filterSet.serialize()).to.deep.equal({});
   });
 
   it('calls clear on clicking clear button', function() {
     this.filterSet.activate();
-    this.filterSet.fields.name.setValue('jed');
+    this.filterSet.filters.name.setValue('jed');
     this.filterSet.$clear.trigger('click');
     expect(this.filterSet.serialize()).to.deep.equal({});
   });

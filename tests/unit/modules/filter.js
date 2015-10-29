@@ -42,6 +42,11 @@ describe('filter set', function() {
       expect(this.filter.$remove.is('#fixtures .filter .button--remove')).to.be.true;
     });
 
+    it('sets its initial state', function() {
+      expect(this.filter.name).to.equal('name');
+      expect(this.filter.fields).to.deep.equal(['name']);
+    });
+
     it('sets values', function() {
       this.filter.setValue('jed');
       expect(this.filter.$input.val()).to.equal('jed');
@@ -113,6 +118,11 @@ describe('filter set', function() {
         '</div>'
       );
       this.filter = Filter.build(this.$fixture.find('.filter'));
+    });
+
+    it('sets its initial state', function() {
+      expect(this.filter.name).to.equal('date');
+      expect(this.filter.fields).to.deep.equal(['min_date', 'max_date']);
     });
 
     it('pulls values from query', function() {
