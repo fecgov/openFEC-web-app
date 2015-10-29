@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var chai = require('chai');
 var sinon = require('sinon');
@@ -11,7 +11,7 @@ var URI = require('URIjs');
 
 require('../setup')();
 
-var CycleSelect = require('../../../static/js/modules/filters').CycleSelect;
+var CycleSelect = require('../../../static/js/modules/cycle-select').CycleSelect;
 
 describe('filter set', function() {
   before(function() {

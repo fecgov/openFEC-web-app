@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var chai = require('chai');
 var sinon = require('sinon');
@@ -8,8 +8,8 @@ var $ = require('jquery');
 
 require('../setup')();
 
-var FilterPanel = require('../../../static/js/modules/filters').FilterPanel;
-var FilterSet = require('../../../static/js/modules/filters').FilterSet;
+var FilterPanel = require('../../../static/js/modules/filter-panel').FilterPanel;
+var FilterSet = require('../../../static/js/modules/filter-set').FilterSet;
 
 function expectOpen(panel) {
   expect(panel.isOpen).to.be.true;

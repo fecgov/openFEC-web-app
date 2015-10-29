@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var chai = require('chai');
 var expect = chai.expect;
@@ -7,7 +7,7 @@ var $ = require('jquery');
 
 require('../setup')();
 
-var FilterSet = require('../../../static/js/modules/filters').FilterSet;
+var FilterSet = require('../../../static/js/modules/filter-set').FilterSet;
 
 describe('filter set', function() {
   before(function() {

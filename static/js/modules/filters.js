@@ -11,70 +11,10 @@ window.$ = window.jQuery = $;
 
 var typeahead = require('fec-style/js/typeahead');
 var typeaheadFilter = require('fec-style/js/typeahead-filter');
-var accessibility = require('fec-style/js/accessibility');
 
 var helpers = require('./helpers');
 
 var KEYCODE_ENTER = 13;
-
-var defaultOptions = {
-  body: '.filters',
-  form: '#category-filters',
-  toggle: '#filter-toggle'
-};
-
-function FilterPanel(options) {
-  this.isOpen = false;
-  this.options = _.extend({}, defaultOptions, options);
-
-  this.$body = $(this.options.body);
-  this.$form = $(this.options.form);
-  this.$toggle = $(this.options.toggle);
-
-  this.$toggle.on('click', this.toggle.bind(this));
-
-  this.filterSet = new FilterSet(this.$form).activate();
-  if (!_.isEmpty(this.filterSet.serialize())) {
-    this.show();
-  }
-
-  this.adjust();
-}
-
-FilterPanel.prototype.adjust = function() {
-  if ($('body').width() > 768) {
-    this.show();
-  } else if (!this.isOpen) {
-    this.hide();
-  }
-};
-
-FilterPanel.prototype.show = function() {
-  this.$body.addClass('is-open');
-  this.$toggle.addClass('is-active');
-  this.$toggle.find('.filters__toggle__text').html('Hide filters');
-  accessibility.restoreTabindex(this.$form);
-  $('body').addClass('is-showing-filters');
-  this.isOpen = true;
-};
-
-FilterPanel.prototype.hide = function() {
-  this.$body.removeClass('is-open');
-  this.$toggle.removeClass('is-active');
-  this.$toggle.find('.filters__toggle__text').html('Show filters');
-  $('#results tr:first-child').focus();
-  accessibility.removeTabindex(this.$form);
-  $('body').removeClass('is-showing-filters');
-  this.isOpen = false;
-};
-
-FilterPanel.prototype.toggle = function() {
-  if (this.isOpen) {
-    this.hide();
-  } else {
-    this.show();
-  }
-};
 
 function FilterSet(elm) {
   this.$elm = $(elm);
@@ -233,64 +173,4 @@ function TypeaheadFilter(elm) {
 TypeaheadFilter.prototype = Object.create(Filter.prototype);
 TypeaheadFilter.constructor = TypeaheadFilter;
 
-function CycleSelect(elm) {
-  this.$elm = $(elm);
-  this.$elm.on('change', this.handleChange.bind(this));
-}
-
-CycleSelect.build = function($elm) {
-  switch ($elm.data('cycle-location')) {
-  case 'query':
-    return new QueryCycleSelect($elm);
-  case 'path':
-    return new PathCycleSelect($elm);
-  }
-};
-
-CycleSelect.prototype.handleChange = function() {
-  this.setUrl(this.nextUrl(this.$elm.val()));
-};
-
-CycleSelect.prototype.setUrl = function(url) {
-  window.location.href = url;
-};
-
-function QueryCycleSelect() {
-  CycleSelect.apply(this, _.toArray(arguments));
-}
-
-QueryCycleSelect.prototype = Object.create(CycleSelect.prototype);
-
-QueryCycleSelect.prototype.nextUrl = function(cycle) {
-  return URI(window.location.href)
-    .removeQuery('cycle')
-    .addQuery({cycle: cycle})
-    .toString();
-};
-
-function PathCycleSelect() {
-  CycleSelect.apply(this, _.toArray(arguments));
-}
-
-PathCycleSelect.prototype = Object.create(CycleSelect.prototype);
-
-PathCycleSelect.prototype.nextUrl = function(cycle) {
-  var uri = URI(window.location.href);
-  var path = uri.path()
-    .replace(/^\/|\/$/g, '')
-    .split('/')
-    .slice(0, -1)
-    .concat([cycle])
-    .join('/')
-    .concat('/');
-  return uri.path(path).toString();
-};
-
-module.exports = {
-  CycleSelect: CycleSelect,
-  QueryCycleSelect: QueryCycleSelect,
-  PathCycleSelect: PathCycleSelect,
-  FilterPanel: FilterPanel,
-  FilterSet: FilterSet,
-  Filter: Filter
-};
+module.exports = {Filter: Filter};

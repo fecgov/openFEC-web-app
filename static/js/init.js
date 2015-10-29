@@ -43,9 +43,9 @@ require('./vendor/tablist');
 var charts = require('./modules/charts');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
-var filters = require('./modules/filters');
 var helpers = require('./modules/helpers');
 var analytics = require('./modules/analytics');
+var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
 charts.init();
 
@@ -202,7 +202,7 @@ $(document).ready(function() {
 
     // Initialize cycle selects
     $('.js-cycle').each(function(idx, elm) {
-      filters.makeCycleSelect($(elm));
+      CycleSelect.build($(elm));
     });
 
     toggle.init();
