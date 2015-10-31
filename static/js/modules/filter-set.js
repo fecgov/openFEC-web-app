@@ -6,10 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('URIjs');
 
-// Hack: Append jQuery to `window` for use by legacy libraries
-window.$ = window.jQuery = $;
-
-var Filter= require('./filters').Filter;
+var Filter = require('./filters').Filter;
 
 var KEYCODE_ENTER = 13;
 
