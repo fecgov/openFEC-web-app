@@ -41,7 +41,7 @@ describe('filter set', function() {
 
     it('changes the query string on change', function() {
       this.cycleSelect.$elm.val('2014').change();
-      expect(CycleSelect.prototype.setUrl).to.have.been.calledWith(window.location.href + '&cycle=2014');
+      expect(CycleSelect.prototype.setUrl).to.have.been.calledWith(window.location.href + '?cycle=2014');
     });
   });
 
@@ -60,7 +60,7 @@ describe('filter set', function() {
     it('changes the query string on change', function() {
       this.cycleSelect.$elm.val('2014').change();
       var url = URI(window.location.href);
-      url.path(url.path() + '2014/');
+      url.path('2014/');
       expect(CycleSelect.prototype.setUrl).to.have.been.calledWith(url.toString());
     });
   });

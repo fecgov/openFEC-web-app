@@ -70,7 +70,7 @@ script:
   # Run Python unit tests
   - if [[ -z $FEC_SAUCE_BROWSER ]]; then py.test; fi
   # Run Javascript unit tests
-  - if [[ -z $FEC_SAUCE_BROWSER ]]; then npm test; fi
+  - if [[ -z $FEC_SAUCE_BROWSER ]]; then npm run test-single; fi
   # Run Selenium tests if not pull request
   - if [[ $TRAVIS_PULL_REQUEST = 'false' && ! -z $FEC_SAUCE_BROWSER  ]]; then py.test --selenium; fi
 
