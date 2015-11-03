@@ -72,5 +72,7 @@ def test_election_url():
         assert app.get_election_url(candidate, 2012) == '/elections/president/2012/'
         candidate = {'office_full': 'Senate', 'state': 'NJ', 'district': None}
         assert app.get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
+        candidate = {'office_full': 'Senate', 'state': 'NJ', 'district': '00'}
+        assert app.get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
         candidate = {'office_full': 'House', 'state': 'NJ', 'district': '02'}
         assert app.get_election_url(candidate, 2012) == '/elections/house/NJ/02/2012/'
