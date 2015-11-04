@@ -16,7 +16,7 @@ function expectOpen(panel) {
   expect(panel.$body.hasClass('is-open')).to.be.true;
   expect(panel.$toggle.hasClass('is-active')).to.be.true;
   expect($('body').hasClass('is-showing-filters')).to.be.true;
-  expect(panel.$toggle.find('.filters__toggle__text').html()).to.equal('Hide filters');
+  expect(panel.$toggle.find('.js-filter-toggle-text').html()).to.equal('Hide filters');
 }
 
 function expectClosed(panel) {
@@ -24,7 +24,7 @@ function expectClosed(panel) {
   expect(panel.$body.hasClass('is-open')).to.be.false;
   expect(panel.$toggle.hasClass('is-active')).to.be.false;
   expect($('body').hasClass('is-showing-filters')).to.be.false;
-  expect(panel.$toggle.find('.filters__toggle__text').html()).to.equal('Show filters');
+  expect(panel.$toggle.find('.js-filter-toggle-text').html()).to.equal('Show filters');
 }
 
 describe('filter panel', function() {
@@ -36,7 +36,7 @@ describe('filter panel', function() {
   beforeEach(function() {
     this.$fixture.empty().append(
       '<div id="filter-toggle">' +
-        '<div class="filters__toggle__text"></div>' +
+        '<div class="js-filter-toggle-text"></div>' +
       '</div>' +
       '<div id="filters" class="filters">' +
         '<form id="category-filters">' +

@@ -215,20 +215,20 @@ function nextUrl(params, fields) {
     params = _.extend(query, params);
     return URI('').query(params).toString();
   } else {
-    return '';
+    return null;
   }
 }
 
 function updateQuery(params, fields) {
   var queryString = nextUrl(params, fields);
-  if (queryString) {
+  if (queryString !== null) {
     window.history.replaceState(params, queryString, queryString || window.location.pathname);
   }
 }
 
 function pushQuery(params, fields) {
   var queryString = nextUrl(params, fields);
-  if (queryString) {
+  if (queryString !== null) {
     window.history.pushState(params, queryString, queryString || window.location.pathname);
     analytics.pageView();
   }

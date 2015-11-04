@@ -12,10 +12,10 @@ function CycleSelect(elm) {
 }
 
 CycleSelect.build = function($elm) {
-  switch ($elm.data('cycle-location')) {
-  case 'query':
+  var location = $elm.data('cycle-location');
+  if (location === 'query') {
     return new QueryCycleSelect($elm);
-  case 'path':
+  } else if (location === 'path') {
     return new PathCycleSelect($elm);
   }
 };
