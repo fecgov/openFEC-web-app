@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document */
+/* global window, document */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -222,7 +222,7 @@ function compareQuery(first, second, keys) {
   return !different;
 }
 
-function pushQuery(params) {
+function nextUrl(params) {
   var query = URI.parseQuery(window.location.search);
   var fields = filters.getFields();
   if (!compareQuery(query, params, fields)) {
@@ -231,7 +231,22 @@ function pushQuery(params) {
       delete query[field];
     });
     params = _.extend(query, params);
-    var queryString = URI('').query(params).toString();
+    return URI('').query(params).toString();
+  } else {
+    return '';
+  }
+}
+
+function updateQuery(params) {
+  var queryString = nextUrl(params);
+  if (queryString) {
+    window.history.replaceState(params, queryString, queryString || window.location.pathname);
+  }
+}
+
+function pushQuery(params) {
+  var queryString = nextUrl(params);
+  if (queryString) {
     window.history.pushState(params, queryString, queryString || window.location.pathname);
     analytics.pageView();
   }
@@ -404,7 +419,6 @@ var defaultCallbacks = {
 };
 
 function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
-  var draw;
   var $processing = $('<div class="overlay is-loading"></div>');
   var $hideNullWidget = $(
     '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
@@ -415,6 +429,10 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   var useFilters = opts.useFilters;
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
   callbacks = _.extend({}, defaultCallbacks, callbacks);
+  if ($form) {
+    var initialFilters = mapFilters($form.serializeArray());
+    updateQuery(initialFilters);
+  }
   opts = _.extend({
     serverSide: true,
     searching: false,
