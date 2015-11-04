@@ -222,7 +222,7 @@ function compareQuery(first, second, keys) {
   return !different;
 }
 
-function pushQuery(params, push) {
+function nextUrl(params) {
   var query = URI.parseQuery(window.location.search);
   var fields = filters.getFields();
   if (!compareQuery(query, params, fields)) {
@@ -231,13 +231,24 @@ function pushQuery(params, push) {
       delete query[field];
     });
     params = _.extend(query, params);
-    var queryString = URI('').query(params).toString();
-    if (push) {
-      window.history.pushState(params, queryString, queryString || window.location.pathname);
-      analytics.pageView();
-    } else {
-      window.history.replaceState(params, queryString, queryString || window.location.pathname);
-    }
+    return URI('').query(params).toString();
+  } else {
+    return '';
+  }
+}
+
+function updateQuery(params) {
+  var queryString = nextUrl(params);
+  if (queryString) {
+    window.history.replaceState(params, queryString, queryString || window.location.pathname);
+  }
+}
+
+function pushQuery(params) {
+  var queryString = nextUrl(params);
+  if (queryString) {
+    window.history.pushState(params, queryString, queryString || window.location.pathname);
+    analytics.pageView();
   }
 }
 
@@ -420,7 +431,7 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   callbacks = _.extend({}, defaultCallbacks, callbacks);
   if ($form) {
     var initialFilters = mapFilters($form.serializeArray());
-    pushQuery(initialFilters, false);
+    updateQuery(initialFilters);
   }
   opts = _.extend({
     serverSide: true,
@@ -439,7 +450,7 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
       if ($form) {
         var filters = $form.serializeArray();
         parsedFilters = mapFilters(filters);
-        pushQuery(parsedFilters, true);
+        pushQuery(parsedFilters);
       }
       var query = _.extend(
         callbacks.mapQuery(api, data),
