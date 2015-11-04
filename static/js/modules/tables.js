@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, module, window, document */
+/* global window, document */
 
 var $ = require('jquery');
 var URI = require('URIjs');
@@ -11,9 +11,9 @@ var accessibility = require('fec-style/js/accessibility');
 require('datatables');
 require('drmonty-datatables-responsive');
 
-var filters = require('./filters');
 var helpers = require('./helpers');
 var analytics = require('./analytics');
+var FilterPanel = require('./filter-panel').FilterPanel;
 
 var simpleDOM = 't<"results-info"ip>';
 
@@ -205,7 +205,7 @@ function compareQuery(first, second, keys) {
   return !different;
 }
 
-function pushQuery(params, fields) {
+function nextUrl(params, fields) {
   var query = URI.parseQuery(window.location.search);
   if (!compareQuery(query, params, fields)) {
     // Clear and update filter fields
@@ -213,7 +213,22 @@ function pushQuery(params, fields) {
       delete query[field];
     });
     params = _.extend(query, params);
-    var queryString = URI('').query(params).toString();
+    return URI('').query(params).toString();
+  } else {
+    return '';
+  }
+}
+
+function updateQuery(params, fields) {
+  var queryString = nextUrl(params, fields);
+  if (queryString) {
+    window.history.replaceState(params, queryString, queryString || window.location.pathname);
+  }
+}
+
+function pushQuery(params, fields) {
+  var queryString = nextUrl(params, fields);
+  if (queryString) {
     window.history.pushState(params, queryString, queryString || window.location.pathname);
     analytics.pageView();
   }
@@ -386,7 +401,6 @@ var defaultCallbacks = {
 };
 
 function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
-  var draw;
   var $processing = $('<div class="overlay is-loading"></div>');
   var $hideNullWidget = $(
     '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
@@ -398,7 +412,9 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
   callbacks = _.extend({}, defaultCallbacks, callbacks);
   if ($form) {
-    var filterPanel = new filters.FilterPanel();
+    var filterPanel = new FilterPanel();
+    var filterSet = filterPanel.filterSet;
+    updateQuery(filterSet.serialize(), filterSet.fields);
   }
   opts = _.extend({
     serverSide: true,
