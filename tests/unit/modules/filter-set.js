@@ -38,7 +38,7 @@ describe('filter set', function() {
   });
 
   it('locates dom elements', function() {
-    expect(this.filterSet.$elm.is('#fixtures form')).to.be.true;
+    expect(this.filterSet.$body.is('#fixtures form')).to.be.true;
     expect(this.filterSet.$clear.is('#fixtures .js-clear-filters')).to.be.true;
     expect(this.filterSet.filters).to.deep.equal({});
     expect(this.filterSet.fields).to.deep.equal([]);

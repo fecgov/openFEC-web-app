@@ -11,8 +11,8 @@ var Filter = require('./filters').Filter;
 var KEYCODE_ENTER = 13;
 
 function FilterSet(elm) {
-  this.$elm = $(elm);
-  this.$clear = this.$elm.find('.js-clear-filters');
+  this.$body = $(elm);
+  this.$clear = this.$body.find('.js-clear-filters');
 
   this.$clear.on('click keypress', this.handleClear.bind(this));
 
@@ -22,7 +22,7 @@ function FilterSet(elm) {
 
 FilterSet.prototype.activate = function() {
   var query = URI.parseQuery(window.location.search);
-  this.filters = _.chain(this.$elm.find('.filter'))
+  this.filters = _.chain(this.$body.find('.filter'))
     .map(function(elm) {
       var filter = Filter.build($(elm)).fromQuery(query);
       return [filter.name, filter];
@@ -37,7 +37,7 @@ FilterSet.prototype.activate = function() {
 };
 
 FilterSet.prototype.serialize = function() {
-  return _.reduce(this.$elm.serializeArray(), function(memo, val) {
+  return _.reduce(this.$body.serializeArray(), function(memo, val) {
     if (val.value && val.name.slice(0, 1) !== '_') {
       if (memo[val.name]) {
         memo[val.name].push(val.value);

@@ -21,11 +21,12 @@ function prepareValue($elm, value) {
 }
 
 function Filter(elm) {
-  this.$elm = $(elm);
-  this.$input = this.$elm.find('input[name]');
-  this.$remove = this.$elm.find('.button--remove');
+  this.$body = $(elm);
+  this.$input = this.$body.find('input[name]');
+  this.$remove = this.$body.find('.button--remove');
 
   this.$input.on('change', this.handleChange.bind(this));
+  this.$input.on('keydown', this.handleKeydown.bind(this));
   this.$remove.on('click', this.handleClear.bind(this));
 
   this.name = this.$input.eq(0).attr('name');
@@ -33,7 +34,7 @@ function Filter(elm) {
 }
 
 Filter.build = function($elm) {
-  if ($elm.hasClass('date-choice-field')) {
+  if ($elm.hasClass('js-date-choice-field')) {
     return new DateFilter($elm);
   } else if ($elm.hasClass('js-typeahead-filter')) {
     return new TypeaheadFilter($elm);
@@ -49,7 +50,7 @@ Filter.prototype.fromQuery = function(query) {
 
 Filter.prototype.setValue = function(value) {
   var $input = this.$input.data('temp') ?
-    this.$elm.find('#' + this.$input.data('temp')) :
+    this.$body.find('#' + this.$input.data('temp')) :
     this.$input;
   $input.val(prepareValue($input, value)).change();
   return this;
@@ -74,9 +75,9 @@ Filter.prototype.handleChange = function() {
 function DateFilter(elm) {
   Filter.call(this, elm);
 
-  this.$minDate = this.$elm.find('.js-min-date');
-  this.$maxDate = this.$elm.find('.js-max-date');
-  this.$elm.on('change', this.handleRadioChange.bind(this));
+  this.$minDate = this.$body.find('.js-min-date');
+  this.$maxDate = this.$body.find('.js-max-date');
+  this.$body.on('change', this.handleRadioChange.bind(this));
 
   this.fields = ['min_' + this.name, 'max_' + this.name];
 }
@@ -91,7 +92,6 @@ DateFilter.prototype.handleRadioChange = function(e) {
     this.$minDate.val($input.data('min-date'));
     this.$maxDate.val($input.data('max-date'));
   }
-  this.$minDate.focus();
 };
 
 DateFilter.prototype.fromQuery = function(query) {
@@ -111,9 +111,9 @@ DateFilter.prototype.setValue = function(value) {
 function TypeaheadFilter(elm) {
   Filter.call(this, elm);
 
-  var key = this.$elm.data('dataset');
+  var key = this.$body.data('dataset');
   var dataset = typeahead.datasets[key];
-  this.typeaheadFilter = new typeaheadFilter.TypeaheadFilter(this.$elm, dataset);
+  this.typeaheadFilter = new typeaheadFilter.TypeaheadFilter(this.$body, dataset);
 }
 
 TypeaheadFilter.prototype = Object.create(Filter.prototype);

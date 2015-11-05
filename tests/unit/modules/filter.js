@@ -37,7 +37,7 @@ describe('filter set', function() {
     });
 
     it('locates dom elements', function() {
-      expect(this.filter.$elm.is('#fixtures .filter')).to.be.true;
+      expect(this.filter.$body.is('#fixtures .filter')).to.be.true;
       expect(this.filter.$input.is('#fixtures input')).to.be.true;
       expect(this.filter.$remove.is('#fixtures .filter .button--remove')).to.be.true;
     });
@@ -108,7 +108,7 @@ describe('filter set', function() {
   describe('date range filters', function() {
     beforeEach(function() {
       this.$fixture.empty().append(
-        '<div class="filter date-choice-field">' +
+        '<div class="filter js-date-choice-field">' +
           '<div class="input--removable">' +
             '<input name="date" type="radio" data-min-date="2015-01-01" data-max-date="2015-12-31">' +
             '<input name="date" type="radio" data-min-date="2016-01-01" data-max-date="2016-12-31">' +
@@ -130,8 +130,8 @@ describe('filter set', function() {
         min_date: '2015-01-01',
         max_date: '2015-12-31'
       });
-      expect(this.filter.$elm.find('[name="min_date"]').val()).to.equal('2015-01-01');
-      expect(this.filter.$elm.find('[name="max_date"]').val()).to.equal('2015-12-31');
+      expect(this.filter.$body.find('[name="min_date"]').val()).to.equal('2015-01-01');
+      expect(this.filter.$body.find('[name="max_date"]').val()).to.equal('2015-12-31');
     });
   });
 });
