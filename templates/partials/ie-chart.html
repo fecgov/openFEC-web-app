@@ -7,16 +7,16 @@
 <div class="row">
   <figure class="chart-container chart--r-d">
     <div class="chart__header">
-      <h4 class="chart__title">Independent contributions and independent expenditures</h4>
+      <h4 class="chart__title"> Contributions received and independent expenditures</h4>
       <ul class="chart__key list--flat">
-        <li class="chart__key__item"><span class="swatch"></span> Contributions received</li>
-        <li class="chart__key__item"><span class="swatch"></span> Independent expenditures</li>
+        <li class="chart__key__item"><span class="swatch"></span> Total contributions received</li>
+        <li class="chart__key__item"><span class="swatch"></span> Total independent expenditures</li>
       </ul>
     </div>
     {{ charts.chart_series_grouped(
       reports | reverse | list,
       ('independent_contributions_period', 'independent_expenditures_period'),
-      labels=('Contributions received', 'Independent expenditures'),
+      labels=('Total contributions received', 'Total independent expenditures'),
       label_key=('coverage_start_date', 'coverage_end_date'),
       tooltip=charts.group_bar_tooltip,
     ) }}
