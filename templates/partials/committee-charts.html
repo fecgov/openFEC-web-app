@@ -2,13 +2,6 @@
 {% set reports = committee.reports  %}
 {% set totals = committee.totals  %}
 {% import 'macros/charts.html' as charts %}
-{% import 'macros/null.html' as null %}
-{% macro group_bar_tooltip(value, key) %}
-<div class="chart-series__bar__tooltip">
-  <h5 class="chart-series__bar__tooltip__title">{{ key|replace('_', ' ')|title }}</h5>
-  <span class="chart-series__bar__tooltip__value">{{ null.null( value | currency )}}</span>
-</div>
-{% endmacro %}
 
 {% if series_group_has_data(reports, ('total_receipts_period', 'total_disbursements_period')) %}
 <div class="content__section--extra">
@@ -20,8 +13,13 @@
         <li class="chart__key__item"><span class="swatch data--disbursements"></span>Total disbursements</li>
       </ul>
     </div>
-    {{ charts.chart_series_grouped(reports | reverse | list, ('total_receipts_period', 'total_disbursements_period'),
-       label_key=('coverage_start_date', 'coverage_end_date'), tooltip=group_bar_tooltip) }}
+    {{ charts.chart_series_grouped(
+      reports | reverse | list,
+      ('total_receipts_period', 'total_disbursements_period'),
+      label_key=('coverage_start_date', 'coverage_end_date'),
+      labels=('Total receipts', 'Total disbursements'),
+      tooltip=charts.group_bar_tooltip,
+    ) }}
   </figure>
 </div>
 {% endif %}
@@ -35,8 +33,13 @@
         <li class="chart__key__item"><span class="swatch data--debt"></span>Debt</li>
       </ul>
     </div>
-    {{ charts.chart_series_grouped(reports | reverse | list, ('cash_on_hand_end_period', 'debts_owed_by_committee'),
-       label_key=('coverage_end_date'), tooltip=group_bar_tooltip) }}
+    {{ charts.chart_series_grouped(
+      reports | reverse | list,
+      ('cash_on_hand_end_period', 'debts_owed_by_committee'),
+      label_key=('coverage_end_date'),
+      labels=('Ending cash on hand', 'Debt'),
+      tooltip=charts.group_bar_tooltip,
+    ) }}
   </figure>
 </div>
 {% endif %}

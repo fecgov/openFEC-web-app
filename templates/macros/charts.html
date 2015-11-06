@@ -1,3 +1,5 @@
+{% import 'macros/null.html' as null %}
+
 {% macro tooltip_wrap(content) %}
 <div class="chart-series__bar__tooltip">
   {{ content }}
@@ -19,7 +21,7 @@
 {% endif %}
 {% endmacro %}
 
-{% macro chart_series_grouped(groups, value_keys, label_key='label',orient='vertical',
+{% macro chart_series_grouped(groups, value_keys, label_key='label', orient='vertical',
                               tooltip=default_tooltip, labels=(), attr={}) %}
 {% if series_group_has_data(groups, value_keys) %}
 <div class="js-chart-series chart-series chart-series--grouped chart-series--{{ orient }} {{ attr.class|default('') }}">
@@ -37,4 +39,11 @@
   {% endfor %}
 </div>
 {% endif %}
+{% endmacro %}
+
+{% macro group_bar_tooltip(value, key) %}
+<div class="chart-series__bar__tooltip">
+  <h5 class="chart-series__bar__tooltip__title">{{ key|replace('_', ' ') | capitalize }}</h5>
+  <span class="chart-series__bar__tooltip__value">{{ null.null( value | currency )}}</span>
+</div>
 {% endmacro %}
