@@ -42,6 +42,19 @@ describe('filter set', function() {
       expect(this.filter.$remove.is('#fixtures .filter .button--remove')).to.be.true;
     });
 
+    it('pulls name from $body if present', function() {
+      this.$fixture.empty().append(
+        '<div class="filter" data-name="name-override">' +
+          '<div class="input--removable">' +
+            '<input name="name" />' +
+            '<button class="button button--remove"></button>' +
+          '</div>' +
+        '</div>'
+      );
+      var filter = Filter.build(this.$fixture.find('.filter'));
+      expect(filter.name).to.equal('name-override');
+    });
+
     it('sets its initial state', function() {
       expect(this.filter.name).to.equal('name');
       expect(this.filter.fields).to.deep.equal(['name']);

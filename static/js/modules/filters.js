@@ -29,7 +29,7 @@ function Filter(elm) {
   this.$input.on('keydown', this.handleKeydown.bind(this));
   this.$remove.on('click', this.handleClear.bind(this));
 
-  this.name = this.$input.eq(0).attr('name');
+  this.name = this.$body.data('name') || this.$input.attr('name');
   this.fields = [this.name];
 }
 
@@ -89,8 +89,8 @@ DateFilter.prototype.handleRadioChange = function(e) {
   var $input = $(e.target);
   if (!$input.is(':checked')) { return; }
   if ($input.attr('data-min-date')) {
-    this.$minDate.val($input.data('min-date'));
-    this.$maxDate.val($input.data('max-date'));
+    this.$minDate.val($input.data('min-date')).change();
+    this.$maxDate.val($input.data('max-date')).change();
   }
 };
 
