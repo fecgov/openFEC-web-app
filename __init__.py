@@ -10,6 +10,7 @@ import jinja2
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
+from raven.contrib.flask import Sentry
 
 from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sslify import SSLify
@@ -377,6 +378,7 @@ if not config.test:
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
+Sentry(app, dsn=config.sentry_dsn)
 
 
 if __name__ == '__main__':

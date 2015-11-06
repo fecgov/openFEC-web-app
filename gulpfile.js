@@ -22,6 +22,7 @@ var uglify = require('gulp-uglify');
 var debug = !!process.env.FEC_WEB_DEBUG;
 var analytics = !!process.env.FEC_WEB_GOOGLE_ANALYTICS;
 var production = ['stage', 'prod'].indexOf(process.env.FEC_WEB_ENVIRONMENT) !== -1;
+var sentryPublicDsn = process.env.SENTRY_PUBLIC_DSN;
 
 // TODO(jmcarp) Restore `watch-js`
 // gulp.task('watch-js', bundle.bind(this, true));
@@ -118,7 +119,8 @@ gulp.task('build-js', function() {
   })
   .transform(preprocessify({
     DEBUG: debug,
-    ANALYTICS: analytics
+    ANALYTICS: analytics,
+    SENTRY_PUBLIC_DSN: sentryPublicDsn
   }))
   .transform({global: true}, stringify(['.html']))
   .transform(hbsfy)

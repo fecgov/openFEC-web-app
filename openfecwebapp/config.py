@@ -42,3 +42,4 @@ test = os.getenv('FEC_WEB_TEST')
 use_analytics = bool(os.getenv('FEC_WEB_GOOGLE_ANALYTICS'))
 
 github_token = os.getenv('FEC_GITHUB_TOKEN')
+sentry_dsn = os.getenv('SENTRY_DSN')
