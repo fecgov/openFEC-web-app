@@ -1,217 +1,122 @@
 'use strict';
 
-/* global require, module, window */
+/* global window */
 
 var $ = require('jquery');
-var _ = require('underscore');
-var URI = require('URIjs');
 
-var accordion = require('fec-style/js/accordion');
-var accessibility = require('fec-style/js/accessibility');
+// Hack: Append jQuery to `window` for use by legacy libraries
+window.$ = window.jQuery = $;
 
-// are the panels open?
-var open = false;
+var typeahead = require('fec-style/js/typeahead');
+var typeaheadFilter = require('fec-style/js/typeahead-filter');
 
-var openFilterPanel = function() {
-  $('body').addClass('is-showing-filters');
-  $('.filters').addClass('is-open');
-  $('#filter-toggle').addClass('is-active')
-    .find('.filters__toggle__text').html('Hide filters');
-  accessibility.restoreTabindex($('#category-filters'));
-  open = true;
-};
+var helpers = require('./helpers');
 
-var closeFilterPanel = function() {
-  $('body').removeClass('is-showing-filters');
-  $('.filters.is-open').removeClass('is-open');
-  $('#filter-toggle').removeClass('is-active')
-    .find('.filters__toggle__text').html('Show filters');
-  $('#results tr:first-child').focus();
-  accessibility.removeTabindex($('#category-filters'));
-  open = false;
-};
+var KEYCODE_ENTER = 13;
 
-// Keep in sync with styles/grid-settings.scss.
-// TODO find better way to sync with scss.
-if ($('body').width() > 768) {
-  open = true;
-  openFilterPanel();
+function prepareValue($elm, value) {
+  return $elm.attr('type') === 'checkbox' ?
+    helpers.ensureArray(value) :
+    value;
 }
 
-$('#filter-toggle').click(function(){
-  if ( open === true ) {
-    closeFilterPanel();
+function Filter(elm) {
+  this.$body = $(elm);
+  this.$input = this.$body.find('input[name]');
+  this.$remove = this.$body.find('.button--remove');
+
+  this.$input.on('change', this.handleChange.bind(this));
+  this.$input.on('keydown', this.handleKeydown.bind(this));
+  this.$remove.on('click', this.handleClear.bind(this));
+
+  this.name = this.$body.data('name') || this.$input.attr('name');
+  this.fields = [this.name];
+}
+
+Filter.build = function($elm) {
+  if ($elm.hasClass('js-date-choice-field')) {
+    return new DateFilter($elm);
+  } else if ($elm.hasClass('js-typeahead-filter')) {
+    return new TypeaheadFilter($elm);
   } else {
-    openFilterPanel();
+    return new Filter($elm);
   }
-});
-
-var prepareValue = function($elm, value) {
-  if ($elm.attr('type') === 'checkbox') {
-    return $.isArray(value) ? value : [value];
-  } else {
-    return value;
-  }
-  return $elm.attr('type') === 'checkbox' ? [value] : value;
 };
 
-function ensureVisible($elm) {
-  if ($elm.is(':visible')) {
-    return;
-  }
-  var $accordion = $elm.closest('.js-accordion');
-  if ($accordion.length) {
-    accordion.showHeader($accordion.find('.js-accordion_header'));
-  }
-}
-
-var activateFilter = function(opts) {
-    var $field = $('#category-filters [name=' + opts.name + ']');
-    if ($field.data('temp')) {
-      $field = $('#' + $field.data('temp'));
-    }
-    var $parent = $field.parent();
-    if (opts.value) {
-        $field.val(prepareValue($field, opts.value)).change();
-        $parent.addClass('is-active');
-        ensureVisible($field);
-    } else {
-        $field.val(prepareValue($field, '')).change();
-        $parent.removeClass('is-active');
-    }
+Filter.prototype.fromQuery = function(query) {
+  this.setValue(query[this.name]);
+  return this;
 };
 
-function initCycleFilters() {
-  var cycleSelect = $('.js-cycle');
-  var callbacks = {
-    path: addCyclePath,
-    query: addCycleQuery
-  };
-  cycleSelect.each(function(_, elm) {
-    var $elm = $(elm);
-    var callback = callbacks[$elm.data('cycle-location')];
-    if (callback) {
-      $elm.change(function() {
-        window.location.href = callback($elm.val());
-      });
-    }
-  });
-}
-
-function addCycleQuery(cycle) {
-  return URI(window.location.href)
-    .removeQuery('cycle')
-    .addQuery({cycle: cycle})
-    .toString();
-}
-
-function addCyclePath(cycle) {
-  var uri = URI(window.location.href);
-  var path = uri.path()
-    .replace(/^\/|\/$/g, '')
-    .split('/')
-    .slice(0, -1)
-    .concat([cycle])
-    .join('/')
-    .concat('/');
-  return uri.path(path).toString();
-}
-
-function getFields() {
-  return _.chain($('div#filters :input[name]'))
-    .map(function(input) {
-      return $(input).attr('name');
-    })
-    .filter(function(name) {
-      return name && name.slice(0, 1) !== '_';
-    })
-    .uniq()
-    .value();
-}
-
-var activateInitialFilters = function() {
-    // this activates dropdowns
-    // name filter is activated in the template
-    var open;
-    var qs = URI.parseQuery(window.location.search);
-    var fields = getFields();
-    _.each(fields, function(key) {
-      activateFilter({
-        name: key,
-        value: qs[key]
-      });
-      open = open || qs[key];
-    });
-
-    if (open) {
-      $('body').addClass('is-showing-filters');
-    }
+Filter.prototype.setValue = function(value) {
+  var $input = this.$input.data('temp') ?
+    this.$body.find('#' + this.$input.data('temp')) :
+    this.$input;
+  $input.val(prepareValue($input, value)).change();
+  return this;
 };
 
-var clearFilters = function() {
-  var fields = getFields();
-  _.each(fields, function(key) {
-    activateFilter({
-      name: key,
-      value: null
-    });
-  });
+Filter.prototype.handleClear = function() {
+  this.setValue();
+  this.$input.focus();
 };
 
-// Clearing the filters
-$('.js-clear-filters').on('click keypress', function(e){
-  if (e.which === 13 || e.type === 'click') {
-    clearFilters();
-    $(this).focus();
-  }
-});
-
-$('.button--remove').click(function(e){
+Filter.prototype.handleKeydown = function(e) {
+  if (e.which === KEYCODE_ENTER) {
     e.preventDefault();
-    var removes = $(this).data('removes');
-    $('[name="' + removes + '"]').val('').trigger('change').focus();
-    $(this).css('display', 'none');
-});
+    this.$input.change();
+  }
+};
 
-$('.filter input, .filter select').change(function(){
-    var $this = $(this);
-    $('[data-removes="' + $this.attr('name') + '"]')
-        .css('display', $this.val() ? 'block' : 'none');
-});
+Filter.prototype.handleChange = function() {
+  this.$remove.css('display', this.$input.val() ? 'block' : 'none');
+};
 
-$('.filter input[type="text"]').on('keypress', function(e) {
-    if (e.which === 13) {
-        $(this).change();
-        e.preventDefault();
-    }
-});
+function DateFilter(elm) {
+  Filter.call(this, elm);
 
-/**
- * Initialize date picker filters
- */
-function bindDateFilters() {
-  $('.date-choice-field').each(function(_, field) {
-    var $field = $(field);
-    var $minDate = $field.find('.js-min-date');
-    var $maxDate = $field.find('.js-max-date');
-    $field.on('change', '[type="radio"]', function(e) {
-      var $input = $(e.target);
-      if ($input.attr('data-min-date')) {
-        $minDate.val($input.data('min-date'));
-        $maxDate.val($input.data('max-date'));
-      }
-      $minDate.focus();
-    });
-  });
+  this.$minDate = this.$body.find('.js-min-date');
+  this.$maxDate = this.$body.find('.js-max-date');
+  this.$body.on('change', this.handleRadioChange.bind(this));
+
+  this.fields = ['min_' + this.name, 'max_' + this.name];
 }
 
-module.exports = {
-  init: function() {
-    initCycleFilters();
-    // if the page was loaded with filters set in the query string
-    activateInitialFilters();
-    bindDateFilters();
-  },
-  getFields: getFields,
-  activateInitialFilters: activateInitialFilters
+DateFilter.prototype = Object.create(Filter.prototype);
+DateFilter.constructor = DateFilter;
+
+DateFilter.prototype.handleRadioChange = function(e) {
+  var $input = $(e.target);
+  if (!$input.is(':checked')) { return; }
+  if ($input.attr('data-min-date')) {
+    this.$minDate.val($input.data('min-date')).change();
+    this.$maxDate.val($input.data('max-date')).change();
+  }
 };
+
+DateFilter.prototype.fromQuery = function(query) {
+  this.setValue([
+    query['min_' + this.name],
+    query['max_' + this.name]
+  ]);
+  return this;
+};
+
+DateFilter.prototype.setValue = function(value) {
+  value = helpers.ensureArray(value);
+  this.$minDate.val(value[0]);
+  this.$maxDate.val(value[1]);
+};
+
+function TypeaheadFilter(elm) {
+  Filter.call(this, elm);
+
+  var key = this.$body.data('dataset');
+  var dataset = typeahead.datasets[key];
+  this.typeaheadFilter = new typeaheadFilter.TypeaheadFilter(this.$body, dataset);
+}
+
+TypeaheadFilter.prototype = Object.create(Filter.prototype);
+TypeaheadFilter.constructor = TypeaheadFilter;
+
+module.exports = {Filter: Filter};

@@ -11,9 +11,9 @@ var accessibility = require('fec-style/js/accessibility');
 require('datatables');
 require('drmonty-datatables-responsive');
 
-var filters = require('./filters');
 var helpers = require('./helpers');
 var analytics = require('./analytics');
+var FilterPanel = require('./filter-panel').FilterPanel;
 
 var simpleDOM = 't<"results-info"ip>';
 
@@ -48,19 +48,6 @@ function yearRange(first, last) {
   } else {
     return first.toString() + ' - ' + last.toString();
   }
-}
-
-function mapFilters(filters) {
-  return _.reduce(filters, function(acc, val) {
-    if (val.value && val.name.slice(0, 1) !== '_') {
-      if (acc[val.name]) {
-        acc[val.name].push(val.value);
-      } else {
-        acc[val.name] = [val.value];
-      }
-    }
-    return acc;
-  }, {});
 }
 
 var parsedFilters;
@@ -207,24 +194,19 @@ function mapResponse(response) {
   };
 }
 
-function ensureArray(value) {
-  return _.isArray(value) ? value : [value];
-}
-
 function compareQuery(first, second, keys) {
   keys = keys || _.union(_.keys(first), _.keys(second));
   var different = _.find(keys, function(key) {
     return !_.isEqual(
-      ensureArray(first[key]).sort(),
-      ensureArray(second[key]).sort()
+      helpers.ensureArray(first[key]).sort(),
+      helpers.ensureArray(second[key]).sort()
     );
   });
   return !different;
 }
 
-function nextUrl(params) {
+function nextUrl(params, fields) {
   var query = URI.parseQuery(window.location.search);
-  var fields = filters.getFields();
   if (!compareQuery(query, params, fields)) {
     // Clear and update filter fields
     _.each(fields, function(field) {
@@ -233,20 +215,20 @@ function nextUrl(params) {
     params = _.extend(query, params);
     return URI('').query(params).toString();
   } else {
-    return '';
+    return null;
   }
 }
 
-function updateQuery(params) {
-  var queryString = nextUrl(params);
-  if (queryString) {
+function updateQuery(params, fields) {
+  var queryString = nextUrl(params, fields);
+  if (queryString !== null) {
     window.history.replaceState(params, queryString, queryString || window.location.pathname);
   }
 }
 
-function pushQuery(params) {
-  var queryString = nextUrl(params);
-  if (queryString) {
+function pushQuery(params, fields) {
+  var queryString = nextUrl(params, fields);
+  if (queryString !== null) {
     window.history.pushState(params, queryString, queryString || window.location.pathname);
     analytics.pageView();
   }
@@ -430,8 +412,9 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
   callbacks = _.extend({}, defaultCallbacks, callbacks);
   if ($form) {
-    var initialFilters = mapFilters($form.serializeArray());
-    updateQuery(initialFilters);
+    var filterPanel = new FilterPanel();
+    var filterSet = filterPanel.filterSet;
+    updateQuery(filterSet.serialize(), filterSet.fields);
   }
   opts = _.extend({
     serverSide: true,
@@ -448,9 +431,8 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
     ajax: function(data, callback, settings) {
       var api = this.api();
       if ($form) {
-        var filters = $form.serializeArray();
-        parsedFilters = mapFilters(filters);
-        pushQuery(parsedFilters);
+        pushQuery(filterPanel.filterSet.serialize(), filterPanel.filterSet.fields);
+        parsedFilters = filterPanel.filterSet.serialize();
       }
       var query = _.extend(
         callbacks.mapQuery(api, data),
@@ -486,8 +468,8 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   if (useFilters) {
     // Update filters and data table on navigation
     $(window).on('popstate', function() {
-      filters.activateInitialFilters();
-      var tempFilters = mapFilters(filters);
+      filterPanel.filterSet.activate();
+      var tempFilters = filterPanel.filterSet.serialize();
       if (!_.isEqual(tempFilters, parsedFilters)) {
         api.ajax.reload();
       }

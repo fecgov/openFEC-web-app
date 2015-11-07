@@ -18,7 +18,6 @@ var siteNav = require('fec-style/js/site-nav');
 var skipNav = require('fec-style/js/skip-nav');
 var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
-var typeaheadFilter = require('fec-style/js/typeahead-filter');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
@@ -44,9 +43,9 @@ require('./vendor/tablist');
 var charts = require('./modules/charts');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
-var filters = require('./modules/filters');
 var helpers = require('./modules/helpers');
 var analytics = require('./modules/analytics');
+var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
 charts.init();
 
@@ -58,12 +57,6 @@ $('.js-dropdown').each(function() {
 
 $('.js-site-nav').each(function() {
   new siteNav.SiteNav(this);
-});
-
-$('.js-typeahead-filter').each(function() {
-  var key = $(this).data('dataset');
-  var dataset = typeahead.datasets[key];
-  new typeaheadFilter.TypeaheadFilter(this, dataset);
 });
 
 new skipNav.Skipnav('.skip-nav', 'main');
@@ -207,6 +200,10 @@ $(document).ready(function() {
     analytics.pageView();
     // @endif
 
-    filters.init();
+    // Initialize cycle selects
+    $('.js-cycle').each(function(idx, elm) {
+      CycleSelect.build($(elm));
+    });
+
     toggle.init();
 });
