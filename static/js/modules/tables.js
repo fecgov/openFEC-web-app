@@ -13,7 +13,6 @@ require('drmonty-datatables-responsive');
 
 var helpers = require('./helpers');
 var analytics = require('./analytics');
-var FilterPanel = require('./filter-panel').FilterPanel;
 
 var simpleDOM = 't<"results-info"ip>';
 
@@ -414,6 +413,7 @@ var defaultCallbacks = _.extend({}, offsetCallbacks, {
 });
 
 function DataTable(selector, opts) {
+  opts = opts || {};
   this.$body = $(selector);
   this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
   this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
@@ -429,6 +429,7 @@ function DataTable(selector, opts) {
 
   if (this.filterSet) {
     updateOnChange(this.filterSet.$body, this.api);
+    updateQuery(this.filterSet.serialize(), this.filterSet.fields);
     this.$table.on('draw.dt', adjustFormHeight.bind(null, this.$table, this.filterSet.$body));
   }
 
@@ -503,7 +504,7 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
   if (this.opts.hideEmpty) {
-    this.hideEmpty(this.fetchContext.data, resp);
+    this.hideEmpty(resp);
   }
 };
 
@@ -524,10 +525,9 @@ DataTable.prototype.hideEmpty = function(response) {
   }
 };
 
-DataTable.defer = function($table) {
-  var args = _.toArray(arguments);
+DataTable.defer = function($table, opts) {
   tabs.onShow($table, function() {
-    new DataTable(args);
+    new DataTable($table, opts);
   });
 };
 
