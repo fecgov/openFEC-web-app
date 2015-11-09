@@ -50,18 +50,16 @@ function yearRange(first, last) {
   }
 }
 
-var parsedFilters;
-
 function getCycle(datum) {
-  if (parsedFilters && parsedFilters.cycle) {
-    var cycles = _.intersection(
-      _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
-      datum.cycles
-    );
-    return {cycle: _.max(cycles)};
-  } else {
+  // if (parsedFilters && parsedFilters.cycle) {
+  //   var cycles = _.intersection(
+  //     _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
+  //     datum.cycles
+  //   );
+  //   return {cycle: _.max(cycles)};
+  // } else {
     return {};
-  }
+  // }
 }
 
 function buildEntityLink(data, url, category, opts) {
@@ -371,10 +369,6 @@ function handleResponseSeek(api, data, response) {
   api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
 }
 
-var defaultCallbacks = {
-  preprocess: mapResponse
-};
-
 function updateOnChange($form, api) {
   function onChange(e) {
     e.preventDefault();
@@ -396,8 +390,103 @@ function adjustFormHeight($table, $form) {
   }
 }
 
-var defaultCallbacks = {
-  preprocess: mapResponse
+var offsetCallbacks = {
+  mapQuery: mapQueryOffset
+};
+
+var seekCallbacks = {
+  mapQuery: mapQuerySeek,
+  handleResponse: handleResponseSeek
+};
+
+var defaultOpts = {
+  serverSide: true,
+  searching: false,
+  lengthMenu: [30, 50, 100],
+  responsive: {details: false},
+  language: {lengthMenu: 'Results per page: _MENU_'},
+  dom: '<"results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
+  callbacks: _.extend({}, offsetCallbacks, {
+    handleResponse: function() {},
+    afterRender: function() {}
+  })
+};
+
+function DataTable(selector, opts) {
+  this.$body = $(selector);
+  this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
+  this.filterSet = (this.opts.panel || {}).filterSet;
+
+  this.xhr = null;
+  this.fetchContext = null;
+  this.filters = null;
+
+  this.api = this.$body.DataTable(this.opts);
+  this.$table = $(this.api.table().node());
+  this.addWidgets();
+}
+
+DataTable.prototype.addWidgets = function() {
+  this.$processing = $('<div class="overlay is-loading"></div>').hide();
+  this.$table.before(this.$processing);
+
+  if (this.opts.useHideNull) {
+    this.$hideNullWidget = $(
+      '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
+      '<label for="null-checkbox" class="results-info__null">' +
+        'Hide results with missing values when sorting' +
+      '</label>'
+    );
+    var $paging = $(this.api.table().container()).find('.results-info--top');
+    $paging.prepend(this.$hideNullWidget);
+  }
+};
+
+DataTable.prototype.fetch = function(data, callback) {
+  var self = this;
+  if (self.filterSet) {
+    pushQuery(self.filterSet.serialize(), self.filterSet.fields);
+    self.filters = self.filterSet.serialize();
+  }
+  var query = _.extend(
+    self.opts.callbacks.mapQuery(self.api, data),
+    self.filters || {}
+  );
+  if (self.opts.useHideNull) {
+    query = _.extend(
+      query,
+      {sort_hide_null: self.$hideNullWidget.is(':checked')}
+    );
+  }
+  query.sort = mapSort(data.order, self.opts.columns);
+  self.$processing && self.$processing.show();
+  self.xhr && self.xhr.abort();
+  self.fetchContext = {
+    data: data,
+    callback: callback
+  };
+  self.xhr = $.getJSON(
+    helpers.buildUrl(self.opts.path, _.extend({}, query, self.opts.baseQuery || {}))
+  ).done(
+    self.fetchSuccess.bind(self)
+  ).fail(
+    self.fetchError.bind(self)
+  ).always(function() {
+    self.$processing && self.$processing.hide();
+  });
+};
+
+DataTable.prototype.fetchSuccess = function(resp) {
+  this.opts.callbacks.handleResponse(this.api, this.fetchContext.data, resp);
+  this.fetchContext.callback(mapResponse(resp));
+  this.opts.callbacks.afterRender(this.api, this.fetchContext.data, resp);
+  if (this.opts.hideEmpty) {
+    this.hideEmpty(this.fetchContext.data, resp);
+  }
+};
+
+DataTable.prototype.fetchError = function() {
+
 };
 
 function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
@@ -511,14 +600,6 @@ function initTableDeferred($table) {
   });
 }
 
-var offsetCallbacks = {
-  mapQuery: mapQueryOffset
-};
-var seekCallbacks = {
-  mapQuery: mapQuerySeek,
-  handleResponse: handleResponseSeek
-};
-
 module.exports = {
   simpleDOM: simpleDOM,
   yearRange: yearRange,
@@ -539,5 +620,6 @@ module.exports = {
   offsetCallbacks: offsetCallbacks,
   seekCallbacks: seekCallbacks,
   initTable: initTable,
-  initTableDeferred: initTableDeferred
+  initTableDeferred: initTableDeferred,
+  DataTable: DataTable
 };

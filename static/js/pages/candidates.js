@@ -7,6 +7,8 @@ var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
+var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
 var candidatesTemplate = require('../../templates/candidates.hbs');
 
 var columns = [
@@ -45,19 +47,22 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $form = $('#category-filters');
-  tables.initTable(
-    $table,
-    $form,
-    'candidates',
-    {},
-    columns,
-    _.extend({}, tables.offsetCallbacks, {
-      afterRender: tables.modalRenderFactory(candidatesTemplate)
-    }),
-    {
-      useFilters: true,
-      rowCallback: tables.modalRenderRow
-    }
-  );
+  // var $form = $('#category-filters');
+  var filterPanel = new FilterPanel('#category-filters');
+  new tables.DataTable($table, {
+    path: 'candidates',
+    columns: columns,
+    useFilters: true,
+    rowCallback: tables.modalRenderRow
+  });
+  // tables.initTable(
+  //   $table,
+  //   $form,
+  //   'candidates',
+  //   {},
+  //   columns,
+  //   _.extend({}, tables.offsetCallbacks, {
+  //     afterRender: tables.modalRenderFactory(candidatesTemplate)
+  //   }),
+  // );
 });
