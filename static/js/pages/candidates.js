@@ -19,7 +19,7 @@ var columns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row)),
+        helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row, meta)),
         'candidate'
       );
     }

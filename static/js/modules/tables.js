@@ -49,16 +49,18 @@ function yearRange(first, last) {
   }
 }
 
-function getCycle(datum) {
-  // if (parsedFilters && parsedFilters.cycle) {
-  //   var cycles = _.intersection(
-  //     _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
-  //     datum.cycles
-  //   );
-  //   return {cycle: _.max(cycles)};
-  // } else {
+function getCycle(datum, meta) {
+  var dataTable = DataTable.registry[meta.settings.sTableId];
+  var filters = dataTable && dataTable.filters;
+  if (filters && filters.cycle) {
+    var cycles = _.intersection(
+      _.map(filters.cycle, function(cycle) { return parseInt(cycle); }),
+      datum.cycles
+    );
+    return {cycle: _.max(cycles)};
+  } else {
     return {};
-  // }
+  }
 }
 
 function buildEntityLink(data, url, category, opts) {
@@ -427,6 +429,8 @@ function DataTable(selector, opts) {
   this.$table = $(this.api.table().node());
   this.addWidgets();
 
+  DataTable.registry[this.$table.attr('id')] = this;
+
   if (this.filterSet) {
     updateOnChange(this.filterSet.$body, this.api);
     updateQuery(this.filterSet.serialize(), this.filterSet.fields);
@@ -524,6 +528,8 @@ DataTable.prototype.hideEmpty = function(response) {
     this.$table.remove();
   }
 };
+
+DataTable.registry = {};
 
 DataTable.defer = function($table, opts) {
   tabs.onShow($table, function() {
