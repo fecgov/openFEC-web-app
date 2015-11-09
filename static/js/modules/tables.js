@@ -406,15 +406,17 @@ var defaultOpts = {
   responsive: {details: false},
   language: {lengthMenu: 'Results per page: _MENU_'},
   dom: '<"results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
-  callbacks: _.extend({}, offsetCallbacks, {
-    handleResponse: function() {},
-    afterRender: function() {}
-  })
 };
+
+var defaultCallbacks = _.extend({}, offsetCallbacks, {
+  handleResponse: function() {},
+  afterRender: function() {}
+});
 
 function DataTable(selector, opts) {
   this.$body = $(selector);
   this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
+  this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
   this.filterSet = (this.opts.panel || {}).filterSet;
 
   this.xhr = null;
@@ -424,7 +426,27 @@ function DataTable(selector, opts) {
   this.api = this.$body.DataTable(this.opts);
   this.$table = $(this.api.table().node());
   this.addWidgets();
+
+  if (this.filterSet) {
+    updateOnChange(this.filterSet.$body, this.api);
+    this.$table.on('draw.dt', adjustFormHeight.bind(null, this.$table, this.filterSet.$body));
+  }
+
+  if (this.opts.useFilters) {
+    $(window).on('popstate', this.handlePopState.bind(this));
+  }
+
+  this.$table.css('width', '100%');
+  this.$table.find('tbody').addClass('js-panel-toggle');
 }
+
+DataTable.prototype.handlePopState = function() {
+  this.filterSet.activate();
+  var filters = this.filterSet.serialize();
+  if (!_.isEqual(filters, this.filters)) {
+    this.api.ajax.reload();
+  }
+};
 
 DataTable.prototype.addWidgets = function() {
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
@@ -449,7 +471,7 @@ DataTable.prototype.fetch = function(data, callback) {
     self.filters = self.filterSet.serialize();
   }
   var query = _.extend(
-    self.opts.callbacks.mapQuery(self.api, data),
+    self.callbacks.mapQuery(self.api, data),
     self.filters || {}
   );
   if (self.opts.useHideNull) {
@@ -477,9 +499,9 @@ DataTable.prototype.fetch = function(data, callback) {
 };
 
 DataTable.prototype.fetchSuccess = function(resp) {
-  this.opts.callbacks.handleResponse(this.api, this.fetchContext.data, resp);
+  this.callbacks.handleResponse(this.api, this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
-  this.opts.callbacks.afterRender(this.api, this.fetchContext.data, resp);
+  this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
   if (this.opts.hideEmpty) {
     this.hideEmpty(this.fetchContext.data, resp);
   }
@@ -489,116 +511,25 @@ DataTable.prototype.fetchError = function() {
 
 };
 
-function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
-  var $processing = $('<div class="overlay is-loading"></div>');
-  var $hideNullWidget = $(
-    '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
-    '<label for="null-checkbox" class="results-info__null">' +
-      'Hide results with missing values when sorting' +
-    '</label>'
-  );
-  var useFilters = opts.useFilters;
-  var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
-  callbacks = _.extend({}, defaultCallbacks, callbacks);
-  if ($form) {
-    var filterPanel = new FilterPanel();
-    var filterSet = filterPanel.filterSet;
-    updateQuery(filterSet.serialize(), filterSet.fields);
-  }
-  opts = _.extend({
-    serverSide: true,
-    searching: false,
-    columns: columns,
-    lengthMenu: [30, 50, 100],
-    responsive: {
-      details: false
-    },
-    language: {
-      lengthMenu: 'Results per page: _MENU_'
-    },
-    dom: '<"results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
-    ajax: function(data, callback, settings) {
-      var api = this.api();
-      if ($form) {
-        pushQuery(filterPanel.filterSet.serialize(), filterPanel.filterSet.fields);
-        parsedFilters = filterPanel.filterSet.serialize();
-      }
-      var query = _.extend(
-        callbacks.mapQuery(api, data),
-        parsedFilters || {}
-      );
-      if (useHideNull) {
-        query = _.extend(
-          query,
-          {sort_hide_null: $hideNullWidget.is(':checked')}
-        );
-      }
-      query.sort = mapSort(data.order, columns);
-      $processing.show();
-      $.getJSON(
-        helpers.buildUrl(path, _.extend({}, query, baseQuery || {}))
-      ).done(function(response) {
-        callbacks.handleResponse(api, data, response);
-        callback(callbacks.preprocess(response));
-        callbacks.afterRender(api, data, response);
-        if (opts.hideEmpty) {
-          hideEmpty(api, data, response);
-        }
-      }).always(function() {
-        $processing.hide();
-      });
-    }
-  }, opts || {});
-  var api = $table.DataTable(opts);
-  callbacks = _.extend({
-    handleResponse: function() {},
-    afterRender: function() {}
-  }, callbacks);
-  if (useFilters) {
-    // Update filters and data table on navigation
-    $(window).on('popstate', function() {
-      filterPanel.filterSet.activate();
-      var tempFilters = filterPanel.filterSet.serialize();
-      if (!_.isEqual(tempFilters, parsedFilters)) {
-        api.ajax.reload();
-      }
-    });
-  }
-  // Prepare loading message
-  $processing.hide();
-  $table.before($processing);
-  var $paging = $(api.table().container()).find('.results-info--top');
-  if (useHideNull) {
-    $paging.prepend($hideNullWidget);
-  }
-  $table.css('width', '100%');
-  $table.find('tbody').addClass('js-panel-toggle');
-  if ($form) {
-    updateOnChange($form, api);
-    $table.on('draw.dt', adjustFormHeight.bind(null, $table, $form));
-  }
-}
-
 /**
  * Replace a `DataTable` with placeholder text if no results found. Should only
  * be used with unfiltered tables, else tables may be destroyed on restrictive
  * filtering.
  */
-function hideEmpty(api, data, response) {
+DataTable.prototype.hideEmpty = function(response) {
   if (!response.pagination.count) {
-    api.destroy();
-    var $table = $(api.table().node());
-    $table.before('<div class="message message--alert">No data found.</div>');
-    $table.remove();
+    this.api.destroy();
+    this.$table.before('<div class="message message--alert">No data found.</div>');
+    this.$table.remove();
   }
-}
+};
 
-function initTableDeferred($table) {
+DataTable.defer = function($table) {
   var args = _.toArray(arguments);
   tabs.onShow($table, function() {
-    initTable.apply(null, args);
+    new DataTable(args);
   });
-}
+};
 
 module.exports = {
   simpleDOM: simpleDOM,
@@ -619,7 +550,5 @@ module.exports = {
   MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
   offsetCallbacks: offsetCallbacks,
   seekCallbacks: seekCallbacks,
-  initTable: initTable,
-  initTableDeferred: initTableDeferred,
   DataTable: DataTable
 };

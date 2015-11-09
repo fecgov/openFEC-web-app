@@ -47,22 +47,15 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  // var $form = $('#category-filters');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
     path: 'candidates',
+    panel: filterPanel,
     columns: columns,
     useFilters: true,
-    rowCallback: tables.modalRenderRow
+    rowCallback: tables.modalRenderRow,
+    callbacks: {
+      afterRender: tables.modalRenderFactory(candidatesTemplate)
+    }
   });
-  // tables.initTable(
-  //   $table,
-  //   $form,
-  //   'candidates',
-  //   {},
-  //   columns,
-  //   _.extend({}, tables.offsetCallbacks, {
-  //     afterRender: tables.modalRenderFactory(candidatesTemplate)
-  //   }),
-  // );
 });
