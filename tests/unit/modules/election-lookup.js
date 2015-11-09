@@ -108,7 +108,7 @@ describe('election lookup', function() {
     var titles = $rendered.map(function(idx, elm) {
       return $(elm).find('h3').text().trim();
     }).get();
-    expect(titles).to.deep.equal(['US president', 'NJ Senate', 'NJ House District 09']);
+    expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
   });
 
   it('should show no results warning on no results by zip', function() {
