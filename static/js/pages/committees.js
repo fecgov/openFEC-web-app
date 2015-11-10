@@ -56,4 +56,5 @@ $(document).ready(function() {
       order: [[4, 'desc']],
       rowCallback: tables.modalRenderRow
     }
-  );});
+  );
+});

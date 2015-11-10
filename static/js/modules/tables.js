@@ -426,24 +426,28 @@ function DataTable(selector, opts) {
   this.filters = null;
 
   this.api = this.$body.DataTable(this.opts);
-  this.$table = $(this.api.table().node());
   this.addWidgets();
 
-  DataTable.registry[this.$table.attr('id')] = this;
+  DataTable.registry[this.$body.attr('id')] = this;
 
   if (this.filterSet) {
     updateOnChange(this.filterSet.$body, this.api);
     updateQuery(this.filterSet.serialize(), this.filterSet.fields);
-    this.$table.on('draw.dt', adjustFormHeight.bind(null, this.$table, this.filterSet.$body));
+    this.$body.on('draw.dt', adjustFormHeight.bind(null, this.$body, this.filterSet.$body));
   }
 
   if (this.opts.useFilters) {
     $(window).on('popstate', this.handlePopState.bind(this));
   }
 
-  this.$table.css('width', '100%');
-  this.$table.find('tbody').addClass('js-panel-toggle');
+  this.$body.css('width', '100%');
+  this.$body.find('tbody').addClass('js-panel-toggle');
 }
+
+DataTable.prototype.destroy = function() {
+  this.api.destroy();
+  delete DataTable.registry[this.$body.attr('id')];
+};
 
 DataTable.prototype.handlePopState = function() {
   this.filterSet.activate();
@@ -455,7 +459,7 @@ DataTable.prototype.handlePopState = function() {
 
 DataTable.prototype.addWidgets = function() {
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
-  this.$table.before(this.$processing);
+  this.$body.before(this.$processing);
 
   if (this.opts.useHideNull) {
     this.$hideNullWidget = $(
@@ -523,9 +527,9 @@ DataTable.prototype.fetchError = function() {
  */
 DataTable.prototype.hideEmpty = function(response) {
   if (!response.pagination.count) {
-    this.api.destroy();
-    this.$table.before('<div class="message message--alert">No data found.</div>');
-    this.$table.remove();
+    this.destroy();
+    this.$body.before('<div class="message message--alert">No data found.</div>');
+    this.$body.remove();
   }
 };
 
