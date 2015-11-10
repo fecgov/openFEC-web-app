@@ -2,6 +2,7 @@ import re
 import http
 import json
 import locale
+import hashlib
 import logging
 import datetime
 
@@ -11,6 +12,7 @@ from webargs import fields
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
 
+from hmac_authentication import hmacauth
 from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sslify import SSLify
 from flask.ext.basicauth import BasicAuth
@@ -374,6 +376,15 @@ if config.username and config.password:
     app.config['BASIC_AUTH_FORCE'] = True
     basic_auth = BasicAuth(app)
 
+
+if config.environment == 'prod':
+    auth = hmacauth.HmacAuth(
+        digest=hashlib.sha1,
+        secret_key=config.hmac_secret,
+        signature_header='X-Signature',
+        headers=config.hmac_headers,
+    )
+    app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
