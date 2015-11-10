@@ -401,6 +401,7 @@ SeekPaginator.prototype.handleResponse = function(data, response) {
 var defaultOpts = {
   serverSide: true,
   searching: false,
+  useHideNull: true,
   lengthMenu: [30, 50, 100],
   responsive: {details: false},
   language: {lengthMenu: 'Results per page: _MENU_'},
@@ -420,12 +421,12 @@ function DataTable(selector, opts) {
 
   this.xhr = null;
   this.fetchContext = null;
+  this.hasWidgets = null;
   this.filters = null;
 
   var Paginator = this.opts.paginator || OffsetPaginator;
   this.paginator = new Paginator();
   this.api = this.$body.DataTable(this.opts);
-  this.addWidgets();
 
   DataTable.registry[this.$body.attr('id')] = this;
 
@@ -456,7 +457,8 @@ DataTable.prototype.handlePopState = function() {
   }
 };
 
-DataTable.prototype.addWidgets = function() {
+DataTable.prototype.ensureWidgets = function() {
+  if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
 
@@ -467,13 +469,16 @@ DataTable.prototype.addWidgets = function() {
         'Hide results with missing values when sorting' +
       '</label>'
     );
-    var $paging = $(this.api.table().container()).find('.results-info--top');
+    var $paging = this.$body.closest('.dataTables_wrapper').find('.results-info--top');
     $paging.prepend(this.$hideNullWidget);
   }
+
+  this.hasWidgets = true;
 };
 
 DataTable.prototype.fetch = function(data, callback) {
   var self = this;
+  self.ensureWidgets();
   if (self.filterSet) {
     pushQuery(self.filterSet.serialize(), self.filterSet.fields);
     self.filters = self.filterSet.serialize();
