@@ -22,25 +22,6 @@ $(document.body).on('draw.dt', function() {
   $('.dataTable tbody td:first-child').attr('scope','row');
 });
 
-$.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
-  var settings = this.context[0];
-
-  // Clear stored indexes on filter change
-  if (!_.isEqual(settings._parsedFilters, parsedFilters)) {
-    settings._seekIndexes = {};
-  }
-  settings._parsedFilters = _.clone(parsedFilters);
-
-  // Set or get stored indexes
-  if (typeof value !== 'undefined') {
-    settings._seekIndexes = settings._seekIndexes || {};
-    settings._seekIndexes[length] = settings._seekIndexes[length] || {};
-    settings._seekIndexes[length][start] = value;
-  } else {
-    return ((settings._seekIndexes || {})[length] || {})[start] || undefined;
-  }
-});
-
 function yearRange(first, last) {
   if (first === last) {
     return first;
@@ -233,25 +214,6 @@ function pushQuery(params, fields) {
   }
 }
 
-function mapQueryOffset(api, data) {
-  return {
-    per_page: data.length,
-    page: Math.floor(data.start / data.length) + 1,
-  };
-}
-
-function mapQuerySeek(api, data) {
-  var indexes = api.seekIndex(data.length, data.start) || {};
-  return _.extend(
-    {per_page: data.length},
-    _.chain(Object.keys(indexes))
-      .filter(function(key) { return indexes[key]; })
-      .map(function(key) { return [key, indexes[key]]; })
-      .object()
-      .value()
-  );
-}
-
 function identity(value) {
   return value;
 }
@@ -366,10 +328,6 @@ function barsAfterRender(template, api, data, response) {
   });
 }
 
-function handleResponseSeek(api, data, response) {
-  api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
-}
-
 function updateOnChange($form, api) {
   function onChange(e) {
     e.preventDefault();
@@ -391,13 +349,53 @@ function adjustFormHeight($table, $form) {
   }
 }
 
-var offsetCallbacks = {
-  mapQuery: mapQueryOffset
+function OffsetPaginator() {}
+
+OffsetPaginator.prototype.mapQuery = function(data) {
+  return {
+    per_page: data.length,
+    page: Math.floor(data.start / data.length) + 1,
+  };
 };
 
-var seekCallbacks = {
-  mapQuery: mapQuerySeek,
-  handleResponse: handleResponseSeek
+OffsetPaginator.prototype.handleResponse = function() {};
+
+function SeekPaginator() {
+  this.indexes = {};
+  this.query = null;
+}
+
+SeekPaginator.prototype.getIndexes = function(length, start) {
+  return (this.indexes[length] || {})[start] || {};
+};
+
+SeekPaginator.prototype.setIndexes = function(length, start, value) {
+  this.indexes[length] = this.indexes[length] || {};
+  this.indexes[length][start] = value;
+};
+
+SeekPaginator.prototype.clearIndexes = function() {
+  this.indexes = {};
+};
+
+SeekPaginator.prototype.mapQuery = function(data, query) {
+  if (!_.isEqual(query, this.query)) {
+    this.query = _.clone(query);
+    this.clearIndexes();
+  }
+  var indexes = this.getIndexes(data.length, data.start);
+  return _.extend(
+    {per_page: data.length},
+    _.chain(Object.keys(indexes))
+      .filter(function(key) { return indexes[key]; })
+      .map(function(key) { return [key, indexes[key]]; })
+      .object()
+      .value()
+  );
+};
+
+SeekPaginator.prototype.handleResponse = function(data, response) {
+  this.setIndexes(data.length, data.length + data.start, response.pagination.last_indexes);
 };
 
 var defaultOpts = {
@@ -409,10 +407,9 @@ var defaultOpts = {
   dom: '<"results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
 };
 
-var defaultCallbacks = _.extend({}, offsetCallbacks, {
-  handleResponse: function() {},
+var defaultCallbacks = {
   afterRender: function() {}
-});
+};
 
 function DataTable(selector, opts) {
   opts = opts || {};
@@ -425,6 +422,8 @@ function DataTable(selector, opts) {
   this.fetchContext = null;
   this.filters = null;
 
+  var Paginator = this.opts.paginator || OffsetPaginator;
+  this.paginator = new Paginator();
   this.api = this.$body.DataTable(this.opts);
   this.addWidgets();
 
@@ -479,17 +478,12 @@ DataTable.prototype.fetch = function(data, callback) {
     pushQuery(self.filterSet.serialize(), self.filterSet.fields);
     self.filters = self.filterSet.serialize();
   }
-  var query = _.extend(
-    self.callbacks.mapQuery(self.api, data),
-    self.filters || {}
-  );
-  if (self.opts.useHideNull) {
-    query = _.extend(
-      query,
-      {sort_hide_null: self.$hideNullWidget.is(':checked')}
-    );
-  }
+  var query = _.extend({}, self.filters || {});
   query.sort = mapSort(data.order, self.opts.columns);
+  if (self.opts.useHideNull) {
+    query.sort_hide_null = self.$hideNullWidget.is(':checked');
+  }
+  query = _.extend(query, self.paginator.mapQuery(data, query));
   self.$processing && self.$processing.show();
   self.xhr && self.xhr.abort();
   self.fetchContext = {
@@ -508,7 +502,7 @@ DataTable.prototype.fetch = function(data, callback) {
 };
 
 DataTable.prototype.fetchSuccess = function(resp) {
-  this.callbacks.handleResponse(this.api, this.fetchContext.data, resp);
+  this.paginator.handleResponse(this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
   if (this.opts.hideEmpty) {
@@ -558,7 +552,7 @@ module.exports = {
   modalRenderFactory: modalRenderFactory,
   MODAL_TRIGGER_CLASS: MODAL_TRIGGER_CLASS,
   MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
-  offsetCallbacks: offsetCallbacks,
-  seekCallbacks: seekCallbacks,
-  DataTable: DataTable
+  DataTable: DataTable,
+  OffsetPaginator: OffsetPaginator,
+  SeekPaginator: SeekPaginator
 };
