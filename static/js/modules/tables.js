@@ -104,20 +104,24 @@ function buildAggregateUrl(cycle) {
 function buildTotalLink(path, getParams) {
   return function(data, type, row, meta) {
     data = data || 0;
+    var params = getParams(data, type, row, meta);
     var span = document.createElement('div');
     span.setAttribute('data-value', data);
     span.setAttribute('data-row', meta.row);
-    var link = document.createElement('a');
-    link.textContent = helpers.currency(data);
-    link.setAttribute('title', 'View individual transactions');
-    var params = getParams(data, type, row, meta);
-    var uri = helpers.buildAppUrl(path, _.extend(
-      {committee_id: row.committee_id},
-      buildAggregateUrl(_.extend({}, row, params).cycle),
-      params
-    ));
-    link.setAttribute('href', uri);
-    span.appendChild(link);
+    if (params) {
+      var link = document.createElement('a');
+      link.textContent = helpers.currency(data);
+      link.setAttribute('title', 'View individual transactions');
+      var uri = helpers.buildAppUrl(path, _.extend(
+        {committee_id: row.committee_id},
+        buildAggregateUrl(_.extend({}, row, params).cycle),
+        params
+      ));
+      link.setAttribute('href', uri);
+      span.appendChild(link);
+    } else {
+      span.textContent = helpers.currency(data);
+    }
     return span.outerHTML;
   };
 }
@@ -207,11 +211,8 @@ function ensureArray(value) {
   return _.isArray(value) ? value : [value];
 }
 
-function compareQuery(first, second) {
-  var keys = _.keys(first);
-  if (!_.isEqual(keys.sort(), _.keys(second).sort())) {
-    return false;
-  }
+function compareQuery(first, second, keys) {
+  keys = keys || _.union(_.keys(first), _.keys(second));
   var different = _.find(keys, function(key) {
     return !_.isEqual(
       ensureArray(first[key]).sort(),
@@ -223,9 +224,10 @@ function compareQuery(first, second) {
 
 function pushQuery(params) {
   var query = URI.parseQuery(window.location.search);
-  if (!compareQuery(query, params)) {
+  var fields = filters.getFields();
+  if (!compareQuery(query, params, fields)) {
     // Clear and update filter fields
-    _.each(filters.getFields(), function(field) {
+    _.each(fields, function(field) {
       delete query[field];
     });
     params = _.extend(query, params);

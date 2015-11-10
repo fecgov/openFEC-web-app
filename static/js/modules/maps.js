@@ -30,7 +30,7 @@ var compactRules = [
   ['', 0]
 ];
 
-var colorZero = '#fffff9';
+var colorZero = '#ffffff';
 var colorScale = ['#c1eded', '#278887'];
 
 _.templateSettings = {

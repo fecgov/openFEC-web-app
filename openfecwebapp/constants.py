@@ -199,7 +199,7 @@ form_types = OrderedDict([
 
 amendment_indicators = OrderedDict([
     ('N', 'New'),
-    ('A', 'Amended'),
+    ('A', 'Amendment'),
 ])
 amendment_indicators_extended = OrderedDict([
     ('T', 'Terminated'),

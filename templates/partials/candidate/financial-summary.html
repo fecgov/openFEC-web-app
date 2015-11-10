@@ -48,12 +48,11 @@
             aggregate.debt != 0
            %}
              <a href="{{ url_for('filings',
-               amendment_indicator='N',
                form_type=['F3', 'F3P'],
                committee_id=committee_ids,
                cycle=cycle,
                ) }}">
-               View source forms
+               View source filings
              </a>
            {% endif %}
         </p>

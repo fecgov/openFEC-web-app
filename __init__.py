@@ -143,6 +143,7 @@ app.jinja_env.globals.update({
     'asset_for': asset_for,
     'base_path': get_base_path,
     'environment': config.environment,
+    'today': datetime.date.today,
 })
 
 
@@ -367,7 +368,7 @@ if config.environment in ['stage', 'prod']:
 
 # Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
 # for credentials over HTTP; h/t @noahkunin.
-if not config.test:
+if config.username and config.password:
     app.config['BASIC_AUTH_USERNAME'] = config.username
     app.config['BASIC_AUTH_PASSWORD'] = config.password
     app.config['BASIC_AUTH_FORCE'] = True

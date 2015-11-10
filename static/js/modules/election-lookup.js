@@ -54,7 +54,7 @@ function formatResult(result, lookup) {
 
 function formatName(result) {
   var parts = [result.state, officeMap[result.office]];
-  if (result.district) {
+  if (result.district && result.district !== '00') {
     parts = parts.concat('District ' + result.district.toString());
   }
   return parts.join(' ');
@@ -241,7 +241,8 @@ ElectionLookup.prototype.handlePopState = function() {
 ElectionLookup.prototype.drawDistricts = function(results) {
   var encoded = _.chain(results)
     .filter(function(result) {
-      return result.state && result.district;
+      return result.state && result.state !== 'US' &&
+        result.district && result.district !== '00';
     })
     .map(function(result) {
       return utils.encodeDistrict(result.state, result.district);

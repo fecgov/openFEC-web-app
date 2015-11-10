@@ -55,50 +55,46 @@ var electionColumns = [
     }
   },
   {data: 'party_full', className: 'all'},
-  {
-    data: 'total_receipts',
-    orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
-      return {
-        committee_id: row.committee_ids,
-        cycle: context.election.cycle
-      };
-    })
-  },
-  {
-    data: 'total_disbursements',
-    orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['disbursements'], function(data, type, row, meta) {
-      return {
-        committee_id: row.committee_ids,
-        cycle: context.election.cycle
-      };
-    })
-  },
+  tables.currencyColumn({data: 'total_receipts', orderSequence: ['desc', 'asc']}),
+  tables.currencyColumn({data: 'total_disbursements', orderSequence: ['desc', 'asc']}),
   tables.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
-  tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false})
+  {
+    render: function(data, type, row, meta) {
+      var dates = helpers.cycleDates(context.election.cycle);
+      var url = helpers.buildAppUrl(
+        ['filings'],
+        {
+          committee_id: row.committee_ids,
+          min_receipt_date: dates.min,
+          max_receipt_date: dates.max
+        }
+      );
+      var anchor = document.createElement('a');
+      anchor.textContent = 'View';
+      anchor.setAttribute('href', url);
+      anchor.setAttribute('target', '_blank');
+      return anchor.outerHTML;
+    },
+    className: 'all',
+    orderable: false,
+  }
 ];
 
 function makeCommitteeColumn(opts, factory) {
   return _.extend({}, {
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
+      row.cycle = context.election.cycle;
       var column = meta.settings.aoColumns[meta.col].data;
       return _.extend({
-        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids,
-        cycle: context.election.cycle
+        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids
       }, factory(data, type, row, meta, column));
     })
   }, opts);
 }
 
 var makeSizeColumn = _.partial(makeCommitteeColumn, _, function(data, type, row, meta, column) {
-  var limits = columns.sizeInfo[column].limits;
-  return {
-    min_amount: limits[0],
-    max_amount: limits[1],
-    is_individual: 'true'
-  };
+  return columns.getSizeParams(column);
 });
 
 var sizeColumns = [
@@ -267,7 +263,8 @@ function drawStateMap($container, candidateId, cached) {
     var results = _.reduce(
       data.results,
       function(acc, val) {
-        var row = fips.fipsByState[val.state.toUpperCase()] || {};
+        var state = val.state ? val.state.toUpperCase() : val.state;
+        var row = fips.fipsByState[state] || {};
         var code = row.STATE ? parseInt(row.STATE) : null;
         acc[code] = val.total;
         return acc;
