@@ -497,7 +497,7 @@ DataTable.prototype.fetch = function(data, callback) {
     callback: callback
   };
   self.xhr = $.getJSON(
-    helpers.buildUrl(self.opts.path, _.extend({}, query, self.opts.baseQuery || {}))
+    helpers.buildUrl(self.opts.path, _.extend({}, query, self.opts.query || {}))
   ).done(
     self.fetchSuccess.bind(self)
   ).fail(

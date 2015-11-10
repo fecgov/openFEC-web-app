@@ -11,12 +11,14 @@ module.exports = function(config) {
   var reporters = ['progress'];
 
   if (process.argv.indexOf('--debug') === -1) {
-    browserify.transform.push(istanbul({
-      ignore: [
-        'tests/unit/**/*',
-        '**/templates/**'
-      ]}
-    ));
+    browserify.transform.push(
+      istanbul({
+        ignore: [
+          'tests/unit/**/*',
+          '**/templates/**'
+        ]
+      })
+    );
     reporters.push('coverage');
   }
 

@@ -204,10 +204,9 @@ function highlightRowAndState($map, $table, state, scroll) {
 
 }
 
-var aggregateCallbacks = _.extend(
-  {afterRender: tables.barsAfterRender.bind(undefined, undefined)},
-  tables.offsetCallbacks
-);
+var aggregateCallbacks = {
+  afterRender: tables.barsAfterRender.bind(undefined, undefined),
+};
 
 $(document).ready(function() {
   // Set up data tables
@@ -218,101 +217,145 @@ $(document).ready(function() {
     var query = {cycle: cycle};
     var path;
     switch ($table.attr('data-type')) {
-      case 'committee-contributor':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'];
-        tables.initTableDeferred($table, null, path, query, committeeColumns, aggregateCallbacks, {
-          dom: tables.simpleDOM,
-          order: [[1, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false,
-          hideEmpty: true
+    case 'committee-contributor':
+      path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: committeeColumns,
+        callbacks: aggregateCallbacks,
+        dom: tables.simpleDOM,
+        order: [[1, 'desc']],
+        pagingType: 'simple',
+        lengthChange: false,
+        pageLength: 10,
+        useHideNull: false,
+        hideEmpty: true
+      });
+      break;
+    case 'contribution-size':
+      path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_size'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: sizeColumns,
+        callbacks: aggregateCallbacks,
+        dom: 't',
+        order: [[1, 'desc']],
+        pagingType: 'simple',
+        lengthChange: false,
+        pageLength: 10,
+        useHideNull: false,
+        hideEmpty: true
+      });
+      break;
+    case 'receipts-by-state':
+      path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'];
+      query = _.extend(query, {per_page: 99, hide_null: true});
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: stateColumns,
+        callbacks: aggregateCallbacks,
+        dom: 't',
+        order: [[1, 'desc']],
+        paging: false,
+        scrollY: 400,
+        scrollCollapse: true
+      });
+      events.on('state.map', function(params) {
+        var $map = $('.state-map');
+        highlightRowAndState($map, $table, params.state, true);
+      });
+      $table.on('click', 'tr', function() {
+        events.emit('state.table', {
+          state: $(this).find('span[data-state]').attr('data-state')
         });
-        break;
-      case 'contribution-size':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_size'];
-        tables.initTableDeferred($table, null, path, query, sizeColumns, aggregateCallbacks, {
-          dom: 't',
+      });
+      break;
+    case 'receipts-by-employer':
+      path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'];
+      tables.DataTable.defer(
+        $table,
+        _.extend({}, tableOpts, {
+          path: path,
+          query: query,
+          columns: employerColumns,
+          callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
-          pagingType: 'simple',
-          lengthChange: false,
-          pageLength: 10,
-          useHideNull: false,
-          hideEmpty: true
-        });
-        break;
-      case 'receipts-by-state':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'];
-        query = _.extend(query, {per_page: 99, hide_null: true});
-        tables.initTableDeferred($table, null, path, query, stateColumns, aggregateCallbacks,
-          _.extend(
-            {},
-            tableOpts,
-            {
-              dom: 't',
-              order: [[1, 'desc']],
-              paging: false,
-              scrollY: 400,
-              scrollCollapse: true
-            }
-          )
-        );
-        events.on('state.map', function(params) {
-          var $map = $('.state-map');
-          highlightRowAndState($map, $table, params.state, true);
-        });
-        $table.on('click', 'tr', function(e) {
-          events.emit('state.table', {state: $(this).find('span[data-state]').attr('data-state')});
-        });
-        break;
-      case 'receipts-by-employer':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'];
-        tables.initTableDeferred($table, null, path, query, employerColumns, aggregateCallbacks, _.extend({}, tableOpts, {
+        })
+      );
+      break;
+    case 'receipts-by-occupation':
+      path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'];
+      tables.DataTable.defer(
+        $table,
+        _.extend({}, tableOpts, {
+          path: path,
+          query: query,
+          columns: occupationColumns,
+          callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
-        }));
-        break;
-      case 'receipts-by-occupation':
-        path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_occupation'];
-        tables.initTableDeferred($table, null, path, query, occupationColumns, aggregateCallbacks, _.extend({}, tableOpts, {
+        })
+      );
+      break;
+    case 'filing':
+      path = ['committee', committeeId, 'filings'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: filingsColumns,
+        rowCallback: filings.renderRow,
+        dom: '<"panel__main"t><"results-info results-info--bottom"frip>',
+        pagingType: 'simple',
+        // Order by receipt date descending
+        order: [[2, 'desc']],
+        useFilters: true,
+        hideEmpty: true,
+        callbacks: {
+          afterRender: filings.renderModal
+        }
+      });
+      break;
+    case 'disbursements-by-purpose':
+      path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'];
+      tables.DataTable.defer(
+        $table,
+        _.extend({}, tableOpts, {
+          path: path,
+          query: query,
+          columns: disbursementPurposeColumns,
+          callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
-        }));
-        break;
-      case 'filing':
-        path = ['committee', committeeId, 'filings'];
-        tables.initTableDeferred($table, null, path, query, filingsColumns,
-          _.extend({}, tables.offsetCallbacks, {
-            afterRender: filings.renderModal
-          }),
-          {
-            rowCallback: filings.renderRow,
-            dom: '<"panel__main"t><"results-info results-info--bottom"frip>',
-            pagingType: 'simple',
-            // Order by receipt date descending
-            order: [[2, 'desc']],
-            useFilters: true,
-            hideEmpty: true
-          }
-        );
-        break;
-      case 'disbursements-by-purpose':
-        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'];
-        tables.initTableDeferred($table, null, path, query, disbursementPurposeColumns, aggregateCallbacks, _.extend({}, tableOpts, {
+        })
+      );
+      break;
+    case 'disbursements-by-recipient':
+      path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'];
+      tables.DataTable.defer(
+        $table,
+        _.extend({}, tableOpts, {
+          path: path,
+          query: query,
+          columns: disbursementRecipientColumns,
+          callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
-        }));
-        break;
-      case 'disbursements-by-recipient':
-        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient'];
-        tables.initTableDeferred($table, null, path, query, disbursementRecipientColumns, aggregateCallbacks, _.extend({}, tableOpts, {
+        })
+      );
+      break;
+    case 'disbursements-by-recipient-id':
+      path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'];
+      tables.DataTable.defer(
+        $table,
+        _.extend({}, tableOpts, {
+          path: path,
+          query: query,
+          columns: disbursementRecipientIDColumns,
+          callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
-        }));
-        break;
-      case 'disbursements-by-recipient-id':
-        path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_recipient_id'];
-        tables.initTableDeferred($table, null, path, query, disbursementRecipientIDColumns, aggregateCallbacks, _.extend({}, tableOpts, {
-          order: [[1, 'desc']],
-        }));
-        break;
+        })
+      );
+      break;
     }
   });
 
@@ -325,7 +368,7 @@ $(document).ready(function() {
   events.on('state.table', function(params) {
     highlightRowAndState($map, $('.data-table'), params.state, false);
   });
-  $map.on('click', 'path[data-state]', function(e) {
+  $map.on('click', 'path[data-state]', function() {
     var state = $(this).attr('data-state');
     events.emit('state.map', {state: state});
   });
