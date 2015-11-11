@@ -18,6 +18,7 @@ var siteNav = require('fec-style/js/site-nav');
 var skipNav = require('fec-style/js/skip-nav');
 var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
+var modals = require('fec-style/js/modals');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
@@ -60,6 +61,8 @@ $('.js-site-nav').each(function() {
 });
 
 new skipNav.Skipnav('.skip-nav', 'main');
+
+new modals.Modal('.js-modal', 'body');
 
 $(document).ready(function() {
     var $body,
