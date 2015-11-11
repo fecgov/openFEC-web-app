@@ -88,12 +88,16 @@ def cycle_end(value):
     return datetime.datetime(value, 12, 31)
 
 
+def nullify(value, *nulls):
+    return value if value not in nulls else None
+
+
 def get_election_url(candidate, cycle, district=None):
     return url_for(
         'elections',
         office=candidate['office_full'].lower(),
-        state=candidate['state'] if candidate['state'] != 'US' else None,
-        district=district or candidate['district'],
+        state=nullify(candidate['state'], 'US'),
+        district=nullify(district or candidate['district'], '00'),
         cycle=cycle,
     )
 
