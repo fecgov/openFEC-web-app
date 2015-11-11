@@ -53,6 +53,7 @@ before_script:
   - travis_retry pip install -r requirements.txt
   - travis_retry npm install
   - travis_retry npm install -g gulp
+  - travis_retry npm install karma-phantomjs-launcher karma-phantomjs-shim
   - npm run build
   - python __init__.py &
 
