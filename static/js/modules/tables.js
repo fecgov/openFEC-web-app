@@ -559,6 +559,8 @@ module.exports = {
   modalRenderFactory: modalRenderFactory,
   MODAL_TRIGGER_CLASS: MODAL_TRIGGER_CLASS,
   MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
+  mapSort: mapSort,
+  mapResponse: mapResponse,
   DataTable: DataTable,
   OffsetPaginator: OffsetPaginator,
   SeekPaginator: SeekPaginator

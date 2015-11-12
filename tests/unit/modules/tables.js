@@ -13,7 +13,8 @@ var _ = require('underscore');
 require('../setup')();
 
 var helpers = require('../../../static/js/modules/helpers');
-var DataTable = require('../../../static/js/modules/tables').DataTable;
+var tables = require('../../../static/js/modules/tables');
+var DataTable = tables.DataTable;
 
 describe('data table', function() {
   before(function() {
@@ -65,10 +66,16 @@ describe('data table', function() {
       expect(prev.length).to.equal(1);
       expect(prev.is(':visible')).to.be.false;
     });
+
+    it('only adds widgets once', function() {
+      this.table.ensureWidgets();
+      this.table.ensureWidgets();
+      var prev = this.table.$body.prev('.is-loading');
+      expect(prev.length).to.equal(1);
+    });
   });
 
-  describe('buildUrl()', function() {
-
+  describe('fetches data', function() {
     it('builds URLs', function() {
       _.extend(this.table.opts, {
         path: ['path', 'to', 'endpoint'],
@@ -86,6 +93,35 @@ describe('data table', function() {
         {party: 'DFL', sort: '-office', sort_hide_null: 'true', per_page: 30, page: 3, extra: 'true'}
       );
       expect(URI(url).equals(expected)).to.be.true;
+    });
+
+    it('renders data', function() {
+      this.table.xhr = null;
+      var callback = sinon.stub();
+      var resp = {
+        results: [
+          {name: 'Jed Bartlet', office: 'President', party: 'DEM'},
+        ],
+        pagination: {count: 42}
+      };
+      this.table.fetch({}, callback);
+      this.deferred.resolve(resp);
+      expect(callback).to.have.been.calledWith(tables.mapResponse(resp));
+    });
+
+    it('hides table on empty results', function() {
+      this.table.xhr = null;
+      this.table.opts.hideEmpty = true;
+      var callback = sinon.stub();
+      var resp = {
+        results: [],
+        pagination: {count: 0}
+      };
+      this.table.fetch({}, callback);
+      this.deferred.resolve(resp);
+      expect(
+        $.fn.DataTable.isDataTable(this.table.api.table().node())
+      ).to.be.false;
     });
   });
 });
