@@ -1,7 +1,5 @@
 'use strict';
 
-/* global describe, it */
-
 var chai = require('chai');
 var expect = chai.expect;
 

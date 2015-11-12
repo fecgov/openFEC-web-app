@@ -46,6 +46,10 @@ function cycleDates(year) {
   };
 }
 
+function ensureArray(value) {
+  return _.isArray(value) ? value : [value];
+}
+
 function filterNull(params) {
   return _.chain(params)
     .pairs()
@@ -74,6 +78,7 @@ function buildUrl(path, query) {
 module.exports = {
   currency: currency,
   datetime: datetime,
+  ensureArray: ensureArray,
   decodeAmendment: decodeAmendment,
   cycleDates: cycleDates,
   filterNull: filterNull,
