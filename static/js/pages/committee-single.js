@@ -209,6 +209,22 @@ var aggregateCallbacks = _.extend(
   tables.offsetCallbacks
 );
 
+function initExpendituresTable() {
+  var $table = $('table[data-type="independent-expenditure-committee"]');
+  var path = ['schedules', 'schedule_e', 'by_candidate'];
+  var query = {
+    committee_id: $table.data('committee'),
+    cycle: $table.data('cycle')
+  };
+  tables.initTableDeferred($table, null, path, query, expendituresColumns, tables.offsetCallbacks, {
+    // Order by receipt date descending
+    order: [[0, 'desc']],
+    dom: tables.simpleDOM,
+    pagingType: 'simple',
+    hideEmpty: true
+  });
+}
+
 $(document).ready(function() {
   // Set up data tables
   $('.data-table').each(function(index, table) {
