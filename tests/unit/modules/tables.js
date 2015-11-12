@@ -7,9 +7,12 @@ var expect = chai.expect;
 chai.use(sinonChai);
 
 var $ = require('jquery');
+var URI = require('URIjs');
+var _ = require('underscore');
 
 require('../setup')();
 
+var helpers = require('../../../static/js/modules/helpers');
 var DataTable = require('../../../static/js/modules/tables').DataTable;
 
 describe('data table', function() {
@@ -56,9 +59,33 @@ describe('data table', function() {
     });
 
     it('adds hidden loading widget', function() {
+      this.table.ensureWidgets();
+      this.deferred.reject();
       var prev = this.table.$body.prev('.is-loading');
       expect(prev.length).to.equal(1);
       expect(prev.is(':visible')).to.be.false;
+    });
+  });
+
+  describe('buildUrl()', function() {
+
+    it('builds URLs', function() {
+      _.extend(this.table.opts, {
+        path: ['path', 'to', 'endpoint'],
+        query: {extra: 'true'}
+      });
+      this.table.filters = {party: 'DFL'};
+      var data = {
+        start: 60,
+        length: 30,
+        order: [{column: 1, dir: 'desc'}]
+      };
+      var url = this.table.buildUrl(data);
+      var expected = helpers.buildUrl(
+        ['path', 'to', 'endpoint'],
+        {party: 'DFL', sort: '-office', sort_hide_null: 'true', per_page: 30, page: 3, extra: 'true'}
+      );
+      expect(URI(url).equals(expected)).to.be.true;
     });
   });
 });

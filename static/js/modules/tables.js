@@ -483,27 +483,29 @@ DataTable.prototype.fetch = function(data, callback) {
     pushQuery(self.filterSet.serialize(), self.filterSet.fields);
     self.filters = self.filterSet.serialize();
   }
-  var query = _.extend({}, self.filters || {});
-  query.sort = mapSort(data.order, self.opts.columns);
-  if (self.opts.useHideNull) {
-    query.sort_hide_null = self.$hideNullWidget.is(':checked');
-  }
-  query = _.extend(query, self.paginator.mapQuery(data, query));
+  var url = self.buildUrl(data);
   self.$processing && self.$processing.show();
   self.xhr && self.xhr.abort();
   self.fetchContext = {
     data: data,
     callback: callback
   };
-  self.xhr = $.getJSON(
-    helpers.buildUrl(self.opts.path, _.extend({}, query, self.opts.query || {}))
-  ).done(
-    self.fetchSuccess.bind(self)
-  ).fail(
-    self.fetchError.bind(self)
-  ).always(function() {
+  self.xhr = $.getJSON(url);
+  self.xhr.done(self.fetchSuccess.bind(self));
+  self.xhr.fail(self.fetchError.bind(self));
+  self.xhr.always(function() {
     self.$processing && self.$processing.hide();
   });
+};
+
+DataTable.prototype.buildUrl = function(data) {
+  var query = _.extend({}, this.filters || {});
+  query.sort = mapSort(data.order, this.opts.columns);
+  if (this.opts.useHideNull) {
+    query.sort_hide_null = this.$hideNullWidget.is(':checked');
+  }
+  query = _.extend(query, this.paginator.mapQuery(data, query));
+  return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
 };
 
 DataTable.prototype.fetchSuccess = function(resp) {
