@@ -3,7 +3,7 @@
 /* global window */
 
 var $ = require('jquery');
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 var moment = require('moment');
 var topojson = require('topojson');

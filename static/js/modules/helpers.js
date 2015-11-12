@@ -2,7 +2,7 @@
 
 /* global Intl, BASE_PATH, API_LOCATION, API_VERSION, API_KEY */
 
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 var moment = require('moment');
 var decoders = require('./decoders');

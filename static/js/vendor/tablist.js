@@ -4,7 +4,7 @@
 */
 
 var $ = require('jquery');
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 
 var events = require('fec-style/js/events');

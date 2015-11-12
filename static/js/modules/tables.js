@@ -3,7 +3,7 @@
 /* global window, document */
 
 var $ = require('jquery');
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 var tabs = require('../vendor/tablist');
 var accessibility = require('fec-style/js/accessibility');
