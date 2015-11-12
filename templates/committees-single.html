@@ -136,6 +136,9 @@
         {% include 'partials/committee/disbursements-tab.html' %}
         {% include 'partials/committee/between-committees-tab.html' %}
       {% endif %}
+      {% if committee_type not 'P' %}
+        {% include 'partials/committee/independent-expenditures-tab.html' %}
+      {% endif %}
       {% include 'partials/committee/filings-tab.html' %}
     {% endwith %}
   </div>
