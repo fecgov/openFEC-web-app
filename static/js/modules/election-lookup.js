@@ -325,7 +325,7 @@ ElectionLookup.prototype.getTitle = function() {
   var params = this.serialized;
   var title = params.cycle + ' candidates';
   if (params.zip) {
-    title += ' in zip code ' + params.zip;
+    title += ' in ZIP code ' + params.zip;
   } else {
     title += ' in ' + params.state;
     if (params.district && params.district !== '00') {
