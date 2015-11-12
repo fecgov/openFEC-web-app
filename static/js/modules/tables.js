@@ -402,6 +402,7 @@ var defaultCallbacks = {
 
 function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
   var $processing = $('<div class="overlay is-loading"></div>');
+  var $downloadButton = $('<button class="results-info__download button--primary-contrast js-modal" type="button">Export data (CSV)</button>');
   var $hideNullWidget = $(
     '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
     '<label for="null-checkbox" class="results-info__null">' +
@@ -488,6 +489,9 @@ function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
     updateOnChange($form, api);
     $table.on('draw.dt', adjustFormHeight.bind(null, $table, $form));
   }
+
+  // Add download button and modal
+  $paging.prepend($downloadButton);
 }
 
 /**
