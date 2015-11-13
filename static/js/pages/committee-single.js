@@ -209,11 +209,17 @@ var aggregateCallbacks = _.extend(
   tables.offsetCallbacks
 );
 
+var expendituresColumns = [
+  tables.currencyColumn({data: 'total'}),
+  columns.supportOpposeColumn,
+  tables.committeeColumn({data: 'candidate', className: 'all'}),
+];
+
 function initExpendituresTable() {
   var $table = $('table[data-type="independent-expenditure-committee"]');
-  var path = ['schedules', 'schedule_e', 'by_candidate'];
+  var committeeId = $table.data('committee');
+  var path = ['committee', committeeId, 'schedules', 'schedule_e', 'by_candidate'];
   var query = {
-    committee_id: $table.data('committee'),
     cycle: $table.data('cycle')
   };
   tables.initTableDeferred($table, null, path, query, expendituresColumns, tables.offsetCallbacks, {
@@ -226,6 +232,7 @@ function initExpendituresTable() {
 }
 
 $(document).ready(function() {
+  initExpendituresTable();
   // Set up data tables
   $('.data-table').each(function(index, table) {
     var $table = $(table);
