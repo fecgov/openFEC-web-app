@@ -27,20 +27,12 @@
         </div>
         <div>
           <h5 class="term t-data-header" data-term="Ending Cash on Hand">Ending cash on hand</h5>
-          <span class="t-big-data">{{ null.null( aggregate.cash | currency ) }}</span>
+          <span class="t-big-data">{{ null.null( aggregate.cash_on_hand_end_period | currency ) }}</span>
         </div>
         <div>
           <h5 class="term t-data-header" data-term="Debt">Debt</h5>
-          <span class="t-big-data">{{ null.null( aggregate.debt | currency ) }}</span>
+          <span class="t-big-data">{{ null.null( aggregate.debts_owed_by_committee | currency ) }}</span>
         </div>
-        <p>
-          Coverage period:
-          {% if aggregate.start_date and aggregate.end_date %}
-          {{ aggregate.start_date | date }}–{{ aggregate.end_date | date }}
-          {% else %}
-          <a class='term' data-term='None'>None</a>
-          {% endif %}
-        </p>
         <p>
           {% if aggregate.receipts != 0 or
             aggregate.disbursements != 0 or
