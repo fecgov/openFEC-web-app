@@ -28,8 +28,8 @@ CycleSelect.prototype.initCycles = function() {
   });
   bins.unshift({min: selected - this.duration + 1, max: selected, period: true});
   this.$cycles.html(cyclesTemplate(bins));
-  var query = URI.parseQuery(window.location.search);
-  this.$cycles.find('[value="' + query.cycle + '"][data-period="' + query.period + '"]')
+  var params = this.getParams();
+  this.$cycles.find('[value="' + params.cycle + '"][data-period="' + params.period + '"]')
     .prop('selected', true);
   this.$cycles.on('change', this.handleChange.bind(this));
 };
@@ -61,6 +61,14 @@ function QueryCycleSelect() {
 
 QueryCycleSelect.prototype = Object.create(CycleSelect.prototype);
 
+QueryCycleSelect.prototype.getParams = function() {
+  var query = URI.parseQuery(window.location.search);
+  return {
+    cycle: query.cycle,
+    period: query.period
+  };
+};
+
 QueryCycleSelect.prototype.nextUrl = function(cycle, period) {
   return URI(window.location.href)
     .removeQuery('cycle')
@@ -77,6 +85,18 @@ function PathCycleSelect() {
 }
 
 PathCycleSelect.prototype = Object.create(CycleSelect.prototype);
+
+PathCycleSelect.prototype.getParams = function() {
+  var query = URI.parseQuery(window.location.search);
+  var cycle = window.location.pathname
+    .replace(/\/$/, '')
+    .split('/')
+    .pop();
+  return {
+    cycle: cycle,
+    period: query.period
+  };
+};
 
 PathCycleSelect.prototype.nextUrl = function(cycle, period) {
   var uri = URI(window.location.href);
