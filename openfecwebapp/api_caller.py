@@ -78,10 +78,10 @@ def load_cmte_financials(committee_id, **filters):
     }
 
 
-def load_candidate_totals(candidate_id, cycle):
+def load_candidate_totals(candidate_id, cycle, period=True):
     response = _call_api(
         'candidate', candidate_id, 'totals',
-        cycle=cycle,
+        cycle=cycle, period=period,
     )
     if response['results']:
         return response['results'][0]

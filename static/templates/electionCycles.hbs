@@ -1,0 +1,10 @@
+<select class="js-subcycle-select">
+  {{#each this}}
+  <option value="{{this.max}}" data-period="{{this.period}}">
+    {{#if this.period}}
+    Full cycle:
+    {{/if}}
+    {{this.min}} - {{this.max}}
+  </option>
+  {{/each}}
+</select>

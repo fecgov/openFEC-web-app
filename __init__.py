@@ -185,14 +185,16 @@ def developers():
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
+    'period': fields.Bool(missing=True),
 })
-def candidate_page(c_id, cycle=None):
+def candidate_page(c_id, cycle=None, period=True):
     """Fetch and render data for candidate detail page.
 
     :param int cycle: Optional cycle for associated committees and financials.
+    :param bool period: Load full election period
     """
-    candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle)
-    return views.render_candidate(candidate, committees, cycle)
+    candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle=cycle)
+    return views.render_candidate(candidate, committees, cycle, period)
 
 
 @app.route('/committee/<c_id>/')
