@@ -481,8 +481,10 @@ DataTable.prototype.fetch = function(data, callback) {
     self.filters = self.filterSet.serialize();
   }
   var url = self.buildUrl(data);
-  self.$processing && self.$processing.show();
-  self.xhr && self.xhr.abort();
+  self.$processing.show();
+  if (self.xhr) {
+    self.xhr.abort();
+  }
   self.fetchContext = {
     data: data,
     callback: callback
@@ -491,7 +493,7 @@ DataTable.prototype.fetch = function(data, callback) {
   self.xhr.done(self.fetchSuccess.bind(self));
   self.xhr.fail(self.fetchError.bind(self));
   self.xhr.always(function() {
-    self.$processing && self.$processing.hide();
+    self.$processing.hide();
   });
 };
 
