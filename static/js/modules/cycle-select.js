@@ -22,11 +22,11 @@ CycleSelect.prototype.initCycles = function() {
   this.$cycles = $('<div></div>');
   this.$cycles.insertAfter(this.$elm);
   var selected = parseInt(this.$elm.val());
-  var cycles = _.range(selected - this.duration + 2, selected + 2, 2);
+  var cycles = _.range(selected, selected - this.duration, -2);
   var bins = _.map(cycles, function(cycle) {
     return {min: cycle - 1, max: cycle, period: false};
   });
-  bins.unshift({min: _.first(cycles) - 1, max: _.last(cycles), period: true});
+  bins.unshift({min: selected - this.duration + 1, max: selected, period: true});
   this.$cycles.html(cyclesTemplate(bins));
   var query = URI.parseQuery(window.location.search);
   this.$cycles.find('[value="' + query.cycle + '"][data-period="' + query.period + '"]')
@@ -45,7 +45,10 @@ CycleSelect.build = function($elm) {
 
 CycleSelect.prototype.handleChange = function(e) {
   var $target = $(e.target);
-  this.setUrl(this.nextUrl($target));
+  var cycle = $target.val();
+  var period = $target.find(':selected').data('period');
+  period = period !== undefined ? period : true;
+  this.setUrl(this.nextUrl(cycle, period));
 };
 
 CycleSelect.prototype.setUrl = function(url) {
@@ -58,9 +61,7 @@ function QueryCycleSelect() {
 
 QueryCycleSelect.prototype = Object.create(CycleSelect.prototype);
 
-QueryCycleSelect.prototype.nextUrl = function($elm) {
-  var cycle = $elm.val();
-  var period = $elm.find(':selected').data('period') || false;
+QueryCycleSelect.prototype.nextUrl = function(cycle, period) {
   return URI(window.location.href)
     .removeQuery('cycle')
     .removeQuery('period')
@@ -77,9 +78,7 @@ function PathCycleSelect() {
 
 PathCycleSelect.prototype = Object.create(CycleSelect.prototype);
 
-PathCycleSelect.prototype.nextUrl = function($elm) {
-  var cycle = $elm.val();
-  var period = $elm.find(':selected').data('period') || false;
+PathCycleSelect.prototype.nextUrl = function(cycle, period) {
   var uri = URI(window.location.href);
   var path = uri.path()
     .replace(/^\/|\/$/g, '')

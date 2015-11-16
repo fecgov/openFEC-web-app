@@ -1,4 +1,4 @@
-{% macro cycle_select(cycles, cycle=none, duration=none, location='query', id='cycle-select', tooltip=True) %}
+{% macro cycle_select(cycles, cycle=none, duration=2, location='query', id='cycle-select', tooltip=True) %}
 {% if cycles %}
   {% if tooltip %}
     <div class="tooltip__container">
@@ -16,10 +16,10 @@
       data-cycle-location="{{ location }}"
       data-duration="{{ duration }}"
     >
-  {% for each in cycles | restrict_cycles | sort(reverse=True) %}
+  {% for each in cycles | sort(reverse=True) %}
     <option
         value="{{ each }}"
-        {% if each == cycle %}selected{% endif %}
+        {% if cycle and cycle <= each and cycle > (each - duration) %}selected{% endif %}
       >{{ each }}</option>
   {% endfor %}
   </select>

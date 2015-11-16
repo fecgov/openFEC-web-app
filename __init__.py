@@ -1,4 +1,3 @@
-import re
 import http
 import json
 import locale
@@ -347,17 +346,6 @@ def fmt_year_range(year):
     if type(year) == int:
         return "{}–{}".format(year - 1, year)
     return None
-
-
-@app.template_filter()
-def fmt_report_desc(report_full_description):
-    if report_full_description:
-        return re.sub('{.+}', '', report_full_description)
-
-
-@app.template_filter()
-def restrict_cycles(value, start_year=START_YEAR):
-    return [each for each in value if start_year <= each <= utils.current_cycle()]
 
 
 @app.template_filter()
