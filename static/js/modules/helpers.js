@@ -23,7 +23,7 @@ function currency(value) {
 Handlebars.registerHelper('currency', currency);
 
 function datetime(value, options) {
-  var hash = options ? options.hash : {};
+  var hash = options.hash || {};
   var format = hash.pretty ? 'MMM D, YYYY' : 'MM-DD-YYYY';
   var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
   return parsed.isValid() ? parsed.format(format) : null;
