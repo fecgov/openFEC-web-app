@@ -123,6 +123,15 @@ def get_base_path():
     return request.headers.get('X-Script-Name', '')
 
 
+def format_election_years(cycle, period, duration):
+    start = (
+        cycle - duration + 1
+        if period and duration
+        else cycle - 1
+    )
+    return '{}–{}'.format(start, cycle)
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -149,6 +158,7 @@ app.jinja_env.globals.update({
     'base_path': get_base_path,
     'environment': config.environment,
     'today': datetime.date.today,
+    'format_election_years': format_election_years,
 })
 
 
