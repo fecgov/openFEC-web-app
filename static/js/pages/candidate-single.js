@@ -6,7 +6,6 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
-var decoders = require('../modules/decoders');
 
 var filingsColumns = [
   tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
@@ -38,7 +37,8 @@ function initExpendituresTable() {
   var path = ['schedules', 'schedule_e', 'by_candidate'];
   var query = {
     candidate_id: $table.data('candidate'),
-    cycle: $table.data('cycle')
+    cycle: $table.data('cycle'),
+    period: $table.data('period')
   };
   tables.initTableDeferred($table, null, path, query, expendituresColumns, tables.offsetCallbacks, {
     // Order by receipt date descending

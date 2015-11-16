@@ -71,6 +71,7 @@ def render_candidate(candidate, committees, cycle, period=True):
     tmpl_vars['cycle'] = cycle
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
+    tmpl_vars['period'] = period
 
     committee_groups = groupby(committees, lambda each: each['designation'])
     committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
