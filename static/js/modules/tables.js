@@ -14,6 +14,8 @@ require('drmonty-datatables-responsive');
 var helpers = require('./helpers');
 var analytics = require('./analytics');
 
+var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
+
 var simpleDOM = 't<"results-info"ip>';
 
 // Only show table after draw
@@ -405,7 +407,7 @@ var defaultOpts = {
   lengthMenu: [30, 50, 100],
   responsive: {details: false},
   language: {lengthMenu: 'Results per page: _MENU_'},
-  dom: '<"results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
+  dom: '<"js-results-info results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
 };
 
 var defaultCallbacks = {
@@ -463,13 +465,8 @@ DataTable.prototype.ensureWidgets = function() {
   this.$body.before(this.$processing);
 
   if (this.opts.useHideNull) {
-    this.$hideNullWidget = $(
-      '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
-      '<label for="null-checkbox" class="results-info__null">' +
-        'Hide results with missing values when sorting' +
-      '</label>'
-    );
-    var $paging = this.$body.closest('.dataTables_wrapper').find('.results-info--top');
+    this.$hideNullWidget = $(hideNullTemplate());
+    var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
     $paging.prepend(this.$hideNullWidget);
   }
 
