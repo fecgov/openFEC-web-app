@@ -8,8 +8,8 @@ var _ = require('underscore');
 var tabs = require('../vendor/tablist');
 var accessibility = require('fec-style/js/accessibility');
 
-require('datatables');
-require('drmonty-datatables-responsive');
+require('datatables.net')(window, $);
+require('datatables.net-responsive');
 
 var helpers = require('./helpers');
 var analytics = require('./analytics');
