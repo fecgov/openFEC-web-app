@@ -54,7 +54,7 @@
     "url": "https://github.com/18F/openfec-web-app/issues"
   },
   "dependencies": {
-    "URIjs": "1.16.0",
+    "urijs": "1.16.1",
     "chroma-js": "1.0.1",
     "colorbrewer": "0.0.2",
     "d3": "3.5.5",
