@@ -76,6 +76,10 @@ describe('data table', function() {
   });
 
   describe('fetches data', function() {
+    beforeEach(function() {
+      this.table.xhr = null;
+    });
+
     it('builds URLs', function() {
       _.extend(this.table.opts, {
         path: ['path', 'to', 'endpoint'],
@@ -96,7 +100,6 @@ describe('data table', function() {
     });
 
     it('renders data', function() {
-      this.table.xhr = null;
       var callback = sinon.stub();
       var resp = {
         results: [
@@ -110,7 +113,6 @@ describe('data table', function() {
     });
 
     it('hides table on empty results', function() {
-      this.table.xhr = null;
       this.table.opts.hideEmpty = true;
       var callback = sinon.stub();
       var resp = {
@@ -122,6 +124,60 @@ describe('data table', function() {
       expect(
         $.fn.DataTable.isDataTable(this.table.api.table().node())
       ).to.be.false;
+    });
+
+    it('pushes filter parameters to window location', function() {
+      var serialized = {
+        name: 'bartlet',
+        office: 'president',
+        party: 'democrat'
+      };
+      this.table.filterSet = {
+        serialize: function() { return serialized; },
+        fields: ['name', 'office', 'party']
+      };
+      this.table.fetch({}, function() {});
+      expect(this.table.filters).to.deep.equal(serialized);
+      var params = URI.parseQuery(window.location.search);
+      expect(params.name).to.equal('bartlet');
+    });
+
+    it('terminates ongoing ajax requests', function() {
+      var xhr = this.table.xhr = {abort: sinon.stub()};
+      this.table.fetch({}, function() {});
+      expect(xhr.abort).to.have.been.called;
+    });
+  });
+
+  describe('listens to window state', function() {
+    beforeEach(function() {
+      sinon.stub(this.table.api.ajax, 'reload');
+    });
+
+    afterEach(function() {
+      this.table.api.ajax.reload.restore();
+    });
+
+    it('calls fetch on reload', function() {
+      var serialized = {name: 'bartlet'};
+      this.table.filterSet = {
+        activate: function() {},
+        serialize: function() { return serialized; }
+      };
+      this.table.filters = null;
+      this.table.handlePopState();
+      expect(this.table.api.ajax.reload).to.have.been.called;
+    });
+
+    it('does not call fetch on reload when state is unchanged', function() {
+      var serialized = {name: 'bartlet'};
+      this.table.filterSet = {
+        activate: function() {},
+        serialize: function() { return serialized; }
+      };
+      this.table.filters = serialized;
+      this.table.handlePopState();
+      expect(this.table.api.ajax.reload).to.have.not.been.called;
     });
   });
 });
