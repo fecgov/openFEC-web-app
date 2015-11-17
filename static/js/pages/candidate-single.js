@@ -23,8 +23,9 @@ function initFilingsTable() {
   var $table = $('table[data-type="filing"]');
   var candidateId = $table.attr('data-candidate');
   var path = ['candidate', candidateId, 'filings'];
-  tables.initTableDeferred($table, null, path, {}, filingsColumns, tables.offsetCallbacks, {
-    // Order by receipt date descending
+  tables.DataTable.defer($table, {
+    path: path,
+    columns: filingsColumns,
     order: [[2, 'desc']],
     dom: tables.simpleDOM,
     pagingType: 'simple',
@@ -40,7 +41,10 @@ function initExpendituresTable() {
     cycle: $table.data('cycle'),
     period: $table.data('period')
   };
-  tables.initTableDeferred($table, null, path, query, expendituresColumns, tables.offsetCallbacks, {
+  tables.DataTable.defer($table, {
+    path: path,
+    query: query,
+    columns: expendituresColumns,
     // Order by receipt date descending
     order: [[0, 'desc']],
     dom: tables.simpleDOM,

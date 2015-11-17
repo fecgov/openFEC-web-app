@@ -4,7 +4,7 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var URI = require('URIjs');
+var URI = require('urijs');
 
 var cyclesTemplate = require('../../templates/electionCycles.hbs');
 
