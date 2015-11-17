@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, document */
+/* global document */
 
 var $ = require('jquery');
 
@@ -16,7 +16,10 @@ var filingsColumns = columns.getColumns(
 
 $(document).ready(function() {
   var $table = $('#results');
-  tables.initTable($table, null, 'filings', {per_page: 10}, filingsColumns, tables.offsetCallbacks, {
+  new tables.DataTable($table, {
+    path: 'filings',
+    query: {per_page: 10},
+    columns: filingsColumns,
     // Order by receipt date descending
     order: [[2, 'desc']],
     useFilters: false,
