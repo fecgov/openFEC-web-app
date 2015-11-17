@@ -6,6 +6,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var URI = require('urijs');
 
+var cycleTemplate = require('../../templates/electionCycle.hbs');
 var cyclesTemplate = require('../../templates/electionCycles.hbs');
 
 function CycleSelect(elm) {
@@ -51,7 +52,7 @@ CycleSelect.prototype.initCyclesMulti = function(selected) {
 };
 
 CycleSelect.prototype.initCyclesSingle = function(selected) {
-  this.$cycles.html(selected - 1 + '–' + selected);
+  this.$cycles.html(cycleTemplate({min: selected - 1, max: selected}));
 };
 
 CycleSelect.build = function($elm) {

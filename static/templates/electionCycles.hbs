@@ -1,19 +1,19 @@
 <fieldset class="js-subcycle-select toggles">
+  <legend class="label">Time period:</legend>
   {{#each this}}
   <label>
     <input
         type="radio"
         name="cycle-toggle"
-        value="{{this.max}}"
-        class="panel-toggle-control"
-        data-period="{{this.period}}"
-        {{#if this.checked}}checked{{/if}}
+        value="{{max}}"
+        data-period="{{period}}"
+        {{#if checked}}checked{{/if}}
       />
     <span class="button--neutral">
-      {{#if this.period}}
+      {{#if period}}
       Full cycle:
       {{/if}}
-      {{this.min}}–{{this.max}}
+      {{min}}–{{max}}
     </span>
   </label>
   {{/each}}
