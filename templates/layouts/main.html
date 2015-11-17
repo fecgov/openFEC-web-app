@@ -45,7 +45,7 @@
 
   <header class="site-header">
     <div class="disclaimer">
-      <span class="disclaimer__left">Looking for <a href="http://www.fec.gov">fec.gov?</a></span>
+      <span class="disclaimer__left">Looking for <a href="http://www.fec.gov">FEC.gov?</a></span>
       <span class="disclaimer__center">
         An official website of the United States Government
         <img src="{{ url_for('static', filename='img/us_flag_small.png') }}" alt="US flag signifying that this is a United States Federal Government website">
@@ -78,7 +78,9 @@
       <p class="address__title">Federal Election Commission</p>
       <p>999 E Street, NW, Washington, DC 20463</p>
       <p>(800) 424-9530</p>
-      <p><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
+      <p class="address__subtitle">betaFEC feedback</p>
+      <p><a href="mailto:{{ contact_email }}">{{ contact_email }}</a><img class="icon--inline--right" src="{{ url_for('static', filename='img/i-email--inverse.svg') }}" alt="Icon of email being sent"></p>
+      <p><a href="https://github.com/18F/fec">GitHub repository</a><img class="icon--inline--right" src="{{ url_for('static', filename='img/i-github--inverse.svg') }}" alt="Icon of GitHub logo"></p>
     </div>
   </div>
 </footer>

@@ -67,17 +67,23 @@ describe('election lookup', function() {
 
   it('should disable the district select when state is not set', function() {
     this.el.$state.val('').change();
-    expect(this.el.$district.prop('disabled')).to.equal(true);
+    expect(this.el.$district.prop('disabled')).to.be.true;
   });
 
   it('should disable the district select when state is set and the state does not have districts', function() {
     this.el.$state.val('AS').change();
-    expect(this.el.$district.prop('disabled')).to.equal(true);
+    expect(this.el.$district.prop('disabled')).to.be.true;
   });
 
   it('should enable the district select when state is set and the state has districts', function() {
     this.el.$state.val('VA').change();
-    expect(this.el.$district.prop('disabled')).to.equal(false);
+    expect(this.el.$district.prop('disabled')).to.be.false;
+  });
+
+  it('should clear the state select and disable the district select when the zip select is set', function() {
+    this.el.$zip.val('19041').change();
+    expect(this.el.$state.val()).to.equal('');
+    expect(this.el.$district.prop('disabled')).to.be.true;
   });
 
   it('should serialize zip codes', function() {

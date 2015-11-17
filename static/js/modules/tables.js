@@ -240,6 +240,9 @@ function modalRenderFactory(template, fetch) {
     $modal.appendTo($main);
     $modal.css('display', 'block');
 
+    // Add a class to the .dataTables_wrapper
+    $table.closest('.dataTables_wrapper').addClass('dataTables_wrapper--panel');
+
     $table.off('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, callback);
     callback = function(e) {
       if (e.which === 13 || e.type === 'click') {

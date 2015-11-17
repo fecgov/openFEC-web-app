@@ -133,7 +133,7 @@ function getDistrictPalette(scale) {
 
 var ElectionFormMixin = {
   handleZipChange: function() {
-    this.$state.val('');
+    this.$state.val('').change();
     this.$district.val('');
   },
 
@@ -165,6 +165,8 @@ _.extend(ElectionLookup.prototype, ElectionFormMixin);
 ElectionLookup.prototype.init = function() {
   this.districts = 0;
   this.serialized = {};
+  this.results = [];
+  this.xhr = null;
 
   this.$form = this.$elm.find('form');
   this.$zip = this.$form.find('[name="zip"]');
@@ -214,16 +216,27 @@ ElectionLookup.prototype.search = function(e, opts) {
   opts = _.extend({pushState: true}, opts || {});
   var self = this;
   var serialized = self.serialize();
-  if (self.shouldSearch(serialized) && !_.isEqual(serialized, self.serialized)) {
-    $.getJSON(self.getUrl(serialized)).done(function(response) {
-      // Note: Update district color map before rendering results
-      self.drawDistricts(response.results);
-      self.draw(response.results);
-    });
-    self.serialized = serialized;
-    if (opts.pushState) {
-      window.history.pushState(serialized, null, URI('').query(serialized).toString());
-      analytics.pageView();
+  if (self.shouldSearch(serialized)) {
+    if (!_.isEqual(serialized, self.serialized)) {
+      // Requested search options differ from saved options; request new data.
+      self.xhr && self.xhr.abort();
+      self.xhr = $.getJSON(self.getUrl(serialized)).done(function(response) {
+        // Note: Update district color map before rendering results
+        self.results = response.results;
+        self.drawDistricts(self.results);
+        self.draw(response.results);
+      });
+      self.serialized = serialized;
+      if (opts.pushState) {
+        window.history.pushState(serialized, null, URI('').query(serialized).toString());
+        analytics.pageView();
+      }
+    } else if (self.results) {
+      // Requested options match saved options; redraw cached results. This
+      // ensures that clicking on a state or district will highlight it when
+      // the search options don't match the state of the map, e.g. after the
+      // user has run a search, then zoomed out and triggered a map redraw.
+      self.drawDistricts(self.results);
     }
   }
 };
@@ -241,8 +254,7 @@ ElectionLookup.prototype.handlePopState = function() {
 ElectionLookup.prototype.drawDistricts = function(results) {
   var encoded = _.chain(results)
     .filter(function(result) {
-      return result.state && result.state !== 'US' &&
-        result.district && result.district !== '00';
+      return result.office === 'H';
     })
     .map(function(result) {
       return utils.encodeDistrict(result.state, result.district);
@@ -313,7 +325,7 @@ ElectionLookup.prototype.getTitle = function() {
   var params = this.serialized;
   var title = params.cycle + ' candidates';
   if (params.zip) {
-    title += ' in zip code ' + params.zip;
+    title += ' in ZIP code ' + params.zip;
   } else {
     title += ' in ' + params.state;
     if (params.district && params.district !== '00') {

@@ -27,8 +27,6 @@
     "karma-chrome-launcher": "^0.2.1",
     "karma-coverage": "^0.5.3",
     "karma-mocha": "^0.2.0",
-    "karma-phantomjs-launcher": "^0.2.1",
-    "karma-phantomjs-shim": "^1.1.2",
     "mocha": "^2.2.5",
     "preprocessify": "0.0.3",
     "sinon": "^1.15.4",
@@ -77,5 +75,9 @@
     "underscore": "1.8.3",
     "underscore.string": "3.2.0",
     "watchify": "3.2.1"
+  },
+  "engines": {
+    "node": "0.12.7",
+    "npm": "2.11.3"
   }
 }
