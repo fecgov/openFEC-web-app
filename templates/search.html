@@ -19,10 +19,7 @@
           </div>
         </div>
         <form action="{{ url_for('election_lookup') }}" class="widget__content">
-          <div class="row u-visually-hidden">
-            <label class="label" for="cycle-select">Choose an election cycle</label>
-            {{ select.cycle_select(cycles, location='form', tooltip=False) }}
-          </div>
+          <input class="u-visually-hidden" type="hidden" value="{{cycles[0]}}" name="cycle">
           <div class="row">
             <div class="row">
               <label for="zip" class="label">Find by ZIP code</label>
