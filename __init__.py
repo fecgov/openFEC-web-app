@@ -203,6 +203,8 @@ def candidate_page(c_id, cycle=None, period=True):
     :param bool period: Load full election period
     """
     candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle=cycle)
+    if period and cycle and cycle not in candidate['election_years']:
+        return redirect(url_for('candidate_page', c_id=c_id, cycle=cycle, period='false'))
     return views.render_candidate(candidate, committees, cycle, period)
 
 
