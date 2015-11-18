@@ -20,53 +20,68 @@
           <span class="t-data entity__type">Candidate for {{ office_full }}</span><span class="t-data">ID: {{ candidate_id }}</span>
         </div>
       </div>
-      <div class="row">
-        <div>
+      <ul class="entity__info">
+        <li class="entity__term">
+          <span class="entity__term__label"><a class="term" data-term="Party">Party</a></span>
+          <span class="entity__term__data">{{ party_full }}</span>
+        </li>
+        <li class="entity__term">
+          <span class="entity__term__label"><a class="term" data-term="Status">Status</a></span>
+          <span class="entity__term__data">{% if incumbent_challenge_full %}{{ incumbent_challenge_full|title }}{% endif %}</span>
+        </li>
+        <li class="entity__term">
+          <span class="entity__term__label"><span class="term" data-term="District">District</span></span>
+          <span class="entity__term__data">
+            {% if district and district != '00' %}
+            <a href="{{ election_url(context(), cycle) }}">{{ constants.states[state] }} - {{ district }}</a>
+            {% else %}
+            <a href="{{ election_url(context(), cycle) }}">{{ constants.states[state] }}</a>
+            {% endif %}
+          </span>
+        </li>
+        <li class="entity__term">
+          <span class="entity__term__label">
+            <a class="term" data-term="Principal Campaign Committee">Principal committee</a>
+          </span>
+          {% for c in committee_groups['P'] %}
+          <p class="entity__term__data">
+            <a href="{{ url_for('committee_page', c_id=c.committee_id, cycle=cycle) }}">{{ c.name }}</a>
+          </span>
+          {% endfor %}
+        </li>
+        <li class="entity__term">
+          <span class="entity__term__label">Elections</span>
+          <p class="entity__term__data">
+          {% for year, district in elections %}
+            {{ year }}{% if loop.last == false %},{% endif %}
+          {% endfor %}
+          </p>
+        </li>
+      </ul>
+      <div class="entity__header__bottom">
+        <div class="entity__cycle">
+          <span class="label">View data for</span>
           {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
         </div>
-      </div>
-      <div class="entity__header__bottom">
-        <ul class="entity__info">
-          <li class="entity__term">
-            <span class="entity__term__label"><a class="term" data-term="Party">Party</a></span>
-            <span class="entity__term__data">{{ party_full }}</span>
-          </li>
-          <li class="entity__term">
-            <span class="entity__term__label"><a class="term" data-term="Status">Status</a></span>
-            <span class="entity__term__data">{% if incumbent_challenge_full %}{{ incumbent_challenge_full|title }}{% endif %}</span>
-          </li>
-          <li class="entity__term">
-            <span class="entity__term__label"><span class="term" data-term="District">District</span></span>
-            <span class="entity__term__data">
-              {% if district and district != '00' %}
-              <a href="{{ election_url(context(), cycle) }}">{{ state }} - {{ district }}</a>
-              {% else %}
-              <a href="{{ election_url(context(), cycle) }}">{{ state }}</a>
-              {% endif %}
-            </span>
-          </li>
-          <li class="entity__term">
-            <span class="entity__term__label">
-              <a class="term" data-term="Principal Campaign Committee">Principal committee</a>
-            </span>
-            {% for c in committee_groups['P'] %}
-            <p class="entity__term__data">
-              <a href="{{ url_for('committee_page', c_id=c.committee_id, cycle=cycle) }}">{{ c.name }}</a>
-            </span>
-            {% endfor %}
-          </li>
-          <li class="entity__term">
-            <span class="entity__term__label">Elections</span>
-            <ul class="entity__term__data">
-            {% for year, district in elections %}
-              <a href="{{ election_url(context(), year, district) }}">{{ year }}</a>{% if loop.last == false %},{% endif %}
-            {% endfor %}
-            </ul>
-          </li>
-        </ul>
+        <div class="entity__election">
+          <span class="entity__term__label">More information on this election</span>
+          <a
+            class="button card card--feature card--full card--neutral"
+            href="{{ election_url(context(), cycle) }}"
+            >
+            <div class="card__image__container">
+              <img class="card__image icon--complex" src="/static/img/i-elections--primary.svg" alt="Icon representing elections">
+            </div>
+            <div class="card__content">
+              <span class="t-sans t-block">{{cycle}} {{office_full}}</span>
+              <span class="t-block">{% if district != '00' %}{{ constants.states[state] }} - {{ district }}{% else %}{{ constants.states[state] }}{% endif %}</span>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </header>
+
   <div class="page-controls page-controls--neutral">
     <div class="page-controls__top">
       <div class="container">
