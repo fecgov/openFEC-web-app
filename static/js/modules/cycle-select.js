@@ -19,8 +19,8 @@ function CycleSelect(elm) {
 }
 
 CycleSelect.prototype.initCycles = function() {
-  this.$cycles = $('<div></div>');
-  this.$cycles.insertAfter(this.$elm);
+  this.$cycles = $('<div class="cycle-period"></div>');
+  this.$cycles.insertAfter(this.$elm.closest('.cycle-select'));
   var selected = parseInt(this.$elm.val());
   if (this.duration > 2) {
     this.initCyclesMulti(selected);
