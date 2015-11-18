@@ -49,6 +49,9 @@ CycleSelect.prototype.initCyclesMulti = function(selected) {
   });
   this.$cycles.html(cyclesTemplate(bins));
   this.$cycles.on('change', this.handleChange.bind(this));
+  if (params.period === 'true' || params.period === undefined) {
+    this.$cycles.find('.js-subcycle-select').addClass('subcycle--all-selected');
+  }
 };
 
 CycleSelect.prototype.initCyclesSingle = function(selected) {
