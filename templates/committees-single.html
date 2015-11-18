@@ -15,51 +15,50 @@
     <header class="entity__header entity__header--primary">
       <div class="container">
         <div class="entity__header__top row">
-          <div class="usa-width-three-fourths">
-            <h1 class="entity__name">{{ name }}</h1>
-            <span class="t-data entity__type">
-              {{ committee_type_full }}
-               - {{ designation_full }}
-               {% if organization %} - {{ organization }}{% endif %}
-            </span><span class="t-data">ID: {{ committee_id }}</span>
-          </div>
-          <div class="usa-width-one-fourth">
-            {{ select.cycle_select(cycles, cycle) }}
-          </div>
+          <h1 class="entity__name">{{ name }}</h1>
+          <span class="t-data entity__type">
+            {{ committee_type_full }}
+             - {{ designation_full }}
+             {% if organization %} - {{ organization }}{% endif %}
+          </span><span class="t-data">ID: {{ committee_id }}</span>
         </div>
-        <div class="entity__header__bottom">
-          <ul class="entity__info">
-            {% if party_full %}
-            <li class="entity__term">
-              <span class="entity__term__label"><span class="term" data-term="Party">Political party</span></span>
-              <span class="entity__term__data">{{ party_full }}</span>
-            </li>
-            {% endif %}
-            <li class="entity__term">
-              <span class="entity__term__label">Treasurer</span>
-              <span class="entity__term__data">{{ treasurer_name }}</span>
-            </li>
-            {% if candidates %}
-            <li class="entity__term">
-              <span class="entity__term__label">Related
-                {% if candidates|length > 1 %}
-                  candidates
-                {% else %}
-                  candidate
-                {% endif %}
-              </span>
-              <ul class="entity__term__data">
-              {% for c in candidates %}
-                <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=cycle) }}">{{ c.name }}</a></li>
-              {% endfor %}
-              </ul>
-            </li>
-            {% endif %}
-            <li class="entity__term">
-              <span class="entity__term__label">Address</span>
-              <span class="entity__term__data">{{ street_1 }}{% if street_2 %}<br>{{ street_2 }}{% endif %} <br> {{city}}, {{state}} {{zip}}</span>
-            </li>
-        </ul>
+        <ul class="entity__info">
+          {% if party_full %}
+          <li class="entity__term">
+            <span class="entity__term__label"><span class="term" data-term="Party">Political party</span></span>
+            <span class="entity__term__data">{{ party_full }}</span>
+          </li>
+          {% endif %}
+          <li class="entity__term">
+            <span class="entity__term__label">Treasurer</span>
+            <span class="entity__term__data">{{ treasurer_name }}</span>
+          </li>
+          {% if candidates %}
+          <li class="entity__term">
+            <span class="entity__term__label">Related
+              {% if candidates|length > 1 %}
+                candidates
+              {% else %}
+                candidate
+              {% endif %}
+            </span>
+            <ul class="entity__term__data">
+            {% for c in candidates %}
+              <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=cycle) }}">{{ c.name }}</a></li>
+            {% endfor %}
+            </ul>
+          </li>
+          {% endif %}
+          <li class="entity__term">
+            <span class="entity__term__label">Address</span>
+            <span class="entity__term__data">{{ street_1 }}{% if street_2 %}<br>{{ street_2 }}{% endif %} <br> {{city}}, {{state}} {{zip}}</span>
+          </li>
+      </ul>
+      <div class="entity__header__bottom">
+        <div class="entity__cycle">
+          <span class="label">View data for</span>
+          {{ select.cycle_select(cycles, cycle)}}
+        </div>
       </div>
     </header>
     <div class="page-controls page-controls--primary">
