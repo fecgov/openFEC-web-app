@@ -35,7 +35,7 @@
             {% if district and district != '00' %}
             <a href="{{ election_url(context(), cycle) }}">{{ constants.states[state] }} - {{ district }}</a>
             {% else %}
-            <a href="{{ election_url(context(), cycle) }}">{{ constants.states[state] }}</a>
+            <a href="{{ election_url(context(), cycle) }}">{{ state }}</a>
             {% endif %}
           </span>
         </li>
