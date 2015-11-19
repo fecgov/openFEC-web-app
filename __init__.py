@@ -378,7 +378,9 @@ if not config.test:
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
-Sentry(app, dsn=config.sentry_dsn)
+
+if config.sentry_dsn:
+    Sentry(app, dsn=config.sentry_dsn)
 
 
 if __name__ == '__main__':
