@@ -71,7 +71,9 @@ CycleSelect.prototype.handleChange = function(e) {
   var $target = $(e.target);
   var cycle = $target.val();
   var period = $target.data('period');
-  period = period !== undefined ? period : true;
+  if (period === undefined && this.duration > 2) {
+    period = 'true';
+  }
   this.setUrl(this.nextUrl(cycle, period));
 };
 
