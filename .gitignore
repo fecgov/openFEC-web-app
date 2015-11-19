@@ -10,5 +10,5 @@ openfecwebapp/local_config.py
 app/
 /.env
 .DS_Store
-
+coverage/
 dist

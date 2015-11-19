@@ -32,7 +32,7 @@ class CommitteesPageTests(SearchPageTestCase):
             self.assertIn('pork', row.text.lower())
 
     def testCommitteePartyFilter(self):
-        self.check_filter('party', 'REP', 3, 'Republican Party')
+        self.check_filter('party', 'REP', 3, 'REPUBLICAN PARTY')
 
     def testCommitteeStateFilter(self):
         self.check_filter('state', 'CA', 2, 'CA')

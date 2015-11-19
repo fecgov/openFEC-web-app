@@ -3,7 +3,7 @@
 /* global require, module */
 
 var $ = require('jquery');
-var URI = require('URIjs');
+var URI = require('urijs');
 
 var helpers = require('./helpers');
 

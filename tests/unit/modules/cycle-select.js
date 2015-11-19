@@ -7,7 +7,7 @@ var expect = chai.expect;
 chai.use(sinonChai);
 
 var $ = require('jquery');
-var URI = require('URIjs');
+var URI = require('urijs');
 
 require('../setup')();
 

@@ -1,12 +1,13 @@
 'use strict';
 
-/* global require, document */
+/* global document */
 
 var $ = require('jquery');
-var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
+var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
 var committeesTemplate = require('../../templates/committees.hbs');
 
 var columns = [
@@ -17,7 +18,7 @@ var columns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['committee', row.committee_id], tables.getCycle(row)),
+        helpers.buildAppUrl(['committee', row.committee_id], tables.getCycle(row, meta)),
         'committee'
       );
     }
@@ -41,19 +42,16 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $form = $('#category-filters');
-  tables.initTable(
-    $table,
-    $form,
-    'committees',
-    {},
-    columns,
-    _.extend(tables.offsetCallbacks, {
+  var filterPanel = new FilterPanel('#category-filters');
+  new tables.DataTable($table, {
+    panel: filterPanel,
+    path: 'committees',
+    columns: columns,
+    useFilters: true,
+    order: [[4, 'desc']],
+    rowCallback: tables.modalRenderRow,
+    callbacks: {
       afterRender: tables.modalRenderFactory(committeesTemplate)
-    }),
-    {
-      useFilters: true,
-      order: [[4, 'desc']],
-      rowCallback: tables.modalRenderRow
     }
-  );});
+  });
+});
