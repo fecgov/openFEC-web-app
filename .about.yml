@@ -59,13 +59,14 @@ services:
 #     name: Name of the license from the Software Package Data Exchange (SPDX): https://spdx.org/licenses/
 #     url: URL for the text of the license
 licenses:
-  betaFEC:
+  openFEC-web-app:
     name: CC0-1.0
-    url: https://github.com/18F/openfec/blob/master/LICENSE.md
+    url: https://github.com/18F/openFEC-web-app/blob/master/LICENSE.md
 
 # URIs for points-of-contact
 # Items:
 # - url: URL for the link
 #   text: Anchor text for the link
 contact:
-- url: leah.bannon@gsa.gov
+- text: Leah Bannon
+  url: leah.bannon@gsa.gov
