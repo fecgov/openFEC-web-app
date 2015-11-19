@@ -60,7 +60,7 @@
     "d3": "3.5.5",
     "datatables": "1.10.7",
     "drmonty-datatables-responsive": "1.0.6",
-    "fec-style": "git+https://github.com/18f/fec-style.git#master",
+    "fec-style": "git+https://github.com/18F/fec-style.git#d3c0fe",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
     "intl": "1.0.0-rc-4",
