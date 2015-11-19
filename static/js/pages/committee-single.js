@@ -180,6 +180,12 @@ var disbursementRecipientIDColumns = [
   }
 ];
 
+var expendituresColumns = [
+  tables.currencyColumn({data: 'total'}),
+  columns.supportOpposeColumn,
+  tables.committeeColumn({data: 'candidate', className: 'all'}),
+];
+
 function buildStateUrl($elm) {
   return helpers.buildUrl(
     ['committee', $elm.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
@@ -208,30 +214,7 @@ var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
 };
 
-var expendituresColumns = [
-  tables.currencyColumn({data: 'total'}),
-  columns.supportOpposeColumn,
-  tables.committeeColumn({data: 'candidate', className: 'all'}),
-];
-
-function initExpendituresTable() {
-  var $table = $('table[data-type="independent-expenditure-committee"]');
-  var committeeId = $table.data('committee');
-  var path = ['committee', committeeId, 'schedules', 'schedule_e', 'by_candidate'];
-  var query = {
-    cycle: $table.data('cycle')
-  };
-  tables.initTableDeferred($table, null, path, query, expendituresColumns, tables.offsetCallbacks, {
-    // Order by receipt date descending
-    order: [[0, 'desc']],
-    dom: tables.simpleDOM,
-    pagingType: 'simple',
-    hideEmpty: true
-  });
-}
-
 $(document).ready(function() {
-  initExpendituresTable();
   // Set up data tables
   $('.data-table').each(function(index, table) {
     var $table = $(table);
@@ -378,6 +361,19 @@ $(document).ready(function() {
           order: [[1, 'desc']],
         })
       );
+      break;
+    case 'independent-expenditure-committee':
+      path = ['committee', committeeId, 'schedules', 'schedule_e', 'by_candidate'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: expendituresColumns,
+        // Order by receipt date descending
+        order: [[0, 'desc']],
+        dom: tables.simpleDOM,
+        pagingType: 'simple',
+        hideEmpty: true
+      });
       break;
     }
   });
