@@ -12,6 +12,7 @@ gunicorn==19.3.0
 webargs==0.18.0
 CacheControl==0.11.5
 cachetools==1.0.2
+raven[flask]==5.8.1
 
 # Development
 invoke==0.10.1

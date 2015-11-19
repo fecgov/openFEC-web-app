@@ -42,6 +42,7 @@ test = os.getenv('FEC_WEB_TEST')
 use_analytics = bool(os.getenv('FEC_WEB_GOOGLE_ANALYTICS'))
 
 github_token = os.getenv('FEC_GITHUB_TOKEN')
+sentry_dsn = os.getenv('SENTRY_DSN')
 
 hmac_secret = os.getenv('HMAC_SECRET')
 hmac_headers = os.getenv('HMAC_HEADERS', '').split(',')
