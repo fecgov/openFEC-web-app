@@ -3,10 +3,11 @@
 /* global require, document */
 
 var $ = require('jquery');
-var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
+var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
 var donationTemplate = require('../../templates/receipts.hbs');
 
 var columns = [
@@ -59,21 +60,18 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $form = $('#category-filters');
-  tables.initTable(
-    $table,
-    $form,
-    'schedules/schedule_a',
-    {},
-    columns,
-    _.extend(tables.seekCallbacks, {
+  var filterPanel = new FilterPanel('#category-filters');
+  new tables.DataTable($table, {
+    path: 'schedules/schedule_a',
+    panel: filterPanel,
+    columns: columns,
+    paginator: tables.SeekPaginator,
+    order: [[4, 'desc']],
+    pagingType: 'simple',
+    useFilters: true,
+    rowCallback: tables.modalRenderRow,
+    callbacks: {
       afterRender: tables.modalRenderFactory(donationTemplate)
-    }),
-    {
-      order: [[4, 'desc']],
-      pagingType: 'simple',
-      useFilters: true,
-      rowCallback: tables.modalRenderRow
     }
-  );
+  });
 });

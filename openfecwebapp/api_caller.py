@@ -4,7 +4,6 @@ from urllib import parse
 import requests
 import cachecontrol
 from flask import abort
-from werkzeug.exceptions import NotFound
 
 from openfecwebapp import utils
 from openfecwebapp import config
@@ -56,12 +55,7 @@ def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
 
 def load_with_nested(primary_type, primary_id, secondary_type, cycle=None):
     path = ('history', str(cycle)) if cycle else ()
-    # Hack: If no history records are found, get the latest detail record
-    # TODO(jmcarp) Roll back once #875 is resolved
-    try:
-        data = load_single_type(primary_type, primary_id, *path)
-    except NotFound:
-        data = load_single_type(primary_type, primary_id)
+    data = load_single_type(primary_type, primary_id, *path)
     cycle = cycle or min(utils.current_cycle(), max(data['cycles']))
     path = ('history', str(cycle))
     nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path)
