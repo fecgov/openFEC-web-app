@@ -103,7 +103,11 @@ var sizeColumns = [
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['candidate', row.candidate_id]),
+        'candidate'
+      );
     }
   },
   makeSizeColumn({data: '0'}),
