@@ -202,9 +202,21 @@ def candidate_page(c_id, cycle=None, election_full=True):
     :param int cycle: Optional cycle for associated committees and financials.
     :param bool election_full: Load full election period
     """
-    candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle=cycle)
+    candidate, committees, cycle = load_with_nested(
+        'candidate', c_id, 'committees',
+        cycle=cycle, cycle_key='election_years',
+    )
     if election_full and cycle and cycle not in candidate['election_years']:
-        return redirect(url_for('candidate_page', c_id=c_id, cycle=cycle, election_full='false'))
+        next_cycle = next(
+            (
+                year for year in sorted(candidate['election_years'])
+                if year > cycle
+            ),
+            max(candidate['election_years']),
+        )
+        return redirect(
+            url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
+        )
     return views.render_candidate(candidate, committees, cycle, election_full)
 
 
