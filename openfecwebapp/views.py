@@ -64,19 +64,23 @@ election_durations = {
     'H': 2,
 }
 
-def render_candidate(candidate, committees, cycle, period=True):
+def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
     tmpl_vars['cycle'] = cycle
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
-    tmpl_vars['period'] = period
+    tmpl_vars['election_full'] = election_full
 
     committee_groups = groupby(committees, lambda each: each['designation'])
     committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
 
-    aggregate = api_caller.load_candidate_totals(candidate['candidate_id'], cycle, period=period)
+    aggregate = api_caller.load_candidate_totals(
+        candidate['candidate_id'],
+        cycle=cycle,
+        election_full=election_full,
+    )
 
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized

@@ -7,11 +7,11 @@
           type="radio"
           name="cycle-toggle"
           value="{{max}}"
-          data-period="{{period}}"
+          data-election-full="{{electionFull}}"
           {{#if checked}}checked{{/if}}
         />
       <span class="button button--neutral">
-        {{#if period}}
+        {{#if electionFull}}
         Full cycle:
         {{/if}}
         {{min}}–{{max}}

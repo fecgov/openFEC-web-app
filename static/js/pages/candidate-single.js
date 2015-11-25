@@ -39,7 +39,7 @@ function initExpendituresTable() {
   var query = {
     candidate_id: $table.data('candidate'),
     cycle: $table.data('cycle'),
-    period: $table.data('period')
+    election_full: $table.data('election-full')
   };
   tables.DataTable.defer($table, {
     path: path,

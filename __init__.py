@@ -123,10 +123,10 @@ def get_base_path():
     return request.headers.get('X-Script-Name', '')
 
 
-def format_election_years(cycle, period, duration):
+def format_election_years(cycle, election_full, duration):
     start = (
         cycle - duration + 1
-        if period and duration
+        if election_full and duration
         else cycle - 1
     )
     return '{}–{}'.format(start, cycle)
@@ -194,18 +194,18 @@ def developers():
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
-    'period': fields.Bool(missing=True),
+    'election_full': fields.Bool(missing=True),
 })
-def candidate_page(c_id, cycle=None, period=True):
+def candidate_page(c_id, cycle=None, election_full=True):
     """Fetch and render data for candidate detail page.
 
     :param int cycle: Optional cycle for associated committees and financials.
-    :param bool period: Load full election period
+    :param bool election_full: Load full election period
     """
     candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle=cycle)
-    if period and cycle and cycle not in candidate['election_years']:
-        return redirect(url_for('candidate_page', c_id=c_id, cycle=cycle, period='false'))
-    return views.render_candidate(candidate, committees, cycle, period)
+    if election_full and cycle and cycle not in candidate['election_years']:
+        return redirect(url_for('candidate_page', c_id=c_id, cycle=cycle, election_full='false'))
+    return views.render_candidate(candidate, committees, cycle, election_full)
 
 
 @app.route('/committee/<c_id>/')

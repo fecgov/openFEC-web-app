@@ -36,15 +36,15 @@ CycleSelect.prototype.initCyclesMulti = function(selected) {
     return {
       min: cycle - 1,
       max: cycle,
-      period: false,
+      electionFull: false,
       checked: cycle.toString() === params.cycle &&
-        params.period === 'false'
+        params.electionFull === 'false'
     };
   });
   bins.unshift({
     min: selected - this.duration + 1,
     max: selected,
-    period: true,
+    electionFull: true,
     checked: true
   });
   this.$cycles.html(cyclesTemplate(bins));
@@ -67,11 +67,11 @@ CycleSelect.build = function($elm) {
 CycleSelect.prototype.handleChange = function(e) {
   var $target = $(e.target);
   var cycle = $target.val();
-  var period = $target.data('period');
-  if (period === undefined && this.duration > 2) {
-    period = 'true';
+  var electionFull = $target.data('election-full');
+  if (electionFull === undefined && this.duration > 2) {
+    electionFull = 'true';
   }
-  this.setUrl(this.nextUrl(cycle, period));
+  this.setUrl(this.nextUrl(cycle, electionFull));
 };
 
 CycleSelect.prototype.setUrl = function(url) {
@@ -88,17 +88,17 @@ QueryCycleSelect.prototype.getParams = function() {
   var query = URI.parseQuery(window.location.search);
   return {
     cycle: query.cycle,
-    period: query.period
+    electionFull: query.election_full
   };
 };
 
-QueryCycleSelect.prototype.nextUrl = function(cycle, period) {
+QueryCycleSelect.prototype.nextUrl = function(cycle, electionFull) {
   return URI(window.location.href)
     .removeQuery('cycle')
-    .removeQuery('period')
+    .removeQuery('election_full')
     .addQuery({
       cycle: cycle,
-      period: period
+      election_full: electionFull
     })
     .toString();
 };
@@ -117,11 +117,11 @@ PathCycleSelect.prototype.getParams = function() {
     .pop();
   return {
     cycle: cycle,
-    period: query.period
+    electionFull: query.election_full
   };
 };
 
-PathCycleSelect.prototype.nextUrl = function(cycle, period) {
+PathCycleSelect.prototype.nextUrl = function(cycle, electionFull) {
   var uri = URI(window.location.href);
   var path = uri.path()
     .replace(/^\/|\/$/g, '')
@@ -131,7 +131,7 @@ PathCycleSelect.prototype.nextUrl = function(cycle, period) {
     .join('/')
     .concat('/');
   return uri.path(path)
-    .search({period: period})
+    .search({election_full: electionFull})
     .toString();
 };
 
