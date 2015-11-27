@@ -13,6 +13,12 @@ require('../setup')();
 
 var CycleSelect = require('../../../static/js/modules/cycle-select').CycleSelect;
 
+function trim(text) {
+  return text
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
 describe('filter set', function() {
   before(function() {
     this.$fixture = $('<div id="fixtures"></div>');
@@ -39,9 +45,46 @@ describe('filter set', function() {
       this.cycleSelect = CycleSelect.build($('#fixtures select'));
     });
 
+    it('renders static two-year period', function() {
+      expect(trim(this.cycleSelect.$cycles.text())).to.equal('Time period: 2011–2012');
+    });
+
     it('changes the query string on change', function() {
       this.cycleSelect.$elm.val('2014').change();
       expect(CycleSelect.prototype.setUrl).to.have.been.calledWith(window.location.href + '?cycle=2014');
+    });
+  });
+
+  describe('election query cycle select', function() {
+    beforeEach(function() {
+      this.$fixture.empty().append(
+        '<select class="cycle-select" data-duration="4" data-cycle-location="query">' +
+          '<option value="2016"></option>' +
+          '<option value="2012"></option>' +
+          '<option value="2008"></option>' +
+        '</select>'
+      );
+      this.cycleSelect = CycleSelect.build($('#fixtures select'));
+    });
+
+    it('renders two-year period select', function() {
+      var $cycles = this.cycleSelect.$cycles.find('span');
+      expect($cycles.length).to.equal(3);
+      var labels = ['Full cycle: 2013–2016', '2015–2016', '2013–2014'];
+      expect(
+        $cycles.map(function(idx, elm) {
+          return trim($(elm).text());
+        }).get()
+      ).to.deep.equal(labels);
+    });
+
+    it('changes the query string on change', function() {
+      this.cycleSelect.$cycles.find('[name="cycle-toggle"]').val('2014').change();
+      expect(
+        CycleSelect.prototype.setUrl
+      ).to.have.been.calledWith(
+        window.location.href + '?cycle=2014&election_full=false'
+      );
     });
   });
 
