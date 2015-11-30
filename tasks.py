@@ -1,6 +1,11 @@
+import os
+
 import git
 from invoke import run
 from invoke import task
+from slacker import Slacker
+
+from openfecwebapp.config import env
 
 
 @task
@@ -33,6 +38,13 @@ def _resolve_rule(repo, branch):
         if rule(repo, branch):
             return space
     return None
+
+
+def _detect_branch(repo):
+    try:
+        return repo.active_branch.name
+    except TypeError:
+        return None
 
 
 def _detect_space(branch=None, yes=False):
@@ -96,7 +108,9 @@ def deploy(space=None, branch=None, yes=False):
     or `branch` if repo is in detached HEAD mode, e.g. when running on Travis.
     """
     # Detect space
-    space = space or _detect_space(branch, yes)
+    repo = git.Repo('.')
+    branch = branch or _detect_branch(repo)
+    space = space or _detect_space(repo, branch, yes)
     if space is None:
         return
 
@@ -128,3 +142,17 @@ def deploy(space=None, branch=None, yes=False):
         run('cf unmap-route {0} {1}'.format(old, opts), echo=True, warn=True)
 
     run('cf stop {0}'.format(old), echo=True, warn=True)
+
+    # Notify after deploy
+    notify(space, branch)
+
+@task
+def notify(space, branch):
+    slack = Slacker(env.get_credential('FEC_SLACK_TOKEN'))
+    user = os.getenv('USER')
+    repo = os.path.split(os.getcwd())[-1]
+    slack.chat.post_message(
+        env.get_credential('FEC_SLACK_CHANNEL', '#fec'),
+        'branch {branch} of repo {repo} deployed to space {space} by {user}'.format(**locals()),
+        username=env.get_credential('FEC_SLACK_BOT', 'fec-bot'),
+    )
