@@ -12,6 +12,7 @@ require('datatables');
 require('drmonty-datatables-responsive');
 
 var helpers = require('./helpers');
+var download = require('./download');
 var analytics = require('./analytics');
 
 var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
@@ -467,10 +468,17 @@ DataTable.prototype.ensureWidgets = function() {
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
 
+  var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
+
   if (this.opts.useHideNull) {
     this.$hideNullWidget = $(hideNullTemplate());
-    var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
     $paging.prepend(this.$hideNullWidget);
+  }
+
+  if (this.opts.useExport) {
+    this.$exportWidget = $('<div class="button">Export this data</div>');
+    this.$exportWidget.on('click', this.export.bind(this));
+    $paging.prepend(this.$exportWidget);
   }
 
   this.hasWidgets = true;
@@ -498,6 +506,11 @@ DataTable.prototype.fetch = function(data, callback) {
   self.xhr.always(function() {
     self.$processing.hide();
   });
+};
+
+DataTable.prototype.export = function() {
+  var url = this.buildUrl(this.api.ajax.params());
+  download.download(url);
 };
 
 DataTable.prototype.buildUrl = function(data) {

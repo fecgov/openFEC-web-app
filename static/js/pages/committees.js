@@ -45,9 +45,10 @@ $(document).ready(function() {
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
     panel: filterPanel,
-    path: 'committees',
+    path: ['committees'],
     columns: columns,
     useFilters: true,
+    useExport: true,
     order: [[4, 'desc']],
     rowCallback: tables.modalRenderRow,
     callbacks: {
