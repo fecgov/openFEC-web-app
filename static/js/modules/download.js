@@ -3,6 +3,7 @@
 var $ = require('jquery');
 var URI = require('urijs');
 var _ = require('underscore');
+var moment = require('moment');
 
 var pending = require('../../templates/download/pending.hbs');
 var complete = require('../../templates/download/complete.hbs');
@@ -19,7 +20,7 @@ function hydrate() {
 function download(url, init) {
   if (storedDownloads().length >= MAX_DOWNLOADS) { return; }
   var item = new DownloadItem(url);
-  if (init || item.downloadUrl === null) {
+  if (init || !item.isPending) {
     item.init();
   }
 }
@@ -30,12 +31,15 @@ function storedDownloads() {
   });
 }
 
-function downloadUrl(url) {
+function getUrlParts(url) {
   var uri = URI(url);
   var path = uri.path().split('/');
   path.splice(2, 0, 'download');
   uri.path(path.join('/'));
-  return uri.toString();
+  return {
+    resource: path[path.length - 2],
+    apiUrl: uri.toString()
+  };
 }
 
 var defaultOpts = {
@@ -54,8 +58,17 @@ function DownloadItem(url, opts) {
   this.promise = null;
 
   this.key = PREFIX + this.url;
-  this.apiUrl = downloadUrl(this.url);
-  this.downloadUrl = window.localStorage.getItem(this.key);
+
+  var urlParts = getUrlParts(this.url);
+  this.apiUrl = urlParts.apiUrl;
+  this.resource = urlParts.resource;
+
+  var payload = JSON.parse(window.localStorage.getItem(this.key)) || {};
+  this.timestamp = payload.timestamp || moment().format();
+  this.downloadUrl = payload.downloadUrl;
+  this.isPending = !_.isEmpty(payload);
+
+  this.filename = this.resource + '-' + this.timestamp + '.csv';
 }
 
 DownloadItem.prototype.init = function() {
@@ -82,7 +95,8 @@ DownloadItem.prototype.serialize = function() {
   return {
     url: this.url,
     apiUrl: this.apiUrl,
-    downloadUrl: this.downloadUrl
+    downloadUrl: this.downloadUrl,
+    filename: this.filename
   };
 };
 
@@ -91,11 +105,22 @@ DownloadItem.prototype.schedule = function() {
 };
 
 DownloadItem.prototype.push = function() {
-  window.localStorage.setItem(this.key, '');
+  window.localStorage.setItem(
+    this.key,
+    JSON.stringify({
+      timestamp: this.timestamp,
+      downloadUrl: this.downloadUrl
+    })
+  );
 };
 
 DownloadItem.prototype.refresh = function() {
-  this.promise = $.getJSON(this.apiUrl);
+  this.promise = $.ajax({
+    method: 'POST',
+    url: this.apiUrl,
+    data: JSON.stringify({filename: this.filename}),
+    contentType: 'application/json'
+  });
   this.promise.then(this.handleSuccess.bind(this));
   this.promise.fail(this.handleError.bind(this));
 };
@@ -114,7 +139,7 @@ DownloadItem.prototype.handleError = function() {
 
 DownloadItem.prototype.finish = function(downloadUrl) {
   this.downloadUrl = downloadUrl;
-  window.localStorage.setItem(this.key, downloadUrl);
+  this.push();
   this.draw();
 };
 
