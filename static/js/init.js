@@ -23,6 +23,10 @@ require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
 require('jquery.inputmask/dist/inputmask/inputmask.numeric.extensions.js');
 
+// @if SENTRY_PUBLIC_DSN
+require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
+// @endif
+
 // Remove extra padding in currency mask
 Inputmask.extendAliases({
   currency: {
