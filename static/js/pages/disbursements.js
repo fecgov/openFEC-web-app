@@ -63,13 +63,14 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
-    path: 'schedules/schedule_b',
+    path: ['schedules', 'schedule_b'],
     panel: filterPanel,
     columns: columns,
     paginator: tables.SeekPaginator,
     order: [[3, 'desc']],
     pagingType: 'simple',
     useFilters: true,
+    useExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(disbursementTemplate)

@@ -21,13 +21,14 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
-    path: 'filings',
+    path: ['filings'],
     panel: filterPanel,
     columns: filingsColumns,
     rowCallback: filings.renderRow,
     // Order by receipt date descending
     order: [[3, 'desc']],
     useFilters: true,
+    useExport: true,
     callbacks: {
       afterRender: filings.renderModal
     }
