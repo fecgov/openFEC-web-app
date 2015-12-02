@@ -68,9 +68,14 @@ DownloadItem.prototype.init = function() {
 
 DownloadItem.prototype.draw = function() {
   var template = this.downloadUrl ? complete : pending;
-  this.$body = $(template(this.serialize()));
-  this.$body.appendTo(this.$parent);
-  this.$body.find('.js-close').on('click', this.close.bind(this));
+  var $body = $(template(this.serialize()));
+  if (this.$body) {
+    this.$body.replaceWith($body);
+  } else {
+    $body.appendTo(this.$parent);
+  }
+  $body.find('.js-close').on('click', this.close.bind(this));
+  this.$body = $body;
 };
 
 DownloadItem.prototype.serialize = function() {
@@ -110,9 +115,7 @@ DownloadItem.prototype.handleError = function() {
 DownloadItem.prototype.finish = function(downloadUrl) {
   this.downloadUrl = downloadUrl;
   window.localStorage.setItem(this.key, downloadUrl);
-  var $body = $(complete(this.serialize()));
-  this.$body.replaceWith($body);
-  this.$body = $body;
+  this.draw();
 };
 
 DownloadItem.prototype.close = function() {
