@@ -19,7 +19,7 @@ var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
-var browseDOM = '<"js-results-info results-info results-info--top"ilfrp>' +
+var browseDOM = '<"js-results-info results-info results-info--top"iplfr>' +
                 '<"panel__main"t>' +
                 '<"results-info"ip>';
 
@@ -477,7 +477,7 @@ DataTable.prototype.ensureWidgets = function() {
 
   if (this.opts.useHideNull) {
     this.$hideNullWidget = $(hideNullTemplate());
-    $paging.prepend(this.$hideNullWidget);
+    $paging.append(this.$hideNullWidget);
   }
 
   if (this.opts.useExport) {
