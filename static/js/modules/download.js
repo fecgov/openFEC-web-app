@@ -11,6 +11,7 @@ var complete = require('../../templates/download/complete.hbs');
 
 var PREFIX = 'download-';
 var MAX_DOWNLOADS = 5;
+var DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 var downloadContainer = null;
 
@@ -74,11 +75,11 @@ function DownloadItem(url, opts, container) {
   this.resource = urlParts.resource;
 
   var payload = JSON.parse(window.localStorage.getItem(this.key)) || {};
-  this.timestamp = payload.timestamp || moment().format();
+  this.timestamp = payload.timestamp || moment().format(DATE_FORMAT);
   this.downloadUrl = payload.downloadUrl;
   this.isPending = !_.isEmpty(payload);
 
-  this.filename = this.resource + '-' + this.timestamp + '.csv';
+  this.filename = this.resource + '-' + this.timestamp + '.zip';
 }
 
 DownloadItem.prototype.init = function() {
