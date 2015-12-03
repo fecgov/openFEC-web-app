@@ -4,11 +4,14 @@ var $ = require('jquery');
 var URI = require('urijs');
 var _ = require('underscore');
 
+var container = require('../../templates/download/container.hbs');
 var pending = require('../../templates/download/pending.hbs');
 var complete = require('../../templates/download/complete.hbs');
 
 var PREFIX = 'download-';
 var MAX_DOWNLOADS = 5;
+
+var downloadContainer = null;
 
 function hydrate() {
   storedDownloads().forEach(function(key) {
@@ -18,7 +21,13 @@ function hydrate() {
 
 function download(url, init) {
   if (storedDownloads().length >= MAX_DOWNLOADS) { return; }
-  var item = new DownloadItem(url);
+
+  if (!downloadContainer) {
+    downloadContainer = new DownloadContainer(document.body);
+    downloadContainer.init();
+  }
+
+  var item = new DownloadItem(url, null, downloadContainer);
   if (init || item.downloadUrl === null) {
     item.init();
   }
@@ -43,9 +52,10 @@ var defaultOpts = {
   parent: '.js-downloads-list'
 };
 
-function DownloadItem(url, opts) {
+function DownloadItem(url, opts, container) {
   this.url = url;
   this.opts = _.extend({}, defaultOpts, opts);
+  this.container = container;
 
   this.$body = null;
   this.$parent = $(this.opts.parent);
@@ -63,6 +73,7 @@ DownloadItem.prototype.init = function() {
   if (!this.downloadUrl) {
     this.refresh();
     this.push();
+    this.container.add();
   }
 };
 
@@ -103,6 +114,7 @@ DownloadItem.prototype.refresh = function() {
 DownloadItem.prototype.handleSuccess = function(response) {
   if (response && response.status === 'complete') {
     this.finish(response.url);
+    this.container.updateStatus('complete');
   } else {
     this.schedule();
   }
@@ -123,6 +135,45 @@ DownloadItem.prototype.close = function() {
   this.promise && this.promise.abort();
   window.localStorage.removeItem(this.key);
   this.$body.remove();
+  this.container.subtract();
+};
+
+
+function DownloadContainer(parent) {
+  this.$parent = $(parent);
+  this.$statusMessage = $('.js-download-status-message');
+  this.status = 'pending';
+  this.items = 0;
+};
+
+DownloadContainer.prototype.init = function() {
+  this.$body = $(container());
+  this.$parent.append(this.$body);
+};
+
+DownloadContainer.prototype.add = function() {
+  this.items++;
+};
+
+DownloadContainer.prototype.subtract = function() {
+  this.items = this.items - 1;
+  if (this.items === 0) {
+    this.destroy();
+  }
+};
+
+DownloadContainer.prototype.updateStatus = function(status) {
+  this.status = status;
+  if (this.status === 'complete') {
+    this.$statusMessage.text('Your export is complete');
+  } else {
+    this.$statusMessage.text('Building your exports...');
+  }
+};
+
+DownloadContainer.prototype.destroy = function() {
+  this.$body.remove();
+  downloadContainer = null;
 };
 
 module.exports = {
