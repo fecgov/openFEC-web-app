@@ -63,6 +63,7 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
+    title: 'Disbursement',
     path: ['schedules', 'schedule_b'],
     panel: filterPanel,
     columns: columns,

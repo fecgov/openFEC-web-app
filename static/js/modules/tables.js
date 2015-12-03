@@ -16,8 +16,12 @@ var download = require('./download');
 var analytics = require('./analytics');
 
 var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
+var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
+var browseDOM = '<"js-results-info results-info results-info--top"ilfrp>' +
+                '<"panel__main"t>' +
+                '<"results-info"ip>';
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -411,7 +415,8 @@ var defaultOpts = {
   lengthMenu: [30, 50, 100],
   responsive: {details: false},
   language: {lengthMenu: 'Results per page: _MENU_'},
-  dom: '<"js-results-info results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
+  title: null,
+  dom: browseDOM,
 };
 
 var defaultCallbacks = {
@@ -476,9 +481,11 @@ DataTable.prototype.ensureWidgets = function() {
   }
 
   if (this.opts.useExport) {
-    this.$exportWidget = $('<div class="button button--primary-contrast results-info__download">Export this data</div>');
+    var title = this.opts.title;
+    this.$exportWidget = $(exportWidgetTemplate(title));
+    $paging.after(this.$exportWidget);
+    this.$exportButton = $('.js-export');
     this.$exportWidget.on('click', this.export.bind(this));
-    $paging.prepend(this.$exportWidget);
   }
 
   this.hasWidgets = true;
@@ -562,6 +569,7 @@ DataTable.defer = function($table, opts) {
 
 module.exports = {
   simpleDOM: simpleDOM,
+  browseDOM: browseDOM,
   yearRange: yearRange,
   getCycle: getCycle,
   buildTotalLink: buildTotalLink,

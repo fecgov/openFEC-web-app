@@ -62,6 +62,7 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
+    title: 'Receipt',
     path: ['schedules', 'schedule_a'],
     panel: filterPanel,
     columns: columns,

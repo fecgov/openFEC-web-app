@@ -21,6 +21,7 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
+    title: 'Filing',
     path: ['filings'],
     panel: filterPanel,
     columns: filingsColumns,
