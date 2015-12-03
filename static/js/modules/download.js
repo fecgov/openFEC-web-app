@@ -40,7 +40,7 @@ function downloadUrl(url) {
 
 var defaultOpts = {
   timeout: 5000,
-  parent: document.body
+  parent: '.js-downloads-list'
 };
 
 function DownloadItem(url, opts) {
