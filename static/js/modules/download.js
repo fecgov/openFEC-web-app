@@ -83,10 +83,10 @@ function DownloadItem(url, opts, container) {
 
 DownloadItem.prototype.init = function() {
   this.draw();
+  this.container.add();
   if (!this.downloadUrl) {
     this.refresh();
     this.push();
-    this.container.add();
   }
 };
 
@@ -163,13 +163,12 @@ DownloadItem.prototype.close = function() {
   this.container.subtract();
 };
 
-
 function DownloadContainer(parent) {
   this.$parent = $(parent);
   this.$statusMessage = $('.js-download-status-message');
   this.status = 'pending';
   this.items = 0;
-};
+}
 
 DownloadContainer.prototype.init = function() {
   this.$body = $(container());
