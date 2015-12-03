@@ -10,7 +10,7 @@ Filter disbursements
 
 {% block message %}
 <div class="message message--info message--small">
-  <p>Due to the large number of transactions, records begin in 2011.</p>
+  <span class="t-block">Due to the large number of transactions, records begin in 2011.</span>
 </div>
 {% endblock %}
 
@@ -28,6 +28,6 @@ Filter disbursements
 {{ text.field('max_amount', 'Maximum expenditure') }}
 {{ date.field('date', 'Disbursement date', dates ) }}
 <div class="message message--info message--small">
-  <p>Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</p>
+  <span class="t-block">Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</span>
 </div>
 {% endblock %}

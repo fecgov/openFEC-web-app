@@ -49,6 +49,7 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
+    title: 'Candidate',
     path: ['candidates'],
     panel: filterPanel,
     columns: columns,
