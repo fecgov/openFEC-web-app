@@ -509,17 +509,20 @@ DataTable.prototype.fetch = function(data, callback) {
 };
 
 DataTable.prototype.export = function() {
-  var url = this.buildUrl(this.api.ajax.params());
+  var url = this.buildUrl(this.api.ajax.params(), false);
   download.download(url);
 };
 
-DataTable.prototype.buildUrl = function(data) {
+DataTable.prototype.buildUrl = function(data, paginate) {
   var query = _.extend({}, this.filters || {});
+  paginate = typeof paginate === 'undefined' ? true : paginate;
   query.sort = mapSort(data.order, this.opts.columns);
   if (this.opts.useHideNull) {
     query.sort_hide_null = this.$hideNullWidget.is(':checked');
   }
-  query = _.extend(query, this.paginator.mapQuery(data, query));
+  if (paginate) {
+    query = _.extend(query, this.paginator.mapQuery(data, query));
+  }
   return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
 };
 

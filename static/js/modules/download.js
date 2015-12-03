@@ -145,8 +145,10 @@ DownloadItem.prototype.handleSuccess = function(response) {
   }
 };
 
-DownloadItem.prototype.handleError = function() {
-  this.schedule();
+DownloadItem.prototype.handleError = function(xhr, textStatus) {
+  if (textStatus !== 'abort') {
+    this.schedule();
+  }
 };
 
 DownloadItem.prototype.finish = function(downloadUrl) {
@@ -156,7 +158,7 @@ DownloadItem.prototype.finish = function(downloadUrl) {
 };
 
 DownloadItem.prototype.close = function() {
-  this.timeout && clearTimeout(this.timeout);
+  window.clearTimeout(this.timeout);
   this.promise && this.promise.abort();
   window.localStorage.removeItem(this.key);
   this.$body.remove();
@@ -165,7 +167,6 @@ DownloadItem.prototype.close = function() {
 
 function DownloadContainer(parent) {
   this.$parent = $(parent);
-  this.$statusMessage = $('.js-download-status-message');
   this.status = 'pending';
   this.items = 0;
 }
@@ -173,6 +174,7 @@ function DownloadContainer(parent) {
 DownloadContainer.prototype.init = function() {
   this.$body = $(container());
   this.$parent.append(this.$body);
+  this.$statusMessage = this.$body.find('.js-download-status-message');
 };
 
 DownloadContainer.prototype.add = function() {
