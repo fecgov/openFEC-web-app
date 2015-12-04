@@ -5,9 +5,9 @@ var URI = require('urijs');
 var _ = require('underscore');
 var moment = require('moment');
 
-var container = require('../../templates/download/container.hbs');
 var pending = require('../../templates/download/pending.hbs');
 var complete = require('../../templates/download/complete.hbs');
+var container = require('../../templates/download/container.hbs');
 
 var PREFIX = 'download-';
 var MAX_DOWNLOADS = 5;
@@ -140,7 +140,6 @@ DownloadItem.prototype.refresh = function() {
 DownloadItem.prototype.handleSuccess = function(response) {
   if (response && response.status === 'complete') {
     this.finish(response.url);
-    this.container.updateStatus('complete');
   } else {
     this.schedule();
   }
@@ -168,14 +167,12 @@ DownloadItem.prototype.close = function() {
 
 function DownloadContainer(parent) {
   this.$parent = $(parent);
-  this.status = 'pending';
   this.items = 0;
 }
 
 DownloadContainer.prototype.init = function() {
   this.$body = $(container());
   this.$parent.append(this.$body);
-  this.$statusMessage = this.$body.find('.js-download-status-message');
 };
 
 DownloadContainer.prototype.add = function() {
@@ -186,15 +183,6 @@ DownloadContainer.prototype.subtract = function() {
   this.items = this.items - 1;
   if (this.items === 0) {
     this.destroy();
-  }
-};
-
-DownloadContainer.prototype.updateStatus = function(status) {
-  this.status = status;
-  if (this.status === 'complete') {
-    this.$statusMessage.text('Your export is complete');
-  } else {
-    this.$statusMessage.text('Building your exports...');
   }
 };
 

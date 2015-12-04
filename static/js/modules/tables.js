@@ -525,7 +525,7 @@ DataTable.prototype.buildUrl = function(data, paginate) {
   paginate = typeof paginate === 'undefined' ? true : paginate;
   query.sort = mapSort(data.order, this.opts.columns);
   if (this.opts.useHideNull) {
-    query.sort_hide_null = this.$hideNullWidget.is(':checked');
+    query.sort_hide_null = this.$hideNullWidget.find('input').is(':checked');
   }
   if (paginate) {
     query = _.extend(query, this.paginator.mapQuery(data, query));
