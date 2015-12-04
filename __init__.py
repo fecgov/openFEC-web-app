@@ -22,6 +22,7 @@ from werkzeug.contrib.fixers import ProxyFix
 from openfecwebapp import utils
 from openfecwebapp import views
 from openfecwebapp import config
+from openfecwebapp.config import env
 from openfecwebapp import constants
 from openfecwebapp.api_caller import load_search_results, load_with_nested
 
@@ -393,6 +394,16 @@ if config.environment == 'prod':
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
+
+def initialize_newrelic():
+    license_key = env.get_credential('NEW_RELIC_LICENSE_KEY')
+    if license_key:
+        import newrelic.agent
+        settings = newrelic.agent.global_settings()
+        settings.license_key = license_key
+        newrelic.agent.initialize()
+
+initialize_newrelic()
 
 if config.sentry_dsn:
     Sentry(app, dsn=config.sentry_dsn)

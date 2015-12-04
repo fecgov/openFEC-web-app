@@ -22,8 +22,8 @@
 {% if environment != 'prod' %}
 <div class="banner">
   <div class="container">
-    <span class="t-block t-bold is-centered">{{ 'STAGING' if environment == 'stage' else 'DEVELOPMENT' }}</span>
-    <span class="t-block is-centered">This site is for testing new ideas and code. View the most accurate data on the <a href="https://beta.fec.gov">live site</a>.</span>
+    <span class="t-block t-bold t-centered">{{ 'STAGING' if environment == 'stage' else 'DEVELOPMENT' }}</span>
+    <span class="t-block t-centered">This site is for testing new ideas and code. View the most accurate data on the <a href="https://beta.fec.gov">live site</a>.</span>
   </div>
 </div>
 {% endif %}
