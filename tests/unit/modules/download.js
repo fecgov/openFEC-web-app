@@ -112,4 +112,57 @@ describe('DownloadItem', function() {
     });
   });
 
+  describe('refresh()', function() {
+    beforeEach(function() {
+      this.container = download.DownloadContainer.getInstance(document.body);
+      this.item = new download.DownloadItem('/v1/1/', this.container);
+    });
+
+    beforeEach(function() {
+      this.promise = $.Deferred();
+      sinon.stub($, 'ajax').returns(this.promise);
+      sinon.stub(download.DownloadItem.prototype, 'schedule');
+      sinon.stub(download.DownloadItem.prototype, 'finish');
+    });
+
+    afterEach(function() {
+      $.ajax.restore();
+      download.DownloadItem.prototype.schedule.restore();
+      download.DownloadItem.prototype.finish.restore();
+    });
+
+    it('sends an ajax request', function() {
+      this.item.refresh();
+      expect($.ajax).to.have.been.calledWith({
+        method: 'POST',
+        url: this.item.apiUrl,
+        data: JSON.stringify({filename: this.item.filename}),
+        contentType: 'application/json'
+      });
+    });
+
+    it('handles success on queued', function() {
+      this.item.refresh();
+      this.promise.resolve({status: 'queued'});
+      expect(this.item.finish).not.to.have.been.called;
+    });
+
+    it('handles success on complete', function() {
+      this.item.refresh();
+      this.promise.resolve({status: 'complete', url: '/download'});
+      expect(this.item.finish).to.have.been.calledWith('/download');
+    });
+
+    it('handles an error', function() {
+      this.item.refresh();
+      this.promise.reject({}, 'error');
+      expect(this.item.schedule).to.have.been.called;
+    });
+
+    it('handles a synthetic error', function() {
+      this.item.refresh();
+      this.promise.reject({}, 'abort');
+      expect(this.item.schedule).not.to.have.been.called;
+    });
+  });
 });
