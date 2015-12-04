@@ -166,3 +166,26 @@ describe('DownloadItem', function() {
     });
   });
 });
+
+describe('DownloadContainer', function() {
+  beforeEach(function() {
+    download.DownloadContainer.getInstance().destroy();
+  });
+
+  afterEach(clearStorage);
+
+  it('shows the container on download', function() {
+    expect(download.DownloadContainer.instance).not.to.be.ok;
+    download.download('/1');
+    expect(download.DownloadContainer.instance).to.be.ok;
+  });
+
+  it('hides the container on download dismiss', function() {
+    var item1 = download.download('/1');
+    var item2 = download.download('/2');
+    item1.close();
+    expect(download.DownloadContainer.instance).to.be.ok;
+    item2.close();
+    expect(download.DownloadContainer.instance).not.to.be.ok;
+  });
+});
