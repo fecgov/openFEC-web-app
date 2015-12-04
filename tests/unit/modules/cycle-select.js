@@ -19,6 +19,18 @@ function trim(text) {
     .replace(/\s+/g, ' ');
 }
 
+function expectDisabled($elm, disabled) {
+  var $input = $elm.find('input');
+  var $span = $elm.find('span');
+  if (disabled) {
+    expect($input.prop('disabled')).to.be.ok;
+    expect($span.hasClass('disabled')).to.be.true;
+  } else {
+    expect($input.prop('disabled')).not.to.be.ok;
+    expect($span.hasClass('disabled')).to.be.false;
+  }
+}
+
 describe('filter set', function() {
   before(function() {
     this.$fixture = $('<div id="fixtures"></div>');
@@ -85,6 +97,15 @@ describe('filter set', function() {
       ).to.have.been.calledWith(
         window.location.href + '?cycle=2014&election_full=false'
       );
+    });
+
+    it('disables cycles not included in context', function() {
+      window.context = {cycles: [2016]};
+      this.cycleSelect.initCyclesMulti(2016);
+      var labels = this.cycleSelect.$cycles.find('label');
+      expectDisabled(labels.eq(0), false);
+      expectDisabled(labels.eq(1), false);
+      expectDisabled(labels.eq(2), true);
     });
   });
 

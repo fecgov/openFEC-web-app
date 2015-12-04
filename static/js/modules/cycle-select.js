@@ -1,6 +1,6 @@
 'use strict';
 
-/* global window */
+/* global context */
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -37,6 +37,9 @@ CycleSelect.prototype.initCyclesMulti = function(selected) {
       min: cycle - 1,
       max: cycle,
       electionFull: false,
+      active: typeof context !== 'undefined' && context.cycles ?
+        context.cycles.indexOf(cycle) !== -1 :
+        true,
       checked: cycle.toString() === params.cycle &&
         params.electionFull === 'false'
     };
@@ -45,6 +48,7 @@ CycleSelect.prototype.initCyclesMulti = function(selected) {
     min: selected - this.duration + 1,
     max: selected,
     electionFull: true,
+    active: true,
     checked: true
   });
   this.$cycles.html(cyclesTemplate(bins));

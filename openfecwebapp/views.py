@@ -93,6 +93,8 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         reverse=True,
     )
 
+    tmpl_vars['context_vars'] = {'cycles': candidate['cycles']}
+
     return render_template('candidates-single.html', **tmpl_vars)
 
 

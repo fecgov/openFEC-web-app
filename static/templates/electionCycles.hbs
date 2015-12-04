@@ -9,8 +9,9 @@
           value="{{max}}"
           data-election-full="{{electionFull}}"
           {{#if checked}}checked{{/if}}
+          {{#unless active}}disabled{{/unless}}
         />
-      <span class="button button--neutral">
+      <span class="button button--neutral {{#unless active}}disabled{{/unless}}">
         {{#if electionFull}}
         Full cycle:
         {{/if}}
