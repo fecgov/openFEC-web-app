@@ -13,26 +13,20 @@ var PREFIX = 'download-';
 var MAX_DOWNLOADS = 5;
 var DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
-var downloadContainer = null;
-
 function hydrate() {
-  storedDownloads().forEach(function(key) {
-    download(key.slice(PREFIX.length), true);
+  return storedDownloads().map(function(key) {
+    return download(key.slice(PREFIX.length), true);
   });
 }
 
 function download(url, init) {
   if (storedDownloads().length >= MAX_DOWNLOADS) { return; }
-
-  if (!downloadContainer) {
-    downloadContainer = new DownloadContainer(document.body);
-    downloadContainer.init();
-  }
-
-  var item = new DownloadItem(url, null, downloadContainer);
+  var container = DownloadContainer.getInstance(document.body);
+  var item = new DownloadItem(url, container);
   if (init || !item.isPending) {
     item.init();
   }
+  return item;
 }
 
 function storedDownloads() {
@@ -53,17 +47,16 @@ function getUrlParts(url) {
 }
 
 var defaultOpts = {
-  timeout: 5000,
-  parent: '.js-downloads-list'
+  timeout: 5000
 };
 
-function DownloadItem(url, opts, container) {
+function DownloadItem(url, container, opts) {
   this.url = url;
-  this.opts = _.extend({}, defaultOpts, opts);
   this.container = container;
+  this.opts = _.extend({}, defaultOpts, opts);
 
   this.$body = null;
-  this.$parent = $(this.opts.parent);
+  this.$parent = this.container.$list;
 
   this.timeout = null;
   this.promise = null;
@@ -160,20 +153,18 @@ DownloadItem.prototype.finish = function(downloadUrl) {
 DownloadItem.prototype.close = function() {
   window.clearTimeout(this.timeout);
   this.promise && this.promise.abort();
+  this.$body && this.$body.remove();
   window.localStorage.removeItem(this.key);
-  this.$body.remove();
   this.container.subtract();
 };
 
 function DownloadContainer(parent) {
   this.$parent = $(parent);
+  this.$body = $(container());
+  this.$list = this.$body.find('.js-downloads-list');
+  this.$parent.append(this.$body);
   this.items = 0;
 }
-
-DownloadContainer.prototype.init = function() {
-  this.$body = $(container());
-  this.$parent.append(this.$body);
-};
 
 DownloadContainer.prototype.add = function() {
   this.items++;
@@ -188,10 +179,18 @@ DownloadContainer.prototype.subtract = function() {
 
 DownloadContainer.prototype.destroy = function() {
   this.$body.remove();
-  downloadContainer = null;
+  DownloadContainer.instance = null;
+};
+
+DownloadContainer.instance = null;
+DownloadContainer.getInstance = function(parent) {
+  DownloadContainer.instance = DownloadContainer.instance || new DownloadContainer(parent);
+  return DownloadContainer.instance;
 };
 
 module.exports = {
   hydrate: hydrate,
-  download: download
+  download: download,
+  DownloadItem: DownloadItem,
+  DownloadContainer: DownloadContainer
 };
