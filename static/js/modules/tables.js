@@ -487,6 +487,7 @@ DataTable.prototype.ensureWidgets = function() {
     this.$exportWidget = $(exportWidgetTemplate(title));
     $paging.after(this.$exportWidget);
     this.$exportButton = $('.js-export');
+    this.$exportTooltipContainer = $('.js-tooltip-container');
     this.$exportButton.on('click', this.export.bind(this));
   }
 
@@ -495,14 +496,33 @@ DataTable.prototype.ensureWidgets = function() {
 
 DataTable.prototype.disableExport = function() {
   this.$exportButton.addClass('disabled');
-  this.$exportButton.attr('disabled', true);
   this.$exportButton.off('click');
+
+  // Adding everything we need for the tooltip
+  this.$exportButton.attr('aria-describedby', 'export-tooltip');
+  var $exportTooltip = this.$exportWidget.find('.tooltip');
+
+  this.$exportTooltipContainer.hover(function() {
+    $exportTooltip.attr('aria-hidden', 'false');
+  }, function() {
+    $exportTooltip.attr('aria-hidden', 'true');
+  });
+  this.$exportButton.focus(function() {
+    $exportTooltip.attr('aria-hidden', 'false');
+  });
+  this.$exportButton.blur(function() {
+    $exportTooltip.attr('aria-hidden', 'true');
+  })
 }
 
 DataTable.prototype.enableExport = function() {
   this.$exportButton.removeClass('disabled');
-  this.$exportButton.attr('disabled', false);
   this.$exportButton.on('click', this.export.bind(this));
+
+  // Remove all tooltip stuff
+  this.$exportButton.removeAttr('aria-describedby');
+  this.$exportTooltipContainer.off('mouseenter mouseleave');
+  this.$exportButton.off('focus blur');
 }
 
 DataTable.prototype.fetch = function(data, callback) {
