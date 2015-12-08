@@ -23,6 +23,8 @@ var browseDOM = '<"js-results-info results-info results-info--top"iplfr>' +
                 '<"panel__main"t>' +
                 '<"results-info"ip>';
 
+var DOWNLOAD_CAP = 100000;
+
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
   $('.datatable__container').css('opacity', '1');
@@ -485,11 +487,23 @@ DataTable.prototype.ensureWidgets = function() {
     this.$exportWidget = $(exportWidgetTemplate(title));
     $paging.after(this.$exportWidget);
     this.$exportButton = $('.js-export');
-    this.$exportWidget.on('click', this.export.bind(this));
+    this.$exportButton.on('click', this.export.bind(this));
   }
 
   this.hasWidgets = true;
 };
+
+DataTable.prototype.disableExport = function() {
+  this.$exportButton.addClass('disabled');
+  this.$exportButton.attr('disabled', true);
+  this.$exportButton.off('click');
+}
+
+DataTable.prototype.enableExport = function() {
+  this.$exportButton.removeClass('disabled');
+  this.$exportButton.attr('disabled', false);
+  this.$exportButton.on('click', this.export.bind(this));
+}
 
 DataTable.prototype.fetch = function(data, callback) {
   var self = this;
@@ -537,6 +551,13 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.paginator.handleResponse(this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
+
+  if (resp.pagination.count > DOWNLOAD_CAP) {
+    this.disableExport();
+  } else {
+    this.enableExport();
+  }
+
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
   }
