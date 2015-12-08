@@ -483,8 +483,11 @@ DataTable.prototype.ensureWidgets = function() {
   }
 
   if (this.opts.useExport) {
-    var title = this.opts.title;
-    this.$exportWidget = $(exportWidgetTemplate(title));
+    var templateVars = {
+      title: this.opts.title,
+      max: DOWNLOAD_CAP
+    }
+    this.$exportWidget = $(exportWidgetTemplate(templateVars));
     $paging.after(this.$exportWidget);
     this.$exportButton = $('.js-export');
     this.$exportTooltipContainer = $('.js-tooltip-container');

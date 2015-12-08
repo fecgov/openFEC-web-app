@@ -33,11 +33,17 @@ function decodeAmendment(value) {
   return decoders.amendments[value];
 }
 
+function formatNumber(value) {
+  return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
+
 Handlebars.registerHelper('datetime', datetime);
 
 Handlebars.registerHelper('decodeAmendment', decodeAmendment);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
+
+Handlebars.registerHelper('formatNumber', formatNumber);
 
 function cycleDates(year) {
   return {
@@ -80,6 +86,7 @@ module.exports = {
   datetime: datetime,
   ensureArray: ensureArray,
   decodeAmendment: decodeAmendment,
+  formatNumber: formatNumber,
   cycleDates: cycleDates,
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,
