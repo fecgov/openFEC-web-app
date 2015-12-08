@@ -130,6 +130,12 @@ DownloadItem.prototype.refresh = function() {
   this.promise.fail(this.handleError.bind(this));
 };
 
+DownloadItem.prototype.cancel = function() {
+  var message = 'Your request contains more than 100,000 results.'
+  this.close();
+  alert(message);
+};
+
 DownloadItem.prototype.handleSuccess = function(response) {
   if (response && response.status === 'complete') {
     this.finish(response.url);
@@ -141,6 +147,8 @@ DownloadItem.prototype.handleSuccess = function(response) {
 DownloadItem.prototype.handleError = function(xhr, textStatus) {
   if (textStatus !== 'abort') {
     this.schedule();
+  } if (textStatus === '403') {
+    this.cancel();
   }
 };
 
