@@ -15,11 +15,13 @@ require('../setup')();
 var helpers = require('../../../static/js/modules/helpers');
 var tables = require('../../../static/js/modules/tables');
 var DataTable = tables.DataTable;
+var exportSpy;
 
 describe('data table', function() {
   before(function() {
     this.$fixture = $('<div id="fixtures"></div>');
     $('body').append(this.$fixture);
+    exportSpy = sinon.spy(DataTable.prototype, 'export');
   });
 
   beforeEach(function() {
@@ -41,7 +43,8 @@ describe('data table', function() {
         {data: 'name'},
         {data: 'office'},
         {data: 'party'},
-      ]
+      ],
+      useExport: true
     });
   });
 
@@ -67,11 +70,62 @@ describe('data table', function() {
       expect(prev.is(':visible')).to.be.false;
     });
 
+    it('adds export widget', function() {
+      this.table.ensureWidgets();
+      this.deferred.reject();
+      var $exportButton = $('.js-export');
+      expect($exportButton.length).to.equal(1);
+    });
+
     it('only adds widgets once', function() {
       this.table.ensureWidgets();
       this.table.ensureWidgets();
       var prev = this.table.$body.prev('.is-loading');
       expect(prev.length).to.equal(1);
+    });
+  });
+
+  describe('disables exporting', function() {
+    beforeEach(function() {
+      this.table.enableExport();
+      this.table.disableExport();
+    });
+
+    it('adds a disabled class', function() {
+      expect(this.table.$exportButton.hasClass('disabled')).to.be.true;
+    });
+
+    it('does nothing on click', function() {
+      this.table.$exportButton.click();
+      expect(exportSpy).to.not.have.been.called;
+    });
+
+    it('shows and hides the tooltip', function() {
+      this.table.$exportTooltipContainer.trigger('mouseenter');
+      expect(this.table.$exportTooltip.attr('aria-hidden')).to.equal('false');
+      this.table.$exportTooltipContainer.trigger('mouseleave');
+      expect(this.table.$exportTooltip.attr('aria-hidden')).to.equal('true');
+    });
+  });
+
+  describe('enables exporting', function() {
+    beforeEach(function() {
+      this.table.disableExport();
+      this.table.enableExport();
+    });
+
+    it('removes the disabled class', function() {
+      expect(this.table.$exportButton.hasClass('disabled')).to.be.false;
+    });
+
+    it('adds starts an export when clicked', function() {
+      this.table.$exportButton.trigger('click');
+      expect(exportSpy).to.have.been.called;
+    });
+
+    it('does not show the tooltip', function() {
+      this.table.$exportTooltipContainer.trigger('mouseenter');
+      expect(this.table.$exportTooltip.attr('aria-hidden')).to.equal('true');
     });
   });
 
@@ -124,6 +178,19 @@ describe('data table', function() {
       expect(
         $.fn.DataTable.isDataTable(this.table.api.table().node())
       ).to.be.false;
+    });
+
+    it('disables export button if too many results', function() {
+      var disableSpy = sinon.spy(this.table, 'disableExport');
+      var enableSpy = sinon.spy(this.table, 'enableExport');
+      var resp = {
+        results: [],
+        pagination: {count:1000000}
+      };
+      this.table.fetch({}, function(){});
+      this.deferred.resolve(resp);
+      expect(disableSpy).to.have.been.called;
+      expect(enableSpy).to.not.have.been.called;
     });
 
     it('pushes filter parameters to window location', function() {
