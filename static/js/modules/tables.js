@@ -491,6 +491,7 @@ DataTable.prototype.ensureWidgets = function() {
     $paging.after(this.$exportWidget);
     this.$exportButton = $('.js-export');
     this.$exportTooltipContainer = $('.js-tooltip-container');
+    this.$exportTooltip = this.$exportWidget.find('.tooltip');
     this.$exportButton.on('click', this.export.bind(this));
   }
 
@@ -503,7 +504,7 @@ DataTable.prototype.disableExport = function() {
 
   // Adding everything we need for the tooltip
   this.$exportButton.attr('aria-describedby', 'export-tooltip');
-  var $exportTooltip = this.$exportWidget.find('.tooltip');
+  var $exportTooltip = this.$exportTooltip;
 
   this.$exportTooltipContainer.hover(function() {
     $exportTooltip.attr('aria-hidden', 'false');
