@@ -76,12 +76,12 @@ $(document).ready(function() {
     if ( $pageControls.length > 0 ) {
         var scrollPos,
             controlsHeight,
-            controlsTop = $pageControls.offset().top + 100;
+            controlsTop = $pageControls.offset().top - 41;
         $(document).scroll(function(){
           scrollPos = $(window).scrollTop();
 
           if (scrollPos >= controlsTop) {
-            controlsHeight = $pageControls.height();
+            controlsHeight = $pageControls.height() - 41;
             $pageControls.addClass('is-fixed');
             $body.css('padding-top', controlsHeight);
           } else {
