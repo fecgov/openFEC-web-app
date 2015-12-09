@@ -183,7 +183,7 @@ var disbursementRecipientIDColumns = [
 var expendituresColumns = [
   tables.currencyColumn({data: 'total'}),
   columns.supportOpposeColumn,
-  tables.committeeColumn({data: 'candidate', className: 'all'}),
+  tables.candidateColumn({data: 'candidate', className: 'all'}),
 ];
 
 function buildStateUrl($elm) {
