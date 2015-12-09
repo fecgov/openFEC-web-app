@@ -66,7 +66,7 @@
         <div class="entity__election">
           <span class="entity__term__label">More information on this election</span>
           <a
-            class="button card card--feature card--full card--neutral"
+            class="button card card--horizontal card--full-bleed card--neutral"
             href="{{ election_url(context(), cycle) }}"
             >
             <div class="card__image__container">
@@ -92,6 +92,7 @@
       <div class="container">
         <nav class="page-tabs">
           <ul class="page-tabs__list" role="tablist" data-name="tab">
+            <li class="page-tabs__item page-tabs__years"><h2>{{ format_election_years(cycle, election_full, duration) }}: </h2></li>
             <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" href="#section-1">Financial summary</a></li>
             <li role="presentation" class="page-tabs__item"><a role="tab" data-name="other-spending" tabindex="0" aria-controls="panel2" href="#section-2">Other spending</a></li>
           </ul>

@@ -3,18 +3,10 @@
 
 <section class="main" id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
   <div class="container">
-  <div class="content__section">
-    <div class="section__heading">
-      <h2 class="heading__title">
-        Financial summary: {{ format_election_years(cycle, election_full, duration) }}
-      </h2>
-    </div>
-    <p class="usa-width-two-thirds">Candidates receive and spend money through <span class="term" data-term="Committee">committees</span>. These are the <strong>combined financial totals</strong> for all of this candidate's <span class="term" data-term="Authorized committee">authorized committees</span>. You can learn more about each committee's fundraising and spending on its page.</p>
-  </div>
   {% if committees_authorized %}
 
   <div class="content__section">
-    <figure class="usa-width-one-half">
+    <figure class="candidate__totals">
       <h3 class="t-ruled--bottom">Combined financial totals</h3>
       <div class="is-right-aligned">
         <div>
@@ -50,7 +42,7 @@
         </p>
       </div>
     </figure>
-    <div class="usa-width-one-half">
+    <div class="candidate__committees">
       <h3 class="t-ruled--bottom">Campaign committees</h3>
       {% for committee in committee_groups['P'] %}
       <div class="callout callout--primary">
@@ -58,10 +50,9 @@
           <h4 class="callout__title">
             <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
           </h4>
-          <span class="callout__subtitle">Principal campaign committee</span>
+          <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
         </div>
         <div class="callout__action">
-          <span class="t-block t-data">View detailed data:</span>
           <ul class="callout__sublinks">
             <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received &raquo;</a></li>
             <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent &raquo;</a></li>
@@ -80,10 +71,9 @@
             <h4 class="callout__title">
               <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
             </h4>
-            <span class="callout__subtitle">Authorized campaign committee</span>
+            <span class="callout__subtitle term" data-term="authorized committee">Authorized campaign committee</span>
           </div>
           <div class="callout__action">
-            <span class="t-block t-data">View detailed data:</span>
             <ul class="callout__sublinks">
               <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received &raquo;</a></li>
               <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent &raquo;</a></li>
@@ -96,22 +86,25 @@
         </div>
         {% endfor %}
       {% endif %}
+      <p>Candidates receive and spend money through <span class="term" data-term="Committee">committees</span>. These are the <strong>combined financial totals</strong> for all of this candidate's <span class="term" data-term="Authorized committee">authorized committees</span>. You can learn more about each committee's fundraising and spending on its page.</p>
     </div>
   </div>
 
 {% if committee_groups['J'] %}
-  <div class="content__section">
-    <h2 class="content__section__heading"><span class="term" data-term="Joint Fundraising Committee">Joint fundraising committees</span></h2>
-    <div class="row">
-      <p class="usa-width-two-thirds">In joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed.</p>
+  <div class="content__section content__section--extra">
+    <div class="section__heading">
+      <h3 class="heading__title"><span class="term" data-term="Joint Fundraising Committee">Joint fundraising committees</span></h3>
     </div>
-    <ul class="list--bulleted">
-      {% for committee in committee_groups['J'] %}
-      <li>
-          <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}"><h5>{{ committee.name }}</h5></a>
-      </li>
-      {% endfor %}
-    </ul>
+    <div class="row">
+      <ul class="list--bulleted usa-width-one-half">
+        {% for committee in committee_groups['J'] %}
+        <li>
+            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}"><h5>{{ committee.name }}</h5></a>
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="usa-width-one-half">In joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed.</p>
+    </div>
   </div>
 {% endif %}
 
@@ -123,7 +116,7 @@
 
 <div class="content__section">
   <div class="section__heading">
-    <h2 class="heading__title">All candidate filings</h2>
+    <h3 class="heading__title">All candidate filings</h3>
   </div>
   <div class="row">
     <p class="usa-width-two-thirds">Candidates are required to file a <strong>Statement of Candidacy</strong> every time they run for office. Financial reports from committees are available on committee pages.</p>
