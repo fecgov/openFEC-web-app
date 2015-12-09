@@ -486,7 +486,7 @@ DataTable.prototype.ensureWidgets = function() {
     var templateVars = {
       title: this.opts.title,
       max: DOWNLOAD_CAP
-    }
+    };
     this.$exportWidget = $(exportWidgetTemplate(templateVars));
     $paging.after(this.$exportWidget);
     this.$exportButton = $('.js-export');
@@ -516,8 +516,8 @@ DataTable.prototype.disableExport = function() {
   });
   this.$exportButton.blur(function() {
     $exportTooltip.attr('aria-hidden', 'true');
-  })
-}
+  });
+};
 
 DataTable.prototype.enableExport = function() {
   this.$exportButton.removeClass('disabled');
@@ -527,7 +527,7 @@ DataTable.prototype.enableExport = function() {
   this.$exportButton.removeAttr('aria-describedby');
   this.$exportTooltipContainer.off('mouseenter mouseleave');
   this.$exportButton.off('focus blur');
-}
+};
 
 DataTable.prototype.fetch = function(data, callback) {
   var self = this;
