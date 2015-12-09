@@ -131,9 +131,9 @@ DownloadItem.prototype.refresh = function() {
 };
 
 DownloadItem.prototype.cancel = function() {
-  var message = 'Your request contains more than 100,000 results.'
+  var message = 'Your request contains more than 100,000 results.';
   this.close();
-  alert(message);
+  window.alert(message);
 };
 
 DownloadItem.prototype.handleSuccess = function(response) {
@@ -147,7 +147,7 @@ DownloadItem.prototype.handleSuccess = function(response) {
 DownloadItem.prototype.handleError = function(xhr, textStatus) {
   if (textStatus !== 'abort') {
     this.schedule();
-  } if (textStatus === '403') {
+  } else if (xhr.status === 403) {
     this.cancel();
   }
 };
