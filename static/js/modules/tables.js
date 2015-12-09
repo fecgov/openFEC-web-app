@@ -506,17 +506,16 @@ DataTable.prototype.disableExport = function() {
   this.$exportButton.attr('aria-describedby', 'export-tooltip');
   var $exportTooltip = this.$exportTooltip;
 
-  this.$exportTooltipContainer.hover(function() {
-    $exportTooltip.attr('aria-hidden', 'false');
-  }, function() {
+  function hideTooltip() {
     $exportTooltip.attr('aria-hidden', 'true');
-  });
-  this.$exportButton.focus(function() {
+  }
+  function showTooltip() {
     $exportTooltip.attr('aria-hidden', 'false');
-  });
-  this.$exportButton.blur(function() {
-    $exportTooltip.attr('aria-hidden', 'true');
-  });
+  }
+
+  this.$exportTooltipContainer.hover(showTooltip, hideTooltip);
+  this.$exportButton.focus(showTooltip);
+  this.$exportButton.blur(hideTooltip);
 };
 
 DataTable.prototype.enableExport = function() {

@@ -15,13 +15,16 @@ require('../setup')();
 var helpers = require('../../../static/js/modules/helpers');
 var tables = require('../../../static/js/modules/tables');
 var DataTable = tables.DataTable;
-var exportSpy;
 
 describe('data table', function() {
   before(function() {
     this.$fixture = $('<div id="fixtures"></div>');
     $('body').append(this.$fixture);
-    exportSpy = sinon.spy(DataTable.prototype, 'export');
+    sinon.spy(DataTable.prototype, 'export');
+  });
+
+  after(function() {
+    DataTable.prototype.export.restore();
   });
 
   beforeEach(function() {
@@ -87,7 +90,6 @@ describe('data table', function() {
 
   describe('disables exporting', function() {
     beforeEach(function() {
-      this.table.enableExport();
       this.table.disableExport();
     });
 
@@ -97,7 +99,7 @@ describe('data table', function() {
 
     it('does nothing on click', function() {
       this.table.$exportButton.click();
-      expect(exportSpy).to.not.have.been.called;
+      expect(DataTable.prototype.export).not.to.have.been.called;
     });
 
     it('shows and hides the tooltip', function() {
@@ -110,7 +112,6 @@ describe('data table', function() {
 
   describe('enables exporting', function() {
     beforeEach(function() {
-      this.table.disableExport();
       this.table.enableExport();
     });
 
@@ -120,7 +121,7 @@ describe('data table', function() {
 
     it('adds starts an export when clicked', function() {
       this.table.$exportButton.trigger('click');
-      expect(exportSpy).to.have.been.called;
+      expect(DataTable.prototype.export).to.have.been.called;
     });
 
     it('does not show the tooltip', function() {
@@ -180,17 +181,27 @@ describe('data table', function() {
       ).to.be.false;
     });
 
-    it('disables export button if too many results', function() {
-      var disableSpy = sinon.spy(this.table, 'disableExport');
-      var enableSpy = sinon.spy(this.table, 'enableExport');
-      var resp = {
-        results: [],
-        pagination: {count:1000000}
-      };
-      this.table.fetch({}, function(){});
-      this.deferred.resolve(resp);
-      expect(disableSpy).to.have.been.called;
-      expect(enableSpy).to.not.have.been.called;
+    describe('post-fetch', function() {
+      beforeEach(function() {
+        sinon.spy(this.table, 'disableExport');
+        sinon.spy(this.table, 'enableExport');
+      });
+
+      afterEach(function() {
+        this.table.disableExport.restore();
+        this.table.enableExport.restore();
+      });
+
+      it('disables export button if too many results', function() {
+        var resp = {
+          results: [],
+          pagination: {count: 1000000}
+        };
+        this.table.fetch({}, function(){});
+        this.deferred.resolve(resp);
+        expect(this.table.disableExport).to.have.been.called;
+        expect(this.table.enableExport).not.to.have.been.called;
+      });
     });
 
     it('pushes filter parameters to window location', function() {
