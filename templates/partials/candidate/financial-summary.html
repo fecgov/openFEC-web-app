@@ -54,9 +54,9 @@
         </div>
         <div class="callout__action">
           <ul class="callout__sublinks">
-            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received</a></li>
-            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent</a></li>
-            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed</a></li>
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='receipts') }}">Money received</a></li>
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='disbursements') }}">Money spent</a></li>
+            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='fillings') }}">Reports filed</a></li>
           </ul>
         </div>
       </div>
@@ -72,9 +72,9 @@
           </div>
           <div class="callout__action">
             <ul class="callout__sublinks">
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=receipts">Money received</a></li>
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=disbursements">Money spent</a></li>
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}&tab=filings">Reports filed</a></li>
+              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='receipts') }}">Money received</a></li>
+              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='disbursements') }}">Money spent</a></li>
+              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='filings') }}">Reports filed</a></li>
             </ul>
           </div>
         </div>
