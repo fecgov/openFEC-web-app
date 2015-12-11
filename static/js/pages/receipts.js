@@ -70,7 +70,7 @@ $(document).ready(function() {
     order: [[4, 'desc']],
     pagingType: 'simple',
     useFilters: true,
-    useExport: true,
+    useExport: false,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(donationTemplate)
