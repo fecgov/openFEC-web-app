@@ -2,8 +2,6 @@
 
 /* global window, document, Inputmask, BASE_PATH */
 
-var KEYCODE_SLASH = 191;
-
 var $ = require('jquery');
 var keyboard = require('keyboardjs');
 
@@ -104,12 +102,6 @@ $(document).ready(function() {
     // Initialize feedback
     new feedback.Feedback(helpers.buildAppUrl(['issue']));
 
-    // Focus search on "/"
-    $(document.body).on('keyup', function(e) {
-      if (e.keyCode === KEYCODE_SLASH) {
-        $('.js-search-input:visible').first().focus();
-      }
-    });
 
     // Inialize input masks
     $('[data-inputmask]').inputmask();
