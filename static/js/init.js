@@ -4,6 +4,7 @@
 
 var $ = require('jquery');
 var keyboard = require('keyboardjs');
+var Sticky = require('component-sticky');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
@@ -70,24 +71,6 @@ $(document).ready(function() {
     $pageControls = $('.page-controls');
     $body.addClass('js-initialized');
 
-    // Sticky page controls
-    if ( $pageControls.length > 0 ) {
-        var scrollPos,
-            controlsHeight,
-            controlsTop = $pageControls.offset().top + 100;
-        $(document).scroll(function(){
-          scrollPos = $(window).scrollTop();
-
-          if (scrollPos >= controlsTop) {
-            controlsHeight = $pageControls.height();
-            $pageControls.addClass('is-fixed');
-            $body.css('padding-top', controlsHeight);
-          } else {
-            $pageControls.removeClass('is-fixed');
-            $body.css('padding-top', 0);
-          }
-        });
-    }
 
     // Initialize glossary
     new glossary.Glossary(terms, {body: '#glossary'});
@@ -202,4 +185,12 @@ $(document).ready(function() {
     });
 
     toggle.init();
+  // Initialize sticky elements
+  $('.js-sticky').each(function() {
+    var container = $(this).data('sticky-container');
+    var opts = {
+      within: document.getElementById(container)
+    };
+    new Sticky(this, opts);
+  });
 });
