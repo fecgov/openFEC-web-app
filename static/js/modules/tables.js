@@ -416,7 +416,10 @@ var defaultOpts = {
   useHideNull: true,
   lengthMenu: [30, 50, 100],
   responsive: {details: false},
-  language: {lengthMenu: 'Results per page: _MENU_'},
+  language: {
+    lengthMenu: 'Results per page: _MENU_',
+    info: 'Showing _START_ – _END_ of _TOTAL_ records'
+  },
   title: null,
   dom: browseDOM,
 };
