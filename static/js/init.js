@@ -65,11 +65,6 @@ $('.js-site-nav').each(function() {
 new skipNav.Skipnav('.skip-nav', 'main');
 
 $(document).ready(function() {
-    var $body,
-        $pageControls;
-    $body = $('body');
-    $pageControls = $('.page-controls');
-    $body.addClass('js-initialized');
 
 
     // Initialize glossary
