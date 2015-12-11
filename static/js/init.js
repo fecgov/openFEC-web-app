@@ -3,7 +3,6 @@
 /* global window, document, Inputmask, BASE_PATH */
 
 var $ = require('jquery');
-var keyboard = require('keyboardjs');
 var Sticky = require('component-sticky');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
@@ -50,68 +49,19 @@ var helpers = require('./modules/helpers');
 var analytics = require('./modules/analytics');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
-charts.init();
-
-var SLT_ACCORDION = '.js-accordion';
-
-$('.js-dropdown').each(function() {
-  new dropdown.Dropdown(this);
-});
-
-$('.js-site-nav').each(function() {
-  new siteNav.SiteNav(this);
-});
-
-new skipNav.Skipnav('.skip-nav', 'main');
-
 $(document).ready(function() {
+  charts.init();
 
+  $('.js-dropdown').each(function() {
+    new dropdown.Dropdown(this);
+  });
 
-    // Initialize glossary
-    new glossary.Glossary(terms, {body: '#glossary'});
+  $('.js-site-nav').each(function() {
+    new siteNav.SiteNav(this);
+  });
 
-    // Initialize typeaheads
-    new typeahead.Typeahead(
-      '.js-search-input',
-      $('.js-search-type').val(),
-      BASE_PATH
-    );
+  new skipNav.Skipnav('.skip-nav', 'main');
 
-    // Initialize feedback
-    new feedback.Feedback(helpers.buildAppUrl(['issue']));
-
-
-    // Inialize input masks
-    $('[data-inputmask]').inputmask();
-
-
-    // Initialize accordions
-    $(SLT_ACCORDION).each(function() {
-      Object.create(accordion).init($(this));
-    });
-
-    var $search = $('.js-search');
-    $search.each(function() {
-      new Search($(this));
-    });
-
-    // TODO: Restore
-    // @if DEBUG
-    // var perf = require('./modules/performance');
-    // perf.bar();
-    // @endif
-
-    // @if ANALYTICS
-    analytics.init();
-    analytics.pageView();
-    // @endif
-
-    // Initialize cycle selects
-    $('.js-cycle').each(function(idx, elm) {
-      CycleSelect.build($(elm));
-    });
-
-    toggle.init();
   // Initialize sticky elements
   $('.js-sticky').each(function() {
     var container = $(this).data('sticky-container');
@@ -120,4 +70,48 @@ $(document).ready(function() {
     };
     new Sticky(this, opts);
   });
+
+  // Initialize glossary
+  new glossary.Glossary(terms, {body: '#glossary'});
+
+  // Initialize typeaheads
+  new typeahead.Typeahead(
+    '.js-search-input',
+    $('.js-search-type').val(),
+    BASE_PATH
+  );
+
+  // Initialize feedback
+  new feedback.Feedback(helpers.buildAppUrl(['issue']));
+
+  // Inialize input masks
+  $('[data-inputmask]').inputmask();
+
+  // Initialize accordions
+  $('.js-accordion').each(function() {
+    Object.create(accordion).init($(this));
+  });
+
+  // Initialize search
+  $('.js-search').each(function() {
+    new Search($(this));
+  });
+
+  // TODO: Restore
+  // @if DEBUG
+  // var perf = require('./modules/performance');
+  // perf.bar();
+  // @endif
+
+  // @if ANALYTICS
+  analytics.init();
+  analytics.pageView();
+  // @endif
+
+  // Initialize cycle selects
+  $('.js-cycle').each(function(idx, elm) {
+    CycleSelect.build($(elm));
+  });
+
+  toggle.init();
 });
