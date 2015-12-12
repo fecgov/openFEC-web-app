@@ -242,6 +242,9 @@ def filings():
         result_type='committees',
     )
 
+@app.route('/independent-expenditures/')
+def independent_expenditures():
+    return render_template('independent-expenditures.html', dates=utils.date_ranges())
 
 @app.route('/elections/')
 def election_lookup():

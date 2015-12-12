@@ -1,0 +1,23 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/date.html' as date %}
+
+{% block heading %}
+Filter filings
+{% endblock %}
+
+{% block filters %}
+
+{{ typeahead.field('committee_id', 'Committee') }}
+{{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
+{% include 'partials/filters/support-oppose.html' %}
+
+{{ date.field('expenditure_date', 'Expenditure date', dates ) }}
+
+{{ text.field('min_amount', 'Minimum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+
+{% endblock %}
