@@ -19,7 +19,7 @@ var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
-var browseDOM = '<"js-results-info results-info results-info--top"iplfr>' +
+var browseDOM = '<"js-results-info results-info results-info--top"pilfr>' +
                 '<"panel__main"t>' +
                 '<"results-info"ip>';
 
