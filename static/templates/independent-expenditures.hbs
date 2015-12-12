@@ -39,7 +39,7 @@
       <td class="panel__data"><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
     </tr>
     <tr>
-      <td class="panel__term">Committee type/td>
+      <td class="panel__term">Committee type</td>
       <td class="panel__data">{{ committee.committee_type_full }}</td>
     </tr>
     <tr>
@@ -49,6 +49,10 @@
     <tr>
       <td class="panel__term">City and state</td>
       <td class="panel__data">{{ committee.city }}, {{ committee.state }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Total spent on office (year to date)</td>
+      <td class="panel__data">{{ currency office_total_ytd }}</td>
     </tr>
   </table>
 </div>

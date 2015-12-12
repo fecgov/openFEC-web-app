@@ -6,11 +6,12 @@
 {% import 'macros/filters/date.html' as date %}
 
 {% block heading %}
-Filter filings
+Filter independent expenditures
 {% endblock %}
 
 {% block filters %}
 
+{% include 'partials/filters/election-years.html' %}
 {{ typeahead.field('committee_id', 'Committee') }}
 {{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
 {% include 'partials/filters/support-oppose.html' %}
@@ -18,6 +19,6 @@ Filter filings
 {{ text.field('min_amount', 'Minimum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
 {{ text.field('max_amount', 'Maximum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
 
-{{ date.field('expenditure_date', 'Expenditure date', dates ) }}
+{{ date.field('date', 'Expenditure date', dates ) }}
 
 {% endblock %}
