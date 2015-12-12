@@ -33,9 +33,21 @@ function decodeAmendment(value) {
   return decoders.amendments[value];
 }
 
+function decodeOffice(value) {
+  return decoders.office[value];
+}
+
+function decodeSupportOppose(value) {
+  return decoders.supportOppose[value] || 'Unknown';
+}
+
 Handlebars.registerHelper('datetime', datetime);
 
 Handlebars.registerHelper('decodeAmendment', decodeAmendment);
+
+Handlebars.registerHelper('decodeOffice', decodeOffice);
+
+Handlebars.registerHelper('decodeSupportOppose', decodeSupportOppose);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
 
@@ -80,6 +92,8 @@ module.exports = {
   datetime: datetime,
   ensureArray: ensureArray,
   decodeAmendment: decodeAmendment,
+  decodeOffice: decodeOffice,
+  decodeSupportOppose: decodeSupportOppose,
   cycleDates: cycleDates,
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,
