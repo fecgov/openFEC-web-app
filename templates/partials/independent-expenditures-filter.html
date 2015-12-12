@@ -12,12 +12,12 @@ Filter filings
 {% block filters %}
 
 {{ typeahead.field('committee_id', 'Committee') }}
-{{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
+{{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
 {% include 'partials/filters/support-oppose.html' %}
-
-{{ date.field('expenditure_date', 'Expenditure date', dates ) }}
 
 {{ text.field('min_amount', 'Minimum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
 {{ text.field('max_amount', 'Maximum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+
+{{ date.field('expenditure_date', 'Expenditure date', dates ) }}
 
 {% endblock %}

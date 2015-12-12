@@ -9,11 +9,13 @@ var helpers = require('../modules/helpers');
 var columns = require('../modules/columns');
 var FilterPanel = require('../modules/filter-panel').FilterPanel;
 
+var expenditureTemplate = require('../../templates/independent-expenditures.hbs');
+
 var columns = [
   {
     data: 'committee',
     orderable: false,
-    className: 'min-desktop hide-panel',
+    className: 'min-desktop',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(
@@ -26,7 +28,7 @@ var columns = [
       }
     }
   },
-  {data: 'expenditure_description', orderable: false, className: 'min-desktop hide-panel'},
+  tables.urlColumn('pdf_url', {data: 'expenditure_description', className: 'all hide-panel', orderable: false}),
   tables.currencyColumn({data: 'expenditure_amount', className: 'min-tablet'}),
   tables.dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel-tablet'}),
   {
@@ -64,7 +66,7 @@ $(document).ready(function() {
     order: [[3, 'desc']],
     useFilters: true,
     callbacks: {
-      // afterRender: tables.modalRenderFactory(donationTemplate)
+      afterRender: tables.modalRenderFactory(expenditureTemplate)
     }
   });
 });
