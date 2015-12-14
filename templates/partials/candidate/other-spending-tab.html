@@ -5,7 +5,7 @@
   <div class="content__section">
     <div class="section__heading">
       <h2 class="heading__title">
-        Other spending: {{ cycle|fmt_year_range }}
+        Other spending
       </h2>
     </div>
     <p class="usa-width-two-thirds">This tab shows spending that opposes or supports this candidate. None of the funds are directly given to or spent by the candidate.</p>
@@ -15,7 +15,13 @@
       <div class="results-info results-info--simple">
         <h3 class="results-info__title">Independent expenditures</h3>
       </div>
-      <table class="data-table" data-type="independent-expenditure" data-candidate="{{ candidate_id }}" data-cycle="{{ cycle }}">
+      <table
+          class="data-table"
+          data-type="independent-expenditure"
+          data-candidate="{{ candidate_id }}"
+          data-cycle="{{ cycle }}"
+          data-election-full="{{ election_full }}"
+        >
         <thead>
           <tr>
             <th scope="col">Amount</th>
