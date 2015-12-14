@@ -578,10 +578,12 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
 
-  if (resp.pagination.count > DOWNLOAD_CAP) {
-    this.disableExport();
-  } else {
-    this.enableExport();
+  if (this.opts.useExport) {
+    if (resp.pagination.count > DOWNLOAD_CAP) {
+      this.disableExport();
+    } else {
+      this.enableExport();
+    }
   }
 
   if (this.opts.hideEmpty) {
