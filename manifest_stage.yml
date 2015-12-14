@@ -2,7 +2,13 @@
 inherit: manifest_base.yml
 host: fec-stage-web
 services:
-# Must provide FEC_WEB_USERNAME, FEC_WEB_PASSWORD, FEC_GITHUB_TOKEN, NEW_RELIC_LICENSE_KEY
+  # Must provide:
+  # * FEC_WEB_USERNAME
+  # * FEC_WEB_PASSWORD
+  # * FEC_GITHUB_TOKEN
+  # * SENTRY_DSN
+  # * SENTRY_PUBLIC_DSN
+  # * NEW_RELIC_LICENSE_KEY
   - fec-creds-stage
 env:
   FEC_WEB_DEBUG: "true"
