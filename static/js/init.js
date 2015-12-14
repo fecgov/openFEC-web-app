@@ -73,15 +73,20 @@ $(document).ready(function() {
     $body.addClass('js-initialized');
 
     // Sticky page controls
+
+    // Constant representing the height of the hidden "page-controls__top" div
+    // This is invisible at first, but gets shown once you scroll down the page
+    var PAGECONTROLSTOP = 41;
+
     if ( $pageControls.length > 0 ) {
         var scrollPos,
             controlsHeight,
-            controlsTop = $pageControls.offset().top + 100;
+            controlsTop = $pageControls.offset().top - PAGECONTROLSTOP;
         $(document).scroll(function(){
           scrollPos = $(window).scrollTop();
 
           if (scrollPos >= controlsTop) {
-            controlsHeight = $pageControls.height();
+            controlsHeight = $pageControls.height() - PAGECONTROLSTOP;
             $pageControls.addClass('is-fixed');
             $body.css('padding-top', controlsHeight);
           } else {

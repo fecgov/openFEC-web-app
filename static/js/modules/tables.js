@@ -100,7 +100,7 @@ function formattedColumn(formatter, defaultOpts) {
   return function(opts) {
     return _.extend({}, defaultOpts, {
       render: function(data, type, row, meta) {
-        return formatter(data);
+        return formatter(data, type, row, meta);
       }
     }, opts);
   };
@@ -142,17 +142,17 @@ var dateColumn = formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc
 var currencyColumn = formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = barColumn(helpers.currency);
 
-var candidateColumn = formattedColumn(function(data) {
-  if (data) {
-    return buildEntityLink(data.name, helpers.buildAppUrl(['candidate', data.candidate_id]), 'candidate');
+var candidateColumn = formattedColumn(function(data, type, row) {
+  if (row) {
+    return buildEntityLink(row.candidate_name, helpers.buildAppUrl(['candidate', row.candidate_id]), 'candidate');
   } else {
     return '';
   }
 });
 
-var committeeColumn = formattedColumn(function(data) {
-  if (data) {
-    return buildEntityLink(data.name, helpers.buildAppUrl(['committee', data.committee_id]), 'committee');
+var committeeColumn = formattedColumn(function(data, type, row) {
+  if (row) {
+    return buildEntityLink(row.committee_name, helpers.buildAppUrl(['committee', row.committee_id]), 'committee');
   } else {
     return '';
   }

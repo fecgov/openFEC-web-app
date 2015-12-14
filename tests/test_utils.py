@@ -22,18 +22,6 @@ def test_fmt_year_range_not_int():
     assert app.fmt_year_range(None) is None
 
 
-def test_restrict_cycles():
-    year = datetime.datetime.now().year
-    cycle = year + year % 2
-    cycles = [cycle - 2, cycle, cycle + 2]
-    assert app.restrict_cycles(cycles) == [cycle - 2, cycle]
-
-
-def test_restrict_cycles_after_start_year():
-    cycles = [1978, 1980, 1982]
-    assert app.restrict_cycles(cycles, start_year=1979) == [1980, 1982]
-
-
 def test_fmt_chart_ticks_single_key():
     group = {
         'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
