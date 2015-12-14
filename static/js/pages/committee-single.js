@@ -368,7 +368,6 @@ $(document).ready(function() {
         path: path,
         query: query,
         columns: expendituresColumns,
-        // Order by receipt date descending
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',
