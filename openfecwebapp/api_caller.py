@@ -53,10 +53,10 @@ def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
     return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
 
 
-def load_with_nested(primary_type, primary_id, secondary_type, cycle=None):
+def load_with_nested(primary_type, primary_id, secondary_type, cycle=None, cycle_key='cycles'):
     path = ('history', str(cycle)) if cycle else ()
     data = load_single_type(primary_type, primary_id, *path)
-    cycle = cycle or min(utils.current_cycle(), max(data['cycles']))
+    cycle = cycle or max(data[cycle_key])
     path = ('history', str(cycle))
     nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path)
     return data, nested_data['results'], cycle
@@ -76,6 +76,16 @@ def load_cmte_financials(committee_id, **filters):
         'reports': reports['results'],
         'totals': totals['results'],
     }
+
+
+def load_candidate_totals(candidate_id, cycle, election_full=True):
+    response = _call_api(
+        'candidate', candidate_id, 'totals',
+        cycle=cycle, election_full=election_full,
+    )
+    if response['results']:
+        return response['results'][0]
+    return {}
 
 
 def result_or_404(data):
