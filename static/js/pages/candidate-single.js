@@ -38,7 +38,8 @@ function initExpendituresTable() {
   var path = ['schedules', 'schedule_e', 'by_candidate'];
   var query = {
     candidate_id: $table.data('candidate'),
-    cycle: $table.data('cycle')
+    cycle: $table.data('cycle'),
+    election_full: $table.data('election-full')
   };
   tables.DataTable.defer($table, {
     path: path,

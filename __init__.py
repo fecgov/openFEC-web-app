@@ -1,4 +1,3 @@
-import re
 import http
 import json
 import locale
@@ -126,6 +125,15 @@ def get_base_path():
     return request.headers.get('X-Script-Name', '')
 
 
+def format_election_years(cycle, election_full, duration):
+    start = (
+        cycle - duration + 1
+        if election_full and duration
+        else cycle - 1
+    )
+    return '{}–{}'.format(start, cycle)
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -152,6 +160,7 @@ app.jinja_env.globals.update({
     'base_path': get_base_path,
     'environment': config.environment,
     'today': datetime.date.today,
+    'format_election_years': format_election_years,
 })
 
 
@@ -187,14 +196,30 @@ def developers():
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
+    'election_full': fields.Bool(missing=True),
 })
-def candidate_page(c_id, cycle=None):
+def candidate_page(c_id, cycle=None, election_full=True):
     """Fetch and render data for candidate detail page.
 
     :param int cycle: Optional cycle for associated committees and financials.
+    :param bool election_full: Load full election period
     """
-    candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle)
-    return views.render_candidate(candidate, committees, cycle)
+    candidate, committees, cycle = load_with_nested(
+        'candidate', c_id, 'committees',
+        cycle=cycle, cycle_key='election_years',
+    )
+    if election_full and cycle and cycle not in candidate['election_years']:
+        next_cycle = next(
+            (
+                year for year in sorted(candidate['election_years'])
+                if year > cycle
+            ),
+            max(candidate['election_years']),
+        )
+        return redirect(
+            url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
+        )
+    return views.render_candidate(candidate, committees, cycle, election_full)
 
 
 @app.route('/committee/<c_id>/')
@@ -347,17 +372,6 @@ def fmt_year_range(year):
     if type(year) == int:
         return "{}–{}".format(year - 1, year)
     return None
-
-
-@app.template_filter()
-def fmt_report_desc(report_full_description):
-    if report_full_description:
-        return re.sub('{.+}', '', report_full_description)
-
-
-@app.template_filter()
-def restrict_cycles(value, start_year=START_YEAR):
-    return [each for each in value if start_year <= each <= utils.current_cycle()]
 
 
 @app.template_filter()
