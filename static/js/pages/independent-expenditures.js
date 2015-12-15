@@ -28,9 +28,8 @@ var columns = [
       }
     }
   },
-  tables.urlColumn('pdf_url', {data: 'expenditure_description', className: 'all hide-panel', orderable: false}),
   tables.currencyColumn({data: 'expenditure_amount', className: 'min-tablet'}),
-  tables.dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel-tablet'}),
+  columns.supportOpposeColumn,
   {
     data: 'candidate_name',
     orderable: false,
@@ -43,7 +42,8 @@ var columns = [
       );
     }
   },
-  columns.supportOpposeColumn,
+  tables.dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel-tablet'}),
+  tables.urlColumn('pdf_url', {data: 'expenditure_description', className: 'all hide-panel', orderable: false}),
   {
     className: 'all u-no-padding',
     width: '20px',
@@ -63,7 +63,7 @@ $(document).ready(function() {
     columns: columns,
     paginator: tables.SeekPaginator,
     rowCallback: tables.modalRenderRow,
-    order: [[3, 'desc']],
+    order: [[4, 'desc']],
     useFilters: true,
     callbacks: {
       afterRender: tables.modalRenderFactory(expenditureTemplate)
