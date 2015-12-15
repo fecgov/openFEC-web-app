@@ -92,6 +92,10 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         key=lambda pair: pair[0],
         reverse=True,
     )
+    tmpl_vars['election_year'] = next(
+        (year for year in sorted(candidate['election_years']) if year >= cycle),
+        None,
+    )
 
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles']}
 
