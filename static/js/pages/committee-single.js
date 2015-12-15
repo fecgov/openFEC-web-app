@@ -180,6 +180,12 @@ var disbursementRecipientIDColumns = [
   }
 ];
 
+var expendituresColumns = [
+  tables.currencyColumn({data: 'total'}),
+  columns.supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', className: 'all'}),
+];
+
 function buildStateUrl($elm) {
   return helpers.buildUrl(
     ['committee', $elm.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
@@ -355,6 +361,18 @@ $(document).ready(function() {
           order: [[1, 'desc']],
         })
       );
+      break;
+    case 'independent-expenditure-committee':
+      path = ['committee', committeeId, 'schedules', 'schedule_e', 'by_candidate'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: expendituresColumns,
+        order: [[0, 'desc']],
+        dom: tables.simpleDOM,
+        pagingType: 'simple',
+        hideEmpty: true
+      });
       break;
     }
   });
