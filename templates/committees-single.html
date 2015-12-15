@@ -61,7 +61,7 @@
         </div>
       </div>
     </header>
-    <div class="page-controls page-controls--primary">
+    <div class="page-controls page-controls--primary js-sticky" data-sticky-container="body">
       <div class="page-controls__top">
         <div class="container">
           <span class="page-controls__title">{{ name }}</span>
@@ -71,14 +71,16 @@
         <div class="container">
           <nav class="page-tabs">
             <ul class="page-tabs__list" role="tablist" data-name="tab">
-              <li class="page-tabs__item page-tabs__years"><h2 class="u-no-margin">{{ cycle|fmt_year_range }}: </h2></li>
               {% if committee_type not in ['C', 'E'] %}
                 <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" href="#section-1">Financial summary</a></li>
                 <li role="presentation" class="page-tabs__item"><a role="tab" data-name="receipts" tabindex="0" aria-controls="panel2" href="#section-2">Receipts from individuals</a></li>
                 <li role="presentation" class="page-tabs__item"><a role="tab" data-name="disbursements" tabindex="0" aria-controls="panel3" href="#section-3">Disbursements</a></li>
                 <li role="presentation" class="page-tabs__item"><a role="tab" data-name="between-committees" tabindex="0" aria-controls="panel4" href="#section-4">Between committees</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="filings" tabindex="0" aria-controls="panel5" href="#section-5">Filings</a></li>
               {% endif %}
+              {% if committee_type not in ['P', 'H', 'S', 'A'] %}
+                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="independent-expenditures-committee" tabindex="0" aria-controls="panel6" href="#section-6">Independent Expenditures</a></li>
+              {% endif %}
+              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="filings" tabindex="0" aria-controls="panel5" href="#section-5">Filings</a></li>
             </ul>
           </nav>
         </div>
@@ -135,6 +137,9 @@
         {% include 'partials/committee/receipts-tab.html' %}
         {% include 'partials/committee/disbursements-tab.html' %}
         {% include 'partials/committee/between-committees-tab.html' %}
+      {% endif %}
+      {% if committee_type not in ['P', 'H', 'S', 'A'] %}
+        {% include 'partials/committee/independent-expenditures-tab.html' %}
       {% endif %}
       {% include 'partials/committee/filings-tab.html' %}
     {% endwith %}

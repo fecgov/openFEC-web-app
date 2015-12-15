@@ -4,6 +4,8 @@ var $ = require('jquery');
 
 var events = require('fec-style/js/events.js');
 
+var KEYCODE_SLASH = 191;
+
 var defaultOpts = {
   placeHolderOptions: {
     'candidates': 'Search candidates',
@@ -13,7 +15,7 @@ var defaultOpts = {
 
 function onSelectChange($input, updatedText) {
   $input.attr('placeholder', updatedText).attr('aria-label', updatedText);
-};
+}
 
 var Search = function($el, opts) {
   var $select = $el.find('.js-search-type'),
@@ -28,6 +30,14 @@ var Search = function($el, opts) {
       onSelectChange($input, settings.placeHolderOptions[value]);
     });
   }
+
+  $(document.body).on('keyup', function(e) {
+    // Focus search on "/"
+    if (e.keyCode === KEYCODE_SLASH) {
+      $input.first().focus();
+    }
+  });
+
 };
 
 module.exports = Search;
