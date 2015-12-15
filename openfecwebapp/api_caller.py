@@ -53,12 +53,13 @@ def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
     return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
 
 
-def load_with_nested(primary_type, primary_id, secondary_type, cycle=None, cycle_key='cycles'):
-    path = ('history', str(cycle)) if cycle else ()
-    data = load_single_type(primary_type, primary_id, *path)
-    cycle = cycle or max(data[cycle_key])
-    path = ('history', str(cycle))
-    nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path)
+def load_with_nested(primary_type, primary_id, secondary_type, cycle=None,
+                     cycle_key='cycle', **query):
+    path = ('history', str(cycle)) if cycle else ('history', )
+    data = load_single_type(primary_type, primary_id, *path, per_page=1, **query)
+    cycle = cycle or max(data['cycles'])
+    path = ('history', str(data[cycle_key]))
+    nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path, **query)
     return data, nested_data['results'], cycle
 
 
