@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+export PATH=/app/.heroku/node/bin:$PATH
+
+npm install
+npm run build
