@@ -49,9 +49,11 @@ before_script:
       fi
 
   # Install web app and run in background
+  - travis_retry pip install -U pip wheel
   - travis_retry pip install -r requirements.txt
   - travis_retry npm install
   - travis_retry npm install -g gulp
+  - travis_retry npm install karma-phantomjs-launcher karma-phantomjs-shim
   - npm run build
   - python __init__.py &
 
@@ -62,6 +64,7 @@ before_script:
   - psql -c 'create database cfdm_test' -U postgres
   - pg_restore --dbname cfdm_test data/subset.dump --no-acl --no-owner
   - travis_retry pip install -r requirements.txt
+  - travis_retry pip install -r requirements-dev.txt
   - python manage.py update_all --processes 1
   - python manage.py runserver &
   - cd ..
@@ -70,7 +73,7 @@ script:
   # Run Python unit tests
   - if [[ -z $FEC_SAUCE_BROWSER ]]; then py.test; fi
   # Run Javascript unit tests
-  - if [[ -z $FEC_SAUCE_BROWSER ]]; then npm test; fi
+  - if [[ -z $FEC_SAUCE_BROWSER ]]; then npm run test-single; fi
   # Run Selenium tests if not pull request
   - if [[ $TRAVIS_PULL_REQUEST = 'false' && ! -z $FEC_SAUCE_BROWSER  ]]; then py.test --selenium; fi
 

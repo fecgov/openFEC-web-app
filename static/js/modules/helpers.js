@@ -2,7 +2,7 @@
 
 /* global Intl, BASE_PATH, API_LOCATION, API_VERSION, API_KEY */
 
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 var moment = require('moment');
 var decoders = require('./decoders');
@@ -23,7 +23,7 @@ function currency(value) {
 Handlebars.registerHelper('currency', currency);
 
 function datetime(value, options) {
-  var hash = options ? options.hash : {};
+  var hash = options.hash || {};
   var format = hash.pretty ? 'MMM D, YYYY' : 'MM-DD-YYYY';
   var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
   return parsed.isValid() ? parsed.format(format) : null;
@@ -44,6 +44,10 @@ function cycleDates(year) {
     min: '01-01-' + (year - 1),
     max: '12-31-' + year
   };
+}
+
+function ensureArray(value) {
+  return _.isArray(value) ? value : [value];
 }
 
 function filterNull(params) {
@@ -74,6 +78,7 @@ function buildUrl(path, query) {
 module.exports = {
   currency: currency,
   datetime: datetime,
+  ensureArray: ensureArray,
   decodeAmendment: decodeAmendment,
   cycleDates: cycleDates,
   filterNull: filterNull,

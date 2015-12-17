@@ -1,9 +1,9 @@
 'use strict';
 
-/* global require, module, window, document */
+/* global window, document */
 
 var $ = require('jquery');
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 var tabs = require('../vendor/tablist');
 var accessibility = require('fec-style/js/accessibility');
@@ -11,9 +11,10 @@ var accessibility = require('fec-style/js/accessibility');
 require('datatables');
 require('drmonty-datatables-responsive');
 
-var filters = require('./filters');
 var helpers = require('./helpers');
 var analytics = require('./analytics');
+
+var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
 
@@ -21,25 +22,6 @@ var simpleDOM = 't<"results-info"ip>';
 $(document.body).on('draw.dt', function() {
   $('.datatable__container').css('opacity', '1');
   $('.dataTable tbody td:first-child').attr('scope','row');
-});
-
-$.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
-  var settings = this.context[0];
-
-  // Clear stored indexes on filter change
-  if (!_.isEqual(settings._parsedFilters, parsedFilters)) {
-    settings._seekIndexes = {};
-  }
-  settings._parsedFilters = _.clone(parsedFilters);
-
-  // Set or get stored indexes
-  if (typeof value !== 'undefined') {
-    settings._seekIndexes = settings._seekIndexes || {};
-    settings._seekIndexes[length] = settings._seekIndexes[length] || {};
-    settings._seekIndexes[length][start] = value;
-  } else {
-    return ((settings._seekIndexes || {})[length] || {})[start] || undefined;
-  }
 });
 
 function yearRange(first, last) {
@@ -50,25 +32,12 @@ function yearRange(first, last) {
   }
 }
 
-function mapFilters(filters) {
-  return _.reduce(filters, function(acc, val) {
-    if (val.value && val.name.slice(0, 1) !== '_') {
-      if (acc[val.name]) {
-        acc[val.name].push(val.value);
-      } else {
-        acc[val.name] = [val.value];
-      }
-    }
-    return acc;
-  }, {});
-}
-
-var parsedFilters;
-
-function getCycle(datum) {
-  if (parsedFilters && parsedFilters.cycle) {
+function getCycle(datum, meta) {
+  var dataTable = DataTable.registry[meta.settings.sTableId];
+  var filters = dataTable && dataTable.filters;
+  if (filters && filters.cycle) {
     var cycles = _.intersection(
-      _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
+      _.map(filters.cycle, function(cycle) { return parseInt(cycle); }),
       datum.cycles
     );
     return {cycle: _.max(cycles)};
@@ -131,7 +100,7 @@ function formattedColumn(formatter, defaultOpts) {
   return function(opts) {
     return _.extend({}, defaultOpts, {
       render: function(data, type, row, meta) {
-        return formatter(data);
+        return formatter(data, type, row, meta);
       }
     }, opts);
   };
@@ -173,17 +142,17 @@ var dateColumn = formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc
 var currencyColumn = formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = barColumn(helpers.currency);
 
-var candidateColumn = formattedColumn(function(data) {
-  if (data) {
-    return buildEntityLink(data.name, helpers.buildAppUrl(['candidate', data.candidate_id]), 'candidate');
+var candidateColumn = formattedColumn(function(data, type, row) {
+  if (row) {
+    return buildEntityLink(row.candidate_name, helpers.buildAppUrl(['candidate', row.candidate_id]), 'candidate');
   } else {
     return '';
   }
 });
 
-var committeeColumn = formattedColumn(function(data) {
-  if (data) {
-    return buildEntityLink(data.name, helpers.buildAppUrl(['committee', data.committee_id]), 'committee');
+var committeeColumn = formattedColumn(function(data, type, row) {
+  if (row) {
+    return buildEntityLink(row.committee_name, helpers.buildAppUrl(['committee', row.committee_id]), 'committee');
   } else {
     return '';
   }
@@ -207,53 +176,44 @@ function mapResponse(response) {
   };
 }
 
-function ensureArray(value) {
-  return _.isArray(value) ? value : [value];
-}
-
 function compareQuery(first, second, keys) {
   keys = keys || _.union(_.keys(first), _.keys(second));
   var different = _.find(keys, function(key) {
     return !_.isEqual(
-      ensureArray(first[key]).sort(),
-      ensureArray(second[key]).sort()
+      helpers.ensureArray(first[key]).sort(),
+      helpers.ensureArray(second[key]).sort()
     );
   });
   return !different;
 }
 
-function pushQuery(params) {
+function nextUrl(params, fields) {
   var query = URI.parseQuery(window.location.search);
-  var fields = filters.getFields();
   if (!compareQuery(query, params, fields)) {
     // Clear and update filter fields
     _.each(fields, function(field) {
       delete query[field];
     });
     params = _.extend(query, params);
-    var queryString = URI('').query(params).toString();
-    window.history.pushState(params, queryString, queryString || window.location.pathname);
-    analytics.pageView();
+    return URI('').query(params).toString();
+  } else {
+    return null;
   }
 }
 
-function mapQueryOffset(api, data) {
-  return {
-    per_page: data.length,
-    page: Math.floor(data.start / data.length) + 1,
-  };
+function updateQuery(params, fields) {
+  var queryString = nextUrl(params, fields);
+  if (queryString !== null) {
+    window.history.replaceState(params, queryString, queryString || window.location.pathname);
+  }
 }
 
-function mapQuerySeek(api, data) {
-  var indexes = api.seekIndex(data.length, data.start) || {};
-  return _.extend(
-    {per_page: data.length},
-    _.chain(Object.keys(indexes))
-      .filter(function(key) { return indexes[key]; })
-      .map(function(key) { return [key, indexes[key]]; })
-      .object()
-      .value()
-  );
+function pushQuery(params, fields) {
+  var queryString = nextUrl(params, fields);
+  if (queryString !== null) {
+    window.history.pushState(params, queryString, queryString || window.location.pathname);
+    analytics.pageView();
+  }
 }
 
 function identity(value) {
@@ -279,6 +239,9 @@ function modalRenderFactory(template, fetch) {
     // Move the modal to the results div.
     $modal.appendTo($main);
     $modal.css('display', 'block');
+
+    // Add a class to the .dataTables_wrapper
+    $table.closest('.dataTables_wrapper').addClass('dataTables_wrapper--panel');
 
     $table.off('click keypress', '.js-panel-toggle tr.' + MODAL_TRIGGER_CLASS, callback);
     callback = function(e) {
@@ -370,14 +333,6 @@ function barsAfterRender(template, api, data, response) {
   });
 }
 
-function handleResponseSeek(api, data, response) {
-  api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
-}
-
-var defaultCallbacks = {
-  preprocess: mapResponse
-};
-
 function updateOnChange($form, api) {
   function onChange(e) {
     e.preventDefault();
@@ -399,124 +354,194 @@ function adjustFormHeight($table, $form) {
   }
 }
 
-var defaultCallbacks = {
-  preprocess: mapResponse
+function OffsetPaginator() {}
+
+OffsetPaginator.prototype.mapQuery = function(data) {
+  return {
+    per_page: data.length,
+    page: Math.floor(data.start / data.length) + 1,
+  };
 };
 
-function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
-  var draw;
-  var $processing = $('<div class="overlay is-loading"></div>');
-  var $hideNullWidget = $(
-    '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
-    '<label for="null-checkbox" class="results-info__null">' +
-      'Hide results with missing values when sorting' +
-    '</label>'
-  );
-  var useFilters = opts.useFilters;
-  var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
-  callbacks = _.extend({}, defaultCallbacks, callbacks);
-  opts = _.extend({
-    serverSide: true,
-    searching: false,
-    columns: columns,
-    lengthMenu: [30, 50, 100],
-    responsive: {
-      details: false
-    },
-    language: {
-      lengthMenu: 'Results per page: _MENU_'
-    },
-    dom: '<"results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
-    ajax: function(data, callback, settings) {
-      var api = this.api();
-      if ($form) {
-        var filters = $form.serializeArray();
-        parsedFilters = mapFilters(filters);
-        pushQuery(parsedFilters);
-      }
-      var query = _.extend(
-        callbacks.mapQuery(api, data),
-        parsedFilters || {}
-      );
-      if (useHideNull) {
-        query = _.extend(
-          query,
-          {sort_hide_null: $hideNullWidget.is(':checked')}
-        );
-      }
-      query.sort = mapSort(data.order, columns);
-      $processing.show();
-      $.getJSON(
-        helpers.buildUrl(path, _.extend({}, query, baseQuery || {}))
-      ).done(function(response) {
-        callbacks.handleResponse(api, data, response);
-        callback(callbacks.preprocess(response));
-        callbacks.afterRender(api, data, response);
-        if (opts.hideEmpty) {
-          hideEmpty(api, data, response);
-        }
-      }).always(function() {
-        $processing.hide();
-      });
-    }
-  }, opts || {});
-  var api = $table.DataTable(opts);
-  callbacks = _.extend({
-    handleResponse: function() {},
-    afterRender: function() {}
-  }, callbacks);
-  if (useFilters) {
-    // Update filters and data table on navigation
-    $(window).on('popstate', function() {
-      filters.activateInitialFilters();
-      var tempFilters = mapFilters(filters);
-      if (!_.isEqual(tempFilters, parsedFilters)) {
-        api.ajax.reload();
-      }
-    });
-  }
-  // Prepare loading message
-  $processing.hide();
-  $table.before($processing);
-  var $paging = $(api.table().container()).find('.results-info--top');
-  if (useHideNull) {
-    $paging.prepend($hideNullWidget);
-  }
-  $table.css('width', '100%');
-  $table.find('tbody').addClass('js-panel-toggle');
-  if ($form) {
-    updateOnChange($form, api);
-    $table.on('draw.dt', adjustFormHeight.bind(null, $table, $form));
-  }
+OffsetPaginator.prototype.handleResponse = function() {};
+
+function SeekPaginator() {
+  this.indexes = {};
+  this.query = null;
 }
+
+SeekPaginator.prototype.getIndexes = function(length, start) {
+  return (this.indexes[length] || {})[start] || {};
+};
+
+SeekPaginator.prototype.setIndexes = function(length, start, value) {
+  this.indexes[length] = this.indexes[length] || {};
+  this.indexes[length][start] = value;
+};
+
+SeekPaginator.prototype.clearIndexes = function() {
+  this.indexes = {};
+};
+
+SeekPaginator.prototype.mapQuery = function(data, query) {
+  if (!_.isEqual(query, this.query)) {
+    this.query = _.clone(query);
+    this.clearIndexes();
+  }
+  var indexes = this.getIndexes(data.length, data.start);
+  return _.extend(
+    {per_page: data.length},
+    _.chain(Object.keys(indexes))
+      .filter(function(key) { return indexes[key]; })
+      .map(function(key) { return [key, indexes[key]]; })
+      .object()
+      .value()
+  );
+};
+
+SeekPaginator.prototype.handleResponse = function(data, response) {
+  this.setIndexes(data.length, data.length + data.start, response.pagination.last_indexes);
+};
+
+var defaultOpts = {
+  serverSide: true,
+  searching: false,
+  useHideNull: true,
+  lengthMenu: [30, 50, 100],
+  responsive: {details: false},
+  language: {lengthMenu: 'Results per page: _MENU_'},
+  dom: '<"js-results-info results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
+};
+
+var defaultCallbacks = {
+  afterRender: function() {}
+};
+
+function DataTable(selector, opts) {
+  opts = opts || {};
+  this.$body = $(selector);
+  this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
+  this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
+  this.filterSet = (this.opts.panel || {}).filterSet;
+
+  this.xhr = null;
+  this.fetchContext = null;
+  this.hasWidgets = null;
+  this.filters = null;
+
+  var Paginator = this.opts.paginator || OffsetPaginator;
+  this.paginator = new Paginator();
+  this.api = this.$body.DataTable(this.opts);
+
+  DataTable.registry[this.$body.attr('id')] = this;
+
+  if (this.filterSet) {
+    updateOnChange(this.filterSet.$body, this.api);
+    updateQuery(this.filterSet.serialize(), this.filterSet.fields);
+    this.$body.on('draw.dt', adjustFormHeight.bind(null, this.$body, this.filterSet.$body));
+  }
+
+  if (this.opts.useFilters) {
+    $(window).on('popstate', this.handlePopState.bind(this));
+  }
+
+  this.$body.css('width', '100%');
+  this.$body.find('tbody').addClass('js-panel-toggle');
+}
+
+DataTable.prototype.destroy = function() {
+  this.api.destroy();
+  delete DataTable.registry[this.$body.attr('id')];
+};
+
+DataTable.prototype.handlePopState = function() {
+  this.filterSet.activate();
+  var filters = this.filterSet.serialize();
+  if (!_.isEqual(filters, this.filters)) {
+    this.api.ajax.reload();
+  }
+};
+
+DataTable.prototype.ensureWidgets = function() {
+  if (this.hasWidgets) { return; }
+  this.$processing = $('<div class="overlay is-loading"></div>').hide();
+  this.$body.before(this.$processing);
+
+  if (this.opts.useHideNull) {
+    this.$hideNullWidget = $(hideNullTemplate());
+    var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
+    $paging.prepend(this.$hideNullWidget);
+  }
+
+  this.hasWidgets = true;
+};
+
+DataTable.prototype.fetch = function(data, callback) {
+  var self = this;
+  self.ensureWidgets();
+  if (self.filterSet) {
+    pushQuery(self.filterSet.serialize(), self.filterSet.fields);
+    self.filters = self.filterSet.serialize();
+  }
+  var url = self.buildUrl(data);
+  self.$processing.show();
+  if (self.xhr) {
+    self.xhr.abort();
+  }
+  self.fetchContext = {
+    data: data,
+    callback: callback
+  };
+  self.xhr = $.getJSON(url);
+  self.xhr.done(self.fetchSuccess.bind(self));
+  self.xhr.fail(self.fetchError.bind(self));
+  self.xhr.always(function() {
+    self.$processing.hide();
+  });
+};
+
+DataTable.prototype.buildUrl = function(data) {
+  var query = _.extend({}, this.filters || {});
+  query.sort = mapSort(data.order, this.opts.columns);
+  if (this.opts.useHideNull) {
+    query.sort_hide_null = this.$hideNullWidget.is(':checked');
+  }
+  query = _.extend(query, this.paginator.mapQuery(data, query));
+  return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
+};
+
+DataTable.prototype.fetchSuccess = function(resp) {
+  this.paginator.handleResponse(this.fetchContext.data, resp);
+  this.fetchContext.callback(mapResponse(resp));
+  this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
+  if (this.opts.hideEmpty) {
+    this.hideEmpty(resp);
+  }
+};
+
+DataTable.prototype.fetchError = function() {
+
+};
 
 /**
  * Replace a `DataTable` with placeholder text if no results found. Should only
  * be used with unfiltered tables, else tables may be destroyed on restrictive
  * filtering.
  */
-function hideEmpty(api, data, response) {
+DataTable.prototype.hideEmpty = function(response) {
   if (!response.pagination.count) {
-    api.destroy();
-    var $table = $(api.table().node());
-    $table.before('<div class="message message--alert">No data found.</div>');
-    $table.remove();
+    this.destroy();
+    this.$body.before('<div class="message message--alert">No data found.</div>');
+    this.$body.remove();
   }
-}
-
-function initTableDeferred($table) {
-  var args = _.toArray(arguments);
-  tabs.onShow($table, function() {
-    initTable.apply(null, args);
-  });
-}
-
-var offsetCallbacks = {
-  mapQuery: mapQueryOffset
 };
-var seekCallbacks = {
-  mapQuery: mapQuerySeek,
-  handleResponse: handleResponseSeek
+
+DataTable.registry = {};
+
+DataTable.defer = function($table, opts) {
+  tabs.onShow($table, function() {
+    new DataTable($table, opts);
+  });
 };
 
 module.exports = {
@@ -536,8 +561,9 @@ module.exports = {
   modalRenderFactory: modalRenderFactory,
   MODAL_TRIGGER_CLASS: MODAL_TRIGGER_CLASS,
   MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
-  offsetCallbacks: offsetCallbacks,
-  seekCallbacks: seekCallbacks,
-  initTable: initTable,
-  initTableDeferred: initTableDeferred
+  mapSort: mapSort,
+  mapResponse: mapResponse,
+  DataTable: DataTable,
+  OffsetPaginator: OffsetPaginator,
+  SeekPaginator: SeekPaginator
 };

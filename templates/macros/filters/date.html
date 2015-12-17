@@ -1,19 +1,19 @@
 {% macro field(name, label, dates) %}
 
-<div class="filter date-choice-field" id="{{ name }}">
+  <div class="filter js-date-choice-field" id="{{ name }}" data-name="{{ name }}">
   <fieldset>
     <legend for="{{ name }}" class="label">{{ label }}</legend>
     <ul>
       <li>
-        <input id="radio-1" name="{{ name }}" type="radio" data-min-date={{ dates['year'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['year'][1] | date(fmt='%m-%d-%Y') }}>
+        <input id="radio-1" name="_{{ name }}" type="radio" data-min-date={{ dates['year'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['year'][1] | date(fmt='%m-%d-%Y') }}>
         <label for="radio-1">This year</label>
       </li>
       <li>
-        <input id="radio-2" name="{{ name }}" type="radio" data-min-date={{ dates['cycle'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['cycle'][1] | date(fmt='%m-%d-%Y') }}>
+        <input id="radio-2" name="_{{ name }}" type="radio" data-min-date={{ dates['cycle'][0] | date(fmt='%m-%d-%Y') }} data-max-date={{ dates['cycle'][1] | date(fmt='%m-%d-%Y') }}>
         <label for="radio-2">This cycle</label>
       </li>
       <li>
-        <input id="radio-3" name="{{ name }}" type="radio">
+        <input id="radio-3" name="_{{ name }}" type="radio">
         <label for="radio-3">Custom</label>
       </li>
     </ul>

@@ -407,7 +407,10 @@ function initSpendingTables() {
     var dataType = $table.attr('data-type');
     var opts = tableOpts[dataType];
     if (opts) {
-      tables.initTableDeferred($table, null, opts.path, helpers.filterNull(context.election), opts.columns, tables.offsetCallbacks, {
+      tables.DataTable.defer($table, {
+        path: opts.path,
+        query: helpers.filterNull(context.election),
+        columns: opts.columns,
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',

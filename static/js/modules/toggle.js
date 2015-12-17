@@ -18,7 +18,6 @@ module.exports = {
         });
         $('#' + $elm.attr('value')).attr('aria-hidden','false');
       });
-      $('.panel-toggle-control:checked').change();
     });
   }
 };

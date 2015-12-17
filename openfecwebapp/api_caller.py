@@ -4,7 +4,6 @@ from urllib import parse
 import requests
 import cachecontrol
 from flask import abort
-from werkzeug.exceptions import NotFound
 
 from openfecwebapp import utils
 from openfecwebapp import config
@@ -54,17 +53,13 @@ def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
     return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
 
 
-def load_with_nested(primary_type, primary_id, secondary_type, cycle=None):
-    path = ('history', str(cycle)) if cycle else ()
-    # Hack: If no history records are found, get the latest detail record
-    # TODO(jmcarp) Roll back once #875 is resolved
-    try:
-        data = load_single_type(primary_type, primary_id, *path)
-    except NotFound:
-        data = load_single_type(primary_type, primary_id)
-    cycle = cycle or min(utils.current_cycle(), max(data['cycles']))
-    path = ('history', str(cycle))
-    nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path)
+def load_with_nested(primary_type, primary_id, secondary_type, cycle=None,
+                     cycle_key='cycle', **query):
+    path = ('history', str(cycle)) if cycle else ('history', )
+    data = load_single_type(primary_type, primary_id, *path, per_page=1, **query)
+    cycle = cycle or max(data['cycles'])
+    path = ('history', str(data[cycle_key]))
+    nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path, **query)
     return data, nested_data['results'], cycle
 
 
@@ -82,6 +77,16 @@ def load_cmte_financials(committee_id, **filters):
         'reports': reports['results'],
         'totals': totals['results'],
     }
+
+
+def load_candidate_totals(candidate_id, cycle, election_full=True):
+    response = _call_api(
+        'candidate', candidate_id, 'totals',
+        cycle=cycle, election_full=election_full,
+    )
+    if response['results']:
+        return response['results'][0]
+    return {}
 
 
 def result_or_404(data):
