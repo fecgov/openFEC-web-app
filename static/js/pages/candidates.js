@@ -7,7 +7,8 @@ var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
-var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
+var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 
 var candidatesTemplate = require('../../templates/candidates.hbs');
 

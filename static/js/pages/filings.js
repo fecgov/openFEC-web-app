@@ -7,7 +7,8 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var filings = require('../modules/filings');
 var columns = require('../modules/columns');
-var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
+var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 
 var filingsColumns = columns.getColumns(
   columns.filings,
