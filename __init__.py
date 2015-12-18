@@ -207,7 +207,7 @@ def candidate_page(c_id, cycle=None, election_full=True):
     candidate, committees, cycle = load_with_nested(
         'candidate', c_id, 'committees',
         cycle=cycle, cycle_key='two_year_period',
-        election_full='true',
+        election_full=election_full,
     )
     if election_full and cycle and cycle not in candidate['election_years']:
         next_cycle = next(
