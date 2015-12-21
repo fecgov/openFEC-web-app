@@ -16,6 +16,8 @@
   "predef": [
     "require",
     "module",
+    "window",
+    "document",
     "describe",
     "before",
     "beforeEach",

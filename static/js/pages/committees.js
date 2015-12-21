@@ -6,7 +6,8 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
-var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
+var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 
 var committeesTemplate = require('../../templates/committees.hbs');
 
