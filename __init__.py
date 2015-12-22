@@ -288,6 +288,7 @@ def elections(office, cycle, state=None, district=None):
     return render_template(
         'elections.html',
         office=office,
+        office_code=office[0],
         cycle=cycle,
         cycles=cycles,
         state=state,
