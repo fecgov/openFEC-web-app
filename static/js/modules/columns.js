@@ -51,7 +51,7 @@ var filings = {
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      var cycle = tables.getCycle(row, meta);
+      var cycle = tables.getCycle([row.cycle], meta);
       if (row.candidate_name) {
         return tables.buildEntityLink(
           row.candidate_name,

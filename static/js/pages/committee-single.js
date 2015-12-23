@@ -166,7 +166,11 @@ var disbursementRecipientIDColumns = [
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.recipient_id, 'committee');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['committee', row.recipient_id]),
+        'committee'
+      );
     }
   },
   {
