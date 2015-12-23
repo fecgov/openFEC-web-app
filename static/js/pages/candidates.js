@@ -20,14 +20,17 @@ var columns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row, meta)),
+        helpers.buildAppUrl(
+          ['candidate', row.candidate_id],
+          tables.getCycle(row.election_years, meta)
+        ),
         'candidate'
       );
     }
   },
   {data: 'office_full', className: 'min-tablet hide-panel'},
   {
-    data: 'cycles',
+    data: 'election_years',
     className: 'min-tablet',
     render: function(data, type, row, meta) {
       return tables.yearRange(_.first(data), _.last(data));
