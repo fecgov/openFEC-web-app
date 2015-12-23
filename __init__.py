@@ -379,6 +379,12 @@ def fmt_year_range(year):
 def fmt_state_full(value):
     return constants.states[value.upper()]
 
+@app.template_filter()
+def fmt_cycle_min_max(cycles):
+    if len(cycles) > 1:
+        return '{}–{}'.format(min(cycles), max(cycles))
+    return cycles[0]
+
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
 if config.force_https:
