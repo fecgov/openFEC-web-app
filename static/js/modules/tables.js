@@ -32,15 +32,17 @@ function yearRange(first, last) {
   }
 }
 
-function getCycle(datum, meta) {
+function getCycle(value, meta) {
   var dataTable = DataTable.registry[meta.settings.sTableId];
   var filters = dataTable && dataTable.filters;
   if (filters && filters.cycle) {
     var cycles = _.intersection(
       _.map(filters.cycle, function(cycle) { return parseInt(cycle); }),
-      datum.cycles
+      value
     );
-    return {cycle: _.max(cycles)};
+    return cycles.length ?
+      {cycle: _.max(cycles)} :
+      {};
   } else {
     return {};
   }

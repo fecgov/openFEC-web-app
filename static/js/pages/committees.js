@@ -18,7 +18,10 @@ var columns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['committee', row.committee_id], tables.getCycle(row, meta)),
+        helpers.buildAppUrl(
+          ['committee', row.committee_id],
+          tables.getCycle(row.cycles, meta)
+        ),
         'committee'
       );
     }
