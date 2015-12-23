@@ -40,7 +40,9 @@ function getCycle(value, meta) {
       _.map(filters.cycle, function(cycle) { return parseInt(cycle); }),
       value
     );
-    return {cycle: _.max(cycles)};
+    return cycles.length ?
+      {cycle: _.max(cycles)} :
+      {};
   } else {
     return {};
   }
