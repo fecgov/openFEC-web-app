@@ -8,12 +8,12 @@
         <div class="row">
           <h3 class="results-info__title">Candidates in this election</h3>
         </div>
+        <div class="row u-padding--bottom">
+          <span>This page only shows candidates who have registered <em>and</em> filed a financial report. Looking for <a href="{{ url_for('candidates', office=office_code|upper, cycle=cycle, district=district, state=state|upper) }}">all candidates who filed</a>?</span>
+        </div>
         <div class="row">
-          <div class="t-block usa-width-three-fourths">
-            <p>This page only shows candidates who have registered <em>and</em> filed a financial report. Looking for all candidates who filed? <a href="{{ url_for('candidates', office=office_code|upper, cycle=cycle, district=district, state=state|upper) }}">Click here</a>.</p>
-            <p>Totals reflect the sum total reported by all of a candidate's authorized committees.</p>
-          </div>
-          <div class="usa-width-one-fourth is-right-aligned">
+          <span class="t-block usa-width-three-fourths">Totals reflect the sum reported by all of a candidate's authorized committees.</span>
+          <div class="usa-width-one-fourth t-right-aligned">
             <span class="is-incumbent t-sans t-note">Incumbent</span>
           </div>
         </div>
