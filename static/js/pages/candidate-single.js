@@ -17,11 +17,14 @@ var expendituresColumns = [
   {
     data: 'total',
     className: 'all',
+    orderable: true,
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
-      return {
-        candidate_id: row.candidate_id,
-      };
+        return {
+          support_oppose_indicator: row.support_oppose_indicator,
+          candidate_id: row.candidate_id,
+          is_notice: false,
+        };
     })
   },
   tables.committeeColumn({data: 'committee', className: 'all'}),
