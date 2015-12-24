@@ -28,11 +28,11 @@
 
           {% if results %}
             {% if results|length >= 20 %}
-              <div class="results__count message message--alert"> 
-                Showing first 20 results. 
+              <div class="results__count message message--alert">
+                Showing first 20 results.
                 <a href="{{ url_for(result_type, name=query) }}">View all &raquo;</a>
               </div>
-            {% endif %}          
+            {% endif %}
             <h2 class="results__title">Results:</h2>
             {% if result_type == 'committees' %}
               {% with committees=results %}
@@ -48,16 +48,18 @@
               {% endwith %}
             {% endif %}
         </section>
-        <aside class="sidebar">
-          <div class="card">
-            <a class="button--neutral" href="{{ url_for(result_type) }}">Filter these results &raquo;</a>
-            <div class="card__content card__content--small">
-              <p>Trying to sort through a lot of results? Want to explore
-                similar {{ result_type }}? Try exploring all {{ result_type }}.
-              </p>
+        <div class="sidebar-container">
+          <aside class="sidebar">
+            <div class="card">
+              <a class="button--neutral" href="{{ url_for(result_type, name=query) }}">Filter these results &raquo;</a>
+              <div class="card__content card__content--small">
+                <p>Trying to sort through a lot of results? Want to explore
+                  similar {{ result_type }}? Try exploring all {{ result_type }}.
+                </p>
+              </div>
             </div>
-          </div>
-        </aside>
+          </aside>
+        </div>
       {% endif %}
       </div>
     {% include 'partials/search-results-alternatives.html' %}

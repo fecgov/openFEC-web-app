@@ -6,7 +6,8 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
-var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
+var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 
 var committeesTemplate = require('../../templates/committees.hbs');
 
@@ -18,7 +19,10 @@ var columns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['committee', row.committee_id], tables.getCycle(row, meta)),
+        helpers.buildAppUrl(
+          ['committee', row.committee_id],
+          tables.getCycle(row.cycles, meta)
+        ),
         'committee'
       );
     }

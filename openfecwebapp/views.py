@@ -1,5 +1,4 @@
 import datetime
-import collections
 
 import furl
 
@@ -59,52 +58,52 @@ def groupby(values, keygetter):
     return ret
 
 
-def aggregate_committees(committees):
-    ret = collections.defaultdict(int)
-    start_dates, end_dates = [], []
-    for each in committees:
-        totals = each['totals'][0] if each['totals'] else {}
-        reports = each['reports'][0] if each['reports'] else {}
-        ret['receipts'] += totals.get('receipts') or 0
-        ret['disbursements'] += totals.get('disbursements') or 0
-        ret['cash'] += reports.get('cash_on_hand_end_period') or 0
-        ret['debt'] += reports.get('debts_owed_by_committee') or 0
-        if totals.get('coverage_start_date'):
-            start_dates.append(totals['coverage_start_date'])
-        if totals.get('coverage_end_date'):
-            end_dates.append(totals['coverage_end_date'])
-    ret['start_date'] = min(start_dates) if start_dates else None
-    ret['end_date'] = min(end_dates) if end_dates else None
-    return ret
+election_durations = {
+    'P': 4,
+    'S': 6,
+    'H': 2,
+}
 
-
-def render_candidate(candidate, committees, cycle):
+def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
     tmpl_vars['cycle'] = cycle
+    tmpl_vars['cycle_loaded'] = candidate['two_year_period']
     tmpl_vars['result_type'] = 'candidates'
+    tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
+    tmpl_vars['election_full'] = election_full
+    tmpl_vars['aggregate_cycles'] = (
+        list(range(cycle, cycle - tmpl_vars['duration'], -2))
+        if election_full
+        else [cycle]
+    )
 
     committee_groups = groupby(committees, lambda each: each['designation'])
     committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
-    for committee in committees_authorized:
-        committee.update(
-            api_caller.load_cmte_financials(
-                committee['committee_id'],
-                cycle=cycle,
-            )
-        )
+
+    aggregate = api_caller.load_candidate_totals(
+        candidate['candidate_id'],
+        cycle=cycle,
+        election_full=election_full,
+    )
 
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized
     tmpl_vars['committee_ids'] = [committee['committee_id'] for committee in committees_authorized]
-    tmpl_vars['aggregate'] = aggregate_committees(committees_authorized)
+    tmpl_vars['aggregate'] = aggregate
 
     tmpl_vars['elections'] = sorted(
         zip(candidate['election_years'], candidate['election_districts']),
         key=lambda pair: pair[0],
         reverse=True,
     )
+    tmpl_vars['election_year'] = next(
+        (year for year in sorted(candidate['election_years']) if year >= cycle),
+        None,
+    )
+
+    tmpl_vars['context_vars'] = {'cycles': candidate['cycles']}
 
     return render_template('candidates-single.html', **tmpl_vars)
 

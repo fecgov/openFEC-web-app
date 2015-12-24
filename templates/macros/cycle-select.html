@@ -1,22 +1,21 @@
-{% macro cycle_select(cycles, cycle=none, location='query', id='cycle-select', tooltip=True) %}
+{% macro cycle_select(cycles, cycle=none, duration=2, location='query', id='cycle-select') %}
 {% if cycles %}
-  {% if tooltip %}
-    <div class="tooltip__container">
-      <label for="{{ id }}" class="label tooltip__trigger-text">View data for:</label>
-      <button class="tooltip__trigger" type="button"><span class="u-visually-hidden">Learn more</span></button>
-      <div role="tooltip" class="tooltip tooltip--under">
-        <p class="tooltip__content">This site groups data in two-year periods — if a candidate or committee has been active more than two years, this page won't show all their data.</p>
-        <p class="tooltip__content">We're currently working to create additional views, but we need your help. See the <a href="https://github.com/18f/fec/issues/73" tabindex="-1" target="_blank">latest designs on GitHub</a>, and let us know what you think. You can also leave comments using the feedback button at the bottom of this page.</p>
-      </div>
-    </div>
-  {% endif %}
-  <select id="{{ id }}" class="cycle-select select--neutral js-cycle" name="cycle" data-cycle-location="{{ location }}">
-  {% for each in cycles | restrict_cycles | sort(reverse=True) %}
-    <option
-        value="{{ each }}"
-        {% if each == cycle %}selected{% endif %}
-      >{{ each | fmt_year_range }}</option>
-  {% endfor %}
-  </select>
+  <div class="cycle-select">
+    <label for="{{ id }}" class="cycle-select__label">Election:</label>
+    <select
+        id="{{ id }}"
+        class="select--neutral js-cycle"
+        name="cycle"
+        data-cycle-location="{{ location }}"
+        data-duration="{{ duration }}"
+      >
+    {% for each in cycles | sort(reverse=True) %}
+      <option
+          value="{{ each }}"
+          {% if cycle and cycle <= each and cycle > (each - duration) %}selected{% endif %}
+        >{{ each }}</option>
+    {% endfor %}
+    </select>
+  </div>
 {% endif %}
 {% endmacro %}

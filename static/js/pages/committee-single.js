@@ -166,7 +166,11 @@ var disbursementRecipientIDColumns = [
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/committee/' + row.recipient_id, 'committee');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['committee', row.recipient_id]),
+        'committee'
+      );
     }
   },
   {
@@ -178,6 +182,12 @@ var disbursementRecipientIDColumns = [
       return {recipient_committee_id: row.recipient_id};
     })
   }
+];
+
+var expendituresColumns = [
+  tables.currencyColumn({data: 'total'}),
+  columns.supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', className: 'all'}),
 ];
 
 function buildStateUrl($elm) {
@@ -355,6 +365,18 @@ $(document).ready(function() {
           order: [[1, 'desc']],
         })
       );
+      break;
+    case 'independent-expenditure-committee':
+      path = ['committee', committeeId, 'schedules', 'schedule_e', 'by_candidate'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: expendituresColumns,
+        order: [[0, 'desc']],
+        dom: tables.simpleDOM,
+        pagingType: 'simple',
+        hideEmpty: true
+      });
       break;
     }
   });

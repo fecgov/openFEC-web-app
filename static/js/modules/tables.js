@@ -39,15 +39,17 @@ function yearRange(first, last) {
   }
 }
 
-function getCycle(datum, meta) {
+function getCycle(value, meta) {
   var dataTable = DataTable.registry[meta.settings.sTableId];
   var filters = dataTable && dataTable.filters;
   if (filters && filters.cycle) {
     var cycles = _.intersection(
       _.map(filters.cycle, function(cycle) { return parseInt(cycle); }),
-      datum.cycles
+      value
     );
-    return {cycle: _.max(cycles)};
+    return cycles.length ?
+      {cycle: _.max(cycles)} :
+      {};
   } else {
     return {};
   }
@@ -107,7 +109,7 @@ function formattedColumn(formatter, defaultOpts) {
   return function(opts) {
     return _.extend({}, defaultOpts, {
       render: function(data, type, row, meta) {
-        return formatter(data);
+        return formatter(data, type, row, meta);
       }
     }, opts);
   };
@@ -149,17 +151,17 @@ var dateColumn = formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc
 var currencyColumn = formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = barColumn(helpers.currency);
 
-var candidateColumn = formattedColumn(function(data) {
-  if (data) {
-    return buildEntityLink(data.name, helpers.buildAppUrl(['candidate', data.candidate_id]), 'candidate');
+var candidateColumn = formattedColumn(function(data, type, row) {
+  if (row) {
+    return buildEntityLink(row.candidate_name, helpers.buildAppUrl(['candidate', row.candidate_id]), 'candidate');
   } else {
     return '';
   }
 });
 
-var committeeColumn = formattedColumn(function(data) {
-  if (data) {
-    return buildEntityLink(data.name, helpers.buildAppUrl(['committee', data.committee_id]), 'committee');
+var committeeColumn = formattedColumn(function(data, type, row) {
+  if (row) {
+    return buildEntityLink(row.committee_name, helpers.buildAppUrl(['committee', row.committee_id]), 'committee');
   } else {
     return '';
   }
@@ -296,13 +298,6 @@ function modalRenderFactory(template, fetch) {
     $modal.on('click', '.js-panel-close', function(e) {
       e.preventDefault();
       hidePanel(api, $modal);
-    });
-
-    /* Set focus to highlighted row on blurring anchors if tabbing out of the panel */
-    $modal.on('blur', 'a, button', function(e) {
-      if (!$modal.has(e.relatedTarget).length) {
-        $('.row-active .js-panel-button').focus();
-      }
     });
   };
 }
