@@ -32,6 +32,23 @@
 </div>
 
 <div class="panel__row">
+  <h4 class="panel__title">Filing information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Form type</td>
+      <td class="panel__data">{{ decodeForm form_type }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Report type</td>
+      <td class="panel__data">{{ decodeReport report_type }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Receipt date</td>
+      <td class="panel__data">{{ datetime receipt_date pretty=true }}</td>
+    </tr>
+  </table>
+</div>
+<div class="panel__row">
   <h4 class="panel__title">Committee information</h4>
   <table>
     <tr>
