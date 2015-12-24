@@ -12,8 +12,11 @@
 
 <section class="main__content--full">
   {% include 'partials/disbursements-filter.html' %}
-  <div id="committees" class="datatable__container">
-    {% include 'partials/disbursements-table.html' %}
+  <div class="data-container">
+    <div class="data-container__widgets"></div>
+    <div id="committees" class="data-container__body fade-in">
+      {% include 'partials/disbursements-table.html' %}
+    </div>
   </div>
 </section>
 

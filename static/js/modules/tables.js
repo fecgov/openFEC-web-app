@@ -20,7 +20,7 @@ var simpleDOM = 't<"results-info"ip>';
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
-  $('.datatable__container').css('opacity', '1');
+  $('.data-container__body.fade-in').css('opacity', '1');
   $('.dataTable tbody td:first-child').attr('scope','row');
 });
 
@@ -342,7 +342,7 @@ function updateOnChange($form, api) {
  */
 function adjustFormHeight($table, $form) {
   $form.height('');
-  var tableHeight = $table.closest('.datatable__container').height();
+  var tableHeight = $table.closest('.data-container__body').height();
   var filterHeight = $form.height();
   if (tableHeight > filterHeight && $(document).width() > 980) {
     $form.height(tableHeight);
