@@ -4,11 +4,23 @@
     <tr>
       <td class="panel__term">Name</td>
       {{#if contributor}}
-        <td class="panel__data"><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
+        {{#if (eq receipt_type '15E')}}
+          <td class="panel__data">{{contributor_name}}</td>
+        {{else}}
+          <td class="panel__data"><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
+        {{/if}}
       {{else}}
         <td class="panel__data">{{contributor_name}}</td>
       {{/if}}
     </tr>
+    {{#if contributor}}
+      {{#if (eq receipt_type '15E')}}
+        <tr>
+          <td class="panel__term">Earmarked by</td>
+          <td class="panel__data"><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
+        </tr>
+      {{/if}}
+    {{/if}}
     <tr>
       <td class="panel__term">City and state</td>
       <td class="panel__data">{{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}</td>

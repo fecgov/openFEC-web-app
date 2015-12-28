@@ -29,6 +29,12 @@ function datetime(value, options) {
   return parsed.isValid() ? parsed.format(format) : null;
 }
 
+Handlebars.registerHelper({
+  eq: function (v1, v2) {
+    return v1 === v2;
+  }
+});
+
 function decodeAmendment(value) {
   return decoders.amendments[value];
 }
