@@ -24,12 +24,24 @@
 
 {% macro checkbox_dropdown(name, label, selected={}, options={}) %}
 <div class="filter">
-  <fieldset class="js-dropdown">
+  <fieldset class="js-dropdown js-filter">
     <legend class="label" for="{{ name }}">{{ label }}</legend>
     {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
     {% if options %}
     {{ checkbox_options(name, options) }}
     {% endif %}
   </fieldset>
+</div>
+{% endmacro %}
+
+{% macro checkbox_dropdown_multiple(name, label, selected={}, options={}) %}
+<div class="filter">
+  <div class="js-dropdown">
+    <span class="label" for="{{ name }}">{{ label }}</span>
+    {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
+    {% if options %}
+    {{ checkbox_options(name, options) }}
+    {% endif %}
+  </div>
 </div>
 {% endmacro %}
