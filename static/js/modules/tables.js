@@ -337,18 +337,6 @@ function updateOnChange($form, api) {
   $form.on('change', 'input,select', _.debounce(onChange, 250));
 }
 
-/**
- * Adjust form height to match table; called after table redraw.
- */
-function adjustFormHeight($table, $form) {
-  $form.height('');
-  var tableHeight = $table.closest('.data-container__body').height();
-  var filterHeight = $form.height();
-  if (tableHeight > filterHeight && $(document).width() > 980) {
-    $form.height(tableHeight);
-  }
-}
-
 function OffsetPaginator() {}
 
 OffsetPaginator.prototype.mapQuery = function(data) {
@@ -417,7 +405,8 @@ function DataTable(selector, opts) {
   this.$body = $(selector);
   this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
   this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
-  this.filterSet = (this.opts.panel || {}).filterSet;
+  this.filterPanel = (this.opts.filterPanel || {});
+  this.filterSet = (this.opts.filterPanel || {}).filterSet;
 
   this.xhr = null;
   this.fetchContext = null;
@@ -430,10 +419,12 @@ function DataTable(selector, opts) {
 
   DataTable.registry[this.$body.attr('id')] = this;
 
-  if (this.filterSet) {
+  if (this.filterPanel) {
     updateOnChange(this.filterSet.$body, this.api);
     updateQuery(this.filterSet.serialize(), this.filterSet.fields);
-    this.$body.on('draw.dt', adjustFormHeight.bind(null, this.$body, this.filterSet.$body));
+    this.$body.on('draw.dt', this, function(e) {
+      e.data.filterPanel.setHeight();
+    });
   }
 
   if (this.opts.useFilters) {
