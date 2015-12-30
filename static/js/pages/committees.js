@@ -46,9 +46,9 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var filterPanel = new FilterPanel('#category-filters');
+  var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
-    panel: filterPanel,
+    filterPanel: filterPanel,
     path: 'committees',
     columns: columns,
     useFilters: true,

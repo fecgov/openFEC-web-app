@@ -20,10 +20,10 @@ var filingsColumns = columns.getColumns(
 
 $(document).ready(function() {
   var $table = $('#results');
-  var filterPanel = new FilterPanel('#category-filters');
+  var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
     path: 'filings',
-    panel: filterPanel,
+    filterPanel: filterPanel,
     columns: filingsColumns,
     rowCallback: filings.renderRow,
     // Order by receipt date descending

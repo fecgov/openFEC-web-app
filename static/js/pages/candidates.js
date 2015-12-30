@@ -51,10 +51,10 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var filterPanel = new FilterPanel('#category-filters');
+  var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
     path: 'candidates',
-    panel: filterPanel,
+    filterPanel: filterPanel,
     columns: columns,
     useFilters: true,
     rowCallback: tables.modalRenderRow,
