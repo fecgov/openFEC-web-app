@@ -4,9 +4,10 @@
 
 var URI = require('urijs');
 var _ = require('underscore');
-var moment = require('moment');
 var decoders = require('./decoders');
 var Handlebars = require('hbsfy/runtime');
+
+var helpers = require('fec-style/js/helpers');
 
 var intl = require('intl');
 var locale = require('intl/locale-data/json/en-US.json');
@@ -22,18 +23,9 @@ function currency(value) {
 }
 Handlebars.registerHelper('currency', currency);
 
-function datetime(value, options) {
-  var hash = options.hash || {};
-  var format = hash.pretty ? 'MMM D, YYYY' : 'MM-DD-YYYY';
-  var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
-  return parsed.isValid() ? parsed.format(format) : null;
-}
-
 function decodeAmendment(value) {
   return decoders.amendments[value];
 }
-
-Handlebars.registerHelper('datetime', datetime);
 
 Handlebars.registerHelper('decodeAmendment', decodeAmendment);
 
@@ -77,7 +69,6 @@ function buildUrl(path, query) {
 
 module.exports = {
   currency: currency,
-  datetime: datetime,
   ensureArray: ensureArray,
   decodeAmendment: decodeAmendment,
   cycleDates: cycleDates,
