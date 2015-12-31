@@ -70,6 +70,7 @@ function buildUrl(path, query) {
 module.exports = {
   currency: currency,
   ensureArray: ensureArray,
+  datetime: helpers.datetime,
   decodeAmendment: decodeAmendment,
   cycleDates: cycleDates,
   filterNull: filterNull,
