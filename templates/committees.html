@@ -13,7 +13,9 @@
 <section class="main__content--full">
   {% include 'partials/committee-filter.html' %}
   <div class="data-container">
-    <div class="data-container__widgets"></div>
+    <div class="data-container__widgets">
+      <ul class="data-container__tags js-tag-container"></ul>
+    </div>
     <div id="committees" class="data-container__body fade-in">
       {% include 'partials/committees-table.html' %}
     </div>

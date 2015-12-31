@@ -62,7 +62,7 @@
     "d3": "3.5.5",
     "datatables": "1.10.7",
     "drmonty-datatables-responsive": "1.0.6",
-    "fec-style": "1.2.0",
+    "fec-style": "../fec-style",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
     "intl": "1.0.0-rc-4",
