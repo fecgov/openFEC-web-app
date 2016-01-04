@@ -510,7 +510,7 @@ DataTable.prototype.ensureWidgets = function() {
   }
 
   if(this.opts.disableExport) {
-    this.disableExport({message: EXPORTS_DISABLED})
+    this.disableExport({message: EXPORTS_DISABLED});
   }
 
   this.hasWidgets = true;
