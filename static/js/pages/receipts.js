@@ -16,7 +16,7 @@ var columns = [
     className: 'all',
     width: '200px',
     render: function(data, type, row, meta) {
-      if (data && row.receipt_type !== '15E') {
+      if (data && row.receipt_type !== helpers.globals.EARMARKED_CODE) {
         return tables.buildEntityLink(
           data.name,
           helpers.buildAppUrl(['committee', data.committee_id]),

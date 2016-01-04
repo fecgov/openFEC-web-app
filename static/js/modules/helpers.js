@@ -35,6 +35,14 @@ Handlebars.registerHelper({
   }
 });
 
+var globals = {
+  EARMARKED_CODE: '15E'
+};
+
+Handlebars.registerHelper('global', function(value) {
+  return globals[value];
+});
+
 function decodeAmendment(value) {
   return decoders.amendments[value];
 }
@@ -89,5 +97,6 @@ module.exports = {
   cycleDates: cycleDates,
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,
-  buildUrl: buildUrl
+  buildUrl: buildUrl,
+  globals: globals
 };

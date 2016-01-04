@@ -4,7 +4,7 @@
     <tr>
       <td class="panel__term">Name</td>
       {{#if contributor}}
-        {{#if (eq receipt_type '15E')}}
+        {{#if (eq receipt_type (global 'EARMARKED_CODE'))}}
           <td class="panel__data">{{contributor_name}}</td>
         {{else}}
           <td class="panel__data"><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
@@ -14,7 +14,7 @@
       {{/if}}
     </tr>
     {{#if contributor}}
-      {{#if (eq receipt_type '15E')}}
+      {{#if (eq receipt_type (global 'EARMARKED_CODE'))}}
         <tr>
           <td class="panel__term">Earmarked by</td>
           <td class="panel__data"><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
