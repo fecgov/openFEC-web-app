@@ -69,7 +69,8 @@ $(document).ready(function() {
     order: [[4, 'desc']],
     pagingType: 'simple',
     useFilters: true,
-    useExport: false,
+    useExport: true,
+    disableExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(donationTemplate)

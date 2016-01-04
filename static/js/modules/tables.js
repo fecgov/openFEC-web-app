@@ -24,6 +24,19 @@ var browseDOM = '<"js-results-info results-info results-info--top"pilfr>' +
                 '<"results-info"ip>';
 
 var DOWNLOAD_CAP = 100000;
+var MAX_DOWNLOADS = download.MAX_DOWNLOADS;
+
+var CAP_EXCEEDED =
+    'Exports are limited to ' +
+    DOWNLOAD_CAP +
+    ' records—add filters to narrow results, or export bigger ' +
+    'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.';
+
+var DOWNLOADS_EXCEEDED = 'Each user is limited to ' +
+    download.MAX_DOWNLOADS +
+    ' exports at a time. This helps us keep things running smoothly.';
+
+var EXPORTS_DISABLED = 'Data exports for this page are coming soon.';
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -451,6 +464,10 @@ function DataTable(selector, opts) {
     $(window).on('popstate', this.handlePopState.bind(this));
   }
 
+  if (this.opts.useExport) {
+    $(document.body).on('download:change', this.toggleExport.bind(this));
+  }
+
   this.$body.css('width', '100%');
   this.$body.find('tbody').addClass('js-panel-toggle');
 }
@@ -482,8 +499,7 @@ DataTable.prototype.ensureWidgets = function() {
 
   if (this.opts.useExport) {
     var templateVars = {
-      title: this.opts.title,
-      max: DOWNLOAD_CAP
+      title: this.opts.title
     };
     this.$exportWidget = $(exportWidgetTemplate(templateVars));
     $paging.after(this.$exportWidget);
@@ -493,16 +509,29 @@ DataTable.prototype.ensureWidgets = function() {
     this.$exportButton.on('click', this.export.bind(this));
   }
 
+  if(this.opts.disableExport) {
+    this.disableExport({message: EXPORTS_DISABLED})
+  }
+
   this.hasWidgets = true;
 };
 
-DataTable.prototype.disableExport = function() {
+DataTable.prototype.toggleExport = function(e) {
+  if (e.downloadCount >= MAX_DOWNLOADS) {
+    this.disableExport({message: DOWNLOADS_EXCEEDED});
+  } else {
+    this.enableExport();
+  }
+};
+
+DataTable.prototype.disableExport = function(opts) {
   this.$exportButton.addClass('disabled');
   this.$exportButton.off('click');
 
   // Adding everything we need for the tooltip
   this.$exportButton.attr('aria-describedby', 'export-tooltip');
   var $exportTooltip = this.$exportTooltip;
+  $exportTooltip.html(opts.message);
 
   function hideTooltip() {
     $exportTooltip.attr('aria-hidden', 'true');
@@ -573,9 +602,9 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
 
-  if (this.opts.useExport) {
+  if (this.opts.useExport && !this.opts.disableExport) {
     if (resp.pagination.count > DOWNLOAD_CAP) {
-      this.disableExport();
+      this.disableExport({message: CAP_EXCEEDED});
     } else {
       this.enableExport();
     }

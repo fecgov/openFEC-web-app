@@ -176,10 +176,12 @@ function DownloadContainer(parent) {
 
 DownloadContainer.prototype.add = function() {
   this.items++;
+  this.$body.trigger($.Event('download:change', {downloadCount: this.items}));
 };
 
 DownloadContainer.prototype.subtract = function() {
   this.items = this.items - 1;
+  this.$body.trigger($.Event('download:change', {downloadCount: this.items}));
   if (this.items === 0) {
     this.destroy();
   }
@@ -200,5 +202,6 @@ module.exports = {
   hydrate: hydrate,
   download: download,
   DownloadItem: DownloadItem,
-  DownloadContainer: DownloadContainer
+  DownloadContainer: DownloadContainer,
+  MAX_DOWNLOADS: MAX_DOWNLOADS
 };
