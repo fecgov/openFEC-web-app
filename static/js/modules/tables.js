@@ -3,16 +3,17 @@
 /* global window, document */
 
 var $ = require('jquery');
-var URI = require('urijs');
 var _ = require('underscore');
+
 var tabs = require('../vendor/tablist');
+
+var urls = require('fec-style/js/urls');
 var accessibility = require('fec-style/js/accessibility');
 
 require('datatables');
 require('drmonty-datatables-responsive');
 
 var helpers = require('./helpers');
-var analytics = require('./analytics');
 
 var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
 
@@ -176,46 +177,6 @@ function mapResponse(response) {
     recordsFiltered: response.pagination.count,
     data: response.results
   };
-}
-
-function compareQuery(first, second, keys) {
-  keys = keys || _.union(_.keys(first), _.keys(second));
-  var different = _.find(keys, function(key) {
-    return !_.isEqual(
-      helpers.ensureArray(first[key]).sort(),
-      helpers.ensureArray(second[key]).sort()
-    );
-  });
-  return !different;
-}
-
-function nextUrl(params, fields) {
-  var query = URI.parseQuery(window.location.search);
-  if (!compareQuery(query, params, fields)) {
-    // Clear and update filter fields
-    _.each(fields, function(field) {
-      delete query[field];
-    });
-    params = _.extend(query, params);
-    return URI('').query(params).toString();
-  } else {
-    return null;
-  }
-}
-
-function updateQuery(params, fields) {
-  var queryString = nextUrl(params, fields);
-  if (queryString !== null) {
-    window.history.replaceState(params, queryString, queryString || window.location.pathname);
-  }
-}
-
-function pushQuery(params, fields) {
-  var queryString = nextUrl(params, fields);
-  if (queryString !== null) {
-    window.history.pushState(params, queryString, queryString || window.location.pathname);
-    analytics.pageView();
-  }
 }
 
 function identity(value) {
@@ -421,7 +382,7 @@ function DataTable(selector, opts) {
 
   if (this.filterPanel) {
     updateOnChange(this.filterSet.$body, this.api);
-    updateQuery(this.filterSet.serialize(), this.filterSet.fields);
+    urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
     this.$body.on('draw.dt', this, function(e) {
       e.data.filterPanel.setHeight();
     });
@@ -466,7 +427,7 @@ DataTable.prototype.fetch = function(data, callback) {
   var self = this;
   self.ensureWidgets();
   if (self.filterSet) {
-    pushQuery(self.filterSet.serialize(), self.filterSet.fields);
+    urls.pushQuery(self.filterSet.serialize(), self.filterSet.fields);
     self.filters = self.filterSet.serialize();
   }
   var url = self.buildUrl(data);
