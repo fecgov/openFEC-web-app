@@ -90,7 +90,7 @@ describe('data table', function() {
 
   describe('disables exporting', function() {
     beforeEach(function() {
-      this.table.disableExport();
+      this.table.disableExport({});
     });
 
     it('adds a disabled class', function() {
