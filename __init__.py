@@ -207,7 +207,7 @@ def candidate_page(c_id, cycle=None, election_full=True):
     candidate, committees, cycle = load_with_nested(
         'candidate', c_id, 'committees',
         cycle=cycle, cycle_key='two_year_period',
-        election_full='true',
+        election_full=election_full,
     )
     if election_full and cycle and cycle not in candidate['election_years']:
         next_cycle = next(
@@ -288,6 +288,7 @@ def elections(office, cycle, state=None, district=None):
     return render_template(
         'elections.html',
         office=office,
+        office_code=office[0],
         cycle=cycle,
         cycles=cycles,
         state=state,
@@ -378,6 +379,12 @@ def fmt_year_range(year):
 @app.template_filter()
 def fmt_state_full(value):
     return constants.states[value.upper()]
+
+@app.template_filter()
+def fmt_cycle_min_max(cycles):
+    if len(cycles) > 1:
+        return '{}–{}'.format(min(cycles), max(cycles))
+    return cycles[0]
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
