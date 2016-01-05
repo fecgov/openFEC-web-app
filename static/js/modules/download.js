@@ -5,9 +5,11 @@ var URI = require('urijs');
 var _ = require('underscore');
 var moment = require('moment');
 
-var pending = require('../../templates/download/pending.hbs');
-var complete = require('../../templates/download/complete.hbs');
-var container = require('../../templates/download/container.hbs');
+var templates = {
+  pending: require('../../templates/download/pending.hbs'),
+  complete: require('../../templates/download/complete.hbs'),
+  container: require('../../templates/download/container.hbs')
+};
 
 var PREFIX = 'download-';
 var MAX_DOWNLOADS = 5;
@@ -20,7 +22,7 @@ function hydrate() {
 }
 
 function download(url, init) {
-  if (storedDownloads().length >= MAX_DOWNLOADS) { return; }
+  if (!init && storedDownloads().length >= MAX_DOWNLOADS) { return; }
   var container = DownloadContainer.getInstance(document.body);
   var item = new DownloadItem(url, container);
   if (init || !item.isPending) {
@@ -85,7 +87,7 @@ DownloadItem.prototype.init = function() {
 };
 
 DownloadItem.prototype.draw = function() {
-  var template = this.downloadUrl ? complete : pending;
+  var template = this.downloadUrl ? templates.complete : templates.pending;
   var $body = $(template(this.serialize()));
   if (this.$body) {
     this.$body.replaceWith($body);
@@ -168,7 +170,7 @@ DownloadItem.prototype.close = function() {
 
 function DownloadContainer(parent) {
   this.$parent = $(parent);
-  this.$body = $(container());
+  this.$body = $(templates.container());
   this.$list = this.$body.find('.js-downloads-list');
   this.$parent.append(this.$body);
   this.items = 0;
@@ -176,12 +178,16 @@ function DownloadContainer(parent) {
 
 DownloadContainer.prototype.add = function() {
   this.items++;
-  this.$body.trigger($.Event('download:change', {downloadCount: this.items}));
+  if (this.items >= MAX_DOWNLOADS) {
+    this.$body.trigger($.Event('download:hide'));
+  }
 };
 
 DownloadContainer.prototype.subtract = function() {
   this.items = this.items - 1;
-  this.$body.trigger($.Event('download:change', {downloadCount: this.items}));
+  if (this.items < MAX_DOWNLOADS) {
+    this.$body.trigger($.Event('download:show'));
+  }
   if (this.items === 0) {
     this.destroy();
   }

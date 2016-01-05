@@ -1,7 +1,5 @@
 'use strict';
 
-/* global window, document */
-
 var $ = require('jquery');
 var URI = require('urijs');
 var _ = require('underscore');
@@ -24,7 +22,6 @@ var browseDOM = '<"js-results-info results-info results-info--top"pilfr>' +
                 '<"results-info"ip>';
 
 var DOWNLOAD_CAP = 100000;
-var MAX_DOWNLOADS = download.MAX_DOWNLOADS;
 
 var CAP_EXCEEDED =
     'Exports are limited to ' +
@@ -465,7 +462,11 @@ function DataTable(selector, opts) {
   }
 
   if (this.opts.useExport) {
-    $(document.body).on('download:change', this.toggleExport.bind(this));
+    $(document.body).on('download:show', this.enableExport.bind(this));
+    $(document.body).on(
+      'download:hide',
+      this.disableExport.bind(this, {message: DOWNLOADS_EXCEEDED})
+    );
   }
 
   this.$body.css('width', '100%');
@@ -498,9 +499,7 @@ DataTable.prototype.ensureWidgets = function() {
   }
 
   if (this.opts.useExport) {
-    var templateVars = {
-      title: this.opts.title
-    };
+    var templateVars = {title: this.opts.title};
     this.$exportWidget = $(exportWidgetTemplate(templateVars));
     $paging.after(this.$exportWidget);
     this.$exportButton = $('.js-export');
@@ -509,19 +508,11 @@ DataTable.prototype.ensureWidgets = function() {
     this.$exportButton.on('click', this.export.bind(this));
   }
 
-  if(this.opts.disableExport) {
+  if (this.opts.disableExport) {
     this.disableExport({message: EXPORTS_DISABLED});
   }
 
   this.hasWidgets = true;
-};
-
-DataTable.prototype.toggleExport = function(e) {
-  if (e.downloadCount >= MAX_DOWNLOADS) {
-    this.disableExport({message: DOWNLOADS_EXCEEDED});
-  } else {
-    this.enableExport();
-  }
 };
 
 DataTable.prototype.disableExport = function(opts) {
