@@ -12,8 +12,9 @@ var colorbrewer = require('colorbrewer');
 var L = require('leaflet');
 require('leaflet-providers');
 
+var analytics = require('fec-style/js/analytics');
+
 var helpers = require('./helpers');
-var analytics = require('./analytics');
 var utils = require('./election-utils');
 
 var states = require('../data/us-states-10m.json');

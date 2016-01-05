@@ -9,7 +9,7 @@ var _ = require('underscore');
 
 var events = require('fec-style/js/events');
 
-var analytics = require('../modules/analytics');
+var analytics = require('fec-style/js/analytics');
 
 // The class for the container div
 
