@@ -25,6 +25,9 @@ function download(url, init) {
   if (!init && storedDownloads().length >= MAX_DOWNLOADS) { return; }
   var container = DownloadContainer.getInstance(document.body);
   var item = new DownloadItem(url, container);
+  if (item.isPending) {
+    $(document.body).trigger($.Event('download:pending'));
+  }
   if (init || !item.isPending) {
     item.init();
   }

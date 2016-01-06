@@ -35,6 +35,8 @@ var DOWNLOADS_EXCEEDED = 'Each user is limited to ' +
 
 var EXPORTS_DISABLED = 'Data exports for this page are coming soon.';
 
+var DOWNLOAD_PENDING = 'You\'re already exporting this data set.';
+
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
   $('.datatable__container').css('opacity', '1');
@@ -466,6 +468,10 @@ function DataTable(selector, opts) {
     $(document.body).on(
       'download:hide',
       this.disableExport.bind(this, {message: DOWNLOADS_EXCEEDED})
+    );
+    $(document.body).on(
+      'download:pending',
+      this.disableExport.bind(this, {message: DOWNLOAD_PENDING})
     );
   }
 
