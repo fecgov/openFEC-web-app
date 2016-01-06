@@ -8,6 +8,7 @@ var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+var filterTags = require('fec-style/js/filter-tags');
 
 var committeesTemplate = require('../../templates/committees.hbs');
 
@@ -46,6 +47,8 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
+  var $widgets = $('.js-data-widgets');
+  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
     filterPanel: filterPanel,
@@ -58,4 +61,5 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(committeesTemplate)
     }
   });
+  $widgets.prepend($tagList);
 });

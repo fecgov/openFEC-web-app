@@ -9,6 +9,7 @@ var filings = require('../modules/filings');
 var columns = require('../modules/columns');
 
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+var filterTags = require('fec-style/js/filter-tags');
 
 var filingsColumns = columns.getColumns(
   columns.filings,
@@ -20,6 +21,8 @@ var filingsColumns = columns.getColumns(
 
 $(document).ready(function() {
   var $table = $('#results');
+  var $widgets = $('.js-data-widgets');
+  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
     path: 'filings',
@@ -33,4 +36,5 @@ $(document).ready(function() {
       afterRender: filings.renderModal
     }
   });
+  $widgets.prepend($tagList);
 });

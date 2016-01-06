@@ -6,6 +6,7 @@ var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+var filterTags = require('fec-style/js/filter-tags');
 
 var donationTemplate = require('../../templates/receipts.hbs');
 
@@ -59,6 +60,8 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
+  var $widgets = $('.js-data-widgets');
+  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
     path: 'schedules/schedule_a',
@@ -73,4 +76,5 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(donationTemplate)
     }
   });
+  $widgets.prepend($tagList);
 });
