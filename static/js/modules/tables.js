@@ -545,6 +545,7 @@ DataTable.prototype.disableExport = function(opts) {
 DataTable.prototype.enableExport = function() {
   this.$exportButton.removeClass('disabled');
   this.$exportButton.on('click', this.export.bind(this));
+  this.$exportTooltip.attr('aria-hidden', 'true');
 
   // Remove all tooltip stuff
   this.$exportButton.removeAttr('aria-describedby');

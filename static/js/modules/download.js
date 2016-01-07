@@ -22,7 +22,9 @@ function hydrate() {
 }
 
 function download(url, init) {
-  if (!init && storedDownloads().length >= MAX_DOWNLOADS) { return; }
+  if (!init && storedDownloads().length >= MAX_DOWNLOADS) {
+    $(document.body).trigger($.Event('download:hide'));
+  }
   var container = DownloadContainer.getInstance(document.body);
   var item = new DownloadItem(url, container);
   if (item.isPending) {
