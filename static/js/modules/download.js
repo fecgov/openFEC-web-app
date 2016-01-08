@@ -12,7 +12,6 @@ var templates = {
 };
 
 var PREFIX = 'download-';
-var MAX_DOWNLOADS = 5;
 var DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 function hydrate() {
@@ -22,18 +21,17 @@ function hydrate() {
 }
 
 function download(url, init) {
-  if (!init && storedDownloads().length >= MAX_DOWNLOADS) {
-    $(document.body).trigger($.Event('download:hide'));
-  }
   var container = DownloadContainer.getInstance(document.body);
   var item = new DownloadItem(url, container);
-  if (item.isPending) {
-    $(document.body).trigger($.Event('download:pending'));
-  }
+
   if (init || !item.isPending) {
     item.init();
   }
   return item;
+}
+
+function isPending(url) {
+  return !!window.localStorage.getItem(PREFIX + url);
 }
 
 function storedDownloads() {
@@ -168,6 +166,10 @@ DownloadItem.prototype.finish = function(downloadUrl) {
 DownloadItem.prototype.close = function() {
   window.clearTimeout(this.timeout);
   this.promise && this.promise.abort();
+  this.$body.trigger({
+    type: 'download:close',
+    url: this.url
+  });
   this.$body && this.$body.remove();
   window.localStorage.removeItem(this.key);
   this.container.subtract();
@@ -183,19 +185,15 @@ function DownloadContainer(parent) {
 
 DownloadContainer.prototype.add = function() {
   this.items++;
-  if (this.items >= MAX_DOWNLOADS) {
-    this.$body.trigger($.Event('download:hide'));
-  }
+  this.$body.trigger({type: 'download:countchanged', count: this.items});
 };
 
 DownloadContainer.prototype.subtract = function() {
   this.items = this.items - 1;
-  if (this.items < MAX_DOWNLOADS) {
-    this.$body.trigger($.Event('download:show'));
-  }
   if (this.items === 0) {
     this.destroy();
   }
+  this.$body.trigger({type: 'download:countchanged', count: this.items});
 };
 
 DownloadContainer.prototype.destroy = function() {
@@ -210,9 +208,9 @@ DownloadContainer.getInstance = function(parent) {
 };
 
 module.exports = {
+  isPending: isPending,
   hydrate: hydrate,
   download: download,
   DownloadItem: DownloadItem,
-  DownloadContainer: DownloadContainer,
-  MAX_DOWNLOADS: MAX_DOWNLOADS
-};
+  DownloadContainer: DownloadContainer
+  };
