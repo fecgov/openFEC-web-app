@@ -34,7 +34,7 @@ var DOWNLOAD_MESSAGES = {
     ' exports at a time. This helps us keep things running smoothly.',
   comingSoon: 'Data exports for this page are coming soon.',
   pending: 'You\'re already exporting this data set.'
-}
+};
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -463,20 +463,20 @@ function DataTable(selector, opts) {
   }
 
   if (this.opts.useExport) {
-    $(document.body).on('download:countchanged', this.refreshExport.bind(this));
+    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
   }
 
   this.$body.css('width', '100%');
   this.$body.find('tbody').addClass('js-panel-toggle');
 }
 
-DataTable.prototype.refreshExport = function(e) {
+DataTable.prototype.refreshExport = function() {
   if (this.opts.useExport && !this.opts.disableExport) {
-    if (resp.pagination.count > DOWNLOAD_CAP) {
+    if (this.api.context[0].fnRecordsTotal() > DOWNLOAD_CAP) {
       this.disableExport({message: DOWNLOAD_MESSAGES.recordCap});
     } else if (this.isPending()) {
       this.disableExport({message: DOWNLOAD_MESSAGES.pending});
-    } else if (e.count >= MAX_DOWNLOADS) {
+    } else if (download.pendingCount() >= MAX_DOWNLOADS) {
       this.disableExport({message: DOWNLOAD_MESSAGES.downloadCap});
     } else {
       this.enableExport();
@@ -585,7 +585,7 @@ DataTable.prototype.fetch = function(data, callback) {
 DataTable.prototype.export = function() {
   var url = this.buildUrl(this.api.ajax.params(), false);
   download.download(url);
-  this.disableExport({message: DOWNLOAD_PENDING});
+  this.disableExport({message: DOWNLOAD_MESSAGES.pending});
 };
 
 DataTable.prototype.isPending = function() {
@@ -610,6 +610,8 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.paginator.handleResponse(this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
+
+  this.refreshExport();
 
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);

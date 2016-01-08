@@ -40,6 +40,10 @@ function storedDownloads() {
   });
 }
 
+function pendingCount() {
+  return storedDownloads().length;
+}
+
 function getUrlParts(url) {
   var uri = URI(url);
   var path = uri.path().split('/');
@@ -166,10 +170,6 @@ DownloadItem.prototype.finish = function(downloadUrl) {
 DownloadItem.prototype.close = function() {
   window.clearTimeout(this.timeout);
   this.promise && this.promise.abort();
-  this.$body.trigger({
-    type: 'download:close',
-    url: this.url
-  });
   this.$body && this.$body.remove();
   window.localStorage.removeItem(this.key);
   this.container.subtract();
@@ -185,15 +185,19 @@ function DownloadContainer(parent) {
 
 DownloadContainer.prototype.add = function() {
   this.items++;
-  this.$body.trigger({type: 'download:countchanged', count: this.items});
+  if (this.$body) {
+    this.$body.trigger({type: 'download:countChanged', count: this.items});
+  }
 };
 
 DownloadContainer.prototype.subtract = function() {
   this.items = this.items - 1;
+  if (this.$body) {
+    this.$body.trigger({type: 'download:countChanged', count: this.items});
+  }
   if (this.items === 0) {
     this.destroy();
   }
-  this.$body.trigger({type: 'download:countchanged', count: this.items});
 };
 
 DownloadContainer.prototype.destroy = function() {
@@ -208,9 +212,10 @@ DownloadContainer.getInstance = function(parent) {
 };
 
 module.exports = {
-  isPending: isPending,
   hydrate: hydrate,
   download: download,
+  isPending: isPending,
+  pendingCount: pendingCount,
   DownloadItem: DownloadItem,
   DownloadContainer: DownloadContainer
   };
