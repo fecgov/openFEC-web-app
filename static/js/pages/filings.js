@@ -3,11 +3,11 @@
 /* global require, document */
 
 var $ = require('jquery');
-var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var filings = require('../modules/filings');
 var columns = require('../modules/columns');
+var FilterPanel = require('../modules/filter-panel').FilterPanel;
 
 var filingsColumns = columns.getColumns(
   columns.filings,
@@ -19,15 +19,17 @@ var filingsColumns = columns.getColumns(
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $form = $('#category-filters');
-  tables.initTable($table, $form, 'filings', {}, filingsColumns,
-    _.extend({}, tables.offsetCallbacks, {
+  var filterPanel = new FilterPanel('#category-filters');
+  new tables.DataTable($table, {
+    path: 'filings',
+    panel: filterPanel,
+    columns: filingsColumns,
+    rowCallback: filings.renderRow,
+    // Order by receipt date descending
+    order: [[3, 'desc']],
+    useFilters: true,
+    callbacks: {
       afterRender: filings.renderModal
-    }),
-    {
-      rowCallback: filings.renderRow,
-      // Order by receipt date descending
-      order: [[3, 'desc']],
-      useFilters: true
+    }
   });
 });

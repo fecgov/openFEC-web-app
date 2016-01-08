@@ -22,18 +22,6 @@ def test_fmt_year_range_not_int():
     assert app.fmt_year_range(None) is None
 
 
-def test_restrict_cycles():
-    year = datetime.datetime.now().year
-    cycle = year + year % 2
-    cycles = [cycle - 2, cycle, cycle + 2]
-    assert app.restrict_cycles(cycles) == [cycle - 2, cycle]
-
-
-def test_restrict_cycles_after_start_year():
-    cycles = [1978, 1980, 1982]
-    assert app.restrict_cycles(cycles, start_year=1979) == [1980, 1982]
-
-
 def test_fmt_chart_ticks_single_key():
     group = {
         'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
@@ -71,6 +59,8 @@ def test_election_url():
         candidate = {'office_full': 'President', 'state': 'US', 'district': None}
         assert app.get_election_url(candidate, 2012) == '/elections/president/2012/'
         candidate = {'office_full': 'Senate', 'state': 'NJ', 'district': None}
+        assert app.get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
+        candidate = {'office_full': 'Senate', 'state': 'NJ', 'district': '00'}
         assert app.get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
         candidate = {'office_full': 'House', 'state': 'NJ', 'district': '02'}
         assert app.get_election_url(candidate, 2012) == '/elections/house/NJ/02/2012/'

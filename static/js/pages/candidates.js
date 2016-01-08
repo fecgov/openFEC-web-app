@@ -7,6 +7,8 @@ var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
+var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
 var candidatesTemplate = require('../../templates/candidates.hbs');
 
 var columns = [
@@ -17,14 +19,17 @@ var columns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row)),
+        helpers.buildAppUrl(
+          ['candidate', row.candidate_id],
+          tables.getCycle(row.election_years, meta)
+        ),
         'candidate'
       );
     }
   },
   {data: 'office_full', className: 'min-tablet hide-panel'},
   {
-    data: 'cycles',
+    data: 'election_years',
     className: 'min-tablet',
     render: function(data, type, row, meta) {
       return tables.yearRange(_.first(data), _.last(data));
@@ -45,19 +50,15 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $form = $('#category-filters');
-  tables.initTable(
-    $table,
-    $form,
-    'candidates',
-    {},
-    columns,
-    _.extend({}, tables.offsetCallbacks, {
+  var filterPanel = new FilterPanel('#category-filters');
+  new tables.DataTable($table, {
+    path: 'candidates',
+    panel: filterPanel,
+    columns: columns,
+    useFilters: true,
+    rowCallback: tables.modalRenderRow,
+    callbacks: {
       afterRender: tables.modalRenderFactory(candidatesTemplate)
-    }),
-    {
-      useFilters: true,
-      rowCallback: tables.modalRenderRow
     }
-  );
+  });
 });

@@ -67,7 +67,8 @@ class TestGithub:
             url_for('issue'),
             {
                 'action': 'i tried to use it',
-                'response': 'but nothing happened',
+                'feedback': 'but nothing happened',
+                'about': 'i like data',
             },
             headers={'referer': referer},
         )
@@ -79,4 +80,5 @@ class TestGithub:
         assert referer in args[0]
         assert 'i tried to use it' in kwargs['body']
         assert 'but nothing happened' in kwargs['body']
+        assert 'i like data' in kwargs['body']
         assert res.json == {'body': 'it broke'}

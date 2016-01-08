@@ -2,7 +2,7 @@
 
 /* global ga */
 
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 
 function init() {
