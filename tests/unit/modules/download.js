@@ -29,14 +29,6 @@ describe('helpers', function() {
       expect(item.$body).not.to.be.null;
     });
 
-    it('respects MAX_DOWNLOADS', function() {
-      for (var i=0; i<5; i++) {
-        download.download('/' + i.toString());
-      }
-      var item = download.download('/5');
-      expect(item).to.be.undefined;
-    });
-
     it('is idempotent', function() {
       var item1 = download.download('/1');
       var item2 = download.download('/1');
