@@ -14,8 +14,12 @@
   "noempty": true,
   "nonew": false,
   "predef": [
+    "window",
+    "document",
     "require",
     "module",
+    "window",
+    "document",
     "describe",
     "before",
     "beforeEach",

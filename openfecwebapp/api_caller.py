@@ -35,6 +35,7 @@ def load_search_results(query, query_type='candidates'):
 
     if query:
         filters['q'] = query
+        filters['sort'] = ['-receipts']
 
     url = '/' + query_type
     if query_type == 'candidates':

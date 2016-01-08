@@ -46,6 +46,7 @@ var charts = require('./modules/charts');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
+var download = require('./modules/download');
 var analytics = require('./modules/analytics');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
@@ -114,4 +115,5 @@ $(document).ready(function() {
   });
 
   toggle.init();
+  download.hydrate();
 });

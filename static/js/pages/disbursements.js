@@ -6,7 +6,8 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
-var FilterPanel = require('../modules/filter-panel').FilterPanel;
+
+var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 
 var disbursementTemplate = require('../../templates/disbursements.hbs');
 
@@ -63,13 +64,16 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
-    path: 'schedules/schedule_b',
+    title: 'Disbursement',
+    path: ['schedules', 'schedule_b'],
     panel: filterPanel,
     columns: columns,
     paginator: tables.SeekPaginator,
     order: [[3, 'desc']],
     pagingType: 'simple',
     useFilters: true,
+    useExport: true,
+    disableExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(disbursementTemplate)

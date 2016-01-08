@@ -12,7 +12,7 @@ Filter receipts
 
 {% block message %}
 <div class="message message--info message--small">
-  <p>Due to the large number of transactions, records begin in 2011.</p>
+  <span class="t-block">Due to the large number of transactions, records begin in 2011.</span>
 </div>
 {% endblock %}
 
@@ -65,7 +65,7 @@ Filter receipts
 {{ text.field('max_amount', 'Maximum contribution', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
 {{ date.field('date', 'Receipt date', dates ) }}
 <div class="message message--info message--small">
-  <p>Receipts are reported periodically, according to the filer's reporting schedule. Receipts are updated as they’re processed— that time can vary.</p>
+  <span class="t-block">Receipts are reported periodically, according to the filer's reporting schedule. Receipts are updated as they’re processed— that time can vary.</span>
 </div>
 
 {% endblock %}
