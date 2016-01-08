@@ -12,7 +12,6 @@ var templates = {
 };
 
 var PREFIX = 'download-';
-var MAX_DOWNLOADS = 5;
 var DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 function hydrate() {
@@ -22,22 +21,27 @@ function hydrate() {
 }
 
 function download(url, init) {
-  if (!init && storedDownloads().length >= MAX_DOWNLOADS) { return; }
   var container = DownloadContainer.getInstance(document.body);
   var item = new DownloadItem(url, container);
-  if (item.isPending) {
-    $(document.body).trigger($.Event('download:pending'));
-  }
+
   if (init || !item.isPending) {
     item.init();
   }
   return item;
 }
 
+function isPending(url) {
+  return !!window.localStorage.getItem(PREFIX + url);
+}
+
 function storedDownloads() {
   return Object.keys(window.localStorage).filter(function(key) {
     return key.indexOf(PREFIX) === 0;
   });
+}
+
+function pendingCount() {
+  return storedDownloads().length;
 }
 
 function getUrlParts(url) {
@@ -181,15 +185,15 @@ function DownloadContainer(parent) {
 
 DownloadContainer.prototype.add = function() {
   this.items++;
-  if (this.items >= MAX_DOWNLOADS) {
-    this.$body.trigger($.Event('download:hide'));
+  if (this.$body) {
+    this.$body.trigger({type: 'download:countChanged', count: this.items});
   }
 };
 
 DownloadContainer.prototype.subtract = function() {
   this.items = this.items - 1;
-  if (this.items < MAX_DOWNLOADS) {
-    this.$body.trigger($.Event('download:show'));
+  if (this.$body) {
+    this.$body.trigger({type: 'download:countChanged', count: this.items});
   }
   if (this.items === 0) {
     this.destroy();
@@ -210,7 +214,8 @@ DownloadContainer.getInstance = function(parent) {
 module.exports = {
   hydrate: hydrate,
   download: download,
+  isPending: isPending,
+  pendingCount: pendingCount,
   DownloadItem: DownloadItem,
-  DownloadContainer: DownloadContainer,
-  MAX_DOWNLOADS: MAX_DOWNLOADS
-};
+  DownloadContainer: DownloadContainer
+  };
