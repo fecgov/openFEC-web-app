@@ -405,14 +405,14 @@ if config.username and config.password:
     basic_auth = BasicAuth(app)
 
 
-if config.environment == 'prod':
-    auth = hmacauth.HmacAuth(
-        digest=hashlib.sha1,
-        secret_key=config.hmac_secret,
-        signature_header='X-Signature',
-        headers=config.hmac_headers,
-    )
-    app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
+# if config.environment == 'prod':
+#     auth = hmacauth.HmacAuth(
+#         digest=hashlib.sha1,
+#         secret_key=config.hmac_secret,
+#         signature_header='X-Signature',
+#         headers=config.hmac_headers,
+#     )
+#     app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
