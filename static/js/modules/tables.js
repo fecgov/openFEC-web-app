@@ -34,7 +34,7 @@ var DOWNLOAD_MESSAGES = {
     ' exports at a time. This helps us keep things running smoothly.',
   comingSoon: 'Data exports for this page are coming soon.',
   pending: 'You\'re already exporting this data set.'
-}
+};
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -470,13 +470,13 @@ function DataTable(selector, opts) {
   this.$body.find('tbody').addClass('js-panel-toggle');
 }
 
-DataTable.prototype.refreshExport = function(e) {
+DataTable.prototype.refreshExport = function() {
   if (this.opts.useExport && !this.opts.disableExport) {
     if (this.api.context[0].fnRecordsTotal() > DOWNLOAD_CAP) {
       this.disableExport({message: DOWNLOAD_MESSAGES.recordCap});
     } else if (this.isPending()) {
       this.disableExport({message: DOWNLOAD_MESSAGES.pending});
-    } else if (e && e.count >= MAX_DOWNLOADS) {
+    } else if (download.pendingCount() >= MAX_DOWNLOADS) {
       this.disableExport({message: DOWNLOAD_MESSAGES.downloadCap});
     } else {
       this.enableExport();

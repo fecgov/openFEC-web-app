@@ -40,6 +40,10 @@ function storedDownloads() {
   });
 }
 
+function pendingCount() {
+  return storedDownloads().length;
+}
+
 function getUrlParts(url) {
   var uri = URI(url);
   var path = uri.path().split('/');
@@ -211,6 +215,7 @@ module.exports = {
   hydrate: hydrate,
   download: download,
   isPending: isPending,
+  pendingCount: pendingCount,
   DownloadItem: DownloadItem,
   DownloadContainer: DownloadContainer
   };
