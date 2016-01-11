@@ -1,7 +1,7 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/cycle-select.html' as select %}
 
-{{ cycle }} Election - United States {{ office|title }} {% if state %} - {{ state|fmt_state_full }} {% if district %} - District {{ district }} {% endif %} {% endif %}
+{{ cycle }} Election - US {{ office|title }} {% if state %} - {{ state|fmt_state_full }} {% if district %} - District {{ district }} {% endif %} {% endif %}
 
 {% block title %}
   {{ title }}
