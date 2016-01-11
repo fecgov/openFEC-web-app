@@ -424,7 +424,7 @@ var defaultOpts = {
   responsive: {details: false},
   language: {
     lengthMenu: 'Results per page: _MENU_',
-    info: 'Showing _START_ – _END_ of _TOTAL_ records'
+    info: 'Showing _START_–_END_ of about _TOTAL_ records'
   },
   title: null,
   dom: browseDOM,
