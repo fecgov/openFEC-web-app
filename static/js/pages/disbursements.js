@@ -67,13 +67,16 @@ $(document).ready(function() {
   var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
-    path: 'schedules/schedule_b',
-    filterPanel: filterPanel,
+    title: 'Disbursement',
+    path: ['schedules', 'schedule_b'],
+    panel: filterPanel,
     columns: columns,
     paginator: tables.SeekPaginator,
     order: [[3, 'desc']],
     pagingType: 'simple',
     useFilters: true,
+    useExport: true,
+    disableExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(disbursementTemplate)

@@ -23,6 +23,9 @@ function currency(value) {
 }
 Handlebars.registerHelper('currency', currency);
 
+var numberFormatter = Intl.NumberFormat('en-US');
+Handlebars.registerHelper('formatNumber', numberFormatter.format);
+
 function decodeAmendment(value) {
   return decoders.amendments[value];
 }
@@ -30,6 +33,7 @@ function decodeAmendment(value) {
 Handlebars.registerHelper('decodeAmendment', decodeAmendment);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
+
 
 function cycleDates(year) {
   return {
@@ -70,8 +74,8 @@ function buildUrl(path, query) {
 module.exports = {
   currency: currency,
   ensureArray: ensureArray,
-  datetime: helpers.datetime,
   decodeAmendment: decodeAmendment,
+  formatNumber: numberFormatter.format,
   cycleDates: cycleDates,
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,

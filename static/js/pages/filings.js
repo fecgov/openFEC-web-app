@@ -25,13 +25,15 @@ $(document).ready(function() {
   var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
-    path: 'filings',
-    filterPanel: filterPanel,
+    title: 'Filing',
+    path: ['filings'],
+    panel: filterPanel,
     columns: filingsColumns,
     rowCallback: filings.renderRow,
     // Order by receipt date descending
     order: [[3, 'desc']],
     useFilters: true,
+    useExport: true,
     callbacks: {
       afterRender: filings.renderModal
     }

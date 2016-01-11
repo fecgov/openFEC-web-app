@@ -44,13 +44,14 @@
     </figure>
     <div class="candidate__committees">
       <h3 class="t-ruled--bottom">Campaign committees</h3>
-      {% for committee in committee_groups['P'] %}
+      {% for committee in committee_groups['P'] | reverse %}
       <div class="callout callout--primary">
         <div class="callout__content">
           <h4 class="callout__title">
             <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
           </h4>
           <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
+          <span class="callout__subtitle t-block">{{ committee.cycles | fmt_cycle_min_max }}</span>
         </div>
         <div class="callout__action">
           <ul class="callout__sublinks">
@@ -62,13 +63,14 @@
       </div>
       {% endfor %}
       {% if committee_groups['A'] | length > 0 %}
-        {% for committee in committee_groups['A'] %}
+        {% for committee in committee_groups['A'] | reverse %}
         <div class="callout callout--neutral">
           <div class="callout__content">
             <h4 class="callout__title">
               <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
             </h4>
             <span class="callout__subtitle term" data-term="authorized committee">Authorized campaign committee</span>
+            <span class="callout__subtitle t-block">{{ committee.cycles | fmt_cycle_min_max }}</span>
           </div>
           <div class="callout__action">
             <ul class="callout__sublinks">

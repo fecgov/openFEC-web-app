@@ -51,10 +51,12 @@ $(document).ready(function() {
   var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
-    filterPanel: filterPanel,
-    path: 'committees',
+    title: 'Committee',
+    panel: filterPanel,
+    path: ['committees'],
     columns: columns,
     useFilters: true,
+    useExport: true,
     order: [[4, 'desc']],
     rowCallback: tables.modalRenderRow,
     callbacks: {

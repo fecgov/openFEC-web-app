@@ -30,6 +30,7 @@
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
     "mocha": "^2.2.5",
+    "mockdate": "^1.0.3",
     "preprocessify": "0.0.3",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
@@ -62,7 +63,11 @@
     "d3": "3.5.5",
     "datatables": "1.10.7",
     "drmonty-datatables-responsive": "1.0.6",
+<<<<<<< HEAD
     "fec-style": "git://github.com/18f/fec-style#styling-calendar",
+=======
+    "fec-style": "1.3.0",
+>>>>>>> 6add485147b043c66358af453738f2e10c8d61af
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
     "intl": "1.0.0-rc-4",
