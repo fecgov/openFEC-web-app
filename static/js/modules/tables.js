@@ -8,7 +8,6 @@ var tabs = require('../vendor/tablist');
 var urls = require('fec-style/js/urls');
 var accessibility = require('fec-style/js/accessibility');
 var analytics = require('fec-style/js/analytics');
-var helpers = require('fec-style/js/helpers');
 
 require('datatables');
 require('drmonty-datatables-responsive');
@@ -18,6 +17,7 @@ var download = require('./download');
 
 var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
+var titleTemplate = require('../../templates/tables/title.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
 var browseDOM = '<"js-results-info results-info results-info--top"pilfr>' +
@@ -391,8 +391,8 @@ function DataTable(selector, opts) {
   this.$body = $(selector);
   this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
   this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
-  this.filterPanel = (this.opts.filterPanel || {});
-  this.filterSet = (this.opts.filterPanel || {}).filterSet;
+  this.filterPanel = (this.opts.panel || {});
+  this.filterSet = this.filterPanel.filterSet;
 
   this.xhr = null;
   this.fetchContext = null;
@@ -456,6 +456,7 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
+  this.$widgets = $('.js-data-widgets');
 
   var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
 
@@ -465,9 +466,11 @@ DataTable.prototype.ensureWidgets = function() {
   }
 
   if (this.opts.useExport) {
-    var templateVars = {title: this.opts.title};
-    this.$exportWidget = $(exportWidgetTemplate(templateVars));
-    $paging.after(this.$exportWidget);
+    this.$title = $(titleTemplate({title: this.opts.title}));
+    $paging.after(this.$title);
+
+    this.$exportWidget = $(exportWidgetTemplate());
+    this.$widgets.append(this.$exportWidget);
     this.$exportButton = $('.js-export');
     this.$exportTooltipContainer = $('.js-tooltip-container');
     this.$exportTooltip = this.$exportWidget.find('.tooltip');
