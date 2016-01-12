@@ -25,14 +25,16 @@
       <td class="panel__term">City and state</td>
       <td class="panel__data">{{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}</td>
     </tr>
-    <tr>
-      <td class="panel__term">Occupation</td>
-      <td class="panel__data">{{ contributor_occupation }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Employer</td>
-      <td class="panel__data">{{ contributor_employer }}</td>
-    </tr>
+    {{#if is_individual}}
+      <tr>
+        <td class="panel__term">Occupation</td>
+        <td class="panel__data">{{ contributor_occupation }}</td>
+      </tr>
+      <tr>
+        <td class="panel__term">Employer</td>
+        <td class="panel__data">{{ contributor_employer }}</td>
+      </tr>
+    {{/if}}
     <tr>
       <td class="panel__term">Year to date</td>
       <td class="panel__data">{{{ currency contributor_aggregate_ytd }}}</td>
