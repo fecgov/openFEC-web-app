@@ -13,6 +13,9 @@ var intl = require('intl');
 var locale = require('intl/locale-data/json/en-US.json');
 intl.__addLocaleData(locale);
 
+var datetime = helpers.datetime;
+Handlebars.registerHelper('datetime', datetime);
+
 var currencyFormatter = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
 function currency(value) {
   if (!isNaN(parseInt(value))) {
@@ -74,6 +77,7 @@ function buildUrl(path, query) {
 module.exports = {
   currency: currency,
   ensureArray: ensureArray,
+  datetime: datetime,
   decodeAmendment: decodeAmendment,
   formatNumber: numberFormatter.format,
   cycleDates: cycleDates,
