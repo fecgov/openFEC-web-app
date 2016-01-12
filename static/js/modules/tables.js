@@ -7,13 +7,14 @@ var tabs = require('../vendor/tablist');
 
 var urls = require('fec-style/js/urls');
 var accessibility = require('fec-style/js/accessibility');
+var analytics = require('fec-style/js/analytics');
+var helpers = require('fec-style/js/helpers');
 
 require('datatables');
 require('drmonty-datatables-responsive');
 
 var helpers = require('./helpers');
 var download = require('./download');
-var analytics = require('./analytics');
 
 var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
