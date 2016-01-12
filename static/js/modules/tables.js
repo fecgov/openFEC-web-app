@@ -15,12 +15,12 @@ require('drmonty-datatables-responsive');
 var helpers = require('./helpers');
 var download = require('./download');
 
-var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 var titleTemplate = require('../../templates/tables/title.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
-var browseDOM = '<"js-results-info results-info results-info--top"pilfr>' +
+var browseDOM = '<"js-results-info results-info results-info--top"' +
+                  '<"results-info__right"ilpr>>' +
                 '<"panel__main"t>' +
                 '<"results-info"ip>';
 
@@ -370,7 +370,6 @@ SeekPaginator.prototype.handleResponse = function(data, response) {
 var defaultOpts = {
   serverSide: true,
   searching: false,
-  useHideNull: true,
   lengthMenu: [30, 50, 100],
   responsive: {details: false},
   language: {
@@ -460,21 +459,21 @@ DataTable.prototype.ensureWidgets = function() {
 
   var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
 
-  if (this.opts.useHideNull) {
-    this.$hideNullWidget = $(hideNullTemplate());
-    $paging.append(this.$hideNullWidget);
-  }
-
   if (this.opts.useExport) {
     this.$title = $(titleTemplate({title: this.opts.title}));
-    $paging.after(this.$title);
+    $paging.prepend(this.$title);
 
     this.$exportWidget = $(exportWidgetTemplate());
     this.$widgets.append(this.$exportWidget);
     this.$exportButton = $('.js-export');
     this.$exportTooltipContainer = $('.js-tooltip-container');
     this.$exportTooltip = this.$exportWidget.find('.tooltip');
+
+    this.$exportInfo = $('.js-info');
+    this.$exportInfo.append($('#results_info'));
+
     this.$exportButton.on('click', this.export.bind(this));
+
   }
 
   if (this.opts.disableExport) {
@@ -555,9 +554,7 @@ DataTable.prototype.buildUrl = function(data, paginate) {
   var query = _.extend({}, this.filters || {});
   paginate = typeof paginate === 'undefined' ? true : paginate;
   query.sort = mapSort(data.order, this.opts.columns);
-  if (this.opts.useHideNull) {
-    query.sort_hide_null = this.$hideNullWidget.find('input').is(':checked');
-  }
+
   if (paginate) {
     query = _.extend(query, this.paginator.mapQuery(data, query));
   }

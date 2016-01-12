@@ -18,7 +18,6 @@ var tableOpts = {
   pagingType: 'simple',
   lengthChange: false,
   pageLength: 10,
-  useHideNull: false,
   hideEmpty: true
 };
 
@@ -239,7 +238,6 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false,
         hideEmpty: true
       });
       break;
@@ -255,7 +253,6 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false,
         hideEmpty: true
       });
       break;
