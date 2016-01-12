@@ -377,6 +377,7 @@ var defaultOpts = {
     lengthMenu: 'Results per page: _MENU_',
     info: 'Showing _START_ – _END_ of _TOTAL_ records'
   },
+  pagingType: 'simple',
   title: null,
   dom: browseDOM,
 };

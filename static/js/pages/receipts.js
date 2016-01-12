@@ -70,7 +70,6 @@ $(document).ready(function() {
     columns: columns,
     paginator: tables.SeekPaginator,
     order: [[4, 'desc']],
-    pagingType: 'simple',
     useFilters: true,
     useExport: true,
     disableExport: true,
