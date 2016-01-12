@@ -1,7 +1,5 @@
 'use strict';
 
-/* global window, document */
-
 var $ = require('jquery');
 var URI = require('urijs');
 var _ = require('underscore');
@@ -12,11 +10,31 @@ require('datatables');
 require('drmonty-datatables-responsive');
 
 var helpers = require('./helpers');
+var download = require('./download');
 var analytics = require('./analytics');
 
 var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
+var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
+var browseDOM = '<"js-results-info results-info results-info--top"pilfr>' +
+                '<"panel__main"t>' +
+                '<"results-info"ip>';
+
+var DOWNLOAD_CAP = 100000;
+var MAX_DOWNLOADS = 5;
+var DOWNLOAD_MESSAGES = {
+  recordCap:
+    'Exports are limited to ' +
+    DOWNLOAD_CAP +
+    ' records—add filters to narrow results, or export bigger ' +
+    'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.',
+  downloadCap: 'Each user is limited to ' +
+    MAX_DOWNLOADS +
+    ' exports at a time. This helps us keep things running smoothly.',
+  comingSoon: 'Data exports for this page are coming soon.',
+  pending: 'You\'re already exporting this data set.'
+};
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -404,8 +422,12 @@ var defaultOpts = {
   useHideNull: true,
   lengthMenu: [30, 50, 100],
   responsive: {details: false},
-  language: {lengthMenu: 'Results per page: _MENU_'},
-  dom: '<"js-results-info results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
+  language: {
+    lengthMenu: 'Results per page: _MENU_',
+    info: 'Showing _START_ – _END_ of _TOTAL_ records'
+  },
+  title: null,
+  dom: browseDOM,
 };
 
 var defaultCallbacks = {
@@ -440,9 +462,27 @@ function DataTable(selector, opts) {
     $(window).on('popstate', this.handlePopState.bind(this));
   }
 
+  if (this.opts.useExport) {
+    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
+  }
+
   this.$body.css('width', '100%');
   this.$body.find('tbody').addClass('js-panel-toggle');
 }
+
+DataTable.prototype.refreshExport = function() {
+  if (this.opts.useExport && !this.opts.disableExport) {
+    if (this.api.context[0].fnRecordsTotal() > DOWNLOAD_CAP) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.recordCap});
+    } else if (this.isPending()) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.pending});
+    } else if (download.pendingCount() >= MAX_DOWNLOADS) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.downloadCap});
+    } else {
+      this.enableExport();
+    }
+  }
+};
 
 DataTable.prototype.destroy = function() {
   this.api.destroy();
@@ -462,13 +502,60 @@ DataTable.prototype.ensureWidgets = function() {
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
 
+  var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
+
   if (this.opts.useHideNull) {
     this.$hideNullWidget = $(hideNullTemplate());
-    var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
-    $paging.prepend(this.$hideNullWidget);
+    $paging.append(this.$hideNullWidget);
+  }
+
+  if (this.opts.useExport) {
+    var templateVars = {title: this.opts.title};
+    this.$exportWidget = $(exportWidgetTemplate(templateVars));
+    $paging.after(this.$exportWidget);
+    this.$exportButton = $('.js-export');
+    this.$exportTooltipContainer = $('.js-tooltip-container');
+    this.$exportTooltip = this.$exportWidget.find('.tooltip');
+    this.$exportButton.on('click', this.export.bind(this));
+  }
+
+  if (this.opts.disableExport) {
+    this.disableExport({message: DOWNLOAD_MESSAGES.comingSoon});
   }
 
   this.hasWidgets = true;
+};
+
+DataTable.prototype.disableExport = function(opts) {
+  this.$exportButton.addClass('disabled');
+  this.$exportButton.off('click');
+
+  // Adding everything we need for the tooltip
+  this.$exportButton.attr('aria-describedby', 'export-tooltip');
+  var $exportTooltip = this.$exportTooltip;
+  $exportTooltip.html(opts.message);
+
+  function hideTooltip() {
+    $exportTooltip.attr('aria-hidden', 'true');
+  }
+  function showTooltip() {
+    $exportTooltip.attr('aria-hidden', 'false');
+  }
+
+  this.$exportTooltipContainer.hover(showTooltip, hideTooltip);
+  this.$exportButton.focus(showTooltip);
+  this.$exportButton.blur(hideTooltip);
+};
+
+DataTable.prototype.enableExport = function() {
+  this.$exportButton.removeClass('disabled');
+  this.$exportButton.on('click', this.export.bind(this));
+  this.$exportTooltip.attr('aria-hidden', 'true');
+
+  // Remove all tooltip stuff
+  this.$exportButton.removeAttr('aria-describedby');
+  this.$exportTooltipContainer.off('mouseenter mouseleave');
+  this.$exportButton.off('focus blur');
 };
 
 DataTable.prototype.fetch = function(data, callback) {
@@ -495,13 +582,27 @@ DataTable.prototype.fetch = function(data, callback) {
   });
 };
 
-DataTable.prototype.buildUrl = function(data) {
+DataTable.prototype.export = function() {
+  var url = this.buildUrl(this.api.ajax.params(), false);
+  download.download(url);
+  this.disableExport({message: DOWNLOAD_MESSAGES.pending});
+};
+
+DataTable.prototype.isPending = function() {
+  var url = this.buildUrl(this.api.ajax.params(), false);
+  return download.isPending(url);
+};
+
+DataTable.prototype.buildUrl = function(data, paginate) {
   var query = _.extend({}, this.filters || {});
+  paginate = typeof paginate === 'undefined' ? true : paginate;
   query.sort = mapSort(data.order, this.opts.columns);
   if (this.opts.useHideNull) {
-    query.sort_hide_null = this.$hideNullWidget.is(':checked');
+    query.sort_hide_null = this.$hideNullWidget.find('input').is(':checked');
   }
-  query = _.extend(query, this.paginator.mapQuery(data, query));
+  if (paginate) {
+    query = _.extend(query, this.paginator.mapQuery(data, query));
+  }
   return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
 };
 
@@ -509,6 +610,9 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.paginator.handleResponse(this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
+
+  this.refreshExport();
+
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
   }
@@ -541,6 +645,7 @@ DataTable.defer = function($table, opts) {
 
 module.exports = {
   simpleDOM: simpleDOM,
+  browseDOM: browseDOM,
   yearRange: yearRange,
   getCycle: getCycle,
   buildTotalLink: buildTotalLink,

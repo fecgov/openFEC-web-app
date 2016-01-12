@@ -61,13 +61,16 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
-    path: 'schedules/schedule_a',
+    title: 'Receipt',
+    path: ['schedules', 'schedule_a'],
     panel: filterPanel,
     columns: columns,
     paginator: tables.SeekPaginator,
     order: [[4, 'desc']],
     pagingType: 'simple',
     useFilters: true,
+    useExport: true,
+    disableExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(donationTemplate)

@@ -53,10 +53,12 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
-    path: 'candidates',
+    title: 'Candidate',
+    path: ['candidates'],
     panel: filterPanel,
     columns: columns,
     useFilters: true,
+    useExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(candidatesTemplate)
