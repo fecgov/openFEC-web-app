@@ -59,11 +59,13 @@ $(document).ready(function() {
   var $table = $('#results');
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
+    title: 'Independent expenditure',
     path: 'schedules/schedule_e',
     panel: filterPanel,
     columns: columns,
     paginator: tables.SeekPaginator,
     rowCallback: tables.modalRenderRow,
+    useExport: true,
     order: [[4, 'desc']],
     useFilters: true,
     callbacks: {
