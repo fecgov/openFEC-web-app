@@ -74,6 +74,8 @@ Then start the server:
 
     $ python __init__.py
 
+To view the site, visit [http://localhost:3000/](http://localhost:3000/).
+
 To run the server in debug mode set:
 
     $ export FEC_WEB_DEBUG=true
