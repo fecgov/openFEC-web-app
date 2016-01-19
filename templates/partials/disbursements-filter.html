@@ -24,8 +24,8 @@ Filter disbursements
 {{ states.field('recipient_state')}}
 <h4 class="filters__subheader">Transaction information</h4>
 {{ text.field('disbursement_description', 'Purpose') }}
-{{ text.field('min_amount', 'Minimum expenditure') }}
-{{ text.field('max_amount', 'Maximum expenditure') }}
+{{ text.field('min_amount', 'Minimum expenditure', {'data-suffix': 'or more'}) }}
+{{ text.field('max_amount', 'Maximum expenditure', {'data-suffix': 'or less'}) }}
 {{ date.field('date', 'Disbursement date', dates ) }}
 <div class="message message--info message--small">
   <span class="t-block">Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</span>
