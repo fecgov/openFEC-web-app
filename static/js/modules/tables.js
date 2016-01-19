@@ -35,6 +35,7 @@ var DOWNLOAD_MESSAGES = {
   downloadCap: 'Each user is limited to ' +
     MAX_DOWNLOADS +
     ' exports at a time. This helps us keep things running smoothly.',
+  empty: 'This table has no data to export.',
   comingSoon: 'Data exports for this page are coming soon.',
   pending: 'You\'re already exporting this data set.'
 };
@@ -374,7 +375,7 @@ var defaultOpts = {
   responsive: {details: false},
   language: {
     lengthMenu: 'Results per page: _MENU_',
-    info: 'Showing _START_ – _END_ of _TOTAL_ records'
+    info: 'Showing _START_–_END_ of about _TOTAL_ records'
   },
   pagingType: 'simple',
   title: null,
@@ -426,8 +427,11 @@ function DataTable(selector, opts) {
 
 DataTable.prototype.refreshExport = function() {
   if (this.opts.useExport && !this.opts.disableExport) {
-    if (this.api.context[0].fnRecordsTotal() > DOWNLOAD_CAP) {
+    var numRows = this.api.context[0].fnRecordsTotal();
+    if (numRows > DOWNLOAD_CAP) {
       this.disableExport({message: DOWNLOAD_MESSAGES.recordCap});
+    } else if (numRows === 0) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.empty});
     } else if (this.isPending()) {
       this.disableExport({message: DOWNLOAD_MESSAGES.pending});
     } else if (download.pendingCount() >= MAX_DOWNLOADS) {

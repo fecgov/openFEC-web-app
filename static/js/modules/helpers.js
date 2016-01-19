@@ -29,6 +29,20 @@ Handlebars.registerHelper('currency', currency);
 var numberFormatter = Intl.NumberFormat('en-US');
 Handlebars.registerHelper('formatNumber', numberFormatter.format);
 
+Handlebars.registerHelper({
+  eq: function (v1, v2) {
+    return v1 === v2;
+  }
+});
+
+var globals = {
+  EARMARKED_CODE: '15E'
+};
+
+Handlebars.registerHelper('global', function(value) {
+  return globals[value];
+});
+
 function decodeAmendment(value) {
   return decoders.amendments[value];
 }
@@ -83,5 +97,6 @@ module.exports = {
   cycleDates: cycleDates,
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,
-  buildUrl: buildUrl
+  buildUrl: buildUrl,
+  globals: globals
 };
