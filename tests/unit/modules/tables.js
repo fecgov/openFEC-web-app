@@ -29,6 +29,7 @@ describe('data table', function() {
 
   beforeEach(function() {
     this.$fixture.empty().append(
+      '<div class="js-data-widgets"></div>' +
       '<table id="table">' +
         '<thead>' +
           '<tr>' +
@@ -149,7 +150,7 @@ describe('data table', function() {
       var url = this.table.buildUrl(data);
       var expected = helpers.buildUrl(
         ['path', 'to', 'endpoint'],
-        {party: 'DFL', sort: '-office', sort_hide_null: 'true', per_page: 30, page: 3, extra: 'true'}
+        {party: 'DFL', sort: '-office', per_page: 30, page: 3, extra: 'true'}
       );
       expect(URI(url).equals(expected)).to.be.true;
     });
