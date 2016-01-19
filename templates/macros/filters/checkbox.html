@@ -1,6 +1,6 @@
 {% macro checkbox(name, value, label) %}
 <li class="dropdown__item">
-  <input id="{{ name }}-{{ value }}" name="{{ name }}" type="checkbox" value="{{ value }}">
+  <input id="{{ name }}-{{ clean_id(value) }}" name="{{ name }}" type="checkbox" value="{{ value }}">
   <label class="dropdown__value" for="{{ name }}-{{ value }}">{{ label }}</label>
 </li>
 {% endmacro %}
