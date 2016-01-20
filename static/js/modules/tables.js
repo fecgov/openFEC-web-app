@@ -25,11 +25,12 @@ var browseDOM = '<"js-results-info results-info results-info--top"' +
                 '<"results-info"ip>';
 
 var DOWNLOAD_CAP = 100000;
+var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
 var MAX_DOWNLOADS = 5;
 var DOWNLOAD_MESSAGES = {
   recordCap:
     'Exports are limited to ' +
-    DOWNLOAD_CAP +
+    downloadCapFormatted +
     ' records—add filters to narrow results, or export bigger ' +
     'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.',
   downloadCap: 'Each user is limited to ' +

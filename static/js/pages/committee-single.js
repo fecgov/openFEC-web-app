@@ -184,9 +184,21 @@ var disbursementRecipientIDColumns = [
 ];
 
 var expendituresColumns = [
-  tables.currencyColumn({data: 'total'}),
+  {
+    data: 'total',
+    className: 'all',
+    orderable: true,
+    orderSequence: ['desc', 'asc'],
+    render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
+        return {
+          support_oppose_indicator: row.support_oppose_indicator,
+          candidate_id: row.candidate_id,
+          is_notice: false,
+        };
+    })
+  },
   columns.supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', className: 'all'}),
+  tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 function buildStateUrl($elm) {

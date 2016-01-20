@@ -43,14 +43,27 @@ Handlebars.registerHelper('global', function(value) {
   return globals[value];
 });
 
-function decodeAmendment(value) {
+Handlebars.registerHelper('decodeAmendment', function(value) {
   return decoders.amendments[value];
-}
+});
 
-Handlebars.registerHelper('decodeAmendment', decodeAmendment);
+Handlebars.registerHelper('decodeOffice', function(value) {
+  return decoders.office[value];
+});
+
+Handlebars.registerHelper('decodeSupportOppose', function(value) {
+  return decoders.supportOppose[value] || 'Unknown';
+});
+
+Handlebars.registerHelper('decodeForm', function(value) {
+  return decoders.forms[value] || value;
+});
+
+Handlebars.registerHelper('decodeReport', function(value) {
+  return decoders.reports[value] || value;
+});
 
 Handlebars.registerHelper('basePath', BASE_PATH);
-
 
 function cycleDates(year) {
   return {
@@ -92,7 +105,6 @@ module.exports = {
   currency: currency,
   ensureArray: ensureArray,
   datetime: datetime,
-  decodeAmendment: decodeAmendment,
   formatNumber: numberFormatter.format,
   cycleDates: cycleDates,
   filterNull: filterNull,
