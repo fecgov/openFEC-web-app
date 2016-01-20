@@ -1,0 +1,25 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/date.html' as date %}
+
+{% block heading %}
+Filter independent expenditures
+{% endblock %}
+
+{% block filters %}
+
+{% include 'partials/filters/election-years.html' %}
+{{ typeahead.field('committee_id', 'Committee') }}
+{{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
+{% include 'partials/filters/support-oppose.html' %}
+{% include 'partials/filters/ie-report-types.html' %}
+
+{{ text.field('min_amount', 'Minimum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+
+{{ date.field('date', 'Expenditure date', dates ) }}
+
+{% endblock %}
