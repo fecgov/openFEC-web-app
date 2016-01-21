@@ -9,8 +9,8 @@ var urls = require('fec-style/js/urls');
 var accessibility = require('fec-style/js/accessibility');
 var analytics = require('fec-style/js/analytics');
 
-require('datatables');
-require('drmonty-datatables-responsive');
+require('datatables.net')(window, $);
+require('datatables.net-responsive')(window, $);
 
 var helpers = require('./helpers');
 var download = require('./download');
@@ -25,16 +25,18 @@ var browseDOM = '<"js-results-info results-info results-info--top"' +
                 '<"results-info"ip>';
 
 var DOWNLOAD_CAP = 100000;
+var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
 var MAX_DOWNLOADS = 5;
 var DOWNLOAD_MESSAGES = {
   recordCap:
     'Exports are limited to ' +
-    DOWNLOAD_CAP +
+    downloadCapFormatted +
     ' records—add filters to narrow results, or export bigger ' +
     'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.',
   downloadCap: 'Each user is limited to ' +
     MAX_DOWNLOADS +
     ' exports at a time. This helps us keep things running smoothly.',
+  empty: 'This table has no data to export.',
   comingSoon: 'Data exports for this page are coming soon.',
   pending: 'You\'re already exporting this data set.'
 };
@@ -374,7 +376,7 @@ var defaultOpts = {
   responsive: {details: false},
   language: {
     lengthMenu: 'Results per page: _MENU_',
-    info: 'Showing _START_ – _END_ of _TOTAL_ records'
+    info: 'Showing _START_–_END_ of about _TOTAL_ records'
   },
   pagingType: 'simple',
   title: null,
@@ -426,8 +428,11 @@ function DataTable(selector, opts) {
 
 DataTable.prototype.refreshExport = function() {
   if (this.opts.useExport && !this.opts.disableExport) {
-    if (this.api.context[0].fnRecordsTotal() > DOWNLOAD_CAP) {
+    var numRows = this.api.context[0].fnRecordsTotal();
+    if (numRows > DOWNLOAD_CAP) {
       this.disableExport({message: DOWNLOAD_MESSAGES.recordCap});
+    } else if (numRows === 0) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.empty});
     } else if (this.isPending()) {
       this.disableExport({message: DOWNLOAD_MESSAGES.pending});
     } else if (download.pendingCount() >= MAX_DOWNLOADS) {

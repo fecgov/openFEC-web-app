@@ -1,0 +1,101 @@
+<div class="panel__row">
+  <h4 class="panel__title">Expenditure information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Amount</td>
+      <td class="panel__data">{{ currency expenditure_amount }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Expenditure date</td>
+      <td class="panel__data">{{ datetime expenditure_date pretty=true }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Dissemination date</td>
+      <td class="panel__data">{{ datetime dissemination_date pretty=true }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Candidate</td>
+      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a> ({{ decodeSupportOppose support_oppose_indicator }})</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Description</td>
+      <td class="panel__data">{{ expenditure_description }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Payee</td>
+      <td class="panel__data">
+        {{ payee_name }}<br>
+        {{ payee_city }}, {{ payee_state }}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Filing information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Form type</td>
+      <td class="panel__data">{{ decodeForm form_type }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Report type</td>
+      <td class="panel__data">{{ decodeReport report_type }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Receipt date</td>
+      <td class="panel__data">{{ datetime receipt_date pretty=true }}</td>
+    </tr>
+  </table>
+</div>
+<div class="panel__row">
+  <h4 class="panel__title">Committee information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Committee name</td>
+      <td class="panel__data"><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
+    </tr>
+    <tr>
+      <td class="panel__term">Committee type</td>
+      <td class="panel__data">{{ committee.committee_type_full }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Treasurer</td>
+      <td class="panel__data">{{ committee.treasurer_name }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">City and state</td>
+      <td class="panel__data">{{ committee.city }}, {{ committee.state }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Total spent on office (year to date)</td>
+      <td class="panel__data">{{ currency office_total_ytd }}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Candidate information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Candidate</td>
+      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a></td>
+    </tr>
+    <tr>
+      <td class="panel__term">Office</td>
+      <td class="panel__data">{{ decodeOffice candidate_office }}</td>
+    </tr>
+    {{#if candidate_state }}
+    <tr>
+      <td class="panel__term">State</td>
+      <td class="panel__data">{{ cand_office_state }}</td>
+    </tr>
+    {{/if}}
+    {{#if candidate_district}}
+    <tr>
+      <td class="panel__term">District</td>
+      <td class="panel__data">{{ cand_office_district }}</td>
+    </tr>
+    {{/if}}
+  </table>
+</div>

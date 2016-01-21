@@ -69,7 +69,6 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     tmpl_vars = candidate
 
     tmpl_vars['cycle'] = cycle
-    tmpl_vars['cycle_loaded'] = candidate['two_year_period']
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
     tmpl_vars['election_full'] = election_full
@@ -78,6 +77,14 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         if election_full
         else [cycle]
     )
+
+    # Annotate committees with most recent available cycle
+    for committee in committees:
+        committee['related_cycle'] = (
+            max(cycle for cycle in tmpl_vars['aggregate_cycles'] if cycle in committee['cycles'])
+            if election_full
+            else candidate['two_year_period']
+        )
 
     committee_groups = groupby(committees, lambda each: each['designation'])
     committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
