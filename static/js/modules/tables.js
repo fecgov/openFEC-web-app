@@ -7,7 +7,7 @@ var tabs = require('../vendor/tablist');
 var accessibility = require('fec-style/js/accessibility');
 
 require('datatables.net')(window, $);
-require('datatables.net-responsive');
+require('datatables.net-responsive')(window, $);
 
 var helpers = require('./helpers');
 var download = require('./download');
