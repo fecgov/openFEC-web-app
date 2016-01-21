@@ -1,9 +1,7 @@
 'use strict';
 
-/* global window, document */
-
 var $ = require('jquery');
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 var tabs = require('../vendor/tablist');
 var accessibility = require('fec-style/js/accessibility');
@@ -12,34 +10,38 @@ require('datatables.net')(window, $);
 require('datatables.net-responsive');
 
 var helpers = require('./helpers');
+var download = require('./download');
 var analytics = require('./analytics');
-var FilterPanel = require('./filter-panel').FilterPanel;
+
+var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
+var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
+var browseDOM = '<"js-results-info results-info results-info--top"pilfr>' +
+                '<"panel__main"t>' +
+                '<"results-info"ip>';
+
+var DOWNLOAD_CAP = 100000;
+var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
+var MAX_DOWNLOADS = 5;
+var DOWNLOAD_MESSAGES = {
+  recordCap:
+    'Exports are limited to ' +
+    downloadCapFormatted +
+    ' records—add filters to narrow results, or export bigger ' +
+    'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.',
+  downloadCap: 'Each user is limited to ' +
+    MAX_DOWNLOADS +
+    ' exports at a time. This helps us keep things running smoothly.',
+  empty: 'This table has no data to export.',
+  comingSoon: 'Data exports for this page are coming soon.',
+  pending: 'You\'re already exporting this data set.'
+};
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
   $('.datatable__container').css('opacity', '1');
   $('.dataTable tbody td:first-child').attr('scope','row');
-});
-
-$.fn.DataTable.Api.register('seekIndex()', function(length, start, value) {
-  var settings = this.context[0];
-
-  // Clear stored indexes on filter change
-  if (!_.isEqual(settings._parsedFilters, parsedFilters)) {
-    settings._seekIndexes = {};
-  }
-  settings._parsedFilters = _.clone(parsedFilters);
-
-  // Set or get stored indexes
-  if (typeof value !== 'undefined') {
-    settings._seekIndexes = settings._seekIndexes || {};
-    settings._seekIndexes[length] = settings._seekIndexes[length] || {};
-    settings._seekIndexes[length][start] = value;
-  } else {
-    return ((settings._seekIndexes || {})[length] || {})[start] || undefined;
-  }
 });
 
 function yearRange(first, last) {
@@ -50,15 +52,17 @@ function yearRange(first, last) {
   }
 }
 
-var parsedFilters;
-
-function getCycle(datum) {
-  if (parsedFilters && parsedFilters.cycle) {
+function getCycle(value, meta) {
+  var dataTable = DataTable.registry[meta.settings.sTableId];
+  var filters = dataTable && dataTable.filters;
+  if (filters && filters.cycle) {
     var cycles = _.intersection(
-      _.map(parsedFilters.cycle, function(cycle) {return parseInt(cycle);}),
-      datum.cycles
+      _.map(filters.cycle, function(cycle) { return parseInt(cycle); }),
+      value
     );
-    return {cycle: _.max(cycles)};
+    return cycles.length ?
+      {cycle: _.max(cycles)} :
+      {};
   } else {
     return {};
   }
@@ -118,7 +122,7 @@ function formattedColumn(formatter, defaultOpts) {
   return function(opts) {
     return _.extend({}, defaultOpts, {
       render: function(data, type, row, meta) {
-        return formatter(data);
+        return formatter(data, type, row, meta);
       }
     }, opts);
   };
@@ -160,17 +164,17 @@ var dateColumn = formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc
 var currencyColumn = formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = barColumn(helpers.currency);
 
-var candidateColumn = formattedColumn(function(data) {
-  if (data) {
-    return buildEntityLink(data.name, helpers.buildAppUrl(['candidate', data.candidate_id]), 'candidate');
+var candidateColumn = formattedColumn(function(data, type, row) {
+  if (row) {
+    return buildEntityLink(row.candidate_name, helpers.buildAppUrl(['candidate', row.candidate_id]), 'candidate');
   } else {
     return '';
   }
 });
 
-var committeeColumn = formattedColumn(function(data) {
-  if (data) {
-    return buildEntityLink(data.name, helpers.buildAppUrl(['committee', data.committee_id]), 'committee');
+var committeeColumn = formattedColumn(function(data, type, row) {
+  if (row) {
+    return buildEntityLink(row.committee_name, helpers.buildAppUrl(['committee', row.committee_id]), 'committee');
   } else {
     return '';
   }
@@ -232,25 +236,6 @@ function pushQuery(params, fields) {
     window.history.pushState(params, queryString, queryString || window.location.pathname);
     analytics.pageView();
   }
-}
-
-function mapQueryOffset(api, data) {
-  return {
-    per_page: data.length,
-    page: Math.floor(data.start / data.length) + 1,
-  };
-}
-
-function mapQuerySeek(api, data) {
-  var indexes = api.seekIndex(data.length, data.start) || {};
-  return _.extend(
-    {per_page: data.length},
-    _.chain(Object.keys(indexes))
-      .filter(function(key) { return indexes[key]; })
-      .map(function(key) { return [key, indexes[key]]; })
-      .object()
-      .value()
-  );
 }
 
 function identity(value) {
@@ -327,13 +312,6 @@ function modalRenderFactory(template, fetch) {
       e.preventDefault();
       hidePanel(api, $modal);
     });
-
-    /* Set focus to highlighted row on blurring anchors if tabbing out of the panel */
-    $modal.on('blur', 'a, button', function(e) {
-      if (!$modal.has(e.relatedTarget).length) {
-        $('.row-active .js-panel-button').focus();
-      }
-    });
   };
 }
 
@@ -370,14 +348,6 @@ function barsAfterRender(template, api, data, response) {
   });
 }
 
-function handleResponseSeek(api, data, response) {
-  api.seekIndex(data.length, data.length + data.start, response.pagination.last_indexes);
-}
-
-var defaultCallbacks = {
-  preprocess: mapResponse
-};
-
 function updateOnChange($form, api) {
   function onChange(e) {
     e.preventDefault();
@@ -399,131 +369,288 @@ function adjustFormHeight($table, $form) {
   }
 }
 
-var defaultCallbacks = {
-  preprocess: mapResponse
+function OffsetPaginator() {}
+
+OffsetPaginator.prototype.mapQuery = function(data) {
+  return {
+    per_page: data.length,
+    page: Math.floor(data.start / data.length) + 1,
+  };
 };
 
-function initTable($table, $form, path, baseQuery, columns, callbacks, opts) {
-  var $processing = $('<div class="overlay is-loading"></div>');
-  var $hideNullWidget = $(
-    '<input id="null-checkbox" type="checkbox" name="sort_hide_null" checked>' +
-    '<label for="null-checkbox" class="results-info__null">' +
-      'Hide results with missing values when sorting' +
-    '</label>'
-  );
-  var useFilters = opts.useFilters;
-  var useHideNull = opts.hasOwnProperty('useHideNull') ? opts.useHideNull : true;
-  callbacks = _.extend({}, defaultCallbacks, callbacks);
-  if ($form) {
-    var filterPanel = new FilterPanel();
-    var filterSet = filterPanel.filterSet;
-    updateQuery(filterSet.serialize(), filterSet.fields);
-  }
-  opts = _.extend({
-    serverSide: true,
-    searching: false,
-    columns: columns,
-    lengthMenu: [30, 50, 100],
-    responsive: {
-      details: false
-    },
-    language: {
-      lengthMenu: 'Results per page: _MENU_'
-    },
-    dom: '<"results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
-    ajax: function(data, callback, settings) {
-      var api = this.api();
-      if ($form) {
-        pushQuery(filterPanel.filterSet.serialize(), filterPanel.filterSet.fields);
-        parsedFilters = filterPanel.filterSet.serialize();
-      }
-      var query = _.extend(
-        callbacks.mapQuery(api, data),
-        parsedFilters || {}
-      );
-      if (useHideNull) {
-        query = _.extend(
-          query,
-          {sort_hide_null: $hideNullWidget.is(':checked')}
-        );
-      }
-      query.sort = mapSort(data.order, columns);
-      $processing.show();
-      $.getJSON(
-        helpers.buildUrl(path, _.extend({}, query, baseQuery || {}))
-      ).done(function(response) {
-        callbacks.handleResponse(api, data, response);
-        callback(callbacks.preprocess(response));
-        callbacks.afterRender(api, data, response);
-        if (opts.hideEmpty) {
-          hideEmpty(api, data, response);
-        }
-      }).always(function() {
-        $processing.hide();
-      });
-    }
-  }, opts || {});
-  var api = $table.DataTable(opts);
-  callbacks = _.extend({
-    handleResponse: function() {},
-    afterRender: function() {}
-  }, callbacks);
-  if (useFilters) {
-    // Update filters and data table on navigation
-    $(window).on('popstate', function() {
-      filterPanel.filterSet.activate();
-      var tempFilters = filterPanel.filterSet.serialize();
-      if (!_.isEqual(tempFilters, parsedFilters)) {
-        api.ajax.reload();
-      }
-    });
-  }
-  // Prepare loading message
-  $processing.hide();
-  $table.before($processing);
-  var $paging = $(api.table().container()).find('.results-info--top');
-  if (useHideNull) {
-    $paging.prepend($hideNullWidget);
-  }
-  $table.css('width', '100%');
-  $table.find('tbody').addClass('js-panel-toggle');
-  if ($form) {
-    updateOnChange($form, api);
-    $table.on('draw.dt', adjustFormHeight.bind(null, $table, $form));
-  }
+OffsetPaginator.prototype.handleResponse = function() {};
+
+function SeekPaginator() {
+  this.indexes = {};
+  this.query = null;
 }
+
+SeekPaginator.prototype.getIndexes = function(length, start) {
+  return (this.indexes[length] || {})[start] || {};
+};
+
+SeekPaginator.prototype.setIndexes = function(length, start, value) {
+  this.indexes[length] = this.indexes[length] || {};
+  this.indexes[length][start] = value;
+};
+
+SeekPaginator.prototype.clearIndexes = function() {
+  this.indexes = {};
+};
+
+SeekPaginator.prototype.mapQuery = function(data, query) {
+  if (!_.isEqual(query, this.query)) {
+    this.query = _.clone(query);
+    this.clearIndexes();
+  }
+  var indexes = this.getIndexes(data.length, data.start);
+  return _.extend(
+    {per_page: data.length},
+    _.chain(Object.keys(indexes))
+      .filter(function(key) { return indexes[key]; })
+      .map(function(key) { return [key, indexes[key]]; })
+      .object()
+      .value()
+  );
+};
+
+SeekPaginator.prototype.handleResponse = function(data, response) {
+  this.setIndexes(data.length, data.length + data.start, response.pagination.last_indexes);
+};
+
+var defaultOpts = {
+  serverSide: true,
+  searching: false,
+  useHideNull: true,
+  lengthMenu: [30, 50, 100],
+  responsive: {details: false},
+  language: {
+    lengthMenu: 'Results per page: _MENU_',
+    info: 'Showing _START_–_END_ of about _TOTAL_ records'
+  },
+  title: null,
+  dom: browseDOM,
+};
+
+var defaultCallbacks = {
+  afterRender: function() {}
+};
+
+function DataTable(selector, opts) {
+  opts = opts || {};
+  this.$body = $(selector);
+  this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
+  this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
+  this.filterSet = (this.opts.panel || {}).filterSet;
+
+  this.xhr = null;
+  this.fetchContext = null;
+  this.hasWidgets = null;
+  this.filters = null;
+
+  var Paginator = this.opts.paginator || OffsetPaginator;
+  this.paginator = new Paginator();
+  this.api = this.$body.DataTable(this.opts);
+
+  DataTable.registry[this.$body.attr('id')] = this;
+
+  if (this.filterSet) {
+    updateOnChange(this.filterSet.$body, this.api);
+    updateQuery(this.filterSet.serialize(), this.filterSet.fields);
+    this.$body.on('draw.dt', adjustFormHeight.bind(null, this.$body, this.filterSet.$body));
+  }
+
+  if (this.opts.useFilters) {
+    $(window).on('popstate', this.handlePopState.bind(this));
+  }
+
+  if (this.opts.useExport) {
+    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
+  }
+
+  this.$body.css('width', '100%');
+  this.$body.find('tbody').addClass('js-panel-toggle');
+}
+
+DataTable.prototype.refreshExport = function() {
+  if (this.opts.useExport && !this.opts.disableExport) {
+    var numRows = this.api.context[0].fnRecordsTotal();
+    if (numRows > DOWNLOAD_CAP) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.recordCap});
+    } else if (numRows === 0) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.empty});
+    } else if (this.isPending()) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.pending});
+    } else if (download.pendingCount() >= MAX_DOWNLOADS) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.downloadCap});
+    } else {
+      this.enableExport();
+    }
+  }
+};
+
+DataTable.prototype.destroy = function() {
+  this.api.destroy();
+  delete DataTable.registry[this.$body.attr('id')];
+};
+
+DataTable.prototype.handlePopState = function() {
+  this.filterSet.activate();
+  var filters = this.filterSet.serialize();
+  if (!_.isEqual(filters, this.filters)) {
+    this.api.ajax.reload();
+  }
+};
+
+DataTable.prototype.ensureWidgets = function() {
+  if (this.hasWidgets) { return; }
+  this.$processing = $('<div class="overlay is-loading"></div>').hide();
+  this.$body.before(this.$processing);
+
+  var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
+
+  if (this.opts.useHideNull) {
+    this.$hideNullWidget = $(hideNullTemplate());
+    $paging.append(this.$hideNullWidget);
+  }
+
+  if (this.opts.useExport) {
+    var templateVars = {title: this.opts.title};
+    this.$exportWidget = $(exportWidgetTemplate(templateVars));
+    $paging.after(this.$exportWidget);
+    this.$exportButton = $('.js-export');
+    this.$exportTooltipContainer = $('.js-tooltip-container');
+    this.$exportTooltip = this.$exportWidget.find('.tooltip');
+    this.$exportButton.on('click', this.export.bind(this));
+  }
+
+  if (this.opts.disableExport) {
+    this.disableExport({message: DOWNLOAD_MESSAGES.comingSoon});
+  }
+
+  this.hasWidgets = true;
+};
+
+DataTable.prototype.disableExport = function(opts) {
+  this.$exportButton.addClass('disabled');
+  this.$exportButton.off('click');
+
+  // Adding everything we need for the tooltip
+  this.$exportButton.attr('aria-describedby', 'export-tooltip');
+  var $exportTooltip = this.$exportTooltip;
+  $exportTooltip.html(opts.message);
+
+  function hideTooltip() {
+    $exportTooltip.attr('aria-hidden', 'true');
+  }
+  function showTooltip() {
+    $exportTooltip.attr('aria-hidden', 'false');
+  }
+
+  this.$exportTooltipContainer.hover(showTooltip, hideTooltip);
+  this.$exportButton.focus(showTooltip);
+  this.$exportButton.blur(hideTooltip);
+};
+
+DataTable.prototype.enableExport = function() {
+  this.$exportButton.removeClass('disabled');
+  this.$exportButton.on('click', this.export.bind(this));
+  this.$exportTooltip.attr('aria-hidden', 'true');
+
+  // Remove all tooltip stuff
+  this.$exportButton.removeAttr('aria-describedby');
+  this.$exportTooltipContainer.off('mouseenter mouseleave');
+  this.$exportButton.off('focus blur');
+};
+
+DataTable.prototype.fetch = function(data, callback) {
+  var self = this;
+  self.ensureWidgets();
+  if (self.filterSet) {
+    pushQuery(self.filterSet.serialize(), self.filterSet.fields);
+    self.filters = self.filterSet.serialize();
+  }
+  var url = self.buildUrl(data);
+  self.$processing.show();
+  if (self.xhr) {
+    self.xhr.abort();
+  }
+  self.fetchContext = {
+    data: data,
+    callback: callback
+  };
+  self.xhr = $.getJSON(url);
+  self.xhr.done(self.fetchSuccess.bind(self));
+  self.xhr.fail(self.fetchError.bind(self));
+  self.xhr.always(function() {
+    self.$processing.hide();
+  });
+};
+
+DataTable.prototype.export = function() {
+  var url = this.buildUrl(this.api.ajax.params(), false);
+  download.download(url);
+  this.disableExport({message: DOWNLOAD_MESSAGES.pending});
+};
+
+DataTable.prototype.isPending = function() {
+  var url = this.buildUrl(this.api.ajax.params(), false);
+  return download.isPending(url);
+};
+
+DataTable.prototype.buildUrl = function(data, paginate) {
+  var query = _.extend({}, this.filters || {});
+  paginate = typeof paginate === 'undefined' ? true : paginate;
+  query.sort = mapSort(data.order, this.opts.columns);
+  if (this.opts.useHideNull) {
+    query.sort_hide_null = this.$hideNullWidget.find('input').is(':checked');
+  }
+  if (paginate) {
+    query = _.extend(query, this.paginator.mapQuery(data, query));
+  }
+  return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
+};
+
+DataTable.prototype.fetchSuccess = function(resp) {
+  this.paginator.handleResponse(this.fetchContext.data, resp);
+  this.fetchContext.callback(mapResponse(resp));
+  this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
+
+  this.refreshExport();
+
+  if (this.opts.hideEmpty) {
+    this.hideEmpty(resp);
+  }
+};
+
+DataTable.prototype.fetchError = function() {
+
+};
 
 /**
  * Replace a `DataTable` with placeholder text if no results found. Should only
  * be used with unfiltered tables, else tables may be destroyed on restrictive
  * filtering.
  */
-function hideEmpty(api, data, response) {
+DataTable.prototype.hideEmpty = function(response) {
   if (!response.pagination.count) {
-    api.destroy();
-    var $table = $(api.table().node());
-    $table.before('<div class="message message--alert">No data found.</div>');
-    $table.remove();
+    this.destroy();
+    this.$body.before('<div class="message message--alert">No data found.</div>');
+    this.$body.remove();
   }
-}
-
-function initTableDeferred($table) {
-  var args = _.toArray(arguments);
-  tabs.onShow($table, function() {
-    initTable.apply(null, args);
-  });
-}
-
-var offsetCallbacks = {
-  mapQuery: mapQueryOffset
 };
-var seekCallbacks = {
-  mapQuery: mapQuerySeek,
-  handleResponse: handleResponseSeek
+
+DataTable.registry = {};
+
+DataTable.defer = function($table, opts) {
+  tabs.onShow($table, function() {
+    new DataTable($table, opts);
+  });
 };
 
 module.exports = {
   simpleDOM: simpleDOM,
+  browseDOM: browseDOM,
   yearRange: yearRange,
   getCycle: getCycle,
   buildTotalLink: buildTotalLink,
@@ -539,8 +666,9 @@ module.exports = {
   modalRenderFactory: modalRenderFactory,
   MODAL_TRIGGER_CLASS: MODAL_TRIGGER_CLASS,
   MODAL_TRIGGER_HTML: MODAL_TRIGGER_HTML,
-  offsetCallbacks: offsetCallbacks,
-  seekCallbacks: seekCallbacks,
-  initTable: initTable,
-  initTableDeferred: initTableDeferred
+  mapSort: mapSort,
+  mapResponse: mapResponse,
+  DataTable: DataTable,
+  OffsetPaginator: OffsetPaginator,
+  SeekPaginator: SeekPaginator
 };

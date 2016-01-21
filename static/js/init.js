@@ -2,10 +2,8 @@
 
 /* global window, document, Inputmask, BASE_PATH */
 
-var KEYCODE_SLASH = 191;
-
 var $ = require('jquery');
-var keyboard = require('keyboardjs');
+var Sticky = require('component-sticky');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
@@ -22,6 +20,10 @@ var typeahead = require('fec-style/js/typeahead');
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
 require('jquery.inputmask/dist/inputmask/inputmask.numeric.extensions.js');
+
+// @if SENTRY_PUBLIC_DSN
+require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
+// @endif
 
 // Remove extra padding in currency mask
 Inputmask.extendAliases({
@@ -44,166 +46,74 @@ var charts = require('./modules/charts');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
+var download = require('./modules/download');
 var analytics = require('./modules/analytics');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
-charts.init();
-
-var SLT_ACCORDION = '.js-accordion';
-
-$('.js-dropdown').each(function() {
-  new dropdown.Dropdown(this);
-});
-
-$('.js-site-nav').each(function() {
-  new siteNav.SiteNav(this);
-});
-
-new skipNav.Skipnav('.skip-nav', 'main');
-
 $(document).ready(function() {
-    var $body,
-        $pageControls;
-    $body = $('body');
-    $pageControls = $('.page-controls');
-    $body.addClass('js-initialized');
+  charts.init();
 
-    // Sticky page controls
-    if ( $pageControls.length > 0 ) {
-        var scrollPos,
-            controlsHeight,
-            controlsTop = $pageControls.offset().top + 100;
-        $(document).scroll(function(){
-          scrollPos = $(window).scrollTop();
+  $('.js-dropdown').each(function() {
+    new dropdown.Dropdown(this);
+  });
 
-          if (scrollPos >= controlsTop) {
-            controlsHeight = $pageControls.height();
-            $pageControls.addClass('is-fixed');
-            $body.css('padding-top', controlsHeight);
-          } else {
-            $pageControls.removeClass('is-fixed');
-            $body.css('padding-top', 0);
-          }
-        });
-    }
+  $('.js-site-nav').each(function() {
+    new siteNav.SiteNav(this);
+  });
 
-    // Initialize glossary
-    new glossary.Glossary(terms, {body: '#glossary'});
+  new skipNav.Skipnav('.skip-nav', 'main');
 
-    // Initialize typeaheads
-    new typeahead.Typeahead(
-      '.js-search-input',
-      $('.js-search-type').val(),
-      BASE_PATH
-    );
+  // Initialize sticky elements
+  $('.js-sticky').each(function() {
+    var container = $(this).data('sticky-container');
+    var opts = {
+      within: document.getElementById(container)
+    };
+    new Sticky(this, opts);
+  });
 
-    // Initialize feedback
-    new feedback.Feedback(helpers.buildAppUrl(['issue']));
+  // Initialize glossary
+  new glossary.Glossary(terms, {body: '#glossary'});
 
-    // Focus search on "/"
-    $(document.body).on('keyup', function(e) {
-      if (e.keyCode === KEYCODE_SLASH) {
-        $('.js-search-input:visible').first().focus();
-      }
-    });
+  // Initialize typeaheads
+  new typeahead.Typeahead(
+    '.js-search-input',
+    $('.js-search-type').val(),
+    BASE_PATH
+  );
 
-    // Inialize input masks
-    $('[data-inputmask]').inputmask();
+  // Initialize feedback
+  new feedback.Feedback(helpers.buildAppUrl(['issue']));
 
-    // Reveal containers
-    if ( $('.js-reveal-container').length > 0 ) {
-        var $revealButton = $('.js-reveal-button');
-        $revealButton.click(function(){
-            var $revealContainer = $(this).parents('.js-reveal-container'),
-                $revealContent = $revealContainer.find('.js-reveal-content');
-            if ( $revealContent.hasClass('u-hidden') ) {
-                $revealContent.removeClass('u-hidden').attr('aria-hidden', 'false');
-                $(this).html('Hide charts');
-            } else {
-                $revealContent.addClass('u-hidden').attr('aria-hidden', 'true');
-                $(this).html('View charts');
-            }
-        });
-    }
+  // Inialize input masks
+  $('[data-inputmask]').inputmask();
 
-    // General reveal / disclosure
-    $('.js-reveal').on('click keypress', function(e){
-        if (e.which === 13 || e.type === 'click') {
-            var revealElement = $(this).data('reveals');
-            $('#' + revealElement).attr('aria-hidden', false);
-            $(this).addClass('selected');
-        }
-    });
+  // Initialize accordions
+  $('.js-accordion').each(function() {
+    Object.create(accordion).init($(this));
+  });
 
-    $('.js-hide').on('click keypress', function(e){
-        if (e.which === 13 || e.type === 'click') {
-            var hideElement = $(this).data('hides');
-            $('#' + hideElement).attr('aria-hidden', true);
-            // Set focus back on the original triggering element
-            $('.js-reveal[data-reveals="' + hideElement + '"]').removeClass('selected');
-        }
-    });
+  // Initialize search
+  $('.js-search').each(function() {
+    new Search($(this));
+  });
 
-    $(document.body).on('keyup', function(e) {
-        if (e.keyCode == keyboard.key.code('escape')) {
-            var menu = $('#site-menu');
-            if (menu.attr('aria-hidden') === 'false') {
-                menu.attr('aria-hidden', true);
-                $('.js-reveal[data-reveals="site-menu"]').focus();
-            }
-        }
-    });
+  // TODO: Restore
+  // @if DEBUG
+  // var perf = require('./modules/performance');
+  // perf.bar();
+  // @endif
 
-    // Notice close-state persistence
-    // Commenting out for now
-    // if (typeof window.sessionStorage !== 'undefined') {
-    //     if (window.sessionStorage.getItem('keep-banner-closed') === '1') {
-    //         $('#notice').attr('aria-hidden', true);
-    //         $('#notice-reveal').addClass('u-visible');
-    //     } else {
-    //         $('#notice').attr('aria-hidden', false);
-    //     }
-    // }
+  // @if ANALYTICS
+  analytics.init();
+  analytics.pageView();
+  // @endif
 
-    $("#notice-close").on('click keypress', function(e){
-        if (e.which === 13 || e.type === 'click') {
-            $('#notice-reveal').addClass('u-visible');
-            if (typeof window.sessionStorage !== 'undefined') {
-                window.sessionStorage.setItem('keep-banner-closed', '1');
-            }
-        }
-    });
+  // Initialize cycle selects
+  $('.js-cycle').each(function(idx, elm) {
+    CycleSelect.build($(elm));
+  });
 
-    // Hide the notice reveal link if you open it
-    $('#notice-reveal').click(function(){
-      $(this).removeClass('u-visible');
-    });
-
-    // Initialize accordions
-    $(SLT_ACCORDION).each(function() {
-      Object.create(accordion).init($(this));
-    });
-
-    var $search = $('.js-search');
-    $search.each(function() {
-      new Search($(this));
-    });
-
-    // TODO: Restore
-    // @if DEBUG
-    // var perf = require('./modules/performance');
-    // perf.bar();
-    // @endif
-
-    // @if ANALYTICS
-    analytics.init();
-    analytics.pageView();
-    // @endif
-
-    // Initialize cycle selects
-    $('.js-cycle').each(function(idx, elm) {
-      CycleSelect.build($(elm));
-    });
-
-    toggle.init();
+  toggle.init();
+  download.hydrate();
 });

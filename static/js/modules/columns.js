@@ -28,15 +28,11 @@ function getSizeParams(size) {
   return params;
 }
 
-var supportOpposeMap = {
-  S: 'Support',
-  O: 'Oppose',
-};
 
 var supportOpposeColumn = {
   data: 'support_oppose_indicator',
   render: function(data, type, row, meta) {
-    return supportOpposeMap[data] || 'Unknown';
+    return decoders.supportOppose[data] || 'Unknown';
   }
 };
 
@@ -55,7 +51,7 @@ var filings = {
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      var cycle = tables.getCycle(row);
+      var cycle = tables.getCycle([row.cycle], meta);
       if (row.candidate_name) {
         return tables.buildEntityLink(
           row.candidate_name,

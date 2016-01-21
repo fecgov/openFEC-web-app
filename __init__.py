@@ -1,4 +1,3 @@
-import re
 import http
 import json
 import locale
@@ -11,6 +10,7 @@ import jinja2
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from dateutil.parser import parse as parse_date
+from raven.contrib.flask import Sentry
 
 from hmac_authentication import hmacauth
 from flask import Flask, render_template, request, redirect, url_for, abort
@@ -21,6 +21,7 @@ from werkzeug.contrib.fixers import ProxyFix
 from openfecwebapp import utils
 from openfecwebapp import views
 from openfecwebapp import config
+from openfecwebapp.config import env
 from openfecwebapp import constants
 from openfecwebapp.api_caller import load_search_results, load_with_nested
 
@@ -124,6 +125,15 @@ def get_base_path():
     return request.headers.get('X-Script-Name', '')
 
 
+def format_election_years(cycle, election_full, duration):
+    start = (
+        cycle - duration + 1
+        if election_full and duration
+        else cycle - 1
+    )
+    return '{}–{}'.format(start, cycle)
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -150,6 +160,7 @@ app.jinja_env.globals.update({
     'base_path': get_base_path,
     'environment': config.environment,
     'today': datetime.date.today,
+    'format_election_years': format_election_years,
 })
 
 
@@ -185,14 +196,31 @@ def developers():
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
+    'election_full': fields.Bool(missing=True),
 })
-def candidate_page(c_id, cycle=None):
+def candidate_page(c_id, cycle=None, election_full=True):
     """Fetch and render data for candidate detail page.
 
     :param int cycle: Optional cycle for associated committees and financials.
+    :param bool election_full: Load full election period
     """
-    candidate, committees, cycle = load_with_nested('candidate', c_id, 'committees', cycle)
-    return views.render_candidate(candidate, committees, cycle)
+    candidate, committees, cycle = load_with_nested(
+        'candidate', c_id, 'committees',
+        cycle=cycle, cycle_key='two_year_period',
+        election_full=election_full,
+    )
+    if election_full and cycle and cycle not in candidate['election_years']:
+        next_cycle = next(
+            (
+                year for year in sorted(candidate['election_years'])
+                if year > cycle
+            ),
+            max(candidate['election_years']),
+        )
+        return redirect(
+            url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
+        )
+    return views.render_candidate(candidate, committees, cycle, election_full)
 
 
 @app.route('/committee/<c_id>/')
@@ -240,6 +268,9 @@ def filings():
         result_type='committees',
     )
 
+@app.route('/independent-expenditures/')
+def independent_expenditures():
+    return render_template('independent-expenditures.html', dates=utils.date_ranges())
 
 @app.route('/elections/')
 def election_lookup():
@@ -260,6 +291,7 @@ def elections(office, cycle, state=None, district=None):
     return render_template(
         'elections.html',
         office=office,
+        office_code=office[0],
         cycle=cycle,
         cycles=cycles,
         state=state,
@@ -348,19 +380,14 @@ def fmt_year_range(year):
 
 
 @app.template_filter()
-def fmt_report_desc(report_full_description):
-    if report_full_description:
-        return re.sub('{.+}', '', report_full_description)
-
-
-@app.template_filter()
-def restrict_cycles(value, start_year=START_YEAR):
-    return [each for each in value if start_year <= each <= utils.current_cycle()]
-
-
-@app.template_filter()
 def fmt_state_full(value):
     return constants.states[value.upper()]
+
+@app.template_filter()
+def fmt_cycle_min_max(cycles):
+    if len(cycles) > 1:
+        return '{}–{}'.format(min(cycles), max(cycles))
+    return cycles[0]
 
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
@@ -381,17 +408,30 @@ if config.username and config.password:
     basic_auth = BasicAuth(app)
 
 
-if config.environment == 'prod':
-    auth = hmacauth.HmacAuth(
-        digest=hashlib.sha1,
-        secret_key=config.hmac_secret,
-        signature_header='X-Signature',
-        headers=config.hmac_headers,
-    )
-    app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
+# if config.environment == 'prod':
+#     auth = hmacauth.HmacAuth(
+#         digest=hashlib.sha1,
+#         secret_key=config.hmac_secret,
+#         signature_header='X-Signature',
+#         headers=config.hmac_headers,
+#     )
+#     app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
+
+def initialize_newrelic():
+    license_key = env.get_credential('NEW_RELIC_LICENSE_KEY')
+    if license_key:
+        import newrelic.agent
+        settings = newrelic.agent.global_settings()
+        settings.license_key = license_key
+        newrelic.agent.initialize()
+
+initialize_newrelic()
+
+if config.sentry_dsn:
+    Sentry(app, dsn=config.sentry_dsn)
 
 
 if __name__ == '__main__':

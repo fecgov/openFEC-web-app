@@ -2,7 +2,174 @@
 
 ## [Unreleased](https://github.com/18F/openFEC-web-app/tree/HEAD)
 
-[Full Changelog](https://github.com/18F/openFEC-web-app/compare/public-beta-20150829...HEAD)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/public-beta-20151217...HEAD)
+
+**Closed issues:**
+
+- Export Feature: Mismatch between exported CSV and Manifest Records [\#1014](https://github.com/18F/openFEC-web-app/issues/1014)
+- 2-4-6 finanical summaries display authorized committees [\#998](https://github.com/18F/openFEC-web-app/issues/998)
+- make the legal resources section visually consistent [\#997](https://github.com/18F/openFEC-web-app/issues/997)
+- missing glossary items 'communication costs' and 'electioneering communication' [\#996](https://github.com/18F/openFEC-web-app/issues/996)
+- browse candidate to candidate page bug [\#995](https://github.com/18F/openFEC-web-app/issues/995)
+- test  [\#994](https://github.com/18F/openFEC-web-app/issues/994)
+- 2-4-6 issue future two-year period [\#991](https://github.com/18F/openFEC-web-app/issues/991)
+- Deploy a release [\#985](https://github.com/18F/openFEC-web-app/issues/985)
+- Prototype download interaction [\#971](https://github.com/18F/openFEC-web-app/issues/971)
+- To help users make specific inquiries, add additional departments to Contact Us page [\#825](https://github.com/18F/openFEC-web-app/issues/825)
+- So users know which data they're looking at even when they collapsed the filter panel, we'll show a quick summary of the filters applied [\#754](https://github.com/18F/openFEC-web-app/issues/754)
+- There is an expectation that the committee information will be on the committee profile page. We need to figure out a solution for showing "Other spending" aggregates on committee pages [\#701](https://github.com/18F/openFEC-web-app/issues/701)
+
+**Merged pull requests:**
+
+- Adding query parameter to link to browse pages [\#1011](https://github.com/18F/openFEC-web-app/pull/1011) ([noahmanger](https://github.com/noahmanger))
+- Adding link to candidates page from election [\#1010](https://github.com/18F/openFEC-web-app/pull/1010) ([noahmanger](https://github.com/noahmanger))
+- Add treasurer filter to committee browse view. [\#1008](https://github.com/18F/openFEC-web-app/pull/1008) ([jmcarp](https://github.com/jmcarp))
+- Feature/extract filters [\#1007](https://github.com/18F/openFEC-web-app/pull/1007) ([jmcarp](https://github.com/jmcarp))
+- Pass correct full election flag. [\#1006](https://github.com/18F/openFEC-web-app/pull/1006) ([jmcarp](https://github.com/jmcarp))
+- Restore natural focus behavior on filter panel [\#1005](https://github.com/18F/openFEC-web-app/pull/1005) ([noahmanger](https://github.com/noahmanger))
+- Removes broken glossary link [\#1001](https://github.com/18F/openFEC-web-app/pull/1001) ([emileighoutlaw](https://github.com/emileighoutlaw))
+- \[dontmerge\] Hotfix/browse candidates election year [\#1000](https://github.com/18F/openFEC-web-app/pull/1000) ([jmcarp](https://github.com/jmcarp))
+- \[dontmerge\] Hotfix/recipient committee url [\#999](https://github.com/18F/openFEC-web-app/pull/999) ([jmcarp](https://github.com/jmcarp))
+- Sort search views by receipts. [\#988](https://github.com/18F/openFEC-web-app/pull/988) ([jmcarp](https://github.com/jmcarp))
+- \[WIP\] Basic prototype of data downloads. [\#972](https://github.com/18F/openFEC-web-app/pull/972) ([jmcarp](https://github.com/jmcarp))
+
+## [public-beta-20151217](https://github.com/18F/openFEC-web-app/tree/public-beta-20151217) (2015-12-17)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/election-candidate-url...public-beta-20151217)
+
+**Closed issues:**
+
+- Update "View source filings" link [\#992](https://github.com/18F/openFEC-web-app/issues/992)
+- Make design tweaks to candidate page for cycle select [\#976](https://github.com/18F/openFEC-web-app/issues/976)
+- Design interaction for cap on number of records that can be exported [\#975](https://github.com/18F/openFEC-web-app/issues/975)
+- Prevent users from navigating to invalid candidate cycles [\#973](https://github.com/18F/openFEC-web-app/issues/973)
+- Campaign Finance Home Nav Item underperforming [\#968](https://github.com/18F/openFEC-web-app/issues/968)
+- Revise cycle select based on usability feedback [\#967](https://github.com/18F/openFEC-web-app/issues/967)
+- Design interaction of data exporting [\#946](https://github.com/18F/openFEC-web-app/issues/946)
+- In order to determine if it's meeting user needs, test 2/4/6 cycle select with users [\#935](https://github.com/18F/openFEC-web-app/issues/935)
+- Content: beta content warning [\#727](https://github.com/18F/openFEC-web-app/issues/727)
+
+**Merged pull requests:**
+
+- Release/public beta 20151217 [\#990](https://github.com/18F/openFEC-web-app/pull/990) ([jmcarp](https://github.com/jmcarp))
+- Fix election title and link for off-year periods. [\#989](https://github.com/18F/openFEC-web-app/pull/989) ([jmcarp](https://github.com/jmcarp))
+- \[WIP\] Activating reporting and registration link [\#986](https://github.com/18F/openFEC-web-app/pull/986) ([noahmanger](https://github.com/noahmanger))
+- Feature/js cleanup [\#983](https://github.com/18F/openFEC-web-app/pull/983) ([noahmanger](https://github.com/noahmanger))
+- Feature/refactor cards [\#974](https://github.com/18F/openFEC-web-app/pull/974) ([noahmanger](https://github.com/noahmanger))
+- Feature/cfenv/slack [\#970](https://github.com/18F/openFEC-web-app/pull/970) ([jmcarp](https://github.com/jmcarp))
+- Add .about.yml. [\#960](https://github.com/18F/openFEC-web-app/pull/960) ([jmcarp](https://github.com/jmcarp))
+- \[WIP\] Feature/candidate election aggregate [\#950](https://github.com/18F/openFEC-web-app/pull/950) ([jmcarp](https://github.com/jmcarp))
+- Feature/add ie to committee pages [\#943](https://github.com/18F/openFEC-web-app/pull/943) ([LindsayYoung](https://github.com/LindsayYoung))
+
+## [election-candidate-url](https://github.com/18F/openFEC-web-app/tree/election-candidate-url) (2015-11-20)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/fix-senate-election-urls...election-candidate-url)
+
+**Fixed bugs:**
+
+- Bug: Election links from Senator pages are broken [\#914](https://github.com/18F/openFEC-web-app/issues/914)
+
+**Closed issues:**
+
+- Bug: Some detail panels extend beyond height of the container on mobile [\#948](https://github.com/18F/openFEC-web-app/issues/948)
+- Download queries as csv [\#945](https://github.com/18F/openFEC-web-app/issues/945)
+- Refine design of 2/4/6 selector [\#942](https://github.com/18F/openFEC-web-app/issues/942)
+- To prevent users from encountering irrelevant information, hide tabs where not applicable [\#937](https://github.com/18F/openFEC-web-app/issues/937)
+- Build version of 2/4/6 cycle select for usability testing [\#934](https://github.com/18F/openFEC-web-app/issues/934)
+- Decide design direction for 2/4/6 cycle select [\#933](https://github.com/18F/openFEC-web-app/issues/933)
+- To clarify language for users, make "from state" more precise [\#920](https://github.com/18F/openFEC-web-app/issues/920)
+- 508 - Hidden input is accessible via keyboard, when it shouldn't be [\#908](https://github.com/18F/openFEC-web-app/issues/908)
+- 508 - Rollover is not accessible with keyboard [\#907](https://github.com/18F/openFEC-web-app/issues/907)
+- Bug: Tooltips on IE show when hovering over selects [\#899](https://github.com/18F/openFEC-web-app/issues/899)
+- In order to find committees \(esp super PACs\) that are opposing or supporting a given candidate, users want the ability to filter committees by the candidate they are supporting or opposing.  [\#850](https://github.com/18F/openFEC-web-app/issues/850)
+- Fix "Invalid party code" and "unknown" status [\#775](https://github.com/18F/openFEC-web-app/issues/775)
+- add net cycle to date for presidental [\#750](https://github.com/18F/openFEC-web-app/issues/750)
+- Post beta release design consideration: big picture presentation of the current Campaign Finance activities [\#670](https://github.com/18F/openFEC-web-app/issues/670)
+- So users understand the elections page Fundraising Comparison Map, alter the way candidates are added to comparison [\#650](https://github.com/18F/openFEC-web-app/issues/650)
+- In order to fit users' mental models of a candidate's election listings, determine the chronological order dates should appear in. [\#614](https://github.com/18F/openFEC-web-app/issues/614)
+- Discuss browser support and js support [\#299](https://github.com/18F/openFEC-web-app/issues/299)
+
+**Merged pull requests:**
+
+- Fix candidate links on election size aggregates. [\#966](https://github.com/18F/openFEC-web-app/pull/966) ([jmcarp](https://github.com/jmcarp))
+- Use versioned fec-style from npm. [\#965](https://github.com/18F/openFEC-web-app/pull/965) ([jmcarp](https://github.com/jmcarp))
+- Feature/add ie to committee pages [\#962](https://github.com/18F/openFEC-web-app/pull/962) ([jmcarp](https://github.com/jmcarp))
+- Tooltips now triggered by button [\#959](https://github.com/18F/openFEC-web-app/pull/959) ([noahmanger](https://github.com/noahmanger))
+- Feature/by state language [\#957](https://github.com/18F/openFEC-web-app/pull/957) ([noahmanger](https://github.com/noahmanger))
+- Update README.md [\#956](https://github.com/18F/openFEC-web-app/pull/956) ([emileighoutlaw](https://github.com/emileighoutlaw))
+- Feature/fix unit tests [\#954](https://github.com/18F/openFEC-web-app/pull/954) ([jmcarp](https://github.com/jmcarp))
+- Use hidden field on home election search [\#953](https://github.com/18F/openFEC-web-app/pull/953) ([noahmanger](https://github.com/noahmanger))
+- Fixing presidential net values [\#952](https://github.com/18F/openFEC-web-app/pull/952) ([noahmanger](https://github.com/noahmanger))
+- Feature/fix browse bugs [\#951](https://github.com/18F/openFEC-web-app/pull/951) ([noahmanger](https://github.com/noahmanger))
+- Updates the feedback template with new field names [\#949](https://github.com/18F/openFEC-web-app/pull/949) ([noahmanger](https://github.com/noahmanger))
+- Load aggregated candidate totals from API. [\#944](https://github.com/18F/openFEC-web-app/pull/944) ([jmcarp](https://github.com/jmcarp))
+- \[WIP\] Feature/refactor data tables [\#938](https://github.com/18F/openFEC-web-app/pull/938) ([jmcarp](https://github.com/jmcarp))
+- \[WIP\] Log client and server errors to Sentry. [\#929](https://github.com/18F/openFEC-web-app/pull/929) ([jmcarp](https://github.com/jmcarp))
+- Miscellaneous updates to election map. [\#927](https://github.com/18F/openFEC-web-app/pull/927) ([jmcarp](https://github.com/jmcarp))
+- Content update [\#919](https://github.com/18F/openFEC-web-app/pull/919) ([emileighoutlaw](https://github.com/emileighoutlaw))
+- Revert "Temporarily fetch committee information from detail table." [\#916](https://github.com/18F/openFEC-web-app/pull/916) ([jmcarp](https://github.com/jmcarp))
+
+## [fix-senate-election-urls](https://github.com/18F/openFEC-web-app/tree/fix-senate-election-urls) (2015-11-11)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/pin-buildpacks...fix-senate-election-urls)
+
+## [pin-buildpacks](https://github.com/18F/openFEC-web-app/tree/pin-buildpacks) (2015-11-11)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/fix-disbursement-columns...pin-buildpacks)
+
+**Fixed bugs:**
+
+- Ethno bug on fec.gov [\#892](https://github.com/18F/openFEC-web-app/issues/892)
+- Bug: on development site, top banner overlaps glossary functionality, and glossary can't be closed [\#864](https://github.com/18F/openFEC-web-app/issues/864)
+
+**Closed issues:**
+
+- 508 - Codesniffer is showing a js-reset button with no content in the text node [\#905](https://github.com/18F/openFEC-web-app/issues/905)
+- 508 - Campaign Finance Data dropdown isn't accessible with keyboard [\#904](https://github.com/18F/openFEC-web-app/issues/904)
+- So that users clearly understand how to engage with the FEC for feedback on betaFEC, develop and implement a contact/feedback strategy [\#866](https://github.com/18F/openFEC-web-app/issues/866)
+
+**Merged pull requests:**
+
+- Skip phantomjs install. [\#940](https://github.com/18F/openFEC-web-app/pull/940) ([jmcarp](https://github.com/jmcarp))
+- \[hotfix\] Pin buildpacks. [\#939](https://github.com/18F/openFEC-web-app/pull/939) ([jmcarp](https://github.com/jmcarp))
+- Making markup the same as the markup for candidate committee charts [\#936](https://github.com/18F/openFEC-web-app/pull/936) ([noahmanger](https://github.com/noahmanger))
+- Feature/fix grouped charts [\#932](https://github.com/18F/openFEC-web-app/pull/932) ([jmcarp](https://github.com/jmcarp))
+- Adds new footer items for feedback and github [\#928](https://github.com/18F/openFEC-web-app/pull/928) ([jenniferthibault](https://github.com/jenniferthibault))
+- Feature/refactored nav [\#925](https://github.com/18F/openFEC-web-app/pull/925) ([noahmanger](https://github.com/noahmanger))
+- Adds line about what this repo is [\#923](https://github.com/18F/openFEC-web-app/pull/923) ([emileighoutlaw](https://github.com/emileighoutlaw))
+- Cache compiled dependencies for faster builds. [\#922](https://github.com/18F/openFEC-web-app/pull/922) ([jmcarp](https://github.com/jmcarp))
+- Moves badges to top of README [\#918](https://github.com/18F/openFEC-web-app/pull/918) ([emileighoutlaw](https://github.com/emileighoutlaw))
+- Fix Senate election URLs. [\#917](https://github.com/18F/openFEC-web-app/pull/917) ([jmcarp](https://github.com/jmcarp))
+- Removing has-banner calss [\#915](https://github.com/18F/openFEC-web-app/pull/915) ([noahmanger](https://github.com/noahmanger))
+- Skip basic auth unless credentials set. [\#913](https://github.com/18F/openFEC-web-app/pull/913) ([jmcarp](https://github.com/jmcarp))
+- Update "looking for" link from "FEC.gov" to "fec.gov" [\#912](https://github.com/18F/openFEC-web-app/pull/912) ([wslack](https://github.com/wslack))
+- Include current date in links to disbursements. [\#910](https://github.com/18F/openFEC-web-app/pull/910) ([jmcarp](https://github.com/jmcarp))
+- Standardizes README content [\#909](https://github.com/18F/openFEC-web-app/pull/909) ([emileighoutlaw](https://github.com/emileighoutlaw))
+- \[WIP\] Feature/refactor filter panel [\#900](https://github.com/18F/openFEC-web-app/pull/900) ([jmcarp](https://github.com/jmcarp))
+- Replace history on table initialization. [\#895](https://github.com/18F/openFEC-web-app/pull/895) ([jmcarp](https://github.com/jmcarp))
+- Check HMAC signature in production. [\#808](https://github.com/18F/openFEC-web-app/pull/808) ([jmcarp](https://github.com/jmcarp))
+
+## [fix-disbursement-columns](https://github.com/18F/openFEC-web-app/tree/fix-disbursement-columns) (2015-10-28)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/update-individual-label...fix-disbursement-columns)
+
+**Fixed bugs:**
+
+- bug: Election page "Contributions by size" should be "Individual contributions by size" [\#872](https://github.com/18F/openFEC-web-app/issues/872)
+
+**Merged pull requests:**
+
+- Hotfix/fix disbursement columns [\#903](https://github.com/18F/openFEC-web-app/pull/903) ([noahmanger](https://github.com/noahmanger))
+
+## [update-individual-label](https://github.com/18F/openFEC-web-app/tree/update-individual-label) (2015-10-27)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/public-beta-20151026...update-individual-label)
+
+**Fixed bugs:**
+
+- Bug: Candidate filings not showing up on candidate pages [\#887](https://github.com/18F/openFEC-web-app/issues/887)
+- Bug: Some filings should have panels but don't [\#883](https://github.com/18F/openFEC-web-app/issues/883)
+
+**Merged pull requests:**
+
+- Updating table labels to specify individual contributions [\#898](https://github.com/18F/openFEC-web-app/pull/898) ([noahmanger](https://github.com/noahmanger))
+
+## [public-beta-20151026](https://github.com/18F/openFEC-web-app/tree/public-beta-20151026) (2015-10-26)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/public-beta-20150829...public-beta-20151026)
 
 **Fixed bugs:**
 
@@ -163,6 +330,7 @@
 
 **Merged pull requests:**
 
+- Release/public beta 20151026 [\#897](https://github.com/18F/openFEC-web-app/pull/897) ([jmcarp](https://github.com/jmcarp))
 - Handle missing dates in totals. [\#896](https://github.com/18F/openFEC-web-app/pull/896) ([jmcarp](https://github.com/jmcarp))
 - colorZero now \#fff [\#894](https://github.com/18F/openFEC-web-app/pull/894) ([noahmanger](https://github.com/noahmanger))
 - Temporarily fetch committee information from detail table. [\#893](https://github.com/18F/openFEC-web-app/pull/893) ([jmcarp](https://github.com/jmcarp))

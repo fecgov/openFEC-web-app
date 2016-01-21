@@ -1,12 +1,12 @@
 'use strict';
 
-/* global require, document */
-
 var $ = require('jquery');
-var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
+
+var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+
 var donationTemplate = require('../../templates/receipts.hbs');
 
 var columns = [
@@ -16,7 +16,7 @@ var columns = [
     className: 'all',
     width: '200px',
     render: function(data, type, row, meta) {
-      if (data) {
+      if (data && row.receipt_type !== helpers.globals.EARMARKED_CODE) {
         return tables.buildEntityLink(
           data.name,
           helpers.buildAppUrl(['committee', data.committee_id]),
@@ -59,21 +59,21 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $form = $('#category-filters');
-  tables.initTable(
-    $table,
-    $form,
-    'schedules/schedule_a',
-    {},
-    columns,
-    _.extend(tables.seekCallbacks, {
+  var filterPanel = new FilterPanel('#category-filters');
+  new tables.DataTable($table, {
+    title: 'Receipt',
+    path: ['schedules', 'schedule_a'],
+    panel: filterPanel,
+    columns: columns,
+    paginator: tables.SeekPaginator,
+    order: [[4, 'desc']],
+    pagingType: 'simple',
+    useFilters: true,
+    useExport: true,
+    disableExport: true,
+    rowCallback: tables.modalRenderRow,
+    callbacks: {
       afterRender: tables.modalRenderFactory(donationTemplate)
-    }),
-    {
-      order: [[4, 'desc']],
-      pagingType: 'simple',
-      useFilters: true,
-      rowCallback: tables.modalRenderRow
     }
-  );
+  });
 });

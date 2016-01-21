@@ -2,7 +2,7 @@
 
 /* global Intl, BASE_PATH, API_LOCATION, API_VERSION, API_KEY */
 
-var URI = require('URIjs');
+var URI = require('urijs');
 var _ = require('underscore');
 var moment = require('moment');
 var decoders = require('./decoders');
@@ -22,22 +22,64 @@ function currency(value) {
 }
 Handlebars.registerHelper('currency', currency);
 
+var numberFormatter = Intl.NumberFormat('en-US');
+Handlebars.registerHelper('formatNumber', numberFormatter.format);
+
 function datetime(value, options) {
-  var hash = options ? options.hash : {};
+  var hash = options.hash || {};
   var format = hash.pretty ? 'MMM D, YYYY' : 'MM-DD-YYYY';
   var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
   return parsed.isValid() ? parsed.format(format) : null;
 }
 
+Handlebars.registerHelper({
+  eq: function (v1, v2) {
+    return v1 === v2;
+  }
+});
+
+var globals = {
+  EARMARKED_CODE: '15E'
+};
+
+Handlebars.registerHelper('global', function(value) {
+  return globals[value];
+});
+
 function decodeAmendment(value) {
   return decoders.amendments[value];
+}
+
+function decodeOffice(value) {
+  return decoders.office[value];
+}
+
+function decodeSupportOppose(value) {
+  return decoders.supportOppose[value] || 'Unknown';
+}
+
+function decodeForm(value) {
+  return decoders.forms[value] || value;
+}
+
+function decodeReport(value) {
+  return decoders.reports[value] || value;
 }
 
 Handlebars.registerHelper('datetime', datetime);
 
 Handlebars.registerHelper('decodeAmendment', decodeAmendment);
 
+Handlebars.registerHelper('decodeOffice', decodeOffice);
+
+Handlebars.registerHelper('decodeSupportOppose', decodeSupportOppose);
+
+Handlebars.registerHelper('decodeForm', decodeForm);
+
+Handlebars.registerHelper('decodeReport', decodeReport);
+
 Handlebars.registerHelper('basePath', BASE_PATH);
+
 
 function cycleDates(year) {
   return {
@@ -80,8 +122,14 @@ module.exports = {
   datetime: datetime,
   ensureArray: ensureArray,
   decodeAmendment: decodeAmendment,
+  decodeOffice: decodeOffice,
+  decodeSupportOppose: decodeSupportOppose,
+  decodeForm: decodeForm,
+  decodeReport: decodeReport,
+  formatNumber: numberFormatter.format,
   cycleDates: cycleDates,
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,
-  buildUrl: buildUrl
+  buildUrl: buildUrl,
+  globals: globals
 };

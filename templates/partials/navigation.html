@@ -5,12 +5,10 @@
       <a href="{{ url_for('search') }}" class="site-nav__link is-current">Campaign finance data</a>
       <button class="site-nav__link site-nav__toggle js-sublist-toggle">Campaign finance data</button>
       <ul class="site-nav__dropdown">
-        <li class="site-nav__item u-under-lg-only">
+        <li class="site-nav__item">
           <a class="t-bold site-nav__link" href="{{ url_for('search') }}">Campaign finance data home</a>
         </li>
-        <li class="site-nav__item">
-          <span class="t-bold site-nav__subtitle">Browse:</span>
-        </li>
+        <li class="t-bold site-nav__subtitle">Browse:</li>
         <li class="site-nav__item">
           <a class="site-nav__link site-nav__sublink" href="{{ url_for('candidates', cycle=default_cycles) }}">Candidates</a>
         </li>
@@ -28,17 +26,23 @@
         </li>
         <li class="site-nav__item">
           <a
-              class="site-nav__link site-nav__sublink site-nav__sublink--last"
+              class="site-nav__link site-nav__sublink"
               href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">
             Disbursements</a>
+        </li>
+        <li class="site-nav__item">
+          <a
+              class="site-nav__link site-nav__sublink site-nav__sublink--last"
+              href="{{ url_for('independent_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">
+            Independent expenditures</a>
         </li>
         <li class="site-nav__item">
           <a class="t-bold site-nav__link" href="{{ url_for('election_lookup') }}">Find candidates by location</a>
         </li>
       </ul>
     </li>
-    <li class="site-nav__item is-disabled">
-      <a href="#" class="site-nav__link" tabindex="-1">(Registration and reporting)</a>
+    <li class="site-nav__item">
+      <a href="{{ cms_url }}/registration-and-reporting" class="site-nav__link">Registration and reporting</a>
     </li>
     <li class="site-nav__item is-disabled">
       <a href="#" class="site-nav__link" tabindex="-1">(Calendar)</a>

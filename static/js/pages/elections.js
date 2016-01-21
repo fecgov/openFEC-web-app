@@ -21,7 +21,19 @@ var candidateStateMapTemplate = require('../../templates/candidateStateMap.hbs')
 var MAX_MAPS = 2;
 
 var independentExpenditureColumns = [
-  tables.currencyColumn({data: 'total', className: 'all'}),
+  {
+    data: 'total',
+    className: 'all',
+    orderable: true,
+    orderSequence: ['desc', 'asc'],
+    render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
+        return {
+          support_oppose_indicator: row.support_oppose_indicator,
+          candidate_id: row.candidate_id,
+          is_notice: false,
+        };
+    })
+  },
   tables.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn,
   tables.candidateColumn({data: 'candidate', className: 'all'}),
@@ -103,7 +115,11 @@ var sizeColumns = [
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(data, '/candidate/' + row.candidate_id, 'candidate');
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['candidate', row.candidate_id]),
+        'candidate'
+      );
     }
   },
   makeSizeColumn({data: '0'}),
@@ -403,7 +419,10 @@ function initSpendingTables() {
     var dataType = $table.attr('data-type');
     var opts = tableOpts[dataType];
     if (opts) {
-      tables.initTableDeferred($table, null, opts.path, helpers.filterNull(context.election), opts.columns, tables.offsetCallbacks, {
+      tables.DataTable.defer($table, {
+        path: opts.path,
+        query: helpers.filterNull(context.election),
+        columns: opts.columns,
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',

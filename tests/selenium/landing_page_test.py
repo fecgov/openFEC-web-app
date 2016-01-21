@@ -40,6 +40,6 @@ class LandingPageTests(BaseTest):
         WebDriverWait(self.driver, 1).until(lambda driver: button.is_displayed())
         button.click()
         self.assertIn(
-            'Can',
+            'candidate',
             glossary.find_element_by_class_name('glossary-definition').text,
         )

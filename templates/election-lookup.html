@@ -14,8 +14,7 @@
     <div class="search-controls">
       <form>
         <div class="search-controls__row">
-          <label class="label" for="cycle-select">Choose an election cycle</label>
-          {{ select.cycle_select(cycles, location='form', tooltip=False) }}
+          {{ select.cycle_select(cycles, location='form') }}
         </div>
         <div class="search-controls__row">
           <div class="search-controls__either">
