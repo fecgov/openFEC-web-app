@@ -138,11 +138,13 @@
     {% endmacro %}
 
     {% with committee=context() %}
-      {% if committee_type not in ['C', 'E'] %}
         {% include 'partials/loading-tab.html' %}
         {% include 'partials/committee/financial-summary.html' %}
+      {% if committee_type not in ['C', 'E'] %}
         {% include 'partials/committee/receipts-tab.html' %}
-        {% include 'partials/committee/disbursements-tab.html' %}
+      {% endif %}
+      {% include 'partials/committee/disbursements-tab.html' %}
+      {% if committee_type not in ['C', 'E']}
         {% include 'partials/committee/between-committees-tab.html' %}
       {% endif %}
       {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
