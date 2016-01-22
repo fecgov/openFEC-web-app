@@ -72,10 +72,12 @@
         <div class="container">
           <nav class="page-tabs">
             <ul class="page-tabs__list" role="tablist" data-name="tab">
-              {% if committee_type not in ['C', 'E'] %}
                 {{ tabs.tab('Financial summary', 'summary', 'panel1', '#section-1') }}
+              {% if committee_type not in ['C', 'E'] %}
                 {{ tabs.tab('Individual contributions', 'receipts', 'panel2', '#section-2') }}
+              {% endif %}
                 {{ tabs.tab('Disbursements', 'disbursements', 'panel3', '#section-3') }}
+              {% if committee_type not in ['C', 'E'] %}
                 {{ tabs.tab('Between committees', 'between-committees', 'panel4', '#section-4') }}
               {% endif %}
               {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
@@ -144,7 +146,7 @@
         {% include 'partials/committee/receipts-tab.html' %}
       {% endif %}
       {% include 'partials/committee/disbursements-tab.html' %}
-      {% if committee_type not in ['C', 'E']}
+      {% if committee_type not in ['C', 'E'] %}
         {% include 'partials/committee/between-committees-tab.html' %}
       {% endif %}
       {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
