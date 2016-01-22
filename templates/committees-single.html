@@ -145,8 +145,14 @@
         {% include 'partials/committee/disbursements-tab.html' %}
         {% include 'partials/committee/between-committees-tab.html' %}
       {% endif %}
-      {% if committee_type not in ['P', 'H', 'S', 'A'] %}
+      {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
         {% include 'partials/committee/independent-expenditures-tab.html' %}
+      {% endif %}
+      {% if committee_type in ['C'] %}
+        {% include 'partials/committee/communication-cost-tab.html' %}
+      {% endif %}
+      {% if committee_type in ['E'] %}
+        {% include 'partials/committee/electioneering-tab.html' %}
       {% endif %}
       {% include 'partials/committee/filings-tab.html' %}
     {% endwith %}
