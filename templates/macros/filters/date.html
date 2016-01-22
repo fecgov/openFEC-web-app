@@ -1,7 +1,7 @@
 {% macro field(name, label, dates) %}
 
-  <div class="filter js-date-choice-field" id="{{ name }}" data-name="{{ name }}">
-  <fieldset class="js-filter">
+  <div class="filter js-filter js-date-choice-field" id="{{ name }}" data-name="{{ name }}">
+  <fieldset>
     <legend for="{{ name }}" class="label">{{ label }}</legend>
     <ul>
       <li>
@@ -19,9 +19,9 @@
     </ul>
     <div class="date-range-input">
       <label for="min_{{ name }}">From</label>
-      <input type="text" id="min_{{ name }}" name="min_{{ name }}" class="js-min-date" data-inputmask="'alias': 'mm-dd-yyyy'">
+      <input type="text" id="min_{{ name }}" name="min_{{ name }}" class="js-min-date" data-prefix="beginning" data-inputmask="'alias': 'mm-dd-yyyy'">
       <label for="max_{{ name }}">To</label>
-      <input type="text" id="max_{{ name }}" name="max_{{ name }}" class="js-max-date" data-inputmask="'alias': 'mm-dd-yyyy'">
+      <input type="text" id="max_{{ name }}" name="max_{{ name }}" class="js-max-date" data-prefix="ending" data-inputmask="'alias': 'mm-dd-yyyy'">
     </div>
   </fieldset>
 </div>

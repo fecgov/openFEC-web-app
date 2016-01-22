@@ -45,21 +45,21 @@ Handlebars.registerHelper('global', function(value) {
 
 function decodeAmendment(value) {
   return decoders.amendments[value];
-}
+});
 
 function decodeOffice(value) {
   return decoders.office[value];
-}
+});
 
-function decodeSupportOppose(value) {
+Handlebars.registerHelper('decodeSupportOppose', function(value) {
   return decoders.supportOppose[value] || 'Unknown';
-}
+});
 
-function decodeForm(value) {
+Handlebars.registerHelper('decodeForm', function(value) {
   return decoders.forms[value] || value;
-}
+});
 
-function decodeReport(value) {
+Handlebars.registerHelper('decodeReport', function(value) {
   return decoders.reports[value] || value;
 }
 
@@ -74,7 +74,6 @@ Handlebars.registerHelper('decodeForm', decodeForm);
 Handlebars.registerHelper('decodeReport', decodeReport);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
-
 
 function cycleDates(year) {
   return {
@@ -116,11 +115,6 @@ module.exports = {
   currency: currency,
   ensureArray: ensureArray,
   datetime: datetime,
-  decodeAmendment: decodeAmendment,
-  decodeOffice: decodeOffice,
-  decodeSupportOppose: decodeSupportOppose,
-  decodeForm: decodeForm,
-  decodeReport: decodeReport,
   formatNumber: numberFormatter.format,
   cycleDates: cycleDates,
   filterNull: filterNull,

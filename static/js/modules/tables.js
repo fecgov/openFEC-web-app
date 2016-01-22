@@ -406,7 +406,7 @@ function DataTable(selector, opts) {
 
   DataTable.registry[this.$body.attr('id')] = this;
 
-  if (this.filterPanel) {
+  if (!_.isEmpty(this.filterPanel)) {
     updateOnChange(this.filterSet.$body, this.api);
     urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
     this.$body.on('draw.dt', this, function(e) {
