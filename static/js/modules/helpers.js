@@ -45,11 +45,11 @@ Handlebars.registerHelper('global', function(value) {
 
 function decodeAmendment(value) {
   return decoders.amendments[value];
-});
+}
 
 function decodeOffice(value) {
   return decoders.office[value];
-});
+}
 
 Handlebars.registerHelper('decodeSupportOppose', function(value) {
   return decoders.supportOppose[value] || 'Unknown';
@@ -61,17 +61,11 @@ Handlebars.registerHelper('decodeForm', function(value) {
 
 Handlebars.registerHelper('decodeReport', function(value) {
   return decoders.reports[value] || value;
-}
+});
 
 Handlebars.registerHelper('decodeAmendment', decodeAmendment);
 
 Handlebars.registerHelper('decodeOffice', decodeOffice);
-
-Handlebars.registerHelper('decodeSupportOppose', decodeSupportOppose);
-
-Handlebars.registerHelper('decodeForm', decodeForm);
-
-Handlebars.registerHelper('decodeReport', decodeReport);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
 
