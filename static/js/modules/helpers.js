@@ -4,13 +4,17 @@
 
 var URI = require('urijs');
 var _ = require('underscore');
-var moment = require('moment');
 var decoders = require('./decoders');
 var Handlebars = require('hbsfy/runtime');
+
+var helpers = require('fec-style/js/helpers');
 
 var intl = require('intl');
 var locale = require('intl/locale-data/json/en-US.json');
 intl.__addLocaleData(locale);
+
+var datetime = helpers.datetime;
+Handlebars.registerHelper('datetime', datetime);
 
 var currencyFormatter = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
 function currency(value) {
@@ -24,13 +28,6 @@ Handlebars.registerHelper('currency', currency);
 
 var numberFormatter = Intl.NumberFormat('en-US');
 Handlebars.registerHelper('formatNumber', numberFormatter.format);
-
-function datetime(value, options) {
-  var hash = options.hash || {};
-  var format = hash.pretty ? 'MMM D, YYYY' : 'MM-DD-YYYY';
-  var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
-  return parsed.isValid() ? parsed.format(format) : null;
-}
 
 Handlebars.registerHelper({
   eq: function (v1, v2) {
@@ -54,32 +51,23 @@ function decodeOffice(value) {
   return decoders.office[value];
 }
 
-function decodeSupportOppose(value) {
+Handlebars.registerHelper('decodeSupportOppose', function(value) {
   return decoders.supportOppose[value] || 'Unknown';
-}
+});
 
-function decodeForm(value) {
+Handlebars.registerHelper('decodeForm', function(value) {
   return decoders.forms[value] || value;
-}
+});
 
-function decodeReport(value) {
+Handlebars.registerHelper('decodeReport', function(value) {
   return decoders.reports[value] || value;
-}
-
-Handlebars.registerHelper('datetime', datetime);
+});
 
 Handlebars.registerHelper('decodeAmendment', decodeAmendment);
 
 Handlebars.registerHelper('decodeOffice', decodeOffice);
 
-Handlebars.registerHelper('decodeSupportOppose', decodeSupportOppose);
-
-Handlebars.registerHelper('decodeForm', decodeForm);
-
-Handlebars.registerHelper('decodeReport', decodeReport);
-
 Handlebars.registerHelper('basePath', BASE_PATH);
-
 
 function cycleDates(year) {
   return {
@@ -119,13 +107,8 @@ function buildUrl(path, query) {
 
 module.exports = {
   currency: currency,
-  datetime: datetime,
   ensureArray: ensureArray,
-  decodeAmendment: decodeAmendment,
-  decodeOffice: decodeOffice,
-  decodeSupportOppose: decodeSupportOppose,
-  decodeForm: decodeForm,
-  decodeReport: decodeReport,
+  datetime: datetime,
   formatNumber: numberFormatter.format,
   cycleDates: cycleDates,
   filterNull: filterNull,

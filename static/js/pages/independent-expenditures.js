@@ -1,7 +1,5 @@
 'use strict';
 
-/* global require, document */
-
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
@@ -9,6 +7,7 @@ var helpers = require('../modules/helpers');
 var columns = require('../modules/columns');
 
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+var filterTags = require('fec-style/js/filter-tags');
 
 var expenditureTemplate = require('../../templates/independent-expenditures.hbs');
 
@@ -57,6 +56,8 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
+  var $widgets = $('.js-data-widgets');
+  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
     title: 'Independent expenditure',
@@ -72,4 +73,5 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(expenditureTemplate)
     }
   });
+  $widgets.prepend($tagList);
 });

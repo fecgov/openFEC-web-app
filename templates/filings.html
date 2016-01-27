@@ -11,9 +11,11 @@
 
 <section class="main__content--full">
   {% include 'partials/filings-filter.html' %}
-
-  <div id="filings" class="datatable__container">
-    {% include 'partials/filings-table.html' %}
+  <div class="data-container">
+    <div class="data-container__widgets js-data-widgets"></div>
+    <div id="filings" class="data-container__body fade-in">
+      {% include 'partials/filings-table.html' %}
+    </div>
   </div>
 </section>
 
