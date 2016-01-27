@@ -9,8 +9,8 @@ var urls = require('fec-style/js/urls');
 var accessibility = require('fec-style/js/accessibility');
 var analytics = require('fec-style/js/analytics');
 
-require('datatables');
-require('drmonty-datatables-responsive');
+require('datatables.net')(window, $);
+require('datatables.net-responsive')(window, $);
 
 var helpers = require('./helpers');
 var download = require('./download');
