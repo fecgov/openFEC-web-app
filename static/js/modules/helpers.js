@@ -43,13 +43,13 @@ Handlebars.registerHelper('global', function(value) {
   return globals[value];
 });
 
-Handlebars.registerHelper('decodeAmendment', function(value) {
+function decodeAmendment(value) {
   return decoders.amendments[value];
-});
+}
 
-Handlebars.registerHelper('decodeOffice', function(value) {
+function decodeOffice(value) {
   return decoders.office[value];
-});
+}
 
 Handlebars.registerHelper('decodeSupportOppose', function(value) {
   return decoders.supportOppose[value] || 'Unknown';
@@ -62,6 +62,10 @@ Handlebars.registerHelper('decodeForm', function(value) {
 Handlebars.registerHelper('decodeReport', function(value) {
   return decoders.reports[value] || value;
 });
+
+Handlebars.registerHelper('decodeAmendment', decodeAmendment);
+
+Handlebars.registerHelper('decodeOffice', decodeOffice);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
 
