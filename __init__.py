@@ -276,6 +276,10 @@ def independent_expenditures():
 def electioneering_communications():
     return render_template('electioneering-communications.html', dates=utils.date_ranges())
 
+@app.route('/communication-costs/')
+def communication_costs():
+    return render_template('communication-costs.html', dates=utils.date_ranges())
+
 @app.route('/elections/')
 def election_lookup():
     return render_template('election-lookup.html')

@@ -10,20 +10,24 @@
       <td class="panel__data">{{ report_year }}</td>
     </tr>
     <tr>
-      <td class="panel__term">Disbursement date</td>
-      <td class="panel__data">{{ datetime disbursement_date pretty=true }}</td>
+      <td class="panel__term">Transaction date</td>
+      <td class="panel__data">{{ datetime transaction_date pretty=true }}</td>
     </tr>
     <tr>
-      <td class="panel__term">Communication date</td>
-      <td class="panel__data">{{ datetime communication_date pretty=true }}</td>
+      <td class="panel__term">Communication class</td>
+      <td class="panel__data">{{ communication_class }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Communication type</td>
+      <td class="panel__data">{{ communication_type }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Purpose</td>
+      <td class="panel__data">{{ purpose }}</td>
     </tr>
     <tr>
       <td class="panel__term">Candidate</td>
-      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a></td>
-    </tr>
-    <tr>
-      <td class="panel__term">Purpose description</td>
-      <td class="panel__data">{{ purpose_description }}</td>
+      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a> {{ decodeSupportOppose support_oppose_indicator }})</td>
     </tr>
   </table>
 </div>
@@ -59,22 +63,22 @@
     </tr>
     <tr>
       <td class="panel__term">Party</td>
-      <td class="panel__data">{{ candidate_party_affiliation }}</td>
+      <td class="panel__data">{{ candidate.party_full }}</td>
     </tr>
     <tr>
       <td class="panel__term">Office</td>
-      <td class="panel__data">{{ candidate_office }}</td>
+      <td class="panel__data">{{ candidate.office_full }}</td>
     </tr>
-    {{#if candidate_office_state }}
+    {{#if candidate.state }}
     <tr>
       <td class="panel__term">State</td>
-      <td class="panel__data">{{ candidate_office_state }}</td>
+      <td class="panel__data">{{ candidate.state }}</td>
     </tr>
     {{/if}}
-    {{#if candidate_office_district }}
+    {{#if candidate.district_number}}
     <tr>
       <td class="panel__term">District</td>
-      <td class="panel__data">{{ candidate_office_district }}</td>
+      <td class="panel__data">{{ candidate.district_number }}</td>
     </tr>
     {{/if}}
   </table>
