@@ -272,6 +272,10 @@ def filings():
 def independent_expenditures():
     return render_template('independent-expenditures.html', dates=utils.date_ranges())
 
+@app.route('/electioneering-communications/')
+def electioneering_communications():
+    return render_template('electioneering-communications.html', dates=utils.date_ranges())
+
 @app.route('/elections/')
 def election_lookup():
     return render_template('election-lookup.html')

@@ -1,0 +1,37 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse electioneering communications
+{% endblock %}
+
+{% block body %}
+
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title">Electioneering communication</h1>
+</header>
+
+<section class="main__content--full">
+  {% include 'partials/electioneering-communications-filter.html' %}
+  <div id="committees" class="datatable__container">
+    <table id="results" class="data-table" data-type="electioneering-communications">
+      <thead>
+        <tr>
+          <th scope="col">Committee</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Candidate</th>
+          <th scope="col">Disbursement date</th>
+          <th scope="col">Description</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</section>
+
+{% include 'partials/datatable-modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_for('dist/js/pages/electioneering-communications.js') }}"></script>
+{% endblock %}

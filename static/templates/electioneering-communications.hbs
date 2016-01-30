@@ -1,0 +1,77 @@
+<div class="panel__row">
+  <h4 class="panel__title">Disbursement information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Amount</td>
+      <td class="panel__data">{{ currency disbursement_amount }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Disbursement date</td>
+      <td class="panel__data">{{ datetime disbursement_date pretty=true }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Communication date</td>
+      <td class="panel__data">{{ datetime communication_date pretty=true }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Candidate</td>
+      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a></td>
+    </tr>
+    <tr>
+      <td class="panel__term">Purpose description</td>
+      <td class="panel__data">{{ purpose_description }}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Committee information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Committee name</td>
+      <td class="panel__data"><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
+    </tr>
+    <tr>
+      <td class="panel__term">Committee type</td>
+      <td class="panel__data">{{ committee.committee_type_full }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Treasurer</td>
+      <td class="panel__data">{{ committee.treasurer_name }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">City and state</td>
+      <td class="panel__data">{{ committee.city }}, {{ committee.state }}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Candidate information</h4>
+  <table>
+    <tr>
+      <td class="panel__term">Candidate</td>
+      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a></td>
+    </tr>
+    <tr>
+      <td class="panel__term">Party</td>
+      <td class="panel__data">{{ candidate.party_full }}</td>
+    </tr>
+    <tr>
+      <td class="panel__term">Office</td>
+      <td class="panel__data">{{ candidate.office_full }}</td>
+    </tr>
+    {{#if candidate.state }}
+    <tr>
+      <td class="panel__term">State</td>
+      <td class="panel__data">{{ candidate.state }}</td>
+    </tr>
+    {{/if}}
+    {{#if candidate.district_number}}
+    <tr>
+      <td class="panel__term">District</td>
+      <td class="panel__data">{{ candidate.district_number }}</td>
+    </tr>
+    {{/if}}
+  </table>
+</div>
