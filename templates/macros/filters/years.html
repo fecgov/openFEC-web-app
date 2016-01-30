@@ -1,0 +1,21 @@
+{% macro years(name, label, maxYear=2016, minYear=1978) %}
+<div class="filter">
+  <fieldset class="js-dropdown">
+    <legend class="label">{{ label }}</legend>
+    <ul class="dropdown__selected"></ul>
+    <div class="dropdown">
+      <button type="button" class="dropdown__button button--neutral">More</button>
+      <div id="{{ name }}-dropdown" class="dropdown__panel" aria-hidden="true">
+        <ul class="dropdown__list">
+        {% for year in range(maxYear, minYear, -2) %}
+          <li class="dropdown__item">
+            <input id="{{ name }}-checkbox-{{ year }}" name="{{ name }}" type="checkbox" value="{{ year }}" />
+            <label class="dropdown__value" for="{{name}}-checkbox-{{ year }}">{{ year | fmt_year_range }}</label>
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </fieldset>
+</div>
+{% endmacro %}
