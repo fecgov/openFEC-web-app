@@ -80,6 +80,14 @@ Handlebars.registerHelper('decodeReport', decodeReport);
 
 Handlebars.registerHelper('basePath', BASE_PATH);
 
+Handlebars.registerHelper('panelRow', function(label, options) {
+  return new Handlebars.SafeString(
+    '<tr>' +
+      '<td class="panel__term">' + label + '</td>' +
+      '<td class="panel__data">' + options.fn(this) + '</td>' +
+    '</tr>'
+  );
+});
 
 function cycleDates(year) {
   return {
