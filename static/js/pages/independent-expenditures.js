@@ -36,11 +36,15 @@ var columns = [
     orderable: false,
     className: 'min-desktop hide-panel',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(
-        data,
-        helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row, meta)),
-        'candidate'
-      );
+      if (row.candidate_id) {
+        return tables.buildEntityLink(
+          data,
+          helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row, meta)),
+          'candidate'
+        );
+      } else {
+        return row.candidate_name;
+      }
     }
   },
   tables.dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel-tablet'}),
