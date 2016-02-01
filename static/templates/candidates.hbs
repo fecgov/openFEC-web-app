@@ -3,33 +3,27 @@
     <h4 class="panel__title"><a href="{{basePath}}/candidate/{{candidate_id}}">{{name}}</a></h4>
   </div>
   <table>
-    <tr>
-      <td class="panel__term">Office</td>
-      <td class="panel__data">{{office_full}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Election years</td>
-      <td class="panel__data">{{election_years}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Political party</td>
-      <td class="panel__data">{{party_full}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Status</td>
-      <td class="panel__data">{{incumbent_challenge_full}}</td>
-    </tr>
+    {{#panelRow "Office"}}
+      {{office_full}}
+    {{/panelRow}}
+    {{#panelRow "Election years"}}
+      {{election_years}}
+    {{/panelRow}}
+    {{#panelRow "Political party"}}
+      {{party_full}}
+    {{/panelRow}}
+    {{#panelRow "Status"}}
+      {{incumbent_challenge_full}}
+    {{/panelRow}}
     {{#if state}}
-    <tr>
-      <td class="panel__term">State</td>
-      <td class="panel__data">{{state}}</td>
-    </tr>
+      {{#panelRow "State"}}
+        {{state}}
+      {{/panelRow}}
     {{/if}}
     {{#if district}}
-    <tr>
-      <td class="panel__term">District</td>
-      <td class="panel__data">{{district}}</td>
-    </tr>
+      {{#panelRow "District"}}
+        {{district}}
+      {{/panelRow}}
     {{/if}}
   </table>
 </div>
