@@ -11,8 +11,12 @@
       {{datetime dissemination_date format="pretty"}}
     {{/panelRow}}
     {{#panelRow "Candidate"}}
-      <a href="{{basePath}}/candidate/{{candidate_id}}/">{{candidate_name}}</a>
-      ({{decodeSupportOppose support_oppose_indicator}})
+      {{#if candidate_id}}
+        <a href="{{basePath}}/candidate/{{candidate_id}}/">{{candidate_name}}</a>
+      {{else}}
+        {{candidate_name}}
+      {{/if}}
+      ({{decodeSupportOppose support_oppose_indicator}})</td>
     {{/panelRow}}
     {{#panelRow "Description"}}
       {{expenditure_description}}
@@ -65,6 +69,11 @@
   <table>
     {{#panelRow "Candidate"}}
       <a href="{{basePath}}/candidate/{{candidate_id}}/">{{candidate_name}}</a>
+      {{#if candidate_id}}
+        <a href="{{basePath}}/candidate/{{candidate_id}}/">{{candidate_name}}</a>
+      {{else}}
+        {{candidate_name}}
+      {{/if}}
     {{/panelRow}}
     {{#panelRow "Office"}}
       {{decodeOffice candidate_office}}
