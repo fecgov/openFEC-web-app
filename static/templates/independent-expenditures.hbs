@@ -5,10 +5,10 @@
       {{currency expenditure_amount}}
     {{/panelRow}}
     {{#panelRow "Expenditure date"}}
-      {{datetime expenditure_date pretty=true}}
+      {{datetime expenditure_date format="pretty"}}
     {{/panelRow}}
     {{#panelRow "Dissemination date"}}
-      {{datetime dissemination_date pretty=true}}
+      {{datetime dissemination_date format="pretty"}}
     {{/panelRow}}
     {{#panelRow "Candidate"}}
       <a href="{{basePath}}/candidate/{{candidate_id}}/">{{candidate_name}}</a>
@@ -18,7 +18,7 @@
       {{expenditure_description}}
     {{/panelRow}}
     {{#panelRow "Payee"}}
-      {{payee_name}}<br />
+      {{payee_name}}<br>
       {{payee_city}}, {{payee_state}}
     {{/panelRow}}
   </table>
@@ -34,7 +34,7 @@
       {{decodeReport report_type}}
     {{/panelRow}}
     {{#panelRow "Receipt date"}}
-      {{datetime receipt_date pretty=true}}
+      {{datetime receipt_date format="pretty"}}
     {{/panelRow}}
   </table>
 </div>
