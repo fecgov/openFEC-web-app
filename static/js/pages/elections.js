@@ -383,7 +383,7 @@ function initStateMaps(results) {
     var $parent = $target.closest('.state-map');
     drawStateMap($parent, $target.val(), cached);
   });
-  $choropleths.on('click', '.js-add-map', function(e){
+  $choropleths.on('click', '.js-add-map', function(e) {
     appendStateMap($choropleths, results, cached);
   });
   $choropleths.on('click', '.js-remove-map', function(e) {
@@ -428,7 +428,6 @@ function initSpendingTables() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false,
         hideEmpty: true
       });
     }
