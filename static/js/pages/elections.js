@@ -30,7 +30,7 @@ var independentExpenditureColumns = [
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
-          is_notice: false,
+          // is_notice: false
         };
     })
   },
