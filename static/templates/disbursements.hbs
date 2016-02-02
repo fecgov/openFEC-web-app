@@ -1,53 +1,44 @@
 <div class="panel__row">
   <h4 class="panel__title">Recipient information</h4>
   <table>
-    <tr>
-      <td class="panel__term">Recipient name</td>
+    {{#panelRow "Recipient name"}}
       {{#if recipient}}
-        <td class="panel__data"><a href="{{basePath}}/committee/{{recipient.committee_id}}">{{recipient.name}}</a></td>
+        <a href="{{basePath}}/committee/{{recipient.committee_id}}">{{recipient.name}}</a>
       {{else}}
-        <td class="panel__data">{{recipient_name}}</td>
+        {{recipient_name}}
       {{/if}}
-    </tr>
-    <tr>
-      <td class="panel__term">Recipient city and state</td>
-      <td class="panel__data">{{ recipient_city }}, {{ recipient_state }}, {{ recipient_zip }}</td>
-    </tr>
+    {{/panelRow}}
+    {{#panelRow "Recipient city and state"}}
+      {{recipient_city}}, {{recipient_state}}, {{recipient_zip}}
+    {{/panelRow}}
   </table>
 </div>
 
 <div class="panel__row">
   <h4 class="panel__title">Transaction information</h4>
   <table>
-    <tr>
-      <td class="panel__term">Amount</td>
-      <td class="panel__data">{{{ currency disbursement_amount }}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Disbursement date</td>
-      <td class="panel__data">{{{ datetime disbursement_date pretty=true }}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Filing date</td>
-      <td class="panel__data">{{{ datetime receipt_date pretty=true}}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Purpose</td>
-      <td class="panel__data">{{ disbursement_description }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Memo</td>
-      <td class="panel__data">{{ memo_text }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Memo code</td>
-      <td class="panel__data">{{ memoed_subtotal }}</td>
-    </tr>
+    {{#panelRow "Amount"}}
+      {{{currency disbursement_amount}}}
+    {{/panelRow}}
+    {{#panelRow "Disbursement date"}}
+      {{{datetime disbursement_date format="pretty"}}}
+    {{/panelRow}}
+    {{#panelRow "Filing date"}}
+      {{{datetime receipt_date format="pretty"}}}
+    {{/panelRow}}
+    {{#panelRow "Purpose"}}
+      {{disbursement_description}}
+    {{/panelRow}}
+    {{#panelRow "Memo"}}
+      {{memo_text}}
+    {{/panelRow}}
+    {{#panelRow "Memo code"}}
+      {{memoed_subtotal}}
+    {{/panelRow}}
     {{#if election_type_full }}
-    <tr>
-      <td class="panel__term">Election type</td>
-      <td class="panel__data">{{ election_type_full }}</td>
-    </tr>
+      {{#panelRow "Election type"}}
+        {{election_type_full}}
+      {{/panelRow}}
     {{/if}}
   </table>
 </div>
@@ -55,27 +46,22 @@
 <div class="panel__row">
   <h4 class="panel__title">Committee information</h4>
   <table>
-    <tr>
-      <td class="panel__term">Name</td>
-      <td class="panel__data"><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
-    </tr>
-    <tr>
-      <td class="panel__term">Designation</td>
-      <td class="panel__data">{{committee.designation_full}}</a></td>
-    </tr>
+    {{#panelRow "Name"}}
+      <a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a>
+    {{/panelRow}}
+    {{#panelRow "Designation"}}
+      {{committee.designation_full}}
+    {{/panelRow}}
     {{#if committee.type}}
-    <tr>
-      <td class="panel__term">Type</td>
-      <td class="panel__data">{{committee.type_full}}</a></td>
-    </tr>
+      {{#panelRow "Type"}}
+        {{committee.type_full}}
+      {{/panelRow}}
     {{/if}}
-    <tr>
-      <td class="panel__term">Treasurer</td>
-      <td class="panel__data">{{committee.treasurer_name}}</a></td>
-    </tr>
-    <tr>
-      <td class="panel__term">Committee city and state</td>
-      <td class="panel__data">{{ committee.city }}, {{ committee.state }}, {{ committee.zip }}</td>
-    </tr>
+    {{#panelRow "Treasurer"}}
+      {{committee.treasurer_name}}
+    {{/panelRow}}
+    {{#panelRow "Committee city and state"}}
+      {{committee.city}}, {{committee.state}}, {{committee.zip}}
+    {{/panelRow}}
   </table>
 </div>
