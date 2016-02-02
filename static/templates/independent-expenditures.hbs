@@ -15,7 +15,14 @@
     </tr>
     <tr>
       <td class="panel__term">Candidate</td>
-      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a> ({{ decodeSupportOppose support_oppose_indicator }})</td>
+      <td class="panel__data">
+        {{#if candidate_id}}
+          <a href="{{basePath}}/candidate/{{candidate_id}}/">{{candidate_name}}</a>
+        {{else}}
+          {{candidate_name}}
+        {{/if}}
+        ({{ decodeSupportOppose support_oppose_indicator }})</td>
+      </td>
     </tr>
     <tr>
       <td class="panel__term">Description</td>
@@ -79,7 +86,13 @@
   <table>
     <tr>
       <td class="panel__term">Candidate</td>
-      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a></td>
+      <td class="panel__data">
+        {{#if candidate_id}}
+          <a href="{{basePath}}/candidate/{{candidate_id}}/">{{candidate_name}}</a>
+        {{else}}
+          {{candidate_name}}
+        {{/if}}
+      </td>
     </tr>
     <tr>
       <td class="panel__term">Office</td>
