@@ -29,8 +29,7 @@ var independentExpenditureColumns = [
     render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
         return {
           support_oppose_indicator: row.support_oppose_indicator,
-          candidate_id: row.candidate_id,
-          is_notice: false,
+          candidate_id: row.candidate_id
         };
     })
   },
