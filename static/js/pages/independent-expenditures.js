@@ -46,7 +46,7 @@ var columns = [
       }
     }
   },
-  _.extend(columns.supportOpposeColumn, {className: 'min-tablet'}),
+  _.extend({}, columns.supportOpposeColumn, {className: 'min-tablet'}),
   tables.dateColumn({data: 'expenditure_date', className: 'min-desktop hide-panel-tablet'}),
   tables.urlColumn('pdf_url', {data: 'expenditure_description', className: 'min-desktop hide-panel', orderable: false}),
   {
