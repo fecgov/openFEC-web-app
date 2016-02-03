@@ -3,35 +3,28 @@
     <h4 class="panel__title"><a href="{{basePath}}/committee/{{committee_id}}">{{name}}</a></h4>
   </div>
   <table>
-    <tr>
-      <td class="panel__term">Treasurer</td>
-      <td class="panel__data">{{treasurer_name}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">State</td>
-      <td class="panel__data">{{state}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Political party</td>
-      <td class="panel__data">{{party_full}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">First file date</td>
-      <td class="panel__data">{{datetime first_file_date format="pretty"}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Designation</td>
-      <td class="panel__data">{{designation_full}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Type</td>
-      <td class="panel__data">{{committee_type_full}}</td>
-    </tr>
+    {{#panelRow "Treasurer"}}
+      {{treasurer_name}}
+    {{/panelRow}}
+    {{#panelRow "State"}}
+      {{state}}
+    {{/panelRow}}
+    {{#panelRow "Political party"}}
+      {{party_full}}
+    {{/panelRow}}
+    {{#panelRow "First file date"}}
+      {{datetime first_file_date format="pretty"}}
+    {{/panelRow}}
+    {{#panelRow "Designation"}}
+      {{designation_full}}
+    {{/panelRow}}
+    {{#panelRow "Type"}}
+      {{committee_type_full}}
+    {{/panelRow}}
     {{#if organization_type_full}}
-    <tr>
-      <td class="panel__term">Organization type</td>
-      <td class="panel__data">{{organization_type_full}}</td>
-    </tr>
+      {{#panelRow "Organization type"}}
+        {{organization_type_full}}
+      {{/panelRow}}
     {{/if}}
   </table>
 </div>

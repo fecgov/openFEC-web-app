@@ -43,13 +43,13 @@ Handlebars.registerHelper('global', function(value) {
   return globals[value];
 });
 
-function decodeAmendment(value) {
+Handlebars.registerHelper('decodeAmendment', function(value) {
   return decoders.amendments[value];
-}
+});
 
-function decodeOffice(value) {
+Handlebars.registerHelper('decodeOffice', function(value) {
   return decoders.office[value];
-}
+});
 
 Handlebars.registerHelper('decodeSupportOppose', function(value) {
   return decoders.supportOppose[value] || 'Unknown';
@@ -63,11 +63,16 @@ Handlebars.registerHelper('decodeReport', function(value) {
   return decoders.reports[value] || value;
 });
 
-Handlebars.registerHelper('decodeAmendment', decodeAmendment);
-
-Handlebars.registerHelper('decodeOffice', decodeOffice);
-
 Handlebars.registerHelper('basePath', BASE_PATH);
+
+Handlebars.registerHelper('panelRow', function(label, options) {
+  return new Handlebars.SafeString(
+    '<tr>' +
+      '<td class="panel__term">' + label + '</td>' +
+      '<td class="panel__data">' + options.fn(this) + '</td>' +
+    '</tr>'
+  );
+});
 
 function cycleDates(year) {
   return {
