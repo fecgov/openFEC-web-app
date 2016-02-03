@@ -9,6 +9,12 @@
 Filter independent expenditures
 {% endblock %}
 
+{% block message %}
+<div class="message message--info message--small">
+  <span class="t-block">These records include all independent expenditure forms except 24- and 48-hour reports (coming soon).</span>
+</div>
+{% endblock %}
+
 {% block filters %}
 
 {% include 'partials/filters/election-years.html' %}
