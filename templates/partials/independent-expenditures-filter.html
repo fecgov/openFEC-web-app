@@ -12,14 +12,16 @@ Filter independent expenditures
 {% block filters %}
 
 {% include 'partials/filters/election-years.html' %}
-{{ typeahead.field('committee_id', 'Committee') }}
+{{ typeahead.field('committee_id', 'Spender') }}
 {{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
 {% include 'partials/filters/support-oppose.html' %}
+
 {# {% include 'partials/filters/ie-report-types.html' %} #}
 
 {{ text.field('min_amount', 'Minimum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
 {{ text.field('max_amount', 'Maximum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
 
 {{ date.field('date', 'Expenditure date', dates ) }}
+{% include 'partials/filters/hideNull.html' %}
 
 {% endblock %}
