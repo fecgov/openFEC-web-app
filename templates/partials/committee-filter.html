@@ -5,8 +5,10 @@
 
 {% block filters %}
 {{ text.field('name', 'Name') }}
+{{ text.field('treasurer_name', 'Treasurer name') }}
 {% include 'partials/filters/election-years.html' %}
 {% include 'partials/filters/parties.html' %}
 {{ states.field('state') }}
 {% include 'partials/filters/committee-types.html' %}
+{% include 'partials/filters/hideNull.html' %}
 {% endblock %}

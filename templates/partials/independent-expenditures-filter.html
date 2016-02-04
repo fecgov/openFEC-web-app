@@ -1,0 +1,33 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/date.html' as date %}
+
+{% block heading %}
+Filter independent expenditures
+{% endblock %}
+
+{% block message %}
+<div class="message message--info message--small">
+  <span class="t-block">These records include all independent expenditure forms except 24- and 48-hour reports (coming soon).</span>
+</div>
+{% endblock %}
+
+{% block filters %}
+
+{% include 'partials/filters/election-years.html' %}
+{{ typeahead.field('committee_id', 'Spender') }}
+{{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
+{% include 'partials/filters/support-oppose.html' %}
+
+{# {% include 'partials/filters/ie-report-types.html' %} #}
+
+{{ text.field('min_amount', 'Minimum expenditure amount', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum expenditure amount', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+
+{{ date.field('date', 'Expenditure date', dates ) }}
+{% include 'partials/filters/hideNull.html' %}
+
+{% endblock %}

@@ -1,6 +1,6 @@
 {% macro checkbox(name, value, label) %}
 <li class="dropdown__item">
-  <input id="{{ name }}-{{ value }}" name="{{ name }}" type="checkbox" value="{{ value }}">
+  <input id="{{ name }}-{{ clean_id(value) }}" name="{{ name }}" type="checkbox" value="{{ value }}">
   <label class="dropdown__value" for="{{ name }}-{{ value }}">{{ label }}</label>
 </li>
 {% endmacro %}
@@ -24,12 +24,25 @@
 
 {% macro checkbox_dropdown(name, label, selected={}, options={}) %}
 <div class="filter">
-  <fieldset class="js-dropdown">
+  <fieldset class="js-dropdown js-filter">
     <legend class="label" for="{{ name }}">{{ label }}</legend>
     {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
     {% if options %}
     {{ checkbox_options(name, options) }}
     {% endif %}
   </fieldset>
+</div>
+{% endmacro %}
+
+<!-- Used when there are multiple dropdowns within a single filter -->
+{% macro checkbox_dropdown_multiple(name, label, selected={}, options={}) %}
+<div class="filter">
+  <div class="js-dropdown">
+    <span class="label" for="{{ name }}">{{ label }}</span>
+    {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
+    {% if options %}
+    {{ checkbox_options(name, options) }}
+    {% endif %}
+  </div>
 </div>
 {% endmacro %}

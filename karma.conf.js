@@ -27,7 +27,6 @@ module.exports = function(config) {
 
     files: [
       'tests/unit/**/*.js',
-      'static/js/pages/**/*.js',
       'static/js/modules/**/*.js'
     ],
 

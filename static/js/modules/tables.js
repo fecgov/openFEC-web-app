@@ -1,26 +1,49 @@
 'use strict';
 
-/* global window, document */
-
 var $ = require('jquery');
-var URI = require('urijs');
 var _ = require('underscore');
-var tabs = require('../vendor/tablist');
-var accessibility = require('fec-style/js/accessibility');
 
-require('datatables');
-require('drmonty-datatables-responsive');
+var tabs = require('../vendor/tablist');
+
+var urls = require('fec-style/js/urls');
+var accessibility = require('fec-style/js/accessibility');
+var analytics = require('fec-style/js/analytics');
+
+require('datatables.net')(window, $);
+require('datatables.net-responsive')(window, $);
 
 var helpers = require('./helpers');
-var analytics = require('./analytics');
+var download = require('./download');
 
-var hideNullTemplate = require('../../templates/tables/hideNull.hbs');
+var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
+var titleTemplate = require('../../templates/tables/title.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
+var browseDOM = '<"js-results-info results-info results-info--top"' +
+                  '<"results-info__right"ilpr>>' +
+                '<"panel__main"t>' +
+                '<"results-info"ip>';
+
+var DOWNLOAD_CAP = 100000;
+var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
+var MAX_DOWNLOADS = 5;
+var DOWNLOAD_MESSAGES = {
+  recordCap:
+    'Exports are limited to ' +
+    downloadCapFormatted +
+    ' records—add filters to narrow results, or export bigger ' +
+    'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.',
+  downloadCap: 'Each user is limited to ' +
+    MAX_DOWNLOADS +
+    ' exports at a time. This helps us keep things running smoothly.',
+  empty: 'This table has no data to export.',
+  comingSoon: 'Data exports for this page are coming soon.',
+  pending: 'You\'re already exporting this data set.'
+};
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
-  $('.datatable__container').css('opacity', '1');
+  $('.data-container__body.fade-in').css('opacity', '1');
   $('.dataTable tbody td:first-child').attr('scope','row');
 });
 
@@ -178,46 +201,6 @@ function mapResponse(response) {
   };
 }
 
-function compareQuery(first, second, keys) {
-  keys = keys || _.union(_.keys(first), _.keys(second));
-  var different = _.find(keys, function(key) {
-    return !_.isEqual(
-      helpers.ensureArray(first[key]).sort(),
-      helpers.ensureArray(second[key]).sort()
-    );
-  });
-  return !different;
-}
-
-function nextUrl(params, fields) {
-  var query = URI.parseQuery(window.location.search);
-  if (!compareQuery(query, params, fields)) {
-    // Clear and update filter fields
-    _.each(fields, function(field) {
-      delete query[field];
-    });
-    params = _.extend(query, params);
-    return URI('').query(params).toString();
-  } else {
-    return null;
-  }
-}
-
-function updateQuery(params, fields) {
-  var queryString = nextUrl(params, fields);
-  if (queryString !== null) {
-    window.history.replaceState(params, queryString, queryString || window.location.pathname);
-  }
-}
-
-function pushQuery(params, fields) {
-  var queryString = nextUrl(params, fields);
-  if (queryString !== null) {
-    window.history.pushState(params, queryString, queryString || window.location.pathname);
-    analytics.pageView();
-  }
-}
-
 function identity(value) {
   return value;
 }
@@ -292,13 +275,6 @@ function modalRenderFactory(template, fetch) {
       e.preventDefault();
       hidePanel(api, $modal);
     });
-
-    /* Set focus to highlighted row on blurring anchors if tabbing out of the panel */
-    $modal.on('blur', 'a, button', function(e) {
-      if (!$modal.has(e.relatedTarget).length) {
-        $('.row-active .js-panel-button').focus();
-      }
-    });
   };
 }
 
@@ -342,18 +318,6 @@ function updateOnChange($form, api) {
     api.ajax.reload();
   }
   $form.on('change', 'input,select', _.debounce(onChange, 250));
-}
-
-/**
- * Adjust form height to match table; called after table redraw.
- */
-function adjustFormHeight($table, $form) {
-  $form.height('');
-  var tableHeight = $table.closest('.datatable__container').height();
-  var filterHeight = $form.height();
-  if (tableHeight > filterHeight && $(document).width() > 980) {
-    $form.height(tableHeight);
-  }
 }
 
 function OffsetPaginator() {}
@@ -408,11 +372,15 @@ SeekPaginator.prototype.handleResponse = function(data, response) {
 var defaultOpts = {
   serverSide: true,
   searching: false,
-  useHideNull: true,
   lengthMenu: [30, 50, 100],
   responsive: {details: false},
-  language: {lengthMenu: 'Results per page: _MENU_'},
-  dom: '<"js-results-info results-info results-info--top"lfrp><"panel__main"t><"results-info"ip>',
+  language: {
+    lengthMenu: 'Results per page: _MENU_',
+    info: 'Showing _START_–_END_ of about _TOTAL_ records'
+  },
+  pagingType: 'simple',
+  title: null,
+  dom: browseDOM,
 };
 
 var defaultCallbacks = {
@@ -424,7 +392,8 @@ function DataTable(selector, opts) {
   this.$body = $(selector);
   this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
   this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
-  this.filterSet = (this.opts.panel || {}).filterSet;
+  this.filterPanel = (this.opts.panel || {});
+  this.filterSet = this.filterPanel.filterSet;
 
   this.xhr = null;
   this.fetchContext = null;
@@ -437,19 +406,42 @@ function DataTable(selector, opts) {
 
   DataTable.registry[this.$body.attr('id')] = this;
 
-  if (this.filterSet) {
+  if (!_.isEmpty(this.filterPanel)) {
     updateOnChange(this.filterSet.$body, this.api);
-    updateQuery(this.filterSet.serialize(), this.filterSet.fields);
-    this.$body.on('draw.dt', adjustFormHeight.bind(null, this.$body, this.filterSet.$body));
+    urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
+    this.$body.on('draw.dt', this, function(e) {
+      e.data.filterPanel.setHeight();
+    });
   }
 
   if (this.opts.useFilters) {
     $(window).on('popstate', this.handlePopState.bind(this));
   }
 
+  if (this.opts.useExport) {
+    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
+  }
+
   this.$body.css('width', '100%');
   this.$body.find('tbody').addClass('js-panel-toggle');
 }
+
+DataTable.prototype.refreshExport = function() {
+  if (this.opts.useExport && !this.opts.disableExport) {
+    var numRows = this.api.context[0].fnRecordsTotal();
+    if (numRows > DOWNLOAD_CAP) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.recordCap});
+    } else if (numRows === 0) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.empty});
+    } else if (this.isPending()) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.pending});
+    } else if (download.pendingCount() >= MAX_DOWNLOADS) {
+      this.disableExport({message: DOWNLOAD_MESSAGES.downloadCap});
+    } else {
+      this.enableExport();
+    }
+  }
+};
 
 DataTable.prototype.destroy = function() {
   this.api.destroy();
@@ -468,21 +460,71 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
+  this.$widgets = $('.js-data-widgets');
 
-  if (this.opts.useHideNull) {
-    this.$hideNullWidget = $(hideNullTemplate());
-    var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
-    $paging.prepend(this.$hideNullWidget);
+  var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
+
+  if (this.opts.useExport) {
+    this.$title = $(titleTemplate({title: this.opts.title}));
+    $paging.prepend(this.$title);
+
+    this.$exportWidget = $(exportWidgetTemplate());
+    this.$widgets.append(this.$exportWidget);
+    this.$exportButton = $('.js-export');
+    this.$exportTooltipContainer = $('.js-tooltip-container');
+    this.$exportTooltip = this.$exportWidget.find('.tooltip');
+
+    this.$exportInfo = $('.js-info');
+    this.$exportInfo.append($('#results_info'));
+
+    this.$exportButton.on('click', this.export.bind(this));
+
+  }
+
+  if (this.opts.disableExport) {
+    this.disableExport({message: DOWNLOAD_MESSAGES.comingSoon});
   }
 
   this.hasWidgets = true;
+};
+
+DataTable.prototype.disableExport = function(opts) {
+  this.$exportButton.addClass('disabled');
+  this.$exportButton.off('click');
+
+  // Adding everything we need for the tooltip
+  this.$exportButton.attr('aria-describedby', 'export-tooltip');
+  var $exportTooltip = this.$exportTooltip;
+  $exportTooltip.html(opts.message);
+
+  function hideTooltip() {
+    $exportTooltip.attr('aria-hidden', 'true');
+  }
+  function showTooltip() {
+    $exportTooltip.attr('aria-hidden', 'false');
+  }
+
+  this.$exportTooltipContainer.hover(showTooltip, hideTooltip);
+  this.$exportButton.focus(showTooltip);
+  this.$exportButton.blur(hideTooltip);
+};
+
+DataTable.prototype.enableExport = function() {
+  this.$exportButton.removeClass('disabled');
+  this.$exportButton.on('click', this.export.bind(this));
+  this.$exportTooltip.attr('aria-hidden', 'true');
+
+  // Remove all tooltip stuff
+  this.$exportButton.removeAttr('aria-describedby');
+  this.$exportTooltipContainer.off('mouseenter mouseleave');
+  this.$exportButton.off('focus blur');
 };
 
 DataTable.prototype.fetch = function(data, callback) {
   var self = this;
   self.ensureWidgets();
   if (self.filterSet) {
-    pushQuery(self.filterSet.serialize(), self.filterSet.fields);
+    urls.pushQuery(self.filterSet.serialize(), self.filterSet.fields);
     self.filters = self.filterSet.serialize();
   }
   var url = self.buildUrl(data);
@@ -502,13 +544,25 @@ DataTable.prototype.fetch = function(data, callback) {
   });
 };
 
-DataTable.prototype.buildUrl = function(data) {
+DataTable.prototype.export = function() {
+  var url = this.buildUrl(this.api.ajax.params(), false);
+  download.download(url);
+  this.disableExport({message: DOWNLOAD_MESSAGES.pending});
+};
+
+DataTable.prototype.isPending = function() {
+  var url = this.buildUrl(this.api.ajax.params(), false);
+  return download.isPending(url);
+};
+
+DataTable.prototype.buildUrl = function(data, paginate) {
   var query = _.extend({}, this.filters || {});
+  paginate = typeof paginate === 'undefined' ? true : paginate;
   query.sort = mapSort(data.order, this.opts.columns);
-  if (this.opts.useHideNull) {
-    query.sort_hide_null = this.$hideNullWidget.is(':checked');
+
+  if (paginate) {
+    query = _.extend(query, this.paginator.mapQuery(data, query));
   }
-  query = _.extend(query, this.paginator.mapQuery(data, query));
   return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
 };
 
@@ -516,6 +570,9 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.paginator.handleResponse(this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
+
+  this.refreshExport();
+
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
   }
@@ -548,6 +605,7 @@ DataTable.defer = function($table, opts) {
 
 module.exports = {
   simpleDOM: simpleDOM,
+  browseDOM: browseDOM,
   yearRange: yearRange,
   getCycle: getCycle,
   buildTotalLink: buildTotalLink,

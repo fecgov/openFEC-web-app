@@ -47,28 +47,18 @@ def _detect_branch(repo):
         return None
 
 
-def _detect_space(branch=None, yes=False):
+def _detect_space(repo, branch=None, yes=False):
     """Detect space from active git branch.
 
     :param str branch: Optional branch name override
     :param bool yes: Skip confirmation
     :returns: Space name if space is detected and confirmed, else `None`
     """
-    repo = git.Repo('.')
-    # Fail gracefully if `branch` is not provided and repo is in detached
-    # `HEAD` mode
-    try:
-        branch = branch or repo.active_branch.name
-    except TypeError:
-        return None
     space = _resolve_rule(repo, branch)
     if space is None:
-        print(
-            'No space detected from repo {repo}; '
-            'skipping deploy'.format(**locals())
-        )
+        print('No space detected')
         return None
-    print('Detected space {space} from repo {repo}'.format(**locals()))
+    print('Detected space {space}'.format(**locals()))
     if not yes:
         run = input(
             'Deploy to space {space} (enter "yes" to deploy)? > '.format(**locals())

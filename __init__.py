@@ -1,3 +1,4 @@
+import re
 import http
 import json
 import locale
@@ -134,6 +135,11 @@ def format_election_years(cycle, election_full, duration):
     return '{}–{}'.format(start, cycle)
 
 
+CLEAN_PATTERN = re.compile(r'[^\w-]')
+def clean_id(value):
+    return CLEAN_PATTERN.sub('', value)
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -161,6 +167,7 @@ app.jinja_env.globals.update({
     'environment': config.environment,
     'today': datetime.date.today,
     'format_election_years': format_election_years,
+    'clean_id': clean_id,
 })
 
 
@@ -207,7 +214,7 @@ def candidate_page(c_id, cycle=None, election_full=True):
     candidate, committees, cycle = load_with_nested(
         'candidate', c_id, 'committees',
         cycle=cycle, cycle_key='two_year_period',
-        election_full='true',
+        election_full=election_full,
     )
     if election_full and cycle and cycle not in candidate['election_years']:
         next_cycle = next(
@@ -268,6 +275,9 @@ def filings():
         result_type='committees',
     )
 
+@app.route('/independent-expenditures/')
+def independent_expenditures():
+    return render_template('independent-expenditures.html', dates=utils.date_ranges())
 
 @app.route('/elections/')
 def election_lookup():
@@ -288,6 +298,7 @@ def elections(office, cycle, state=None, district=None):
     return render_template(
         'elections.html',
         office=office,
+        office_code=office[0],
         cycle=cycle,
         cycles=cycles,
         state=state,
@@ -379,6 +390,12 @@ def fmt_year_range(year):
 def fmt_state_full(value):
     return constants.states[value.upper()]
 
+@app.template_filter()
+def fmt_cycle_min_max(cycles):
+    if len(cycles) > 1:
+        return '{}–{}'.format(min(cycles), max(cycles))
+    return cycles[0]
+
 # If HTTPS is on, apply full HSTS as well, to all subdomains.
 # Only use when you're sure. 31536000 = 1 year.
 if config.force_https:
@@ -398,14 +415,14 @@ if config.username and config.password:
     basic_auth = BasicAuth(app)
 
 
-if config.environment == 'prod':
-    auth = hmacauth.HmacAuth(
-        digest=hashlib.sha1,
-        secret_key=config.hmac_secret,
-        signature_header='X-Signature',
-        headers=config.hmac_headers,
-    )
-    app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
+# if config.environment == 'prod':
+#     auth = hmacauth.HmacAuth(
+#         digest=hashlib.sha1,
+#         secret_key=config.hmac_secret,
+#         signature_header='X-Signature',
+#         headers=config.hmac_headers,
+#     )
+#     app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)
