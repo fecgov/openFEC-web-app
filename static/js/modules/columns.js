@@ -87,7 +87,7 @@ var filings = {
   }
 };
 
-function getColumns (columns, keys) {
+function getColumns(columns, keys) {
   return _.map(keys, function(key) {
     return columns[key];
   });
