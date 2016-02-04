@@ -28,15 +28,11 @@ function getSizeParams(size) {
   return params;
 }
 
-var supportOpposeMap = {
-  S: 'Support',
-  O: 'Oppose',
-};
 
 var supportOpposeColumn = {
   data: 'support_oppose_indicator',
   render: function(data, type, row, meta) {
-    return supportOpposeMap[data] || 'Unknown';
+    return decoders.supportOppose[data] || 'Unknown';
   }
 };
 

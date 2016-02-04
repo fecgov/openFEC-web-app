@@ -1,21 +1,21 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-  Browse candidates
+  Browse independent expenditures
 {% endblock %}
 
 {% block body %}
 
 <header class="page-header slab slab--primary">
-  <h1 class="page-header__title tst-page-title">Candidates</h1>
+  <h1 class="page-header__title">Independent expenditures</h1>
 </header>
 
 <section class="main__content--full">
-  {% include 'partials/candidates-filter.html' %}
+  {% include 'partials/independent-expenditures-filter.html' %}
   <div class="data-container">
     <div class="data-container__widgets js-data-widgets"></div>
     <div id="candidates" class="data-container__body fade-in">
-      {% include 'partials/candidates-table.html' %}
+      {% include 'partials/independent-expenditures-table.html' %}
     </div>
   </div>
 </section>
@@ -25,5 +25,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ asset_for('dist/js/pages/candidates.js') }}"></script>
+<script src="{{ asset_for('dist/js/pages/independent-expenditures.js') }}"></script>
 {% endblock %}

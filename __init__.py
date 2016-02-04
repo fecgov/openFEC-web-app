@@ -1,3 +1,4 @@
+import re
 import http
 import json
 import locale
@@ -134,6 +135,11 @@ def format_election_years(cycle, election_full, duration):
     return '{}–{}'.format(start, cycle)
 
 
+CLEAN_PATTERN = re.compile(r'[^\w-]')
+def clean_id(value):
+    return CLEAN_PATTERN.sub('', value)
+
+
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
@@ -161,6 +167,7 @@ app.jinja_env.globals.update({
     'environment': config.environment,
     'today': datetime.date.today,
     'format_election_years': format_election_years,
+    'clean_id': clean_id,
 })
 
 
@@ -268,6 +275,9 @@ def filings():
         result_type='committees',
     )
 
+@app.route('/independent-expenditures/')
+def independent_expenditures():
+    return render_template('independent-expenditures.html', dates=utils.date_ranges())
 
 @app.route('/elections/')
 def election_lookup():
