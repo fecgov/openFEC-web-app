@@ -2,90 +2,77 @@
   <h4 class="panel__title">Contributor information</h4>
   <table>
     <tr>
-      <td class="panel__term">Name</td>
-      {{#if contributor}}
-        {{#if (eq receipt_type (global 'EARMARKED_CODE'))}}
-          <td class="panel__data">{{contributor_name}}</td>
+      {{#panelRow "Name"}}
+        {{#if contributor}}
+          {{#if (eq receipt_type (global 'EARMARKED_CODE'))}}
+            {{contributor_name}}
+          {{else}}
+            <a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a>
+          {{/if}}
         {{else}}
-          <td class="panel__data"><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
+          {{contributor_name}}
         {{/if}}
-      {{else}}
-        <td class="panel__data">{{contributor_name}}</td>
-      {{/if}}
+      {{/panelRow}}
     </tr>
     {{#if contributor}}
       {{#if (eq receipt_type (global 'EARMARKED_CODE'))}}
-        <tr>
-          <td class="panel__term">Earmarked by</td>
-          <td class="panel__data"><a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a></td>
-        </tr>
+        {{#panelRow "Earmarked by"}}
+          <a href="{{basePath}}/committee/{{contributor.committee_id}}">{{contributor.name}}</a>
+        {{/panelRow}}
       {{/if}}
     {{/if}}
-    <tr>
-      <td class="panel__term">City and state</td>
-      <td class="panel__data">{{ contributor_city }}, {{ contributor_state }}, {{ contributor_zip }}</td>
-    </tr>
+    {{#panelRow "City and state"}}
+      {{contributor_city}}, {{contributor_state}}, {{contributor_zip}}
+    {{/panelRow}}
     {{#if is_individual}}
-      <tr>
-        <td class="panel__term">Occupation</td>
-        <td class="panel__data">{{ contributor_occupation }}</td>
-      </tr>
-      <tr>
-        <td class="panel__term">Employer</td>
-        <td class="panel__data">{{ contributor_employer }}</td>
-      </tr>
+      {{#panelRow "Occupation"}}
+        {{contributor_occupation}}
+      {{/panelRow}}
+      {{#panelRow "Employer"}}
+        {{contributor_employer}}
+      {{/panelRow}}
     {{/if}}
-    <tr>
-      <td class="panel__term">Year to date</td>
-      <td class="panel__data">{{{ currency contributor_aggregate_ytd }}}</td>
-    </tr>
+    {{#panelRow "Year to date"}}
+      {{{currency contributor_aggregate_ytd}}}
+    {{/panelRow}}
   </table>
 </div>
 
 <div class="panel__row">
   <h4 class="panel__title">Contribution information</h4>
   <table>
-    <tr>
-      <td class="panel__term">Amount</td>
-      <td class="panel__data">{{{ currency contribution_receipt_amount }}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Receipt date</td>
-      <td class="panel__data">{{{ datetime contribution_receipt_date pretty=true }}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Filing date</td>
-      <td class="panel__data">{{{ datetime receipt_date pretty=true}}}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Memo</td>
-      <td class="panel__data">{{ memo_text }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Election type</td>
-      <td class="panel__data">{{ election_type_full }}</td>
-    </tr>
+    {{#panelRow "Amount"}}
+      {{{currency contribution_receipt_amount}}}
+    {{/panelRow}}
+    {{#panelRow "Receipt date"}}
+      {{{datetime contribution_receipt_date format="pretty"}}}
+    {{/panelRow}}
+    {{#panelRow "Filing date"}}
+      {{{datetime receipt_date format="pretty"}}}
+    {{/panelRow}}
+    {{#panelRow "Memo"}}
+      {{memo_text}}
+    {{/panelRow}}
+    {{#panelRow "Election type"}}
+      {{election_type_full}}
+    {{/panelRow}}
   </table>
 </div>
 
 <div class="panel__row">
   <h4 class="panel__title">Recipient information</h4>
   <table>
-    <tr>
-      <td class="panel__term">Committee</td>
-      <td class="panel__data"><a href="{{basePath}}/committee/{{ committee.committee_id }}/">{{ committee.name }}</a></td>
-    </tr>
-    <tr>
-      <td class="panel__term">Political party</td>
-      <td class="panel__data">{{ committee.party_full }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Type</td>
-      <td class="panel__data">{{ committee.committee_type_full }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">State</td>
-      <td class="panel__data">{{ committee.state_full }}</td>
-    </tr>
+    {{#panelRow "Committee"}}
+      <a href="{{basePath}}/committee/{{ committee.committee_id }}/">{{ committee.name }}</a>
+    {{/panelRow}}
+    {{#panelRow "Political party"}}
+      {{committee.party_full}}
+    {{/panelRow}}
+    {{#panelRow "Type"}}
+      {{committee.committee_type_full}}
+    {{/panelRow}}
+    {{#panelRow "State"}}
+      {{committee.state_full}}
+    {{/panelRow}}
   </table>
 </div>
