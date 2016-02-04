@@ -1,81 +1,66 @@
 <div class="panel__row">
   <h4 class="panel__title">Disbursement information</h4>
   <table>
-    <tr>
-      <td class="panel__term">Amount</td>
-      <td class="panel__data">{{ currency disbursement_amount }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Report year</td>
-      <td class="panel__data">{{ report_year }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Disbursement date</td>
-      <td class="panel__data">{{ datetime disbursement_date pretty=true }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Communication date</td>
-      <td class="panel__data">{{ datetime communication_date pretty=true }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Candidate</td>
-      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a></td>
-    </tr>
-    <tr>
-      <td class="panel__term">Purpose description</td>
-      <td class="panel__data">{{ purpose_description }}</td>
-    </tr>
+    {{#panelRow "Amount"}}
+      {{ currency disbursement_amount }}
+    {{/panelRow}}
+    {{#panelRow "Report year"}}
+      {{ report_year }}
+    {{/panelRow}}
+    {{#panelRow "Disbursement date"}}
+      {{ datetime disbursement_date format=pretty }}
+    {{/panelRow}}
+    {{#panelRow "Communication date"}}
+      {{ datetime communication_date format=pretty }}
+    {{/panelRow}}
+    {{#panelRow "Candidate"}}
+      <a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a>
+    {{/panelRow}}
+    {{#panelRow "Purpose description"}}
+      {{ purpose_description }}
+    {{/panelRow}}
   </table>
 </div>
 
 <div class="panel__row">
   <h4 class="panel__title">Committee information</h4>
   <table>
-    <tr>
-      <td class="panel__term">Committee name</td>
-      <td class="panel__data"><a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a></td>
-    </tr>
-    <tr>
-      <td class="panel__term">Committee type</td>
-      <td class="panel__data">{{ committee.committee_type_full }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Treasurer</td>
-      <td class="panel__data">{{ committee.treasurer_name }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">City and state</td>
-      <td class="panel__data">{{ committee.city }}, {{ committee.state }}</td>
-    </tr>
+    {{#panelRow "Committee name"}}
+      <a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a>
+    {{/panelRow}}
+    {{#panelRow "Committee type"}}
+      {{ committee.committee_type_full }}
+    {{/panelRow}}
+    {{#panelRow "Treasurer"}}
+      {{ committee.treasurer_name }}
+    {{/panelRow}}
+    {{#panelRow "City and state"}}
+      {{ committee.city }}, {{ committee.state }}
+    {{/panelRow}}
   </table>
 </div>
 
 <div class="panel__row">
   <h4 class="panel__title">Candidate information</h4>
   <table>
-    <tr>
-      <td class="panel__term">Candidate</td>
-      <td class="panel__data"><a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a></td>
-    </tr>
-    <tr>
-      <td class="panel__term">Party</td>
-      <td class="panel__data">{{ candidate_party_affiliation }}</td>
-    </tr>
-    <tr>
-      <td class="panel__term">Office</td>
-      <td class="panel__data">{{ candidate_office }}</td>
-    </tr>
+    {{#panelRow "Candidate"}}
+      <a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a>
+    {{/panelRow}}
+    {{#panelRow "Party"}}
+      {{ decodeParty candidate.party }}
+    {{/panelRow}}
+    {{#panelRow "Office"}}
+      {{ decodeOffice candidate_office }}
+    {{/panelRow}}
     {{#if candidate_office_state }}
-    <tr>
-      <td class="panel__term">State</td>
-      <td class="panel__data">{{ candidate_office_state }}</td>
-    </tr>
+      {{#panelRow "State"}}
+        {{ decodeState candidate_office_state }}
+      {{/panelRow}}
     {{/if}}
-    {{#if candidate_office_district }}
-    <tr>
-      <td class="panel__term">District</td>
-      <td class="panel__data">{{ candidate_office_district }}</td>
-    </tr>
-    {{/if}}
+    {{#unless (eq candidate.district '00') }}
+      {{#panelRow "District"}}
+        {{ candidate.district }}
+      {{/panelRow}}
+    {{/unless}}
   </table>
 </div>

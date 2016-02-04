@@ -9,19 +9,20 @@ var helpers = require('../modules/helpers');
 var columns = require('../modules/columns');
 
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+var filterTags = require('fec-style/js/filter-tags');
 
-var electioneeringTemplate = require('../../templates/electioneering-communications.hbs');
+var electioneeringTemplate = require('../../templates/communication-costs.hbs');
 
 var columns = [
   {
-    data: 'committee',
+    data: 'committee_name',
     orderable: false,
     className: 'min-desktop',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(
-          data.name,
-          helpers.buildAppUrl(['committee', data.committee_id]),
+          data,
+          helpers.buildAppUrl(['committee', row.committee_id]),
           'committee'
         );
       } else {
@@ -44,7 +45,6 @@ var columns = [
     }
   },
   tables.dateColumn({data: 'transaction_date', className: 'min-tablet hide-panel-tablet'}),
-  tables.urlColumn('pdf_url', {data: 'purpose', className: 'all hide-panel', orderable: false}),
   {
     className: 'all u-no-padding',
     width: '20px',
@@ -57,6 +57,8 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
+  var $widgets = $('.js-data-widgets');
+  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
     title: 'Communication costs',
@@ -67,10 +69,11 @@ $(document).ready(function() {
     rowCallback: tables.modalRenderRow,
     useExport: true,
     ordering: false,
-    // order: [[3,'desc']],
+    order: [[4,'desc']],
     useFilters: true,
     callbacks: {
       afterRender: tables.modalRenderFactory(electioneeringTemplate)
     }
   });
+  $widgets.prepend($tagList);
 });

@@ -12,7 +12,6 @@ Filter communication costs
 
 {% block filters %}
 
-{{ years.years('report_year', 'Report year') }}
 {{ typeahead.field('committee_id', 'Committee') }}
 {{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
 {% include 'partials/filters/support-oppose.html' %}
