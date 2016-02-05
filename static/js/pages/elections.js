@@ -408,7 +408,7 @@ var tableOpts = {
     columns: communicationCostColumns
   },
   'electioneering': {
-    path: ['electioneering_costs', 'by_candidate'],
+    path: ['electioneering', 'by_candidate'],
     columns: electioneeringColumns
   },
 };
