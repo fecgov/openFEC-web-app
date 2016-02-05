@@ -18,7 +18,7 @@ $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
     path: 'filings',
-    query: {per_page: 10},
+    query: {per_page: 10, sort_hide_null: 'true'},
     columns: filingsColumns,
     // Order by receipt date descending
     order: [[2, 'desc']],
