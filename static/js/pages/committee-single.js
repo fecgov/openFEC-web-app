@@ -398,7 +398,7 @@ $(document).ready(function() {
       });
       break;
     case 'electioneering-committee':
-      path = ['committee', committeeId, 'electioneering_costs', 'by_candidate'];
+      path = ['committee', committeeId, 'electioneering', 'by_candidate'];
       tables.DataTable.defer($table, {
         path: path,
         query: query,
