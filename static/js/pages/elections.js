@@ -30,7 +30,7 @@ var independentExpenditureColumns = [
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
-          is_notice: false,
+          // is_notice: false
         };
     })
   },
@@ -383,7 +383,7 @@ function initStateMaps(results) {
     var $parent = $target.closest('.state-map');
     drawStateMap($parent, $target.val(), cached);
   });
-  $choropleths.on('click', '.js-add-map', function(e){
+  $choropleths.on('click', '.js-add-map', function(e) {
     appendStateMap($choropleths, results, cached);
   });
   $choropleths.on('click', '.js-remove-map', function(e) {
@@ -408,7 +408,7 @@ var tableOpts = {
     columns: communicationCostColumns
   },
   'electioneering': {
-    path: ['electioneering_costs', 'by_candidate'],
+    path: ['electioneering', 'by_candidate'],
     columns: electioneeringColumns
   },
 };
@@ -428,7 +428,6 @@ function initSpendingTables() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false,
         hideEmpty: true
       });
     }

@@ -16,6 +16,7 @@ var siteNav = require('fec-style/js/site-nav');
 var skipNav = require('fec-style/js/skip-nav');
 var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
+var analytics = require('fec-style/js/analytics');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
@@ -47,7 +48,6 @@ var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
 var download = require('./modules/download');
-var analytics = require('./modules/analytics');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
 $(document).ready(function() {

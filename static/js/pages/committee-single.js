@@ -18,7 +18,6 @@ var tableOpts = {
   pagingType: 'simple',
   lengthChange: false,
   pageLength: 10,
-  useHideNull: false,
   hideEmpty: true
 };
 
@@ -194,7 +193,7 @@ var expendituresColumns = [
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
-          is_notice: false,
+          // is_notice: false,
         };
     })
   },
@@ -262,7 +261,6 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false,
         hideEmpty: true
       });
       break;
@@ -278,7 +276,6 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        useHideNull: false,
         hideEmpty: true
       });
       break;
