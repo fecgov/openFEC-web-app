@@ -5,7 +5,7 @@
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 
 {% block filters %}
-{{ typeahead.field('q', 'Name', allow_text=True) }}
+{{ typeahead.field('committee_id', 'Committee name or ID', False, 'committees', True) }}
 {{ text.field('treasurer_name', 'Treasurer name') }}
 {% include 'partials/filters/election-years.html' %}
 {% include 'partials/filters/parties.html' %}
