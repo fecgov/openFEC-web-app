@@ -72,8 +72,16 @@
         <div class="container">
           <nav class="page-tabs">
             <ul class="page-tabs__list" role="tablist" data-name="tab">
-                {{ tabs.tab('Financial summary', 'summary', 'panel1', '#section-1') }}
               {% if committee_type not in ['C', 'E'] %}
+                {{ tabs.tab('Financial summary', 'summary', 'panel1', '#section-1') }}
+              {% endif %}
+              {% if committee_type in ['C'] %}
+                {{ tabs.tab('Communication cost', 'communication-cost-committee', 'panel6', '#section-6') }}
+              {% endif %}
+              {% if committee_type in ['E'] %}
+                {{ tabs.tab('Electioneering communication', 'electioneering-committee', 'panel6', '#section-6') }}
+              {% endif %}
+              {% if committee_type not in ['C'] %}
                 {{ tabs.tab('Individual contributions', 'receipts', 'panel2', '#section-2') }}
               {% endif %}
                 {{ tabs.tab('Disbursements', 'disbursements', 'panel3', '#section-3') }}
@@ -82,12 +90,6 @@
               {% endif %}
               {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
                 {{ tabs.tab('Independent expenditures', 'independent-expenditures-committee', 'panel6', '#section-6') }}
-              {% endif %}
-              {% if committee_type in ['C'] %}
-                {{ tabs.tab('Communication cost', 'communication-cost-committee', 'panel6', '#section-6') }}
-              {% endif %}
-              {% if committee_type in ['E'] %}
-                {{ tabs.tab('Electioneering communication', 'electioneering-committee', 'panel6', '#section-6') }}
               {% endif %}
               {{ tabs.tab('Filings', 'filings', 'panel5', '#section-5') }}
             </ul>
@@ -140,9 +142,11 @@
     {% endmacro %}
 
     {% with committee=context() %}
-        {% include 'partials/loading-tab.html' %}
-        {% include 'partials/committee/financial-summary.html' %}
+       {% include 'partials/loading-tab.html' %}
       {% if committee_type not in ['C', 'E'] %}
+        {% include 'partials/committee/financial-summary.html' %}
+      {% endif %}
+      {% if committee_type not in ['C'] %}
         {% include 'partials/committee/receipts-tab.html' %}
       {% endif %}
       {% include 'partials/committee/disbursements-tab.html' %}
