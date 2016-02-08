@@ -67,7 +67,10 @@ $(document).ready(function() {
   new tables.DataTable($table, {
     title: 'Independent expenditure',
     path: 'schedules/schedule_e',
-    query: {is_notice: 'false'},
+    query: {
+      is_notice: 'false',
+      filing_form: 'F3X'
+    },
     panel: filterPanel,
     columns: columns,
     paginator: tables.SeekPaginator,
