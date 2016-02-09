@@ -215,5 +215,20 @@ candidate_status_extended = OrderedDict([
     ('F', 'Future candidate'),
     ('N', 'Not yet a candidate'),
     ('P', 'Statutory candidate in prior cycle'),
+])
 
+disbursement_categories = OrderedDict([
+    ('transfers', 'Transfers'),
+    ('contributions', 'Contributions'),
+    ('loan-repayments', 'Loan repayments'),
+    ('refunds', 'Refunds'),
+    ('administrative', 'Administrative'),
+    ('travel', 'Travel'),
+    ('fundraising', 'Fundraising'),
+    ('advertising', 'Advertising'),
+    ('polling', 'Polling'),
+    ('materials', 'Materials'),
+    ('events', 'Events'),
+    ('contributions', 'Contributions'),
+    ('other', 'Other'),
 ])
