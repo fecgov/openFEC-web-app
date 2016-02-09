@@ -202,12 +202,36 @@ var expendituresColumns = [
 ];
 
 var electioneeringColumns = [
-  tables.currencyColumn({data: 'total', className: 'all'}),
+  {
+    data: 'total',
+    className: 'all',
+    orderable: true,
+    orderSequence: ['desc', 'asc'],
+    render: tables.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
+        return {
+          support_oppose_indicator: row.support_oppose_indicator,
+          candidate_id: row.candidate_id,
+          // is_notice: false,
+        };
+    })
+  },
   tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var communicationCostColumns = [
-  tables.currencyColumn({data: 'total', className: 'all'}),
+  {
+    data: 'total',
+    className: 'all',
+    orderable: true,
+    orderSequence: ['desc', 'asc'],
+    render: tables.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
+        return {
+          support_oppose_indicator: row.support_oppose_indicator,
+          candidate_id: row.candidate_id,
+          // is_notice: false,
+        };
+    })
+  },
   columns.supportOpposeColumn,
   tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
