@@ -201,6 +201,17 @@ var expendituresColumns = [
   tables.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
+var electioneeringColumns = [
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  tables.candidateColumn({data: 'candidate', className: 'all'})
+];
+
+var communicationCostColumns = [
+  tables.currencyColumn({data: 'total', className: 'all'}),
+  columns.supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', className: 'all'})
+];
+
 function buildStateUrl($elm) {
   return helpers.buildUrl(
     ['committee', $elm.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
@@ -383,8 +394,29 @@ $(document).ready(function() {
         columns: expendituresColumns,
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
-        pagingType: 'simple',
-        hideEmpty: true
+        pagingType: 'simple'
+      });
+      break;
+    case 'electioneering-committee':
+      path = ['committee', committeeId, 'electioneering', 'by_candidate'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: electioneeringColumns,
+        order: [[0, 'desc']],
+        dom: tables.simpleDOM,
+        pagingType: 'simple'
+      });
+      break;
+    case 'communication-cost-committee':
+      path = ['committee', committeeId, 'communication_costs', 'by_candidate'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: communicationCostColumns,
+        order: [[0, 'desc']],
+        dom: tables.simpleDOM,
+        pagingType: 'simple'
       });
       break;
     }
