@@ -270,7 +270,7 @@ $(document).ready(function() {
       break;
     case 'receipts-by-state':
       path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'];
-      query = _.extend(query, {per_page: 99, hide_null: true});
+      query = _.extend(query, {per_page: 99});
       tables.DataTable.defer($table, {
         path: path,
         query: query,
