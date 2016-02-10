@@ -190,11 +190,11 @@ var expendituresColumns = [
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
-        return {
-          support_oppose_indicator: row.support_oppose_indicator,
-          candidate_id: row.candidate_id,
-          // is_notice: false,
-        };
+      return {
+        support_oppose_indicator: row.support_oppose_indicator,
+        candidate_id: row.candidate_id,
+        // is_notice: false,
+      };
     })
   },
   columns.supportOpposeColumn,
@@ -208,11 +208,10 @@ var electioneeringColumns = [
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
-        return {
-          support_oppose_indicator: row.support_oppose_indicator,
-          candidate_id: row.candidate_id,
-          // is_notice: false,
-        };
+      return {
+        support_oppose_indicator: row.support_oppose_indicator,
+        candidate_id: row.candidate_id,
+      };
     })
   },
   tables.candidateColumn({data: 'candidate', className: 'all'})
@@ -225,11 +224,10 @@ var communicationCostColumns = [
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
-        return {
-          support_oppose_indicator: row.support_oppose_indicator,
-          candidate_id: row.candidate_id,
-          // is_notice: false,
-        };
+      return {
+        support_oppose_indicator: row.support_oppose_indicator,
+        candidate_id: row.candidate_id,
+      };
     })
   },
   columns.supportOpposeColumn,

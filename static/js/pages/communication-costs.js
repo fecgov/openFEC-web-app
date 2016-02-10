@@ -1,7 +1,5 @@
 'use strict';
 
-/* global require, document */
-
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
@@ -39,7 +37,7 @@ var columns = [
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row, meta)),
+        helpers.buildAppUrl(['candidate', row.candidate_id]),
         'candidate'
       );
     }
@@ -62,14 +60,12 @@ $(document).ready(function() {
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
     title: 'Communication costs',
-    path: 'communication-costs',
+    path: ['communication-costs'],
     panel: filterPanel,
     columns: columns,
-    paginator: tables.SeekPaginator,
     rowCallback: tables.modalRenderRow,
     useExport: true,
-    ordering: false,
-    order: [[4,'desc']],
+    order: [[4, 'desc']],
     useFilters: true,
     callbacks: {
       afterRender: tables.modalRenderFactory(electioneeringTemplate)
