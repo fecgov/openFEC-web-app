@@ -4,12 +4,13 @@
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
+var newAccordion = require('@18f/accordion').Accordion;
+var Glossary = require('@18f/glossary-panel');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
 
 var terms = require('fec-style/js/terms');
-var glossary = require('fec-style/js/glossary');
 var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
 var siteNav = require('fec-style/js/site-nav');
@@ -73,7 +74,10 @@ $(document).ready(function() {
   });
 
   // Initialize glossary
-  new glossary.Glossary(terms, {body: '#glossary'});
+  new Glossary(terms, {}, {
+    termClass: 'glossary__term accordion__button',
+    definitionClass: 'glossary__definition accordion__content'
+  });
 
   // Initialize typeaheads
   new typeahead.Typeahead(
@@ -92,6 +96,11 @@ $(document).ready(function() {
   $('.js-accordion').each(function() {
     Object.create(accordion).init($(this));
   });
+
+  // Initialize new accordions
+  if ($('.js-new-accordion').length > 0 ) {
+    new newAccordion({body: '.js-new-accordion', trigger: '.js-accordion-trigger'});
+  }
 
   // Initialize search
   $('.js-search').each(function() {
