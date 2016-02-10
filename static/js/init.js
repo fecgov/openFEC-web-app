@@ -4,14 +4,13 @@
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
-var newAccordion = require('@18f/accordion').Accordion;
+var Accordion = require('@18f/accordion').Accordion;
 var Glossary = require('@18f/glossary-panel');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
 
 var terms = require('fec-style/js/terms');
-var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
 var siteNav = require('fec-style/js/site-nav');
 var skipNav = require('fec-style/js/skip-nav');
@@ -92,15 +91,18 @@ $(document).ready(function() {
   // Inialize input masks
   $('[data-inputmask]').inputmask();
 
-  // Initialize accordions
-  $('.js-accordion').each(function() {
-    Object.create(accordion).init($(this));
-  });
-
   // Initialize new accordions
-  if ($('.js-new-accordion').length > 0 ) {
-    new newAccordion({body: '.js-new-accordion', trigger: '.js-accordion-trigger'});
-  }
+  $('.js-accordion').each(function(){
+    var contentPrefix = $(this).data('content-prefix') || 'accordion';
+    var selectors = {
+      body: '.js-accordion',
+      trigger: '.js-accordion-trigger'
+    };
+    var opts = {
+      contentPrefix: contentPrefix,
+    }
+    new Accordion(selectors, opts);
+  })
 
   // Initialize search
   $('.js-search').each(function() {

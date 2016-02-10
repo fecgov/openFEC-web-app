@@ -3,18 +3,12 @@
 
 {% macro totals(header_name, header_value, data, report_year, header_description='') %}
   <figure class="totals-table totals-table--charts js-chart-series chart-series--horizontal">
-<!--       <div class="totals-table__cell totals-table__header-cell">
-        <span class="totals-table__label">{{ header_name }}</span>
-        {% if header_description %}
-        <span class="t-note">{{ header_description }}</span>
-        {% endif %}
-      </div>
-      <div class="total-tables__cell totals-table__header-cell">
-        <span>{{ null.null( header_value | currency ) }}</span>
-      </div> -->
       {% if data|length %}
+      <div class="totals-table__header-label">
+        <span class="term" data-term="{{header_name}}">{{ header_name }}</span>
+      </div>
       <button class="accordion__button js-accordion-trigger">
-        {{ header_name }} - {{ null.null(header_value | currency) }}
+        {{ null.null(header_value | currency) }}
       </button>
       <div class="accordion__content">
         {% for item in data %}
@@ -32,8 +26,11 @@
         {% endfor %}
       </div>
       {% else %}
-        <div class="totals-table__row">
-          {{ header_name }} - {{ null.null(header_value | currency) }}
+        <div class="totals-table__header-label">
+          <span class="term" data-term="{{header_name}}">{{ header_name }}</span>
+        </div>
+        <div class="totals-table__row totals-table__header-data">
+          {{ null.null(header_value | currency) }}
         </div>
     {% endif %}
   </figure>
