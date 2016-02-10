@@ -100,9 +100,9 @@ $(document).ready(function() {
     };
     var opts = {
       contentPrefix: contentPrefix,
-    }
+    };
     new Accordion(selectors, opts);
-  })
+  });
 
   // Initialize search
   $('.js-search').each(function() {
