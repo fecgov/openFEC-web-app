@@ -13,16 +13,17 @@
     {% if reports and totals %}
       <div class="content__section">
         <h3 class="results-info results-info--simple results-info__title">Detailed summary {{ reports.0.cycle-1 }}–{{ reports.0.cycle }}</h3>
-        <div class="js-accordion">
-        {% if committee_type == 'P' %}
-          {% include 'partials/committee-totals-presidential.html' %}
-        {% elif committee_type == 'H' or committee_type == 'S' %}
-          {% include 'partials/committee-totals-house-senate.html' %}
-        {% elif committee_type == 'I' %}
-          {% include 'partials/committee-totals-ie-only.html' %}
-        {% else %}
-          {% include 'partials/committee-totals-pac-party.html' %}
-        {% endif %}
+        <div class="js-new-accordion">
+          {% if committee_type == 'P' %}
+            {% include 'partials/committee-totals-presidential.html' %}
+          {% elif committee_type == 'H' or committee_type == 'S' %}
+            {% include 'partials/committee-totals-house-senate.html' %}
+          {% elif committee_type == 'I' %}
+            {% include 'partials/committee-totals-ie-only.html' %}
+          {% else %}
+            {% include 'partials/committee-totals-pac-party.html' %}
+          {% endif %}
+        </div>
       </div>
 
       {% if committee_type != 'I'  %}

@@ -1,0 +1,40 @@
+{% import 'macros/null.html' as null %}
+{% import 'macros/charts.html' as charts %}
+
+{% macro totals(header_name, header_value, data, report_year, header_description='') %}
+  <figure class="totals-table totals-table--charts js-chart-series chart-series--horizontal">
+<!--       <div class="totals-table__cell totals-table__header-cell">
+        <span class="totals-table__label">{{ header_name }}</span>
+        {% if header_description %}
+        <span class="t-note">{{ header_description }}</span>
+        {% endif %}
+      </div>
+      <div class="total-tables__cell totals-table__header-cell">
+        <span>{{ null.null( header_value | currency ) }}</span>
+      </div> -->
+      {% if data|length %}
+      <button class="accordion__button js-accordion-trigger">
+        {{ header_name }} - {{ null.null(header_value | currency) }}
+      </button>
+      <div class="accordion__content">
+        {% for item in data %}
+          <div class="totals-table__row totals-table__row--nested">
+            <div class="totals-table__cell">{{ item[1] }} </div>
+            <div class="totals-table__cell">{{ null.null(item[0] | currency) }}</div>
+            <div class="totals-table__cell totals-table__cell--bar">
+              <div class="bar-container">
+                {{ charts.chart_bar(item[0]|default(0),
+                                    item[1],
+                                    tooltip=None) }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% else %}
+        <div class="totals-table__row">
+          {{ header_name }} - {{ null.null(header_value | currency) }}
+        </div>
+    {% endif %}
+  </figure>
+{% endmacro %}

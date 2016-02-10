@@ -1,6 +1,7 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/null.html' as null %}
 {% import 'macros/cycle-select.html' as select %}
+{% import 'macros/charts.html' as charts %}
 
 {% block title %}
     {{ name }} - committee overview
@@ -86,49 +87,6 @@
         </div>
       </div>
     </div>
-
-    {% macro totals_table_row(pretty_name, value) %}
-      {% import 'macros/charts.html' as charts %}
-      <div class="totals-table__row totals-table__row--nested js-accordion_item" aria-hidden="true">
-        <div class="totals-table__cell">{{ pretty_name }} </div>
-        <div class="totals-table__cell">{{ null.null(value | currency) }}</div>
-        <div class="totals-table__cell totals-table__cell--bar">
-          <div class="bar-container">
-            {{ charts.chart_bar(value|default(0),
-                                pretty_name,
-                                tooltip=None) }}
-          </div>
-        </div>
-      </div>
-    {% endmacro %}
-
-    {% macro totals_table_row_header(pretty_name, value, description, accordion=True) %}
-      <div class="totals-table__row totals-table__row--header js-accordion_header accordion__header">
-        <div class="totals-table__cell">
-          <span class="totals-table__label">{{ pretty_name }}</span>
-          {% if description %}
-          <span class="t-note"><em>{{ description }}</em></span>
-          {% endif %}
-        </div>
-        <div class="totals-table__cell">
-          <span>{{ null.null( value | currency ) }}</span>
-        </div>
-        {% if accordion %}
-          <button class="button button--primary accordion__button js-accordion_button">
-            <span class="js-accordion_text u-visually-hidden" data-show="Show {{ pretty_name }}" data-hide="Hide {{ pretty_name }}"></span>
-          </button>
-        {% endif %}
-      </div>
-    {% endmacro %}
-
-    {% macro totals_table(header_name, header_value, data, report_year, header_description='') %}
-      <figure class="totals-table totals-table--charts js-chart-series chart-series--horizontal">
-        {{ totals_table_row_header(header_name, header_value, header_description, accordion=data|length) }}
-        {% for item in data %}
-          {{ totals_table_row(item[1], item[0]) }}
-        {% endfor %}
-      </figure>
-    {% endmacro %}
 
     {% with committee=context() %}
       {% if committee_type not in ['C', 'E'] %}

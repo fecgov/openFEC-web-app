@@ -1,4 +1,5 @@
 {% with committee=context() %}
+{% import 'macros/tables.html' as tables %}
 
 {% set table_data = [
      (totals.0.individual_itemized_contributions, 'Itemized individual contributions'),
@@ -17,7 +18,7 @@
      (totals.0.other_receipts, 'Other receipts'),
    ]
 %}
-{{ totals_table('Total receipts', totals.0.receipts, table_data,
+{{ tables.totals('Total receipts', totals.0.receipts, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
 
 {% set table_data = [
@@ -35,7 +36,7 @@
    ]
 %}
 
-{{ totals_table('Total disbursements', totals.0.disbursements, table_data,
+{{ tables.totals('Total disbursements', totals.0.disbursements, table_data,
     committee.report_year, header_description='Money spent by the committee' ) }}
 
 {% endwith %}
