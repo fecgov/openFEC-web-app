@@ -19,5 +19,9 @@
 {{ text.field('max_receipts', 'Maximum receipts', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
 {{ text.field('min_disbursements', 'Minimum disbursements', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
 {{ text.field('max_disbursements', 'Maximum disbursements', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+{{ text.field('min_cash_on_hand_end_period', 'Minimum cash on hand', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_cash_on_hand_end_period', 'Maximum cash on hand', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+{{ text.field('min_debts_owed_by_committee', 'Minimum debt', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_debts_owed_by_committee', 'Maximum debt', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
 {% include 'partials/filters/hideNull.html' %}
 {% endblock %}
