@@ -36,10 +36,10 @@ class LandingPageTests(BaseTest):
         glossary.find_element_by_id('glossary-search').send_keys('candidate id')
         glossary.find_element_by_id('glossary-search').send_keys(K.ARROW_DOWN)
         glossary.find_element_by_id('glossary-search').send_keys(K.ENTER)
-        button = self.driver.find_element_by_css_selector('#glossary .accordion__button')
+        button = self.driver.find_element_by_css_selector('#glossary .glossary__term')
         WebDriverWait(self.driver, 1).until(lambda driver: button.is_displayed())
         button.click()
         self.assertIn(
             'candidate',
-            glossary.find_element_by_class_name('glossary-definition').text,
+            glossary.find_element_by_class_name('glossary__definition').text,
         )
