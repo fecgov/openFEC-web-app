@@ -17,8 +17,7 @@ Filter receipts
 {% endblock %}
 
 {% block filters %}
-
-<div class="js-accordion">
+<div class="js-accordion" data-content-prefix="filter" data-open-first="true">
   <button type="button" class="js-accordion-trigger accordion__button">Recipient information</button>
   <div class="accordion__content">
     {{ typeahead.field('committee_id', 'Committee') }}
@@ -74,5 +73,4 @@ Filter receipts
     </div>
   </div>
 </div>
-
 {% endblock %}
