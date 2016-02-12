@@ -1,0 +1,32 @@
+{% macro field(name, title, cycle_name, full_name, office) %}
+  {% if office == 'president' %}
+    {% set duration = 4 %}
+    {% set years = range(2016, 1976, -4) %}
+  {% elif office == 'senate' %}
+    {% set duration = 6 %}
+    {% set years = range(2016, 1976, -2) %}
+  {% elif office == 'senate' %}
+  {% else %}
+    {% set duration = 2 %}
+    {% set years = range(2016, 1976, -2) %}
+  {% endif %}
+  <div
+      id="{{ name }}-field"
+      class="filter js-filter js-election-filter"
+      data-name="{{ name }}"
+      data-cycle-name="{{ cycle_name }}"
+      data-full-name="{{ full_name }}"
+      data-duration="{{ duration }}"
+    >
+  <label class="label" for="{{ name }}">{{ title }}</label>
+  <ul class="dropdown__selected"></ul>
+  <select name="{{ name }}" class="js-election">
+    {% for year in years %}
+      <option value="{{ year }}">{{ year }}</option>
+    {% endfor %}
+  </select>
+  <div class="js-cycles"></div>
+  <input type="hidden" name="{{ cycle_name }}" />
+  <input type="hidden" name="{{ full_name }}" />
+</div>
+{% endmacro %}

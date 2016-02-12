@@ -2,12 +2,12 @@
 
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/election-filter.html' as election_filter %}
 
 {% block filters %}
 {{ text.field('name', 'Name') }}
-{% include 'partials/filters/election-years.html' %}
+{{ election_filter.field('election_year', 'Election cycle', 'cycle', 'election_full', office) }}
 <input id="election_full" name="election_full" type="checkbox" value="true">
-<label for="election_full">Full election period</label>
 {% include 'partials/filters/parties.html' %}
 {% if office in ['senate', 'house'] %}
   {{ states.field('state') }}
