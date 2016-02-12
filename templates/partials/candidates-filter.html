@@ -4,6 +4,7 @@
 {% import 'macros/filters/states.html' as states %}
 
 {% block filters %}
+<div class="filters__inner">
   {{ text.field('q', 'Name') }}
   {% include 'partials/filters/election-years.html' %}
   {% include 'partials/filters/office-sought.html' %}
@@ -11,4 +12,5 @@
   {{ states.field('state') }}
   {% include 'partials/filters/districts.html' %}
   {% include 'partials/filters/candidate_status.html' %}
+</div>
 {% endblock %}
