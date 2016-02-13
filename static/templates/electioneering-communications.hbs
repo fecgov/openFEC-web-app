@@ -1,0 +1,66 @@
+<div class="panel__row">
+  <h4 class="panel__title">Disbursement information</h4>
+  <table>
+    {{#panelRow "Amount"}}
+      {{ currency disbursement_amount }}
+    {{/panelRow}}
+    {{#panelRow "Report year"}}
+      {{ report_year }}
+    {{/panelRow}}
+    {{#panelRow "Disbursement date"}}
+      {{ datetime disbursement_date format=pretty }}
+    {{/panelRow}}
+    {{#panelRow "Communication date"}}
+      {{ datetime communication_date format=pretty }}
+    {{/panelRow}}
+    {{#panelRow "Candidate"}}
+      <a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a>
+    {{/panelRow}}
+    {{#panelRow "Purpose description"}}
+      {{ purpose_description }}
+    {{/panelRow}}
+  </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Committee information</h4>
+  <table>
+    {{#panelRow "Committee name"}}
+      <a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a>
+    {{/panelRow}}
+    {{#panelRow "Committee type"}}
+      {{ committee.committee_type_full }}
+    {{/panelRow}}
+    {{#panelRow "Treasurer"}}
+      {{ committee.treasurer_name }}
+    {{/panelRow}}
+    {{#panelRow "City and state"}}
+      {{ committee.city }}, {{ committee.state }}
+    {{/panelRow}}
+  </table>
+</div>
+
+<div class="panel__row">
+  <h4 class="panel__title">Candidate information</h4>
+  <table>
+    {{#panelRow "Candidate"}}
+      <a href="{{basePath}}/candidate/{{ candidate_id }}/">{{ candidate_name }}</a>
+    {{/panelRow}}
+    {{#panelRow "Party"}}
+      {{ decodeParty candidate.party }}
+    {{/panelRow}}
+    {{#panelRow "Office"}}
+      {{ decodeOffice candidate_office }}
+    {{/panelRow}}
+    {{#if candidate_office_state }}
+      {{#panelRow "State"}}
+        {{ decodeState candidate_office_state }}
+      {{/panelRow}}
+    {{/if}}
+    {{#unless (eq candidate.district '00') }}
+      {{#panelRow "District"}}
+        {{ candidate.district }}
+      {{/panelRow}}
+    {{/unless}}
+  </table>
+</div>

@@ -1,0 +1,40 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse communication costs
+{% endblock %}
+
+{% block body %}
+
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title">Communication costs</h1>
+</header>
+
+<section class="main__content--full">
+  {% include 'partials/communication-costs-filter.html' %}
+  <div class="data-container">
+    <div class="data-container__widgets js-data-widgets"></div>
+    <div id="communication-costs" class="data-container__body fade-in">
+      <table id="results" class="data-table" data-type="communication-costs">
+        <thead>
+          <tr>
+            <th scope="col">Committee</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Support / oppose</th>
+            <th scope="col">Candidate</th>
+            <th scope="col">Transaction date</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/datatable-modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_for('dist/js/pages/communication-costs.js') }}"></script>
+{% endblock %}
