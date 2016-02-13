@@ -72,7 +72,9 @@ To make the site fully functional, you will need to compile the client side JS a
 
 Then start the server:
 
-    $ python __init__.py
+    FEC_WEB_API_URL='https://api.open.fec.gov' \
+        FEC_WEB_API_KEY='DEMO_KEY' \
+        python __init__.py
 
 To view the site, visit [http://localhost:3000/](http://localhost:3000/).
 
