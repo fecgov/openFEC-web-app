@@ -13,14 +13,14 @@ var electioneeringTemplate = require('../../templates/electioneering-communicati
 
 var columns = [
   {
-    data: 'committee',
+    data: 'committee_name',
     orderable: false,
     className: 'min-desktop',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(
-          data.name,
-          helpers.buildAppUrl(['committee', data.committee_id]),
+          data,
+          helpers.buildAppUrl(['committee', row.committee_id]),
           'committee'
         );
       } else {
