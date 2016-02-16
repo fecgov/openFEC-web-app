@@ -1,7 +1,7 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/null.html' as null %}
 {% import 'macros/cycle-select.html' as select %}
-{% import 'macros/charts.html' as charts %}
+{% import 'macros/tabs.html' as tabs %}
 
 {% block title %}
     {{ name }} - committee overview
@@ -73,15 +73,25 @@
           <nav class="page-tabs">
             <ul class="page-tabs__list" role="tablist" data-name="tab">
               {% if committee_type not in ['C', 'E'] %}
-                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="summary" tabindex="0" aria-controls="panel1" href="#section-1">Financial summary</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="receipts" tabindex="0" aria-controls="panel2" href="#section-2">Receipts from individuals</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="disbursements" tabindex="0" aria-controls="panel3" href="#section-3">Disbursements</a></li>
-                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="between-committees" tabindex="0" aria-controls="panel4" href="#section-4">Between committees</a></li>
+                {{ tabs.tab('Financial summary', 'summary', 'panel1', '#section-1') }}
               {% endif %}
-              {% if committee_type not in ['P', 'H', 'S', 'A'] %}
-                <li role="presentation" class="page-tabs__item"><a role="tab" data-name="independent-expenditures-committee" tabindex="0" aria-controls="panel6" href="#section-6">Independent Expenditures</a></li>
+              {% if committee_type in ['C'] %}
+                {{ tabs.tab('Communication cost', 'communication-cost-committee', 'panel6', '#section-6') }}
               {% endif %}
-              <li role="presentation" class="page-tabs__item"><a role="tab" data-name="filings" tabindex="0" aria-controls="panel5" href="#section-5">Filings</a></li>
+              {% if committee_type in ['E'] %}
+                {{ tabs.tab('Electioneering communication', 'electioneering-committee', 'panel6', '#section-6') }}
+              {% endif %}
+              {% if committee_type not in ['C'] %}
+                {{ tabs.tab('Individual contributions', 'receipts', 'panel2', '#section-2') }}
+              {% endif %}
+                {{ tabs.tab('Disbursements', 'disbursements', 'panel3', '#section-3') }}
+              {% if committee_type not in ['C', 'E'] %}
+                {{ tabs.tab('Between committees', 'between-committees', 'panel4', '#section-4') }}
+              {% endif %}
+              {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
+                {{ tabs.tab('Independent expenditures', 'independent-expenditures-committee', 'panel6', '#section-6') }}
+              {% endif %}
+              {{ tabs.tab('Filings', 'filings', 'panel5', '#section-5') }}
             </ul>
           </nav>
         </div>
@@ -89,15 +99,25 @@
     </div>
 
     {% with committee=context() %}
+       {% include 'partials/loading-tab.html' %}
       {% if committee_type not in ['C', 'E'] %}
-        {% include 'partials/loading-tab.html' %}
         {% include 'partials/committee/financial-summary.html' %}
+      {% endif %}
+      {% if committee_type not in ['C'] %}
         {% include 'partials/committee/receipts-tab.html' %}
-        {% include 'partials/committee/disbursements-tab.html' %}
+      {% endif %}
+      {% include 'partials/committee/disbursements-tab.html' %}
+      {% if committee_type not in ['C', 'E'] %}
         {% include 'partials/committee/between-committees-tab.html' %}
       {% endif %}
-      {% if committee_type not in ['P', 'H', 'S', 'A'] %}
+      {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
         {% include 'partials/committee/independent-expenditures-tab.html' %}
+      {% endif %}
+      {% if committee_type in ['C'] %}
+        {% include 'partials/committee/communication-cost-tab.html' %}
+      {% endif %}
+      {% if committee_type in ['E'] %}
+        {% include 'partials/committee/electioneering-tab.html' %}
       {% endif %}
       {% include 'partials/committee/filings-tab.html' %}
     {% endwith %}

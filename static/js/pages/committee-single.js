@@ -43,13 +43,13 @@ var sizeColumns = [
 
 var committeeColumns = [
   {
-    data: 'contributor_name',
+    data: 'committee_name',
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['committee', row.contributor_id]),
+        helpers.buildAppUrl(['committee', row.committee_id]),
         'committee'
       );
     }
@@ -59,8 +59,11 @@ var committeeColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
-      return {contributor_id: row.contributor_id};
+    render: tables.buildTotalLink(['disbursements'], function(data, type, row, meta) {
+      return {
+        committee_id: row.committee_id,
+        recipient_committee_id: row.recipient_id
+      };
     })
   }
 ];
@@ -190,11 +193,44 @@ var expendituresColumns = [
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
-        return {
-          support_oppose_indicator: row.support_oppose_indicator,
-          candidate_id: row.candidate_id,
-          // is_notice: false,
-        };
+      return {
+        support_oppose_indicator: row.support_oppose_indicator,
+        candidate_id: row.candidate_id,
+        // is_notice: false,
+      };
+    })
+  },
+  columns.supportOpposeColumn,
+  tables.candidateColumn({data: 'candidate', className: 'all'})
+];
+
+var electioneeringColumns = [
+  {
+    data: 'total',
+    className: 'all',
+    orderable: true,
+    orderSequence: ['desc', 'asc'],
+    render: tables.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
+      return {
+        support_oppose_indicator: row.support_oppose_indicator,
+        candidate_id: row.candidate_id,
+      };
+    })
+  },
+  tables.candidateColumn({data: 'candidate', className: 'all'})
+];
+
+var communicationCostColumns = [
+  {
+    data: 'total',
+    className: 'all',
+    orderable: true,
+    orderSequence: ['desc', 'asc'],
+    render: tables.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
+      return {
+        support_oppose_indicator: row.support_oppose_indicator,
+        candidate_id: row.candidate_id,
+      };
     })
   },
   columns.supportOpposeColumn,
@@ -239,10 +275,10 @@ $(document).ready(function() {
     var path;
     switch ($table.attr('data-type')) {
     case 'committee-contributor':
-      path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'];
+      path = ['schedules', 'schedule_b', 'by_recipient_id'];
       tables.DataTable.defer($table, {
         path: path,
-        query: query,
+        query: _.extend({recipient_id: committeeId}, query),
         columns: committeeColumns,
         callbacks: aggregateCallbacks,
         dom: tables.simpleDOM,
@@ -270,7 +306,7 @@ $(document).ready(function() {
       break;
     case 'receipts-by-state':
       path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_state'];
-      query = _.extend(query, {per_page: 99, hide_null: true});
+      query = _.extend(query, {per_page: 99});
       tables.DataTable.defer($table, {
         path: path,
         query: query,
@@ -383,8 +419,29 @@ $(document).ready(function() {
         columns: expendituresColumns,
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
-        pagingType: 'simple',
-        hideEmpty: true
+        pagingType: 'simple'
+      });
+      break;
+    case 'electioneering-committee':
+      path = ['committee', committeeId, 'electioneering', 'by_candidate'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: electioneeringColumns,
+        order: [[0, 'desc']],
+        dom: tables.simpleDOM,
+        pagingType: 'simple'
+      });
+      break;
+    case 'communication-cost-committee':
+      path = ['committee', committeeId, 'communication_costs', 'by_candidate'];
+      tables.DataTable.defer($table, {
+        path: path,
+        query: query,
+        columns: communicationCostColumns,
+        order: [[0, 'desc']],
+        dom: tables.simpleDOM,
+        pagingType: 'simple'
       });
       break;
     }

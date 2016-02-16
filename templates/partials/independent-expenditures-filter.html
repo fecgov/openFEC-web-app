@@ -16,6 +16,7 @@ Filter independent expenditures
 {% endblock %}
 
 {% block filters %}
+<<<<<<< HEAD
 <div class="js-accordion" data-content-prefix="filter" data-open-first="true">
   <button type="button" class="js-accordion-trigger accordion__button">Spender information</button>
   <div class="accordion__content">
@@ -35,4 +36,19 @@ Filter independent expenditures
     {{ date.field('date', 'Expenditure date', dates ) }}
   </div>
 </div>
+=======
+
+{% include 'partials/filters/election-years.html' %}
+{{ typeahead.field('committee_id', 'Spender') }}
+{{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
+{% include 'partials/filters/support-oppose.html' %}
+
+{# {% include 'partials/filters/ie-report-types.html' %} #}
+
+{{ text.field('min_amount', 'Minimum expenditure amount', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum expenditure amount', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+
+{{ date.field('date', 'Expenditure date', dates ) }}
+
+>>>>>>> b79a8ae5518d2d780ce5d5af0be2fe960f306be6
 {% endblock %}
