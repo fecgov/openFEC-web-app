@@ -1,0 +1,9 @@
+{% macro tab(text, dataname, controls, href) %}
+  <li role="presentation" class="page-tabs__item">
+    <a role="tab"
+        data-name="{{ dataname }}"
+        tabindex="0"
+        aria-controls="{{ controls }}"
+        href="{{ href }}">{{ text }}</a>
+  </li>
+{% endmacro %}

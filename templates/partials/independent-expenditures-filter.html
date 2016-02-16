@@ -9,6 +9,12 @@
 Filter independent expenditures
 {% endblock %}
 
+{% block message %}
+<div class="message message--info message--small">
+  <span class="t-block">These records include independent expenditures reported on FEC Form 3X. More reports coming soon.</span>
+</div>
+{% endblock %}
+
 {% block filters %}
 
 {% include 'partials/filters/election-years.html' %}
@@ -18,10 +24,9 @@ Filter independent expenditures
 
 {# {% include 'partials/filters/ie-report-types.html' %} #}
 
-{{ text.field('min_amount', 'Minimum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-{{ text.field('max_amount', 'Maximum expenditure amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+{{ text.field('min_amount', 'Minimum expenditure amount', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+{{ text.field('max_amount', 'Maximum expenditure amount', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
 
 {{ date.field('date', 'Expenditure date', dates ) }}
-{% include 'partials/filters/hideNull.html' %}
 
 {% endblock %}
