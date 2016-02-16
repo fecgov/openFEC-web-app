@@ -43,13 +43,13 @@ var sizeColumns = [
 
 var committeeColumns = [
   {
-    data: 'contributor_name',
+    data: 'committee_name',
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
-        helpers.buildAppUrl(['committee', row.contributor_id]),
+        helpers.buildAppUrl(['committee', row.committee_id]),
         'committee'
       );
     }
@@ -59,8 +59,11 @@ var committeeColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
-      return {contributor_id: row.contributor_id};
+    render: tables.buildTotalLink(['disbursements'], function(data, type, row, meta) {
+      return {
+        committee_id: row.committee_id,
+        recipient_committee_id: row.recipient_id
+      };
     })
   }
 ];
@@ -272,10 +275,10 @@ $(document).ready(function() {
     var path;
     switch ($table.attr('data-type')) {
     case 'committee-contributor':
-      path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_contributor'];
+      path = ['schedules', 'schedule_b', 'by_recipient_id'];
       tables.DataTable.defer($table, {
         path: path,
-        query: query,
+        query: _.extend({recipient_id: committeeId}, query),
         columns: committeeColumns,
         callbacks: aggregateCallbacks,
         dom: tables.simpleDOM,
