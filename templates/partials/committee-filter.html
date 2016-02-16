@@ -4,12 +4,12 @@
 {% import 'macros/filters/states.html' as states %}
 
 {% block filters %}
-<div class="js-accordion" data-content-prefix="filter" data-open-first="false">
+<div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
     {{ text.field('q', 'Name') }}
     {% include 'partials/filters/election-years.html' %}
   </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Committee type</button>
+  <button type="button" class="js-accordion-trigger accordion__button">Committee details</button>
   <div class="accordion__content">
     {{ text.field('treasurer_name', 'Treasurer name') }}
     {% include 'partials/filters/parties.html' %}
