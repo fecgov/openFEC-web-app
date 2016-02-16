@@ -2,7 +2,7 @@
   <div class="container">
     <div class="section__heading">
       <h2 class="heading__title" id="section-4-heading">
-        Receipts and disbursements between committees: {{ cycle|fmt_year_range }}
+        Committee to committee disbursements: {{ cycle|fmt_year_range }}
       </h2>
     </div>
     <div class="row filters--horizontal">
@@ -10,7 +10,7 @@
         <legend class="label" for="transfers">Group by:</legend>
         <label for="toggle-from">
           <input id="toggle-from" type="radio" class="panel-toggle-control" name="transfers" value="from-committees" checked>
-          <span class="button--neutral">Receipts from committees</span>
+          <span class="button--neutral">Disbursements received from committees</span>
         </label>
         <label for="toggle-to">
           <input id="toggle-to" type="radio" class="panel-toggle-control" name="transfers" value="to-committees">
@@ -20,7 +20,7 @@
     </div>
     <div id="from-committees" class="panel-toggle-element" aria-hidden="false">
       <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Receipts from other committees</h3>
+        <h3 class="results-info__title">Disbursements received from committees</h3>
       </div>
       <table
          class="data-table"
@@ -29,13 +29,13 @@
          data-cycle="{{ cycle }}">
         <thead>
           <th scope="col">Committee</th>
-          <th scope="col">Total contributed</th>
+          <th scope="col">Total</th>
         </thead>
       </table>
     </div>
     <div id="to-committees" class="panel-toggle-element" aria-hidden="true">
       <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Disbursements to other committees</h3>
+        <h3 class="results-info__title">Disbursements to committees</h3>
       </div>
       <table
           class="data-table"
@@ -44,8 +44,8 @@
           data-cycle="{{ cycle }}"
         >
         <thead>
-          <th scope="col">Recipient committee</th>
-          <th scope="col">Total received</th>
+          <th scope="col">Committee</th>
+          <th scope="col">Total</th>
         </thead>
       </table>
     </div>
