@@ -54,7 +54,7 @@ Install client side dependencies:
 
 If you plan to do client side JS developent, you will want to install [Watchify](https://github.com/substack/watchify):
 ```
-$ npm install -g watchify
+npm install -g watchify
 ```
 
 ### Configuration
