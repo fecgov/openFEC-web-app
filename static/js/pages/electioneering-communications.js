@@ -13,14 +13,14 @@ var electioneeringTemplate = require('../../templates/electioneering-communicati
 
 var columns = [
   {
-    data: 'committee',
+    data: 'committee_name',
     orderable: false,
     className: 'min-desktop',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(
-          data.name,
-          helpers.buildAppUrl(['committee', data.committee_id]),
+          data,
+          helpers.buildAppUrl(['committee', row.committee_id]),
           'committee'
         );
       } else {
@@ -30,9 +30,14 @@ var columns = [
   },
   tables.currencyColumn({data: 'disbursement_amount', className: 'min-tablet'}),
   {
+    data: 'number_of_candidates',
+    className: 'min-tablet',
+  },
+  tables.currencyColumn({data: 'calculated_candidate_share', className: 'min-tablet'}),
+  {
     data: 'candidate_name',
     orderable: false,
-    className: 'min-desktop hide-panel',
+    className: 'min-desktop hide-panel hide-panel-tablet',
     render: function(data, type, row, meta) {
       return tables.buildEntityLink(
         data,
@@ -41,8 +46,7 @@ var columns = [
       );
     }
   },
-  tables.dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel-tablet'}),
-  tables.urlColumn('pdf_url', {data: 'purpose_description', className: 'all hide-panel', orderable: false}),
+  tables.dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel'}),
   {
     className: 'all u-no-padding',
     width: '20px',
