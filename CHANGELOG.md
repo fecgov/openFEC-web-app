@@ -2,7 +2,69 @@
 
 ## [Unreleased](https://github.com/18F/openFEC-web-app/tree/HEAD)
 
-[Full Changelog](https://github.com/18F/openFEC-web-app/compare/public-beta-20160106...HEAD)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/browse-fulltext-search...HEAD)
+
+**Closed issues:**
+
+- Copy edits to Electioneering Communications table [\#1102](https://github.com/18F/openFEC-web-app/issues/1102)
+- Add "Number of candidates" and "Candidate share" to EC page [\#1101](https://github.com/18F/openFEC-web-app/issues/1101)
+- Figure out "sort\_hide\_null" frontend behavior [\#1065](https://github.com/18F/openFEC-web-app/issues/1065)
+- To allow users to sort the event calendar list view by their preference add a "sort by" option [\#1047](https://github.com/18F/openFEC-web-app/issues/1047)
+- Review columns and filters for specialized datatable views [\#1046](https://github.com/18F/openFEC-web-app/issues/1046)
+- Diagram out potential IA for browse pages [\#1003](https://github.com/18F/openFEC-web-app/issues/1003)
+
+**Merged pull requests:**
+
+- Updating EC disclaimer [\#1103](https://github.com/18F/openFEC-web-app/pull/1103) ([noahmanger](https://github.com/noahmanger))
+- Add EC and CC aggregates to candidate detail pages. [\#1100](https://github.com/18F/openFEC-web-app/pull/1100) ([jmcarp](https://github.com/jmcarp))
+- Use top-level committee information. [\#1097](https://github.com/18F/openFEC-web-app/pull/1097) ([jmcarp](https://github.com/jmcarp))
+- Handle null tick dates. [\#1096](https://github.com/18F/openFEC-web-app/pull/1096) ([jmcarp](https://github.com/jmcarp))
+- Feature/rollback hide null [\#1093](https://github.com/18F/openFEC-web-app/pull/1093) ([jmcarp](https://github.com/jmcarp))
+- Miscellaneous cleanup. [\#1089](https://github.com/18F/openFEC-web-app/pull/1089) ([jmcarp](https://github.com/jmcarp))
+- Get committee contributions from disbursements endpoint. [\#1086](https://github.com/18F/openFEC-web-app/pull/1086) ([jmcarp](https://github.com/jmcarp))
+- Add disbursement category filter. [\#1085](https://github.com/18F/openFEC-web-app/pull/1085) ([jmcarp](https://github.com/jmcarp))
+- Content only: Copyedit to ZIP code autotext [\#1083](https://github.com/18F/openFEC-web-app/pull/1083) ([emileighoutlaw](https://github.com/emileighoutlaw))
+- Feature/ec-cc-pages [\#1058](https://github.com/18F/openFEC-web-app/pull/1058) ([noahmanger](https://github.com/noahmanger))
+- Extending about.yml services [\#1048](https://github.com/18F/openFEC-web-app/pull/1048) ([DavidEBest](https://github.com/DavidEBest))
+
+## [browse-fulltext-search](https://github.com/18F/openFEC-web-app/tree/browse-fulltext-search) (2016-02-08)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/ie-f3x-only...browse-fulltext-search)
+
+**Merged pull requests:**
+
+- Use fulltext field for candidate and committee search. [\#1081](https://github.com/18F/openFEC-web-app/pull/1081) ([jmcarp](https://github.com/jmcarp))
+- Restrict itemized IEs to form F3X filings. [\#1080](https://github.com/18F/openFEC-web-app/pull/1080) ([jmcarp](https://github.com/jmcarp))
+
+## [ie-f3x-only](https://github.com/18F/openFEC-web-app/tree/ie-f3x-only) (2016-02-05)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/filings-hide-sort-null...ie-f3x-only)
+
+## [filings-hide-sort-null](https://github.com/18F/openFEC-web-app/tree/filings-hide-sort-null) (2016-02-05)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/fix-electioneering-url...filings-hide-sort-null)
+
+**Closed issues:**
+
+- Implement redesigned typeahead filters [\#1022](https://github.com/18F/openFEC-web-app/issues/1022)
+
+**Merged pull requests:**
+
+- Update node, npm, and node buildpack. [\#1063](https://github.com/18F/openFEC-web-app/pull/1063) ([jmcarp](https://github.com/jmcarp))
+
+## [fix-electioneering-url](https://github.com/18F/openFEC-web-app/tree/fix-electioneering-url) (2016-02-05)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/public-beta-20160203...fix-electioneering-url)
+
+**Closed issues:**
+
+- Recent filings section treats documents without a receipt date as most recent. [\#1071](https://github.com/18F/openFEC-web-app/issues/1071)
+- Tabs receipts, disbursements, and between committees missing data on committee pages [\#1069](https://github.com/18F/openFEC-web-app/issues/1069)
+
+**Merged pull requests:**
+
+- Hotfix/fix electioneering url [\#1075](https://github.com/18F/openFEC-web-app/pull/1075) ([noahmanger](https://github.com/noahmanger))
+- Hide filings with null dates on landing page. [\#1074](https://github.com/18F/openFEC-web-app/pull/1074) ([jmcarp](https://github.com/jmcarp))
+- Nav cal link patch [\#1070](https://github.com/18F/openFEC-web-app/pull/1070) ([jenniferthibault](https://github.com/jenniferthibault))
+
+## [public-beta-20160203](https://github.com/18F/openFEC-web-app/tree/public-beta-20160203) (2016-02-04)
+[Full Changelog](https://github.com/18F/openFEC-web-app/compare/public-beta-20160106...public-beta-20160203)
 
 **Fixed bugs:**
 
@@ -40,6 +102,7 @@
 
 **Merged pull requests:**
 
+- Release/public beta 20160203 [\#1068](https://github.com/18F/openFEC-web-app/pull/1068) ([jmcarp](https://github.com/jmcarp))
 - Feature/ie improvements [\#1067](https://github.com/18F/openFEC-web-app/pull/1067) ([noahmanger](https://github.com/noahmanger))
 - Feature/ie improvements [\#1066](https://github.com/18F/openFEC-web-app/pull/1066) ([noahmanger](https://github.com/noahmanger))
 - Exclude notices from independent expenditures views. [\#1064](https://github.com/18F/openFEC-web-app/pull/1064) ([jmcarp](https://github.com/jmcarp))
