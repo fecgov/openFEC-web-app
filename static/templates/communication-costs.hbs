@@ -13,6 +13,9 @@
     {{#panelRow "Transaction date"}}
       {{ datetime transaction_date format=pretty }}
     {{/panelRow}}
+    {{#panelRow "Transaction type"}}
+      {{transaction_type}}
+    {{/panelRow}}
     {{#panelRow "Communication class"}}
       {{ communication_class }}
     {{/panelRow}}
