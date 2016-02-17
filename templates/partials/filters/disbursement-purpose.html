@@ -1,0 +1,7 @@
+{% import 'macros/filters/checkbox.html' as checkbox %}
+
+{{ checkbox.checkbox_dropdown(
+  'disbursement_purpose_category',
+  'Disbursement purpose category',
+  options=constants.disbursement_categories,
+) }}

@@ -9,7 +9,9 @@
       {% endblock %}
     </h2>
     <form id="category-filters">
-      {% block message %}{% endblock %}
+      <div class="filters__inner">
+        {% block message %}{% endblock %}
+      </div>
       {% block filters %}{% endblock %}
       {% include 'partials/filters/filter-buttons.html' %}
     </form>
