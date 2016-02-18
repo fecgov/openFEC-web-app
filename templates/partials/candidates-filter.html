@@ -4,12 +4,11 @@
 {% import 'macros/filters/states.html' as states %}
 
 {% block filters %}
-{{ text.field('name', 'Name') }}
+{{ text.field('q', 'Name') }}
 {% include 'partials/filters/election-years.html' %}
 {% include 'partials/filters/office-sought.html' %}
 {% include 'partials/filters/parties.html' %}
 {{ states.field('state') }}
 {% include 'partials/filters/districts.html' %}
 {% include 'partials/filters/candidate_status.html' %}
-{% include 'partials/filters/hideNull.html' %}
 {% endblock %}
