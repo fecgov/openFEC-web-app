@@ -1,0 +1,41 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+  Browse electioneering communications
+{% endblock %}
+
+{% block body %}
+
+<header class="page-header slab slab--primary">
+  <h1 class="page-header__title">Electioneering communication</h1>
+</header>
+
+<section class="main__content--full">
+  {% include 'partials/electioneering-communications-filter.html' %}
+  <div class="data-container">
+    <div class="data-container__widgets js-data-widgets"></div>
+    <div id="electioneering-communications" class="data-container__body fade-in">
+      <table id="results" class="data-table" data-type="electioneering-communications">
+        <thead>
+          <tr>
+            <th scope="col">Spender</th>
+            <th scope="col">Disbursement amount</th>
+            <th scope="col">Number of candidates</th>
+            <th scope="col">Amount per candidate</th>
+            <th scope="col">Candidate</th>
+            <th scope="col">Disbursement date</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/datatable-modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_for('dist/js/pages/electioneering-communications.js') }}"></script>
+{% endblock %}

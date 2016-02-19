@@ -51,7 +51,7 @@
         <div class="sidebar-container">
           <aside class="sidebar">
             <div class="card">
-              <a class="button--neutral" href="{{ url_for(result_type, name=query) }}">Filter these results &raquo;</a>
+              <a class="button--neutral" href="{{ url_for(result_type, q=query) }}">Filter these results &raquo;</a>
               <div class="card__content card__content--small">
                 <p>Trying to sort through a lot of results? Want to explore
                   similar {{ result_type }}? Try exploring all {{ result_type }}.

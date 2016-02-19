@@ -150,7 +150,7 @@ describe('data table', function() {
       var url = this.table.buildUrl(data);
       var expected = helpers.buildUrl(
         ['path', 'to', 'endpoint'],
-        {party: 'DFL', sort: '-office', per_page: 30, page: 3, extra: 'true'}
+        {sort_hide_null: 'true', party: 'DFL', sort: '-office', per_page: 30, page: 3, extra: 'true'}
       );
       expect(URI(url).equals(expected)).to.be.true;
     });

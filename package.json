@@ -31,6 +31,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "mocha": "^2.2.5",
     "mockdate": "^1.0.3",
+    "phantomjs": "^1.9.19",
     "preprocessify": "0.0.3",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
@@ -63,7 +64,7 @@
     "d3": "3.5.5",
     "datatables.net": "1.10.10",
     "datatables.net-responsive": "2.0.1",
-    "fec-style": "1.4.1",
+    "fec-style": "1.5.0",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
     "intl": "1.0.0-rc-4",
@@ -82,7 +83,7 @@
     "watchify": "3.2.1"
   },
   "engines": {
-    "node": "0.12.7",
-    "npm": "2.11.3"
+    "node": "5.5.0",
+    "npm": "3.3.12"
   }
 }

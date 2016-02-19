@@ -17,7 +17,7 @@
       </div>
       <table
           class="data-table"
-          data-type="independent-expenditure"
+          data-type="independent-expenditures"
           data-candidate="{{ candidate_id }}"
           data-cycle="{{ cycle }}"
           data-election-full="{{ election_full }}"
@@ -32,6 +32,50 @@
       </table>
       <div class="datatable__note">
         <p class="t-note">Note: These totals are drawn from quarterly, monthly and semi-annual reports. 24-hour and 48-hour independent expenditures reports are not included.</p>
+      </div>
+    </div>
+
+    <div class="content__section">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Communication costs</h3>
+      </div>
+      <table
+          class="data-table"
+          data-type="communication-costs"
+          data-candidate="{{ candidate_id }}"
+          data-cycle="{{ cycle }}"
+          data-election-full="{{ election_full }}"
+        >
+        <thead>
+          <tr>
+            <th scope="col">Amount</th>
+            <th scope="col">Spent by</th>
+            <th scope="col">Support/Oppose</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <div class="content__section">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Electioneering communications</h3>
+      </div>
+      <table
+          class="data-table"
+          data-type="electioneering"
+          data-candidate="{{ candidate_id }}"
+          data-cycle="{{ cycle }}"
+          data-election-full="{{ election_full }}"
+        >
+        <thead>
+          <tr>
+            <th scope="col">Amount</th>
+            <th scope="col">Spent by</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="datatable__note">
+        <p class="t-note">To help users work with this data, we divide each itemized disbursement amount by the number of federal candidates named in connection with that disbursement. The resulting amount is listed here.</p>
       </div>
     </div>
   </div>
