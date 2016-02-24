@@ -589,8 +589,9 @@ DataTable.prototype.fetch = function(data, callback) {
 
 DataTable.prototype.export = function() {
   var url = this.buildUrl(this.api.ajax.params(), false);
-  download.download(url);
+  var item = download.download(url);
   this.disableExport({message: DOWNLOAD_MESSAGES.pending});
+  item.$body.find('.button').focus();
 };
 
 DataTable.prototype.isPending = function() {
