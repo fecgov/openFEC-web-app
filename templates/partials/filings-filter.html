@@ -11,8 +11,8 @@ Filter filings
 
 {% block filters %}
 
-{{ typeahead.field('committee_id', 'Committee') }}
-{{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
+{{ typeahead.field('committee_id', 'Committee ID', 'Find an ID by searching for a committee name') }}
+{{ typeahead.field('candidate_id', 'Candidate ID', 'Find an ID by searching for a candidate name', dataset='candidates') }}
 
 {% include 'partials/filters/election-years.html' %}
 
