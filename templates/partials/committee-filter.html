@@ -2,13 +2,13 @@
 
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
 
 {% block filters %}
-{{ text.field('name', 'Name') }}
+{{ typeahead.field('q', 'Committee name or ID', False, 'committees', True) }}
 {{ text.field('treasurer_name', 'Treasurer name') }}
 {% include 'partials/filters/election-years.html' %}
 {% include 'partials/filters/parties.html' %}
 {{ states.field('state') }}
 {% include 'partials/filters/committee-types.html' %}
-{% include 'partials/filters/hideNull.html' %}
 {% endblock %}

@@ -1,7 +1,6 @@
 'use strict';
 
 var $ = require('jquery');
-var _ = require('underscore');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
@@ -10,18 +9,18 @@ var columns = require('../modules/columns');
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 var filterTags = require('fec-style/js/filter-tags');
 
-var expenditureTemplate = require('../../templates/independent-expenditures.hbs');
+var electioneeringTemplate = require('../../templates/electioneering-communications.hbs');
 
 var columns = [
   {
-    data: 'committee',
+    data: 'committee_name',
     orderable: false,
-    className: 'all',
+    className: 'min-desktop',
     render: function(data, type, row, meta) {
       if (data) {
         return tables.buildEntityLink(
-          data.name,
-          helpers.buildAppUrl(['committee', data.committee_id]),
+          data,
+          helpers.buildAppUrl(['committee', row.committee_id]),
           'committee'
         );
       } else {
@@ -29,26 +28,25 @@ var columns = [
       }
     }
   },
-  tables.currencyColumn({data: 'expenditure_amount', className: 'min-tablet'}),
+  tables.currencyColumn({data: 'disbursement_amount', className: 'min-tablet'}),
+  {
+    data: 'number_of_candidates',
+    className: 'min-tablet',
+  },
+  tables.currencyColumn({data: 'calculated_candidate_share', className: 'min-tablet'}),
   {
     data: 'candidate_name',
     orderable: false,
-    className: 'min-tablet hide-panel',
+    className: 'min-desktop hide-panel hide-panel-tablet',
     render: function(data, type, row, meta) {
-      if (row.candidate_id) {
-        return tables.buildEntityLink(
-          data,
-          helpers.buildAppUrl(['candidate', row.candidate_id], tables.getCycle(row, meta)),
-          'candidate'
-        );
-      } else {
-        return row.candidate_name;
-      }
+      return tables.buildEntityLink(
+        data,
+        helpers.buildAppUrl(['candidate', row.candidate_id]),
+        'candidate'
+      );
     }
   },
-  _.extend({}, columns.supportOpposeColumn, {className: 'min-tablet'}),
-  tables.dateColumn({data: 'expenditure_date', className: 'min-desktop hide-panel-tablet'}),
-  tables.urlColumn('pdf_url', {data: 'expenditure_description', className: 'min-desktop hide-panel', orderable: false}),
+  tables.dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel'}),
   {
     className: 'all u-no-padding',
     width: '20px',
@@ -65,21 +63,16 @@ $(document).ready(function() {
   var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
-    title: 'Independent expenditure',
-    path: 'schedules/schedule_e',
-    query: {
-      is_notice: 'false',
-      filing_form: 'F3X'
-    },
+    title: 'Electioneering communications',
+    path: ['electioneering'],
     panel: filterPanel,
     columns: columns,
-    paginator: tables.SeekPaginator,
     rowCallback: tables.modalRenderRow,
     useExport: true,
-    order: [[4, 'desc']],
+    order: [[3, 'desc']],
     useFilters: true,
     callbacks: {
-      afterRender: tables.modalRenderFactory(expenditureTemplate)
+      afterRender: tables.modalRenderFactory(electioneeringTemplate)
     }
   });
   $widgets.prepend($tagList);

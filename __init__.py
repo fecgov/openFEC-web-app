@@ -286,6 +286,14 @@ def filings():
 def independent_expenditures():
     return render_template('independent-expenditures.html', dates=utils.date_ranges())
 
+@app.route('/electioneering-communications/')
+def electioneering_communications():
+    return render_template('electioneering-communications.html', dates=utils.date_ranges())
+
+@app.route('/communication-costs/')
+def communication_costs():
+    return render_template('communication-costs.html', dates=utils.date_ranges())
+
 @app.route('/elections/')
 def election_lookup():
     return render_template('election-lookup.html')
@@ -372,7 +380,10 @@ def _unique(values):
 
 
 def _fmt_chart_tick(value):
-    return parse_date(value).strftime('%m/%d/%y')
+    try:
+        return parse_date(value).strftime('%m/%d/%y')
+    except (AttributeError, ValueError):
+        return '?'
 
 
 @app.template_filter('fmt_chart_ticks')

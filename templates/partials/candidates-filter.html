@@ -2,14 +2,14 @@
 
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
 
 {% block filters %}
-{{ text.field('name', 'Name') }}
+{{ typeahead.field('q', 'Candidate name or ID', 'Find an ID by searching for a committee name', 'candidates', True) }}
 {% include 'partials/filters/election-years.html' %}
 {% include 'partials/filters/office-sought.html' %}
 {% include 'partials/filters/parties.html' %}
 {{ states.field('state') }}
 {% include 'partials/filters/districts.html' %}
 {% include 'partials/filters/candidate_status.html' %}
-{% include 'partials/filters/hideNull.html' %}
 {% endblock %}
