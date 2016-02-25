@@ -2,10 +2,11 @@
 
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/election-filter.html' as election_filter %}
 
 {% block filters %}
-{{ text.field('name', 'Name') }}
+{{ typeahead.field('q', 'Candidate name or ID', 'Find an ID by searching for a committee name', 'candidates', True) }}
 {{ election_filter.field('election_year', 'Election cycle', 'cycle', 'election_full', office) }}
 <input id="election_full" name="election_full" type="checkbox" value="true">
 {% include 'partials/filters/parties.html' %}
@@ -23,5 +24,4 @@
 {{ text.field('max_cash_on_hand_end_period', 'Maximum cash on hand', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
 {{ text.field('min_debts_owed_by_committee', 'Minimum debt', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
 {{ text.field('max_debts_owed_by_committee', 'Maximum debt', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-{% include 'partials/filters/hideNull.html' %}
 {% endblock %}
