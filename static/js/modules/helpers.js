@@ -63,6 +63,14 @@ Handlebars.registerHelper('decodeReport', function(value) {
   return decoders.reports[value] || value;
 });
 
+Handlebars.registerHelper('decodeState', function(value) {
+  return decoders.states[value] || value;
+});
+
+Handlebars.registerHelper('decodeParty', function(value) {
+  return decoders.parties[value] || value;
+});
+
 Handlebars.registerHelper('basePath', BASE_PATH);
 
 Handlebars.registerHelper('panelRow', function(label, options) {

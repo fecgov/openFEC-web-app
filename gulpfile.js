@@ -127,7 +127,7 @@ gulp.task('build-js', function() {
     SENTRY_PUBLIC_DSN: sentryPublicDsn
   }))
   .transform({global: true}, stringify(['.html']))
-  .transform(hbsfy)
+  .transform({global: true}, hbsfy)
   .bundle()
   .pipe(callback('static/js/common.js'));
 });

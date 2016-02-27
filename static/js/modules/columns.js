@@ -1,7 +1,5 @@
 'use strict';
 
-/* global require, module */
-
 var _ = require('underscore');
 
 var tables = require('./tables');
@@ -87,7 +85,7 @@ var filings = {
   }
 };
 
-function getColumns (columns, keys) {
+function getColumns(columns, keys) {
   return _.map(keys, function(key) {
     return columns[key];
   });

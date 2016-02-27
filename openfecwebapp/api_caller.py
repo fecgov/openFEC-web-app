@@ -66,9 +66,10 @@ def load_with_nested(primary_type, primary_id, secondary_type, cycle=None,
 
 def load_cmte_financials(committee_id, **filters):
     filters.update({
+        'is_amended': 'false',
         'per_page': MAX_FINANCIALS_COUNT,
         'report_type': filters.get('report_type', []) + ['-TER'],
-        'is_amended': 'false',
+        'sort_hide_null': 'true',
     })
 
     reports = _call_api('committee', committee_id, 'reports', **filters)
@@ -82,8 +83,8 @@ def load_cmte_financials(committee_id, **filters):
 
 def load_candidate_totals(candidate_id, cycle, election_full=True):
     response = _call_api(
-        'candidate', candidate_id, 'totals',
-        cycle=cycle, election_full=election_full,
+        'candidates', 'totals',
+        candidate_id=candidate_id, cycle=cycle, election_full=election_full,
     )
     if response['results']:
         return response['results'][0]

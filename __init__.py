@@ -248,6 +248,13 @@ def candidates():
     return render_template('candidates.html', result_type='candidates')
 
 
+@app.route('/candidates/<office>/')
+def candidates_office(office):
+    if office.lower() not in ['president', 'senate', 'house']:
+        abort(404)
+    return render_template('candidates-office.html', result_type='candidates', office=office)
+
+
 @app.route('/committees/')
 def committees():
     return render_template(
@@ -278,6 +285,14 @@ def filings():
 @app.route('/independent-expenditures/')
 def independent_expenditures():
     return render_template('independent-expenditures.html', dates=utils.date_ranges())
+
+@app.route('/electioneering-communications/')
+def electioneering_communications():
+    return render_template('electioneering-communications.html', dates=utils.date_ranges())
+
+@app.route('/communication-costs/')
+def communication_costs():
+    return render_template('communication-costs.html', dates=utils.date_ranges())
 
 @app.route('/elections/')
 def election_lookup():
@@ -365,7 +380,10 @@ def _unique(values):
 
 
 def _fmt_chart_tick(value):
-    return parse_date(value).strftime('%m/%d/%y')
+    try:
+        return parse_date(value).strftime('%m/%d/%y')
+    except (AttributeError, ValueError):
+        return '?'
 
 
 @app.template_filter('fmt_chart_ticks')

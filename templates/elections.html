@@ -1,5 +1,6 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/cycle-select.html' as select %}
+{% import 'macros/tabs.html' as tabs %}
 
 {{ cycle }} Election - US {{ office|title }} {% if state %} - {{ state|fmt_state_full }} {% if district %} - District {{ district }} {% endif %} {% endif %}
 
@@ -52,8 +53,8 @@
         <nav class="page-tabs">
           <ul class="page-tabs__list" role="tablist" data-name="tab">
             <li class="page-tabs__item page-tabs__years"><h2 class="u-no-margin"> {{ cycle|fmt_year_range }}: </h2></li>
-            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="comparison" tabindex="0" aria-controls="panel1" href="#section-1">Candidate comparison</a></li>
-            <li role="presentation" class="page-tabs__item"><a role="tab" data-name="spending" tabindex="0" aria-controls="panel2" href="#section-2">Other spending</a></li>
+            {{ tabs.tab('Candidate comparison', 'comparison', 'panel1', '#section-1') }}
+            {{ tabs.tab('Other spending', 's[emdomg', 'panel2', '#section-2') }}
           </ul>
         </nav>
       </div>

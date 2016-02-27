@@ -49,9 +49,30 @@ team:
 #   url: URL for detailed information
 #   badge: URL for the status badge
 services:
-- name: Travis CI
+- name: Travis CI (dev)
   category: CI
   url: https://travis-ci.org/18F/openFEC-web-app
+  badge: https://img.shields.io/travis/18F/openFEC-web-app/develop.svg
+- name: CodeCov
+  category: code coverage
+  url: https://codecov.io/github/18F/openFEC-web-app
+  badge: https://img.shields.io/codecov/c/github/18F/openFEC-web-app/develop.svg
+- name: Travis CI (master)
+  category: CI
+  url: https://travis-ci.org/18F/openFEC-web-app
+  badge: https://img.shields.io/travis/18F/openFEC-web-app/master.svg
+- name: CodeCov
+  category: code coverage
+  url: https://codecov.io/github/18F/openFEC-web-app
+  badge: https://img.shields.io/codecov/c/github/18F/openFEC-web-app/master.svg
+- name: Code Climate
+  category: testing
+  url: https://codeclimate.com/github/18F/openFEC-web-app
+  badge: https://img.shields.io/codeclimate/github/18F/openFEC-web-app.svg
+- name: Gemnasium
+  category: dependency management
+  url: https://gemnasium.com/18F/openFEC-web-app
+  badge: https://img.shields.io/gemnasium/18F/openFEC-web-app.svg
 
 # Licenses that apply to the project and/or its components (required)
 # Items by property name pattern:
