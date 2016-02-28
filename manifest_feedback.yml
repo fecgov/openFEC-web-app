@@ -1,0 +1,15 @@
+---
+path: feedback
+command: node server-shim.js
+memory: 128M
+domain: 18f.gov
+services:
+  - fec-creds-dev
+  - fec-redis-dev
+env:
+  GITHUB_USER: 18f
+  GITHUB_REPO: fec
+  BASE_URL: https://fec-feedback.18f.gov
+  ORIGIN_URL: https://fec-proxy.18f.gov,https://fec-stage-proxy.18f.gov,https://beta.fec.gov
+applications:
+- name: fec-feedback
