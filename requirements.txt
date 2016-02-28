@@ -1,9 +1,7 @@
 Flask==0.10.1
 Flask-BasicAuth==0.2.0
-Flask-Cors==2.1.0
 Flask-SSLify==0.1.5
 furl==0.4.5
-github3.py==0.9.4
 hmac-authentication==1.0.0
 python-dateutil==2.4.2
 requests==2.7.0

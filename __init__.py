@@ -324,9 +324,6 @@ def elections(office, cycle, state=None, district=None):
     )
 
 
-app.add_url_rule('/issue/', view_func=views.GithubView.as_view('issue'))
-
-
 def election_title(cycle, office, state=None, district=None):
     base = ' '.join([str(cycle), 'Election', 'United States', office.capitalize()])
     parts = [base]
