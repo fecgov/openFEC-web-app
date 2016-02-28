@@ -1,9 +1,8 @@
 'use strict';
 
-/* global window, document, Inputmask, BASE_PATH */
-
 var $ = require('jquery');
 var Sticky = require('component-sticky');
+var Feedback = require('feedback/widget');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
@@ -14,7 +13,6 @@ var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
 var siteNav = require('fec-style/js/site-nav');
 var skipNav = require('fec-style/js/skip-nav');
-var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
 var analytics = require('fec-style/js/analytics');
 
@@ -27,7 +25,7 @@ require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
 // @endif
 
 // Remove extra padding in currency mask
-Inputmask.extendAliases({
+window.Inputmask.extendAliases({
   currency: {
     prefix: '$',
     groupSeparator: ',',
@@ -46,7 +44,6 @@ require('./vendor/tablist');
 var charts = require('./modules/charts');
 var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
-var helpers = require('./modules/helpers');
 var download = require('./modules/download');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
@@ -79,11 +76,15 @@ $(document).ready(function() {
   new typeahead.Typeahead(
     '.js-search-input',
     $('.js-search-type').val(),
-    BASE_PATH
+    window.BASE_PATH
   );
 
   // Initialize feedback
-  new feedback.Feedback(helpers.buildAppUrl(['issue']));
+  window.feedback = new Feedback(
+    document.querySelector('#feedback'),
+    document.querySelector('.js-feedback'),
+    window.FEEDBACK_URL
+  );
 
   // Inialize input masks
   $('[data-inputmask]').inputmask();

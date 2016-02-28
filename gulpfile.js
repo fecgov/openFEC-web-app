@@ -12,7 +12,6 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var rev = require('gulp-rev');
 var preprocessify = require('preprocessify');
-var stringify = require('stringify');
 var hbsfy = require('hbsfy');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
@@ -74,7 +73,6 @@ var fs = require('fs');
 var path = require('path');
 var file = require('gulp-file');
 var concat = require('concat-stream');
-var factor = require('factor-bundle');
 
 var del = require('del');
 var extend = require('gulp-extend');
@@ -126,7 +124,6 @@ gulp.task('build-js', function() {
     ANALYTICS: analytics,
     SENTRY_PUBLIC_DSN: sentryPublicDsn
   }))
-  .transform({global: true}, stringify(['.html']))
   .transform({global: true}, hbsfy)
   .bundle()
   .pipe(callback('static/js/common.js'));

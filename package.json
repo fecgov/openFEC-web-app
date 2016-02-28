@@ -35,7 +35,6 @@
     "preprocessify": "0.0.3",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
-    "stringify": "^3.1.0",
     "vinyl-paths": "^1.0.0",
     "watchify": "^3.2.1"
   },
@@ -65,6 +64,7 @@
     "datatables.net": "1.10.10",
     "datatables.net-responsive": "2.0.1",
     "fec-style": "git://github.com/jmcarp/fec-style.git#election-filter",
+    "feedback": "git+https://github.com/jmcarp/feedback.git",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
     "intl": "1.0.0-rc-4",

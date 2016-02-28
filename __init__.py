@@ -143,6 +143,7 @@ def clean_id(value):
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
+    'feedback_url': config.feedback_url,
     'api_location': config.api_location_public,
     'api_version': config.api_version,
     'api_key': config.api_key_public,
