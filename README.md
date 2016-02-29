@@ -72,7 +72,7 @@ To make the site fully functional, you will need to compile the client side JS a
 
 Then start the server:
 
-    python __init__.py
+    python manage.py runserver
 
 To view the site, visit [http://localhost:3000/](http://localhost:3000/).
 
