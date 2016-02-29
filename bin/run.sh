@@ -1,2 +1,2 @@
 invoke notify
-gunicorn __init__:app
+gunicorn runserver:app
