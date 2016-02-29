@@ -2,7 +2,6 @@ import re
 import json
 import locale
 import hashlib
-import logging
 import datetime
 
 import furl
@@ -27,11 +26,6 @@ app = Flask(__name__, static_path='/static', static_folder='../dist')
 
 from openfecwebapp import routes  # noqa
 from openfecwebapp import filters  # noqa
-
-# ===== configure logging =====
-logger = logging.getLogger(__name__)
-log_level = logging.DEBUG if config.debug else logging.WARN
-logging.basicConfig(level=log_level)
 
 
 def get_absolute_url():
