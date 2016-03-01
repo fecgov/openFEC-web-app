@@ -122,9 +122,13 @@ environment variable; the size of the cache, in items, is controlled by the
 be stale for up to the cache duration set by the API.
 
 ### Run Tests
-#### Unit Tests
+#### Python Unit Tests
 
     py.test
+
+### JavaScript Unit Tests
+
+    npm test
 
 #### Browser Tests
 First, install [PhantomJS](http://phantomjs.org/).
