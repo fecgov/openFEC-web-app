@@ -1,0 +1,35 @@
+<div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title"><a href="{{basePath}}/candidate/{{candidate_id}}">{{name}}</a></h4>
+  </div>
+  <table>
+    {{#panelRow "Election years"}}
+      {{election_years}}
+    {{/panelRow}}
+    {{#panelRow "Political party"}}
+      {{party_full}}
+    {{/panelRow}}
+    {{#if state}}
+      {{#panelRow "State"}}
+        {{state}}
+      {{/panelRow}}
+    {{/if}}
+    {{#if district}}
+      {{#panelRow "District"}}
+        {{district}}
+      {{/panelRow}}
+    {{/if}}
+    {{#panelRow "Receipts"}}
+      {{{currency receipts}}}
+    {{/panelRow}}
+    {{#panelRow "Disbursements"}}
+      {{{currency disbursements}}}
+    {{/panelRow}}
+    {{#panelRow "Ending cash on hand"}}
+      {{{currency cash_on_hand_end_period}}}
+    {{/panelRow}}
+    {{#panelRow "Debts owed by committee"}}
+      {{{currency debts_owed_by_committee}}}
+    {{/panelRow}}
+  </table>
+</div>

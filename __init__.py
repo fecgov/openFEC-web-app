@@ -247,6 +247,13 @@ def candidates():
     return render_template('candidates.html', result_type='candidates')
 
 
+@app.route('/candidates/<office>/')
+def candidates_office(office):
+    if office.lower() not in ['president', 'senate', 'house']:
+        abort(404)
+    return render_template('candidates-office.html', result_type='candidates', office=office)
+
+
 @app.route('/committees/')
 def committees():
     return render_template(

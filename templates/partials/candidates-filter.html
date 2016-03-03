@@ -5,7 +5,7 @@
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 
 {% block filters %}
-{{ typeahead.field('q', 'Candidate name or ID', 'Find an ID by searching for a committee name', 'candidates', True) }}
+{{ typeahead.field('q', 'Candidate name or ID', 'Find an ID by searching for a candidate name', 'candidates', True) }}
 {% include 'partials/filters/election-years.html' %}
 {% include 'partials/filters/office-sought.html' %}
 {% include 'partials/filters/parties.html' %}
