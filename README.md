@@ -41,7 +41,7 @@ We’re thrilled you want to get involved!
 ### Installation
 This application is in [Flask](http://flask.pocoo.org/). Client side features are managed using [Browserify](http://browserify.org/) and [npm](https://www.npmjs.org/).
 
-It uses Python version 3.4. Its recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies.
+It uses Python version 3.4. It's recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies. Don't put your virtualenv in this directory.
 
 Install Python dependencies:
 
@@ -72,9 +72,13 @@ To make the site fully functional, you will need to compile the client side JS a
 
 Then start the server:
 
-    python manage.py runserver
+    FEC_WEB_API_URL='http://fec-dev-api.18f.gov' python manage.py runserver
 
 To view the site, visit [http://localhost:3000/](http://localhost:3000/).
+
+To run the server and configure it to use a local instance of the OpenFEC API:
+
+    python manage.py runserver
 
 To run the server in debug mode set:
 
@@ -122,9 +126,13 @@ environment variable; the size of the cache, in items, is controlled by the
 be stale for up to the cache duration set by the API.
 
 ### Run Tests
-#### Unit Tests
+#### Python Unit Tests
 
     py.test
+
+### JavaScript Unit Tests
+
+    npm test
 
 #### Browser Tests
 First, install [PhantomJS](http://phantomjs.org/).
