@@ -6,8 +6,7 @@ var _ = require('underscore');
 var moment = require('moment');
 
 var templates = {
-  pending: require('../../templates/download/pending.hbs'),
-  complete: require('../../templates/download/complete.hbs'),
+  item: require('../../templates/download/item.hbs'),
   container: require('../../templates/download/container.hbs')
 };
 
@@ -20,13 +19,18 @@ function hydrate() {
   });
 }
 
-function download(url, init) {
+function download(url, init, focus) {
   var container = DownloadContainer.getInstance(document.body);
   var item = new DownloadItem(url, container);
 
   if (init || !item.isPending) {
     item.init();
   }
+
+  if (focus) {
+    item.$button.focus();
+  }
+
   return item;
 }
 
@@ -94,15 +98,17 @@ DownloadItem.prototype.init = function() {
 };
 
 DownloadItem.prototype.draw = function() {
-  var template = this.downloadUrl ? templates.complete : templates.pending;
-  var $body = $(template(this.serialize()));
-  if (this.$body) {
-    this.$body.replaceWith($body);
-  } else {
-    $body.appendTo(this.$parent);
+  var template = templates.item;
+  this.$body = $(template(this.serialize()));
+  this.$body.appendTo(this.$parent);
+
+  this.$button = this.$body.find('.download__button');
+
+  if (!this.downloadUrl) {
+    this.$button.addClass('disabled');
   }
-  $body.find('.js-close').on('click', this.close.bind(this));
-  this.$body = $body;
+
+  this.$body.find('.js-close').on('click', this.close.bind(this));
 };
 
 DownloadItem.prototype.serialize = function() {
@@ -164,7 +170,9 @@ DownloadItem.prototype.handleError = function(xhr, textStatus) {
 DownloadItem.prototype.finish = function(downloadUrl) {
   this.downloadUrl = downloadUrl;
   this.push();
-  this.draw();
+  this.$body.addClass('is-complete');
+  this.$body.find('.download__message').remove();
+  this.$button.attr('href', this.downloadUrl).removeClass('disabled');
 };
 
 DownloadItem.prototype.close = function() {
