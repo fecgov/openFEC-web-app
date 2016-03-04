@@ -130,7 +130,7 @@ be stale for up to the cache duration set by the API.
 
     py.test
 
-### JavaScript Unit Tests
+#### JavaScript Unit Tests
 
     npm test
 
