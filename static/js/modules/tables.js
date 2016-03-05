@@ -546,7 +546,7 @@ DataTable.prototype.fetch = function(data, callback) {
 
 DataTable.prototype.export = function() {
   var url = this.buildUrl(this.api.ajax.params(), false);
-  download.download(url);
+  download.download(url, true, true);
   this.disableExport({message: DOWNLOAD_MESSAGES.pending});
 };
 

@@ -35,6 +35,11 @@ describe('helpers', function() {
       expect(item1.$body).not.to.be.null;
       expect(item2.$body).to.be.null;
     });
+
+    it('focuses on the button', function() {
+      var item = download.download('/1', false, true);
+      expect(item.$button[0]).to.equal(document.activeElement);
+    })
   });
 
   describe('hydrate', function() {
