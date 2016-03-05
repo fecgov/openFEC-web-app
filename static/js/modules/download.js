@@ -104,10 +104,6 @@ DownloadItem.prototype.draw = function() {
 
   this.$button = this.$body.find('.download__button');
 
-  if (!this.downloadUrl) {
-    this.$button.addClass('disabled');
-  }
-
   this.$body.find('.js-close').on('click', this.close.bind(this));
 };
 
@@ -226,4 +222,4 @@ module.exports = {
   pendingCount: pendingCount,
   DownloadItem: DownloadItem,
   DownloadContainer: DownloadContainer
-  };
+};

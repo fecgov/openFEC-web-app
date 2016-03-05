@@ -39,7 +39,7 @@ describe('helpers', function() {
     it('focuses on the button', function() {
       var item = download.download('/1', false, true);
       expect(item.$button[0]).to.equal(document.activeElement);
-    })
+    });
   });
 
   describe('hydrate', function() {

@@ -7,7 +7,6 @@ var tabs = require('../vendor/tablist');
 
 var urls = require('fec-style/js/urls');
 var accessibility = require('fec-style/js/accessibility');
-var analytics = require('fec-style/js/analytics');
 
 require('datatables.net')(window, $);
 require('datatables.net-responsive')(window, $);
@@ -476,9 +475,6 @@ DataTable.prototype.ensureWidgets = function() {
 
     this.$exportInfo = $('.js-info');
     this.$exportInfo.append($('#results_info'));
-
-    this.$exportButton.on('click', this.export.bind(this));
-
   }
 
   if (this.opts.disableExport) {
@@ -510,6 +506,7 @@ DataTable.prototype.disableExport = function(opts) {
 };
 
 DataTable.prototype.enableExport = function() {
+  this.$exportButton.off('click');
   this.$exportButton.removeClass('disabled');
   this.$exportButton.on('click', this.export.bind(this));
   this.$exportTooltip.attr('aria-hidden', 'true');
@@ -546,7 +543,7 @@ DataTable.prototype.fetch = function(data, callback) {
 
 DataTable.prototype.export = function() {
   var url = this.buildUrl(this.api.ajax.params(), false);
-  download.download(url, true, true);
+  download.download(url, false, true);
   this.disableExport({message: DOWNLOAD_MESSAGES.pending});
 };
 
