@@ -27,13 +27,15 @@ module.exports = function(config) {
 
     files: [
       'tests/unit/**/*.js',
-      'static/js/modules/**/*.js'
+      'static/js/modules/**/*.js',
+      'static/js/vendor/**/*.js'
     ],
 
     preprocessors: {
       'tests/unit/**/*.js': ['browserify'],
       'static/js/pages/**/*.js': ['browserify'],
-      'static/js/modules/**/*.js': ['browserify']
+      'static/js/modules/**/*.js': ['browserify'],
+      'static/js/vendor/**/*.js': ['browserify']
     },
 
     browserify: browserify,
