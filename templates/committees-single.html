@@ -45,7 +45,7 @@
             </span>
             <ul class="entity__term__data">
             {% for c in candidates %}
-              <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=cycle) }}">{{ c.name }}</a></li>
+              <li><a href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=c.related_cycle) }}">{{ c.name }}</a></li>
             {% endfor %}
             </ul>
           </li>
