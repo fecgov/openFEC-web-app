@@ -4,8 +4,8 @@
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
-var Accordion = require('@18f/accordion').Accordion;
-var Glossary = require('@18f/glossary-panel');
+var Accordion = require('aria-accordion').Accordion;
+var Glossary = require('glossary-panel');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
