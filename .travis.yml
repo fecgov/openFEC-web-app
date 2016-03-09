@@ -10,31 +10,10 @@ cache:
 python:
   - "3.4"
 
-addons:
-  postgresql: "9.4"
-
 env:
   global:
-    - FEC_WEB_TEST="true"
-    - FEC_SELENIUM_DRIVER="remote"
-    - secure: "cmEueYaeTjqjnql7Vfk/qeZCIMfQRZLsEIA1WackpB5PQJxTAXfTFN6zq4r1LgYTxoOLGFi8s9a3zUJpJ7Nz+IYTEult/ehyW4mqbcYE1zodGDb55AllkmlvdYPbxKf0dJvGnMpcIqvgtAsKHGogOmBGEEc0uoiV3FFx1GvKCnM="
-    - secure: "HjtrA4/I9b8m8ySCyL4VjJMmFyuYWrvZKWVSQFMCN7CklLXbn+UBdUl41Dk5ZUKijBZpLmrC4RSEJh8bFO6n0IbEvpGsmdL1FgqhBekPc1jfvzbOzjRvpKYuXtyzQcPv+FpBGXo9NydSh2OqEyNms2YBk9tZkRnhu/6G+10385o="
-    - secure: "H7oyl5s7ZcmP/0Nf4jGkoTe7qov3kTu1e6QbeXmTS2yENoetI7tFBtMG0QYNBVPmu3QK64mA+VpnDdTa3+hXF6yjXkqEBq//f5/47ZIf5Z7lGyyFdefNH1KKumfDJoQQ2LA2m5ENOvDP6iR/3S4C6798Dc5Zt37t7yPhwj4D+7Q="
-    - secure: "hT2S6JTWsSU+qPzxnsNJxBanOu2obvbF7LNVUQKkdL22HV69vqUJxuEyccmwgcyN2gKzsK2aQOtDlwxYPM/7taRcmhG53RlPYVPRvlYZn7E3glAn9lWZYLWgYxRvYuZjmcithVDGLhNYu0nytmJPaF6Rve2xBaVODTytfDusbqE="
-
-# This matrix runs n+1 jobs: one for each in `include`, and one with no non-global
-# environment variables set. This allows the build that does not use Sauce Labs
-# to run without a tunnel to Sauce.
-matrix:
-  include:
-    - env: FEC_SAUCE_BROWSER=chrome
-      addons: &addons
-        sauce_connect: true
-        postgresql: "9.4"
-      python: "3.4"
-    - env: FEC_SAUCE_BROWSER=firefox
-      addons: *addons
-      python: "3.4"
+    - secure: "RKs9WOSenUXaGMCMjGQ1qjzSbVXpPUU6+AaEMakY19LT5os/ZDB6rUaPtkuL/PKSBgj2RBeojAOS70HBRkNJWV5ZjkYVbz+Jp7dichmLwx1OQ/Ax5fAO9r7YMqbOBHidoXBmKsjs7mYWoXKmjg8b5DVXHCMDgs9e9NIwDVqr3z0="
+    - secure: "LjYwAfqGvi7pv4mOcX9K2Aekcz58CS0B5xNx8Rz70944arMqASgJQwsN53AZgc2wGg54E322jFm3xNEx/muN6nevMXnG14UaNcjylvDWEHk/OWfaQR/30uuPYXd0fjrfHAo8Q5W2oi41Il6WFFMka76LZ8sxXAeyZxQ8hnsd6ZQ="
 
 before_install:
   - travis_retry pip install codecov
@@ -44,14 +23,6 @@ before_install:
   - export PATH=.:$PATH
 
 before_script:
-  # Set up environment
-  - |
-      if [[ $TRAVIS_BRANCH = 'master' ]]; then
-        export FEC_BRANCH=master
-        else export FEC_BRANCH=develop
-      fi
-
-  # Install web app and run in background
   - travis_retry pip install -U pip wheel
   - travis_retry pip install -r requirements.txt
 
@@ -64,40 +35,13 @@ before_script:
   - travis_retry npm install -g gulp
   - travis_retry npm install karma-phantomjs-launcher karma-phantomjs-shim
   - npm run build
-  - python __init__.py &
-
-  # Install API and run in background
-  - travis_retry git clone https://github.com/18F/openFEC
-  - cd openFEC
-  - git checkout $FEC_BRANCH
-  - psql -c 'create database cfdm_test' -U postgres
-  - pg_restore --dbname cfdm_test data/subset.dump --no-acl --no-owner
-  - travis_retry pip install -r requirements.txt
-  - travis_retry pip install -r requirements-dev.txt
-  - python manage.py update_all --processes 1
-  - python manage.py runserver &
-  - cd ..
 
 script:
-  # Run Python unit tests
-  - if [[ -z $FEC_SAUCE_BROWSER ]]; then py.test; fi
-  # Run Javascript unit tests
-  - if [[ -z $FEC_SAUCE_BROWSER ]]; then npm run test-single; fi
-  # Run Selenium tests if not pull request
-  - if [[ $TRAVIS_PULL_REQUEST = 'false' && ! -z $FEC_SAUCE_BROWSER  ]]; then py.test --selenium; fi
+  - py.test
+  - npm run test-single
 
 after_success:
   # Deploy to appropriate Cloud Foundry space after all builds succeed
   # See `tasks.deploy` for details
-  - python travis_after_all.py
-  - export $(cat .to_export_back)
-  - |
-      if [[ $BUILD_LEADER = 'YES' && $TRAVIS_PULL_REQUEST = 'false' ]]; then
-        if [[ $BUILD_AGGREGATE_STATUS = 'others_succeeded' ]]; then
-          echo "All builds passed; deploying..."
-          invoke deploy --branch $TRAVIS_BRANCH --yes
-        else
-          echo "One or more builds failed; skipping deploy"
-        fi
-      fi
-  - if [[ $BUILD_LEADER = 'YES' ]]; then codecov; fi
+  - if [[ $TRAVIS_PULL_REQUEST = 'false' ]]; then invoke deploy --branch $TRAVIS_BRANCH --yes; fi;
+  - codecov --file .coverage --file coverage/coverage.json
