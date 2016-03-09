@@ -142,6 +142,7 @@ def clean_id(value):
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
+    'feedback_url': config.feedback_url,
     'api_location': config.api_location_public,
     'api_version': config.api_version,
     'api_key': config.api_key_public,
@@ -320,9 +321,6 @@ def elections(office, cycle, state=None, district=None):
         district=district,
         title=election_title(cycle, office, state, district),
     )
-
-
-app.add_url_rule('/issue/', view_func=views.GithubView.as_view('issue'))
 
 
 def election_title(cycle, office, state=None, district=None):

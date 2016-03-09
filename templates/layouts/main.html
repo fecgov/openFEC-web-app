@@ -16,10 +16,11 @@
   {% endif %}
   {% if api_location %}
   <script>
-    BASE_PATH = '{{ base_path() }}';
-    API_LOCATION = '{{ api_location }}';
-    API_VERSION = '{{ api_version }}';
-    API_KEY = '{{ api_key }}';
+    window.BASE_PATH = '{{ base_path() }}';
+    window.FEEDBACK_URL = '{{ feedback_url }}';
+    window.API_LOCATION = '{{ api_location }}';
+    window.API_VERSION = '{{ api_version }}';
+    window.API_KEY = '{{ api_key }}';
 
     function trackMetric(name, imagesSelector) {
       if (imagesSelector) {
@@ -86,6 +87,7 @@
 </footer>
 
 {% include './partials/glossary.html' %}
+{% include './partials/feedback.html' %}
 
 <script src="{{ asset_for('dist/js/common.js') }}"></script>
 <script src="{{ asset_for('dist/js/init.js') }}"></script>

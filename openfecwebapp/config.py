@@ -5,6 +5,7 @@ import cfenv
 env = cfenv.AppEnv()
 
 # no trailing slash
+feedback_url = os.getenv('FEEDBACK_URL')
 api_location = os.getenv('FEC_WEB_API_URL', 'http://localhost:5000')
 api_location_public = os.getenv('FEC_WEB_API_URL_PUBLIC', api_location)
 api_version = os.getenv('FEC_WEB_API_VERSION', 'v1')

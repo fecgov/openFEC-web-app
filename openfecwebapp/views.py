@@ -1,19 +1,7 @@
 import datetime
 
-import furl
+from flask import render_template
 
-from flask.views import MethodView
-from flask import request, render_template, jsonify
-from flask.ext.cors import cross_origin
-
-from webargs import fields
-from webargs.flaskparser import use_kwargs
-from marshmallow import ValidationError
-
-import github3
-from werkzeug.utils import cached_property
-
-from openfecwebapp import config
 from openfecwebapp import api_caller
 
 
@@ -113,37 +101,3 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles']}
 
     return render_template('candidates-single.html', **tmpl_vars)
-
-
-def validate_referer(referer):
-    if furl.furl(referer).host != furl.furl(request.url).host:
-        raise ValidationError('Invalid referer.')
-
-class GithubView(MethodView):
-
-    decorators = [cross_origin()]
-
-    @cached_property
-    def repo(self):
-        client = github3.login(token=config.github_token)
-        return client.repository('18F', 'fec')
-
-    @use_kwargs({
-        'referer': fields.Url(
-            required=True,
-            validate=validate_referer,
-            location='headers',
-        ),
-        'action': fields.Str(),
-        'feedback': fields.Str(),
-        'about': fields.Str(),
-    })
-    def post(self, **kwargs):
-        if not any([kwargs['action'], kwargs['feedback'], kwargs['about']]):
-            return jsonify({
-                'message': 'Must provide one of "action", "feedback", or "about".',
-            }), 422
-        title = 'User feedback on {}'.format(kwargs['referer'])
-        body = render_template('feedback.html', headers=request.headers, **kwargs)
-        issue = self.repo.create_issue(title, body=body)
-        return jsonify(issue.to_json()), 201

@@ -11,6 +11,7 @@ env:
   NEW_RELIC_CONFIG_FILE: newrelic.ini
   NEW_RELIC_LOG: stdout
   FEC_FORCE_HTTPS: "true"
+  FEEDBACK_URL: "https://fec-feedback.18f.gov"
 applications:
 - name: web-a
 - name: web-b
