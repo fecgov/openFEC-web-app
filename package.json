@@ -58,8 +58,8 @@
     "url": "https://github.com/18F/openfec-web-app/issues"
   },
   "dependencies": {
-    "aria-accordion": "git://github.com/18f/accordion",
-    "glossary-panel": "git://github.com/18f/glossary.git",
+    "aria-accordion": "0.1.0",
+    "glossary-panel": "0.1.0",
     "chroma-js": "1.0.1",
     "colorbrewer": "0.0.2",
     "component-sticky": "1.0.0",
