@@ -7,7 +7,12 @@ from openfecwebapp import app
 manager = Manager(app)
 manager.add_command(
     'runserver',
-    Server(use_debugger=True, use_reloader=True, extra_files=['./rev-manifest.json']),
+    Server(
+        port=3000,
+        use_debugger=True,
+        use_reloader=True,
+        extra_files=['./rev-manifest.json'],
+    ),
 )
 
 if __name__ == '__main__':
