@@ -18,11 +18,6 @@ cache_size = int(os.getenv('FEC_WEB_CACHE_SIZE', 1000))
 style_url = os.getenv('FEC_WEB_STYLE_URL')
 cms_url = os.getenv('FEC_CMS_URL', '')
 
-# the username and password should be the same for both the
-# web app and API
-username = env.get_credential('FEC_WEB_USERNAME', '')
-password = env.get_credential('FEC_WEB_PASSWORD', '')
-
 # you can only give a var a string using set-env with Cloud Foundry
 # set FEC_WEB_DEBUG to any string but an empty one if you want debug on
 debug = bool(os.getenv('FEC_WEB_DEBUG'))
@@ -36,10 +31,6 @@ environment = (
 
 # Whether the app should force HTTPS/HSTS.
 force_https = bool(os.getenv('FEC_FORCE_HTTPS', ''))
-
-# used to turn auth off for testing
-# set to a non-empty string in your environment if you want auth off
-test = os.getenv('FEC_WEB_TEST')
 
 # used to include the Google Analytics tracking script
 # set to a non-empty string in your environment if you want to use Analytics
