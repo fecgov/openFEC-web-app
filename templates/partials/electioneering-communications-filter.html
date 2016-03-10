@@ -12,7 +12,7 @@ Filter independent expenditures
 
 {% block filters %}
 
-{{ typeahead.field('committee_id', 'Committee') }}
+{{ typeahead.field('committee_id', 'Committee name or ID') }}
 {{ typeahead.field('candidate_id', 'Candidate mentioned', dataset='candidates') }}
 
 {{ text.field('min_amount', 'Minimum disbursement amount', {'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}

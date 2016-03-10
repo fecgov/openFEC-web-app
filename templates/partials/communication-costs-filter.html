@@ -12,7 +12,7 @@ Filter communication costs
 
 {% block filters %}
 
-{{ typeahead.field('committee_id', 'Committee') }}
+{{ typeahead.field('committee_id', 'Committee name or ID') }}
 {{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
 {% include 'partials/filters/support-oppose.html' %}
 

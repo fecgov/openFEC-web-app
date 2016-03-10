@@ -18,7 +18,7 @@ Filter independent expenditures
 {% block filters %}
 
 {% include 'partials/filters/election-years.html' %}
-{{ typeahead.field('committee_id', 'Spender') }}
+{{ typeahead.field('committee_id', 'Spender name or ID') }}
 {{ typeahead.field('candidate_id', 'Candidate supported or opposed', dataset='candidates') }}
 {% include 'partials/filters/support-oppose.html' %}
 
