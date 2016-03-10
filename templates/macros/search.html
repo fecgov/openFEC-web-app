@@ -16,12 +16,12 @@
         {% endif %}
       >Committees</option>
     </select>
-    <input class="js-search-input combo__input tst-search-input" type="text" name="search"
+    <input class="js-search-input combo__input" type="text" name="search"
     aria-label="Search for {{ result_type }}"
     placeholder="Search for {{ result_type }}" autocomplete="off"
     autocorrect="off" autocapitalize="off" spellcheck="false"
     value="{{ query or '' }}">
-    <button type="submit" class="combo__button button--search tst-search-submit {{ button_color }}">
+    <button type="submit" class="combo__button button--search {{ button_color }}">
       <span class="u-visually-hidden">Search</span>
     </button>
   </div>

@@ -22,7 +22,7 @@
   <div class="container">
     <h1 class="t-ruled--bold">Search</h1>
     <div class="row">
-      <section class="main__content tst-search_results">
+      <section class="main__content">
           <h4 class="label">Select a category</h4>
           {{ search.search('results', result_type, query, 'button--neutral') }}
 
@@ -30,7 +30,7 @@
             {% if results|length >= 20 %}
               <div class="results__count message message--alert">
                 Showing first 20 results.
-                <a href="{{ url_for(result_type, name=query) }}">View all &raquo;</a>
+                <a href="{{ url_for(result_type, q=query) }}">View all &raquo;</a>
               </div>
             {% endif %}
             <h2 class="results__title">Results:</h2>

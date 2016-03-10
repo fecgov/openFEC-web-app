@@ -16,7 +16,6 @@ from raven.contrib.flask import Sentry
 from hmac_authentication import hmacauth
 from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sslify import SSLify
-from flask.ext.basicauth import BasicAuth
 from werkzeug.contrib.fixers import ProxyFix
 
 from openfecwebapp import utils
@@ -422,15 +421,6 @@ if config.force_https:
 
 if config.environment in ['stage', 'prod']:
     app.config['PREFERRED_URL_SCHEME'] = 'https'
-
-
-# Note: Apply basic auth check after HTTPS redirect so that users aren't prompted
-# for credentials over HTTP; h/t @noahkunin.
-if config.username and config.password:
-    app.config['BASIC_AUTH_USERNAME'] = config.username
-    app.config['BASIC_AUTH_PASSWORD'] = config.password
-    app.config['BASIC_AUTH_FORCE'] = True
-    basic_auth = BasicAuth(app)
 
 
 # if config.environment == 'prod':
