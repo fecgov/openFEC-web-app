@@ -32,8 +32,6 @@ before_script:
   - nvm use v5.5.0
 
   - travis_retry npm install
-  - travis_retry npm install -g gulp
-  - travis_retry npm install karma-phantomjs-launcher karma-phantomjs-shim
   - npm run build
 
 script:
