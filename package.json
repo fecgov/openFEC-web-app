@@ -59,13 +59,15 @@
     "url": "https://github.com/18F/openfec-web-app/issues"
   },
   "dependencies": {
+    "aria-accordion": "0.1.0",
+    "glossary-panel": "0.1.1",
     "chroma-js": "1.0.1",
     "colorbrewer": "0.0.2",
     "component-sticky": "1.0.0",
     "d3": "3.5.5",
     "datatables.net": "1.10.10",
     "datatables.net-responsive": "2.0.1",
-    "fec-style": "git://github.com/jmcarp/fec-style.git#election-filter",
+    "fec-style": "git://github.com/18f/fec-style.git#new-accordions",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
     "intl": "1.0.0-rc-4",
