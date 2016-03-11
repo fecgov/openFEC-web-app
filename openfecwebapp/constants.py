@@ -1,5 +1,7 @@
 from collections import OrderedDict
 
+START_YEAR = 1979
+
 states = OrderedDict([
     ('AK', 'Alaska'),
     ('AL', 'Alabama'),

@@ -6,11 +6,12 @@ import threading
 import cachetools
 import cachecontrol
 
+from openfecwebapp import constants
+
 
 def current_cycle():
     year = datetime.datetime.now().year
     return year + year % 2
-
 
 class LRUCache(cachecontrol.cache.BaseCache):
     """A thread-safe least recently updated cache adapted to work with
@@ -30,7 +31,6 @@ class LRUCache(cachecontrol.cache.BaseCache):
     def delete(self, key):
         with self.lock:
             self.data.clear()
-
 
 class ReverseProxied(object):
     """Wrap the application in this middleware and configure the
@@ -106,3 +106,15 @@ def date_ranges():
             ),
         ),
     }
+
+def get_cycles():
+    return range(current_cycle(), constants.START_YEAR, -2)
+
+def election_title(cycle, office, state=None, district=None):
+    base = ' '.join([str(cycle), 'Election', 'United States', office.capitalize()])
+    parts = [base]
+    if state:
+        parts.append(constants.states[state.upper()])
+    if district:
+        parts.append('District {0}'.format(district))
+    return ' - '.join(parts)
