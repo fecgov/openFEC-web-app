@@ -18,7 +18,7 @@ Filter communication costs
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Candidate mentioned</button>
   <div class="accordion__content">
-    {{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
+    {{ typeahead.field('candidate_id', 'Candidate name or ID', dataset='candidates') }}
     {% include 'partials/filters/support-oppose.html' %}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Transaction information</button>

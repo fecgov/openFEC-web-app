@@ -6,7 +6,7 @@
 
 {% block filters %}
 <div class="filters__inner">
-  {{ typeahead.field('q', 'Candidate name or ID', 'Find an ID by searching for a candidate name', 'candidates', True) }}
+  {{ typeahead.field('q', 'Candidate name or ID', '', 'candidates', True) }}
   {% include 'partials/filters/election-years.html' %}
   {% include 'partials/filters/office-sought.html' %}
   {% include 'partials/filters/parties.html' %}

@@ -13,7 +13,7 @@ Filter independent expenditures
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
-    {{ typeahead.field('committee_id', 'Spender') }}
+    {{ typeahead.field('committee_id', 'Spender name or ID') }}
     {{ typeahead.field('candidate_id', 'Candidate mentioned', dataset='candidates') }}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Transaction information</button>
