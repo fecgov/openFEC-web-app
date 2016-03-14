@@ -3,11 +3,12 @@
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
+{% import 'macros/filters/years.html' as years %}
 
 {% block filters %}
 <div class="filters__inner">
   {{ typeahead.field('q', 'Candidate name or ID', '', dataset='candidates', allow_text=True) }}
-  {% include 'partials/filters/election-years.html' %}
+  {{ years.years('election_year', 'Election year') }}
   {% include 'partials/filters/office-sought.html' %}
   {% include 'partials/filters/parties.html' %}
   {{ states.field('state') }}

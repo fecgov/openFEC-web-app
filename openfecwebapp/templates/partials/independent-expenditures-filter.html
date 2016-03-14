@@ -3,6 +3,7 @@
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/years.html' as years %}
 {% import 'macros/filters/date.html' as date %}
 
 {% block heading %}
@@ -19,7 +20,7 @@ Filter independent expenditures
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
     {{ typeahead.field('committee_id', 'Spender name or ID') }}
-    {% include 'partials/filters/election-years.html' %}
+    {{ years.years('cycle', 'Two-year period') }}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Candidate mentioned</button>
   <div class="accordion__content">

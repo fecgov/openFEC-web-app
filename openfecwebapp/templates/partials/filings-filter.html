@@ -3,6 +3,7 @@
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/years.html' as years %}
 {% import 'macros/filters/date.html' as date %}
 
 {% block heading %}
@@ -19,7 +20,7 @@ Filter filings
 
   <button type="button" class="js-accordion-trigger accordion__button">Filing date</button>
   <div class="accordion__content">
-    {% include 'partials/filters/election-years.html' %}
+    {{ years.years('cycle', 'Two-year period')  }}
     {{ date.field('receipt_date', 'Receipt date', dates ) }}
   </div>
 
