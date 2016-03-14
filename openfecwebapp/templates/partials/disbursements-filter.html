@@ -17,12 +17,12 @@ Filter disbursements
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
-    {{ typeahead.field('committee_id', 'Spending committee') }}
+    {{ typeahead.field('committee_id', 'Committee name or ID') }}
   </div>
 
   <button type="button" class="js-accordion-trigger accordion__button">Recipient information</button>
   <div class="accordion__content">
-    {{ typeahead.field('recipient_name', 'Recipient', allow_text=True) }}
+    {{ typeahead.field('recipient_name', 'Recipient name or ID', allow_text=True) }}
     {{ text.field('recipient_city', 'City') }}
     {{ states.field('recipient_state')}}
   </div>
