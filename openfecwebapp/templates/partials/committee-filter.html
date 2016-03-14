@@ -7,7 +7,7 @@
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
-    {{ typeahead.field('q', 'Committee name or ID', False, 'committees', True) }}
+    {{ typeahead.field('q', 'Committee name or ID', False, dataset='committees', allow_text=True) }}
     {% include 'partials/filters/election-years.html' %}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Committee details</button>
