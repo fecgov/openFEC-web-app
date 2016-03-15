@@ -1,4 +1,4 @@
-<li class="download">
+<li class="download {{#if downloadUrl}}is-complete{{else}}is-pending{{/if}}">
   <div class="download__item">
     <span id="download-file-name" class="download__name">{{filename}}</span>
       <a class="button button--primary-contrast download__button {{#unless downloadUrl}}disabled{{/unless}}"

@@ -84,7 +84,6 @@ function DownloadItem(url, container, opts) {
   this.timestamp = payload.timestamp || moment().format(DATE_FORMAT);
   this.downloadUrl = payload.downloadUrl;
   this.isPending = !_.isEmpty(payload);
-
   this.filename = this.resource + '-' + this.timestamp + '.zip';
 }
 
@@ -166,6 +165,7 @@ DownloadItem.prototype.handleError = function(xhr, textStatus) {
 DownloadItem.prototype.finish = function(downloadUrl) {
   this.downloadUrl = downloadUrl;
   this.push();
+  this.$body.removeClass('is-pending');
   this.$body.addClass('is-complete');
   this.$body.find('.download__message').remove();
   this.$button.attr('href', this.downloadUrl).removeClass('disabled');
