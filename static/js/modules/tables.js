@@ -14,6 +14,11 @@ require('datatables.net-responsive')(window, $);
 var helpers = require('./helpers');
 var download = require('./download');
 
+// Widgets
+var filterTags = require('fec-style/js/filter-tags');
+var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+var FilterPanelControls = require('fec-style/js/filter-panel-controls').FilterPanelControls;
+
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 var titleTemplate = require('../../templates/tables/title.hbs');
 
@@ -39,6 +44,10 @@ var DOWNLOAD_MESSAGES = {
   comingSoon: 'Data exports for this page are coming soon.',
   pending: 'You\'re already exporting this data set.'
 };
+
+var DATA_WIDGETS = '.js-data-widgets';
+var FILTER_TAGS = '.js-filter-tags';
+var PANEL_CONTROLS = '.js-panel-controls';
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -391,8 +400,6 @@ function DataTable(selector, opts) {
   this.$body = $(selector);
   this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
   this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
-  this.filterPanel = (this.opts.panel || {});
-  this.filterSet = this.filterPanel.filterSet;
 
   this.xhr = null;
   this.fetchContext = null;
@@ -405,20 +412,25 @@ function DataTable(selector, opts) {
 
   DataTable.registry[this.$body.attr('id')] = this;
 
+  if (this.opts.useFilters) {
+    $(window).on('popstate', this.handlePopState.bind(this));
+    new FilterPanelControls(PANEL_CONTROLS);
+    var tagList = new filterTags.TagList({title: 'All records'});
+    this.$widgets.find(FILTER_TAGS).prepend(tagList.$body);
+    this.filterPanel = new FilterPanel();
+    this.filterSet = this.filterPanel.filterSet;
+  }
+
+  if (this.opts.useExport) {
+    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
+  }
+
   if (!_.isEmpty(this.filterPanel)) {
     updateOnChange(this.filterSet.$body, this.api);
     urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
     this.$body.on('draw.dt', this, function(e) {
       e.data.filterPanel.setHeight();
     });
-  }
-
-  if (this.opts.useFilters) {
-    $(window).on('popstate', this.handlePopState.bind(this));
-  }
-
-  if (this.opts.useExport) {
-    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
   }
 
   this.$body.css('width', '100%');
@@ -459,7 +471,7 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
-  this.$widgets = $('.js-data-widgets');
+  this.$widgets = $(DATA_WIDGETS);
 
   var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
 
