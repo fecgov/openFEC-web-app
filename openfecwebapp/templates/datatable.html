@@ -1,21 +1,21 @@
 {% extends 'layouts/main.html' %}
 
 {% block title %}
-  Browse candidates
+  Browse {{ title }}
 {% endblock %}
 
 {% block body %}
 
 <header class="page-header slab slab--primary">
-  <h1 class="page-header__title">Candidates</h1>
+  <h1 class="page-header__title">{{ title }}</h1>
 </header>
 
 <section class="main__content--full">
-  {% include 'partials/candidates-office-filter.html' %}
+  <div class="data-container__widgets js-data-widgets"></div>
+  {% include 'partials/' + slug + '-filter.html' %}
   <div class="data-container">
-    <div class="data-container__widgets js-data-widgets"></div>
-    <div id="candidates" class="data-container__body fade-in">
-      {% include 'partials/candidates-office-table.html' %}
+    <div id="{{slug}}" class="data-container__body fade-in">
+      {% include 'partials/tables/' + slug + '-table.html' %}
     </div>
   </div>
 </section>
@@ -25,10 +25,12 @@
 {% endblock %}
 
 {% block scripts %}
+{% if office %}
 <script>
 var context = {
   office: '{{ office }}'
 };
 </script>
-<script src="{{ asset_for('dist/js/pages/candidates-office.js') }}"></script>
+{% endif %}
+<script src="{{ datatable_script(slug) }}"></script>
 {% endblock %}

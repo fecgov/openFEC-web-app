@@ -100,6 +100,9 @@ assets = {
 def asset_for(path):
     return url_for('static', filename=assets[path].lstrip('/'))
 
+def datatable_script(slug):
+    path = 'dist/js/pages/' + slug + '.js'
+    return asset_for(path)
 
 def get_base_path():
     return request.headers.get('X-Script-Name', '')
@@ -137,6 +140,7 @@ app.jinja_env.globals.update({
     'cycles': utils.get_cycles(),
     'assets': assets,
     'asset_for': asset_for,
+    'datatable_script': datatable_script,
     'base_path': get_base_path,
     'today': datetime.date.today,
     'format_election_years': format_election_years,
