@@ -17,7 +17,6 @@ var download = require('./download');
 // Widgets
 var filterTags = require('fec-style/js/filter-tags');
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
-var FilterPanelControls = require('fec-style/js/filter-panel-controls').FilterPanelControls;
 
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 var titleTemplate = require('../../templates/tables/title.hbs');
@@ -46,8 +45,6 @@ var DOWNLOAD_MESSAGES = {
 };
 
 var DATA_WIDGETS = '.js-data-widgets';
-var FILTER_TAGS = '.js-filter-tags';
-var PANEL_CONTROLS = '.js-panel-controls';
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -414,9 +411,8 @@ function DataTable(selector, opts) {
 
   if (this.opts.useFilters) {
     $(window).on('popstate', this.handlePopState.bind(this));
-    new FilterPanelControls(PANEL_CONTROLS);
     var tagList = new filterTags.TagList({title: 'All records'});
-    this.$widgets.find(FILTER_TAGS).prepend(tagList.$body);
+    this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
     this.filterPanel = new FilterPanel();
     this.filterSet = this.filterPanel.filterSet;
   }
