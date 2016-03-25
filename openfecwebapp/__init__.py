@@ -123,6 +123,7 @@ app.jinja_env.globals.update(vars(config))
 app.jinja_env.globals.update({
     'min': min,
     'max': max,
+    'context': filters.get_context,
     'absolute_url': get_absolute_url,
     'contact_email': 'betafeedback@fec.gov',
     'default_cycles': _get_default_cycles(),

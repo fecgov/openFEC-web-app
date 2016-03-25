@@ -3,6 +3,7 @@
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/years.html' as years %}
 {% import 'macros/filters/date.html' as date %}
 
 {% block heading %}
@@ -13,13 +14,13 @@ Filter filings
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
   <button type="button" class="js-accordion-trigger accordion__button">Filer</button>
   <div class="accordion__content">
-    {{ typeahead.field('committee_id', 'Committee ID', 'Find an ID by searching for a committee name') }}
-    {{ typeahead.field('candidate_id', 'Candidate ID', 'Find an ID by searching for a candidate name', dataset='candidates') }}
+    {{ typeahead.field('committee_id', 'Committee name or ID', '') }}
+    {{ typeahead.field('candidate_id', 'Candidate name or ID', '', dataset='candidates') }}
   </div>
 
   <button type="button" class="js-accordion-trigger accordion__button">Filing date</button>
   <div class="accordion__content">
-    {% include 'partials/filters/election-years.html' %}
+    {{ years.years('cycle', 'Two-year period')  }}
     {{ date.field('receipt_date', 'Receipt date', dates ) }}
   </div>
 
