@@ -19,7 +19,7 @@ Filter receipts
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
-    {{ typeahead.field('committee_id', 'Committee ID', 'Find an ID by searching for a committee name') }}
+    {{ typeahead.field('committee_id', 'Committee name or ID') }}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Contributor information</button>
   <div class="accordion__content">
@@ -55,7 +55,7 @@ Filter receipts
         </ul>
       </fieldset>
     </div>
-    {{ typeahead.field('contributor_name', 'Contributor', 'Enter a committee ID or search by name', allow_text=True) }}
+    {{ typeahead.field('contributor_name', 'Contributor name or ID', dataset='committees', allow_text=True) }}
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
     {{ text.field('contributor_employer', 'Employer') }}
