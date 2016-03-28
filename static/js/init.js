@@ -41,7 +41,7 @@ Inputmask.extendAliases({
 });
 
 // Include vendor scripts
-require('./vendor/tablist');
+require('./vendor/tablist').init();
 
 var charts = require('./modules/charts');
 var Search = require('./modules/search');
