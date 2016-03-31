@@ -26,8 +26,11 @@
     {{#panelRow "Filing date"}}
       {{{datetime receipt_date format="pretty"}}}
     {{/panelRow}}
-    {{#panelRow "Purpose"}}
+    {{#panelRow "Description"}}
       {{disbursement_description}}
+    {{/panelRow}}
+    {{#panelRow "Purpose category"}}
+      {{disbursement_purpose_category}}
     {{/panelRow}}
     {{#panelRow "Memo"}}
       {{memo_text}}

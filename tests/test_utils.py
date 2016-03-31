@@ -1,25 +1,26 @@
 import locale
 import datetime
 
-import __init__ as app
+from openfecwebapp import app, get_election_url
+from openfecwebapp import filters
 
 
 def test_currency_filter_not_none():
     locale.setlocale(locale.LC_ALL, '')
-    assert app.currency_filter(1.05) == '$1.05'
+    assert filters.currency_filter(1.05) == '$1.05'
 
 
 def test_currency_filter_none():
-    assert app.currency_filter(None) is None
+    assert filters.currency_filter(None) is None
 
 
 def test_fmt_year_range_int():
-    assert app.fmt_year_range(1985) == '1984–1985'
+    assert filters.fmt_year_range(1985) == '1984–1985'
 
 
 def test_fmt_year_range_not_int():
-    assert app.fmt_year_range('1985') is None
-    assert app.fmt_year_range(None) is None
+    assert filters.fmt_year_range('1985') is None
+    assert filters.fmt_year_range(None) is None
 
 
 def test_fmt_chart_ticks_single_key():
@@ -28,7 +29,7 @@ def test_fmt_chart_ticks_single_key():
         'coverage_end_date': datetime.datetime(2015, 1, 1).isoformat(),
     }
     keys = 'coverage_start_date'
-    assert app.fmt_chart_ticks(group, keys) == '01/01/15'
+    assert filters.fmt_chart_ticks(group, keys) == '01/01/15'
 
 
 def test_fmt_chart_ticks_two_keys():
@@ -37,7 +38,7 @@ def test_fmt_chart_ticks_two_keys():
         'coverage_end_date': datetime.datetime(2015, 2, 1).isoformat(),
     }
     keys = ('coverage_start_date', 'coverage_end_date')
-    assert app.fmt_chart_ticks(group, keys) == '01/01/15 – 02/01/15'
+    assert filters.fmt_chart_ticks(group, keys) == '01/01/15 – 02/01/15'
 
 
 def test_fmt_chart_ticks_two_keys_repeated_value():
@@ -46,21 +47,21 @@ def test_fmt_chart_ticks_two_keys_repeated_value():
         'coverage_end_date': datetime.datetime(2015, 1, 15).isoformat(),
     }
     keys = ('coverage_start_date', 'coverage_end_date')
-    assert app.fmt_chart_ticks(group, keys) == '01/01/15 – 01/15/15'
+    assert filters.fmt_chart_ticks(group, keys) == '01/01/15 – 01/15/15'
 
 
 def test_fmt_state_full():
     value = 'ny'
-    assert app.fmt_state_full(value) == 'New York'
+    assert filters.fmt_state_full(value) == 'New York'
 
 
 def test_election_url():
-    with app.app.test_request_context():
+    with app.test_request_context():
         candidate = {'office_full': 'President', 'state': 'US', 'district': None}
-        assert app.get_election_url(candidate, 2012) == '/elections/president/2012/'
+        assert get_election_url(candidate, 2012) == '/elections/president/2012/'
         candidate = {'office_full': 'Senate', 'state': 'NJ', 'district': None}
-        assert app.get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
+        assert get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
         candidate = {'office_full': 'Senate', 'state': 'NJ', 'district': '00'}
-        assert app.get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
+        assert get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
         candidate = {'office_full': 'House', 'state': 'NJ', 'district': '02'}
-        assert app.get_election_url(candidate, 2012) == '/elections/house/NJ/02/2012/'
+        assert get_election_url(candidate, 2012) == '/elections/house/NJ/02/2012/'

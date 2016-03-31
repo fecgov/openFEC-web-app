@@ -35,79 +35,68 @@ We’re thrilled you want to get involved!
 - If you’re a developer, follow the installation instructions in the README.md page of each repository to run the apps on your computer.
 - Check out our StoriesonBoard [FEC story map](https://18f.storiesonboard.com/m/fec) to get a sense of the user needs we'll be addressing in the future.
 
----
 ## Set up
 
 ### Installation
 This application is in [Flask](http://flask.pocoo.org/). Client side features are managed using [Browserify](http://browserify.org/) and [npm](https://www.npmjs.org/).
 
-It uses Python version 3.4. Its recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies.
+It uses Python version 3.4. It's recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies. Don't put your virtualenv in this directory.
 
 Install Python dependencies:
 
-    $ pip install -r requirements.txt
+    pip install -r requirements.txt
 
 Install client side dependencies:
 
-    $ npm install -g browserify
     $ npm install
-
-If you plan to do client side JS developent, you will want to install [Watchify](https://github.com/substack/watchify):
-```
-$ npm install -g watchify
-```
 
 ### Configuration
 
 The Flask app talks to an API for data. See [openFEC](http://github.com/18F/openFEC).
 
-The app has HTTP auth enabled. You will need to set environment variables with your desired username and password.
-Those vars are `FEC_WEB_USERNAME` and `FEC_WEB_PASSWORD`. There are other config environment variables that you
-can set, but that have defaults. You can see those in `openfecwebapp/config.py`.
-
 ### Run server
 To make the site fully functional, you will need to compile the client side JS and CSS:
 
-    $ npm run build
+    npm run build
 
 Then start the server:
 
-    $ python __init__.py
+    FEC_WEB_API_URL='http://fec-dev-api.18f.gov' python manage.py runserver
 
 To view the site, visit [http://localhost:3000/](http://localhost:3000/).
 
+To run the server and configure it to use a local instance of the OpenFEC API:
+
+    python manage.py runserver
+
 To run the server in debug mode set:
 
-    $ export FEC_WEB_DEBUG=true
+    export FEC_WEB_DEBUG=true
 
 To use styles served from a custom location (e.g., if developing against a local `fec-style`):
 
-    $ export FEC_WEB_STYLE_URL=http://localhost:8080/css/styles.css
+    export FEC_WEB_STYLE_URL=http://localhost:8080/css/styles.css
 
 To be able to have links between this app and a local installation of the cms:
 
-    $ export FEC_CMS_URL=http://localhost:8000
-    
-If you'd like the app to cache API requests it makes, use the `--cached` flag:
-
-    $ python __init__.py --cached
+    export FEC_CMS_URL=http://localhost:8000
 
 ### Development
 To compile client side JS once:
 
-    $ npm run build-js
+    npm run build-js
 
 Compile Sass once:
 
-    $ npm run build-sass
+    npm run build-sass
 
 Compile JS as changes are made:
 
-    $ npm run watch-js
+    npm run watch-js
 
 Compile Sass as changes are made:
 
-    $ npm run watch-sass
+    npm run watch-sass
 
 ### Deployment
 
@@ -122,31 +111,14 @@ environment variable; the size of the cache, in items, is controlled by the
 be stale for up to the cache duration set by the API.
 
 ### Run Tests
-#### Unit Tests
 
-    $ py.test
+#### Python Unit Tests
 
-#### Browser Tests
-First, install [PhantomJS](http://phantomjs.org/).
+    py.test
 
-Configure development environment:
+#### JavaScript Unit Tests
 
-    $ unset FEC_WEB_API_KEY
-    $ export FEC_WEB_API_URL=http://fec-dev-api.18f.gov
-    $ export FEC_WEB_TEST=true
-
-Run development app server:
-
-    $ python __init__.py
-
-While app is running, run tests:
-
-    $ py.test --selenium
-
-If the development API is down or for testing with feature branches of the API,
-a local API server can be used:
-
-    $ unset FEC_WEB_API_URL
+    npm test
 
 #### Git Hooks
 
@@ -156,11 +128,11 @@ update Python and Node dependencies, and rebuild compiled JS and CSS files,
 on checking out or merging changes to `requirements.txt`, `package.json`,
 or source JS or SCSS files. To enable the hooks, run
 
-    $ invoke add_hooks
+    invoke add_hooks
 
 To disable, run
 
-    $ invoke remove_hooks
+    invoke remove_hooks
 
 
 ## Copyright and licensing

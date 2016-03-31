@@ -1,0 +1,17 @@
+<table id="results" class="data-table" data-type="candidate">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Party</th>
+      {% if office in ['senate', 'house'] %}
+        <th scope="col">State</th>
+      {% endif %}
+      {% if office == 'house' %}
+        <th scope="col">District</th>
+      {% endif %}
+      <th scope="col">Receipts</th>
+      <th scope="col">Disbursements</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+</table>
