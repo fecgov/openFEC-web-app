@@ -15,13 +15,6 @@ var analytics = require('fec-style/js/analytics');
 
 var $container = '.tab-interface';
 
-// Handle click on tab to show + focus tabpanel
-
-$('[role="tab"]').on('click', function(e) {
-  e.preventDefault();
-  show($(this), true);
-});
-
 function show($target, push) {
   // Toggle tabs
   $('[role="tab"]').attr({
@@ -68,9 +61,6 @@ function refreshTabs() {
   });
 }
 
-$(window).on('popstate', refreshTabs);
-refreshTabs();
-
 function onShow($elm, callback) {
   var $panel = $elm.closest('[role="tabpanel"]');
   if ($panel.is(':visible')) {
@@ -82,6 +72,18 @@ function onShow($elm, callback) {
   }
 }
 
+function init() {
+  // Handle click on tab to show + focus tabpanel
+  $('[role="tab"]').on('click', function(e) {
+    e.preventDefault();
+    show($(this), true);
+  });
+
+  $(window).on('popstate', refreshTabs);
+  refreshTabs();
+}
+
 module.exports = {
-  onShow: onShow
+  onShow: onShow,
+  init: init,
 };
