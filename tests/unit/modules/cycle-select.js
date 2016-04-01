@@ -82,7 +82,7 @@ describe('filter set', function() {
     it('renders two-year period select', function() {
       var $cycles = this.cycleSelect.$cycles.find('span');
       expect($cycles.length).to.equal(3);
-      var labels = ['Full cycle: 2013–2016', '2015–2016', '2013–2014'];
+      var labels = ['Full cycle: 2013–2016', '2013–2014', '2015–2016'];
       expect(
         $cycles.map(function(idx, elm) {
           return trim($(elm).text());
@@ -104,8 +104,8 @@ describe('filter set', function() {
       this.cycleSelect.initCyclesMulti(2016);
       var labels = this.cycleSelect.$cycles.find('label');
       expectDisabled(labels.eq(0), false);
-      expectDisabled(labels.eq(1), false);
-      expectDisabled(labels.eq(2), true);
+      expectDisabled(labels.eq(1), true);
+      expectDisabled(labels.eq(2), false);
     });
   });
 
