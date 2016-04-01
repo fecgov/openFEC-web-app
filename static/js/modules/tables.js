@@ -211,7 +211,7 @@ function identity(value) {
 }
 
 var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
-var MODAL_TRIGGER_HTML = '<button class="js-panel-button button--panel">' +
+var MODAL_TRIGGER_HTML = '<button class="js-panel-button icon arrow--right">' +
   '<span class="u-visually-hidden">Toggle details</span>' +
 '</button>';
 
