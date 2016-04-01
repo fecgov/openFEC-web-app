@@ -29,6 +29,10 @@ environment = (
     else 'dev'
 )
 
+features = {
+    'legal': bool(os.getenv('FEC_FEATURES_LEGAL', '')),
+}
+
 # Whether the app should force HTTPS/HSTS.
 force_https = bool(os.getenv('FEC_FORCE_HTTPS', ''))
 
