@@ -45,6 +45,18 @@ def load_search_results(query, query_type='candidates'):
     return results['results'] if len(results) else []
 
 
+def load_legal_search_results(query, query_type='all'):
+    filters = {}
+
+    if query:
+        filters['q'] = query
+
+    url = '/legal/search'
+    results = _call_api(url, **filters)
+
+    return results['results'] if len(results) else []
+
+
 def load_single_type(data_type, c_id, *path, **filters):
     data = _call_api(data_type, c_id, *path, **filters)
     return result_or_404(data)
