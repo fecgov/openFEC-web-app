@@ -81,6 +81,16 @@ To be able to have links between this app and a local installation of the cms:
 
     export FEC_CMS_URL=http://localhost:8000
 
+
+### Features
+
+[config.py](https://github.com/18F/openFEC-web-app/blob/develop/openfecwebapp/config.py)
+includes a set of `features` which can be enabled using environment variables or
+in the config directly.
+
+    $ FEC_FEATURE_LEGAL=1 python manage.py runserver
+
+
 ### Development
 To compile client side JS once:
 
