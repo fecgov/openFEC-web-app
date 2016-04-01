@@ -1,0 +1,123 @@
+{% extends "layouts/main.html" %}
+{% import 'macros/search.html' as search %}
+
+{% block title %}
+  Search results for "{{query}}"
+{% endblock %}
+
+{% block body %}
+<header class="page-header slab slab--primary">
+  <span class="page-header__title">Search results</span>
+    <form id="large-search" autocomplete="off" class="search__container js-search">
+      <div class="combo combo--search">
+        <select class="search__select js-search-type" name="search_type">
+          <option value="all">All sources</option>
+          <option value="candidates">Candidates</option>
+          <option value="committees">Committees</option>
+          <option value="regulations">Regulations</option>
+          <option value="aos">AOs</option>
+          <option value="murs">MURs</option>
+        </select>
+        <input name="search" type="text" class="combo__input js-search-input"{% if query %} value="{{ query }}"{% endif %}>
+        <button type="submit" class="button--primary button--search combo__button">
+         <span class="u-visually-hidden">Search</span>
+        </button>
+      </div>
+    </form>
+</header>
+
+<div class="main">
+  <div class="container">
+    <div class="row">
+      <div class="sidebar-container sidebar-container--left">
+        <aside class="sidebar sidebar--primary">
+          <h4 class="sidebar__title">Resources</h4>
+          <div class="sidebar__content">
+            <ul>
+              <li><a href="#results-regulations">Regulations ({{results.regulations|length}})</a></li>
+              <li><a href="#results-advisory-opinions">Advisory Opinions ({{results.advisory_opinions|length}})</a></li>
+              <li><a href="#results-murs">Matters Under Review ({{results.murs|length}})</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <section class="main__content">
+        <div id="results-regulations" class="content__section">
+          <div class="results-info results-info--top">
+            <h2 class="results-info__title">Regulations</h2>
+          </div>
+          {% if results.regulations|length %}
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for regulation in results.regulations %}
+                  {% include 'partials/legal-search-results-regulations.html' %}
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <div class="message message--alert">
+              <p>Sorry, there were no results.</p>
+            </div>
+          {% endif %}
+        </div>
+        <div id="results-advisory-opinions" class="content__section">
+          <div class="results-info results-info--top">
+            <h2 class="results-info__title">Advisory Opinions</h2>
+          </div>
+          {% if results.advisory_opinions|length %}
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Name</th>
+                  <th>Hit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for advisory_opinion in results.advisory_opinions %}
+                  {% include 'partials/legal-search-results-advisory-opinion.html' %}
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <div class="message message--alert">
+              <p>Sorry, there were no results.</p>
+            </div>
+          {% endif %}
+        </div>
+        <div id="results-murs" class="content__section">
+          <div class="results-info results-info--top">
+            <h2 class="results-info__title">Enforcement Matters</h2>
+          </div>
+          {% if results.murs|length %}
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Date</th>
+                  <th>Case / Committee name</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for mur in results.murs %}
+                  {% include 'partials/legal-search-results-mur.html' %}
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <div class="message message--alert">
+              <p>Sorry, there were no results.</p>
+            </div>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

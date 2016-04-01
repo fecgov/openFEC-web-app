@@ -152,3 +152,77 @@ def elections(office, cycle, state=None, district=None):
         district=district,
         title=utils.election_title(cycle, office, state, district),
     )
+
+@app.route('/legal/search/')
+def legal_search():
+    query = request.args.get('search')
+    result_type = request.args.get('search_type') or 'all'
+
+    # Stub the results for now
+    results = {
+        'regulations': [
+            {
+                'id': 1,
+                'name' : 'Independent expenditures',
+                'hit_text': '§ 100.113 Independent expenditures. An independent ' \
+                            'expenditure that meets the requirements of 11 CFR ' \
+                            '104.4 or part 109 is an expenditure, and such ' \
+                            'independent expenditure is to be reported by the ' \
+                            'person making the expenditure in accordance with 11 ' \
+                            'CFR 104.4 and part 109.',
+            },
+            {
+                'id': 2,
+                'name' : 'Independent expenditures',
+                'hit_text': '§ 100.113 Independent expenditures. An independent ' \
+                            'expenditure that meets the requirements of 11 CFR ' \
+                            '104.4 or part 109 is an expenditure, and such ' \
+                            'independent expenditure is to be reported by the ' \
+                            'person making the expenditure in accordance with 11 ' \
+                            'CFR 104.4 and part 109.',
+            },
+        ],
+        'advisory_opinions': [
+            {
+                'id': 1,
+                'no' : 'AO 2015-14',
+                'name': 'Hillary for America',
+                'hit_text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam turpis ligula, sodales ' \
+                            'ut dolor quis, dictum congue lacus. Sed urna nunc, volutpat ac porta eu, cursus a ' \
+                            'nisi. Aenean eu.'
+            },
+            {
+                'id': 1,
+                'no' : 'AO 2014-20',
+                'name': 'Make Your Laws PAC',
+                'hit_text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam turpis ligula, sodales ' \
+                            'ut dolor quis, dictum congue lacus. Sed urna nunc, volutpat ac porta eu, cursus a ' \
+                            'nisi. Aenean eu.'
+            },
+        ],
+        'murs': [
+            {
+                'id': 1,
+                'no': '002',
+                'date': '08/06/2000',
+                'case_name': 'Westchester Coalition for Legal Defense',
+                'type': 'adr',
+            },
+            {
+                'id': 1,
+                'no': '6775',
+                'date': '02/10/2015',
+                'case_name': 'Ready for Hillary PAC',
+                'type': 'mur',
+            },
+            {
+                'id': 1,
+                'no': '1951',
+                'date': '05/11/2010',
+                'case_name': 'Citizens for Harken',
+                'type': 'af',
+            },
+        ],
+    }
+
+    return views.render_legal_search_results(results, query, result_type)

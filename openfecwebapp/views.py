@@ -26,6 +26,15 @@ def render_search_results(results, query, result_type):
     )
 
 
+def render_legal_search_results(results, query, result_type):
+    return render_template(
+        'legal-search-results.html',
+        results=results,
+        result_type=result_type,
+        query=query,
+    )
+
+
 def to_date(committee, cycle):
     if committee['committee_type'] in ['H', 'S', 'P']:
         return None
