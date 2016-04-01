@@ -12,8 +12,13 @@
 - [] FEC QA review on staging
 - [] File accessibility review request [here](https://github.com/18F/Accessibility_Reviews/issues/new)
 
-## Deployement
-- [] Rebuild tables if necessary
+## Deployment
+- [] Update fec-style and publish to npm as necessary
+- [] Run update scripts in standalone app if necessary
+  - [] Allocate additional resources for the database to help with the processing before starting if need be.
+- [] Deploy API
+- [] Deploy web app
+- [] Deploy CMS
 
 ## After release
 - [] Review changes on production
