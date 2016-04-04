@@ -7,9 +7,6 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 
-var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
-var filterTags = require('fec-style/js/filter-tags');
-
 var disbursementTemplate = require('../../templates/disbursements.hbs');
 
 var columns = [
@@ -63,13 +60,9 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $widgets = $('.js-data-widgets');
-  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
-  var filterPanel = new FilterPanel();
   new tables.DataTable($table, {
     title: 'Disbursement',
     path: ['schedules', 'schedule_b'],
-    panel: filterPanel,
     columns: columns,
     paginator: tables.SeekPaginator,
     order: [[3, 'desc']],
@@ -81,5 +74,4 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(disbursementTemplate)
     }
   });
-  $widgets.prepend($tagList);
 });

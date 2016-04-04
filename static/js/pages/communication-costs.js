@@ -6,9 +6,6 @@ var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 var columns = require('../modules/columns');
 
-var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
-var filterTags = require('fec-style/js/filter-tags');
-
 var electioneeringTemplate = require('../../templates/communication-costs.hbs');
 
 var columns = [
@@ -55,13 +52,9 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $widgets = $('.js-data-widgets');
-  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
-  var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
     title: 'Communication costs',
     path: ['communication-costs'],
-    panel: filterPanel,
     columns: columns,
     rowCallback: tables.modalRenderRow,
     useExport: true,
@@ -71,5 +64,4 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(electioneeringTemplate)
     }
   });
-  $widgets.prepend($tagList);
 });

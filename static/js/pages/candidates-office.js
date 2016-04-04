@@ -52,7 +52,7 @@ var columnGroups = {
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $widgets = $('.js-data-widgets');
+  var $widgets = $(tables.dataWidgets);
   var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel();
 
@@ -69,5 +69,5 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(candidatesTemplate)
     }
   });
-  $widgets.prepend($tagList);
+  $widgets.find('.js-filter-tags').prepend($tagList);
 });
