@@ -30,7 +30,7 @@ CycleSelect.prototype.initCycles = function() {
 };
 
 CycleSelect.prototype.initCyclesMulti = function(selected) {
-  var cycles = _.range(selected, selected - this.duration, -2);
+  var cycles = _.range(selected - this.duration + 2, selected + 2, 2);
   var params = this.getParams();
   var bins = _.map(cycles, function(cycle) {
     return {

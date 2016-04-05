@@ -82,49 +82,84 @@ def committee_page(c_id, cycle=None):
 
 @app.route('/candidates/')
 def candidates():
-    return render_template('candidates.html', result_type='candidates')
+    return render_template(
+        'datatable.html',
+        result_type='candidates',
+        slug='candidates',
+        title='Candidates'
+    )
 
 @app.route('/candidates/<office>/')
 def candidates_office(office):
     if office.lower() not in ['president', 'senate', 'house']:
         abort(404)
-    return render_template('candidates-office.html', result_type='candidates', office=office)
+    return render_template(
+        'datatable.html',
+        result_type='candidates',
+        title='Candidates',
+        slug='candidates-office',
+        office=office
+    )
 
 @app.route('/committees/')
 def committees():
     return render_template(
-        'committees.html',
+        'datatable.html',
         result_type='committees',
+        slug='committees',
+        title='Committees',
         dates=utils.date_ranges(),
     )
 
 @app.route('/receipts/')
 def receipts():
-    return render_template('receipts.html', dates=utils.date_ranges())
+    return render_template(
+        'datatable.html',
+        slug='receipts',
+        title='Receipts',
+        dates=utils.date_ranges())
 
 @app.route('/disbursements/')
 def disbursements():
-    return render_template('disbursements.html', dates=utils.date_ranges())
+    return render_template(
+        'datatable.html',
+        slug='receipts',
+        title='Receipts',
+        dates=utils.date_ranges())
 
 @app.route('/filings/')
 def filings():
     return render_template(
-        'filings.html',
+        'datatable.html',
+        slug='filings',
+        title='Filings',
         dates=utils.date_ranges(),
         result_type='committees',
     )
 
 @app.route('/independent-expenditures/')
 def independent_expenditures():
-    return render_template('independent-expenditures.html', dates=utils.date_ranges())
+    return render_template(
+        'datatable.html',
+        slug='independent-expenditures',
+        title='Independent expenditures',
+        dates=utils.date_ranges())
 
 @app.route('/electioneering-communications/')
 def electioneering_communications():
-    return render_template('electioneering-communications.html', dates=utils.date_ranges())
+    return render_template(
+        'datatable.html',
+        slug='electioneering-communications',
+        title='Electioneering communications',
+        dates=utils.date_ranges())
 
 @app.route('/communication-costs/')
 def communication_costs():
-    return render_template('communication-costs.html', dates=utils.date_ranges())
+    return render_template(
+        'datatable.html',
+        slug='communication-costs',
+        title='Communication costs',
+        dates=utils.date_ranges())
 
 @app.route('/elections/')
 def election_lookup():
