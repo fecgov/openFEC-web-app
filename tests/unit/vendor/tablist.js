@@ -1,10 +1,5 @@
-'use strict';
-
 var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
 var expect = chai.expect;
-chai.use(sinonChai);
 
 var $ = require('jquery');
 
@@ -39,11 +34,8 @@ describe('tablist', function() {
             '<li><a role="tab" data-name="tab1" href="#section-1">1</a></li>' +
           '</ul>' +
           '<section id="section-0" role="tabpanel" aria-hidden="true">' +
-            '' +
           '</section>' +
-          '<section id="section-1" role="tabpanel">' +
-            '' +
-          '</section>' +
+          '<section id="section-1" role="tabpanel"></section>' +
         '</div>'
       );
 
