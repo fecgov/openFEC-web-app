@@ -153,27 +153,36 @@ var tooltipTemplate = _.template(
 function stateTooltips(svg, path, results) {
   var tooltip = d3.select('body').append('div')
     .attr('id', 'map-tooltip')
-    .attr('class', 'tooltip tooltip--above')
+    .attr('class', 'tooltip tooltip--above tooltip--mouse')
     .style('position', 'absolute')
     .style('pointer-events', 'none')
     .style('display', 'none');
   svg.selectAll('path')
     .on('mouseover', function(d) {
       this.parentNode.appendChild(this);
-      var offset = $(this).offset();
       var html = tooltipTemplate({
         name: fips.fipsByCode[d.id].STATE_NAME,
         total: helpers.currency(results[d.id] || 0)
       });
       tooltip
         .style('display', 'block')
-        .style('left', parseInt(offset.left) + 'px')
-        .style('top', parseInt(offset.top) + 'px')
         .html(html);
+      moveTooltip(tooltip);
     })
-    .on('mouseout', function(d) {
+    .on('mouseout', function() {
       tooltip.style('display', 'none');
+    })
+    .on('mousemove', function() {
+      moveTooltip(tooltip);
     });
+}
+
+function moveTooltip(tooltip) {
+  var x = d3.event.pageX - (tooltip[0][0].offsetWidth / 2);
+  var y = d3.event.pageY - (tooltip[0][0].offsetHeight);
+  tooltip
+    .style('left', x + 'px')
+    .style('top', y + 'px');
 }
 
 function highlightState($parent, state) {
