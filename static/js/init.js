@@ -4,13 +4,13 @@
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
+var Accordion = require('aria-accordion').Accordion;
+var Glossary = require('glossary-panel');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
 
 var terms = require('fec-style/js/terms');
-var glossary = require('fec-style/js/glossary');
-var accordion = require('fec-style/js/accordion');
 var dropdown = require('fec-style/js/dropdowns');
 var siteNav = require('fec-style/js/site-nav');
 var skipNav = require('fec-style/js/skip-nav');
@@ -41,7 +41,7 @@ Inputmask.extendAliases({
 });
 
 // Include vendor scripts
-require('./vendor/tablist');
+require('./vendor/tablist').init();
 
 var charts = require('./modules/charts');
 var Search = require('./modules/search');
@@ -73,7 +73,10 @@ $(document).ready(function() {
   });
 
   // Initialize glossary
-  new glossary.Glossary(terms, {body: '#glossary'});
+  new Glossary(terms, {}, {
+    termClass: 'glossary__term accordion__button',
+    definitionClass: 'glossary__definition accordion__content'
+  });
 
   // Initialize typeaheads
   new typeahead.Typeahead(
@@ -88,9 +91,19 @@ $(document).ready(function() {
   // Inialize input masks
   $('[data-inputmask]').inputmask();
 
-  // Initialize accordions
-  $('.js-accordion').each(function() {
-    Object.create(accordion).init($(this));
+  // Initialize new accordions
+  $('.js-accordion').each(function(){
+    var contentPrefix = $(this).data('content-prefix') || 'accordion';
+    var openFirst = $(this).data('open-first');
+    var selectors = {
+      body: '.js-accordion',
+      trigger: '.js-accordion-trigger'
+    };
+    var opts = {
+      contentPrefix: contentPrefix,
+      openFirst: openFirst
+    };
+    new Accordion(selectors, opts);
   });
 
   // Initialize search

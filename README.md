@@ -35,7 +35,6 @@ We’re thrilled you want to get involved!
 - If you’re a developer, follow the installation instructions in the README.md page of each repository to run the apps on your computer.
 - Check out our StoriesonBoard [FEC story map](https://18f.storiesonboard.com/m/fec) to get a sense of the user needs we'll be addressing in the future.
 
----
 ## Set up
 
 ### Installation
@@ -49,21 +48,11 @@ Install Python dependencies:
 
 Install client side dependencies:
 
-    npm install -g browserify
-    npm install
-
-If you plan to do client side JS developent, you will want to install [Watchify](https://github.com/substack/watchify):
-```
-npm install -g watchify
-```
+    $ npm install
 
 ### Configuration
 
 The Flask app talks to an API for data. See [openFEC](http://github.com/18F/openFEC).
-
-The app has HTTP auth enabled. You will need to set environment variables with your desired username and password.
-Those vars are `FEC_WEB_USERNAME` and `FEC_WEB_PASSWORD`. There are other config environment variables that you
-can set, but that have defaults. You can see those in `openfecwebapp/config.py`.
 
 ### Run server
 To make the site fully functional, you will need to compile the client side JS and CSS:
@@ -72,13 +61,13 @@ To make the site fully functional, you will need to compile the client side JS a
 
 Then start the server:
 
-    FEC_WEB_API_URL='http://fec-dev-api.18f.gov' python __init__.py
+    FEC_WEB_API_URL='http://fec-dev-api.18f.gov' python manage.py runserver
 
 To view the site, visit [http://localhost:3000/](http://localhost:3000/).
 
 To run the server and configure it to use a local instance of the OpenFEC API:
 
-    python __init__.py
+    python manage.py runserver
 
 To run the server in debug mode set:
 
@@ -91,10 +80,6 @@ To use styles served from a custom location (e.g., if developing against a local
 To be able to have links between this app and a local installation of the cms:
 
     export FEC_CMS_URL=http://localhost:8000
-    
-If you'd like the app to cache API requests it makes, use the `--cached` flag:
-
-    python __init__.py --cached
 
 ### Development
 To compile client side JS once:
@@ -126,6 +111,7 @@ environment variable; the size of the cache, in items, is controlled by the
 be stale for up to the cache duration set by the API.
 
 ### Run Tests
+
 #### Python Unit Tests
 
     py.test
@@ -133,28 +119,6 @@ be stale for up to the cache duration set by the API.
 #### JavaScript Unit Tests
 
     npm test
-
-#### Browser Tests
-First, install [PhantomJS](http://phantomjs.org/).
-
-Configure development environment:
-
-    unset FEC_WEB_API_KEY
-    export FEC_WEB_API_URL=http://fec-dev-api.18f.gov
-    export FEC_WEB_TEST=true
-
-Run development app server:
-
-    python __init__.py
-
-While app is running, run tests:
-
-    py.test --selenium
-
-If the development API is down or for testing with feature branches of the API,
-a local API server can be used:
-
-    unset FEC_WEB_API_URL
 
 #### Git Hooks
 
