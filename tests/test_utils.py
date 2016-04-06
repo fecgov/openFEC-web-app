@@ -1,8 +1,9 @@
 import locale
 import datetime
 
-from openfecwebapp import app, get_election_url
+from openfecwebapp import get_election_url
 from openfecwebapp import filters
+from openfecwebapp.app import app
 
 
 def test_currency_filter_not_none():

@@ -9,7 +9,7 @@ import furl
 from raven.contrib.flask import Sentry
 
 from hmac_authentication import hmacauth
-from flask import Flask, render_template, request, url_for
+from flask import render_template, request, url_for
 from flask_sslify import SSLify
 from werkzeug.contrib.fixers import ProxyFix
 
@@ -17,12 +17,11 @@ from openfecwebapp import utils
 from openfecwebapp import views
 from openfecwebapp import config
 from openfecwebapp import constants
+from openfecwebapp.app import app
 from openfecwebapp.env import env
 
 
 locale.setlocale(locale.LC_ALL, '')
-
-app = Flask(__name__, static_path='/static', static_folder='../dist')
 
 logger = logging.getLogger(__name__)
 
