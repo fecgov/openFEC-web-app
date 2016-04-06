@@ -159,7 +159,7 @@ def legal_search():
     result_type = request.args.get('search_type') or 'all'
 
     # Stub the results for now
-    results = {
+    results = stubs = {
         'regulations': [
             {
                 'id': 1,
@@ -180,24 +180,6 @@ def legal_search():
                             'independent expenditure is to be reported by the ' \
                             'person making the expenditure in accordance with 11 ' \
                             'CFR 104.4 and part 109.',
-            },
-        ],
-        'advisory_opinions': [
-            {
-                'id': 1,
-                'no' : 'AO 2015-14',
-                'name': 'Hillary for America',
-                'hit_text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam turpis ligula, sodales ' \
-                            'ut dolor quis, dictum congue lacus. Sed urna nunc, volutpat ac porta eu, cursus a ' \
-                            'nisi. Aenean eu.'
-            },
-            {
-                'id': 1,
-                'no' : 'AO 2014-20',
-                'name': 'Make Your Laws PAC',
-                'hit_text': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam turpis ligula, sodales ' \
-                            'ut dolor quis, dictum congue lacus. Sed urna nunc, volutpat ac porta eu, cursus a ' \
-                            'nisi. Aenean eu.'
             },
         ],
         'murs': [
@@ -228,5 +210,7 @@ def legal_search():
     # Only hit the API if there's an actual query
     if query:
         results = api_caller.load_legal_search_results(query, result_type)
+        results['regulations'] = stubs['regulations']
+        results['murs'] = stubs['murs']
 
     return views.render_legal_search_results(results, query, result_type)
