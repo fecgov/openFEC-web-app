@@ -58,7 +58,7 @@ var columns = [
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
-    title: 'Receipt',
+    title: 'Individual contributions',
     path: ['schedules', 'schedule_a'],
     query: {contributor_type: 'individual'},
     columns: columns,
