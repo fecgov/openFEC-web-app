@@ -119,6 +119,16 @@ def receipts():
         title='Receipts',
         dates=utils.date_ranges())
 
+@app.route('/receipts/individual-contributions/')
+def individual_contributions():
+    return render_template(
+        'datatable.html',
+        result_type='receipts',
+        title='Individual contributions',
+        slug='individual-contributions',
+        dates=utils.date_ranges()
+    )
+
 @app.route('/disbursements/')
 def disbursements():
     return render_template(
