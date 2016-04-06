@@ -6,7 +6,7 @@ from invoke import run
 from invoke import task
 from slacker import Slacker
 
-from openfecwebapp.config import env
+from openfecwebapp.env import env
 
 
 @task

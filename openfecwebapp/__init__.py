@@ -2,6 +2,7 @@ import re
 import json
 import locale
 import hashlib
+import logging
 import datetime
 
 import furl
@@ -15,13 +16,15 @@ from werkzeug.contrib.fixers import ProxyFix
 from openfecwebapp import utils
 from openfecwebapp import views
 from openfecwebapp import config
-from openfecwebapp.config import env
 from openfecwebapp import constants
+from openfecwebapp.env import env
 
 
 locale.setlocale(locale.LC_ALL, '')
 
 app = Flask(__name__, static_path='/static', static_folder='../dist')
+
+logger = logging.getLogger(__name__)
 
 from openfecwebapp import routes  # noqa
 from openfecwebapp import filters  # noqa
