@@ -130,17 +130,20 @@ To stand up a user-provided credential service that supports both the API and th
 the following keys are set:
 
 * SQLA_CONN
-* FEC_WEB_USERNAME
-* FEC_WEB_PASSWORD
 * FEC_WEB_API_KEY
 * FEC_WEB_API_KEY_PUBLIC
+* FEC_GITHUB_TOKEN
+* SENTRY_DSN
+* SENTRY_PUBLIC_DSN
 * NEW_RELIC_LICENSE_KEY
 
 Deploys of a single app can be performed manually by targeting the env/space, and specifying the corresponding manifest, as well as the app you want, like so:
 
 ```
-cf target [dev|stage|prod] && cf push -f manifest_<[dev|stage|prod]>.yml [api|web]
+cf target -o [dev|stage|prod] && cf push -f manifest_<[dev|stage|prod]>.yml [api|web]
 ```
+
+**NOTE:**  Performing a deploy in this manner will result in a brief period of downtime.
 
 #### Caching
 
