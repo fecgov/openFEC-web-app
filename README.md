@@ -100,7 +100,7 @@ Compile Sass as changes are made:
 
 ### Deployment
 
-##### Likely only useful for 18F team members
+*Likely only useful for 18F team members*
 
 Before deploying, install the [Cloud Foundry CLI](https://docs.cloudfoundry.org/devguide/cf-cli/install-go-cli.html) and the [autopilot plugin](https://github.com/concourse/autopilot):
 
