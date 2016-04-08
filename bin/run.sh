@@ -1,2 +1,2 @@
 invoke notify
-gunicorn openfecwebapp:app
+gunicorn openfecwebapp.app:app
