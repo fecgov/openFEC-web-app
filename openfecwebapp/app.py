@@ -24,7 +24,7 @@ locale.setlocale(locale.LC_ALL, '')
 
 logger = logging.getLogger(__name__)
 
-app = Flask('openfecwebapp', static_path='/static', static_folder='../dist')
+app = Flask(__name__, static_path='/static', static_folder='../dist')
 
 from openfecwebapp import routes  # noqa
 from openfecwebapp import filters  # noqa
