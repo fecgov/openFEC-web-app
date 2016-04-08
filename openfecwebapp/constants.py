@@ -238,7 +238,7 @@ disbursement_categories = OrderedDict([
 table_columns = OrderedDict([
     ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District']),
     ('candidates-office-president', ['Name', 'Party', 'Receipts', 'Disbursements']),
-    ('candidates-office-senate', ['Name', 'Party', 'Receipts', 'Disbursements']),
+    ('candidates-office-senate', ['Name', 'Party', 'State', 'Receipts', 'Disbursements']),
     ('candidates-office-house', ['Name', 'Party', 'State', 'District', 'Receipts', 'Disbursements']),
     ('committees', ['Name', 'Treasurer', 'State', 'Party', 'First file date', 'Type', 'Designation', 'Organization type']),
     ('communication-costs', ['Committee', 'Amount', 'Support / oppose', 'Candidate', 'Transaction date']),
