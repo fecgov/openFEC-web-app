@@ -11,7 +11,7 @@ var columns = require('../modules/columns');
 var filingsColumns = [
   columnHelpers.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
   columns.amendmentIndicatorColumn,
-  tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  columns.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
 ];
 
 var expenditureColumns = [
@@ -28,7 +28,7 @@ var expenditureColumns = [
         };
     })
   },
-  columns.commiteeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn
 ];
 
@@ -45,7 +45,7 @@ var communicationCostColumns = [
         };
     })
   },
-  columns.commiteeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn
 ];
 
@@ -59,7 +59,7 @@ var electioneeringColumns = [
         return {candidate_id: row.candidate_id};
     })
   },
-  columns.commiteeColumn({data: 'committee', className: 'all'})
+  columns.committeeColumn({data: 'committee', className: 'all'})
 ];
 
 function initFilingsTable() {
