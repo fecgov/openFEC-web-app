@@ -7,6 +7,7 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var filings = require('../modules/filings');
 var columnHelpers = require('../modules/column-helpers');
+var columns = require('../modules/columns');
 
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,

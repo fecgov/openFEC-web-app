@@ -54,8 +54,10 @@ var committeeColumn = columnHelpers.formattedColumn(function(data, type, row) {
 
 var renderCandidateColumn = function(data, type, row, meta) {
   if (data) {
-    var query = row.election_years ? tables.getCycle(row.election_years, meta) : null;
-    return columnHelpers.buildEntityLink(data, helpers.buildAppUrl(['candidate', row.candidate_id], query), 'candidate');
+    return columnHelpers.buildEntityLink(
+      data,
+      helpers.buildAppUrl(['candidate', row.candidate_id]),
+      'candidate');
   } else {
     return '';
   }
@@ -63,10 +65,9 @@ var renderCandidateColumn = function(data, type, row, meta) {
 
 var renderCommitteeColumn = function(data, type, row, meta) {
   if (data) {
-    var query = row.cycles ? tables.getCycle(row.cycles, meta) : null;
     return columnHelpers.buildEntityLink(
       data,
-      helpers.buildAppUrl(['committee', row.committee_id], query),
+      helpers.buildAppUrl(['committee', row.committee_id]),
       'committee');
   } else {
     return '';
@@ -100,7 +101,21 @@ var candidateOffice = {
 };
 
 var committees = [
-  {data: 'name', className: 'all', width: '280px', render: renderCommitteeColumn},
+  {
+    data: 'name',
+    className: 'all',
+    width: '280px',
+    render: function(data, type, row, meta) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data,
+          helpers.buildAppUrl(['committee', row.committee_id], tables.getCycle(row.cycles, meta)),
+          'committee');
+      } else {
+        return '';
+      }
+    }
+  },
   {data: 'treasurer_name', className: 'min-desktop hide-panel'},
   {data: 'state', className: 'min-desktop hide-panel', width: '60px'},
   {data: 'party_full', className: 'min-desktop hide-panel'},
