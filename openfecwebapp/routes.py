@@ -145,16 +145,6 @@ def disbursements():
         columns=constants.table_columns['disbursements']
     )
 
-@app.route('/disbursements/operating-expenditures')
-def operating_expenditures():
-    return render_template(
-        'datatable.html',
-        slug='operating-expenditures',
-        title='Operating expenditures',
-        dates=utils.date_ranges(),
-        columns=constants.table_columns['disbursements']
-    )
-
 @app.route('/filings/')
 def filings():
     return render_template(
