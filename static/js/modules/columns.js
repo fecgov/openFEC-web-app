@@ -36,6 +36,22 @@ var modalTriggerColumn = {
   }
 };
 
+var candidateColumn = columnHelpers.formattedColumn(function(data, type, row) {
+  if (row) {
+    return columnHelpers.buildEntityLink(row.candidate_name, helpers.buildAppUrl(['candidate', row.candidate_id]), 'candidate');
+  } else {
+    return '';
+  }
+});
+
+var committeeColumn = columnHelpers.formattedColumn(function(data, type, row) {
+  if (row) {
+    return columnHelpers.buildEntityLink(row.committee_name, helpers.buildAppUrl(['committee', row.committee_id]), 'committee');
+  } else {
+    return '';
+  }
+});
+
 var renderCandidateColumn = function(data, type, row, meta) {
   if (data) {
     var query = row.election_years ? tables.getCycle(row.election_years, meta) : null;
@@ -141,7 +157,17 @@ var disbursements = [
     data: 'committee',
     orderable: false,
     className: 'min-tablet hide-panel',
-    render: renderCommitteeColumn
+    render: function(data, type, row, meta) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
+    }
   },
   modalTriggerColumn
 ];
@@ -208,7 +234,17 @@ var independentExpenditures = [
     data: 'committee',
     orderable: false,
     className: 'all',
-    render: renderCommitteeColumn
+    render: function(data, type, row, meta) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
+    }
   },
   currencyColumn({data: 'expenditure_amount', className: 'min-tablet'}),
   {
@@ -276,6 +312,8 @@ var receipts = [
 
 
 module.exports = {
+  candidateColumn: candidateColumn,
+  committeeColumn: committeeColumn,
   dateColumn: dateColumn,
   currencyColumn: currencyColumn,
   barCurrencyColumn: barCurrencyColumn,

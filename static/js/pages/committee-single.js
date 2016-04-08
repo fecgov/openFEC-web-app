@@ -147,7 +147,7 @@ var filingsColumns = columnHelpers.getColumns(
 
 var disbursementPurposeColumns = [
   {data: 'purpose', className: 'all', orderable: false},
-  tables.barCurrencyColumn({data: 'total', className: 'all', orderable: false})
+  columnHelpers.buildTotalLink({data: 'total', className: 'all', orderable: false})
 ];
 
 var disbursementRecipientColumns = [

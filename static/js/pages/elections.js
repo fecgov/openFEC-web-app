@@ -35,7 +35,7 @@ var independentExpenditureColumns = [
         };
     })
   },
-  columns.commiteeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn,
   columns.candidateColumn({data: 'candidate', className: 'all'}),
 ];
@@ -53,7 +53,7 @@ var communicationCostColumns = [
         };
     })
   },
-  columns.commiteeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn,
   columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
@@ -70,7 +70,7 @@ var electioneeringColumns = [
         };
     })
   },
-  columns.commiteeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
