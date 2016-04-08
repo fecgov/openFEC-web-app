@@ -4,7 +4,7 @@
       <h2 class="heading__title" id="section-5-heading">
         Committee filings: {{ cycle|fmt_year_range }}
       </h2>
-      <a class="heading__action button--neutral button--browse" href="{{ url_for('filings', committee_id=committee_id) }}">All filings</a>
+      <a class="heading__action button--alt button--browse" href="{{ url_for('filings', committee_id=committee_id) }}">All filings</a>
     </div>
     <div class="content__section">
       <table class="data-table" data-type="filing" data-cycle="{{ cycle }}" data-committee="{{ committee_id }}">

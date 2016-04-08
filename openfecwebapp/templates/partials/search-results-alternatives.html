@@ -8,10 +8,10 @@
   <h4><a href="{{ url_for('search', search_type=alt_type, search=query )}}">View search results for <span class="t-bold">{{ alt_type }}</span> matching your search.</a></h4>
   <p>Or try browsing one of the following data sets:</p>
   <ul class="list--buttons">
-    <li><a class="button--browse button--neutral" href="{{ url_for('candidates', election_year=default_cycles) }}">Candidates</a></li>
-    <li><a class="button--browse button--neutral" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a></li>
-    <li><a class="button--browse button--neutral" href="{{ url_for('filings') }}">Filings</a></li>
-    <li><a class="button--browse button--neutral" href="{{ url_for('receipts', max_date=today() | date(fmt='%m-%d-%Y')) }}">Receipts</a></li>
-    <li><a class="button--browse button--neutral" href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">Disbursements</a></li>
+    <li><a class="button--browse button--standard" href="{{ url_for('candidates', election_year=default_cycles) }}">Candidates</a></li>
+    <li><a class="button--browse button--standard" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a></li>
+    <li><a class="button--browse button--standard" href="{{ url_for('filings') }}">Filings</a></li>
+    <li><a class="button--browse button--standard" href="{{ url_for('receipts', max_date=today() | date(fmt='%m-%d-%Y')) }}">Receipts</a></li>
+    <li><a class="button--browse button--standard" href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">Disbursements</a></li>
   </ul>
 </div>
