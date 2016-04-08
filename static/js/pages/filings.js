@@ -6,9 +6,9 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var filings = require('../modules/filings');
-var columns = require('../modules/columns');
+var columnHelpers = require('../modules/column-helpers');
 
-var filingsColumns = columns.getColumns(
+var filingsColumns = columnHelpers.getColumns(
   columns.filings,
   [
     'pdf_url', 'filer_name', 'amendment_indicator', 'receipt_date', 'coverage_end_date',

@@ -11,6 +11,7 @@ var maps = require('../modules/maps');
 var tables = require('../modules/tables');
 var filings = require('../modules/filings');
 var helpers = require('../modules/helpers');
+var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 
 var tableOpts = {
@@ -27,7 +28,7 @@ var sizeColumns = [
     width: '50%',
     className: 'all',
     render: function(data, type, row, meta) {
-      return columns.sizeInfo[data].label;
+      return columnHelpers.sizeInfo[data].label;
     }
   },
   {
@@ -35,8 +36,8 @@ var sizeColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
-      return columns.getSizeParams(row.size);
+    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+      return columnHelpers.getSizeParams(row.size);
     })
   }
 ];
@@ -47,7 +48,7 @@ var committeeColumns = [
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(
+      return columnHelpers.buildEntityLink(
         data,
         helpers.buildAppUrl(['committee', row.committee_id]),
         'committee'
@@ -59,7 +60,7 @@ var committeeColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['disbursements'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
       return {
         committee_id: row.committee_id,
         recipient_committee_id: row.recipient_id
@@ -86,7 +87,7 @@ var stateColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
       return {
         contributor_state: row.state,
         is_individual: 'true'
@@ -102,7 +103,7 @@ var employerColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
       if (row.employer) {
         return {
           contributor_employer: row.employer,
@@ -122,7 +123,7 @@ var occupationColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
       if (row.occupation) {
         return {
           contributor_occupation: row.occupation,
@@ -135,7 +136,7 @@ var occupationColumns = [
   }
 ];
 
-var filingsColumns = columns.getColumns(
+var filingsColumns = columnHelpers.getColumns(
   columns.filings,
   [
     'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
@@ -156,7 +157,7 @@ var disbursementRecipientColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['disbursements'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
       return {recipient_name: row.recipient_name};
     })
   }
@@ -168,7 +169,7 @@ var disbursementRecipientIDColumns = [
     className: 'all',
     orderable: false,
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(
+      return columnHelpers.buildEntityLink(
         data,
         helpers.buildAppUrl(['committee', row.recipient_id]),
         'committee'
@@ -180,7 +181,7 @@ var disbursementRecipientIDColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['disbursements'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
       return {recipient_committee_id: row.recipient_id};
     })
   }
@@ -192,7 +193,7 @@ var expendituresColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
       return {
         support_oppose_indicator: row.support_oppose_indicator,
         candidate_id: row.candidate_id,
@@ -201,7 +202,7 @@ var expendituresColumns = [
     })
   },
   columns.supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', className: 'all'})
+  columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var electioneeringColumns = [
@@ -210,14 +211,14 @@ var electioneeringColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
       return {
         support_oppose_indicator: row.support_oppose_indicator,
         candidate_id: row.candidate_id,
       };
     })
   },
-  tables.candidateColumn({data: 'candidate', className: 'all'})
+  columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var communicationCostColumns = [
@@ -226,7 +227,7 @@ var communicationCostColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
       return {
         support_oppose_indicator: row.support_oppose_indicator,
         candidate_id: row.candidate_id,
@@ -234,7 +235,7 @@ var communicationCostColumns = [
     })
   },
   columns.supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', className: 'all'})
+  columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 function buildStateUrl($elm) {
