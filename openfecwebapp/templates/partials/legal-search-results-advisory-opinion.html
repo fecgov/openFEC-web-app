@@ -1,9 +1,8 @@
 <tr>
-  <td>{{ advisory_opinion.no }}</td>
+  <td><a title="{{ advisory_opinion.description }}" href="http://saos.fec.gov/aodocs/{{ advisory_opinion.no }}.pdf#search={{ query }}">{{ advisory_opinion.no }}</a></td>
   <td>{{ advisory_opinion.name }}</td>
   <td>
-    &ldquo;
-    <span>{{ advisory_opinion.text }}</span>
-    &rdquo;
+    <strong class="result__summary">{{ advisory_opinion.summary }}</strong>
+    <div class="result__text" title="{{advisory_opinion.text}}">{{ advisory_opinion.text|truncate }}</div>
   </td>
 </tr>

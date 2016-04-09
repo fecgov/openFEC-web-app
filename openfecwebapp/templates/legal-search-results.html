@@ -10,7 +10,7 @@
   <span class="page-header__title">Search results</span>
     <form id="large-search" autocomplete="off" class="search__container js-search">
       <div class="combo combo--search">
-        <select class="search__select js-search-type" name="search_type">
+        <select class="search__select" name="search_type">
           <option value="all">All sources</option>
           <option value="candidates">Candidates</option>
           <option value="committees">Committees</option>
@@ -43,15 +43,20 @@
       <section class="main__content">
         <div id="results-advisory-opinions" class="content__section">
           <div class="results-info results-info--top">
-            <h2 class="results-info__title">Advisory Opinions</h2>
+            <div class="results-info__left">
+              <h2 class="results-info__title">Advisory Opinions</h2>
+            </div>
+            <div class="results-info__right">
+              <span class="results-info__secondary">Showing the top 10 results</span>
+            </div>
           </div>
           {% if results.advisory_opinions|length %}
-            <table class="data-table">
+            <table class="data-table data-table--text">
               <thead>
                 <tr>
-                  <th>No.</th>
-                  <th>Name</th>
-                  <th>Hit</th>
+                  <th class="cell--15">No.</th>
+                  <th class="cell--25">Name</th>
+                  <th class="cell--60">Hit</th>
                 </tr>
               </thead>
               <tbody>
