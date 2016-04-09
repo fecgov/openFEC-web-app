@@ -45,6 +45,40 @@ def load_search_results(query, query_type='candidates'):
     return results['results'] if len(results) else []
 
 
+def load_legal_search_results(query, query_type='all', limit=20):
+    filters = {}
+
+    def _transform_advisory_opinion(advisory_opinion):
+        source = advisory_opinion['_source']
+        return {
+            'id': source['AO_Id'],
+            'no' : source['AO_No'],
+            'name': source['AO_name'],
+            'summary': source['AO_Summary'],
+            'tags': source['AO_tags'],
+            'description': source['description'],
+            'doc_id': source['doc_id'],
+            'text': source['text'],
+        }
+
+
+    def _transform(data):
+        results = {}
+        results['advisory_opinions'] = [_transform_advisory_opinion(i) for i in data if i['_type'] == 'ao']
+        results['regulations'] = [i for i in data if i['_type'] == 'regulation']
+        results['murs'] = [i for i in data if i['_type'] == 'mur']
+        return results
+
+    if query:
+        filters['q'] = query
+        filters['limit'] = limit
+
+    url = '/legal/search'
+    results = _call_api(url, **filters)
+
+    return _transform(results['results'] if len(results) else [])
+
+
 def load_single_type(data_type, c_id, *path, **filters):
     data = _call_api(data_type, c_id, *path, **filters)
     return result_or_404(data)

@@ -187,3 +187,15 @@ def elections(office, cycle, state=None, district=None):
         district=district,
         title=utils.election_title(cycle, office, state, district),
     )
+
+@app.route('/legal/search/')
+def legal_search():
+    query = request.args.get('search')
+    result_type = request.args.get('search_type') or 'all'
+    results = {}
+
+    # Only hit the API if there's an actual query
+    if query:
+        results = api_caller.load_legal_search_results(query, result_type)
+
+    return views.render_legal_search_results(results, query, result_type)

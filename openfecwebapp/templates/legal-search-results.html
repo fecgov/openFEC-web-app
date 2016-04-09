@@ -1,0 +1,78 @@
+{% extends "layouts/main.html" %}
+{% import 'macros/search.html' as search %}
+
+{% block title %}
+  Search results for "{{query}}"
+{% endblock %}
+
+{% block body %}
+<header class="page-header slab slab--primary">
+  <span class="page-header__title">Search results</span>
+    <form id="large-search" autocomplete="off" class="search__container js-search">
+      <div class="combo combo--search">
+        <select class="search__select" name="search_type">
+          <option value="all">All sources</option>
+          <option value="candidates">Candidates</option>
+          <option value="committees">Committees</option>
+          <option value="regulations">Regulations</option>
+          <option value="aos">AOs</option>
+          <option value="murs">MURs</option>
+        </select>
+        <input name="search" type="text" class="combo__input js-search-input"{% if query %} value="{{ query }}"{% endif %}>
+        <button type="submit" class="button--primary button--search combo__button">
+         <span class="u-visually-hidden">Search</span>
+        </button>
+      </div>
+    </form>
+</header>
+
+<div class="main">
+  <div class="container">
+    <div class="row">
+      <div class="sidebar-container sidebar-container--left">
+        <nav class="sidebar sidebar--neutral side-nav js-sticky" data-sticky-container="main">
+          <ul class="sidebar__content">
+            <li class="side-nav__item"><a class="side-nav__link" href="#results-advisory-opinions">Advisory Opinions ({{results.advisory_opinions|length}})</a></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link" href="#results-regulations">Regulations (TBD)</span></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link" href="#results-murs">Matters Under Review (TBD)</span></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link" href="#results-murs">(Resource TBD)</span></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link" href="#results-murs">(Resource TBD)</span></li>
+          </ul>
+        </nav>
+      </div>
+      <section class="main__content">
+        <div id="results-advisory-opinions" class="content__section">
+          <div class="results-info results-info--top">
+            <div class="results-info__left">
+              <h2 class="results-info__title">Advisory Opinions</h2>
+            </div>
+            <div class="results-info__right">
+              <span class="results-info__secondary">Showing the top 10 results</span>
+            </div>
+          </div>
+          {% if results.advisory_opinions|length %}
+            <table class="data-table data-table--text">
+              <thead>
+                <tr>
+                  <th class="cell--15">No.</th>
+                  <th class="cell--25">Name</th>
+                  <th class="cell--60">Hit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for advisory_opinion in results.advisory_opinions %}
+                  {% include 'partials/legal-search-results-advisory-opinion.html' %}
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <div class="message message--alert">
+              <p>Sorry, there were no results.</p>
+            </div>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}
