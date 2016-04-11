@@ -8,7 +8,7 @@
     </h3>
     <span class="result__years t-data">
       {% if candidate.election_years[0] != candidate.election_years[-1] %}
-        Years active: {{ min(candidate.election_years) }}–{{ max(candidate.election_years) }}
+        Election years: {{ min(candidate.election_years) }}–{{ max(candidate.election_years) }}
       {% else %}
         Years active: {{ candidate.election_years[0] }}
       {% endif %}
