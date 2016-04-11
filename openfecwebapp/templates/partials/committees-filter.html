@@ -13,7 +13,7 @@
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Committee details</button>
   <div class="accordion__content">
-    {{ text.field('treasurer_name', 'Treasurer name') }}
+    {{ text.field('treasurer_name', 'Most recent treasurer') }}
     {% include 'partials/filters/parties.html' %}
     {{ states.field('state') }}
   </div>
