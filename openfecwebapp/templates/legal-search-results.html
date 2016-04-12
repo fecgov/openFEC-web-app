@@ -1,5 +1,5 @@
 {% extends "layouts/main.html" %}
-{% import 'macros/search.html' as search %}
+{% import 'macros/legal-search.html' as legal_search %}
 
 {% block title %}
   Search results for "{{query}}"
@@ -8,22 +8,7 @@
 {% block body %}
 <header class="page-header slab slab--primary">
   <span class="page-header__title">Search results</span>
-    <form id="large-search" autocomplete="off" class="search__container js-search">
-      <div class="combo combo--search">
-        <select class="search__select" name="search_type">
-          <option value="all">All sources</option>
-          <option value="candidates">Candidates</option>
-          <option value="committees">Committees</option>
-          <option value="regulations">Regulations</option>
-          <option value="aos">AOs</option>
-          <option value="murs">MURs</option>
-        </select>
-        <input name="search" type="text" class="combo__input js-search-input"{% if query %} value="{{ query }}"{% endif %}>
-        <button type="submit" class="button--primary button--search combo__button">
-         <span class="u-visually-hidden">Search</span>
-        </button>
-      </div>
-    </form>
+  {{ legal_search.search('header', result_type, query) }}
 </header>
 
 <div class="main">
@@ -47,7 +32,7 @@
               <h2 class="results-info__title">Advisory Opinions</h2>
             </div>
             <div class="results-info__right">
-              <span class="results-info__secondary">Showing the top 10 results</span>
+              <span class="results-info__details">Showing the top 10 results</span>
             </div>
           </div>
           {% if results.advisory_opinions|length %}
