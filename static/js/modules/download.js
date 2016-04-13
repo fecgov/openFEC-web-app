@@ -168,7 +168,7 @@ DownloadItem.prototype.finish = function(downloadUrl) {
   this.$body.removeClass('is-pending');
   this.$body.addClass('is-complete');
   this.$body.find('.download__message').remove();
-  this.$button.attr('href', this.downloadUrl).removeClass('disabled');
+  this.$button.attr('href', this.downloadUrl).removeClass('is-disabled');
 };
 
 DownloadItem.prototype.close = function() {
