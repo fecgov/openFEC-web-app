@@ -7,11 +7,11 @@
     {{ name }} - Candidate overview
 {% endblock %}
 
-{% set links=[('', 'Candidate profiles')] %}
+{% set breadcrumbs=[('', 'Candidate profiles')] %}
 
 {% block body %}
 <div class="tab-interface">
-  {{ header.header(name, links) }}
+  {{ header.header(name, breadcrumbs) }}
   <header class="entity__header entity__header--neutral">
     <div class="container">
       <div class="entity__header__top row">

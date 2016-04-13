@@ -8,11 +8,11 @@
     {{ name }} - committee overview
 {% endblock %}
 
-{% set links=[('', 'Committee profiles')] %}
+{% set breadcrumbs=[('', 'Committee profiles')] %}
 
 {% block body %}
   <div class="tab-interface">
-    {{ header.header(name, links, search_type='committees') }}
+    {{ header.header(name, breadcrumbs, search_type='committees') }}
     <header class="entity__header entity__header--primary">
       <div class="container">
         <div class="entity__header__top row">

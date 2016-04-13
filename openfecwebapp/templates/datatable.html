@@ -5,10 +5,10 @@
   Browse {{ title }}
 {% endblock %}
 
-{% set links=[('', 'Advanced data')] %}
+{% set breadcrumbs=[('', 'Advanced data')] %}
 {% block body %}
 
-{{ header.header(slug | title, links, show_search=False) }}
+{{ header.header(slug | title, breadcrumbs, show_search=False) }}
 
 <section class="main__content--full">
   <div class="data-container__widgets js-data-widgets">
