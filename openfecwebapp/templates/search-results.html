@@ -24,7 +24,7 @@
     <div class="row">
       <section class="main__content">
           <h4 class="label">Select a category</h4>
-          {{ search.search('results', result_type, query, 'button--standard') }}
+          {{ search.search('results', result_type, query, 'button--standard', select_class='select--alt') }}
 
           {% if results %}
             {% if results|length >= 20 %}
