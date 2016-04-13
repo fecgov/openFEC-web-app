@@ -1,18 +1,17 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/cycle-select.html' as select %}
 {% import 'macros/tabs.html' as tabs %}
+{% import 'macros/page-header.html' as header %}
 
 {% block title %}
     {{ name }} - Candidate overview
 {% endblock %}
 
-{% block body %}
+{% set links=[('', 'Candidate profiles')] %}
 
+{% block body %}
 <div class="tab-interface">
-  <header class="page-header page-header--primary">
-    <span class="page-header__title">Candidates</span>
-    {{ search.search('page-header', 'candidates') }}
-  </header>
+  {{ header.header(name, links) }}
   <header class="entity__header entity__header--neutral">
     <div class="container">
       <div class="entity__header__top row">

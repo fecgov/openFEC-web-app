@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 {% import 'macros/search.html' as search %}
-{% set hide_header_search = true %}
+{% import 'macros/page-header.html' as header %}
 
 {% block title %}
     Search results for "{{query}}"
@@ -14,9 +14,7 @@
 {% set alt_type = 'committees' %}
 {% endif %}
 
-<header class="page-header slab slab--primary">
-  <span class="page-header__title">Search results</span>
-</header>
+{{ header.header(title, show_search=False) }}
 
 <div class="main">
   <div class="container">

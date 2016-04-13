@@ -2,17 +2,17 @@
 {% import 'macros/null.html' as null %}
 {% import 'macros/cycle-select.html' as select %}
 {% import 'macros/tabs.html' as tabs %}
+{% import 'macros/page-header.html' as header %}
 
 {% block title %}
     {{ name }} - committee overview
 {% endblock %}
 
+{% set links=[('', 'Committee profiles')] %}
+
 {% block body %}
   <div class="tab-interface">
-    <header class="page-header page-header--primary">
-    <span class="page-header__title">Committees</span>
-    {{ search.search('page-header', 'committees') }}
-    </header>
+    {{ header.header(name, links, search_type='committees') }}
     <header class="entity__header entity__header--primary">
       <div class="container">
         <div class="entity__header__top row">
