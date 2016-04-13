@@ -14,6 +14,10 @@ require('datatables.net-responsive')(window, $);
 var helpers = require('./helpers');
 var download = require('./download');
 
+// Widgets
+var filterTags = require('fec-style/js/filter-tags');
+var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 var titleTemplate = require('../../templates/tables/title.hbs');
 
@@ -39,6 +43,8 @@ var DOWNLOAD_MESSAGES = {
   comingSoon: 'Data exports for this page are coming soon.',
   pending: 'You\'re already exporting this data set.'
 };
+
+var DATA_WIDGETS = '.js-data-widgets';
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -205,7 +211,7 @@ function identity(value) {
 }
 
 var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
-var MODAL_TRIGGER_HTML = '<button class="js-panel-button icon arrow--right">' +
+var MODAL_TRIGGER_HTML = '<button class="js-panel-button button--panel">' +
   '<span class="u-visually-hidden">Toggle details</span>' +
 '</button>';
 
@@ -391,8 +397,6 @@ function DataTable(selector, opts) {
   this.$body = $(selector);
   this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
   this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
-  this.filterPanel = (this.opts.panel || {});
-  this.filterSet = this.filterPanel.filterSet;
 
   this.xhr = null;
   this.fetchContext = null;
@@ -405,20 +409,24 @@ function DataTable(selector, opts) {
 
   DataTable.registry[this.$body.attr('id')] = this;
 
+  if (this.opts.useFilters) {
+    $(window).on('popstate', this.handlePopState.bind(this));
+    var tagList = new filterTags.TagList({title: 'All records'});
+    this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
+    this.filterPanel = new FilterPanel();
+    this.filterSet = this.filterPanel.filterSet;
+  }
+
+  if (this.opts.useExport) {
+    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
+  }
+
   if (!_.isEmpty(this.filterPanel)) {
     updateOnChange(this.filterSet.$body, this.api);
     urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
     this.$body.on('draw.dt', this, function(e) {
       e.data.filterPanel.setHeight();
     });
-  }
-
-  if (this.opts.useFilters) {
-    $(window).on('popstate', this.handlePopState.bind(this));
-  }
-
-  if (this.opts.useExport) {
-    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
   }
 
   this.$body.css('width', '100%');
@@ -459,7 +467,7 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
-  this.$widgets = $('.js-data-widgets');
+  this.$widgets = $(DATA_WIDGETS);
 
   var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
 
@@ -485,7 +493,7 @@ DataTable.prototype.ensureWidgets = function() {
 };
 
 DataTable.prototype.disableExport = function(opts) {
-  this.$exportButton.addClass('disabled');
+  this.$exportButton.addClass('is-disabled');
   this.$exportButton.off('click');
 
   // Adding everything we need for the tooltip
@@ -507,7 +515,7 @@ DataTable.prototype.disableExport = function(opts) {
 
 DataTable.prototype.enableExport = function() {
   this.$exportButton.off('click');
-  this.$exportButton.removeClass('disabled');
+  this.$exportButton.removeClass('is-disabled');
   this.$exportButton.on('click', this.export.bind(this));
   this.$exportTooltip.attr('aria-hidden', 'true');
 

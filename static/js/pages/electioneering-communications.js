@@ -59,7 +59,7 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $widgets = $('.js-data-widgets');
+  var $widgets = $(tables.dataWidgets);
   var $tagList = new filterTags.TagList({title: 'All records'}).$body;
   var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
@@ -75,5 +75,5 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(electioneeringTemplate)
     }
   });
-  $widgets.prepend($tagList);
+  $widgets.find('.js-filter-tags').prepend($tagList);
 });

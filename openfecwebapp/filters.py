@@ -5,8 +5,8 @@ import datetime
 import jinja2
 from dateutil.parser import parse as parse_date
 
-from openfecwebapp import app
 from openfecwebapp import constants
+from openfecwebapp.app import app
 
 
 @jinja2.contextfunction

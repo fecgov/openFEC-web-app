@@ -24,7 +24,7 @@
     <div class="row">
       <section class="main__content">
           <h4 class="label">Select a category</h4>
-          {{ search.search('results', result_type, query, 'button--neutral') }}
+          {{ search.search('results', result_type, query, 'button--standard', select_class='select--alt') }}
 
           {% if results %}
             {% if results|length >= 20 %}
@@ -51,7 +51,7 @@
         <div class="sidebar-container">
           <aside class="sidebar">
             <div class="card">
-              <a class="button--neutral" href="{{ url_for(result_type, q=query) }}">Filter these results &raquo;</a>
+              <a class="button--standard" href="{{ url_for(result_type, q=query) }}">Filter these results &raquo;</a>
               <div class="card__content card__content--small">
                 <p>Trying to sort through a lot of results? Want to explore
                   similar {{ result_type }}? Try exploring all {{ result_type }}.

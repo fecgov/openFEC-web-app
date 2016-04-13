@@ -13,8 +13,8 @@
     <div class="container">
       <div id="election-preview" class="widget widget--neutral">
         <div class="row">
-          <div class="icon-heading">
-            <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-elections--primary.svg') }}" alt="Icon representing filings">
+          <div class="icon-heading--full">
+            <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-elections--primary.svg') }}" alt="Icon representing elections">
             <h2 class="icon-heading__title widget__title"><span class="t-short">Find candidates running near you</span></h2>
           </div>
         </div>
@@ -27,7 +27,7 @@
                 <input type="text" inputmode="numeric" id="zip" name="zip" placeholder="e.g. 10001">
               </div>
               <div class="search-controls__submit">
-                <button type="submit" class="button--search--text button--primary-contrast">Search</button>
+                <button type="submit" class="button--search--text button--cta">Search</button>
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
             <fieldset>
               <legend class="label">Find by state and district</legend>
               <div class="search-controls__state">
-                <select id="state" name="state" aria-label="Select a state">
+                <select id="state" name="state" aria-label="Select a state" class="select--alt">
                   <option value="">Select state</option>
                   {% for value, label in constants.states.items() %}
                   <option value="{{ value }}">{{ label }}</option>
@@ -44,7 +44,7 @@
                 </select>
               </div>
               <div class="search-controls__district">
-                <select id="district" name="district" aria-label="Select a district">
+                <select id="district" name="district" aria-label="Select a district" class="select--alt">
                   <option value="">Select district</option>
                   {% for value in range(1, 100) %}
                   {% with formatted = '{0:02d}'.format(value) %}
@@ -54,7 +54,7 @@
                 </select>
               </div>
               <div class="search-controls__submit">
-                <button type="submit" class="button--search--text button--primary-contrast">Search</button>
+                <button type="submit" class="button--search--text button--standard">Search</button>
               </div>
             </fieldset>
           </div>
@@ -65,11 +65,11 @@
         <h2 class="widget__title"><span class="t-short">So far in the 2016 presidential election:</span></h2>
         <div class="widget__content">
           <div>
-            <h5 class="t-data-header">Funds raised</h5>
+            <h5 class="t-data-header">Raised</h5>
             <span class="t-big-data js-receipts"></span>
           </div>
           <div>
-            <h5 class="t-data-header">Funds spent</h5>
+            <h5 class="t-data-header">Spent</h5>
             <span class="t-big-data js-disbursements"></span>
           </div>
           <div>
@@ -84,7 +84,7 @@
             url_for('filings', form_type=['F3X', 'F5'],
             min_receipt_date='01-01-2015', max_receipt_date='12-31-2016')
           }}">View independent expenditure source filings</a></p>
-          <a class="button--election button--neutral js-election-url">Compare candidates in this election</a>
+          <a class="button--election button--standard js-election-url">Compare candidates in this election</a>
         </div>
       </div>
     </div>
@@ -106,7 +106,7 @@
             <li><a href="{{ url_for('candidates', election_year=2016, office='S') }}">All 2016 Senate candidates &raquo;</a></li>
             <li><a href="{{ url_for('candidates', election_year=2016, office='H') }}">All 2016 House candidates &raquo;</a></li>
           </ul>
-          <a class="button--neutral button--browse" href="{{ url_for('candidates', election_year=default_cycles) }}">Candidate data</a>
+          <a class="button--standard button--browse" href="{{ url_for('candidates', election_year=default_cycles) }}">Candidate data</a>
         </div>
       </div>
       <div class="grid__item card card--wide">
@@ -121,7 +121,7 @@
             <li><a href="{{ url_for('committees', cycle=2016, designation=['B', 'D'], committee_type=['N', 'Q', 'V', 'W']) }}">All PACs active 2015-2016 &raquo;</a></li>
             <li><a href="{{ url_for('committees', cycle=2016, committee_type=['I', 'O', 'U']) }}">All independent expenditure committees active 2015-2016 &raquo;</a></li>
           </ul>
-          <a class="button--neutral button--browse" href="{{ url_for('committees', cycle=default_cycles) }}">All committee data</a>
+          <a class="button--standard button--browse" href="{{ url_for('committees', cycle=default_cycles) }}">All committee data</a>
         </div>
       </div>
       <div class="grid__item card card--wide">
@@ -143,7 +143,7 @@
             </li>
           </ul>
           <a
-              class="button--neutral button--browse"
+              class="button--standard button--browse"
               href="{{ url_for('receipts', max_date=today() | date(fmt='%m-%d-%Y')) }}"
             >All receipt data</a>
         </div>
@@ -165,7 +165,7 @@
             </li>
           </ul>
           <a
-              class="button--neutral button--browse"
+              class="button--standard button--browse"
               href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}"
             >All disbursement data</a>
         </div>
@@ -180,7 +180,7 @@
           <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-filings--primary.svg') }}" alt="Icon representing filings">
           <h2 class="icon-heading__title">10 most recent filings submitted</h2>
         </div>
-        <a class="u-float-right button--neutral button--browse" href="{{ url_for('filings') }}">All filing data</a>
+        <a class="u-float-right button--alt button--browse" href="{{ url_for('filings') }}">All filing data</a>
       </div>
       <table id="results" class="data-table" data-type="filing-table">
         <thead>

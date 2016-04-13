@@ -1,8 +1,6 @@
 import os
 
-import cfenv
-
-env = cfenv.AppEnv()
+from openfecwebapp.env import env
 
 # no trailing slash
 api_location = os.getenv('FEC_WEB_API_URL', 'http://localhost:5000')

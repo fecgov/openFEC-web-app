@@ -5,8 +5,8 @@ from webtest import TestApp
 import github3
 from flask import url_for
 
-from openfecwebapp import app
 from openfecwebapp import config
+from openfecwebapp.app import app
 
 @pytest.yield_fixture
 def client():
