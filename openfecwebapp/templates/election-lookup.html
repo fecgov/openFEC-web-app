@@ -1,13 +1,13 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/cycle-select.html' as select %}
+{% import 'macros/page-header.html' as header %}
+
 {% block title %}
   Find candidates and elections by location
 {% endblock %}
 
 {% block body %}
-<header class="page-header slab slab--primary">
-  <span class="page-header__title">Find candidates and elections by location</span>
-</header>
+  {{ header.header(title, show_search=False) }}
 <section class="main" id="election-lookup" >
   <div class="container">
     <h2 class="t-ruled--bottom t-ruled--bold">Search</h2>
