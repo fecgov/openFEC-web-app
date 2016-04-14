@@ -95,7 +95,7 @@ describe('data table', function() {
     });
 
     it('adds a disabled class', function() {
-      expect(this.table.$exportButton.hasClass('disabled')).to.be.true;
+      expect(this.table.$exportButton.hasClass('is-disabled')).to.be.true;
     });
 
     it('does nothing on click', function() {
@@ -117,7 +117,7 @@ describe('data table', function() {
     });
 
     it('removes the disabled class', function() {
-      expect(this.table.$exportButton.hasClass('disabled')).to.be.false;
+      expect(this.table.$exportButton.hasClass('is-disabled')).to.be.false;
     });
 
     it('adds starts an export when clicked', function() {

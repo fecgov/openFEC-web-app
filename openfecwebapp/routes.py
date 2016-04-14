@@ -123,8 +123,8 @@ def receipts():
 def disbursements():
     return render_template(
         'datatable.html',
-        slug='receipts',
-        title='Receipts',
+        slug='disbursements',
+        title='Disbursements',
         dates=utils.date_ranges())
 
 @app.route('/filings/')
