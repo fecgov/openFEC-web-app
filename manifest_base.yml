@@ -12,5 +12,4 @@ env:
   NEW_RELIC_LOG: stdout
   FEC_FORCE_HTTPS: "true"
 applications:
-- name: web-a
-- name: web-b
+- name: web

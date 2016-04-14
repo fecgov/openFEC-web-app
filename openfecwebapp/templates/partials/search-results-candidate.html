@@ -8,16 +8,16 @@
     </h3>
     <span class="result__years t-data">
       {% if candidate.election_years[0] != candidate.election_years[-1] %}
-        Election years: {{ min(candidate.election_years) }}–{{ max(candidate.election_years) }}
+        Election year: {{ min(candidate.election_years) }}–{{ max(candidate.election_years) }}
       {% else %}
-        Election years: {{ candidate.election_years[0] }}
+        Election year: {{ candidate.election_years[0] }}
       {% endif %}
     </span>
   </div>
   <div class="row">
     <ul class="result__column">
       <li>Office sought: {{ candidate.office_full }}</li>
-      <li><span class="term" data-term="party">Party:</span> {{ candidate.party_full }}</li>
+      <li><span class="term" data-term="Political party">Party:</span> {{ candidate.party_full }}</li>
     </ul>
     <ul class="result__column">
       <li>State: {{ candidate.state or 'N/A' }}</li>

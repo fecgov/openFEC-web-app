@@ -24,10 +24,10 @@ function expectDisabled($elm, disabled) {
   var $span = $elm.find('span');
   if (disabled) {
     expect($input.prop('disabled')).to.be.ok;
-    expect($span.hasClass('disabled')).to.be.true;
+    expect($span.hasClass('is-disabled')).to.be.true;
   } else {
     expect($input.prop('disabled')).not.to.be.ok;
-    expect($span.hasClass('disabled')).to.be.false;
+    expect($span.hasClass('is-disabled')).to.be.false;
   }
 }
 

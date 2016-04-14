@@ -32,13 +32,23 @@ def to_date(committee, cycle):
     return min(datetime.datetime.now().year, cycle)
 
 
-def render_committee(committee, candidates=None, cycle=None):
+def render_committee(committee, candidates, cycle):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
     tmpl_vars['cycle'] = cycle
     tmpl_vars['year'] = to_date(committee, cycle)
     tmpl_vars['result_type'] = 'committees'
+
+    # Link to current cycle if candidate has a corresponding page, else link
+    # without cycle query parameter
+    # See https://github.com/18F/openFEC/issues/1536
+    for candidate in candidates:
+        election_years = [
+            election_year for election_year in candidate['election_years']
+            if election_year - election_durations[candidate['office']] < cycle <= election_year
+        ]
+        candidate['related_cycle'] = max(election_years) if election_years else None
 
     # add related candidates a level below
     tmpl_vars['candidates'] = candidates

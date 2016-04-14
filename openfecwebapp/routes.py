@@ -5,12 +5,12 @@ from webargs import fields
 from webargs.flaskparser import use_kwargs
 from flask import render_template, request, redirect, url_for, abort
 
-from openfecwebapp import app
 from openfecwebapp import views
 from openfecwebapp import utils
 from openfecwebapp import config
 from openfecwebapp import constants
 from openfecwebapp import api_caller
+from openfecwebapp.app import app
 
 
 @app.route('/')

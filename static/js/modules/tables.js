@@ -99,7 +99,7 @@ function identity(value) {
 }
 
 var MODAL_TRIGGER_CLASS = 'js-panel-trigger';
-var MODAL_TRIGGER_HTML = '<button class="js-panel-button icon arrow--right">' +
+var MODAL_TRIGGER_HTML = '<button class="js-panel-button button--panel">' +
   '<span class="u-visually-hidden">Toggle details</span>' +
 '</button>';
 
@@ -381,7 +381,7 @@ DataTable.prototype.ensureWidgets = function() {
 };
 
 DataTable.prototype.disableExport = function(opts) {
-  this.$exportButton.addClass('disabled');
+  this.$exportButton.addClass('is-disabled');
   this.$exportButton.off('click');
 
   // Adding everything we need for the tooltip
@@ -403,7 +403,7 @@ DataTable.prototype.disableExport = function(opts) {
 
 DataTable.prototype.enableExport = function() {
   this.$exportButton.off('click');
-  this.$exportButton.removeClass('disabled');
+  this.$exportButton.removeClass('is-disabled');
   this.$exportButton.on('click', this.export.bind(this));
   this.$exportTooltip.attr('aria-hidden', 'true');
 

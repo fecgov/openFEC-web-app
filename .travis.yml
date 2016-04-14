@@ -2,24 +2,15 @@ language: python
 
 sudo: false
 
-cache:
-  directories:
-    - $HOME/.cache/pip
+cache: pip
 
 python:
   - "3.4"
 
 env:
   global:
-    - secure: "RKs9WOSenUXaGMCMjGQ1qjzSbVXpPUU6+AaEMakY19LT5os/ZDB6rUaPtkuL/PKSBgj2RBeojAOS70HBRkNJWV5ZjkYVbz+Jp7dichmLwx1OQ/Ax5fAO9r7YMqbOBHidoXBmKsjs7mYWoXKmjg8b5DVXHCMDgs9e9NIwDVqr3z0="
-    - secure: "LjYwAfqGvi7pv4mOcX9K2Aekcz58CS0B5xNx8Rz70944arMqASgJQwsN53AZgc2wGg54E322jFm3xNEx/muN6nevMXnG14UaNcjylvDWEHk/OWfaQR/30uuPYXd0fjrfHAo8Q5W2oi41Il6WFFMka76LZ8sxXAeyZxQ8hnsd6ZQ="
-
-before_install:
-  - travis_retry pip install codecov
-  - travis_retry curl -L -o travis_after_all.py https://raw.github.com/jmcarp/travis_after_all/master/travis_after_all.py
-  - travis_retry curl -L -o cf.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.11.3&source=github-rel"
-  - tar xzvf cf.tgz
-  - export PATH=.:$PATH
+    - secure: "JMpt3KkMyVBleZMavP+3zEKg/shfYKl0b9esxmPYm0HIuvufNN0nAElK5XxLzqzLiQ3DOEYoJ08W+7keEvZZTdHO1PBFhAekVdFsmYIJ5GHUNhFP8jxSY8JQ+gMeCY5V5gHcKwwiq8BlIYq/AM9a4br6nRqlGKdCP4jGFR2U/Ok=" # FEC_CF_USERNAME
+    - secure: "FV08xzTfJSHyQnRpjhJLtYx1lg/FnfJwsJZYe3vu184L3a1e5D0A50PS5UmK6Uf0DhCfB6n2PwqPUpW3KKyKycTBr19b9CDAJ+mWA0EwNpyWDJLXO4DnClc/d3e6TZtzaf9jQhKUxK0DUybg7ZzUaRTcjIUroJUgV0A31MRst3I=" # FEC_CF_PASSWORD
 
 before_script:
   - travis_retry pip install -U pip wheel
@@ -38,7 +29,17 @@ script:
   - npm run test-single
 
 after_success:
-  # Deploy to appropriate Cloud Foundry space after all builds succeed
-  # See `tasks.deploy` for details
-  - if [[ $TRAVIS_PULL_REQUEST = 'false' ]]; then invoke deploy --branch $TRAVIS_BRANCH --yes; fi;
-  - codecov --file .coverage --file coverage/coverage.json
+  - travis_retry pip install codecov
+  - codecov
+
+before_deploy:
+  - export PATH=$HOME:$PATH
+  - travis_retry curl -L -o $HOME/cf.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.15.0"
+  - tar xzvf $HOME/cf.tgz -C $HOME
+  - travis_retry cf install-plugin autopilot -f -r CF-Community
+
+deploy:
+  provider: script
+  script: invoke deploy --branch $TRAVIS_BRANCH --yes
+  on:
+    all_branches: true
