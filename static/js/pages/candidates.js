@@ -6,9 +6,6 @@ var _ = require('underscore');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 
-var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
-var filterTags = require('fec-style/js/filter-tags');
-
 var candidatesTemplate = require('../../templates/candidates.hbs');
 
 var columns = [
@@ -50,14 +47,9 @@ var columns = [
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $widgets = $('.js-data-widgets');
-  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
-  var filterPanel = new FilterPanel();
-
   new tables.DataTable($table, {
     title: 'Candidate',
     path: ['candidates'],
-    panel: filterPanel,
     columns: columns,
     useFilters: true,
     useExport: true,
@@ -66,5 +58,4 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(candidatesTemplate)
     }
   });
-  $widgets.prepend($tagList);
 });

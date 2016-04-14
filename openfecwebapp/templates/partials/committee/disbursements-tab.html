@@ -6,7 +6,7 @@
       <h2 class="heading__title" id="section-2-heading">
         Money spent by this committee: {{ cycle|fmt_year_range }}
       </h2>
-      <a class="heading__action button--neutral button--browse"
+      <a class="heading__action button--alt button--browse"
           href="{{ url_for(
             'disbursements',
             committee_id=committee_id,
@@ -20,11 +20,11 @@
         <legend class="label">Group by:</legend>
         <label for="toggle-purpose">
           <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />
-          <span class="button--neutral">Purpose</span>
+          <span class="button--alt">Purpose</span>
         </label>
         <label for="toggle-recipient">
           <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />
-          <span class="button--neutral">Recipient</span>
+          <span class="button--alt">Recipient</span>
         </label>
       </fieldset>
     </div>

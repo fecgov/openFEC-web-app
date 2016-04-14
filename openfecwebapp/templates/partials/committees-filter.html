@@ -9,11 +9,11 @@
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
     {{ typeahead.field('q', 'Committee name or ID', False, dataset='committees', allow_text=True) }}
-    {{ years.years('cycle', 'Two-year period') }}
+    {{ years.years('cycle', 'Years active') }}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Committee details</button>
   <div class="accordion__content">
-    {{ text.field('treasurer_name', 'Treasurer name') }}
+    {{ text.field('treasurer_name', 'Most recent treasurer') }}
     {% include 'partials/filters/parties.html' %}
     {{ states.field('state') }}
   </div>

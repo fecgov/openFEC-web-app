@@ -8,7 +8,7 @@
       <h2 class="heading__title" id="section-2-heading">
         Money received by the committee: {{ cycle|fmt_year_range }}
       </h2>
-      <a class="heading__action button--neutral button--browse"
+      <a class="heading__action button--alt button--browse"
           href="{{ url_for(
             'receipts',
             committee_id=committee_id,
@@ -23,19 +23,19 @@
           <legend class="label">Group by:</legend>
           <label for="toggle-state">
             <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
-            <span class="button--neutral">Contributor state</span>
+            <span class="button--alt">Contributor state</span>
           </label>
           <label for="toggle-contribution-size">
             <input id="toggle-contribution-size" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
-            <span class="button--neutral">Contribution size</span>
+            <span class="button--alt">Contribution size</span>
           </label>
           <label for="toggle-employer">
             <input id="toggle-employer" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-employer">
-            <span class="button--neutral">Contributor employer</span>
+            <span class="button--alt">Contributor employer</span>
           </label>
           <label for="toggle-occupation">
             <input id="toggle-occupation" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-occupation">
-            <span class="button--neutral">Contributor occupation</span>
+            <span class="button--alt">Contributor occupation</span>
           </label>
         </fieldset>
       </div>

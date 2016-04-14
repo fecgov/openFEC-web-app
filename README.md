@@ -100,7 +100,50 @@ Compile Sass as changes are made:
 
 ### Deployment
 
-See directions in the 18F/openFEC repo.
+*Likely only useful for 18F team members*
+
+Before deploying, install the [Cloud Foundry CLI](https://docs.cloudfoundry.org/devguide/cf-cli/install-go-cli.html) and the [autopilot plugin](https://github.com/concourse/autopilot):
+
+```
+cf install-plugin autopilot -r CF-Community
+```
+
+To deploy to Cloud Foundry, run `invoke deploy`. The `deploy` task will attempt to detect the appropriate
+Cloud Foundry space based the current branch; to override, pass the optional `--space` flag:
+
+```
+invoke deploy --space dev
+```
+
+The `deploy` task will use the `FEC_CF_USERNAME` and `FEC_CF_PASSWORD` environment variables to log in.
+If these variables are not provided, you will be prompted for your Cloud Foundry credentials.
+
+Credentials for Cloud Foundry applications are managed using user-provided services labeled as
+"fec-creds-prod", "fec-creds-stage", and "fec-creds-dev". Services are used to share credentials between the API and the webapp. To set up a service:
+
+```
+cf target -s dev
+cf cups fec-creds-dev -p '{"SQLA_CONN": "..."}'
+```
+
+To stand up a user-provided credential service that supports both the API and the webapp, ensure that
+the following keys are set:
+
+* SQLA_CONN
+* FEC_WEB_API_KEY
+* FEC_WEB_API_KEY_PUBLIC
+* FEC_GITHUB_TOKEN
+* SENTRY_DSN
+* SENTRY_PUBLIC_DSN
+* NEW_RELIC_LICENSE_KEY
+
+Deploys of a single app can be performed manually by targeting the env/space, and specifying the corresponding manifest, as well as the app you want, like so:
+
+```
+cf target -o [dev|stage|prod] && cf push -f manifest_<[dev|stage|prod]>.yml [api|web]
+```
+
+**NOTE:**  Performing a deploy in this manner will result in a brief period of downtime.
 
 #### Caching
 
