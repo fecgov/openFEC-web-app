@@ -1,6 +1,6 @@
 'use strict';
 
-/* global window, document, Inputmask, BASE_PATH */
+/* global window, document, Inputmask, BASE_PATH, CMS_URL */
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
