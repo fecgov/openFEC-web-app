@@ -405,6 +405,8 @@ function DataTable(selector, opts) {
 
   this.$widgets = $(DATA_WIDGETS);
 
+  // Set `this.filterSet` before instantiating the nested `DataTable` so that
+  // filters are available on fetching initial data
   if (this.opts.useFilters) {
     var tagList = new filterTags.TagList({title: 'All records'});
     this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
