@@ -150,7 +150,7 @@ the following keys are set:
 Deploys of a single app can be performed manually by targeting the env/space, and specifying the corresponding manifest, as well as the app you want, like so:
 
 ```
-cf target -o [dev|stage|prod] && cf push -f manifest_<[dev|stage|prod]>.yml [api|web]
+cf target -s [feature|dev|stage|prod] && cf push -f manifest_<[feature|dev|stage|prod]>.yml [api|web]
 ```
 
 **NOTE:**  Performing a deploy in this manner will result in a brief period of downtime.
