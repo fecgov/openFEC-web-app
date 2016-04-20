@@ -5,12 +5,13 @@
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
+var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 
 var filingsColumns = [
-  tables.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
+  columnHelpers.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
   columns.amendmentIndicatorColumn,
-  tables.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  columns.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
 ];
 
 var expenditureColumns = [
@@ -19,7 +20,7 @@ var expenditureColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
@@ -27,7 +28,7 @@ var expenditureColumns = [
         };
     })
   },
-  tables.committeeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn
 ];
 
@@ -37,14 +38,14 @@ var communicationCostColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
         };
     })
   },
-  tables.committeeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn
 ];
 
@@ -54,11 +55,11 @@ var electioneeringColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
         return {candidate_id: row.candidate_id};
     })
   },
-  tables.committeeColumn({data: 'committee', className: 'all'})
+  columns.committeeColumn({data: 'committee', className: 'all'})
 ];
 
 function initFilingsTable() {

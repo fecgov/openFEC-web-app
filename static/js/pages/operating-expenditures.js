@@ -8,20 +8,23 @@ var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 var columns = require('../modules/columns');
 
-var committeesTemplate = require('../../templates/committees.hbs');
+var disbursementTemplate = require('../../templates/disbursements.hbs');
 
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
-    title: 'Committee',
-    path: ['committees'],
-    columns: columns.committees,
+    title: 'Operating expenditures',
+    path: ['schedules', 'schedule_b'],
+    // query: {filter for operating expenditures},
+    columns: columns.disbursements,
+    paginator: tables.SeekPaginator,
+    order: [[3, 'desc']],
     useFilters: true,
     useExport: true,
-    order: [[4, 'desc']],
+    disableExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
-      afterRender: tables.modalRenderFactory(committeesTemplate)
+      afterRender: tables.modalRenderFactory(disbursementTemplate)
     }
   });
 });

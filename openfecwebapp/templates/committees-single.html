@@ -2,17 +2,17 @@
 {% import 'macros/null.html' as null %}
 {% import 'macros/cycle-select.html' as select %}
 {% import 'macros/tabs.html' as tabs %}
+{% import 'macros/page-header.html' as header %}
 
 {% block title %}
     {{ name }} - committee overview
 {% endblock %}
 
+{% set breadcrumbs=[('', 'Committee profiles')] %}
+
 {% block body %}
   <div class="tab-interface">
-    <header class="page-header page-header--primary">
-    <span class="page-header__title">Committees</span>
-    {{ search.search('page-header', 'committees') }}
-    </header>
+    {{ header.header(name, breadcrumbs, search_type='committees') }}
     <header class="entity__header entity__header--primary">
       <div class="container">
         <div class="entity__header__top row">
@@ -26,7 +26,7 @@
         <ul class="entity__info">
           {% if party_full %}
           <li class="entity__term">
-            <span class="entity__term__label"><span class="term" data-term="Party">Political party</span></span>
+            <span class="entity__term__label"><span class="term" data-term="Political party">Political party</span></span>
             <span class="entity__term__data">{{ party_full }}</span>
           </li>
           {% endif %}

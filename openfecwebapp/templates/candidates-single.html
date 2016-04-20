@@ -1,18 +1,17 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/cycle-select.html' as select %}
 {% import 'macros/tabs.html' as tabs %}
+{% import 'macros/page-header.html' as header %}
 
 {% block title %}
     {{ name }} - Candidate overview
 {% endblock %}
 
-{% block body %}
+{% set breadcrumbs=[('', 'Candidate profiles')] %}
 
+{% block body %}
 <div class="tab-interface">
-  <header class="page-header page-header--primary">
-    <span class="page-header__title">Candidates</span>
-    {{ search.search('page-header', 'candidates') }}
-  </header>
+  {{ header.header(name, breadcrumbs) }}
   <header class="entity__header entity__header--neutral">
     <div class="container">
       <div class="entity__header__top row">
@@ -23,7 +22,7 @@
       </div>
       <ul class="entity__info">
         <li class="entity__term">
-          <span class="entity__term__label"><a class="term" data-term="Party">Party</a></span>
+          <span class="entity__term__label"><a class="term" data-term="Political party">Party</a></span>
           <span class="entity__term__data">{{ party_full }}</span>
         </li>
         <li class="entity__term">
