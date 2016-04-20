@@ -86,7 +86,8 @@ def candidates():
         'datatable.html',
         result_type='candidates',
         slug='candidates',
-        title='Candidates'
+        title='Candidates',
+        columns=constants.table_columns['candidates']
     )
 
 @app.route('/candidates/<office>/')
@@ -98,7 +99,8 @@ def candidates_office(office):
         result_type='candidates',
         title='Candidates',
         slug='candidates-office',
-        office=office
+        office=office,
+        columns=constants.table_columns['candidates-office-' + office.lower()]
     )
 
 @app.route('/committees/')
@@ -109,6 +111,7 @@ def committees():
         slug='committees',
         title='Committees',
         dates=utils.date_ranges(),
+        columns=constants.table_columns['committees']
     )
 
 @app.route('/receipts/')
@@ -117,7 +120,20 @@ def receipts():
         'datatable.html',
         slug='receipts',
         title='Receipts',
-        dates=utils.date_ranges())
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['receipts']
+    )
+
+@app.route('/receipts/individual-contributions/')
+def individual_contributions():
+    return render_template(
+        'datatable.html',
+        result_type='receipts',
+        title='Individual contributions',
+        slug='individual-contributions',
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['receipts']
+    )
 
 @app.route('/disbursements/')
 def disbursements():
@@ -125,7 +141,9 @@ def disbursements():
         'datatable.html',
         slug='disbursements',
         title='Disbursements',
-        dates=utils.date_ranges())
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['disbursements']
+    )
 
 @app.route('/filings/')
 def filings():
@@ -135,6 +153,7 @@ def filings():
         title='Filings',
         dates=utils.date_ranges(),
         result_type='committees',
+        columns=constants.table_columns['filings']
     )
 
 @app.route('/independent-expenditures/')
@@ -143,7 +162,9 @@ def independent_expenditures():
         'datatable.html',
         slug='independent-expenditures',
         title='Independent expenditures',
-        dates=utils.date_ranges())
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['independent-expenditures']
+    )
 
 @app.route('/electioneering-communications/')
 def electioneering_communications():
@@ -151,7 +172,9 @@ def electioneering_communications():
         'datatable.html',
         slug='electioneering-communications',
         title='Electioneering communications',
-        dates=utils.date_ranges())
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['electioneering-communications']
+    )
 
 @app.route('/communication-costs/')
 def communication_costs():
@@ -159,7 +182,9 @@ def communication_costs():
         'datatable.html',
         slug='communication-costs',
         title='Communication costs',
-        dates=utils.date_ranges())
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['communication-costs']
+    )
 
 @app.route('/elections/')
 def election_lookup():

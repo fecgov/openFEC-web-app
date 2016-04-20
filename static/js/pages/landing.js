@@ -6,10 +6,11 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
+var columnHelpers = require('../modules/column-helpers');
 var lookup = require('../modules/election-lookup');
 var summary = require('../modules/election-summary');
 
-var filingsColumns = columns.getColumns(
+var filingsColumns = columnHelpers.getColumns(
   columns.filings,
   ['pdf_url', 'filer_name', 'receipt_date']
 );

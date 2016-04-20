@@ -22,7 +22,16 @@
   {% include 'partials/' + slug + '-filter.html' %}
   <div class="data-container">
     <div id="{{slug}}" class="data-container__body fade-in">
-      {% include 'partials/tables/' + slug + '-table.html' %}
+      <table id="results" class="data-table">
+        <thead>
+          <tr>
+            {% for column in columns %}
+              <th scope="col">{{ column }}</th>
+            {% endfor %}
+            <th scope="col"></th>
+          </tr>
+        </thead>
+      </table>
     </div>
   </div>
 </section>

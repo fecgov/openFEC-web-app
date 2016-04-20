@@ -234,3 +234,17 @@ disbursement_categories = OrderedDict([
     ('contributions', 'Contributions'),
     ('other', 'Other'),
 ])
+
+table_columns = OrderedDict([
+    ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District']),
+    ('candidates-office-president', ['Name', 'Party', 'Receipts', 'Disbursements']),
+    ('candidates-office-senate', ['Name', 'Party', 'State', 'Receipts', 'Disbursements']),
+    ('candidates-office-house', ['Name', 'Party', 'State', 'District', 'Receipts', 'Disbursements']),
+    ('committees', ['Name', 'Treasurer', 'State', 'Party', 'First file date', 'Type', 'Designation', 'Organization type']),
+    ('communication-costs', ['Committee', 'Amount', 'Support / oppose', 'Candidate', 'Transaction date']),
+    ('disbursements', ['Recipient name', 'State', 'Amount', 'Disbursement date', 'Purpose', 'Committee']),
+    ('electioneering-communications', ['Spender', 'Disbursement amount', 'Number of candidates', 'Amount per candidate', 'Candidate', 'Disbursement date']),
+    ('filings', ['Document', 'Filer name', 'Amendment indicator', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursement']),
+    ('independent-expenditures', ['Spender', 'Amount', 'Candidate', 'Support / oppose', 'Expenditure date', 'Description']),
+    ('receipts', ['Contributor name', 'State', 'Employer', 'Amount', 'Receipt date', 'Recipient'])
+])
