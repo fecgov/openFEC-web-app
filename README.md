@@ -126,7 +126,8 @@ invoke deploy --space dev
 ```
 
 The `deploy` task will use the `FEC_CF_USERNAME` and `FEC_CF_PASSWORD` environment variables to log in.
-If these variables are not provided, you will be prompted for your Cloud Foundry credentials.
+If these variables are not provided, your existing authorization will be used.
+You can use `cf login` to login manually.
 
 Credentials for Cloud Foundry applications are managed using user-provided services labeled as
 "fec-creds-prod", "fec-creds-stage", and "fec-creds-dev". Services are used to share credentials between the API and the webapp. To set up a service:
