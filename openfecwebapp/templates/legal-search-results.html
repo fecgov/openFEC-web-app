@@ -17,7 +17,7 @@
       <div class="sidebar-container sidebar-container--left">
         <nav class="sidebar sidebar--neutral side-nav js-sticky" data-sticky-container="main">
           <ul class="sidebar__content">
-            <li class="side-nav__item"><a class="side-nav__link" href="#results-advisory-opinions">Advisory Opinions ({{results.advisory_opinions|length}})</a></li>
+            <li class="side-nav__item"><a class="side-nav__link" href="#results-advisory-opinions">Advisory Opinions ({{ results.total_advisory_opinions }})</a></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">Regulations (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">Matters Under Review (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
@@ -31,11 +31,13 @@
             <div class="results-info__left">
               <h2 class="results-info__title">Advisory Opinions</h2>
             </div>
+            {% if results.total_advisory_opinions %}
             <div class="results-info__right">
-              <span class="results-info__details"><a href="/legal/advisory-opinions">View all <strong>{{ results.advisory_opinions|length }}</strong> results</a></span>
+              <span class="results-info__details"><a href="/legal/advisory-opinions?search={{ query }}">View all <strong>{{ results.total_advisory_opinions }}</strong> results</a></span>
             </div>
+            {% endif %}
           </div>
-          {% if results.advisory_opinions|length %}
+          {% if results.total_advisory_opinions %}
             <table class="data-table data-table--text">
               <thead>
                 <tr>

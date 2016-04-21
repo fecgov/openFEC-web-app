@@ -54,18 +54,27 @@ def _transform_advisory_opinion(advisory_opinion):
         'tags': source.get('AO_tags'),
         'description': source.get('description'),
         'doc_id': source.get('doc_id'),
-        'highlights': advisory_opinion['highlight']['text'],
+        'highlights': advisory_opinion.get('highlight', {}).get('text', []),
         'pdf_url': advisory_opinion.get('pdf_url'),
     }
 
 
 def _transform_legal_search_results(response):
     data = response.get('results', [])
+    count = response.get('count', -1)
 
     results = {}
     results['advisory_opinions'] = [_transform_advisory_opinion(i) for i in data if i['_type'] == 'ao']
     results['regulations'] = [i for i in data if i['_type'] == 'regulation']
     results['murs'] = [i for i in data if i['_type'] == 'mur']
+    results['total_advisory_opinions'] = len(results['advisory_opinions'])
+    results['total_regulations'] = 0
+    results['total_murs'] = 0
+
+    if count != -1:
+        # This version of the API won't always return count
+        results['total_advisory_opinions'] = count
+
     return results
 
 
