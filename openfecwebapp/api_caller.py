@@ -47,18 +47,21 @@ def load_search_results(query, query_type='candidates'):
 def _transform_advisory_opinion(advisory_opinion):
     source = advisory_opinion['_source']
     return {
-        'id': source['AO_Id'],
-        'no' : source['AO_No'],
-        'name': source['AO_name'],
-        'summary': source['AO_Summary'],
-        'tags': source['AO_tags'],
-        'description': source['description'],
-        'doc_id': source['doc_id'],
-        'text': source['text'],
+        'id': source.get('AO_Id'),
+        'no' : source.get('AO_No'),
+        'name': source.get('AO_name'),
+        'summary': source.get('AO_Summary'),
+        'tags': source.get('AO_tags'),
+        'description': source.get('description'),
+        'doc_id': source.get('doc_id'),
+        'highlights': advisory_opinion['highlight']['text'],
+        'pdf_url': advisory_opinion.get('pdf_url'),
     }
 
 
-def _transform_legal_search_results(data):
+def _transform_legal_search_results(response):
+    data = response.get('results', [])
+
     results = {}
     results['advisory_opinions'] = [_transform_advisory_opinion(i) for i in data if i['_type'] == 'ao']
     results['regulations'] = [i for i in data if i['_type'] == 'regulation']
@@ -77,7 +80,7 @@ def load_legal_search_results(query, query_type='all', limit=20):
     url = '/legal/search'
     results = _call_api(url, **filters)
 
-    return _transform_legal_search_results(results.get('results', []))
+    return _transform_legal_search_results(results)
 
 
 def load_single_type(data_type, c_id, *path, **filters):
