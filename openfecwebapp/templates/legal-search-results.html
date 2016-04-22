@@ -17,7 +17,7 @@
       <div class="sidebar-container sidebar-container--left">
         <nav class="sidebar sidebar--neutral side-nav js-sticky" data-sticky-container="main">
           <ul class="sidebar__content">
-            <li class="side-nav__item"><a class="side-nav__link" href="#results-advisory-opinions">Advisory Opinions ({{ results.total_advisory_opinions }})</a></li>
+            <li class="side-nav__item"><a class="side-nav__link" href="#results-advisory-opinions">Advisory Opinions ({{ results.total_advisory_opinions|default(0) }})</a></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">Regulations (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">Matters Under Review (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>

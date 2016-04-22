@@ -80,13 +80,14 @@ def _transform_legal_search_results(response):
     return results
 
 
-def load_legal_search_results(query, query_type='all', limit=20):
+def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     filters = {}
 
     if query:
         filters['q'] = query
         filters['limit'] = limit
         filters['type'] = query_type
+        filters['from_hit'] = offset
 
     url = '/legal/search'
     results = _call_api(url, **filters)
@@ -97,6 +98,7 @@ def load_legal_search_results(query, query_type='all', limit=20):
         results = _transform_legal_search_results(results)
 
     results['limit'] = limit
+    results['offset'] = offset
 
     return results
 

@@ -14,7 +14,7 @@ Searching {{ document_type_display_name }} for "{{ query }}"
 <div class="main">
   <div class="container">
     <section class="main__content--full">
-      <div id="results-{{ result_type }}" class="content__section">
+      <div id="results-{{ result_type }}" class="content__section dataTables_wrapper">
         <div class="results-info results-info--top">
           <div class="results-info__left">
             <h2 class="results-info__title">{{ document_type_display_name }}</h2>
@@ -36,18 +36,27 @@ Searching {{ document_type_display_name }} for "{{ query }}"
               {% endfor %}
             </tbody>
           </table>
+          <div class="results-info">
+            <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + results.results|length }} of about {{ results.count }}</span></div>
+            <div class="dataTables_paginate">
+              {% if results.offset > 0 %}
+              <a class="paginate_button previous" href="/legal/advisory-opinions?search={{ query }}&offset={{ results.offset - results.limit }}">Previous</a>
+              {% else %}
+              <span class="paginate_button previous is-disabled">Previous</span>
+              {% endif %}
+              {% if results.offset + results.limit < results.count %}
+              <a class="paginate_button next" href="/legal/advisory-opinions?search={{ query }}&offset={{ results.offset + results.limit }}">Next</a>
+              {% else %}
+              <span class="paginate_button next is-disabled">Next</span>
+              {% endif %}
+            </div>
+          </div>
         {% else %}
           <div class="message message--alert">
             <p>Sorry, there were no results.</p>
           </div>
         {% endif %}
       </div>
-      {% if results.count %}
-      <div class="results-info">
-        <div class="dataTables_info">Showing {{ results.offset|default(1) }}&ndash;{{ min(results.limit, results.count) }} of about {{ results.count }}</span>
-        <div class="dataTables_paginate">
-      </div>
-      {% endif %}
     </section>
     </div>
   </div>
