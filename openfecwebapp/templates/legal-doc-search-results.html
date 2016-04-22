@@ -1,0 +1,55 @@
+{% extends "layouts/main.html" %}
+{% import 'macros/legal-search.html' as legal_search %}
+{% set document_type_display_name = 'Advisory Opinions' %}
+
+{% block title %}
+Searching {{ document_type_display_name }} for "{{ query }}"
+{% endblock %}
+
+{% block body %}
+<header class="page-header slab slab--primary">
+  <span class="page-header__title">Legal resources // {{ document_type_display_name }}</span>
+</header>
+
+<div class="main">
+  <div class="container">
+    <section class="main__content--full">
+      <div id="results-{{ result_type }}" class="content__section">
+        <div class="results-info results-info--top">
+          <div class="results-info__left">
+            <h2 class="results-info__title">{{ document_type_display_name }}</h2>
+          </div>
+        </div>
+        {% if results.count %}
+          <table class="data-table data-table--text">
+            <thead>
+              <tr>
+                <th class="cell--15">No.</th>
+                <th class="cell--25">Name</th>
+                <th class="cell--60">Hit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {# TODO this should handle generic document types (aos, murs, regs, etc) #}
+              {% for advisory_opinion in results.results %}
+                {% include 'partials/legal-search-results-advisory-opinion.html' %}
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="message message--alert">
+            <p>Sorry, there were no results.</p>
+          </div>
+        {% endif %}
+      </div>
+      {% if results.count %}
+      <div class="results-info">
+        <div class="dataTables_info">Showing {{ results.offset|default(1) }}&ndash;{{ min(results.limit, results.count) }} of about {{ results.count }}</span>
+        <div class="dataTables_paginate">
+      </div>
+      {% endif %}
+    </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

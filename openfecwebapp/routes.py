@@ -224,3 +224,15 @@ def legal_search():
         results = api_caller.load_legal_search_results(query, result_type)
 
     return views.render_legal_search_results(results, query, result_type)
+
+@app.route('/legal/advisory-opinions/')
+def advisory_opinions():
+    query = request.args.get('search')
+    result_type = 'aos'
+    results = {}
+
+    # Only hit the API if there's an actual query
+    if query:
+        results = api_caller.load_legal_search_results(query, result_type)
+
+    return views.render_legal_doc_search_results(results, query, result_type)

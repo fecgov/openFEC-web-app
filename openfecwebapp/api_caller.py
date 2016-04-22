@@ -45,6 +45,7 @@ def load_search_results(query, query_type='candidates'):
     return results['results'] if len(results) else []
 
 def _transform_advisory_opinion(advisory_opinion):
+    #TODO move this to the API
     source = advisory_opinion['_source']
     return {
         'id': source.get('AO_Id'),
@@ -60,6 +61,7 @@ def _transform_advisory_opinion(advisory_opinion):
 
 
 def _transform_legal_search_results(response):
+    #TODO move this to the API
     data = response.get('results', [])
     count = response.get('count', -1)
 
@@ -89,7 +91,14 @@ def load_legal_search_results(query, query_type='all', limit=20):
     url = '/legal/search'
     results = _call_api(url, **filters)
 
-    return _transform_legal_search_results(results)
+    if query_type == 'aos':
+        results['results'] = [_transform_advisory_opinion(ao) for ao in results.get('results', [])]
+    else:
+        results = _transform_legal_search_results(results)
+
+    results['limit'] = limit
+
+    return results
 
 
 def load_single_type(data_type, c_id, *path, **filters):
