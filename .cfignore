@@ -1,1 +1,14 @@
-.gitignore
+*.log
+*.swp
+*.swo
+*.pyc
+node_modules
+.coverage
+.sass-cache/
+rev-manifest.json
+openfecwebapp/local_config.py
+app/
+/.env
+.DS_Store
+coverage/
+dist
