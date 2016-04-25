@@ -3,6 +3,7 @@
 *.swo
 *.pyc
 node_modules
+.cfmeta
 .coverage
 .sass-cache/
 rev-manifest.json

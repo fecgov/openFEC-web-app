@@ -126,7 +126,8 @@ invoke deploy --space dev
 ```
 
 The `deploy` task will use the `FEC_CF_USERNAME` and `FEC_CF_PASSWORD` environment variables to log in.
-If these variables are not provided, you will be prompted for your Cloud Foundry credentials.
+If these variables are not provided, your existing authorization will be used.
+You can use `cf login` to login manually.
 
 Credentials for Cloud Foundry applications are managed using user-provided services labeled as
 "fec-creds-prod", "fec-creds-stage", and "fec-creds-dev". Services are used to share credentials between the API and the webapp. To set up a service:
@@ -150,7 +151,7 @@ the following keys are set:
 Deploys of a single app can be performed manually by targeting the env/space, and specifying the corresponding manifest, as well as the app you want, like so:
 
 ```
-cf target -o [dev|stage|prod] && cf push -f manifest_<[dev|stage|prod]>.yml [api|web]
+cf target -s [feature|dev|stage|prod] && cf push -f manifest_<[feature|dev|stage|prod]>.yml [api|web]
 ```
 
 **NOTE:**  Performing a deploy in this manner will result in a brief period of downtime.
