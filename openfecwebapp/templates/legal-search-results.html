@@ -34,6 +34,7 @@
         </nav>
       </div>
       <section class="main__content">
+        <h1 class="main__title">Results for “{{ query }}”</h1>
         <div id="results-regulations" class="content__section">
           <div class="results-info results-info--top">
             <div class="results-info__left">
@@ -76,7 +77,7 @@
             </div>
             {% if results.total_advisory_opinions %}
             <div class="results-info__right">
-              <span class="results-info__details"><a href="/legal/advisory-opinions?search={{ query }}">View all <strong>{{ results.total_advisory_opinions }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.advisory_opinions|length }} of <a href="/legal/advisory-opinions/?search={{ query }}"><strong>{{ results.total_advisory_opinions }}</strong> results</a></span>
             </div>
             {% endif %}
           </div>
@@ -95,6 +96,9 @@
                 {% endfor %}
               </tbody>
             </table>
+            <div class="results-info results-info--simple">
+              <a class="button button--alt" href="/legal/advisory-opinions/?search={{ query }}">View all results</a>
+            </div>
           {% else %}
             <div class="message message--alert">
               <p>Sorry, there were no results.</p>

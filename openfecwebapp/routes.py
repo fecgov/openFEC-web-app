@@ -223,7 +223,7 @@ def legal_search(query, result_type):
 
     # Only hit the API if there's an actual query
     if query:
-        results = api_caller.load_legal_search_results(query, result_type)
+        results = api_caller.load_legal_search_results(query, result_type, limit=3)
 
     return views.render_legal_search_results(results, query, result_type)
 
