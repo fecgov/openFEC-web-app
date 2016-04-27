@@ -22,6 +22,7 @@ from openfecwebapp.env import env
 
 locale.setlocale(locale.LC_ALL, '')
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_path='/static', static_folder='../dist')
