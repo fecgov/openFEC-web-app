@@ -1,0 +1,12 @@
+---
+inherit: manifest_base.yml
+host: fec-feature-web
+services:
+  - fec-creds-feature
+env:
+  FEC_WEB_ENVIRONMENT: "dev"
+  NEW_RELIC_APP_NAME: OpenFEC Web (feature)
+  FEC_WEB_API_URL: https://fec-feature-api.18f.gov
+  FEC_CMS_URL: https://fec-feature-proxy.18f.gov
+  FEC_WEB_DEBUG: "true"
+  FEC_FEATURE_LEGAL: "true"

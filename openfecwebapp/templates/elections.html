@@ -1,6 +1,7 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/cycle-select.html' as select %}
 {% import 'macros/tabs.html' as tabs %}
+{% import 'macros/page-header.html' as header %}
 
 {{ cycle }} Election - US {{ office|title }} {% if state %} - {{ state|fmt_state_full }} {% if district %} - District {{ district }} {% endif %} {% endif %}
 
@@ -10,10 +11,7 @@
 
 {% block body %}
 <div class="tab-interface">
-  <header class="page-header page-header--primary">
-    <span class="page-header__title">Elections and candidates by location</span>
-    {{ search.search('page-header', 'candidates') }}
-  </header>
+  {{ header.header(title) }}
   <header class="entity__header {% if office != 'president' %}entity__header--map{% endif %} entity__header--primary">
     <div class="container">
       <div class="entity__header--info">
