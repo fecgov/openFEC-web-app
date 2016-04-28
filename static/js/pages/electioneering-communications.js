@@ -14,13 +14,9 @@ var electioneeringTemplate = require('../../templates/electioneering-communicati
 
 $(document).ready(function() {
   var $table = $('#results');
-  var $widgets = $(tables.dataWidgets);
-  var $tagList = new filterTags.TagList({title: 'All records'}).$body;
-  var filterPanel = new FilterPanel('#category-filters');
   new tables.DataTable($table, {
     title: 'Electioneering communications',
     path: ['electioneering'],
-    panel: filterPanel,
     columns: columns.electioneeringCommunications,
     rowCallback: tables.modalRenderRow,
     useExport: true,
@@ -30,5 +26,4 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(electioneeringTemplate)
     }
   });
-  $widgets.find('.js-filter-tags').prepend($tagList);
 });
