@@ -4,9 +4,11 @@
   <p>Sorry, we didn't find any financial data for <span class="t-bold">{{ entity }}</span> in the <span class="t-bold">{{ cycle | fmt_year_range }}</span> election cycle.</p>
   <div class="message--alert__bottom">
     <p>Think this was a mistake?</p>
-    <a class="button button--standard" href="http://www.fec.gov/finance/disclosure/candcmte_info.shtml">Try FEC.gov</a>
-    <a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a>
-    <a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a>
+    <ul class="list--buttons">
+      <li><a class="button button--standard" href="http://www.fec.gov/finance/disclosure/candcmte_info.shtml">Try FEC.gov</a></li>
+      <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
+      <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
+    </ul>
   </div>
 </div>
 {% endmacro %}
