@@ -20,6 +20,7 @@ var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 var titleTemplate = require('../../templates/tables/title.hbs');
+var missingTemplate = require('../../templates/tables/noData.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
 var browseDOM = '<"js-results-info results-info results-info--top"' +
@@ -483,7 +484,7 @@ DataTable.prototype.fetchError = function() {
 DataTable.prototype.hideEmpty = function(response) {
   if (!response.pagination.count) {
     this.destroy();
-    this.$body.before('<div class="message message--alert">No data found.</div>');
+    this.$body.before(missingTemplate());
     this.$body.remove();
   }
 };
