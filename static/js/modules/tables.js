@@ -291,19 +291,23 @@ function DataTable(selector, opts) {
   this.hasWidgets = null;
   this.filters = null;
 
+  this.$widgets = $(DATA_WIDGETS);
+
+  // Set `this.filterSet` before instantiating the nested `DataTable` so that
+  // filters are available on fetching initial data
+  if (this.opts.useFilters) {
+    var tagList = new filterTags.TagList({title: 'All records'});
+    this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
+    this.filterPanel = new FilterPanel();
+    this.filterSet = this.filterPanel.filterSet;
+    $(window).on('popstate', this.handlePopState.bind(this));
+  }
+
   var Paginator = this.opts.paginator || OffsetPaginator;
   this.paginator = new Paginator();
   this.api = this.$body.DataTable(this.opts);
 
   DataTable.registry[this.$body.attr('id')] = this;
-
-  if (this.opts.useFilters) {
-    $(window).on('popstate', this.handlePopState.bind(this));
-    var tagList = new filterTags.TagList({title: 'All records'});
-    this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
-    this.filterPanel = new FilterPanel();
-    this.filterSet = this.filterPanel.filterSet;
-  }
 
   if (this.opts.useExport) {
     $(document.body).on('download:countChanged', this.refreshExport.bind(this));
@@ -355,7 +359,6 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
-  this.$widgets = $(DATA_WIDGETS);
 
   var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
 
