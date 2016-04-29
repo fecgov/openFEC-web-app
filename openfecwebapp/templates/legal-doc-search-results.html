@@ -3,7 +3,11 @@
 {% set document_type_display_name = 'Advisory Opinions' %}
 
 {% block title %}
-Searching {{ document_type_display_name }} for "{{ query }}"
+  {% if query %}
+  Searching {{ document_type_display_name }} for "{{ query }}"
+  {% else %}
+  Search {{ document_type_display_name }}
+  {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -11,54 +15,50 @@ Searching {{ document_type_display_name }} for "{{ query }}"
   <span class="page-header__title">Legal resources // {{ document_type_display_name }}</span>
 </header>
 
-<div class="main">
-  <div class="container">
-    <section class="main__content--full">
-      <div id="results-{{ result_type }}" class="content__section dataTables_wrapper">
-        <div class="results-info results-info--simple">
-          <div class="results-info__left">
-            <h2 class="results-info__title">{{ document_type_display_name }}</h2>
-          </div>
-        </div>
-        {% if results.count %}
-          <table class="data-table data-table--text">
-            <thead>
-              <tr>
-                <th class="cell--15">No.</th>
-                <th class="cell--25">Name</th>
-                <th class="cell--60">Hit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {# TODO this should handle generic document types (aos, murs, regs, etc) #}
-              {% for advisory_opinion in results.results %}
-                {% include 'partials/legal-search-results-advisory-opinion.html' %}
-              {% endfor %}
-            </tbody>
-          </table>
-          <div class="results-info">
-            <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + results.results|length }} of about {{ results.count }}</span></div>
-            <div class="dataTables_paginate">
-              {% if results.offset > 0 %}
-              <a class="paginate_button previous" href="/legal/advisory-opinions?search={{ query }}&offset={{ results.offset - results.limit }}">Previous</a>
-              {% else %}
-              <span class="paginate_button previous is-disabled">Previous</span>
-              {% endif %}
-              {% if results.offset + results.limit < results.count %}
-              <a class="paginate_button next" href="/legal/advisory-opinions?search={{ query }}&offset={{ results.offset + results.limit }}">Next</a>
-              {% else %}
-              <span class="paginate_button next is-disabled">Next</span>
-              {% endif %}
-            </div>
-          </div>
+<section class="main__content--full">
+  {% include 'partials/legal-filter.html' %}
+  <div id="results-{{ result_type }}" class="content__section dataTables_wrapper">
+    <div class="results-info results-info--simple">
+      <div class="results-info__left">
+        <h2 class="results-info__title">Searching {{ document_type_display_name }}{% if query %} for “{{ query }}”{% endif %}</h2>
+      </div>
+    </div>
+    {% if results.count %}
+    <table class="data-table data-table--text">
+      <thead>
+        <tr>
+          <th class="cell--15">No.</th>
+          <th class="cell--25">Name</th>
+          <th class="cell--60">Hit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# TODO this should handle generic document types (aos, murs, regs, etc) #}
+        {% for advisory_opinion in results.results %}
+        {% include 'partials/legal-search-results-advisory-opinion.html' %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="results-info">
+      <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + results.results|length }} of about {{ results.count }}</span></div>
+      <div class="dataTables_paginate">
+        {% if results.offset > 0 %}
+        <a class="paginate_button previous" href="/legal/advisory-opinions?search={{ query }}&offset={{ results.offset - results.limit }}">Previous</a>
         {% else %}
-          <div class="message message--alert">
-            <p>Sorry, there were no results.</p>
-          </div>
+        <span class="paginate_button previous is-disabled">Previous</span>
+        {% endif %}
+        {% if results.offset + results.limit < results.count %}
+        <a class="paginate_button next" href="/legal/advisory-opinions?search={{ query }}&offset={{ results.offset + results.limit }}">Next</a>
+        {% else %}
+        <span class="paginate_button next is-disabled">Next</span>
         {% endif %}
       </div>
-    </section>
     </div>
+    {% else %}
+    <div class="message message--alert">
+      <p>Sorry, there were no results.</p>
+    </div>
+    {% endif %}
   </div>
-</div>
+</section>
 {% endblock %}

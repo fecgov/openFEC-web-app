@@ -1,0 +1,21 @@
+<div id="filters" class="filters filters--fixed is-open">
+  <div class="filters__hider">
+    <h2 class="filter__header filters__inner">
+      Search AOs
+    </h2>
+    <form id="category-filters" action="#results-{{ result_type }}">
+      <div class="filters__inner">
+        <div class="filter" id="search-field">
+          <label class="label" for="search-input">Search terms</label>
+          <div class="combo combo--search--mini">
+            <ul class="dropdown__selected"></ul>
+            <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
+            <button class="combo__button button--search button--standard" type="submit">
+              <span class="u-visually-hidden">Search</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
