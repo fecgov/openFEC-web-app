@@ -13,6 +13,17 @@
   {% include 'partials/filters/parties.html' %}
   {{ states.field('state') }}
   {% include 'partials/filters/districts.html' %}
-  {% include 'partials/filters/candidate_status.html' %}
+  <div class="filter">
+    <fieldset class="js-filter">
+      <legend class="label">Candidate status</legend>
+      <ul>
+        <li>
+          <input id="cycle-checkbox-five-thousand" name="five_thousand_flag" type="checkbox" value="true">
+          <label for="cycle-checkbox-five-thousand">Has raised more $5,000</label>
+        </li>
+      </ul>
+    </fieldset>
+  </div>
+
 </div>
 {% endblock %}
