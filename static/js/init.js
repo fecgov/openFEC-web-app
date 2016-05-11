@@ -70,7 +70,7 @@ $(document).ready(function() {
   $('.js-sticky').each(function() {
     var container = $(this).data('sticky-container');
     var opts = {
-      within: document.getElementById(container)
+      within: document.getElementById(container),
     };
     new Sticky(this, opts);
   });
@@ -132,4 +132,19 @@ $(document).ready(function() {
 
   toggle.init();
   download.hydrate();
+
+  // Home-rolled sticky bar for testing
+  var $stickyBar = $('.js-sticky-bar');
+  var stickyOffset = $stickyBar.offset().top;
+
+  $(window).on('scroll', function() {
+    if ($('body').scrollTop() >= stickyOffset) {
+      var stickyHeight = $stickyBar.outerHeight();
+      $stickyBar.addClass('is-stuck').css('width', '100%');
+      $('body').css('padding-top', stickyHeight);
+    } else {
+      $stickyBar.removeClass('is-stuck');
+      $('body').css('padding-top', 0);
+    }
+  });
 });
