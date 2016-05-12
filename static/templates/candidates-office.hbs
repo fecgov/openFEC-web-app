@@ -1,24 +1,69 @@
 <div class="panel__row">
-  <div class="panel__heading">
-    <h4 class="panel__title"><a href="{{basePath}}/candidate/{{candidate_id}}">{{name}}</a></h4>
-  </div>
+  <h4 class="panel__title">
+    <a href="{{entityUrl this type="candidate" query=query}}">{{name}}</a>
+  </h4>
+</div>
+<div class="panel__row">
+  <h4 class="panel__title">Candidate information</h4>
   <table>
-    {{#panelRow "Election year"}}
-      {{election_years}}
+    {{#panelRow "Candidate ID"}}
+      {{candidate_id}}
+    {{/panelRow}}
+    <tr>
+      <td class="panel__term">Election years</td>
+      <td class="panel__data">
+        <ul>
+        {{#each election_years}}
+          <li><a href="{{electionUrl this parentContext=../this}}">{{this}}</a></li>
+        {{/each}}
+        </ul>
+      </td>
+    </tr>
+    {{#panelRow "Office sought"}}
+      {{office_full}}
     {{/panelRow}}
     {{#panelRow "Political party"}}
       {{party_full}}
     {{/panelRow}}
-    {{#if state}}
+    {{#unless (eq office 'P')}}
       {{#panelRow "State"}}
-        {{state}}
+        {{decodeState state}}
       {{/panelRow}}
-    {{/if}}
-    {{#if district}}
+    {{/unless}}
+    {{#if (eq office 'H')}}
       {{#panelRow "District"}}
         {{district}}
       {{/panelRow}}
     {{/if}}
+    {{#if committees.principal}}
+      {{#panelRow "Principal campaign committees"}}
+      <ul>
+        {{#each committees.principal}}
+          <li>
+            <a href="{{entityUrl this type="committee"}}">
+              {{ this.name}}
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+      {{/panelRow}}
+    {{/if}}
+    {{#if committees.authorized}}
+      {{#panelRow "Authorized campaign committees"}}
+        {{#each committees.authorized}}
+          <li>
+            <a href="{{entityUrl this type="committee"}}">
+              {{ this.name}}
+            </a>
+          </li>
+        {{/each}}
+      {{/panelRow}}
+    {{/if}}
+  </table>
+</div>
+<div class="panel__row">
+  <h4 class="panel__title">Financial totals for {{time_period}}</h4>
+  <table>
     {{#panelRow "Receipts"}}
       {{{currency receipts}}}
     {{/panelRow}}
@@ -31,5 +76,10 @@
     {{#panelRow "Debts owed by committee"}}
       {{{currency debts_owed_by_committee}}}
     {{/panelRow}}
+    {{#if (eq office 'P')}}
+      {{#panelRow "Has accepted presidential public funds"}}
+        {{federal_funds_flag}}
+      {{/panelRow}}
+    {{/if}}
   </table>
 </div>
