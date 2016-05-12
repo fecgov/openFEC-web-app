@@ -91,7 +91,7 @@ var candidates = [
 ];
 
 var candidateOffice = {
-  candidate:   {data: 'name', className: 'all', width: '280px', render: renderCandidateColumn},
+  name:   {data: 'name', className: 'all', width: '280px', render: renderCandidateColumn},
   party: {data: 'party_full', className: 'min-tablet hide-panel'},
   state: {data: 'state', className: 'min-desktop hide-panel'},
   district: {data: 'district', className: 'min-desktop hide-panel'},
