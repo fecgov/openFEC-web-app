@@ -85,7 +85,7 @@ var candidates = [
     }
   },
   {data: 'party_full', className: 'min-tablet hide-panel'},
-  {data: 'state', className: 'min-desktop hide-panel'},
+  {data: 'state', className: 'min-desktop hide-panel', width: '80px'},
   {data: 'district', className: 'min-desktop hide-panel'},
   modalTriggerColumn
 ];
@@ -93,7 +93,7 @@ var candidates = [
 var candidateOffice = {
   name:   {data: 'name', className: 'all', width: '280px', render: renderCandidateColumn},
   party: {data: 'party_full', className: 'min-tablet hide-panel'},
-  state: {data: 'state', className: 'min-desktop hide-panel'},
+  state: {data: 'state', className: 'min-desktop hide-panel', width: '80px'},
   district: {data: 'district', className: 'min-desktop hide-panel'},
   receipts: currencyColumn({data: 'receipts', className: 'min-tablet'}),
   disbursements: currencyColumn({data: 'disbursements', className: 'min-tablet'}),
@@ -117,7 +117,7 @@ var committees = [
     }
   },
   {data: 'treasurer_name', className: 'min-desktop hide-panel'},
-  {data: 'state', className: 'min-desktop hide-panel', width: '60px'},
+  {data: 'state', className: 'min-desktop hide-panel', width: '80px'},
   {data: 'party_full', className: 'min-desktop hide-panel'},
   dateColumn({data: 'first_file_date', className: 'min-tablet hide-panel'}),
   {data: 'committee_type_full', className: 'min-tablet hide-panel'},
@@ -302,7 +302,7 @@ var receipts = [
       }
     }
   },
-  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel'},
+  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel', width: '80px'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
   currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet'}),
   dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel-tablet'}),
