@@ -35,31 +35,55 @@ var renderModal = tables.modalRenderFactory(
     var electionFull = query.election_full === 'true' ? true : false;
     var timePeriod = helpers.getTimePeriod(electionYear, cycle, electionFull, row.office);
 
-    // Build the URL and make a call to the history endpoint
-    var committeeUrl = helpers.buildUrl(
-      ['candidate', row.candidate_id, 'committees', 'history', cycle],
-      {'election_full': query.election_full}
-    );
+    function getCommittees() {
+      // Build the URL and make a call to the history endpoint
+      var url = helpers.buildUrl(
+        ['candidate', row.candidate_id, 'committees', 'history', cycle],
+        {'election_full': query.election_full}
+      );
 
-    return $.getJSON(committeeUrl).then(function(response) {
-      var results = response.results.length ?
-        response.results :
-        {};
-      // Sort the P and A committees
-      var principalCommittees = [],
-          authorizedCommittees = [];
-      results.forEach(function(result){
-        if (result.designation === 'P') {
-          principalCommittees.push(result);
-        } else if (result.designation === 'A') {
-          authorizedCommittees.push(result);
-        }
+      return $.getJSON(url).then(function(response) {
+        var results = response.results.length ?
+          response.results :
+          {};
+        var principalCommittees = [],
+            authorizedCommittees = [];
+        results.forEach(function(result){
+          if (result.designation === 'P') {
+            principalCommittees.push(result);
+          } else if (result.designation === 'A') {
+            authorizedCommittees.push(result);
+          }
+        });
+        var committees = {
+          principal: principalCommittees,
+          authorized: authorizedCommittees
+        };
+        return {committees: committees, query: query, time_period: timePeriod};
       });
-      var committees = {
-        principal: principalCommittees,
-        authorized: authorizedCommittees
+    }
+
+    function getFilings() {
+      var url = helpers.buildUrl(
+        ['candidate', row.candidate_id, 'filings'],
+        {form_type: 'F2'}
+      );
+      return $.getJSON(url).then(function(response) {
+        var results = response.results.length ?
+          response.results :
+          {};
+        return results[0];
+      });
+    }
+
+    return $.when(getCommittees(), getFilings()).then(function(data1, data2) {
+      var newData = {
+        committees: data1,
+        last_form_2: data2,
+        query: query,
+        time_period: timePeriod
       };
-      return _.extend({}, row, {committees: committees, query: query, time_period: timePeriod});
+      return _.extend({}, row, newData);
     });
   }
 );

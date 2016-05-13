@@ -59,6 +59,12 @@
         {{/each}}
       {{/panelRow}}
     {{/if}}
+    {{#if last_form_2}}
+      {{#panelRow "Most recent statement of candidacy"}}
+        <a href="{{last_form_2.pdf_url}}">{{last_form_2.document_description}}</a>
+        <span class="t-block">Filed: {{datetime last_form_2.receipt_date "pretty"}}</span>
+      {{/panelRow}}
+    {{/if}}
   </table>
 </div>
 <div class="panel__row">
