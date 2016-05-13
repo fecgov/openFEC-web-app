@@ -14,7 +14,7 @@
       <td class="panel__data">
         <ul>
         {{#each election_years}}
-          <li><a href="{{electionUrl this parentContext=../this}}">{{this}}</a></li>
+          <li><a href="{{electionUrl this parentContext=../this index=@index}}">{{this}}</a></li>
         {{/each}}
         </ul>
       </td>
@@ -59,14 +59,22 @@
         {{/each}}
       {{/panelRow}}
     {{/if}}
+    {{#if first_form_2}}
+      {{#panelRow "First statement of candidacy"}}
+        <a href="{{first_form_2.pdf_url}}">{{first_form_2.document_description}}</a>
+        <span class="t-block">Filed: {{datetime first_form_2.receipt_date format='pretty'}}</span>
+      {{/panelRow}}
+    {{/if}}
     {{#if last_form_2}}
       {{#panelRow "Most recent statement of candidacy"}}
         <a href="{{last_form_2.pdf_url}}">{{last_form_2.document_description}}</a>
-        <span class="t-block">Filed: {{datetime last_form_2.receipt_date "pretty"}}</span>
+        <span class="t-block">Filed: {{datetime last_form_2.receipt_date format='pretty'}}</span>
       {{/panelRow}}
     {{/if}}
+
   </table>
 </div>
+{{#if showFinancialTotals}}
 <div class="panel__row">
   <h4 class="panel__title">Financial totals for {{time_period}}</h4>
   <table>
@@ -89,3 +97,4 @@
     {{/if}}
   </table>
 </div>
+{{/if}}

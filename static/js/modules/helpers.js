@@ -97,12 +97,15 @@ Handlebars.registerHelper('entityUrl', function(entity, options) {
 Handlebars.registerHelper('electionUrl', function(year, options) {
   var url;
   var candidate = options.hash.parentContext;
+
   if (candidate.office === 'P') {
     url = buildAppUrl(['elections', 'president', year]);
   } else if (candidate.office === 'S') {
     url = buildAppUrl(['elections', 'senate', candidate.state, year]);
   } else if (candidate.office === 'H') {
-    url = buildAppUrl(['elections', 'house', candidate.state, candidate.district, year]);
+    // Match election years with the election district
+    var district = candidate.election_districts[options.hash.index];
+    url = buildAppUrl(['elections', 'house', candidate.state, district, year]);
   }
   return new Handlebars.SafeString(url);
 });
