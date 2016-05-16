@@ -4,8 +4,9 @@ host: fec-stage-web
 services:
   - fec-creds-stage
 env:
-  FEC_WEB_DEBUG: "true"
-  FEC_WEB_ENVIRONMENT: "stage"
-  NEW_RELIC_APP_NAME: OpenFEC Web (staging)
-  FEC_WEB_API_URL: https://fec-stage-api.18f.gov
   FEC_CMS_URL: https://fec-stage-proxy.18f.gov
+  FEC_FEATURE_LEGAL: true
+  FEC_WEB_API_URL: https://fec-stage-api.18f.gov
+  FEC_WEB_DEBUG: true
+  FEC_WEB_ENVIRONMENT: stage
+  NEW_RELIC_APP_NAME: OpenFEC Web (staging)

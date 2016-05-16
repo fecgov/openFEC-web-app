@@ -1,27 +1,28 @@
 'use strict';
 
-/* global document */
-
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 var columns = require('../modules/columns');
 
-var committeesTemplate = require('../../templates/committees.hbs');
+var donationTemplate = require('../../templates/receipts.hbs');
 
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
-    title: 'Committee',
-    path: ['committees'],
-    columns: columns.committees,
+    title: 'Individual contributions',
+    path: ['schedules', 'schedule_a'],
+    query: {contributor_type: 'individual'},
+    columns: columns.receipts,
+    paginator: tables.SeekPaginator,
+    order: [[4, 'desc']],
     useFilters: true,
     useExport: true,
-    order: [[4, 'desc']],
+    disableExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
-      afterRender: tables.modalRenderFactory(committeesTemplate)
+      afterRender: tables.modalRenderFactory(donationTemplate)
     }
   });
 });

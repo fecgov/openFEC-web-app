@@ -76,118 +76,6 @@ function getCycle(value, meta) {
   }
 }
 
-function buildEntityLink(data, url, category, opts) {
-  opts = opts || {};
-  var anchor = document.createElement('a');
-  anchor.textContent = data;
-  anchor.setAttribute('href', url);
-  anchor.setAttribute('title', data);
-  anchor.setAttribute('data-category', category);
-  anchor.classList.add('single-link');
-
-  if (opts.isIncumbent) {
-    anchor.classList.add('is-incumbent');
-  }
-
-  return anchor.outerHTML;
-}
-
-function buildAggregateUrl(cycle) {
-  var dates = helpers.cycleDates(cycle);
-  return {
-    min_date: dates.min,
-    max_date: dates.max
-  };
-}
-
-function buildTotalLink(path, getParams) {
-  return function(data, type, row, meta) {
-    data = data || 0;
-    var params = getParams(data, type, row, meta);
-    var span = document.createElement('div');
-    span.setAttribute('data-value', data);
-    span.setAttribute('data-row', meta.row);
-    if (params) {
-      var link = document.createElement('a');
-      link.textContent = helpers.currency(data);
-      link.setAttribute('title', 'View individual transactions');
-      var uri = helpers.buildAppUrl(path, _.extend(
-        {committee_id: row.committee_id},
-        buildAggregateUrl(_.extend({}, row, params).cycle),
-        params
-      ));
-      link.setAttribute('href', uri);
-      span.appendChild(link);
-    } else {
-      span.textContent = helpers.currency(data);
-    }
-    return span.outerHTML;
-  };
-}
-
-function formattedColumn(formatter, defaultOpts) {
-  defaultOpts = defaultOpts || {};
-  return function(opts) {
-    return _.extend({}, defaultOpts, {
-      render: function(data, type, row, meta) {
-        return formatter(data, type, row, meta);
-      }
-    }, opts);
-  };
-}
-
-function barColumn(formatter) {
-  formatter = formatter || function(value) { return value; };
-  return function(opts) {
-    return _.extend({
-      orderSequence: ['desc', 'asc'],
-      render: function(data, type, row, meta) {
-        var span = document.createElement('div');
-        span.textContent = formatter(_.max([data, 0]));
-        span.setAttribute('data-value', data || 0);
-        span.setAttribute('data-row', meta.row);
-        return span.outerHTML;
-      }
-    }, opts);
-  };
-}
-
-function urlColumn(attr, opts) {
-  return _.extend({
-    render: function(data, type, row, meta) {
-      if (row[attr]) {
-        var anchor = document.createElement('a');
-        anchor.textContent = data;
-        anchor.setAttribute('href', row[attr]);
-        anchor.setAttribute('target', '_blank');
-        return anchor.outerHTML;
-      } else {
-        return data;
-      }
-    }
-  }, opts);
-}
-
-var dateColumn = formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc']});
-var currencyColumn = formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
-var barCurrencyColumn = barColumn(helpers.currency);
-
-var candidateColumn = formattedColumn(function(data, type, row) {
-  if (row) {
-    return buildEntityLink(row.candidate_name, helpers.buildAppUrl(['candidate', row.candidate_id]), 'candidate');
-  } else {
-    return '';
-  }
-});
-
-var committeeColumn = formattedColumn(function(data, type, row) {
-  if (row) {
-    return buildEntityLink(row.committee_name, helpers.buildAppUrl(['committee', row.committee_id]), 'committee');
-  } else {
-    return '';
-  }
-});
-
 function mapSort(order, columns) {
   return _.map(order, function(item) {
     var name = columns[item.column].data;
@@ -403,19 +291,23 @@ function DataTable(selector, opts) {
   this.hasWidgets = null;
   this.filters = null;
 
+  this.$widgets = $(DATA_WIDGETS);
+
+  // Set `this.filterSet` before instantiating the nested `DataTable` so that
+  // filters are available on fetching initial data
+  if (this.opts.useFilters) {
+    var tagList = new filterTags.TagList({title: 'All records'});
+    this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
+    this.filterPanel = new FilterPanel();
+    this.filterSet = this.filterPanel.filterSet;
+    $(window).on('popstate', this.handlePopState.bind(this));
+  }
+
   var Paginator = this.opts.paginator || OffsetPaginator;
   this.paginator = new Paginator();
   this.api = this.$body.DataTable(this.opts);
 
   DataTable.registry[this.$body.attr('id')] = this;
-
-  if (this.opts.useFilters) {
-    $(window).on('popstate', this.handlePopState.bind(this));
-    var tagList = new filterTags.TagList({title: 'All records'});
-    this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
-    this.filterPanel = new FilterPanel();
-    this.filterSet = this.filterPanel.filterSet;
-  }
 
   if (this.opts.useExport) {
     $(document.body).on('download:countChanged', this.refreshExport.bind(this));
@@ -467,7 +359,6 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
-  this.$widgets = $(DATA_WIDGETS);
 
   var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
 
@@ -613,14 +504,6 @@ module.exports = {
   browseDOM: browseDOM,
   yearRange: yearRange,
   getCycle: getCycle,
-  buildTotalLink: buildTotalLink,
-  buildEntityLink: buildEntityLink,
-  candidateColumn: candidateColumn,
-  committeeColumn: committeeColumn,
-  currencyColumn: currencyColumn,
-  urlColumn: urlColumn,
-  barCurrencyColumn: barCurrencyColumn,
-  dateColumn: dateColumn,
   barsAfterRender: barsAfterRender,
   modalRenderRow: modalRenderRow,
   modalRenderFactory: modalRenderFactory,

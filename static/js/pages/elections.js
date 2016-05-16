@@ -12,6 +12,7 @@ var dropdown = require('fec-style/js/dropdowns');
 var fips = require('../modules/fips');
 var maps = require('../modules/maps');
 var tables = require('../modules/tables');
+var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 var helpers = require('../modules/helpers');
 
@@ -26,7 +27,7 @@ var independentExpenditureColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
@@ -34,9 +35,9 @@ var independentExpenditureColumns = [
         };
     })
   },
-  tables.committeeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', className: 'all'}),
+  columns.candidateColumn({data: 'candidate', className: 'all'}),
 ];
 
 var communicationCostColumns = [
@@ -45,16 +46,16 @@ var communicationCostColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
         };
     })
   },
-  tables.committeeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   columns.supportOpposeColumn,
-  tables.candidateColumn({data: 'candidate', className: 'all'})
+  columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var electioneeringColumns = [
@@ -63,14 +64,14 @@ var electioneeringColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
         return {
           candidate_id: row.candidate_id,
         };
     })
   },
-  tables.committeeColumn({data: 'committee', className: 'all'}),
-  tables.candidateColumn({data: 'candidate', className: 'all'})
+  columns.committeeColumn({data: 'committee', className: 'all'}),
+  columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var electionColumns = [
@@ -79,7 +80,7 @@ var electionColumns = [
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(
+      return columnHelpers.buildEntityLink(
         data,
         helpers.buildAppUrl(['candidate', row.candidate_id]),
         'candidate',
@@ -88,9 +89,9 @@ var electionColumns = [
     }
   },
   {data: 'party_full', className: 'all'},
-  tables.currencyColumn({data: 'total_receipts', orderSequence: ['desc', 'asc']}),
-  tables.currencyColumn({data: 'total_disbursements', orderSequence: ['desc', 'asc']}),
-  tables.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
+  columns.currencyColumn({data: 'total_receipts', orderSequence: ['desc', 'asc']}),
+  columns.currencyColumn({data: 'total_disbursements', orderSequence: ['desc', 'asc']}),
+  columns.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
   {
     render: function(data, type, row, meta) {
       var dates = helpers.cycleDates(context.election.cycle);
@@ -116,7 +117,7 @@ var electionColumns = [
 function makeCommitteeColumn(opts, factory) {
   return _.extend({}, {
     orderSequence: ['desc', 'asc'],
-    render: tables.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
       row.cycle = context.election.cycle;
       var column = meta.settings.aoColumns[meta.col].data;
       return _.extend({
@@ -127,7 +128,7 @@ function makeCommitteeColumn(opts, factory) {
 }
 
 var makeSizeColumn = _.partial(makeCommitteeColumn, _, function(data, type, row, meta, column) {
-  return columns.getSizeParams(column);
+  return columnHelpers.getSizeParams(column);
 });
 
 var sizeColumns = [
@@ -136,7 +137,7 @@ var sizeColumns = [
     className: 'all',
     width: '30%',
     render: function(data, type, row, meta) {
-      return tables.buildEntityLink(
+      return columnHelpers.buildEntityLink(
         data,
         helpers.buildAppUrl(['candidate', row.candidate_id]),
         'candidate'
