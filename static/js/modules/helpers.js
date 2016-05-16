@@ -83,14 +83,17 @@ Handlebars.registerHelper('panelRow', function(label, options) {
 });
 
 Handlebars.registerHelper('entityUrl', function(entity, options) {
+  var query,
+      id,
+      url;
   if (options.hash.query) {
-    var query = {
+    query = {
       cycle: options.hash.query.cycle || null,
       election_full: options.hash.query.election_full || null
     };
   }
-  var id = entity.candidate_id || entity.committee_id;
-  var url = buildAppUrl([options.hash.type, id], query);
+  id = entity.candidate_id || entity.committee_id;
+  url = buildAppUrl([options.hash.type, id], query);
   return new Handlebars.SafeString(url);
 });
 
