@@ -20,7 +20,7 @@ var filingsColumns = columnHelpers.getColumns(
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
-    title: 'Filing',
+    title: 'Filings',
     path: ['filings'],
     columns: filingsColumns,
     rowCallback: filings.renderRow,

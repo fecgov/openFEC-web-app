@@ -9,7 +9,7 @@
   <div class="message--alert__bottom">
     <p>Or browse a different data set:</p>
     <ul class="list--buttons">
-      <li><a class="button--browse button--standard" href="{{ url_for('candidates', election_year=default_cycles) }}">Candidates</a></li>
+      <li><a class="button--browse button--standard" href="{{ url_for('candidates', election_year=default_cycles, five_thousand_flag='true') }}">Candidates</a></li>
       <li><a class="button--browse button--standard" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a></li>
       <li><a class="button--browse button--standard" href="{{ url_for('filings') }}">Filings</a></li>
       <li><a class="button--browse button--standard" href="{{ url_for('receipts', max_date=today() | date(fmt='%m-%d-%Y')) }}">Receipts</a></li>

@@ -10,7 +10,7 @@
         </li>
         <li class="t-bold site-nav__subtitle">Browse:</li>
         <li class="site-nav__item">
-          <a class="site-nav__link site-nav__sublink" href="{{ url_for('candidates', election_year=default_cycles) }}">Candidates</a>
+          <a class="site-nav__link site-nav__sublink" href="{{ url_for('candidates', election_year=default_cycles, five_thousand_flag='true') }}">Candidates</a>
         </li>
         <li class="site-nav__item">
           <a class="site-nav__link site-nav__sublink" href="{{ url_for('committees', cycle=default_cycles) }}">Committees</a>

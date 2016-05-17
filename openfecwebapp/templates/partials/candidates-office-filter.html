@@ -29,11 +29,11 @@
     {% if office == 'president' %}
       <div class="filter">
         <fieldset class="js-filter">
-          <legend class="label">Federal funds</legend>
+          <legend class="label"><span class="term" data-term="presidential public funds">Presidential public funds</span></legend>
           <ul>
             <li>
               <input id="cycle-checkbox-federal-funds" name="federal_funds_flag" type="checkbox" value="true">
-              <label for="cycle-checkbox-federal-funds">Has received federal funds</label>
+              <label for="cycle-checkbox-federal-funds">Has accepted presidential public funds</label>
             </li>
           </ul>
         </fieldset>
@@ -55,5 +55,5 @@
     {{ text.field('min_debts_owed_by_committee', 'Minimum debt', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
     {{ text.field('max_debts_owed_by_committee', 'Maximum debt', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
   </div>
-  {% endblock %}
 </div>
+{% endblock %}
