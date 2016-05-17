@@ -32,6 +32,7 @@ CycleSelect.prototype.initCycles = function() {
 CycleSelect.prototype.initCyclesMulti = function(selected) {
   var cycles = _.range(selected - this.duration + 2, selected + 2, 2);
   var params = this.getParams();
+  var selectedCycle;
   var bins = _.map(cycles, function(cycle) {
     return {
       min: cycle - 1,
@@ -53,10 +54,25 @@ CycleSelect.prototype.initCyclesMulti = function(selected) {
   });
   this.$cycles.html(cyclesTemplate(bins));
   this.$cycles.on('change', this.handleChange.bind(this));
+
+  selectedCycle = _.filter(bins, function(bin) {
+    return bin.checked === true;
+  });
+
+  this.setTimePeriod(selectedCycle[0].min, selectedCycle[0].max);
 };
 
 CycleSelect.prototype.initCyclesSingle = function(selected) {
-  this.$cycles.html(cycleTemplate({min: selected - 1, max: selected}));
+  var min = selected - 1;
+  var max = selected;
+  this.setTimePeriod(min, max);
+  this.$cycles.html(cycleTemplate({min: min, max: max}));
+};
+
+CycleSelect.prototype.setTimePeriod = function(min, max) {
+  // Defines a timePeriod property on the global context object in order
+  // to easily get a time period string without having to calculate it every time
+  context.timePeriod = min.toString() + '–' + max.toString();
 };
 
 CycleSelect.build = function($elm) {

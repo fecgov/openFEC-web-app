@@ -79,15 +79,18 @@ function initFilingsTable() {
 var tableOpts = {
   'independent-expenditures': {
     path: ['schedules', 'schedule_e', 'by_candidate'],
-    columns: expenditureColumns
+    columns: expenditureColumns,
+    title: 'independent expenditures'
   },
   'communication-costs': {
     path: ['communication_costs', 'by_candidate'],
-    columns: communicationCostColumns
+    columns: communicationCostColumns,
+    title: 'communication costs'
   },
   'electioneering': {
     path: ['electioneering', 'by_candidate'],
-    columns: electioneeringColumns
+    columns: electioneeringColumns,
+    title: 'electioneering communications'
   },
 };
 
@@ -111,7 +114,12 @@ function initSpendingTables() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        hideEmpty: true
+        hideEmpty: true,
+        hideEmptyOpts: {
+          dataType: opts.title,
+          name: context.name,
+          timePeriod: context.timePeriod
+        }
       });
     }
   });

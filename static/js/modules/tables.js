@@ -487,7 +487,7 @@ DataTable.prototype.fetchError = function() {
 DataTable.prototype.hideEmpty = function(response) {
   if (!response.pagination.count) {
     this.destroy();
-    this.$body.before(missingTemplate());
+    this.$body.before(missingTemplate(this.opts.hideEmptyOpts));
     this.$body.remove();
   }
 };
