@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, document */
+/* global require, document, context */
 
 var $ = require('jquery');
 

@@ -1,6 +1,6 @@
 'use strict';
 
-/* global document */
+/* global document, context */
 
 var $ = require('jquery');
 var _ = require('underscore');
