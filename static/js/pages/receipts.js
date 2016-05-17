@@ -11,7 +11,7 @@ var donationTemplate = require('../../templates/receipts.hbs');
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
-    title: 'Receipt',
+    title: 'Receipts',
     path: ['schedules', 'schedule_a'],
     columns: columns.receipts,
     paginator: tables.SeekPaginator,

@@ -97,7 +97,7 @@ def candidates_office(office):
     return render_template(
         'datatable.html',
         result_type='candidates',
-        title='Candidates',
+        title='candidates for ' + office,
         slug='candidates-office',
         office=office,
         columns=constants.table_columns['candidates-office-' + office.lower()]

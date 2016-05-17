@@ -25,11 +25,13 @@
       <option value="{{ year }}">{{ year }}</option>
     {% endfor %}
   </select>
+  {% if office in ['president', 'senate'] %}
   <fieldset class="toggles toggles--vertical">
     <legend class="label">Time period</legend>
     <div class="js-cycles"></div>
   </fieldset>
   <input type="hidden" name="{{ cycle_name }}" />
   <input type="hidden" name="{{ full_name }}" />
+  {% endif %}
 </div>
 {% endmacro %}
