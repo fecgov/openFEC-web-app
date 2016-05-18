@@ -22,7 +22,7 @@ var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 var titleTemplate = require('../../templates/tables/title.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
-var browseDOM = '<"js-results-info results-info results-info--top"' +
+var browseDOM = '<"js-results-info results-info results-info--simple"' +
                   '<"results-info__right"ilpr>>' +
                 '<"panel__main"t>' +
                 '<"results-info"ip>';
