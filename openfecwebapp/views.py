@@ -76,6 +76,11 @@ def render_committee(committee, candidates, cycle):
     tmpl_vars['reports'] = financials['reports']
     tmpl_vars['totals'] = financials['totals']
 
+    tmpl_vars['context_vars'] = {
+        'cycle': cycle,
+        'timePeriod': str(cycle - 1) + '–' + str(cycle),
+        'name': committee['name']
+    }
     return render_template('committees-single.html', **tmpl_vars)
 
 
@@ -139,7 +144,7 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         None,
     )
 
-    tmpl_vars['context_vars'] = {'cycles': candidate['cycles']}
+    tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
     return render_template('candidates-single.html', **tmpl_vars)
 
