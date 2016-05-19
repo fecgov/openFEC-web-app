@@ -1,10 +1,12 @@
 {% extends "layouts/main.html" %}
 {% import 'macros/legal-search.html' as legal_search %}
-{% set document_type_display_name = 'Advisory Opinions' %}
+{% import 'macros/breadcrumbs.html' as breadcrumb %}
+
+{% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
 
 {% block title %}
   {% if query %}
-  Searching {{ document_type_display_name }} for "{{ query }}"
+  Searching {{ document_type_display_name }} for &rdquo;{{ query }}&ldquo;
   {% else %}
   Search {{ document_type_display_name }}
   {% endif %}
@@ -12,7 +14,7 @@
 
 {% block body %}
 <header class="page-header slab slab--primary">
-  <span class="page-header__title">Legal resources // {{ document_type_display_name }}</span>
+  {{ breadcrumb.breadcrumbs(document_type_display_name, breadcrumb_links) }}
 </header>
 
 <section class="main__content--full">
