@@ -51,9 +51,7 @@
             </div>
             {% if results.total_regulations %}
             <div class="results-info__right">
-              <span class="results-info__details">
-                <a href="/legal/advisory-opinions?search={{ query }}">
-                  View all <strong>{{ results.total_regulations }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.regulations|length }} of <a href="{{ url_for('regulations', search=query, search_type='regulations') }}"><strong>{{ results.total_regulations }}</strong> results</a></span>
             </div>
             {% endif %}
           </div>
@@ -72,6 +70,9 @@
                 {% endfor %}
               </tbody>
             </table>
+            <div class="results-info">
+              <a class="button button--browse button--alt" href="{{ url_for('regulations', search=query, search_type='regulations') }}">View all results</a>
+            </div>
           {% else %}
             <div class="message message--alert">
               <p>Sorry, there were no results.</p>
