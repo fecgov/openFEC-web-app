@@ -3,6 +3,7 @@
 {% import 'macros/breadcrumbs.html' as breadcrumb %}
 
 {% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
+{% set result_entites = results.get(result_type, []) %}
 
 {% block title %}
   {% if query %}
@@ -36,21 +37,29 @@
       </thead>
       <tbody>
         {# TODO this should handle generic document types (aos, murs, regs, etc) #}
-        {% for advisory_opinion in results.results %}
-        {% include 'partials/legal-search-results-advisory-opinion.html' %}
+        {% for result in result_entites %}
+          {% if result_type == 'advisory_opinions' %}
+            {% with advisory_opinion = result %}
+            {% include 'partials/legal-search-results-advisory-opinion.html' %}
+            {% endwith %}
+          {% elif result_type == 'regulations' %}
+            {% with regulation = result %}
+            {% include 'partials/legal-search-results-regulation.html' %}
+            {% endwith %}
+          {% endif %}
         {% endfor %}
       </tbody>
     </table>
     <div class="results-info">
-      <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + results.results|length }} of about {{ results.total_all }}</span></div>
+      <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + result_entites|length }} of about {{ results.total_all }}</span></div>
       <div class="dataTables_paginate">
         {% if results.offset > 0 %}
-	<a class="paginate_button previous" href="{{ url_for('advisory_opinions', search=query, offset=(results.offset - results.limit)) }}#results-{{ result_type }}">Previous</a>
+	<a class="paginate_button previous" href="{{ url_for(result_type, search=query, offset=(results.offset - results.limit)) }}#results-{{ result_type }}">Previous</a>
         {% else %}
         <span class="paginate_button previous is-disabled">Previous</span>
         {% endif %}
         {% if results.offset + results.limit < results.total_all %}
-	<a class="paginate_button next" href="{{ url_for('advisory_opinions', search=query, offset=(results.offset + results.limit)) }}#results-{{ result_type }}">Next</a>
+	<a class="paginate_button next" href="{{ url_for(result_type, search=query, offset=(results.offset + results.limit)) }}#results-{{ result_type }}">Next</a>
         {% else %}
         <span class="paginate_button next is-disabled">Next</span>
         {% endif %}
