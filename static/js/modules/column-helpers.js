@@ -2,9 +2,7 @@
 
 var _ = require('underscore');
 
-var tables = require('./tables');
 var helpers = require('./helpers');
-var decoders = require('./decoders');
 
 var sizeInfo = {
   0: {limits: [0, 199.99], label: 'Under $200'},

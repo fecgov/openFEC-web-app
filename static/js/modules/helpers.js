@@ -82,6 +82,37 @@ Handlebars.registerHelper('panelRow', function(label, options) {
   );
 });
 
+Handlebars.registerHelper('entityUrl', function(entity, options) {
+  var query,
+      id,
+      url;
+  if (options.hash.query) {
+    query = {
+      cycle: options.hash.query.cycle || null,
+      election_full: options.hash.query.election_full || null
+    };
+  }
+  id = entity.candidate_id || entity.committee_id;
+  url = buildAppUrl([options.hash.type, id], query);
+  return new Handlebars.SafeString(url);
+});
+
+Handlebars.registerHelper('electionUrl', function(year, options) {
+  var url;
+  var candidate = options.hash.parentContext;
+
+  if (candidate.office === 'P') {
+    url = buildAppUrl(['elections', 'president', year]);
+  } else if (candidate.office === 'S') {
+    url = buildAppUrl(['elections', 'senate', candidate.state, year]);
+  } else if (candidate.office === 'H') {
+    // Match election years with the election district
+    var district = candidate.election_districts[options.hash.index];
+    url = buildAppUrl(['elections', 'house', candidate.state, district, year]);
+  }
+  return new Handlebars.SafeString(url);
+});
+
 function cycleDates(year) {
   return {
     min: '01-01-' + (year - 1),
@@ -118,6 +149,28 @@ function buildUrl(path, query) {
     .toString();
 }
 
+function getTimePeriod(electionYear, cycle, electionFull, office) {
+  var durations = {
+    P: 3,
+    S: 5,
+    H: 1
+  };
+  var min,
+      max,
+      duration = durations[office];
+
+  if (electionFull) {
+    min = parseInt(electionYear) - duration;
+    max = electionYear;
+  } else {
+    min = parseInt(cycle) - 1;
+    max = cycle;
+  }
+
+  return min.toString() + '–' + max.toString();
+
+}
+
 module.exports = {
   currency: currency,
   ensureArray: ensureArray,
@@ -127,5 +180,6 @@ module.exports = {
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
-  globals: globals
+  globals: globals,
+  getTimePeriod: getTimePeriod
 };

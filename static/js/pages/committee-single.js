@@ -1,6 +1,6 @@
 'use strict';
 
-/* global document */
+/* global document, context */
 
 var $ = require('jquery');
 var _ = require('underscore');
@@ -287,7 +287,12 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        hideEmpty: true
+        hideEmpty: true,
+        hideEmptyOpts: {
+          dataType: 'disbursements received from other committees',
+          name: context.name,
+          timePeriod: context.timePeriod
+        }
       });
       break;
     case 'contribution-size':
@@ -302,7 +307,12 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
-        hideEmpty: true
+        hideEmpty: true,
+        hideEmptyOpts: {
+          dataType: 'individual contributions',
+          name: context.name,
+          timePeriod: context.timePeriod
+        }
       });
       break;
     case 'receipts-by-state':
@@ -339,6 +349,11 @@ $(document).ready(function() {
           columns: employerColumns,
           callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
+          hideEmptyOpts: {
+            dataType: 'individual contributions',
+            name: context.name,
+            timePeriod: context.timePeriod
+          },
         })
       );
       break;
@@ -352,6 +367,11 @@ $(document).ready(function() {
           columns: occupationColumns,
           callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
+          hideEmptyOpts: {
+            dataType: 'individual contributions',
+            name: context.name,
+            timePeriod: context.timePeriod
+          },
         })
       );
       break;
@@ -368,6 +388,11 @@ $(document).ready(function() {
         order: [[2, 'desc']],
         useFilters: true,
         hideEmpty: true,
+        hideEmptyOpts: {
+          dataType: 'filings',
+          name: context.name,
+          timePeriod: context.timePeriod
+        },
         callbacks: {
           afterRender: filings.renderModal
         }
@@ -383,6 +408,11 @@ $(document).ready(function() {
           columns: disbursementPurposeColumns,
           callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
+          hideEmptyOpts: {
+            dataType: 'disbursements',
+            name: context.name,
+            timePeriod: context.timePeriod
+          },
         })
       );
       break;
@@ -396,6 +426,11 @@ $(document).ready(function() {
           columns: disbursementRecipientColumns,
           callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
+          hideEmptyOpts: {
+            dataType: 'disbursements',
+            name: context.name,
+            timePeriod: context.timePeriod
+          },
         })
       );
       break;
@@ -409,6 +444,11 @@ $(document).ready(function() {
           columns: disbursementRecipientIDColumns,
           callbacks: aggregateCallbacks,
           order: [[1, 'desc']],
+          hideEmptyOpts: {
+            dataType: 'disbursements to committees',
+            name: context.name,
+            timePeriod: context.timePeriod
+          },
         })
       );
       break;
@@ -420,7 +460,13 @@ $(document).ready(function() {
         columns: expendituresColumns,
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
-        pagingType: 'simple'
+        pagingType: 'simple',
+        hideEmpty: true,
+        hideEmptyOpts: {
+          dataType: 'independent expenditures',
+          name: context.name,
+          timePeriod: context.timePeriod
+        },
       });
       break;
     case 'electioneering-committee':
@@ -431,7 +477,13 @@ $(document).ready(function() {
         columns: electioneeringColumns,
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
-        pagingType: 'simple'
+        pagingType: 'simple',
+        hideEmpty: true,
+        hideEmptyOpts: {
+          dataType: 'electioneering communications',
+          name: context.name,
+          timePeriod: context.timePeriod
+        },
       });
       break;
     case 'communication-cost-committee':
@@ -442,7 +494,13 @@ $(document).ready(function() {
         columns: communicationCostColumns,
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
-        pagingType: 'simple'
+        pagingType: 'simple',
+        hideEmpty: true,
+        hideEmptyOpts: {
+          dataType: 'communication costs',
+          name: context.name,
+          timePeriod: context.timePeriod
+        },
       });
       break;
     }
