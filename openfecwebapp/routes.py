@@ -220,8 +220,6 @@ def elections(office, cycle, state=None, district=None):
 })
 def legal_search(query, result_type):
     results = {}
-    if result_type not in ['all', 'aos', 'regs', 'murs']:
-        result_type = 'all'
 
     # Only hit the API if there's an actual query
     if query:

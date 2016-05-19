@@ -6,9 +6,9 @@
   <div class="combo combo--search {{ size }}">
     <select class="search__select {{select_class}}" name="search_type" aria-label="Select a document type">
       {% for value, name in (('all', 'All sources'),
-                             ('aos', 'AOs'),
+                             ('advisory_opinions', 'AOs'),
                              ('regulations', 'Regulations'),
-                             ('murs', 'MURs')) %}
+                             ('matters_under_review', 'MURs')) %}
       <option value="{{ value }}" {% if result_type == value %}selected{% endif %}>{{ name }}</option>
       {% endfor %}
     </select>
