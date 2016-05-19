@@ -37,7 +37,7 @@ def render_legal_search_results(results, query, result_type):
 
 
 def render_legal_doc_search_results(results, query, result_type):
-    if result_type == 'aos':
+    if result_type == 'advisory_opinions':
         document_type_display_name = 'Advisory Opinions'
     else:
         document_type_display_name = 'Documents'

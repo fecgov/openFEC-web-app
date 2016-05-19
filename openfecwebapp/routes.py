@@ -233,7 +233,7 @@ def legal_search(query, result_type):
     'offset': fields.Int(missing=0),
 })
 def advisory_opinions(query, offset):
-    result_type = 'aos'
+    result_type = 'advisory_opinions'
     results = {}
 
     # Only hit the API if there's an actual query
