@@ -382,7 +382,7 @@ $(document).ready(function() {
         query: query,
         columns: filingsColumns,
         rowCallback: filings.renderRow,
-        dom: '<"panel__main"t><"results-info results-info--bottom"frip>',
+        dom: '<"panel__main"t><"results-info"frip>',
         pagingType: 'simple',
         // Order by receipt date descending
         order: [[2, 'desc']],
