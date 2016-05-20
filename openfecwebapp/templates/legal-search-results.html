@@ -42,7 +42,7 @@
       </div>
       <section class="main__content--right">
         {% if query %}
-        <h1 class="main__title">Results for “{{ query }}”</h1>
+        <h1 class="main__title">Results for &ldquo;{{ query }}&rdquo;</h1>
         {% endif %}
         <div id="results-regulations" class="content__section">
           <div class="results-info results-info--simple">
@@ -75,7 +75,16 @@
             </div>
           {% else %}
             <div class="message message--alert">
-              <p>Sorry, there were no results.</p>
+              <h2 class="message__title">No results</h2>
+              <p>Sorry, we didn't find any regulations matching <span class="t-bold">{{ query }}</span>.</p>
+              <div class="message--alert__bottom">
+                <p>Think this was a mistake?</p>
+                <ul class="list--buttons">
+                  <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
+                  <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
+                  <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
+                </ul>
+              </div>
             </div>
           {% endif %}
         </div>
@@ -111,7 +120,16 @@
             </div>
           {% else %}
             <div class="message message--alert">
-              <p>Sorry, there were no results.</p>
+              <h2 class="message__title">No results</h2>
+              <p>Sorry, we didn't find any advisory opinions matching <span class="t-bold">{{ query }}</span>.</p>
+              <div class="message--alert__bottom">
+                <p>Think this was a mistake?</p>
+                <ul class="list--buttons">
+                  <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
+                  <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
+                  <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
+                </ul>
+              </div>
             </div>
           {% endif %}
         </div>
