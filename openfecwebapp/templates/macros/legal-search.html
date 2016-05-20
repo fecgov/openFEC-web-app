@@ -8,7 +8,7 @@
       {% for value, name in (('all', 'All sources'),
                              ('advisory_opinions', 'AOs'),
                              ('regulations', 'Regulations'),
-                             ('matters_under_review', 'MURs')) %}
+                             ) %}
       <option value="{{ value }}" {% if result_type == value %}selected{% endif %}>{{ name }}</option>
       {% endfor %}
     </select>
