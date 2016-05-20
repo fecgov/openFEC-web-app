@@ -26,19 +26,6 @@
   <div class="accordion__content">
     {{ text.field('min_receipts', 'Minimum receipts', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
     {{ text.field('max_receipts', 'Maximum receipts', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-    {% if office == 'president' %}
-      <div class="filter">
-        <fieldset class="js-filter">
-          <legend class="label"><span class="term" data-term="presidential public funds">Presidential public funds</span></legend>
-          <ul>
-            <li>
-              <input id="cycle-checkbox-federal-funds" name="federal_funds_flag" type="checkbox" value="true">
-              <label for="cycle-checkbox-federal-funds">Has accepted presidential public funds</label>
-            </li>
-          </ul>
-        </fieldset>
-      </div>
-    {% endif %}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Money spent</button>
   <div class="accordion__content">
