@@ -1,13 +1,20 @@
 {% extends "layouts/main.html" %}
 {% import 'macros/legal-search.html' as legal_search %}
+{% import 'macros/breadcrumbs.html' as breadcrumb %}
+
+{% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
 
 {% block title %}
+  {% if query %}
   Search results for &ldquo;{{query}}&rdquo;
+  {% else %}
+  Search legal resources
+  {% endif %}
 {% endblock %}
 
 {% block body %}
 <header class="page-header slab slab--primary">
-  <span class="page-header__title">Search results</span>
+  {{ breadcrumb.breadcrumbs('Search results', breadcrumb_links) }}
   {{ legal_search.search('header', result_type, query) }}
 </header>
 
@@ -33,17 +40,18 @@
           </ul>
         </nav>
       </div>
-      <section class="main__content">
+      <section class="main__content--right">
+        {% if query %}
+        <h1 class="main__title">Results for &ldquo;{{ query }}&rdquo;</h1>
+        {% endif %}
         <div id="results-regulations" class="content__section">
-          <div class="results-info results-info--top">
+          <div class="results-info results-info--simple">
             <div class="results-info__left">
               <h2 class="results-info__title">Regulations</h2>
             </div>
             {% if results.total_regulations %}
             <div class="results-info__right">
-              <span class="results-info__details">
-                <a href="/legal/advisory-opinions?search={{ query }}">
-                  View all <strong>{{ results.total_regulations }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.regulations|length }} of <a href="{{ url_for('regulations', search=query, search_type='regulations') }}"><strong>{{ results.total_regulations }}</strong> results</a></span>
             </div>
             {% endif %}
           </div>
@@ -62,9 +70,21 @@
                 {% endfor %}
               </tbody>
             </table>
+            <div class="results-info">
+              <a class="button button--browse button--alt" href="{{ url_for('regulations', search=query, search_type='regulations') }}">View all results</a>
+            </div>
           {% else %}
             <div class="message message--alert">
-              <p>Sorry, there were no results.</p>
+              <h2 class="message__title">No results</h2>
+              <p>Sorry, we didn't find any regulations matching <span class="t-bold">{{ query }}</span>.</p>
+              <div class="message--alert__bottom">
+                <p>Think this was a mistake?</p>
+                <ul class="list--buttons">
+                  <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
+                  <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
+                  <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
+                </ul>
+              </div>
             </div>
           {% endif %}
         </div>
@@ -76,7 +96,7 @@
             </div>
             {% if results.total_advisory_opinions %}
             <div class="results-info__right">
-              <span class="results-info__details"><a href="/legal/advisory-opinions?search={{ query }}">View all <strong>{{ results.total_advisory_opinions }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.advisory_opinions|length }} of <a href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}"><strong>{{ results.total_advisory_opinions }}</strong> results</a></span>
             </div>
             {% endif %}
           </div>
@@ -95,9 +115,21 @@
                 {% endfor %}
               </tbody>
             </table>
+            <div class="results-info">
+              <a class="button button--browse button--alt" href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">View all results</a>
+            </div>
           {% else %}
             <div class="message message--alert">
-              <p>Sorry, there were no results.</p>
+              <h2 class="message__title">No results</h2>
+              <p>Sorry, we didn't find any advisory opinions matching <span class="t-bold">{{ query }}</span>.</p>
+              <div class="message--alert__bottom">
+                <p>Think this was a mistake?</p>
+                <ul class="list--buttons">
+                  <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
+                  <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
+                  <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
+                </ul>
+              </div>
             </div>
           {% endif %}
         </div>

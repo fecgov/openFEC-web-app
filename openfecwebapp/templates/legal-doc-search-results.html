@@ -1,64 +1,75 @@
 {% extends "layouts/main.html" %}
 {% import 'macros/legal-search.html' as legal_search %}
-{% set document_type_display_name = 'Advisory Opinions' %}
+{% import 'macros/breadcrumbs.html' as breadcrumb %}
+
+{% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
+{% set result_entites = results.get(result_type, []) %}
 
 {% block title %}
-Searching {{ document_type_display_name }} for "{{ query }}"
+  {% if query %}
+  Searching {{ document_type_display_name }} for &ldquo;{{ query }}&rdquo;
+  {% else %}
+  Search {{ document_type_display_name }}
+  {% endif %}
 {% endblock %}
 
 {% block body %}
 <header class="page-header slab slab--primary">
-  <span class="page-header__title">Legal resources // {{ document_type_display_name }}</span>
+  {{ breadcrumb.breadcrumbs(document_type_display_name, breadcrumb_links) }}
 </header>
 
-<div class="main">
-  <div class="container">
-    <section class="main__content--full">
-      <div id="results-{{ result_type }}" class="content__section dataTables_wrapper">
-        <div class="results-info results-info--simple">
-          <div class="results-info__left">
-            <h2 class="results-info__title">{{ document_type_display_name }}</h2>
-          </div>
-        </div>
-        {% if results.count %}
-          <table class="data-table data-table--text">
-            <thead>
-              <tr>
-                <th class="cell--15">No.</th>
-                <th class="cell--25">Name</th>
-                <th class="cell--60">Hit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {# TODO this should handle generic document types (aos, murs, regs, etc) #}
-              {% for advisory_opinion in results.results %}
-                {% include 'partials/legal-search-results-advisory-opinion.html' %}
-              {% endfor %}
-            </tbody>
-          </table>
-          <div class="results-info">
-            <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + results.results|length }} of about {{ results.count }}</span></div>
-            <div class="dataTables_paginate">
-              {% if results.offset > 0 %}
-              <a class="paginate_button previous" href="/legal/advisory-opinions?search={{ query }}&offset={{ results.offset - results.limit }}">Previous</a>
-              {% else %}
-              <span class="paginate_button previous is-disabled">Previous</span>
-              {% endif %}
-              {% if results.offset + results.limit < results.count %}
-              <a class="paginate_button next" href="/legal/advisory-opinions?search={{ query }}&offset={{ results.offset + results.limit }}">Next</a>
-              {% else %}
-              <span class="paginate_button next is-disabled">Next</span>
-              {% endif %}
-            </div>
-          </div>
+<section class="main__content--full">
+  {% include 'partials/legal-filter.html' %}
+  <div id="results-{{ result_type }}" class="content__section dataTables_wrapper">
+    <div class="results-info results-info--simple">
+      <div class="results-info__left">
+        <h2 class="results-info__title">Searching {{ document_type_display_name }}{% if query %} for &ldquo;{{ query }}&rdquo;{% endif %}</h2>
+      </div>
+    </div>
+    {% if results.total_all %}
+    <table class="data-table data-table--text">
+      <thead>
+        <tr>
+          <th class="cell--15">No.</th>
+          <th class="cell--25">Name</th>
+          <th class="cell--60">Hit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# TODO this should handle generic document types (aos, murs, regs, etc) #}
+        {% for result in result_entites %}
+          {% if result_type == 'advisory_opinions' %}
+            {% with advisory_opinion = result %}
+            {% include 'partials/legal-search-results-advisory-opinion.html' %}
+            {% endwith %}
+          {% elif result_type == 'regulations' %}
+            {% with regulation = result %}
+            {% include 'partials/legal-search-results-regulation.html' %}
+            {% endwith %}
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="results-info">
+      <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + result_entites|length }} of about {{ results.total_all }}</span></div>
+      <div class="dataTables_paginate">
+        {% if results.offset > 0 %}
+	<a class="paginate_button previous" href="{{ url_for(result_type, search=query, offset=(results.offset - results.limit)) }}#results-{{ result_type }}">Previous</a>
         {% else %}
-          <div class="message message--alert">
-            <p>Sorry, there were no results.</p>
-          </div>
+        <span class="paginate_button previous is-disabled">Previous</span>
+        {% endif %}
+        {% if results.offset + results.limit < results.total_all %}
+	<a class="paginate_button next" href="{{ url_for(result_type, search=query, offset=(results.offset + results.limit)) }}#results-{{ result_type }}">Next</a>
+        {% else %}
+        <span class="paginate_button next is-disabled">Next</span>
         {% endif %}
       </div>
-    </section>
     </div>
+    {% else %}
+    <div class="message message--alert">
+      <p>Sorry, there were no results.</p>
+    </div>
+    {% endif %}
   </div>
-</div>
+</section>
 {% endblock %}

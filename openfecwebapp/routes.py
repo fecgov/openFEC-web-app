@@ -223,7 +223,7 @@ def legal_search(query, result_type):
 
     # Only hit the API if there's an actual query
     if query:
-        results = api_caller.load_legal_search_results(query, result_type)
+        results = api_caller.load_legal_search_results(query, result_type, limit=3)
 
     return views.render_legal_search_results(results, query, result_type)
 
@@ -233,7 +233,22 @@ def legal_search(query, result_type):
     'offset': fields.Int(missing=0),
 })
 def advisory_opinions(query, offset):
-    result_type = 'aos'
+    result_type = 'advisory_opinions'
+    results = {}
+
+    # Only hit the API if there's an actual query
+    if query:
+        results = api_caller.load_legal_search_results(query, result_type, offset=offset)
+
+    return views.render_legal_doc_search_results(results, query, result_type)
+
+@app.route('/legal/regulations/')
+@use_kwargs({
+    'query': fields.Str(load_from='search'),
+    'offset': fields.Int(missing=0),
+})
+def regulations(query, offset):
+    result_type = 'regulations'
     results = {}
 
     # Only hit the API if there's an actual query

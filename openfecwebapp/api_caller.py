@@ -64,11 +64,11 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     filters = {}
     if query:
         filters['q'] = query
-        filters['limit'] = limit
+        filters['hits_returned'] = limit
         filters['type'] = query_type
         filters['from_hit'] = offset
 
-    url = '/legal/search'
+    url = '/legal/search/'
     results = _call_api(url, **filters)
     results['limit'] = limit
     results['offset'] = offset
