@@ -41,7 +41,7 @@ Filter individual contributions
         </ul>
       </fieldset>
     </div>
-    {{ typeahead.field('contributor_name', 'Contributor name or ID', dataset='committees', allow_text=True) }}
+    {{ typeahead.field('contributor_name', 'Contributor name', dataset='', allow_text=True) }}
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
     {{ text.field('contributor_employer', 'Employer') }}
