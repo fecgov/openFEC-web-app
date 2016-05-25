@@ -6,7 +6,7 @@
     {% if title != 'Campaign finance data' %}
       <li class="breadcrumbs__item">
         <span class="breadcrumbs__separator">&rsaquo;</span>
-        <a href="/" class="breadcrumbs__link">Campaign finance data</a>
+        <a href="{{url_for('search')}}" class="breadcrumbs__link">Campaign finance data</a>
       </li>
     {% endif %}
     {% for link in links %}
