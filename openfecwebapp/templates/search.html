@@ -102,17 +102,17 @@
         <div class="card__content">
           <h2 class="card__title">Candidate data</h2>
           <ul class="card__links list--bulleted">
-            <li><a href="{{ url_for('candidates', election_year=2016, office='P', five_thousand_flag='true') }}">All 2016 presidential candidates &raquo;</a></li>
-            <li><a href="{{ url_for('candidates', election_year=2016, office='S', five_thousand_flag='true') }}">All 2016 Senate candidates &raquo;</a></li>
-            <li><a href="{{ url_for('candidates', election_year=2016, office='H', five_thousand_flag='true') }}">All 2016 House candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', election_year=2016, office='P', has_raised_funds='true') }}">All 2016 presidential candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', election_year=2016, office='S', has_raised_funds='true') }}">All 2016 Senate candidates &raquo;</a></li>
+            <li><a href="{{ url_for('candidates', election_year=2016, office='H', has_raised_funds='true') }}">All 2016 House candidates &raquo;</a></li>
           </ul>
-          <a class="button--standard button--browse" href="{{ url_for('candidates', election_year=default_cycles, five_thousand_flag='true') }}">Candidate data</a>
+          <a class="button--standard button--browse" href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">Candidate data</a>
         </div>
       </div>
       <div class="grid__item card card--wide">
         <div class="card__image__container">
           <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-committees--neutral.svg') }}" alt="Icon representing committees">
-          <h2 class="card__title"><span class="term" data-term="Committee">Committee</span> data</h2>
+          <h2 class="card__title">Committee data</h2>
         </div>
         <div class="card__content">
           <h2 class="card__title">Committee data</h2>
