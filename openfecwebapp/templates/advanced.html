@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-  {{ header.header('Advanced data', '') }}
+  {{ header.header('Advanced data', '', show_search=False) }}
   <div class="main">
   <div class="container">
     <h1 class="icon-heading--base icon-heading--table">Advanced data index</h1>
@@ -38,6 +38,9 @@
               </ul>
             </li>
           </ul>
+          <ul class="grid__item list--spacious t-sans">
+            <li><a href="{{ url_for('filings', form_type='F2') }}">Most recent Statements of Candidacy (Form 2)</a></li>
+          </ul>
           </div>
         </div>
         <div class="option__aside">
@@ -52,19 +55,23 @@
         <div class="option__content">
           <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed consectetur. Nulla vitae elit libero, a pharetra augue.</p>
           <div class="grid--2-wide">
-          <ul class="grid__item list--spacious t-sans">
-            <li><a class="t-all-data" href="{{ url_for('committees', election_year=default_cycles) }}">All committees</a>
-              <ul>
-                <li><a href="#" class="is-disabled">Candidate committees</a></li>
-                <li><a href="#" class="is-disabled">Political action committees (PACs)</a></li>
-                <li><a href="#" class="is-disabled">Super PACs</a></li>
-                <li><a href="#" class="is-disabled">Leadership PACs</a></li>
-                <li><a href="#" class="is-disabled">Joint fundraising committees</a></li>
-                <li><a href="#" class="is-disabled">Party committees</a></li>
-                <li><a href="#" class="is-disabled">Separate segregated funds</a></li>
-              </ul>
-            </li>
-          </ul>
+            <ul class="grid__item list--spacious t-sans">
+              <li><a class="t-all-data" href="{{ url_for('committees', election_year=default_cycles) }}">All committees</a>
+                <ul>
+                  <li><a href="#" class="is-disabled">Candidate committees</a></li>
+                  <li><a href="#" class="is-disabled">Political action committees (PACs)</a></li>
+                  <li><a href="#" class="is-disabled">Super PACs</a></li>
+                  <li><a href="#" class="is-disabled">Leadership PACs</a></li>
+                  <li><a href="#" class="is-disabled">Joint fundraising committees</a></li>
+                  <li><a href="#" class="is-disabled">Party committees</a></li>
+                  <li><a href="#" class="is-disabled">Separate segregated funds</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="grid__item list--spacious t-sans">
+              <li><a href="{{ url_for('filings', form_type='F1') }}">Most recent Statements of Organization (Form 1)</a></li>
+              <li><a href="{{ url_for('filings', form_type='RFAI') }}">Requests for Additional Information sent to committees</a></li>
+            </ul>
           </div>
         </div>
         <div class="option__aside">
