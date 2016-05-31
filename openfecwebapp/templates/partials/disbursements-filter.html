@@ -4,6 +4,8 @@
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/date.html' as date %}
+{% import 'macros/filters/report-years.html' as report_years %}
+
 {% block heading %}
 Filter disbursements
 {% endblock %}
@@ -15,6 +17,10 @@ Filter disbursements
 {% endblock %}
 
 {% block filters %}
+<div class="filters__inner">
+  {{ report_years.years()}}
+</div>
+
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
   <button type="button" class="js-accordion-trigger accordion__button">Spender information</button>
   <div class="accordion__content">

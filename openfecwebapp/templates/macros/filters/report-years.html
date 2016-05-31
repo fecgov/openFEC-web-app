@@ -1,0 +1,16 @@
+{% macro years(max_year=2016, min_year=1978) %}
+<div class="js-filter filter">
+  <div class="tooltip__container">
+    <label class="label tooltip__trigger-text">Election year</label>
+    <button class="tooltip__trigger" type="button"><span class="u-visually-hidden">Learn more</span></button>
+    <div id="year-tooltip" role="tooltip" class="tooltip tooltip--under">
+      <p class="tooltip__content">The two-year period that includes the election which the transaction was reported for. Due to the large number of itemized transactions, you can only view one period at a time.</p>
+    </div>
+  </div>
+  <select id="report-year" name="report_year" aria-describedby="unique-tooltip">
+    {% for year in range(max_year, min_year, -2) %}
+      <option value="{{year}}">{{ year | fmt_year_range }}</option>
+    {% endfor %}
+  </select>
+</div>
+{% endmacro %}
