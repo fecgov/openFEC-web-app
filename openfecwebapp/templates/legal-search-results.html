@@ -29,12 +29,8 @@
               Regulations ({{ results.total_regulations|default(0) }})
               </a>
             </li>
-            <li class="side-nav__item">
-              <a class="side-nav__link" href="#results-advisory-opinions">
-              Advisory Opinions ({{ results.total_advisory_opinions|default(0) }})
-              </a>
-            </li>
-            <li class="is-disabled side-nav__item"><span class="side-nav__link">Matters Under Review (TBD)</span></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link">Advisory Opinions (TBD)</span></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link">Enforcement Matters (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
           </ul>
@@ -90,8 +86,7 @@
             </div>
           {% endif %}
         </div>
-
-        <div id="results-advisory-opinions" class="content__section">
+        <div id="results-advisory-opinions" class="content__section" style="display:none;">
           <div class="results-info results-info--simple">
             <div class="results-info__left">
               <h2 class="results-info__title">Advisory Opinions</h2>
