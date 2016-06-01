@@ -55,13 +55,12 @@
             <table class="data-table data-table--text">
               <thead>
                 <tr>
-                  <th class="cell--15">Part No.</th>
-                  <th class="cell--25">Name</th>
-                  <th class="cell--60">Hit</th>
+                  <th class="cell--15">Section</th>
+                  <th class="cell--85">Description</th>
                 </tr>
               </thead>
               <tbody>
-                {% for regulation in results.regulations %}
+                {% for section in results.regulations %}
                   {% include 'partials/legal-search-results-regulation.html' %}
                 {% endfor %}
               </tbody>
