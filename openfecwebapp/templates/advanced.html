@@ -9,7 +9,7 @@
   {{ header.header('Advanced data', '', show_search=False) }}
   <div class="main">
   <div class="container">
-    <h1 class="icon-heading--base icon-heading--table">Advanced data index</h1>
+    <h1 class="icon-heading--circle-table">Advanced data index</h1>
   </div>
   <div id="options" class="container">
     <div class="sidebar-container sidebar-container--left">
@@ -46,7 +46,9 @@
         <div class="option__aside">
           <aside class="card card--primary is-disabled">
             <span class="card__image card__icon i-candidate"><span class="u-visually-hidden">Icon representing a candidate</span></span>
-            Candidate interactive overviews
+            <div class="card__content">
+              Candidate interactive overviews
+            </div>
           </aside>
         </div>
       </div>
@@ -77,11 +79,15 @@
         <div class="option__aside">
           <aside class="card card--primary is-disabled">
             <span class="card__image card__icon i-committee"><span class="u-visually-hidden">Icon representing a committee</span></span>
-            PAC interactive overviews
+            <div class="card__content">
+              PAC interactive overviews
+            </div>
           </aside>
-          <aside class="card card--primary is-disabled">
+          <aside class="card card--primary card--stacked is-disabled">
             <span class="card__image card__icon i-committee"><span class="u-visually-hidden">Icon representing a committee</span></span>
-            Party committee interactive overviews
+            <div class="card__content">
+              Party committee interactive overviews
+            </div>
           </aside>
         </div>
       </div>
@@ -103,7 +109,9 @@
         <div class="option__aside">
           <aside class="card card--primary is-disabled">
             <span class="card__image card__icon i-receipt"><span class="u-visually-hidden">Icon representing fundraising</span></span>
-            Fundraising interactive overviews
+            <div class="card__content">
+              Fundraising interactive overviews
+            </div>
           </aside>
         </div>
       </div>
@@ -121,16 +129,18 @@
               </li>
             </ul>
             <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('independent_expenditures', max_date='12-31-2016') }}">Independent expenditures</a></li>
-              <li><a class="t-all-data" href="{{ url_for('electioneering_communications', max_date='12-31-2016') }}">Electioneering communications</a></li>
-              <li><a class="t-all-data" href="{{ url_for('communication_costs', max_date='12-31-2016') }}">Communication costs</a></li>
+              <li><a href="{{ url_for('independent_expenditures', max_date='12-31-2016') }}">Independent expenditures</a></li>
+              <li><a href="{{ url_for('electioneering_communications', max_date='12-31-2016') }}">Electioneering communications</a></li>
+              <li><a href="{{ url_for('communication_costs', max_date='12-31-2016') }}">Communication costs</a></li>
             </ul>
           </div>
         </div>
         <div class="option__aside">
           <aside class="card card--primary is-disabled">
             <span class="card__image card__icon i-disbursement"><span class="u-visually-hidden">Icon representing spending</span></span>
-            Spending interactive overviews
+            <div class="card__content">
+              Spending interactive overviews
+            </div>
           </aside>
         </div>
       </div>
@@ -163,30 +173,28 @@
     <h2>More ways to view this data</h2>
     <div class="grid grid--4-wide">
       <div class="grid__item">
-        <aside class="card card--horizontal card--primary">
-          <div class="card__image">
-            <a class="u-no-border" href="{{ url_for('election_lookup') }}">
-            <span class="card__icon i-elections"><span class="u-visually-hidden">Icon representing elections</span></span>
-            </a>
-          </div>
-          <div class="card__content">
-            <a href="{{ url_for('election_lookup') }}">View elections and candidates by location</a>
-          </div>
-        </aside>
+        <a href="{{ url_for('election_lookup') }}">
+          <aside class="card card--horizontal card--primary">
+            <div class="card__image__container">
+                <span class="card__icon i-elections"><span class="u-visually-hidden">Icon representing elections</span></span>
+            </div>
+            <div class="card__content">
+              View elections and candidates by location
+            </div>
+          </aside>
+        </a>
       </div>
       <div class="grid__item">
-        <aside class="card card--horizontal card--primary">
-          <div class="card__image">
-            <a class="u-no-border" href="{{ url_for('search') }}">
+        <a href="{{ url_for('search') }}">
+          <aside class="card card--horizontal card--primary">
+            <div class="card__image__container">
               <span class="card__icon i-profile"><span class="u-visually-hidden">Icon representing profiles</span></span>
-            </a>
-          </div>
-          <div class="card__content">
-            <a href="{{ url_for('search') }}">
-              Find candidate or committee profiles
-            </a>
-          </div>
-        </aside>
+            </div>
+            <div class="card__content">
+                Find candidate or committee profiles
+            </div>
+          </aside>
+        </a>
       </div>
     </div>
   </div>
