@@ -1,11 +1,10 @@
 <tr class="legal-search-result">
-  <td><a title="{{ regulation.description }}" href="{{ regulation.url }}">PART {{ regulation.no }}</a></td>
-  <td>{{ regulation.name }}</td>
+  <td><a title="{{ section.description }}" href="{{ section.url }}">§ {{ section.no }}</a></td>
   <td>
-    <strong>{{ regulation.name }}</strong>
+    <strong>{{ section.name }}</strong>
     <div class="t-serif legal-search-result__hit">
       &hellip;
-      {% for highlight in regulation.highlights %}
+      {% for highlight in section.highlights %}
         {{ highlight|safe }} &hellip;
       {% endfor %}
     </div>
