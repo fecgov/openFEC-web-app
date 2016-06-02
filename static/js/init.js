@@ -1,6 +1,6 @@
 'use strict';
 
-/* global window, document, Inputmask, BASE_PATH, CMS_URL */
+/* global window, document, BASE_PATH, CMS_URL */
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
@@ -18,27 +18,9 @@ var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
 var analytics = require('fec-style/js/analytics');
 
-require('jquery.inputmask');
-require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
-require('jquery.inputmask/dist/inputmask/inputmask.numeric.extensions.js');
-
 // @if SENTRY_PUBLIC_DSN
 require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
 // @endif
-
-// Remove extra padding in currency mask
-Inputmask.extendAliases({
-  currency: {
-    prefix: '$',
-    groupSeparator: ',',
-    alias: 'numeric',
-    placeholder: '0',
-    autoGroup: true,
-    digits: 2,
-    digitsOptional: true,
-    clearMaskOnLostFocus: false
-  }
-});
 
 // Include vendor scripts
 require('./vendor/tablist').init();
@@ -90,9 +72,6 @@ $(document).ready(function() {
 
   // Initialize feedback
   new feedback.Feedback(helpers.buildAppUrl(['issue']));
-
-  // Inialize input masks
-  $('[data-inputmask]').inputmask();
 
   // Initialize new accordions
   $('.js-accordion').each(function(){
