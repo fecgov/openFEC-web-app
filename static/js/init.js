@@ -116,7 +116,9 @@ $(document).ready(function() {
   });
 
   // Initialize table of contents
-  new toc.TOC('.js-toc');
+  $('.js-toc').each(function() {
+    new toc.TOC(this);
+  });
 
   // TODO: Restore
   // @if DEBUG
