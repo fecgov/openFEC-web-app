@@ -30,9 +30,8 @@
     <table class="data-table data-table--text">
       <thead>
         <tr>
-          <th class="cell--15">No.</th>
-          <th class="cell--25">Name</th>
-          <th class="cell--60">Hit</th>
+          <th class="cell--15">Section</th>
+          <th class="cell--85">Description</th>
         </tr>
       </thead>
       <tbody>
@@ -43,7 +42,7 @@
             {% include 'partials/legal-search-results-advisory-opinion.html' %}
             {% endwith %}
           {% elif result_type == 'regulations' %}
-            {% with regulation = result %}
+            {% with section = result %}
             {% include 'partials/legal-search-results-regulation.html' %}
             {% endwith %}
           {% endif %}
