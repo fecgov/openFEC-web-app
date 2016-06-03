@@ -1,0 +1,201 @@
+{% extends "layouts/main.html" %}
+{% import 'macros/page-header.html' as header %}
+
+{% block title %}
+  Advanced data
+{% endblock %}
+
+{% block body %}
+  {{ header.header('Advanced data', '', show_search=False) }}
+  <div class="main">
+  <div class="container">
+    <h1 class="icon-heading--circle-table">Advanced data index</h1>
+  </div>
+  <div id="options" class="container">
+    <div class="sidebar-container sidebar-container--left">
+      <nav class="sidebar sidebar--neutral sidebar--left side-nav js-sticky js-toc" data-sticky-container="options">
+        <ul class="sidebar__content">
+          <li class="side-nav__item"><a class="side-nav__link" href="#candidates">Candidates</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="#committees">Committees</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="#receipts">Receipts</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="#spending">Spending</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="#filings">Reports and filings</a></li>
+        </ul>
+      </nav>
+    </div>
+    <section class="main__content--right">
+      <div id="candidates" class="option">
+        <h2>Candidates</h2>
+        <div class="option__content">
+          <div class="grid--2-wide">
+          <ul class="grid__item list--spacious t-sans">
+            <li><a class="t-all-data" href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">All candidates</a>
+              <ul>
+                <li><a href="{{ url_for('candidates_office', office='president') }}">Presidential candidates</a></li>
+                <li><a href="{{ url_for('candidates_office', office='senate') }}">Senate candidates</a></li>
+                <li><a href="{{ url_for('candidates_office', office='house') }}">House of Representatives candidates</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="grid__item list--spacious t-sans">
+            <li><a href="{{ url_for('filings', form_type='F2') }}">Most recent Statements of Candidacy (Form 2)</a></li>
+          </ul>
+          </div>
+        </div>
+        <div class="option__aside">
+          <aside class="card card--primary is-disabled">
+            <span class="card__image card__icon i-candidate"><span class="u-visually-hidden">Icon representing a candidate</span></span>
+            <div class="card__content">
+              Candidate interactive overviews
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div id="committees" class="option">
+        <h2>Committees</h2>
+        <div class="option__content">
+          <div class="grid--2-wide">
+            <ul class="grid__item list--spacious t-sans">
+              <li><a class="t-all-data" href="{{ url_for('committees', election_year=default_cycles) }}">All committees</a>
+                <ul>
+                  <li><a href="#" class="is-disabled">Candidate committees</a></li>
+                  <li><a href="#" class="is-disabled">Political action committees (PACs)</a></li>
+                  <li><a href="#" class="is-disabled">Super PACs</a></li>
+                  <li><a href="#" class="is-disabled">Leadership PACs</a></li>
+                  <li><a href="#" class="is-disabled">Joint fundraising committees</a></li>
+                  <li><a href="#" class="is-disabled">Party committees</a></li>
+                  <li><a href="#" class="is-disabled">Separate segregated funds</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="grid__item list--spacious t-sans">
+              <li><a href="{{ url_for('filings', form_type='F1') }}">Most recent Statements of Organization (Form 1)</a></li>
+              <li><a href="{{ url_for('filings', form_type='RFAI') }}">Requests for Additional Information sent to committees</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="option__aside">
+          <aside class="card card--primary is-disabled">
+            <span class="card__image card__icon i-committee"><span class="u-visually-hidden">Icon representing a committee</span></span>
+            <div class="card__content">
+              PAC interactive overviews
+            </div>
+          </aside>
+          <aside class="card card--primary card--stacked is-disabled">
+            <span class="card__image card__icon i-committee"><span class="u-visually-hidden">Icon representing a committee</span></span>
+            <div class="card__content">
+              Party committee interactive overviews
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div id="receipts" class="option">
+        <h2>Receipts</h2>
+        <div class="option__content">
+          <div class="grid--2-wide">
+          <ul class="grid__item list--spacious t-sans">
+            <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=true, max_receipt_date='12-31-2016') }}">All receipts</a>
+              <ul>
+                <li><a href="{{ url_for('individual_contributions', max_receipt_date='12-31-2016', is_individual=true) }}">Individual contributions</a></li>
+                <li><a href="#" class="is-disabled">Contributions from other committees</a></li>
+              </ul>
+            </li>
+          </ul>
+          </div>
+        </div>
+        <div class="option__aside">
+          <aside class="card card--primary is-disabled">
+            <span class="card__image card__icon i-receipt"><span class="u-visually-hidden">Icon representing fundraising</span></span>
+            <div class="card__content">
+              Fundraising interactive overviews
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div id="spending" class="option">
+        <h2>Spending</h2>
+        <div class="option__content">
+          <div class="grid--2-wide">
+            <ul class="grid__item list--spacious t-sans">
+              <li><a class="t-all-data" href="{{ url_for('disbursements', max_date='12-31-2016') }}">All disbursements</a>
+                <ul>
+                  <li><a href="#" class="is-disabled">Operating expenditures</a></li>
+                  <li><a href="#" class="is-disabled">Expenditures to committees</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="grid__item list--spacious t-sans">
+              <li><a href="{{ url_for('independent_expenditures', max_date='12-31-2016') }}">Independent expenditures</a></li>
+              <li><a href="{{ url_for('electioneering_communications', max_date='12-31-2016') }}">Electioneering communications</a></li>
+              <li><a href="{{ url_for('communication_costs', max_date='12-31-2016') }}">Communication costs</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="option__aside">
+          <aside class="card card--primary is-disabled">
+            <span class="card__image card__icon i-disbursement"><span class="u-visually-hidden">Icon representing spending</span></span>
+            <div class="card__content">
+              Spending interactive overviews
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div id="filings" class="option">
+        <h2>Reports and filings</h2>
+        <div class="option__content">
+          <div class="grid--2-wide">
+            <ul class="grid__item list--spacious t-sans">
+              <li><a class="t-all-data" href="{{ url_for('filings') }}">All filings</a></li>
+            </ul>
+            <ul class="grid__item list--spacious t-sans">
+              <li><a class="t-all-data is-disabled">Report summaries</a>
+                <ul>
+                  <li><a class="is-disabled">Authorized committee reports</a></li>
+                  <li><a class="is-disabled">Unauthorized committee reports</a></li>
+                  <li><a class="is-disabled">Independent expenditure (Form 5) filer reports</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="slab slab--neutral">
+  <div class="container">
+    <h2>More ways to view this data</h2>
+    <div class="grid grid--4-wide">
+      <div class="grid__item">
+        <a href="{{ url_for('election_lookup') }}">
+          <aside class="card card--horizontal card--primary">
+            <div class="card__image__container">
+                <span class="card__icon i-elections"><span class="u-visually-hidden">Icon representing elections</span></span>
+            </div>
+            <div class="card__content">
+              View elections and candidates by location
+            </div>
+          </aside>
+        </a>
+      </div>
+      <div class="grid__item">
+        <a href="{{ url_for('search') }}">
+          <aside class="card card--horizontal card--primary">
+            <div class="card__image__container">
+              <span class="card__icon i-profile"><span class="u-visually-hidden">Icon representing profiles</span></span>
+            </div>
+            <div class="card__content">
+                Find candidate or committee profiles
+            </div>
+          </aside>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
