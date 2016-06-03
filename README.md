@@ -164,6 +164,12 @@ environment variable; the size of the cache, in items, is controlled by the
 `FEC_WEB_CACHE_SIZE` environment variable. When the cache is enabled, views may
 be stale for up to the cache duration set by the API.
 
+
+#### Release
+
+See the [release checklist](https://github.com/18F/FEC/wiki/release-checklist) for details on how to release a new version of betaFEC.
+
+
 ### Run Tests
 
 #### Python Unit Tests
