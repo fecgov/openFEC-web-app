@@ -20,16 +20,18 @@
     >
   <label class="label" for="{{ name }}">{{ title }}</label>
   <ul class="dropdown__selected"></ul>
-  <select name="{{ name }}" class="js-election select--full">
+  <select id="{{name}}" name="{{ name }}" class="js-election select--full">
     {% for year in years %}
       <option value="{{ year }}">{{ year }}</option>
     {% endfor %}
   </select>
+  {% if office in ['president', 'senate'] %}
   <fieldset class="toggles toggles--vertical">
     <legend class="label">Time period</legend>
     <div class="js-cycles"></div>
   </fieldset>
   <input type="hidden" name="{{ cycle_name }}" />
   <input type="hidden" name="{{ full_name }}" />
+  {% endif %}
 </div>
 {% endmacro %}

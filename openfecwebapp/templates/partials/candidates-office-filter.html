@@ -6,22 +6,41 @@
 {% import 'macros/filters/election-filter.html' as election_filter %}
 
 {% block filters %}
-{{ typeahead.field('q', 'Candidate name or ID', 'Find an ID by searching for a candidate name', 'candidates', True) }}
-{{ election_filter.field('election_year', 'Election cycle', 'cycle', 'election_full', office) }}
-<input id="election_full" name="election_full" type="checkbox" value="true">
-{% include 'partials/filters/parties.html' %}
-{% if office in ['senate', 'house'] %}
-  {{ states.field('state') }}
-{% endif %}
-{% if office == 'house' %}
-  {% include 'partials/filters/districts.html' %}
-{% endif %}
-{{ text.field('min_receipts', 'Minimum receipts', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-{{ text.field('max_receipts', 'Maximum receipts', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-{{ text.field('min_disbursements', 'Minimum disbursements', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-{{ text.field('max_disbursements', 'Maximum disbursements', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-{{ text.field('min_cash_on_hand_end_period', 'Minimum cash on hand', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-{{ text.field('max_cash_on_hand_end_period', 'Maximum cash on hand', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-{{ text.field('min_debts_owed_by_committee', 'Minimum debt', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-{{ text.field('max_debts_owed_by_committee', 'Maximum debt', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+<div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
+  <div class="filters__inner">
+    {{ typeahead.field('q', 'Candidate name or ID', '', dataset='candidates', allow_text=True) }}
+    {{ election_filter.field('election_year', 'Election cycle', 'cycle', 'election_full', office) }}
+    <input id="election_full" name="election_full" type="checkbox" value="true">
+  </div>
+  <button type="button" class="js-accordion-trigger accordion__button">Candidate information</button>
+  <div class="accordion__content">
+    {% include 'partials/filters/parties.html' %}
+    {% if office in ['senate', 'house'] %}
+      {{ states.field('state') }}
+    {% endif %}
+    {% if office == 'house' %}
+      {% include 'partials/filters/districts.html' %}
+    {% endif %}
+  </div>
+  <button type="button" class="js-accordion-trigger accordion__button">Money received</button>
+  <div class="accordion__content">
+    {{ text.field('min_receipts', 'Minimum receipts', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+    {{ text.field('max_receipts', 'Maximum receipts', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+  </div>
+  <button type="button" class="js-accordion-trigger accordion__button">Money spent</button>
+  <div class="accordion__content">
+    {{ text.field('min_disbursements', 'Minimum disbursements', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+    {{ text.field('max_disbursements', 'Maximum disbursements', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+  </div>
+  <button type="button" class="js-accordion-trigger accordion__button">Cash on hand</button>
+  <div class="accordion__content">
+    {{ text.field('min_cash_on_hand_end_period', 'Minimum cash on hand', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+    {{ text.field('max_cash_on_hand_end_period', 'Maximum cash on hand', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+  </div>
+  <button type="button" class="js-accordion-trigger accordion__button">Debt</button>
+  <div class="accordion__content">
+    {{ text.field('min_debts_owed_by_committee', 'Minimum debt', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
+    {{ text.field('max_debts_owed_by_committee', 'Maximum debt', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+  </div>
+</div>
 {% endblock %}

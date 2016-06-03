@@ -13,7 +13,7 @@ var disbursementTemplate = require('../../templates/disbursements.hbs');
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
-    title: 'Disbursement',
+    title: 'Disbursements',
     path: ['schedules', 'schedule_b'],
     columns: columns.disbursements,
     paginator: tables.SeekPaginator,

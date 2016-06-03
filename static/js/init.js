@@ -1,6 +1,6 @@
 'use strict';
 
-/* global window, document, Inputmask, BASE_PATH */
+/* global window, document, Inputmask, BASE_PATH, CMS_URL */
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
@@ -58,7 +58,10 @@ $(document).ready(function() {
   });
 
   $('.js-site-nav').each(function() {
-    new siteNav.SiteNav(this);
+    new siteNav.SiteNav(this, {
+      cmsUrl: CMS_URL,
+      webAppUrl: BASE_PATH
+    });
   });
 
   new skipNav.Skipnav('.skip-nav', 'main');

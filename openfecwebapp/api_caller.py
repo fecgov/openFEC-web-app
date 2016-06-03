@@ -49,7 +49,7 @@ def _transform_advisory_opinion(advisory_opinion):
     source = advisory_opinion['_source']
     return {
         'id': source.get('AO_Id'),
-        'no' : source.get('AO_No'),
+        'no': source.get('AO_No'),
         'name': source.get('AO_name'),
         'summary': source.get('AO_Summary'),
         'tags': source.get('AO_tags'),
@@ -60,43 +60,16 @@ def _transform_advisory_opinion(advisory_opinion):
     }
 
 
-def _transform_legal_search_results(response):
-    #TODO move this to the API
-    data = response.get('results', [])
-    count = response.get('count', -1)
-
-    results = {}
-    results['advisory_opinions'] = [_transform_advisory_opinion(i) for i in data if i['_type'] == 'ao']
-    results['regulations'] = [i for i in data if i['_type'] == 'regulation']
-    results['murs'] = [i for i in data if i['_type'] == 'mur']
-    results['total_advisory_opinions'] = len(results['advisory_opinions'])
-    results['total_regulations'] = 0
-    results['total_murs'] = 0
-
-    if count != -1:
-        # This version of the API won't always return count
-        results['total_advisory_opinions'] = count
-
-    return results
-
-
 def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     filters = {}
-
     if query:
         filters['q'] = query
-        filters['limit'] = limit
+        filters['hits_returned'] = limit
         filters['type'] = query_type
         filters['from_hit'] = offset
 
-    url = '/legal/search'
+    url = '/legal/search/'
     results = _call_api(url, **filters)
-
-    if query_type == 'aos':
-        results['results'] = [_transform_advisory_opinion(ao) for ao in results.get('results', [])]
-    else:
-        results = _transform_legal_search_results(results)
-
     results['limit'] = limit
     results['offset'] = offset
 

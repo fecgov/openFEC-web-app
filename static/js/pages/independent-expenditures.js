@@ -13,7 +13,7 @@ var expenditureTemplate = require('../../templates/independent-expenditures.hbs'
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
-    title: 'Independent expenditure',
+    title: 'Independent expenditures',
     path: 'schedules/schedule_e',
     query: {
       is_notice: 'false',

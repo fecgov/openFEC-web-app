@@ -1,14 +1,16 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/page-header.html' as header %}
 
+{% set breadcrumbs_title=title %}
+{% set breadcrumbs=[('', 'Advanced data')] %}
+
 {% block title %}
   Browse {{ title }}
 {% endblock %}
 
-{% set breadcrumbs=[('', 'Advanced data')] %}
 {% block body %}
 
-{{ header.header(slug | title, breadcrumbs, show_search=False) }}
+{{ header.header(breadcrumbs_title | title, breadcrumbs, show_search=False) }}
 
 <section class="main__content--full">
   <div class="data-container__widgets js-data-widgets">
