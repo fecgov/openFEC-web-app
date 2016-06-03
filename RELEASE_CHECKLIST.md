@@ -17,14 +17,13 @@
 - [ ] Update fec-style and publish to npm as necessary
 - [ ] Run update scripts in standalone app if necessary
   - [ ] Allocate additional resources for the database to help with the processing before starting if need be.
-- Make sure local copies of `master`, `develop`, and `release/[release name]` branches are up-to-date.
-- Checkout the `release/[release name]` branch.
-- Run `git flow release finish [release name]`
-- Run `git push`
-- Run `git push --tags`
-- Confirm that the new `web` app is up and running successfully.
-- Delete the `web-a` and `web-b` apps.
-- Test the site.
+- [ ] Make sure local copies of `master`, `develop`, and `release/[release name]` branches are up-to-date.
+- [ ] Checkout the `release/[release name]` branch.
+- [ ] Run `git flow release finish [release name]`
+- [ ] Run `git push --follow-tags`
+- [ ] Confirm that the new `web` app is up and running successfully.
+- [ ] Delete the `web-a` and `web-b` apps.
+- [ ] Test the site.
 
 ## After release
 - [ ] Review changes on production
