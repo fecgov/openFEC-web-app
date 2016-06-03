@@ -2,7 +2,7 @@
 {% import 'macros/page-header.html' as header %}
 
 {% set breadcrumbs_title=title %}
-{% set breadcrumbs=[('', 'Advanced data')] %}
+{% set breadcrumbs=[(url_for('advanced'), 'Advanced data')] %}
 
 {% block title %}
   Browse {{ title }}
