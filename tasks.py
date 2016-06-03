@@ -111,6 +111,7 @@ def deploy(space=None, branch=None, yes=False):
     run('cf {0} web -f manifest_{1}.yml'.format(cmd, space), echo=True)
 
 
+# not calling this function for now
 @task
 def notify():
     try:
