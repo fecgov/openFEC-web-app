@@ -17,6 +17,7 @@ var skipNav = require('fec-style/js/skip-nav');
 var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
 var analytics = require('fec-style/js/analytics');
+var toc = require('fec-style/js/toc');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
@@ -112,6 +113,11 @@ $(document).ready(function() {
   // Initialize search
   $('.js-search').each(function() {
     new Search($(this));
+  });
+
+  // Initialize table of contents
+  $('.js-toc').each(function() {
+    new toc.TOC(this);
   });
 
   // TODO: Restore
