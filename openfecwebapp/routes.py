@@ -84,6 +84,7 @@ def committee_page(c_id, cycle=None):
 def advanced():
     return render_template(
         'advanced.html',
+        title='Advanced data'
     )
 
 @app.route('/candidates/')

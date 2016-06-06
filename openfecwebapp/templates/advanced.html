@@ -2,14 +2,14 @@
 {% import 'macros/page-header.html' as header %}
 
 {% block title %}
-  Advanced data
+  {{ title }}
 {% endblock %}
 
 {% block body %}
-  {{ header.header('Advanced data', '', show_search=False) }}
+  {{ header.header(title, '', show_search=False) }}
   <div class="main">
   <div class="container">
-    <h1 class="icon-heading--circle-table">Advanced data index</h1>
+    <h1 class="icon-heading--circle-table">{{ title }}</h1>
   </div>
   <div id="options" class="container">
     <div class="sidebar-container sidebar-container--left">
