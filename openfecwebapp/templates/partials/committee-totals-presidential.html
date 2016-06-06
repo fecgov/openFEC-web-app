@@ -21,7 +21,7 @@
      (totals.0.other_receipts, 'Other receipts'),
    ]
 %}
-{{ tables.totals('Total Receipts', totals.0.receipts, table_data,
+{{ tables.totals('Total receipts', totals.0.receipts, table_data,
     committee.report_year, header_description='Money received by the committee' ) }}
 
 {% set table_data = [
@@ -38,7 +38,7 @@
 
    ]
 %}
-{{ tables.totals('Total Disbursements', totals.0.disbursements, table_data,
+{{ tables.totals('Total disbursements', totals.0.disbursements, table_data,
     committee.report_year, header_description='Money spent by the committee' ) }}
 
 {% endwith %}
