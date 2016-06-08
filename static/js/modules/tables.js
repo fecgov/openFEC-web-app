@@ -420,7 +420,9 @@ DataTable.prototype.enableExport = function() {
 DataTable.prototype.fetch = function(data, callback) {
   var self = this;
   self.ensureWidgets();
-  if (self.filterSet) {
+  if (self.filterSet && !self.filterSet.isValid) {
+    return;
+  } else if (self.filterSet && self.filterSet.isValid) {
     urls.pushQuery(self.filterSet.serialize(), self.filterSet.fields);
     self.filters = self.filterSet.serialize();
   }
