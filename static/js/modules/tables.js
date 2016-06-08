@@ -423,7 +423,7 @@ DataTable.prototype.fetch = function(data, callback) {
   if (self.filterSet && !self.filterSet.isValid) {
     return;
   } else if (self.filterSet && self.filterSet.isValid) {
-    urls.pushQuery(self.filterSet.serialize(), self.filterSet.fields);
+    urls.updateQuery(self.filterSet.serialize(), self.filterSet.fields);
     self.filters = self.filterSet.serialize();
   }
   var url = self.buildUrl(data);
