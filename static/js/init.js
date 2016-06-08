@@ -17,6 +17,8 @@ var skipNav = require('fec-style/js/skip-nav');
 var feedback = require('fec-style/js/feedback');
 var typeahead = require('fec-style/js/typeahead');
 var analytics = require('fec-style/js/analytics');
+var stickyBar = require('fec-style/js/sticky-bar');
+var toc = require('fec-style/js/toc');
 
 require('jquery.inputmask');
 require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
@@ -66,13 +68,18 @@ $(document).ready(function() {
 
   new skipNav.Skipnav('.skip-nav', 'main');
 
-  // Initialize sticky elements
-  $('.js-sticky').each(function() {
+  // Initialize stick side elements
+  $('.js-sticky-side').each(function() {
     var container = $(this).data('sticky-container');
     var opts = {
       within: document.getElementById(container)
     };
     new Sticky(this, opts);
+  });
+
+  // Initialize sticky bar elements
+  $('.js-sticky-bar').each(function() {
+    new stickyBar.StickyBar(this);
   });
 
   // Initialize glossary
@@ -112,6 +119,11 @@ $(document).ready(function() {
   // Initialize search
   $('.js-search').each(function() {
     new Search($(this));
+  });
+
+  // Initialize table of contents
+  $('.js-toc').each(function() {
+    new toc.TOC(this);
   });
 
   // TODO: Restore

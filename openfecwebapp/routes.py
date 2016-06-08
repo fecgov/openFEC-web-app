@@ -80,6 +80,13 @@ def committee_page(c_id, cycle=None):
     committee, candidates, cycle = api_caller.load_with_nested('committee', c_id, 'candidates', cycle)
     return views.render_committee(committee, candidates, cycle)
 
+@app.route('/advanced/')
+def advanced():
+    return render_template(
+        'advanced.html',
+        title='Advanced data'
+    )
+
 @app.route('/candidates/')
 def candidates():
     return render_template(

@@ -22,19 +22,15 @@
   <div class="container">
     <div class="row">
       <div class="sidebar-container sidebar-container--left">
-        <nav class="sidebar sidebar--neutral side-nav js-sticky" data-sticky-container="main">
+        <nav class="sidebar sidebar--neutral side-nav js-sticky-side" data-sticky-container="main">
           <ul class="sidebar__content">
             <li class="side-nav__item">
               <a class="side-nav__link" href="#results-regulations">
               Regulations ({{ results.total_regulations|default(0) }})
               </a>
             </li>
-            <li class="side-nav__item">
-              <a class="side-nav__link" href="#results-advisory-opinions">
-              Advisory Opinions ({{ results.total_advisory_opinions|default(0) }})
-              </a>
-            </li>
-            <li class="is-disabled side-nav__item"><span class="side-nav__link">Matters Under Review (TBD)</span></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link">Advisory Opinions (TBD)</span></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link">Enforcement Matters (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
           </ul>
@@ -59,13 +55,12 @@
             <table class="data-table data-table--text">
               <thead>
                 <tr>
-                  <th class="cell--15">Part No.</th>
-                  <th class="cell--25">Name</th>
-                  <th class="cell--60">Hit</th>
+                  <th class="cell--15">Section</th>
+                  <th class="cell--85">Description</th>
                 </tr>
               </thead>
               <tbody>
-                {% for regulation in results.regulations %}
+                {% for section in results.regulations %}
                   {% include 'partials/legal-search-results-regulation.html' %}
                 {% endfor %}
               </tbody>
@@ -76,11 +71,13 @@
           {% else %}
             <div class="message message--alert">
               <h2 class="message__title">No results</h2>
-              <p>Sorry, we didn't find any regulations matching <span class="t-bold">{{ query }}</span>.</p>
+              <p>Sorry, we didn&rsquo;t find any regulations matching {% if query %}<span class="t-bold">{{ query }}</span>{% else %}your query{% endif %}.</p>
               <div class="message--alert__bottom">
                 <p>Think this was a mistake?</p>
                 <ul class="list--buttons">
+                  {% if query %}
                   <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
+                  {% endif %}
                   <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
                   <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
                 </ul>
@@ -88,8 +85,7 @@
             </div>
           {% endif %}
         </div>
-
-        <div id="results-advisory-opinions" class="content__section">
+        <div id="results-advisory-opinions" class="content__section" style="display:none;">
           <div class="results-info results-info--simple">
             <div class="results-info__left">
               <h2 class="results-info__title">Advisory Opinions</h2>
@@ -121,11 +117,13 @@
           {% else %}
             <div class="message message--alert">
               <h2 class="message__title">No results</h2>
-              <p>Sorry, we didn't find any advisory opinions matching <span class="t-bold">{{ query }}</span>.</p>
+              <p>Sorry, we didn&rsquo;t find any advisory opinions matching {% if query %}<span class="t-bold">{{ query }}</span>{% else %}your query{% endif %}.</p>
               <div class="message--alert__bottom">
                 <p>Think this was a mistake?</p>
                 <ul class="list--buttons">
+                  {% if query %}
                   <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
+                  {% endif %}
                   <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
                   <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
                 </ul>
