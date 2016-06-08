@@ -94,9 +94,9 @@
         <div class="option__content">
           <div class="grid--2-wide">
           <ul class="grid__item list--spacious t-sans">
-            <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=true, max_receipt_date='12-31-2016') }}">All receipts</a>
+            <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=true, max_date=today() | date(fmt='%m-%d-%Y')) }}">All receipts</a>
               <ul>
-                <li><a href="{{ url_for('individual_contributions', max_receipt_date='12-31-2016', is_individual=true) }}">Individual contributions</a></li>
+                <li><a href="{{ url_for('individual_contributions', max_date=today() | date(fmt='%m-%d-%Y'), is_individual=true) }}">Individual contributions</a></li>
                 <li><a href="#" class="is-disabled">Contributions from other committees</a></li>
               </ul>
             </li>
@@ -117,7 +117,7 @@
         <div class="option__content">
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('disbursements', max_date='12-31-2016') }}">All disbursements</a>
+              <li><a class="t-all-data" href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">All disbursements</a>
                 <ul>
                   <li><a href="#" class="is-disabled">Operating expenditures</a></li>
                   <li><a href="#" class="is-disabled">Expenditures to committees</a></li>
@@ -125,9 +125,9 @@
               </li>
             </ul>
             <ul class="grid__item list--spacious t-sans">
-              <li><a href="{{ url_for('independent_expenditures', max_date='12-31-2016') }}">Independent expenditures</a></li>
-              <li><a href="{{ url_for('electioneering_communications', max_date='12-31-2016') }}">Electioneering communications</a></li>
-              <li><a href="{{ url_for('communication_costs', max_date='12-31-2016') }}">Communication costs</a></li>
+              <li><a href="{{ url_for('independent_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Independent expenditures</a></li>
+              <li><a href="{{ url_for('electioneering_communications', max_date=today() | date(fmt='%m-%d-%Y')) }}">Electioneering communications</a></li>
+              <li><a href="{{ url_for('communication_costs', max_date=today() | date(fmt='%m-%d-%Y')) }}">Communication costs</a></li>
             </ul>
           </div>
         </div>
