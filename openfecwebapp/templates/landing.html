@@ -50,7 +50,7 @@ svg {
 <section class="hero hero--primary hero--data" aria-labelledby="hero-heading">
   <div class="hero__image"></div>
   <div class="container">
-    <h1 id="hero-heading" class="t-display t-ruled--bottom hero__title">Campaign finance data</h1>
+    <h1 id="hero-heading" class="hero__title">Campaign finance data</h1>
     <p class="hero__content">See how candidates and committees raise and spend money in federal elections. This financial data helps voters make informed decisions.</p>
   </div>
 </section>
@@ -58,41 +58,97 @@ svg {
 <div class="main container">
   <section class="content__section">
   <div class="grid grid--2-wide">
-    <div class="grid__item">
-      <h2>Profiles</h2>
-      <p>Search candidates or committees to see their financial details.</p>
+    <div class="grid__item grid__item--no-margin">
+      <div class="icon-heading icon-heading__half">
+        <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-profiles--primary.svg') }}" alt="Icon representing candidate and committee profiles">
+        <div class="icon-heading__content">
+          <h2 class="icon-heading__title">Profiles</h2>
+          <p>Search candidates or committees to see their financial details.</p>
+        </div>
+      </div>
     </div>
     <div class="grid__item">
       {{ search.search('candidates', button_color="button--standard", select_class="select--alt") }}
+      <span class="t-note t-sans search__example">Examples: George Bush; Obama for America; C045378</span>
     </div>
   </div>
   </section>
   <section class="content__section--ruled content__section--extra">
     <div class="grid grid--2-wide">
-      <div class="grid__item card card--wide">
+      <div class="grid__item grid__item--no-margin card card--wide">
         <div class="card__image__container">
           <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-candidates--neutral.svg') }}"  alt="Icon representing elections">
-          <h3 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h3>
+          <h2 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h2>
         </div>
         <div class="card__content">
-          <h3 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h3>
+          <h2 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h2>
           <span>Find elections near you— search by state or ZIP code.</span>
         </div>
       </div>
-      <div class="grid__item card card--wide">
+      <div class="grid__item grid__item--no-margin card card--wide">
         <div class="card__image__container">
           <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-committees--neutral.svg') }}" alt="Icon representing committees">
-          <h3 class="card__title"><a href="{{ url_for('advanced') }}">Advanced data &raquo;</a></h3>
+          <h2 class="card__title"><a href="{{ url_for('advanced') }}">Advanced data &raquo;</a></h2>
         </div>
         <div class="card__content">
-          <h3 class="card__title"><a href="{{ url_for('advanced') }}">Advanced data &raquo;</a></h3>
+          <h2 class="card__title"><a href="{{ url_for('advanced') }}">Advanced data &raquo;</a></h2>
           <span>Search, filter and download data.</span>
         </div>
       </div>
     </div>
   </section>
   <section class="content__section--ruled content__section--extra">
-    <div id="chart"></div>
+    <div class="icon-heading content__section">
+      <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-overviews--primary.svg') }}" alt="Icon representing interactive overviews">
+      <div class="icon-heading__content">
+        <h2 class="icon-heading__title">Interactive overviews</h2>
+        <p>You don’t have to be an expert to learn more about campaign finance. These overviews are a visual introduction to how money is raised and spent in federal elections.</p>
+      </div>
+    </div>
+    <div class="content__section">
+      <h2 class="u-no-margin">Raising overview</h2>
+      <p>This chart shows total receipts for the past year. Receipts is the technical term for anything of value, like money, services or property.</p>
+    </div>
+    <div class="content__section">
+      <div class="section__heading">
+        <h3 class="heading__title">For all groups, 2015–2016</h3>
+        <div class="heading__action">
+          <ul class="list--buttons">
+            <li><a class="button button--standard button--table">Explore data</a></li>
+            <li><button class="button button--standard button--share is-disabled">Share</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="overview">
+        <div class="overview__totals">
+          <div class="overview__total">
+            <span class="overview__total-title">Total raised</span>
+            <span class="overview__total-number">$1,203,468,320</span>
+          </div>
+          <div class="overview__total">
+            <span class="overview__total-title"><span class="swatch candidates"></span>Candidates</span>
+            <span class="overview__total-number">$305,427,675</span>
+          </div>
+          <div class="overview__total">
+            <span class="overview__total-title"><span class="swatch pacs"></span>PACs</span>
+            <span class="overview__total-number">$680,219,721</span>
+          </div>
+          <div class="overview__total">
+            <span class="overview__total-title"><span class="swatch parties"></span>Party committees</span>
+            <span class="overview__total-number">$217,813,182</span>
+          </div>
+          <div class="overview__total">
+            <span class="overview__total-title"><span class="swatch other"></span>Other</span>
+            <span class="overview__total-number">$7,741</span>
+          </div>
+        </div>
+        <div class="overview__chart js-bar-chart">
+        </div>
+        <div class="overview__feedback">
+          {% include 'partials/reaction-box.html' %}
+        </div>
+      </div>
+    </div>
   </section>
 </div>
 {% endblock %}

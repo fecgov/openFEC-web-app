@@ -21,7 +21,7 @@ def search():
         results = api_caller.load_search_results(query, result_type)
         return views.render_search_results(results, query, result_type)
     else:
-        return render_template('search.html', page='home', dates=utils.date_ranges(), title='Campaign finance data')
+        return render_template('landing.html', page='home', dates=utils.date_ranges(), title='Campaign finance data')
 
 @app.route('/api/')
 def api():
