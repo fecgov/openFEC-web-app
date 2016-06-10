@@ -1,32 +1,136 @@
 'use strict';
 
-/* global document */
+/* global require */
 
 var $ = require('jquery');
 
-var tables = require('../modules/tables');
-var columns = require('../modules/columns');
-var columnHelpers = require('../modules/column-helpers');
-var lookup = require('../modules/election-lookup');
-var summary = require('../modules/election-summary');
+var GroupedBarChart = require('../modules/bar-charts').GroupedBarChart;
 
-var filingsColumns = columnHelpers.getColumns(
-  columns.filings,
-  ['pdf_url', 'filer_name', 'receipt_date']
-);
+var raisingData = [
+  {
+    'period': 'Jan 1 - June 30, 2015',
+    'status': 'complete',
+    'candidates': 305427675.73,
+    'parties': 217813182.16,
+    'pacs': 680219721.08,
+    'other': 7741.44,
+  },
+  {
+    'period': 'Jul 1 - Dec 31, 2015',
+    'status': 'complete',
+    'candidates': 529603187.6,
+    'parties': 209606697.26,
+    'pacs': 584266359.97,
+    'other': 19512.72
+  },
+  {
+    'period': 'Jan 1 - Mar 31, 2016',
+    'status': 'complete',
+    'candidates': 432197566.98,
+    'parties': 145682466.69,
+    'pacs': 590005249.82,
+    'other': 401526.89
+  },
+  {
+    'period': 'Apr 1 - June 30, 2016',
+    'status': 'in-progress',
+    'candidates': 104196285.25,
+    'parties': 53314363.39,
+    'pacs': 359289.27,
+    'other': 0
+  },
+  {
+    'period': 'Jul 1 - Sep 30, 2016',
+    'status': 'not-started',
+    'candidates': 0,
+    'parties': 0,
+    'pacs': 0,
+    'other': 0
+  },
+  {
+    'period': 'Oct 1 - Dec 31, 2016',
+    'status': 'not-started',
+    'candidates': 0,
+    'parties': 0,
+    'pacs': 0,
+    'other': 0
+  }
+];
 
-$(document).ready(function() {
-  var $table = $('#results');
-  new tables.DataTable($table, {
-    path: 'filings',
-    query: {per_page: 10},
-    columns: filingsColumns,
-    // Order by receipt date descending
-    order: [[2, 'desc']],
-    useFilters: false,
-    dom: 't'
+var spendingData = [
+  {
+    'period': 'Jan 1 - June 30, 2015',
+    'status': 'complete',
+    'candidates': 305427675.73,
+    'parties': 217813182.16,
+    'pacs': 680219721.08,
+    'other': 7741.44
+  },
+  {
+    'period': 'Jul 1 - Dec 31, 2015',
+    'status': 'complete',
+    'candidates': 414159558.73,
+    'parties': 173218529.69,
+    'pacs': 259718445.04,
+    'other': 5482220.81
+  },
+  {
+    'period': 'Jan 1 - Mar 31, 2016',
+    'status': 'complete',
+    'candidates': 476623668.08,
+    'parties': 102074951.47,
+    'pacs': 307355510.41,
+    'other': 23331535.6
+  },
+  {
+    'period': 'Apr 1 - June 30, 2016',
+    'status': 'in-progress',
+    'candidates': 127799212.55,
+    'parties': 35904262.78,
+    'pacs': 263191.92,
+    'other': 242687
+  },
+  {
+    'period': 'Jul 1 - Sep 30, 2016',
+    'status': 'not-started',
+    'candidates': 0,
+    'parties': 0,
+    'pacs': 0,
+  },
+  {
+    'period': 'Oct 1 - Dec 31, 2016',
+    'status': 'not-started',
+    'candidates': 0,
+    'parties': 0,
+    'pacs': 0,
+  }
+];
+
+function zeroPad(parent) {
+  var maxWidth = $(parent).width();
+
+  $(parent).find('.js-zero-pad').each(function() {
+    var thisWidth = $(this).width();
+    var value = $(this).text();
+    while ( thisWidth < maxWidth) {
+      value = '.' + value;
+      $(this).text(value);
+      thisWidth = $(this).width();
+    }
   });
+}
 
-  new lookup.ElectionLookupPreview('#election-preview');
-  new summary.ElectionSummary('#election-summary', {cycle: 2016, office: 'president'});
-});
+function Overview(selector, data) {
+  this.$element = $(selector);
+  this.data = data;
+
+  this.totals = this.$element.find('.js-total');
+  this.reactionBox = this.$element.find('.js-reaction-box');
+
+  new GroupedBarChart(selector + ' .js-chart', this.data);
+
+  zeroPad('.js-totals');
+}
+
+new Overview('.js-raised-overview', raisingData);
+new Overview('.js-spent-overview', spendingData);

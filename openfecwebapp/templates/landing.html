@@ -1,5 +1,6 @@
 {% extends "layouts/main.html" %}
 {% import 'macros/cycle-select.html' as select %}
+{% import 'macros/overviews.html' as overviews %}
 {% set hide_header_search = true %}
 
 {% block title %}
@@ -47,6 +48,7 @@ svg {
 }
 
 </style>
+
 <section class="hero hero--primary hero--data" aria-labelledby="hero-heading">
   <div class="hero__image"></div>
   <div class="container">
@@ -55,7 +57,7 @@ svg {
   </div>
 </section>
 
-<div class="main container">
+<div class="main container js-accordion accordion--neutral" data-content-prefix="about"">
   <section class="content__section">
   <div class="grid grid--2-wide">
     <div class="grid__item grid__item--no-margin">
@@ -109,46 +111,46 @@ svg {
       <h2 class="u-no-margin">Raising overview</h2>
       <p>This chart shows total receipts for the past year. Receipts is the technical term for anything of value, like money, services or property.</p>
     </div>
-    <div class="content__section">
-      <div class="section__heading">
-        <h3 class="heading__title">For all groups, 2015–2016</h3>
-        <div class="heading__action">
-          <ul class="list--buttons">
-            <li><a class="button button--standard button--table">Explore data</a></li>
-            <li><button class="button button--standard button--share is-disabled">Share</button></li>
-          </ul>
+    <section class="content__section">
+      <div class="content__section">
+        <div class="section__heading">
+          <h3 class="heading__title heading__title--with-action">For all groups, 2015–2016</h3>
+          <div class="heading__action">
+            <ul class="list--buttons">
+              <li><a class="button button--standard button--table">Explore data</a></li>
+              <li><button class="button button--standard button--share is-disabled">Share</button></li>
+            </ul>
+          </div>
+        </div>
+        {{ overviews.overview(totals['raising'], 'raised')}}
+        <button class="accordion__button js-accordion-trigger">About this data</button>
+        <div class="accordion__content">
+          Explanation of methodology
         </div>
       </div>
-      <div class="overview">
-        <div class="overview__totals">
-          <div class="overview__total">
-            <span class="overview__total-title">Total raised</span>
-            <span class="overview__total-number">$1,203,468,320</span>
-          </div>
-          <div class="overview__total">
-            <span class="overview__total-title"><span class="swatch candidates"></span>Candidates</span>
-            <span class="overview__total-number">$305,427,675</span>
-          </div>
-          <div class="overview__total">
-            <span class="overview__total-title"><span class="swatch pacs"></span>PACs</span>
-            <span class="overview__total-number">$680,219,721</span>
-          </div>
-          <div class="overview__total">
-            <span class="overview__total-title"><span class="swatch parties"></span>Party committees</span>
-            <span class="overview__total-number">$217,813,182</span>
-          </div>
-          <div class="overview__total">
-            <span class="overview__total-title"><span class="swatch other"></span>Other</span>
-            <span class="overview__total-number">$7,741</span>
+    </section>
+    <section class="content__secton--extra">
+      <div class="content__section">
+        <h2 class="u-no-margin">Spending overview</h2>
+        <p>This chart shows total receipts for the past year. Receipts is the technical term for anything of value, like money, services or property.</p>
+      </div>
+      <div class="content__section">
+        <div class="section__heading">
+          <h3 class="heading__title heading__title--with-action">For all groups, 2015–2016</h3>
+          <div class="heading__action">
+            <ul class="list--buttons">
+              <li><a class="button button--standard button--table">Explore data</a></li>
+              <li><button class="button button--standard button--share is-disabled">Share</button></li>
+            </ul>
           </div>
         </div>
-        <div class="overview__chart js-bar-chart">
-        </div>
-        <div class="overview__feedback">
-          {% include 'partials/reaction-box.html' %}
+        {{ overviews.overview(totals['spending'], 'spent')}}
+        <button class="accordion__button js-accordion-trigger">About this data</button>
+        <div class="accordion__content">
+          Explanation of methodology
         </div>
       </div>
-    </div>
+    </section>
   </section>
 </div>
 {% endblock %}

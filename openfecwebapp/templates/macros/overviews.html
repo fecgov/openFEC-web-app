@@ -1,0 +1,31 @@
+{% macro overview(data, verb) %}
+  <div class="overview js-{{verb}}-overview">
+    <div class="overview__totals js-totals">
+      <div class="overview__total">
+        <span class="overview__total-title">Total {{ verb }}</span>
+        <span class="js-zero-pad">{{ data['total'] | currency }}</span>
+      </div>
+      <div class="overview__total">
+        <span class="overview__total-title"><span class="swatch candidates"></span>Candidates</span>
+        <span class="js-zero-pad">{{ data['candidates'] | currency }}</span>
+      </div>
+      <div class="overview__total">
+        <span class="overview__total-title"><span class="swatch pacs"></span>PACs</span>
+        <span class="js-zero-pad">{{ data['pacs'] | currency }}</span>
+      </div>
+      <div class="overview__total">
+        <span class="overview__total-title"><span class="swatch parties"></span>Party committees</span>
+        <span class="js-zero-pad">{{ data['parties'] | currency }}</span>
+      </div>
+      <div class="overview__total">
+        <span class="overview__total-title"><span class="swatch other"></span>Other</span>
+        <span class="js-zero-pad">{{ data['other'] | currency }}</span>
+      </div>
+    </div>
+    <div class="overview__chart js-chart">
+    </div>
+    <div class="overview__feedback">
+      {% include 'partials/reaction-box.html' %}
+    </div>
+  </div>
+{% endmacro %}
