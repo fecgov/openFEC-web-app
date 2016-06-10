@@ -2,7 +2,7 @@
 {% import 'macros/page-header.html' as header %}
 
 {% set breadcrumbs_title=title %}
-{% set breadcrumbs=[('', 'Advanced data')] %}
+{% set breadcrumbs=[(url_for('advanced'), 'Advanced data')] %}
 
 {% block title %}
   Browse {{ title }}
@@ -13,7 +13,7 @@
 {{ header.header(breadcrumbs_title | title, breadcrumbs, show_search=False) }}
 
 <section class="main__content--full">
-  <div class="data-container__widgets js-data-widgets">
+  <div class="data-container__widgets sticky-bar js-data-widgets js-sticky-bar">
     <div class="js-filter-tags data-container__tags">
       <div class="js-panel-controls panel__controls">
         <button type="button" class="js-filter-toggle filters__toggle" aria-hidden="true">Add filters +</button>

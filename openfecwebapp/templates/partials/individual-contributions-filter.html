@@ -18,7 +18,7 @@ Filter individual contributions
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Contributor information</button>
   <div class="accordion__content">
-    {{ text.field('contributor_name', 'Contributor name') }}
+    {{ typeahead.field('contributor_name', 'Contributor name', dataset='', allow_text=True) }}
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
     {{ text.field('contributor_employer', 'Employer') }}
@@ -33,24 +33,24 @@ Filter individual contributions
       <span class="t-block">Receipts are reported periodically, according to the filer's reporting schedule. Receipts are updated as they’re processed— that time can vary.</span>
     </div>
   </div>
-  <div class="filters__inner">
-    <div class="filter">
-      <fieldset class="js-filter">
-        <legend class="label">Restrict contributions</legend>
-        <ul>
-          <li>
-            <div class="tooltip__container">
-              <input id="is-individual" name="is_individual" type="checkbox" value="true" class="tooltip-trigger" aria-describedby="unique-tooltip" checked>
-              <label for="is-individual" class="tooltip__trigger-text">Unique only</label>
-              <button class="tooltip__trigger" type="button"><span class="u-visually-hidden">Learn more</span></button>
-              <div id="unique-tooltip" role="tooltip" class="tooltip tooltip--under">
-                <p class="tooltip__content">Some transactions — such as earmarked contributions and partnership contributions — are reported more than once for clarity on the printed page but can lead to confusion when viewed as data online. Use the unique only filter to remove these extra transactions.</p>
-              </div>
+</div>
+<div class="filters__inner">
+  <div class="filter">
+    <fieldset class="js-filter">
+      <legend class="label">Restrict contributions</legend>
+      <ul>
+        <li>
+          <div class="tooltip__container">
+            <input id="is-individual" name="is_individual" type="checkbox" value="true" class="tooltip-trigger" aria-describedby="unique-tooltip" checked>
+            <label for="is-individual" class="tooltip__trigger-text">Unique only</label>
+            <button class="tooltip__trigger" type="button"><span class="u-visually-hidden">Learn more</span></button>
+            <div id="unique-tooltip" role="tooltip" class="tooltip tooltip--under">
+              <p class="tooltip__content">Some transactions — such as earmarked contributions and partnership contributions — are reported more than once for clarity on the printed page but can lead to confusion when viewed as data online. Use the unique only filter to remove these extra transactions.</p>
             </div>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
+          </div>
+        </li>
+      </ul>
+    </fieldset>
   </div>
 </div>
 {% endblock %}
