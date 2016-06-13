@@ -20,7 +20,6 @@ $(document).ready(function() {
     order: [[3, 'desc']],
     useFilters: true,
     useExport: true,
-    disableExport: true,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(disbursementTemplate)
