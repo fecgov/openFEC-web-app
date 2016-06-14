@@ -13,6 +13,7 @@ function GroupedBarChart(selector, data) {
 
   this.chart = this.buildChart();
   this.tooltip = this.appendTooltip();
+
 }
 
 GroupedBarChart.prototype.buildChart = function() {
@@ -119,7 +120,9 @@ GroupedBarChart.prototype.buildChart = function() {
       })
     .enter()
       .append('rect')
-      .attr('class', 'bar')
+      .attr('class', function(d) {
+        return 'bar ' + d.name;
+      })
       .attr('y', height)
       .attr('height', 0)
       .attr('width', x1.rangeBand())
@@ -130,11 +133,7 @@ GroupedBarChart.prototype.buildChart = function() {
           var barHeight = height - y(d.value);
           return barHeight;
         })
-        .attr('y', function(d) { return y(d.value); })
-        .style({
-          'cursor': 'pointer',
-          'fill': function(d) { return color(d.name); }
-        });
+        .attr('y', function(d) { return y(d.value); });
 
   periodsWithData.insert('rect', '.bar')
     .attr('class', 'bar-bg')
@@ -160,40 +159,55 @@ GroupedBarChart.prototype.appendTooltip = function() {
   return this.element
     .style({'position': 'relative'})
     .append('div')
-    .attr('class', 'tooltip tooltip--under')
+    .attr('class', 'tooltip tooltip--under tooltip--chart')
     .attr('id', 'tooltip');
 };
 
 GroupedBarChart.prototype.populateTooltip = function(d) {
-  var statusMap = {
-    'in-progress': 'In progress',
-    'not-started': 'Not started'
-  };
   var entityMap = {
     'candidates': 'Candidates',
     'parties': 'Party committees',
     'pacs': 'PACs',
     'other': 'Other'
   };
-  var total = 0;
-  var status = d.status !== 'complete' ? '<span>' + statusMap[d.status] + '</span>' : '';
+  var totalAmount = 0;
+  var total = '';
+  var title = '';
   var list = '';
 
   if (d.status !== 'not-started') {
     d.entities.forEach(function(datum) {
-      total += datum.value;
+      totalAmount += datum.value;
       var value = helpers.currency(datum.value);
-      list += '<li>' + entityMap[datum.name] + ': ' + value + '</li>';
+      list += '<li class="tooltip__item">' +
+        '<span class="tooltip__label">' +
+          '<span class="swatch ' + datum.name + '"></span>' +
+          entityMap[datum.name] +
+        '</span>' +
+        '<span class="tooltip__number">' + value + '</span>' +
+      '</li>';
     });
+
+    totalAmount = helpers.currency(totalAmount);
+
+    total = '<li class="tooltip__item t-bold">' +
+      '<span class="tooltip__label">Total</span>' +
+      '<span class="tooltip__number">' + totalAmount +
+      '</li>';
+
+    title = d.status === 'in-progress' ? d.period + ': In progress' : d.period;
+  } else {
+    title = d.period + ': Not started</span>';
   }
 
-  total = helpers.currency(total);
-  var title = '<span class="tooltip__title">' + d.period + ': ' + total + '</span>';
 
   return '<div class="tooltip__content">' +
-    title +
-    '<ul>' + list + '</ul>' +
-    status + '</div>';
+    '<span class="tooltip__title t-block">' + title + '</span>' +
+    '<ul>' +
+      total +
+      list +
+    '</ul>' +
+    '</div>';
 };
 
 GroupedBarChart.prototype.showTooltip = function(x0, d) {
@@ -206,6 +220,9 @@ GroupedBarChart.prototype.showTooltip = function(x0, d) {
     .style({'top': top.toString() + 'px'})
     .style({'left': left.toString() + 'px'})
     .html(content);
+
+  helpers.zeroPad('.tooltip__content', '.tooltip__item', '.tooltip__number');
+
 };
 
 GroupedBarChart.prototype.hideTooltip = function() {
