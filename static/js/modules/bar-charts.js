@@ -143,10 +143,10 @@ GroupedBarChart.prototype.buildChart = function() {
         })
         .attr('y', function(d) { return y(d.value); });
 
-  periodsWithData.filter(function(d) { return d.status === 'in-progress' })
+  periodsWithData.filter(function(d) { return d.status === 'in-progress'; })
     .selectAll('.bar--in-progress')
     .data(function(d) {
-      return d.entities
+      return d.entities;
     })
     .enter()
       .append('rect')
