@@ -1,7 +1,17 @@
 'use strict';
 
 /* global module, d3 */
+var $ = require('jquery');
 var helpers = require('./helpers');
+var stripes =
+  '<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+      '<defs>' +
+        '<pattern id="stripes" patternUnits="userSpaceOnUse" width="10" height="10">' +
+            '<path stroke="#979797" d="M-1.5,-1.5 L10.0108643,10.0108643" id="Line"></path>' +
+        '</pattern>' +
+      '</defs>' +
+  '</svg>';
+
 
 function GroupedBarChart(selector, data) {
   this.element = d3.select(selector);
@@ -11,9 +21,10 @@ function GroupedBarChart(selector, data) {
   this.height = 320 - this.margin.top - this.margin.bottom;
   this.width = 500 - this.margin.left - this.margin.right;
 
+  $('body').append(stripes);
+
   this.chart = this.buildChart();
   this.tooltip = this.appendTooltip();
-
 }
 
 GroupedBarChart.prototype.buildChart = function() {
@@ -26,9 +37,6 @@ GroupedBarChart.prototype.buildChart = function() {
 
   var y = d3.scale.linear()
       .range([this.height, 0]);
-
-  var color = d3.scale.ordinal()
-      .range(['#3e8a9a', '#d6d7d9','#36bdbb', '#5b616b']);
 
   var xAxis = d3.svg.axis()
       .scale(x0)
@@ -135,6 +143,26 @@ GroupedBarChart.prototype.buildChart = function() {
         })
         .attr('y', function(d) { return y(d.value); });
 
+  periodsWithData.filter(function(d) { return d.status === 'in-progress' })
+    .selectAll('.bar--in-progress')
+    .data(function(d) {
+      return d.entities
+    })
+    .enter()
+      .append('rect')
+      .attr('class', 'bar--in-progress')
+      .attr('y', height)
+      .attr('height', 0)
+      .attr('width', x1.rangeBand())
+      .attr('x', function(d) { return x1(d.name); })
+      .transition()
+        .duration(1000)
+        .attr('height', function(d) {
+          var barHeight = height - y(d.value);
+          return barHeight;
+        })
+        .attr('y', function(d) { return y(d.value); });
+
   periodsWithData.insert('rect', '.bar')
     .attr('class', 'bar-bg')
     .attr('width', x1.rangeBand() * 4)
@@ -146,11 +174,11 @@ GroupedBarChart.prototype.buildChart = function() {
       .data(data)
       .enter()
         .append('rect')
+        .attr('class', 'bar--empty')
         .attr('width', x1.rangeBand() * 4)
         .attr('x', function(d) { return x1(d.name); })
         .attr('y', 0)
-        .attr('height', this.height)
-        .style('fill', '#ccc');
+        .attr('height', this.height);
 
   return svg;
 };
