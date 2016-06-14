@@ -5,6 +5,8 @@
 var $ = require('jquery');
 
 var GroupedBarChart = require('../modules/bar-charts').GroupedBarChart;
+var TopList = require('../modules/top-list').TopList;
+var helpers = require('../modules/helpers');
 
 var raisingData = [
   {
@@ -106,20 +108,6 @@ var spendingData = [
   }
 ];
 
-function zeroPad(parent) {
-  var maxWidth = $(parent).width();
-
-  $(parent).find('.js-zero-pad').each(function() {
-    var thisWidth = $(this).width();
-    var value = $(this).text();
-    while ( thisWidth < maxWidth) {
-      value = '.' + value;
-      $(this).text(value);
-      thisWidth = $(this).width();
-    }
-  });
-}
-
 function Overview(selector, data) {
   this.$element = $(selector);
   this.data = data;
@@ -129,7 +117,7 @@ function Overview(selector, data) {
 
   new GroupedBarChart(selector + ' .js-chart', this.data);
 
-  zeroPad('.js-totals');
+  helpers.zeroPad('.js-totals', '.js-zero-pad');
 }
 
 new Overview('.js-raised-overview', raisingData);

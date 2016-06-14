@@ -3,6 +3,7 @@
 /* global Intl, BASE_PATH, API_LOCATION, API_VERSION, API_KEY */
 
 var URI = require('urijs');
+var $ = require('jquery');
 var _ = require('underscore');
 var decoders = require('./decoders');
 var Handlebars = require('hbsfy/runtime');
@@ -171,6 +172,35 @@ function getTimePeriod(electionYear, cycle, electionFull, office) {
 
 }
 
+/*
+* zeroPad: used to add decimals to numbers in order to right-align them
+* It does so by getting the width of a container element, measuring the length
+* of an item, and then appending decimals until the item is as long as the container
+*
+* @param container: a selector for the item to use as the maxWidth
+* @param item: a selector for the items whose width we will equalize
+* @param appendee (optional): what to append the decimal to
+*/
+
+function zeroPad(container, item, appendee) {
+  // Subtract 2 so if it's close we don't go over
+  var maxWidth = $(container).width() - 2;
+
+  $(container).find(item).each(function() {
+    var itemWidth = $(this).width();
+    // $appendee is where the period will be appended to
+    // You can pass either a child element of item or else it will be appended
+    // to item itself
+    var $appendee = appendee ? $(this).find(appendee) : $(this);
+    var value = $appendee.text();
+    while ( itemWidth < maxWidth) {
+      value = '.' + value;
+      $appendee.text(value);
+      itemWidth = $(this).width();
+    }
+  });
+}
+
 module.exports = {
   currency: currency,
   ensureArray: ensureArray,
@@ -181,5 +211,6 @@ module.exports = {
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
   globals: globals,
-  getTimePeriod: getTimePeriod
+  getTimePeriod: getTimePeriod,
+  zeroPad: zeroPad
 };
