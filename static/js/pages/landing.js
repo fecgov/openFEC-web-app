@@ -122,3 +122,7 @@ function Overview(selector, data) {
 
 new Overview('.js-raised-overview', raisingData);
 new Overview('.js-spent-overview', spendingData);
+$('.js-top-list').each(function() {
+  var dataType = $(this).data('type');
+  new TopList(this, dataType);
+});

@@ -8,47 +8,6 @@
 {% endblock %}
 
 {% block body %}
-<style>
-svg {
-  font: 10px sans-serif;
-}
-
-#chart {
-  position: relative;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.domain {
-  display: none;
-}
-
-.bar {
-  fill: steelblue;
-}
-
-.in-progress,
-.not-started {
-  opacity: .5;
-}
-
-.tick line {
-  stroke: #cdcdcd;
-  stroke-style: dashed;
-}
-
-#tooltip {
-  display: none;
-  position: absolute;
-}
-
-</style>
-
 <section class="hero hero--primary hero--data" aria-labelledby="hero-heading">
   <div class="hero__image"></div>
   <div class="container">
@@ -99,7 +58,7 @@ svg {
       </div>
     </div>
   </section>
-  <section class="content__section--ruled content__section--extra">
+  <div class="content__section--ruled content__section--extra">
     <div class="icon-heading content__section">
       <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-overviews--primary.svg') }}" alt="Icon representing interactive overviews">
       <div class="icon-heading__content">
@@ -151,7 +110,14 @@ svg {
         </div>
       </div>
     </section>
-  </section>
+    <section class="content__section--extra">
+      <div class="container">
+        {{ overviews.top('candidates', 'Candidates', 'candidates') }}
+        {{ overviews.top('pacs', 'PACs', 'PACs') }}
+        {{ overviews.top('parties', 'Party committees', 'party committees') }}
+      </div>
+    </section>
+  </div>
 </div>
 {% endblock %}
 

@@ -28,4 +28,39 @@
       {% include 'partials/reaction-box.html' %}
     </div>
   </div>
+  <svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+      <title>Artboard 1</title>
+      <desc>Created with Sketch.</desc>
+      <defs>
+        <pattern id="stripes" patternUnits="userSpaceOnUse" width="10" height="10">
+            <path stroke="#979797" d="M-1.5,-1.5 L10.0108643,10.0108643" id="Line"></path>
+        </pattern>
+      </defs>
+  </svg>
+{% endmacro %}
+
+{% macro top(type, title, lower_title) %}
+  <div class="top-list js-top-list" data-type="{{type}}">
+    <h2>{{ title }}</h2>
+    <h3 class="top-list__subtitle">Top raising {{ lower_title }}</h3>
+    <div class="toggles--simple">
+      <button class="toggle is-active" aria-controls="{{type}}-top-raising">Top raising</button> |
+      <button class="toggle" aria-controls="{{type}}-top-spending">Top spending</button>
+    </div>
+    <ol class="figure--zero-pad js-top-raising" id="{{type}}-top-raising">
+      <li class="figure__item"><span class="figure__label">1. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      <li class="figure__item"><span class="figure__label">2. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      <li class="figure__item"><span class="figure__label">3. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      <li class="figure__item"><span class="figure__label">4. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      <li class="figure__item"><span class="figure__label">5. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+    </ol>
+    <ol class="figure--zero-pad js-top-spending" id="{{type}}-top-spending" aria-hidden="true">
+      <li class="figure__item"><span class="figure__label">1. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      <li class="figure__item"><span class="figure__label">2. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      <li class="figure__item"><span class="figure__label">3. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      <li class="figure__item"><span class="figure__label">4. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      <li class="figure__item"><span class="figure__label">5. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+    </ol>
+  </div>
 {% endmacro %}
