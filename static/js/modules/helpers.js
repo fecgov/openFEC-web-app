@@ -15,6 +15,9 @@ var locale = require('intl/locale-data/json/en-US.json');
 intl.__addLocaleData(locale);
 
 var datetime = helpers.datetime;
+var isLargeScreen = helpers.isLargeScreen;
+var isMediumScreen = helpers.isMediumScreen;
+
 Handlebars.registerHelper('datetime', datetime);
 
 var currencyFormatter = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
@@ -210,6 +213,8 @@ module.exports = {
   filterNull: filterNull,
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
+  isMediumScreen: isMediumScreen,
+  isLargeScreen: isLargeScreen,
   globals: globals,
   getTimePeriod: getTimePeriod,
   zeroPad: zeroPad
