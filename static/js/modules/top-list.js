@@ -11,7 +11,7 @@ function TopList(selector, dataType) {
   this.raisingID = this.$topRaising.attr('id');
   this.spendingID = this.$topSpending.attr('id');
   this.dataType = dataType;
-  helpers.zeroPad(this.$topRaising, 'li', '.figure__number');
+  helpers.zeroPad(this.$topRaising, '.figure__number');
 
   this.$toggles.on('click', this.handleToggle.bind(this));
 }

@@ -40,7 +40,7 @@
   </svg>
 {% endmacro %}
 
-{% macro top(type, title, lower_title) %}
+{% macro top(type, title, lower_title, raising_data, spending_data) %}
   <div class="top-list js-top-list" data-type="{{type}}">
     <h2>{{ title }}</h2>
     <h3 class="top-list__subtitle">Top raising {{ lower_title }}</h3>
@@ -49,18 +49,24 @@
       <button class="toggle" aria-controls="{{type}}-top-spending">Top spending</button>
     </div>
     <ol class="figure--zero-pad js-top-raising" id="{{type}}-top-raising">
-      <li class="figure__item"><span class="figure__label">1. TBD</span><span class="figure__number">$xxx,xxx</span></li>
-      <li class="figure__item"><span class="figure__label">2. TBD</span><span class="figure__number">$xxx,xxx</span></li>
-      <li class="figure__item"><span class="figure__label">3. TBD</span><span class="figure__number">$xxx,xxx</span></li>
-      <li class="figure__item"><span class="figure__label">4. TBD</span><span class="figure__number">$xxx,xxx</span></li>
-      <li class="figure__item"><span class="figure__label">5. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      {% for data in raising_data %}
+      <li class="figure__item">
+        <span class="figure__label">
+          <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
+        </span>
+        <span class="figure__number">{{ data['receipts'] | currency }}</span>
+      </li>
+      {% endfor %}
     </ol>
     <ol class="figure--zero-pad js-top-spending" id="{{type}}-top-spending" aria-hidden="true">
-      <li class="figure__item"><span class="figure__label">1. TBD</span><span class="figure__number">$xxx,xxx</span></li>
-      <li class="figure__item"><span class="figure__label">2. TBD</span><span class="figure__number">$xxx,xxx</span></li>
-      <li class="figure__item"><span class="figure__label">3. TBD</span><span class="figure__number">$xxx,xxx</span></li>
-      <li class="figure__item"><span class="figure__label">4. TBD</span><span class="figure__number">$xxx,xxx</span></li>
-      <li class="figure__item"><span class="figure__label">5. TBD</span><span class="figure__number">$xxx,xxx</span></li>
+      {% for data in spending_data %}
+      <li class="figure__item">
+        <span class="figure__label">
+          <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
+        </span>
+        <span class="figure__number">{{ data['disbursements'] | currency }}</span>
+      </li>
+      {% endfor %}
     </ol>
   </div>
 {% endmacro %}

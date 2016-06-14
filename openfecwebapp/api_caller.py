@@ -144,3 +144,12 @@ def landing_mock_data():
             'other': 29064184.85
         }
     }
+
+def load_top_candidates(sort):
+        response = _call_api(
+            'candidates', 'totals',
+            sort_hide_null=True, election_year=2016, cycle=2016, election_full=True, sort=sort, per_page=5
+        )
+        if response['results']:
+            return response['results']
+        return {}

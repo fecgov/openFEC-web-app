@@ -115,9 +115,11 @@ function Overview(selector, data) {
   this.totals = this.$element.find('.js-total');
   this.reactionBox = this.$element.find('.js-reaction-box');
 
-  new GroupedBarChart(selector + ' .js-chart', this.data);
-
   helpers.zeroPad('.js-totals', '.js-zero-pad');
+
+  if (helpers.isLargeScreen()) {
+    new GroupedBarChart(selector + ' .js-chart', this.data);
+  }
 }
 
 new Overview('.js-raised-overview', raisingData);
