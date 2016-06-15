@@ -3,23 +3,39 @@
     <div class="overview__totals js-totals">
       <div class="overview__total">
         <span class="overview__total-title">Total {{ verb }}</span>
-        <span class="js-zero-pad">{{ data['total'] | currency }}</span>
+        <span class="overview__total-number"><span class="figure__decimals"></span>{{ data['total'] | currency }}</span>
       </div>
       <div class="overview__total">
-        <span class="overview__total-title term" data-term="candidate"><span class="swatch candidates"></span>Candidates</span>
-        <span class="js-zero-pad">{{ data['candidates'] | currency }}</span>
+        <div class="overview__total-title">
+          <span class="term" data-term="candidate"><span class="swatch candidates"></span>Candidates</span>
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals"></span>{{ data['candidates'] | currency }}
+        </span>
       </div>
       <div class="overview__total">
-        <span class="overview__total-title term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
-        <span class="js-zero-pad">{{ data['pacs'] | currency }}</span>
+        <div class="overview__total-title">
+          <span class="term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals"></span>{{ data['pacs'] | currency }}
+        </span>
       </div>
       <div class="overview__total">
-        <span class="overview__total-title term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
-        <span class="js-zero-pad">{{ data['parties'] | currency }}</span>
+        <div class="overview__total-title">
+          <span class="term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals"></span>{{ data['parties'] | currency }}
+        </span>
       </div>
       <div class="overview__total">
-        <span class="overview__total-title"><span class="swatch other"></span>Other</span>
-        <span class="js-zero-pad">{{ data['other'] | currency }}</span>
+        <div class="overview__total-title">
+          <span class="swatch other"></span>Other
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals"></span>{{ data['other'] | currency }}</a>
+        </span>
       </div>
     </div>
     <div class="overview__chart js-chart">
@@ -32,8 +48,8 @@
 
 {% macro top(type, title, lower_title, raising_data, spending_data) %}
   <div class="top-list js-top-list" data-type="{{type}}">
-    <h2>{{ title }}</h2>
-    <h3 class="top-list__subtitle">Top raising {{ lower_title }}</h3>
+    <h2 class="top-list__title">{{ title }} overview</h2>
+    <h3 class="top-list__subtitle">2015-2016 leaders</h3>
     <div class="toggles--simple">
       <button class="toggle is-active" aria-controls="{{type}}-top-raising">Top raising</button> |
       <button class="toggle" aria-controls="{{type}}-top-spending">Top spending</button>
@@ -44,7 +60,7 @@
         <span class="figure__label">
           <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
         </span>
-        <span class="figure__number">{{ data['receipts'] | currency }}</span>
+        <span class="figure__number"><span class="figure__decimals"></span>{{ data['receipts'] | currency }}</span>
       </li>
       {% endfor %}
     </ol>
@@ -54,7 +70,7 @@
         <span class="figure__label">
           <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
         </span>
-        <span class="figure__number">{{ data['disbursements'] | currency }}</span>
+        <span class="figure__number"><span class="figure__decimals"></span>{{ data['disbursements'] | currency }}</span>
       </li>
       {% endfor %}
     </ol>

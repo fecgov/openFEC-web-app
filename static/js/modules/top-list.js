@@ -13,7 +13,7 @@ function TopList(selector, dataType) {
   this.dataType = dataType;
 
   this.setAria();
-  helpers.zeroPad(this.$topRaising, '.figure__number');
+  helpers.zeroPad(this.$topRaising, '.figure__number', '.figure__decimals');
 
   this.$toggles.on('click', this.handleToggle.bind(this));
 }
@@ -42,7 +42,7 @@ TopList.prototype.showRaising = function() {
 TopList.prototype.showSpending = function() {
   this.$topSpending.attr('aria-hidden', 'false');
   this.$topRaising.attr('aria-hidden', 'true');
-  helpers.zeroPad(this.$topSpending, 'li', '.figure__number');
+  helpers.zeroPad(this.$topSpending, 'li', '.figure__number', '.figure__decimals');
 };
 
 
