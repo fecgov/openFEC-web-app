@@ -11,6 +11,8 @@ function TopList(selector, dataType) {
   this.raisingID = this.$topRaising.attr('id');
   this.spendingID = this.$topSpending.attr('id');
   this.dataType = dataType;
+
+  this.setAria();
   helpers.zeroPad(this.$topRaising, '.figure__number');
 
   this.$toggles.on('click', this.handleToggle.bind(this));
@@ -25,6 +27,11 @@ TopList.prototype.handleToggle = function(e) {
   } else {
     this.showRaising();
   }
+};
+
+TopList.prototype.setAria = function() {
+  this.$topRaising.attr('aria-hidden', 'false');
+  this.$topSpending.attr('aria-hidden', 'true');
 };
 
 TopList.prototype.showRaising = function() {
