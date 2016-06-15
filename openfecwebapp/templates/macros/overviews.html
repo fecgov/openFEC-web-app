@@ -6,15 +6,15 @@
         <span class="js-zero-pad">{{ data['total'] | currency }}</span>
       </div>
       <div class="overview__total">
-        <span class="overview__total-title"><span class="swatch candidates"></span>Candidates</span>
+        <span class="overview__total-title term" data-term="candidate"><span class="swatch candidates"></span>Candidates</span>
         <span class="js-zero-pad">{{ data['candidates'] | currency }}</span>
       </div>
       <div class="overview__total">
-        <span class="overview__total-title"><span class="swatch pacs"></span>PACs</span>
+        <span class="overview__total-title term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
         <span class="js-zero-pad">{{ data['pacs'] | currency }}</span>
       </div>
       <div class="overview__total">
-        <span class="overview__total-title"><span class="swatch parties"></span>Party committees</span>
+        <span class="overview__total-title term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
         <span class="js-zero-pad">{{ data['parties'] | currency }}</span>
       </div>
       <div class="overview__total">
