@@ -5,7 +5,6 @@
 node_modules
 .coverage
 .sass-cache/
-rev-manifest.json
 openfecwebapp/local_config.py
 app/
 /.env
