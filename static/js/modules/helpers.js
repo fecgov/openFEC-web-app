@@ -187,7 +187,7 @@ function getTimePeriod(electionYear, cycle, electionFull, office) {
 
 function zeroPad(container, item, appendee) {
   // Subtract 2 so if it's close we don't go over
-  var maxWidth = $(container).width() - 2;
+  var maxWidth = $(container).width() - 6;
 
   $(container).find(item).each(function() {
     var itemWidth = $(this).width();

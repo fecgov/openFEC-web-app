@@ -50,6 +50,7 @@ GroupedBarChart.prototype.buildChart = function() {
       .tickFormat(d3.format('$s'));
 
   var svg = this.element.append('svg')
+      .attr('class', 'bar-chart')
       .attr('width', '100%')
       .attr('height', this.height + this.margin.top + this.margin.bottom)
     .append('g')
@@ -207,20 +208,26 @@ GroupedBarChart.prototype.populateTooltip = function(d) {
     d.entities.forEach(function(datum) {
       totalAmount += datum.value;
       var value = helpers.currency(datum.value);
-      list += '<li class="tooltip__item">' +
-        '<span class="tooltip__label">' +
+      list += '<li class="figure__item">' +
+        '<span class="t-inline-block">' +
           '<span class="swatch ' + datum.name + '"></span>' +
           entityMap[datum.name] +
         '</span>' +
-        '<span class="tooltip__number">' + value + '</span>' +
+        '<span class="t-inline-block">' +
+          '<span class="figure__decimals"></span>' +
+          value +
+        '</span>' +
       '</li>';
     });
 
     totalAmount = helpers.currency(totalAmount);
 
-    total = '<li class="tooltip__item t-bold">' +
-      '<span class="tooltip__label">Total</span>' +
-      '<span class="tooltip__number">' + totalAmount +
+    total = '<li class="figure__item t-bold">' +
+      '<span class="t-inline-block">Total</span>' +
+      '<span class="t-inline-block">' +
+        '<span class="figure__decimals"></span>' +
+          totalAmount +
+      '</span>' +
       '</li>';
 
     title = d.status === 'in-progress' ? d.period + ': In progress' : d.period;
@@ -229,7 +236,7 @@ GroupedBarChart.prototype.populateTooltip = function(d) {
   }
 
 
-  return '<div class="tooltip__content">' +
+  return '<div class="tooltip__content figure--zero-pad">' +
     '<span class="tooltip__title t-block">' + title + '</span>' +
     '<ul>' +
       total +
@@ -249,7 +256,7 @@ GroupedBarChart.prototype.showTooltip = function(x0, d) {
     .style({'left': left.toString() + 'px'})
     .html(content);
 
-  helpers.zeroPad('.tooltip__content', '.tooltip__item', '.tooltip__number');
+  helpers.zeroPad('.tooltip__content', '.figure__item', '.figure__decimals');
 
 };
 
