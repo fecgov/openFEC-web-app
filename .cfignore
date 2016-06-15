@@ -11,4 +11,3 @@ app/
 /.env
 .DS_Store
 coverage/
-dist
