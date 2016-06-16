@@ -215,6 +215,7 @@ describe('data table', function() {
         serialize: function() { return serialized; },
         fields: ['name', 'office', 'party']
       };
+      this.table.filterSet.isValid = true;
       this.table.fetch({}, function() {});
       expect(this.table.filters).to.deep.equal(serialized);
       var params = URI.parseQuery(window.location.search);
