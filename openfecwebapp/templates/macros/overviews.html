@@ -1,4 +1,6 @@
-{% macro overview(data, verb) %}
+{% import 'macros/reaction-box.html' as reaction_box %}
+
+{% macro overview(data, verb, location) %}
   <div class="overview js-{{verb}}-overview">
     <div class="overview__totals js-totals">
       <div class="overview__total">
@@ -41,7 +43,7 @@
     <div class="overview__chart js-chart">
     </div>
     <div class="overview__feedback">
-      {% include 'partials/reaction-box.html' %}
+      {{ reaction_box.reaction_box(verb, location)}}
     </div>
   </div>
 {% endmacro %}
