@@ -193,7 +193,7 @@ GroupedBarChart.prototype.appendTooltip = function() {
 };
 
 GroupedBarChart.prototype.populateTooltip = function(d) {
-  var entityMap = {
+  var entityDisplayNames = {
     'candidates': 'Candidates',
     'parties': 'Party committees',
     'pacs': 'PACs',
@@ -211,7 +211,7 @@ GroupedBarChart.prototype.populateTooltip = function(d) {
       list += '<li class="figure__item">' +
         '<span class="t-inline-block">' +
           '<span class="swatch ' + datum.name + '"></span>' +
-          entityMap[datum.name] +
+          entityDisplayNames[datum.name] +
         '</span>' +
         '<span class="t-inline-block">' +
           '<span class="figure__decimals"></span>' +
@@ -251,9 +251,11 @@ GroupedBarChart.prototype.showTooltip = function(x0, d) {
   var content = this.populateTooltip(d);
 
   this.tooltip
-    .style({'display': 'block'})
-    .style({'top': top.toString() + 'px'})
-    .style({'left': left.toString() + 'px'})
+    .style({
+      'display': 'block',
+      'top': top.toString() + 'px',
+      'left': left.toString() + 'px'
+    })
     .html(content);
 
   helpers.zeroPad('.tooltip__content', '.figure__item', '.figure__decimals');

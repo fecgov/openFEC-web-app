@@ -205,17 +205,17 @@ function zeroPad(container, item, appendee) {
 }
 
 module.exports = {
-  currency: currency,
-  ensureArray: ensureArray,
-  datetime: datetime,
-  formatNumber: numberFormatter.format,
-  cycleDates: cycleDates,
-  filterNull: filterNull,
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
-  isMediumScreen: isMediumScreen,
-  isLargeScreen: isLargeScreen,
-  globals: globals,
+  currency: currency,
+  cycleDates: cycleDates,
+  datetime: datetime,
+  ensureArray: ensureArray,
+  filterNull: filterNull,
+  formatNumber: numberFormatter.format,
   getTimePeriod: getTimePeriod,
+  globals: globals,
+  isLargeScreen: isLargeScreen,
+  isMediumScreen: isMediumScreen,
   zeroPad: zeroPad
 };
