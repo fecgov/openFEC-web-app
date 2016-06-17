@@ -1,8 +1,10 @@
 'use strict';
 
-/* global module, d3 */
+/* global module */
 var $ = require('jquery');
 var helpers = require('./helpers');
+var d3 = require('d3');
+
 var stripes =
   '<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
       '<defs>' +
