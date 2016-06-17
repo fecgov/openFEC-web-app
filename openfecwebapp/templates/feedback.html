@@ -6,20 +6,20 @@
 {{ chart_comment }}
 
 {% else %}
-  {% if action %}
-  ## What were you trying to do and how can we improve it?
-  {{ action }}
-  {% endif %}
+{% if action %}
+## What were you trying to do and how can we improve it?
+{{ action }}
+{% endif %}
 
-  {% if feedback %}
-  ## General feedback?
-  {{ feedback }}
-  {% endif %}
+{% if feedback %}
+## General feedback?
+{{ feedback }}
+{% endif %}
 
-  {% if about %}
-  ## Tell us about yourself
-  {{ about }}
-  {% endif %}
+{% if about %}
+## Tell us about yourself
+{{ about }}
+{% endif %}
 {% endif %}
 
 ## Details
