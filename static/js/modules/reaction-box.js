@@ -32,7 +32,7 @@ ReactionBox.prototype.handleChange = function(e) {
   var $target = $(e.target);
   this.reaction = $target.val();
 
-  if (typeof ga !== 'undefined') {
+  if (helpers.trackerExists()) {
     var gaEventData = {
       hitType: 'event',
       eventCategory: 'Reactions',
@@ -51,8 +51,8 @@ ReactionBox.prototype.showTextarea = function() {
 
   var labelMap = {
     'informative': 'Great! \n What did you learn?',
-    'confusing': 'We\'re sorry to hear that. What didn\'t make sense?',
-    'not-interested': 'We\'re sorry to hear that. What would you like to see?',
+    'confusing': 'We’re sorry to hear that. What didn\'t make sense?',
+    'not-interested': 'We’re sorry to hear that. What would you like to see?',
     'none': 'How we can make this better?'
   };
 
@@ -62,11 +62,12 @@ ReactionBox.prototype.showTextarea = function() {
 ReactionBox.prototype.handleSubmit = function(e) {
   e.preventDefault();
   var data = {
-    action: 'Looking at the ' + '"' + this.name + '" chart on the ' +
-      this.location + ' page',
-    feedback: 'How was it? ' + this.reaction + '\n' +
-      'Tell us more: ' + this.$textarea.val(),
+    chart_reaction: this.reaction,
+    chart_name: this.name,
+    chart_location: this.location,
+    chart_comment: this.$textarea.val()
   };
+
   var promise = $.ajax({
     method: 'POST',
     url: this.url,
