@@ -147,7 +147,15 @@ var filingsColumns = columnHelpers.getColumns(
 
 var disbursementPurposeColumns = [
   {data: 'purpose', className: 'all', orderable: false},
-  columnHelpers.buildTotalLink({data: 'total', className: 'all', orderable: false})
+  {
+    data: 'total',
+    className: 'all',
+    orderable: false,
+    orderSequence: ['desc', 'asc'],
+    render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
+      return {disbursement_purpose_categories: row.purpose.toLowerCase()};
+    })
+  }
 ];
 
 var disbursementRecipientColumns = [
