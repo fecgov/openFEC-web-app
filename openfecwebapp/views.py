@@ -179,13 +179,21 @@ class GithubView(MethodView):
         'action': fields.Str(),
         'feedback': fields.Str(),
         'about': fields.Str(),
+        'chart_reaction': fields.Str(),
+        'chart_location': fields.Str(),
+        'chart_name': fields.Str(),
+        'chart_comment': fields.Str()
+
     })
     def post(self, **kwargs):
-        if not any([kwargs['action'], kwargs['feedback'], kwargs['about']]):
+        if not any([kwargs['action'], kwargs['feedback'], kwargs['about'], kwargs['chart_comment']]):
             return jsonify({
                 'message': 'Must provide one of "action", "feedback", or "about".',
             }), 422
-        title = 'User feedback on {}'.format(kwargs['referer'])
+        if kwargs['chart_comment']:
+            title = 'Chart reaction on {} page'.format(kwargs['chart_location'])
+        else:
+            title = 'User feedback on {}'.format(kwargs['referer'])
         body = render_template('feedback.html', headers=request.headers, **kwargs)
         issue = self.repo.create_issue(title, body=body)
         return jsonify(issue.to_json()), 201
