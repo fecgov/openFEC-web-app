@@ -25,7 +25,7 @@ var officeTitleMap = {
   president: 'president',
   senate: 'Senate',
   house: 'House of Representatives'
-}
+};
 
 $(document).ready(function() {
   var $table = $('#results');
