@@ -1,0 +1,42 @@
+{% macro reaction_box(name, location) %}
+  <div class="reaction-box js-reaction-box" data-name="{{ name }}" data-location="{{ location }}">
+    <form>
+      <fieldset class="js-reaction-step-1">
+        <ul>
+          <legend class="reaction-box__heading">What do you think of this chart?</legend>
+          <li>
+            <input type="radio" value="informative" name="reaction" id="{{name}}-reaction-informative">
+            <label class="reaction--informative" for="{{name}}-reaction-informative">Informative</label>
+          </li>
+          <li>
+            <input type="radio" value="confusing" name="reaction" id="{{name}}-reaction-confusing">
+            <label class="reaction--confusing" for="{{name}}-reaction-confusing">Confusing</label>
+          </li>
+          <li>
+            <input type="radio" value="not-interested" name="reaction" id="{{name}}-reaction-not-interested">
+            <label class="reaction--not-interested" for="{{name}}-reaction-not-interested">Not interested</label>
+          </li>
+          <li>
+            <input type="radio" value="none" name="reaction" id="{{name}}-reaction-none">
+            <label class="reaction--none" for="{{name}}-reaction-none">None of these</label>
+          </li>
+        </ul>
+      </fieldset>
+      <div class="js-reaction-step-2 u-fade-in" aria-hidden="true">
+        <span class="reaction-box__heading t-block">What do you think of this chart?</span>
+        <p><label for="reaction-more"></label></p>
+        <textarea id="reaction-more"></textarea>
+        <ul class="list--buttons">
+          <li><button type="button" class="button--standard js-skip">Skip</button></li>
+          <li><button type="submit" class="button--cta">Submit</button></li>
+      </div>
+    </form>
+    <div class="message message--success message--inverse-alt message--small js-reaction-success u-fade-in" aria-hidden="true">
+      Thanks for helping us improve!
+    </div>
+    <div class="message message--error message--inverse-alt message--small js-reaction-error u-fade-in" aria-hidden="true">
+      <p>Uh oh. Something wennt wrong. Please try again.</p>
+      <button type="button" class="js-reset button--cta">Start over</button>
+    </div>
+  </div>
+{% endmacro %}

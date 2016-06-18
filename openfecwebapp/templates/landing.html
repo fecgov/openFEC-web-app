@@ -1,0 +1,110 @@
+{% extends "layouts/main.html" %}
+{% import 'macros/cycle-select.html' as select %}
+{% import 'macros/overviews.html' as overviews %}
+{% set hide_header_search = true %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block body %}
+<section class="hero hero--primary hero--data" aria-labelledby="hero-heading">
+  <div class="hero__image"></div>
+  <div class="container">
+    <h1 id="hero-heading" class="hero__title">Campaign finance data</h1>
+    <p class="hero__content">See how candidates and committees raise and spend money in federal elections. This financial data helps voters make informed decisions.</p>
+  </div>
+</section>
+
+<section class="slab slab--neutral slab--spacious">
+  <div class="container">
+    {{ search.search('hero', button_color="button--standard", select_class="select--alt") }}
+    <span class="t-note t-sans search__example">Examples: George Bush; Obama for America; C045378</span>
+  </div>
+</section>
+
+<div class="main container js-accordion accordion--neutral" data-content-prefix="about"">
+  <section class="content__section">
+    <div class="grid grid--2-wide">
+      <div class="grid__item grid__item--no-margin card card--wide">
+        <div class="card__image__container">
+          <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-table--neutral.svg') }}" alt="Icon representing committees">
+          <h2 class="card__title"><a href="{{ url_for('advanced') }}">Advanced data &raquo;</a></h2>
+        </div>
+        <div class="card__content">
+          <h2 class="card__title"><a href="{{ url_for('advanced') }}">Advanced data &raquo;</a></h2>
+          <span>Search, filter and download data.</span>
+        </div>
+      </div>
+      <div class="grid__item grid__item--no-margin card card--wide">
+        <div class="card__image__container">
+          <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-elections--neutral.svg') }}"  alt="Icon representing elections">
+          <h2 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h2>
+        </div>
+        <div class="card__content">
+          <h2 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h2>
+          <span>Find elections near you&mdash;search by state or ZIP code.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="content__section--ruled content__section--extra">
+    <div class="icon-heading content__section">
+      <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-overviews--primary.svg') }}" alt="Icon representing interactive overviews">
+      <div class="icon-heading__content">
+        <h2 class="icon-heading__title">Interactive overviews</h2>
+        <p>You don’t have to be an expert to learn more about campaign finance. These overviews are a visual introduction to how money is raised and spent in federal elections.</p>
+      </div>
+    </div>
+    <h3 class="u-no-margin">Raising overview</h3>
+    <p>This chart shows total receipts for the past year. Receipts is the technical term for anything of value, like money, services or property.</p>
+    <section class="content__section">
+      <div class="content__section">
+        <div class="section__heading">
+          <h4 class="heading__title heading__title--with-action t-upper">All elections, 2015–2016</h4>
+          <div class="heading__action">
+            <ul class="list--buttons">
+              <li><a class="button button--standard button--table" href="{{ url_for('receipts') }}">Explore data</a></li>
+              <li><button class="button button--standard button--share is-disabled">Share</button></li>
+            </ul>
+          </div>
+        </div>
+        {{ overviews.overview(totals['raising'], 'raised', 'landing')}}
+        <button class="accordion__button js-accordion-trigger">About this data</button>
+        <div class="accordion__content">
+          Explanation of methodology
+        </div>
+      </div>
+    </section>
+    <section class="content__secton--extra">
+      <h3 class="u-no-margin">Spending overview</h3>
+      <p>This chart shows total receipts for the past year. Receipts is the technical term for anything of value, like money, services or property.</p>
+      <div class="content__section">
+        <div class="section__heading">
+          <h4 class="heading__title heading__title--with-action t-upper">All elections, 2015–2016</h4>
+          <div class="heading__action">
+            <ul class="list--buttons">
+              <li><a class="button button--standard button--table" href="{{ url_for('disbursements') }}">Explore data</a></li>
+              <li><button class="button button--standard button--share is-disabled">Share</button></li>
+            </ul>
+          </div>
+        </div>
+        {{ overviews.overview(totals['spending'], 'spent', 'landing')}}
+        <button class="accordion__button js-accordion-trigger">About this data</button>
+        <div class="accordion__content">
+          Explanation of methodology
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_for('dist/js/pages/landing.js') }}"></script>
+{% if FEC_WEB_ENVIRONMENT == 'prod' %}
+<!-- Ethnio Activation Code -->
+<script type="text/javascript" language="javascript" src="https://ethn.io/70862.js" async="true" charset="utf-8"></script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,80 @@
+{% import 'macros/reaction-box.html' as reaction_box %}
+
+{% macro overview(data, verb, location) %}
+  <div class="overview js-{{verb}}-overview">
+    <div class="overview__totals js-totals">
+      <div class="overview__total">
+        <span class="overview__total-title">Total {{ verb }}</span>
+        <span class="overview__total-number"><span class="figure__decimals"></span>{{ data['total'] | currency }}</span>
+      </div>
+      <div class="overview__total">
+        <div class="overview__total-title">
+          <span class="term" data-term="candidate"><span class="swatch candidates"></span>Candidates</span>
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals"></span>{{ data['candidates'] | currency }}
+        </span>
+      </div>
+      <div class="overview__total">
+        <div class="overview__total-title">
+          <span class="term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals"></span>{{ data['pacs'] | currency }}
+        </span>
+      </div>
+      <div class="overview__total">
+        <div class="overview__total-title">
+          <span class="term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals"></span>{{ data['parties'] | currency }}
+        </span>
+      </div>
+      <div class="overview__total">
+        <div class="overview__total-title">
+          <span class="swatch other"></span>Other
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals"></span>{{ data['other'] | currency }}</a>
+        </span>
+      </div>
+    </div>
+    <div class="overview__chart js-chart">
+    </div>
+    <div class="overview__feedback">
+      {{ reaction_box.reaction_box(verb, location)}}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro top(type, title, lower_title, raising_data, spending_data) %}
+  <div class="top-list js-top-list" data-type="{{type}}">
+    <h2 class="top-list__title">{{ title }} overview</h2>
+    <h3 class="top-list__subtitle">2015-2016 leaders</h3>
+    <div class="toggles--simple">
+      <button class="toggle is-active" aria-controls="{{type}}-top-raising">Top raising</button> |
+      <button class="toggle" aria-controls="{{type}}-top-spending">Top spending</button>
+    </div>
+    <ol class="figure--zero-pad js-top-raising" id="{{type}}-top-raising">
+      {% for data in raising_data %}
+      <li class="figure__item">
+        <span class="figure__label">
+          <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
+        </span>
+        <span class="figure__number"><span class="figure__decimals"></span>{{ data['receipts'] | currency }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+    <ol class="figure--zero-pad js-top-spending" id="{{type}}-top-spending">
+      {% for data in spending_data %}
+      <li class="figure__item">
+        <span class="figure__label">
+          <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
+        </span>
+        <span class="figure__number"><span class="figure__decimals"></span>{{ data['disbursements'] | currency }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+{% endmacro %}
