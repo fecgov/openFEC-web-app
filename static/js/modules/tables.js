@@ -88,9 +88,15 @@ function mapSort(order, columns) {
 }
 
 function mapResponse(response) {
+  var pagination_count = response.pagination.count;
+
+  if (response.pagination.count > 1000) {
+    pagination_count = Math.round(response.pagination.count / 1000) * 1000;
+  }
+
   return {
-    recordsTotal: response.pagination.count,
-    recordsFiltered: response.pagination.count,
+    recordsTotal: pagination_count,
+    recordsFiltered: pagination_count,
     data: response.results
   };
 }
