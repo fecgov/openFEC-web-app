@@ -323,9 +323,6 @@ function DataTable(selector, opts) {
   if (!_.isEmpty(this.filterPanel)) {
     updateOnChange(this.filterSet.$body, this.api);
     urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
-    this.$body.on('draw.dt', this, function(e) {
-      e.data.filterPanel.setHeight();
-    });
   }
 
   this.$body.css('width', '100%');
