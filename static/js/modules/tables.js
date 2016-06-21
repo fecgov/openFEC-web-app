@@ -36,7 +36,7 @@ var DOWNLOAD_MESSAGES = {
     'Exports are limited to ' +
     downloadCapFormatted +
     ' records—add filters to narrow results, or export bigger ' +
-    'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.',
+    'data sets with <a href="http://www.fec.gov/finance/disclosure/ftp_download.shtml" target="_blank">FEC bulk data exporter</a>.',
   downloadCap: 'Each user is limited to ' +
     MAX_DOWNLOADS +
     ' exports at a time. This helps us keep things running smoothly.',
