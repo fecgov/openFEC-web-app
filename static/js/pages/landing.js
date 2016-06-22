@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require */
+/* global require, ga */
 
 var $ = require('jquery');
 
@@ -133,4 +133,18 @@ $('.js-reaction-box').each(function() {
 $('.js-top-list').each(function() {
   var dataType = $(this).data('type');
   new TopList(this, dataType);
+});
+
+$('.js-ga-event').each(function() {
+  var eventName = $(this).data('ga-event');
+  $(this).on('click', function() {
+    if (helpers.trackerExists()) {
+      var gaEventData = {
+        hitType: 'event',
+        eventCategory: eventName,
+        eventValue: 1
+      };
+      ga('send', gaEventData);
+    }
+  });
 });
