@@ -216,7 +216,7 @@ GroupedBarChart.prototype.populateTooltip = function(d) {
           entityDisplayNames[datum.name] +
         '</span>' +
         '<span class="t-inline-block">' +
-          '<span class="figure__decimals"></span>' +
+          '<span class="figure__decimals" aria-hidden="true"></span>' +
           value +
         '</span>' +
       '</li>';
