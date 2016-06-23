@@ -109,7 +109,7 @@ GroupedBarChart.prototype.buildChart = function() {
     .enter()
       .append('g')
       .attr('class', function(d) { return 'period ' + d.status; })
-      .attr('aria-labelledby', 'bar-chart-tooltip')
+      .attr('aria-labelledby', 'bar-chart-tooltip-' + this.index)
       .attr('transform', function(d) { return 'translate(' + x0(d.period) + ',0)'; })
       .attr('tabindex', '0')
       .on('focus', this.showTooltip.bind(this, x0))
