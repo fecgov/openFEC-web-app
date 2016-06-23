@@ -36,7 +36,7 @@ var DOWNLOAD_MESSAGES = {
     'Exports are limited to ' +
     downloadCapFormatted +
     ' records—add filters to narrow results, or export bigger ' +
-    'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.',
+    'data sets with <a href="http://www.fec.gov/finance/disclosure/ftp_download.shtml" target="_blank">FEC bulk data exporter</a>.',
   downloadCap: 'Each user is limited to ' +
     MAX_DOWNLOADS +
     ' exports at a time. This helps us keep things running smoothly.',
@@ -88,9 +88,15 @@ function mapSort(order, columns) {
 }
 
 function mapResponse(response) {
+  var pagination_count = response.pagination.count;
+
+  if (response.pagination.count > 1000) {
+    pagination_count = Math.round(response.pagination.count / 1000) * 1000;
+  }
+
   return {
-    recordsTotal: response.pagination.count,
-    recordsFiltered: response.pagination.count,
+    recordsTotal: pagination_count,
+    recordsFiltered: pagination_count,
     data: response.results
   };
 }
@@ -317,9 +323,6 @@ function DataTable(selector, opts) {
   if (!_.isEmpty(this.filterPanel)) {
     updateOnChange(this.filterSet.$body, this.api);
     urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
-    this.$body.on('draw.dt', this, function(e) {
-      e.data.filterPanel.setHeight();
-    });
   }
 
   this.$body.css('width', '100%');
