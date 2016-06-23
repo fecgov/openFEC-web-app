@@ -1,31 +1,27 @@
 {% macro reaction_box(name, location) %}
   <div class="reaction-box js-reaction-box" data-name="{{ name }}" data-location="{{ location }}">
     <form>
-      <fieldset class="js-reaction-step-1">
+      <div class="js-reaction-step-1">
+        <span class="reaction-box__heading">What do you think of this chart?</span>
         <ul>
-          <legend class="reaction-box__heading">What do you think of this chart?</legend>
           <li>
-            <input type="radio" value="informative" name="reaction" id="{{name}}-reaction-informative">
-            <label class="reaction--informative" for="{{name}}-reaction-informative">Informative</label>
+            <button type="button" class="button--standard button--informative js-reaction" data-reaction="informative">Informative</button>
           </li>
           <li>
-            <input type="radio" value="confusing" name="reaction" id="{{name}}-reaction-confusing">
-            <label class="reaction--confusing" for="{{name}}-reaction-confusing">Confusing</label>
+            <button type="button" class="button--standard button--confusing js-reaction" data-reaction="confusing">Confusing</button>
           </li>
           <li>
-            <input type="radio" value="not-interested" name="reaction" id="{{name}}-reaction-not-interested">
-            <label class="reaction--not-interested" for="{{name}}-reaction-not-interested">Not interested</label>
+            <button type="button" class="button--standard button--not-interested js-reaction" data-reaction="not-interested">Not interested</button>
           </li>
           <li>
-            <input type="radio" value="none" name="reaction" id="{{name}}-reaction-none">
-            <label class="reaction--none" for="{{name}}-reaction-none">None of these</label>
+            <button type="button" class="button--standard js-reaction" data-reaction="none">None of these</button>
           </li>
         </ul>
-      </fieldset>
+      </div>
       <div class="js-reaction-step-2 u-fade-in" aria-hidden="true">
-        <span class="reaction-box__heading t-block">What do you think of this chart?</span>
-        <p><label for="reaction-more"></label></p>
-        <textarea id="reaction-more"></textarea>
+        <span class="reaction-box__heading">What do you think of this chart?</span>
+        <p><label for="reaction-more-{{ name }}"></label></p>
+        <textarea id="reaction-more-{{ name }}"></textarea>
         <ul class="list--buttons">
           <li><button type="button" class="button--standard js-skip">Skip</button></li>
           <li><button type="submit" class="button--cta">Submit</button></li>
