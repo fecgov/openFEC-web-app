@@ -109,9 +109,10 @@ var spendingData = [
   }
 ];
 
-function Overview(selector, data) {
+function Overview(selector, data, index) {
   this.$element = $(selector);
   this.data = data;
+  this.index = index;
 
   this.totals = this.$element.find('.js-total');
   this.reactionBox = this.$element.find('.js-reaction-box');
@@ -119,12 +120,12 @@ function Overview(selector, data) {
   helpers.zeroPad('.js-totals', '.overview__total-number', '.figure__decimals');
 
   if (helpers.isLargeScreen()) {
-    new GroupedBarChart(selector + ' .js-chart', this.data);
+    new GroupedBarChart(selector + ' .js-chart', this.data, this.index);
   }
 }
 
-new Overview('.js-raised-overview', raisingData);
-new Overview('.js-spent-overview', spendingData);
+new Overview('.js-raised-overview', raisingData, 1);
+new Overview('.js-spent-overview', spendingData, 2);
 
 $('.js-reaction-box').each(function() {
   new ReactionBox(this);

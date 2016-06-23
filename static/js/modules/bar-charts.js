@@ -15,15 +15,18 @@ var stripes =
   '</svg>';
 
 
-function GroupedBarChart(selector, data) {
+function GroupedBarChart(selector, data, index) {
   this.element = d3.select(selector);
   this.data = data;
+  this.index = index;
 
   this.margin = {top: 0, right: 20, bottom: 50, left: 40};
   this.height = 320 - this.margin.top - this.margin.bottom;
   this.width = 500 - this.margin.left - this.margin.right;
 
-  $('body').append(stripes);
+  if ($('#stripes').length === 0) {
+    $('body').append(stripes);
+  }
 
   this.chart = this.buildChart();
   this.tooltip = this.appendTooltip();
@@ -106,6 +109,7 @@ GroupedBarChart.prototype.buildChart = function() {
     .enter()
       .append('g')
       .attr('class', function(d) { return 'period ' + d.status; })
+      .attr('aria-labelledby', 'bar-chart-tooltip')
       .attr('transform', function(d) { return 'translate(' + x0(d.period) + ',0)'; })
       .attr('tabindex', '0')
       .on('focus', this.showTooltip.bind(this, x0))
@@ -191,7 +195,7 @@ GroupedBarChart.prototype.appendTooltip = function() {
     .style({'position': 'relative'})
     .append('div')
     .attr('class', 'tooltip tooltip--under tooltip--chart')
-    .attr('id', 'tooltip');
+    .attr('id', 'bar-chart-tooltip-' + this.index);
 };
 
 GroupedBarChart.prototype.populateTooltip = function(d) {
