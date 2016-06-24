@@ -5,14 +5,14 @@
     <div class="overview__totals js-totals">
       <div class="overview__total">
         <span class="overview__total-title">Total {{ verb }}</span>
-        <span class="overview__total-number"><span class="figure__decimals"></span>{{ data['total'] | currency }}</span>
+        <span class="overview__total-number"><span class="figure__decimals" aria-hidden="true"></span>{{ data['total'] | currency }}</span>
       </div>
       <div class="overview__total">
         <div class="overview__total-title">
           <span class="term" data-term="candidate"><span class="swatch candidates"></span>Candidates</span>
         </div>
         <span class="overview__total-number">
-          <span class="figure__decimals"></span>{{ data['candidates'] | currency }}
+          <span class="figure__decimals" aria-hidden="true"></span>{{ data['candidates'] | currency }}
         </span>
       </div>
       <div class="overview__total">
@@ -20,7 +20,7 @@
           <span class="term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
         </div>
         <span class="overview__total-number">
-          <span class="figure__decimals"></span>{{ data['pacs'] | currency }}
+          <span class="figure__decimals" aria-hidden="true"></span>{{ data['pacs'] | currency }}
         </span>
       </div>
       <div class="overview__total">
@@ -28,7 +28,7 @@
           <span class="term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
         </div>
         <span class="overview__total-number">
-          <span class="figure__decimals"></span>{{ data['parties'] | currency }}
+          <span class="figure__decimals" aria-hidden="true"></span>{{ data['parties'] | currency }}
         </span>
       </div>
       <div class="overview__total">
@@ -36,7 +36,7 @@
           <span class="swatch other"></span>Other
         </div>
         <span class="overview__total-number">
-          <span class="figure__decimals"></span>{{ data['other'] | currency }}</a>
+          <span class="figure__decimals" aria-hidden="true"></span>{{ data['other'] | currency }}</a>
         </span>
       </div>
     </div>
@@ -62,7 +62,7 @@
         <span class="figure__label">
           <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
         </span>
-        <span class="figure__number"><span class="figure__decimals"></span>{{ data['receipts'] | currency }}</span>
+        <span class="figure__number"><span class="figure__decimals" aria-hidden="true"></span>{{ data['receipts'] | currency }}</span>
       </li>
       {% endfor %}
     </ol>
@@ -72,7 +72,7 @@
         <span class="figure__label">
           <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
         </span>
-        <span class="figure__number"><span class="figure__decimals"></span>{{ data['disbursements'] | currency }}</span>
+        <span class="figure__number"><span class="figure__decimals" aria-hidden="true"></span>{{ data['disbursements'] | currency }}</span>
       </li>
       {% endfor %}
     </ol>

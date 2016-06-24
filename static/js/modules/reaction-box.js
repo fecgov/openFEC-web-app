@@ -8,7 +8,6 @@ var helpers = require('./helpers');
 function ReactionBox(selector) {
   this.$element = $(selector);
   this.$form = this.$element.find('form');
-  this.$fieldset = this.$element.find('fieldset');
   this.$textarea = this.$element.find('textarea');
 
   this.$step1 = this.$element.find('.js-reaction-step-1');
@@ -21,17 +20,15 @@ function ReactionBox(selector) {
 
   this.url = helpers.buildAppUrl(['issue']);
 
-  this.$fieldset.on('change', this.handleChange.bind(this));
+  this.$element.on('click', '.js-reaction', this.submitReaction.bind(this));
   this.$element.on('click', '.js-skip', this.handleSuccess.bind(this));
   this.$element.on('click', '.js-reset', this.handleReset.bind(this));
 
   this.$form.on('submit', this.handleSubmit.bind(this));
 }
 
-ReactionBox.prototype.handleChange = function(e) {
-  var $target = $(e.target);
-  this.reaction = $target.val();
-
+ReactionBox.prototype.submitReaction = function(e) {
+  this.reaction = $(e.target).data('reaction');
   if (helpers.trackerExists()) {
     var gaEventData = {
       hitType: 'event',
