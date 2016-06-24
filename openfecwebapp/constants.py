@@ -75,7 +75,7 @@ parties_extended = OrderedDict([
     ('COM', 'Communist Party'),
     ('CRV', 'Conservative Party'),
     ('CST', 'Constitutional'),
-    ('D/C', 'Democratic/Conservative'),
+    ('DC', 'Democratic/Conservative'),
     ('DFL', 'Democratic-Farm-Labor'),
     ('FLP', 'Freedom Labor Party'),
     ('GRE', 'Green Party'),
