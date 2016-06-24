@@ -13,11 +13,12 @@ var disbursementTemplate = require('../../templates/disbursements.hbs');
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Disbursements',
     path: ['schedules', 'schedule_b'],
     columns: columns.disbursements,
     paginator: tables.SeekPaginator,
-    order: [[3, 'desc']],
+    order: [[2, 'desc']],
     useFilters: true,
     useExport: true,
     rowCallback: tables.modalRenderRow,

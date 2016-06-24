@@ -24,6 +24,7 @@ var defaultSort = {
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Candidates for ' + context.office,
     path: ['candidates', 'totals'],
     query: {office: context.office.slice(0, 1).toUpperCase()},

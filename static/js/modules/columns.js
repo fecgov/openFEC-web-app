@@ -12,6 +12,16 @@ var dateColumn = columnHelpers.formattedColumn(helpers.datetime, {orderSequence:
 var currencyColumn = columnHelpers.formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = columnHelpers.barColumn(helpers.currency);
 
+var SIZES = {
+  MEDIUM: '15%',
+  LARGE: '20%',
+  XL: '30%',
+  STATE: '80px',
+  TRIGGER: '30px',
+  CURRENCY: '15%',
+  DATE: '90px'
+};
+
 var supportOpposeColumn = {
   data: 'support_oppose_indicator',
   render: function(data, type, row, meta) {
@@ -29,7 +39,7 @@ var amendmentIndicatorColumn = {
 
 var modalTriggerColumn = {
   className: 'all u-no-padding',
-  width: '20px',
+  width: SIZES.TRIGGER,
   orderable: false,
   render: function(data, type, row, meta) {
     return tables.MODAL_TRIGGER_HTML;
@@ -75,7 +85,7 @@ var renderCommitteeColumn = function(data, type, row, meta) {
 };
 
 var candidates = [
-  {data: 'name', className: 'all', width: '280px', render: renderCandidateColumn},
+  {data: 'name', className: 'all', width: SIZES.LARGE, render: renderCandidateColumn},
   {data: 'office_full', className: 'min-tablet hide-panel'},
   {
     data: 'election_years',
@@ -85,18 +95,18 @@ var candidates = [
     }
   },
   {data: 'party_full', className: 'min-tablet hide-panel'},
-  {data: 'state', className: 'min-desktop hide-panel', width: '80px'},
+  {data: 'state', className: 'min-desktop hide-panel'},
   {data: 'district', className: 'min-desktop hide-panel'},
   modalTriggerColumn
 ];
 
 var candidateOffice = {
-  name:   {data: 'name', className: 'all', width: '280px', render: renderCandidateColumn},
-  party: {data: 'party_full', className: 'min-tablet hide-panel'},
-  state: {data: 'state', className: 'min-desktop hide-panel', width: '80px'},
+  name:   {data: 'name', className: 'all', width: SIZES.XL, render: renderCandidateColumn},
+  party: {data: 'party_full', className: 'min-desktop hide-panel no-wrap'},
+  state: {data: 'state', className: 'min-desktop hide-panel'},
   district: {data: 'district', className: 'min-desktop hide-panel'},
-  receipts: currencyColumn({data: 'receipts', className: 'min-tablet'}),
-  disbursements: currencyColumn({data: 'disbursements', className: 'min-tablet'}),
+  receipts: currencyColumn({data: 'receipts', width: SIZES.CURRENCY, className: 'min-tablet currency-column'}),
+  disbursements: currencyColumn({data: 'disbursements', width: SIZES.CURRENCY, className: 'min-tablet currency-column'}),
   trigger: modalTriggerColumn
 };
 
@@ -104,7 +114,7 @@ var committees = [
   {
     data: 'name',
     className: 'all',
-    width: '280px',
+    width: SIZES.XL,
     render: function(data, type, row, meta) {
       if (data) {
         return columnHelpers.buildEntityLink(
@@ -117,12 +127,9 @@ var committees = [
     }
   },
   {data: 'treasurer_name', className: 'min-desktop hide-panel'},
-  {data: 'state', className: 'min-desktop hide-panel', width: '80px'},
-  {data: 'party_full', className: 'min-desktop hide-panel'},
   dateColumn({data: 'first_file_date', className: 'min-tablet hide-panel'}),
   {data: 'committee_type_full', className: 'min-tablet hide-panel'},
   {data: 'designation_full', className: 'min-tablet hide-panel'},
-  {data: 'organization_type_full', className: 'min-desktop hide-panel'},
   modalTriggerColumn
 ];
 
@@ -150,7 +157,7 @@ var disbursements = [
     data: 'recipient_name',
     orderable: false,
     className: 'all',
-    width: '200px',
+    width: SIZES.LARGE,
     render: function(data, type, row, meta) {
       var committee = row.recipient_committee;
       if (committee) {
@@ -164,14 +171,14 @@ var disbursements = [
       }
     }
   },
-  {data: 'recipient_state', width: '80px', orderable: false, className: 'min-desktop hide-panel'},
-  currencyColumn({data: 'disbursement_amount', className: 'min-tablet hide-panel-tablet'}),
-  dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel-tablet'}),
+  {data: 'recipient_state', width: SIZES.STATE, orderable: false, className: 'min-desktop hide-panel'},
+  dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel-tablet', width: SIZES.DATE}),
   {data: 'disbursement_description', className: 'min-desktop hide-panel', orderable: false},
   {
     data: 'committee',
     orderable: false,
     className: 'min-tablet hide-panel',
+    width: SIZES.LARGE,
     render: function(data, type, row, meta) {
       if (data) {
         return columnHelpers.buildEntityLink(
@@ -184,6 +191,7 @@ var disbursements = [
       }
     }
   },
+  currencyColumn({data: 'disbursement_amount', className: 'min-tablet hide-panel-tablet currency-column'}),
   modalTriggerColumn
 ];
 
@@ -211,11 +219,17 @@ var electioneeringCommunications = [
 ];
 
 var filings = {
-  pdf_url: columnHelpers.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
+  pdf_url: columnHelpers.urlColumn('pdf_url', {
+    data: 'document_description',
+    className: 'all',
+    width: SIZES.MEDIUM,
+    orderable: false
+  }),
   filer_name: {
     data: 'committee_id',
     className: 'all',
     orderable: false,
+    width: SIZES.LARGE,
     render: function(data, type, row, meta) {
       var cycle = tables.getCycle([row.cycle], meta);
       if (row.candidate_name) {
@@ -236,12 +250,21 @@ var filings = {
     },
   },
   amendment_indicator: amendmentIndicatorColumn,
-  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet'}),
-  coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel', orderable: false}),
-  total_receipts: currencyColumn({data: 'total_receipts', className: 'min-tablet hide-panel'}),
-  total_disbursements: currencyColumn({data: 'total_disbursements', className: 'min-tablet hide-panel'}),
-  total_independent_expenditures: currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet hide-panel'}),
-  modal_trigger: modalTriggerColumn
+  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet', width: SIZES.DATE}),
+  coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel', orderable: false, width: SIZES.DATE}),
+  total_receipts: currencyColumn({data: 'total_receipts', className: 'min-tablet hide-panel currency-column', width: SIZES.CURRENCY}),
+  total_disbursements: currencyColumn({data: 'total_disbursements', className: 'min-tablet hide-panel currency-column', width: SIZES.CURRENCY}),
+  total_independent_expenditures: currencyColumn({data: 'total_independent_expenditures', className: 'min-tablet hide-panel currency-column', width: SIZES.CURRENCY}),
+  modal_trigger: {
+    className: 'all u-no-padding',
+    width: SIZES.TRIGGER,
+    orderable: false,
+    render: function(data, type, row, meta) {
+      if (row.form_type && row.form_type.match(/^F3[XP]?$/)) {
+        return tables.MODAL_TRIGGER_HTML;
+      }
+    }
+  }
 };
 
 var independentExpenditures = [
@@ -261,7 +284,6 @@ var independentExpenditures = [
       }
     }
   },
-  currencyColumn({data: 'expenditure_amount', className: 'min-tablet'}),
   {
     data: 'candidate_name',
     orderable: false,
@@ -281,6 +303,7 @@ var independentExpenditures = [
   _.extend({}, supportOpposeColumn, {className: 'min-tablet'}),
   dateColumn({data: 'expenditure_date', className: 'min-desktop hide-panel-tablet'}),
   columnHelpers.urlColumn('pdf_url', {data: 'expenditure_description', className: 'min-desktop hide-panel', orderable: false}),
+  currencyColumn({data: 'expenditure_amount', className: 'min-tablet'}),
   modalTriggerColumn
 ];
 
@@ -289,7 +312,7 @@ var receipts = [
     data: 'contributor',
     orderable: false,
     className: 'all',
-    width: '200px',
+    width: SIZES.LARGE,
     render: function(data, type, row, meta) {
       if (data && row.receipt_type !== helpers.globals.EARMARKED_CODE) {
         return columnHelpers.buildEntityLink(
@@ -302,13 +325,13 @@ var receipts = [
       }
     }
   },
-  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel', width: '80px'},
+  {data: 'contributor_state', orderable: false, width: SIZES.STATE, className: 'min-desktop hide-panel'},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
-  currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet'}),
-  dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel-tablet'}),
+  dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel-tablet', width: SIZES.DATE}),
   {
     data: 'committee',
     orderable: false,
+    width: SIZES.XL,
     className: 'min-desktop hide-panel',
     render: function(data, type, row, meta) {
       if (data) {
@@ -322,6 +345,7 @@ var receipts = [
       }
     }
   },
+  currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet currency-column'}),
   modalTriggerColumn
 ];
 
