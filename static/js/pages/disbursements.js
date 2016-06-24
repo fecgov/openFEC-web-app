@@ -18,7 +18,7 @@ $(document).ready(function() {
     path: ['schedules', 'schedule_b'],
     columns: columns.disbursements,
     paginator: tables.SeekPaginator,
-    order: [[2, 'desc']],
+    order: [[4, 'desc']],
     useFilters: true,
     useExport: true,
     rowCallback: tables.modalRenderRow,
