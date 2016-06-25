@@ -241,11 +241,11 @@ table_columns = OrderedDict([
     ('candidates-office-senate', ['Name', 'Party', 'State', 'Receipts', 'Disbursements']),
     ('candidates-office-house', ['Name', 'Party', 'State', 'District', 'Receipts', 'Disbursements']),
     ('committees', ['Name', 'Treasurer', 'Type', 'Designation', 'First file date']),
-    ('communication-costs', ['Committee', 'Amount', 'Support / oppose', 'Candidate', 'Transaction date']),
-    ('disbursements', ['Recipient name', 'State', 'Purpose', 'Spender', 'Disbursement date', 'Amount']),
-    ('electioneering-communications', ['Spender', 'Disbursement amount', 'Number of candidates', 'Amount per candidate', 'Candidate', 'Disbursement date']),
+    ('communication-costs', ['Committee', 'Support / oppose', 'Candidate', 'Amount', 'Transaction date']),
+    ('disbursements', ['Spender', 'Recipient', 'State', 'Purpose', 'Transaction date', 'Amount']),
+    ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Disbursement date', 'Disbursement amount' ]),
     ('filings', ['Document', 'Filer name', 'Amendment indicator', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursement']),
-    ('independent-expenditures', ['Spender', 'Candidate', 'Support / oppose', 'Expenditure date', 'Description', 'Amount']),
-    ('individual-contributions', ['Contributor name', 'State', 'Employer', 'Recipient', 'Receipt date', 'Amount']),
-    ('receipts', ['Contributor name', 'State', 'Recipient', 'Receipt date', 'Amount'])
+    ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Expenditure date', 'Amount']),
+    ('individual-contributions', ['Recipient', 'Contributor name', 'State', 'Employer', 'Receipt date', 'Amount']),
+    ('receipts', ['Recipient', 'Contributor name', 'State', 'Transaction date', 'Amount'])
 ])

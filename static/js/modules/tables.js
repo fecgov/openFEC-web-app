@@ -180,6 +180,7 @@ function hidePanel(api, $modal) {
 
     if ($(document).width() > 640) {
       api.columns('.hide-panel-tablet').visible(true);
+      api.columns('.hide-panel.min-tablet').visible(true);
     }
 
     if ($(document).width() > 980) {
