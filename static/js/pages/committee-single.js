@@ -136,14 +136,22 @@ var occupationColumns = [
   }
 ];
 
+var columnKeys =   [
+  'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
+  'total_receipts', 'total_disbursements', 'modal_trigger'
+];
+
+if (context.showIndependentExpenditures) {
+  columnKeys.splice(6, 0, 'total_independent_expenditures');
+}
+
+console.log(columnKeys);
+
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
-  [
-    'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
-    'total_receipts', 'total_disbursements', 'total_independent_expenditures',
-    'modal_trigger'
-  ]
+  columnKeys
 );
+
 
 var disbursementPurposeColumns = [
   {data: 'purpose', className: 'all', orderable: false},
