@@ -205,11 +205,6 @@ var electioneeringCommunications = [
 ];
 
 var filings = {
-  pdf_url: columnHelpers.urlColumn('pdf_url', {
-    data: 'document_description',
-    className: 'all column--medium',
-    orderable: false
-  }),
   filer_name: {
     data: 'committee_id',
     className: 'all column--large',
@@ -233,8 +228,13 @@ var filings = {
       }
     },
   },
+  pdf_url: columnHelpers.urlColumn('pdf_url', {
+    data: 'document_description',
+    className: 'all column--medium',
+    orderable: false
+  }),
   amendment_indicator: amendmentIndicatorColumn,
-  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet hide-panel-tablet column--number column--med'}),
+  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet hide-panel column--number column--med'}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--number column--med', orderable: false}),
   total_receipts: currencyColumn({data: 'total_receipts', className: 'min-desktop hide-panel column--number'}),
   total_disbursements: currencyColumn({data: 'total_disbursements', className: 'min-desktop hide-panel column--number'}),
