@@ -84,7 +84,7 @@ var candidates = [
     }
   },
   {data: 'party_full', className: 'min-tablet column--med hide-panel'},
-  {data: 'state', className: 'min-desktop hide-panel column--small'},
+  {data: 'state', className: 'min-desktop hide-panel column--state'},
   {data: 'district', className: 'min-desktop hide-panel column--small'},
   modalTriggerColumn
 ];
@@ -92,7 +92,7 @@ var candidates = [
 var candidateOffice = {
   name:   {data: 'name', className: 'all column--xl', render: renderCandidateColumn},
   party: {data: 'party_full', className: 'min-desktop'},
-  state: {data: 'state', className: 'min-tablet column--small hide-panel'},
+  state: {data: 'state', className: 'min-tablet column--state hide-panel'},
   district: {data: 'district', className: 'min-desktop column--small hide-panel'},
   receipts: currencyColumn({data: 'receipts', className: 'min-tablet hide-panel column--number'}),
   disbursements: currencyColumn({data: 'disbursements', className: 'min-tablet hide-panel column--number'}),
@@ -117,7 +117,7 @@ var committees = [
   {data: 'treasurer_name', className: 'min-desktop hide-panel'},
   {data: 'committee_type_full', className: 'min-tablet hide-panel'},
   {data: 'designation_full', className: 'min-tablet hide-panel'},
-  dateColumn({data: 'first_file_date', className: 'min-tablet hide-panel column--number column--med' }),
+  dateColumn({data: 'first_file_date', className: 'min-tablet hide-panel column--med' }),
   modalTriggerColumn
 ];
 
@@ -136,7 +136,7 @@ var communicationCosts = [
     render: renderCandidateColumn
   },
   currencyColumn({data: 'transaction_amount', className: 'min-tablet hide-panel column--med column--number'}),
-  dateColumn({data: 'transaction_date', className: 'min-tablet hide-panel column--number column--med'}),
+  dateColumn({data: 'transaction_date', className: 'min-tablet hide-panel column--med'}),
   modalTriggerColumn
 ];
 
@@ -174,9 +174,9 @@ var disbursements = [
       }
     }
   },
-  {data: 'recipient_state', orderable: false, className: 'min-desktop column--small hide-panel'},
+  {data: 'recipient_state', orderable: false, className: 'min-desktop column--state hide-panel'},
   {data: 'disbursement_description', className: 'min-desktop hide-panel', orderable: false},
-  dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel column--number column--med'}),
+  dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'disbursement_amount', className: 'min-tablet hide-panel column--number column--med'}),
   modalTriggerColumn
 ];
@@ -199,7 +199,7 @@ var electioneeringCommunications = [
     className: 'min-desktop hide-panel column--small column--number',
   },
   currencyColumn({data: 'calculated_candidate_share', className: 'min-desktop hide-panel column--number column--med'}),
-  dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel column--number column--med'}),
+  dateColumn({data: 'disbursement_date', className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'disbursement_amount', className: 'min-tablet hide-panel column--number column--med'}),
   modalTriggerColumn
 ];
@@ -234,8 +234,8 @@ var filings = {
     orderable: false
   }),
   amendment_indicator: amendmentIndicatorColumn,
-  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet hide-panel column--number column--med'}),
-  coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--number column--med', orderable: false}),
+  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet hide-panel column--med'}),
+  coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   total_receipts: currencyColumn({data: 'total_receipts', className: 'min-desktop hide-panel column--number'}),
   total_disbursements: currencyColumn({data: 'total_disbursements', className: 'min-desktop hide-panel column--number'}),
   total_independent_expenditures: currencyColumn({data: 'total_independent_expenditures', className: 'min-desktop hide-panel column--number'}),
@@ -287,7 +287,7 @@ var independentExpenditures = [
     }
   },
   columnHelpers.urlColumn('pdf_url', {data: 'expenditure_description', className: 'min-desktop hide-panel', orderable: false}),
-  dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel column--number column--med'}),
+  dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'expenditure_amount', className: 'min-tablet hide-panel column--number column--med'}),
   modalTriggerColumn
 ];
@@ -325,7 +325,7 @@ var individualContributions = [
       }
     }
   },
-  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--small '},
+  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--state '},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
   dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet hide-panel column--number column--med'}),
@@ -365,8 +365,8 @@ var receipts = [
       }
     }
   },
-  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--small'},
-  dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel column--number column--med'}),
+  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--state'},
+  dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet hide-panel column--med column--number'}),
   modalTriggerColumn
 ];

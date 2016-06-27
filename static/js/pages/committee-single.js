@@ -145,8 +145,6 @@ if (context.showIndependentExpenditures) {
   columnKeys.splice(6, 0, 'total_independent_expenditures');
 }
 
-console.log(columnKeys);
-
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
   columnKeys
