@@ -209,9 +209,13 @@ function barsAfterRender(template, api, data, response) {
   $cols.after(function() {
     var value = $(this).attr('data-value');
     var width = 100 * parseFloat(value) / tableMax;
-    return '<div class="bar-container">' +
-      '<div class="value-bar" style="width: ' + width + '%"></div>' +
-    '</div>';
+    if ($(this).next('.bar-container').length > 0) {
+      return;
+    } else {
+      return '<div class="bar-container">' +
+        '<div class="value-bar" style="width: ' + width + '%"></div>' +
+      '</div>';
+    }
   });
 }
 

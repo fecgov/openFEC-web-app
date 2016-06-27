@@ -235,6 +235,7 @@ function destroyTable($table) {
     var api = $table.DataTable();
     api.clear();
     api.destroy();
+    $table.data('max', null);
   }
 }
 
@@ -256,6 +257,7 @@ function drawSizeTable(selected) {
     buildUrl(selected, ['schedules', 'schedule_a', 'by_size', 'by_candidate'])
   ).done(function(response) {
     var data = mapSize(response, primary);
+    destroyTable($table);
     $table.dataTable(_.extend({
       autoWidth: false,
       data: data,
@@ -287,9 +289,11 @@ function drawStateTable(selected) {
       autoWidth: false,
       data: data,
       columns: stateColumns(selected),
-      order: [[1, 'desc']]
+      order: [[1, 'desc']],
+      drawCallback: function(settings, $table) {
+        tables.barsAfterRender(null, this.api());
+      }
     }, defaultOpts));
-    tables.barsAfterRender(null, $table.DataTable());
   });
 }
 
