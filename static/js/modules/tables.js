@@ -193,13 +193,22 @@ function hidePanel(api, $modal) {
 function barsAfterRender(template, api, data, response) {
   var $table = $(api.table().node());
   var $cols = $table.find('div[data-value]');
-  var values = $cols.map(function(idx, each) {
-    return parseFloat(each.getAttribute('data-value'));
-  });
-  var max = _.max(values);
+
+  // Store the initial max value on the table element just once
+  // Set widths of bars relative to the global max,
+  // rather than the max of each draw
+  if (!$table.data('max')) {
+    var values = $cols.map(function(idx, each) {
+      return parseFloat(each.getAttribute('data-value'));
+    });
+    var max = _.max(values);
+    $table.data('max', max);
+  }
+
+  var tableMax = $table.data('max');
   $cols.after(function() {
     var value = $(this).attr('data-value');
-    var width = 100 * parseFloat(value) / max;
+    var width = 100 * parseFloat(value) / tableMax;
     return '<div class="bar-container">' +
       '<div class="value-bar" style="width: ' + width + '%"></div>' +
     '</div>';
@@ -514,5 +523,5 @@ module.exports = {
   mapResponse: mapResponse,
   DataTable: DataTable,
   OffsetPaginator: OffsetPaginator,
-  SeekPaginator: SeekPaginator
+  SeekPaginator: SeekPaginator,
 };
