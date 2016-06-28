@@ -148,7 +148,25 @@ def landing_mock_data():
 def load_top_candidates(sort):
         response = _call_api(
             'candidates', 'totals',
-            sort_hide_null=True, election_year=2016, cycle=2016, election_full=True, sort=sort, per_page=5
+            sort_hide_null=True, election_year=2016, cycle=2016, election_full=False, sort=sort, per_page=5
+        )
+        if response['results']:
+            return response['results']
+        return {}
+
+def load_top_pacs(sort):
+        response = _call_api(
+            'totals', 'pac',
+            sort_hide_null=True, cycle=2016, sort=sort, per_page=5
+        )
+        if response['results']:
+            return response['results']
+        return {}
+
+def load_top_parties(sort):
+        response = _call_api(
+            'totals', 'party',
+            sort_hide_null=True, cycle=2016, sort=sort, per_page=5
         )
         if response['results']:
             return response['results']
