@@ -42,7 +42,7 @@ TopList.prototype.showRaising = function() {
 TopList.prototype.showSpending = function() {
   this.$topSpending.attr('aria-hidden', 'false');
   this.$topRaising.attr('aria-hidden', 'true');
-  helpers.zeroPad(this.$topSpending, 'li', '.figure__number', '.figure__decimals');
+  helpers.zeroPad(this.$topSpending, '.figure__number', '.figure__decimals');
 };
 
 
