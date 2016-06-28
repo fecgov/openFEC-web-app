@@ -1,3 +1,11 @@
+{% if chart_reaction %}
+## Reaction to "{{ chart_name }}" chart on {{ chart_location }} page
+{{ chart_reaction }}
+
+## Comment
+{{ chart_comment }}
+
+{% else %}
 {% if action %}
 ## What were you trying to do and how can we improve it?
 {{ action }}
@@ -11,6 +19,7 @@
 {% if about %}
 ## Tell us about yourself
 {{ about }}
+{% endif %}
 {% endif %}
 
 ## Details

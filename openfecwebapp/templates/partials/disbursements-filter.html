@@ -4,14 +4,9 @@
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/date.html' as date %}
+
 {% block heading %}
 Filter disbursements
-{% endblock %}
-
-{% block message %}
-<div class="message message--info message--small message--inverse-alt">
-  <span class="t-block">Due to the large number of transactions, records begin in 2011.</span>
-</div>
 {% endblock %}
 
 {% block filters %}
@@ -33,7 +28,7 @@ Filter disbursements
     {% include 'partials/filters/disbursement-purpose.html' %}
     {{ text.field('min_amount', 'Minimum expenditure', {'data-suffix': 'or more'}) }}
     {{ text.field('max_amount', 'Maximum expenditure', {'data-suffix': 'or less'}) }}
-    {{ date.field('date', 'Disbursement date', dates ) }}
+    {{ date.partition_field('date', 'Disbursement date', dates ) }}
     <div class="message message--info message--small">
       <span class="t-block">Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</span>
     </div>

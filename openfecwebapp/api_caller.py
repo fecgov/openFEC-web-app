@@ -126,3 +126,30 @@ def result_or_404(data):
     if not data.get('results'):
         abort(404)
     return data['results'][0]
+
+def landing_mock_data():
+    return {
+        'raising': {
+            'total': 3853120826,
+            'candidates': 1371424716,
+            'pacs': 626416709.5,
+            'parties': 1854850620,
+            'other': 428781.05
+        },
+        'spending': {
+            'total': 3129642094.49,
+            'candidates': 1324010115.09,
+            'pacs': 529010926.10,
+            'parties': 1247556868.45,
+            'other': 29064184.85
+        }
+    }
+
+def load_top_candidates(sort):
+        response = _call_api(
+            'candidates', 'totals',
+            sort_hide_null=True, election_year=2016, cycle=2016, election_full=True, sort=sort, per_page=5
+        )
+        if response['results']:
+            return response['results']
+        return {}
