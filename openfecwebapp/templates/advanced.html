@@ -101,7 +101,7 @@
           <ul class="grid__item list--spacious t-sans">
             <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=true, max_date=today() | date(fmt='%m-%d-%Y')) }}">All receipts</a>
               <ul>
-                <li><a href="{{ url_for('individual_contributions', max_date=today() | date(fmt='%m-%d-%Y'), is_individual=true) }}">Individual contributions</a></li>
+                <li><a href="{{ url_for('individual_contributions') }}">Individual contributions</a></li>
                 <li><a href="#" class="is-disabled">Contributions from other committees</a></li>
               </ul>
             </li>

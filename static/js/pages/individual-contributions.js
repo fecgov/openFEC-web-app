@@ -13,7 +13,7 @@ $(document).ready(function() {
   new tables.DataTable($table, {
     title: 'Individual contributions',
     path: ['schedules', 'schedule_a'],
-    query: {contributor_type: 'individual'},
+    query: {is_individual: true},
     columns: columns.receipts,
     paginator: tables.SeekPaginator,
     order: [[4, 'desc']],
