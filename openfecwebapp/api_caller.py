@@ -13,6 +13,8 @@ MAX_FINANCIALS_COUNT = 4
 
 
 session = requests.Session()
+http_adapter = requests.adapters.HTTPAdapter(max_retries=2)
+session.mount('https://', http_adapter)
 
 if config.cache:
     cachecontrol.CacheControl(session, cache=utils.LRUCache(config.cache_size))
