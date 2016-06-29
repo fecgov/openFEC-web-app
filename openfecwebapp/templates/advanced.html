@@ -99,7 +99,7 @@
         <div class="option__content">
           <div class="grid--2-wide">
           <ul class="grid__item list--spacious t-sans">
-            <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=true, max_date=today() | date(fmt='%m-%d-%Y')) }}">All receipts</a>
+            <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=True) }}">All receipts</a>
               <ul>
                 <li><a href="{{ url_for('individual_contributions') }}">Individual contributions</a></li>
                 <li><a href="#" class="is-disabled">Contributions from other committees</a></li>
@@ -122,7 +122,7 @@
         <div class="option__content">
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">All disbursements</a>
+              <li><a class="t-all-data" href="{{ url_for('disbursements') }}">All disbursements</a>
                 <ul>
                   <li><a href="#" class="is-disabled">Operating expenditures</a></li>
                   <li><a href="#" class="is-disabled">Expenditures to committees</a></li>
@@ -150,7 +150,7 @@
         <div class="option__content">
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('filings') }}">All filings</a></li>
+              <li><a class="t-all-data" href="{{ url_for('filings', max_receipt_date=today() | date(fmt='%m-%d-%Y')) }}">All filings</a></li>
             </ul>
             <ul class="grid__item list--spacious t-sans">
               <li><a class="t-all-data is-disabled">Report summaries</a>
