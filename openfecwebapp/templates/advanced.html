@@ -62,12 +62,10 @@
       <div id="committees" class="option">
         <h2>Committees</h2>
         <div class="option__content">
-          <p>The term <span class="term" data-term="political committee">committee</span> encompasses several different political groups that receive and spend money in federal elections. 
+          <p>The term <span class="term" data-term="political committee">committee</span> encompasses several different political groups that receive and spend money in federal elections.
           Search for committees by type, years active, political party, location and treasurer.</p>
           <p>Statements of Organization (Form 1) contain basic information about committees, including type, address and treasurer.</p>
-          <p>Requests for Additional Information (RFAIs) are sent to committees when a Campaign Finance Analyst needs additional 
-          clarification on a committee’s filing or identifies an error, omission or possible prohibited activity. Search RFAIs by 
-          committee or date.</p>
+          <p>Requests for Additional Information (RFAIs) are sent to committees when a Campaign Finance Analyst needs additional clarification on a committee’s filing or identifies an error, omission or possible prohibited activity. Search RFAIs by committee or date.</p>
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
               <li><a class="t-all-data" href="{{ url_for('committees', election_year=default_cycles) }}">All committees</a>
@@ -106,10 +104,8 @@
       <div id="receipts" class="option">
         <h2>Receipts</h2>
         <div class="option__content">
-          <p><span class="term" data-term="receipt">Receipts</span> are anything of value, like money, services or property. Search 
-          candidate and committee receipt data by contributor, amount and date.</p>
-          <p>Search individual contributions to see who is donating to candidates and committees. Search for contributors by name, location, 
-          employer and occupation.</p>
+          <p><span class="term" data-term="receipt">Receipts</span> are anything of value, like money, services or property. Search candidate and committee receipt data by contributor, amount and date.</p>
+          <p>Search individual contributions to see who is donating to candidates and committees. Search for contributors by name, location, employer and occupation.</p>
           <div class="grid--2-wide">
           <ul class="grid__item list--spacious t-sans">
             <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=true, max_date=today() | date(fmt='%m-%d-%Y')) }}">All receipts</a>
@@ -165,8 +161,7 @@
       <div id="filings" class="option">
         <h2>Filings</h2>
         <div class="option__content">
-          <p>Filings contain all the statements, reports and notices that candidates and committees file. Search by date, type and 
-          filing candidate or committee.</p>
+          <p>Filings contain all the statements, reports and notices that candidates and committees file. Search by date, type and filing candidate or committee.</p>
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
               <li><a class="t-all-data" href="{{ url_for('filings') }}">All filings</a></li>
