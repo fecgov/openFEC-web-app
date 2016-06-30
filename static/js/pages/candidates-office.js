@@ -21,10 +21,17 @@ var defaultSort = {
   house: 4
 };
 
+var officeTitleMap = {
+  president: 'president',
+  senate: 'Senate',
+  house: 'House of Representatives'
+};
+
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
-    title: 'Candidates for ' + context.office,
+    autoWidth: false,
+    title: 'Candidates for ' + officeTitleMap[context.office],
     path: ['candidates', 'totals'],
     query: {office: context.office.slice(0, 1).toUpperCase()},
     columns: columnGroups[context.office],

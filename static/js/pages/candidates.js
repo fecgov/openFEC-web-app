@@ -9,6 +9,7 @@ var tablePanels = require('../modules/table-panels');
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Candidate',
     path: ['candidates'],
     columns: columns.candidates,

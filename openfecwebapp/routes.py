@@ -143,7 +143,7 @@ def individual_contributions():
         title='Individual contributions',
         slug='individual-contributions',
         dates=utils.date_ranges(),
-        columns=constants.table_columns['receipts']
+        columns=constants.table_columns['individual-contributions']
     )
 
 @app.route('/disbursements/')
