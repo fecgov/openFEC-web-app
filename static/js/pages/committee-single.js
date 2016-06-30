@@ -63,7 +63,7 @@ var committeeColumns = [
     render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
       return {
         committee_id: row.committee_id,
-        recipient_committee_id: row.recipient_id
+        recipient_name: row.recipient_id
       };
     })
   }
@@ -196,7 +196,7 @@ var disbursementRecipientIDColumns = [
     orderable: false,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
-      return {recipient_committee_id: row.recipient_id};
+      return {recipient_name: row.recipient_id};
     })
   }
 ];
