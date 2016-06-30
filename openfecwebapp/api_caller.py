@@ -132,16 +132,16 @@ def landing_mock_data():
         'raising': {
             'total': 3853120826,
             'candidates': 1371424716,
-            'pacs': 626416709.5,
-            'parties': 1854850620,
+            'parties': 626416709.5,
+            'pacs': 1854850620,
             'other': 428781.05
         },
         'spending': {
-            'total': 3129642094.49,
-            'candidates': 1324010115.09,
-            'pacs': 529010926.10,
-            'parties': 1247556868.45,
-            'other': 29064184.85
+            'total': 2381570667.55,
+            'candidates': 1163308172.64,
+            'pacs': 503205461.58,
+            'parties': 685740891.22,
+            'other': 29316142.11
         }
     }
 
