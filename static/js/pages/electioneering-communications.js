@@ -15,12 +15,13 @@ var electioneeringTemplate = require('../../templates/electioneering-communicati
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Electioneering communications',
     path: ['electioneering'],
     columns: columns.electioneeringCommunications,
     rowCallback: tables.modalRenderRow,
     useExport: true,
-    order: [[3, 'desc']],
+    order: [[4, 'desc']],
     useFilters: true,
     callbacks: {
       afterRender: tables.modalRenderFactory(electioneeringTemplate)

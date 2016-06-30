@@ -12,7 +12,7 @@ var columns = require('../modules/columns');
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
   [
-    'pdf_url', 'filer_name', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
+    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
     'total_receipts', 'total_disbursements', 'modal_trigger'
   ]
 );
@@ -20,6 +20,7 @@ var filingsColumns = columnHelpers.getColumns(
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Filings',
     path: ['filings'],
     columns: filingsColumns,

@@ -30,6 +30,7 @@ var officeTitleMap = {
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Candidates for ' + officeTitleMap[context.office],
     path: ['candidates', 'totals'],
     query: {office: context.office.slice(0, 1).toUpperCase()},
