@@ -14,9 +14,9 @@ var raisingData = [
     'period': 'Jan 1 - June 30, 2015',
     'status': 'complete',
     'candidates': 305427675.73,
-    'parties': 217813182.16,
-    'pacs': 680219721.08,
-    'other': 7741.44,
+    'parties': 192007717.64,
+    'pacs': 118403743.85,
+    'other': 259698.70,
   },
   {
     'period': 'Jul 1 - Dec 31, 2015',
@@ -64,10 +64,10 @@ var spendingData = [
   {
     'period': 'Jan 1 - June 30, 2015',
     'status': 'complete',
-    'candidates': 305427675.73,
-    'parties': 217813182.16,
-    'pacs': 680219721.08,
-    'other': 7741.44
+    'candidates': 144725733.28,
+    'parties': 192007717.64,
+    'pacs': 118403743.85,
+    'other': 259698.70
   },
   {
     'period': 'Jul 1 - Dec 31, 2015',
