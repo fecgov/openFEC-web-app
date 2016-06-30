@@ -33,7 +33,7 @@
         <h2>Candidates</h2>
         <div class="option__content">
           <p>Search <span class="term" data-term="candidate">candidate</span> data, including money raised, money spent, cash on hand and debt.</p>
-          <p>Statements of Candidacy (Form 2) contain basic information about individuals running 
+          <p>Statements of Candidacy (Form 2) contain basic information about individuals running
           for federal office, including their names, addresses and authorized campaign committees.</p>
           <div class="grid--2-wide">
           <ul class="grid__item list--spacious t-sans">
@@ -134,11 +134,9 @@
         <h2>Spending</h2>
         <div class="option__content">
           <p>Spending includes all the types of <span class="term" data-term="disbursement">dibsursements</span> candidates and committees make.</p>
-          <p>Search all disbursements to candidates and committees by the recipient, purpose, amount and date.</p>
-          <p>Search <span class="term" data-term="independent expenditure">independent expenditures</span> to find specific spenders, 
-          candidates mentioned and transaction information.</p>
-          <p>Search communication costs and <span class="term" data-term="electioneering communication">electioneering communications</span> 
-          for communications that support or oppose specific candidates. Search by date and amount spent.</p>
+          <p>Search all disbursements from committees by the recipient, purpose, amount and date.</p>
+          <p>Search <span class="term" data-term="independent expenditure">independent expenditures</span> to find specific spenders, candidates mentioned and transaction information.</p>
+          <p>Search communication costs and <span class="term" data-term="electioneering communication">electioneering communications</span> for communications that support or oppose specific candidates. Search by date and amount spent.</p>
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
               <li><a class="t-all-data" href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">All disbursements</a>
