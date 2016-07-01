@@ -271,7 +271,7 @@ GroupedBarChart.prototype.showTooltip = function(x0, d) {
 GroupedBarChart.prototype.hideTooltip = function() {
   this.tooltip
     .style({'display': 'none'})
-    .html('');
+    .html(null);
 };
 
 module.exports = {
