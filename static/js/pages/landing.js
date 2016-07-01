@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require */
+/* global require, ga */
 
 var $ = require('jquery');
 
@@ -14,9 +14,9 @@ var raisingData = [
     'period': 'Jan 1 - June 30, 2015',
     'status': 'complete',
     'candidates': 305427675.73,
-    'parties': 217813182.16,
-    'pacs': 680219721.08,
-    'other': 7741.44,
+    'parties': 192007717.64,
+    'pacs': 118403743.85,
+    'other': 259698.70,
   },
   {
     'period': 'Jul 1 - Dec 31, 2015',
@@ -64,10 +64,10 @@ var spendingData = [
   {
     'period': 'Jan 1 - June 30, 2015',
     'status': 'complete',
-    'candidates': 305427675.73,
-    'parties': 217813182.16,
-    'pacs': 680219721.08,
-    'other': 7741.44
+    'candidates': 144725733.28,
+    'parties': 192007717.64,
+    'pacs': 118403743.85,
+    'other': 259698.70
   },
   {
     'period': 'Jul 1 - Dec 31, 2015',
@@ -109,22 +109,23 @@ var spendingData = [
   }
 ];
 
-function Overview(selector, data) {
+function Overview(selector, data, index) {
   this.$element = $(selector);
   this.data = data;
+  this.index = index;
 
   this.totals = this.$element.find('.js-total');
   this.reactionBox = this.$element.find('.js-reaction-box');
 
-  helpers.zeroPad('.js-totals', '.overview__total-number', '.figure__decimals');
+  helpers.zeroPad(selector + ' .js-totals', '.overview__total-number', '.figure__decimals');
 
   if (helpers.isLargeScreen()) {
-    new GroupedBarChart(selector + ' .js-chart', this.data);
+    new GroupedBarChart(selector + ' .js-chart', this.data, this.index);
   }
 }
 
-new Overview('.js-raised-overview', raisingData);
-new Overview('.js-spent-overview', spendingData);
+new Overview('.js-raised-overview', raisingData, 1);
+new Overview('.js-spent-overview', spendingData, 2);
 
 $('.js-reaction-box').each(function() {
   new ReactionBox(this);
@@ -133,4 +134,18 @@ $('.js-reaction-box').each(function() {
 $('.js-top-list').each(function() {
   var dataType = $(this).data('type');
   new TopList(this, dataType);
+});
+
+$('.js-ga-event').each(function() {
+  var eventName = $(this).data('ga-event');
+  $(this).on('click', function() {
+    if (helpers.trackerExists()) {
+      var gaEventData = {
+        hitType: 'event',
+        eventCategory: eventName,
+        eventValue: 1
+      };
+      ga('send', gaEventData);
+    }
+  });
 });

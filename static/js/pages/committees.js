@@ -13,6 +13,7 @@ var committeesTemplate = require('../../templates/committees.hbs');
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Committees',
     path: ['committees'],
     columns: columns.committees,

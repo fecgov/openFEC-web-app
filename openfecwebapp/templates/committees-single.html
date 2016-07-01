@@ -128,6 +128,9 @@
 {% block scripts %}
 <script>
 var context = {{ context_vars | json | safe }};
+{% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
+  context.showIndependentExpenditures = true;
+{% endif %}
 </script>
 <script src="{{ asset_for('dist/js/pages/committee-single.js') }}"></script>
 {% endblock %}

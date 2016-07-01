@@ -36,7 +36,7 @@ var DOWNLOAD_MESSAGES = {
     'Exports are limited to ' +
     downloadCapFormatted +
     ' records—add filters to narrow results, or export bigger ' +
-    'data sets with <a href="http://www.fec.gov/data/DataCatalog.do?cf=downloadable" target="_blank">FEC bulk data exporter</a>.',
+    'data sets with <a href="http://www.fec.gov/finance/disclosure/ftp_download.shtml" target="_blank">FEC bulk data exporter</a>.',
   downloadCap: 'Each user is limited to ' +
     MAX_DOWNLOADS +
     ' exports at a time. This helps us keep things running smoothly.',
@@ -88,9 +88,15 @@ function mapSort(order, columns) {
 }
 
 function mapResponse(response) {
+  var pagination_count = response.pagination.count;
+
+  if (response.pagination.count > 1000) {
+    pagination_count = Math.round(response.pagination.count / 1000) * 1000;
+  }
+
   return {
-    recordsTotal: response.pagination.count,
-    recordsFiltered: response.pagination.count,
+    recordsTotal: pagination_count,
+    recordsFiltered: pagination_count,
     data: response.results
   };
 }
@@ -180,6 +186,7 @@ function hidePanel(api, $modal) {
 
     if ($(document).width() > 640) {
       api.columns('.hide-panel-tablet').visible(true);
+      api.columns('.hide-panel.min-tablet').visible(true);
     }
 
     if ($(document).width() > 980) {
@@ -192,16 +199,29 @@ function hidePanel(api, $modal) {
 function barsAfterRender(template, api, data, response) {
   var $table = $(api.table().node());
   var $cols = $table.find('div[data-value]');
-  var values = $cols.map(function(idx, each) {
-    return parseFloat(each.getAttribute('data-value'));
-  });
-  var max = _.max(values);
+
+  // Store the initial max value on the table element just once
+  // Set widths of bars relative to the global max,
+  // rather than the max of each draw
+  if (!$table.data('max')) {
+    var values = $cols.map(function(idx, each) {
+      return parseFloat(each.getAttribute('data-value'));
+    });
+    var max = _.max(values);
+    $table.data('max', max);
+  }
+
+  var tableMax = $table.data('max');
   $cols.after(function() {
     var value = $(this).attr('data-value');
-    var width = 100 * parseFloat(value) / max;
-    return '<div class="bar-container">' +
-      '<div class="value-bar" style="width: ' + width + '%"></div>' +
-    '</div>';
+    var width = 100 * parseFloat(value) / tableMax;
+    if ($(this).next('.bar-container').length > 0) {
+      return;
+    } else {
+      return '<div class="bar-container">' +
+        '<div class="value-bar" style="width: ' + width + '%"></div>' +
+      '</div>';
+    }
   });
 }
 
@@ -317,9 +337,6 @@ function DataTable(selector, opts) {
   if (!_.isEmpty(this.filterPanel)) {
     updateOnChange(this.filterSet.$body, this.api);
     urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
-    this.$body.on('draw.dt', this, function(e) {
-      e.data.filterPanel.setHeight();
-    });
   }
 
   this.$body.css('width', '100%');
@@ -516,5 +533,5 @@ module.exports = {
   mapResponse: mapResponse,
   DataTable: DataTable,
   OffsetPaginator: OffsetPaginator,
-  SeekPaginator: SeekPaginator
+  SeekPaginator: SeekPaginator,
 };

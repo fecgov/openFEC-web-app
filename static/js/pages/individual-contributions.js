@@ -11,10 +11,11 @@ var donationTemplate = require('../../templates/receipts.hbs');
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Individual contributions',
     path: ['schedules', 'schedule_a'],
-    query: {contributor_type: 'individual'},
-    columns: columns.receipts,
+    query: {is_individual: true},
+    columns: columns.individualContributions,
     paginator: tables.SeekPaginator,
     order: [[4, 'desc']],
     useFilters: true,

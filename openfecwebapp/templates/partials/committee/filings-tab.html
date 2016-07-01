@@ -15,7 +15,9 @@
           <th scope="col">Coverage end date</th>
           <th scope="col">Total receipts</th>
           <th scope="col">Total disbursement</th>
-          <th scope="col">Total independent expenditures</th>
+          {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
+            <th scope="col">Total independent expenditures</th>
+          {% endif %}
           <th scope="col"></th>
         </thead>
       </table>
