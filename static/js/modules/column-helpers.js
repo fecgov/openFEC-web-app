@@ -5,11 +5,11 @@ var _ = require('underscore');
 var helpers = require('./helpers');
 
 var sizeInfo = {
-  0: {limits: [0, 199.99], label: 'Under $200'},
-  200: {limits: [200, 499.99], label: '$200—$499'},
+  0: {limits: [0, 200], label: '$200 and under'},
+  200: {limits: [200.01, 499.99], label: '$200.01—$499'},
   500: {limits: [500, 999.99], label: '$500—$999'},
-  1000: {limits: [1000, 1999.99], label: '$1000—$1999'},
-  2000: {limits: [2000, null], label: 'Over $2000'},
+  1000: {limits: [1000, 1999.99], label: '$1,000—$1,999'},
+  2000: {limits: [2000, null], label: '$2,000 and over'},
 };
 
 function getSizeParams(size) {
