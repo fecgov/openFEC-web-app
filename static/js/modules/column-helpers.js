@@ -92,6 +92,7 @@ function buildEntityLink(data, url, category, opts) {
 function buildAggregateUrl(cycle) {
   var dates = helpers.cycleDates(cycle);
   return {
+    two_year_transaction_period: cycle,
     min_date: dates.min,
     max_date: dates.max
   };
