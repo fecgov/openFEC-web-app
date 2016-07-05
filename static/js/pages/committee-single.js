@@ -389,6 +389,7 @@ $(document).ready(function() {
     case 'filing':
       path = ['committee', committeeId, 'filings'];
       tables.DataTable.defer($table, {
+        autoWidth: false,
         path: path,
         query: query,
         columns: filingsColumns,
