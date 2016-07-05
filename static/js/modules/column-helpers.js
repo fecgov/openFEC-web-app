@@ -14,7 +14,7 @@ var sizeInfo = {
 
 function getSizeParams(size) {
   var limits = sizeInfo[size].limits;
-  var params = {is_individual: 'true'};
+  var params = {};
   if (limits[0] !== null) {
     params.min_amount = helpers.currency(limits[0]);
   }
