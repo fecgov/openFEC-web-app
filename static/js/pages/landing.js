@@ -8,6 +8,7 @@ var GroupedBarChart = require('../modules/bar-charts').GroupedBarChart;
 var TopList = require('../modules/top-list').TopList;
 var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
+var analytics = require('fec-style/js/analytics');
 
 var raisingData = [
   {
@@ -139,14 +140,13 @@ $('.js-top-list').each(function() {
 $('.js-ga-event').each(function() {
   var eventName = $(this).data('ga-event');
   $(this).on('click', function() {
-    if (helpers.trackerExists()) {
+    if (analytics.trackerExists()) {
       var gaEventData = {
         eventCategory: 'Misc. events',
         eventAction: eventName,
         eventValue: 1
       };
-      var trackerName = ga.getAll()[0].get('name');
-      ga(trackerName + '.send', 'event', gaEventData);
+      ga('nonDAP.send', 'event', gaEventData);
     }
   });
 });
