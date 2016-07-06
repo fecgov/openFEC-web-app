@@ -27,6 +27,7 @@ var sizeColumns = [
     data: 'size',
     width: '50%',
     className: 'all',
+    orderable: false,
     render: function(data, type, row, meta) {
       return columnHelpers.sizeInfo[data].label;
     }
@@ -35,7 +36,7 @@ var sizeColumns = [
     data: 'total',
     width: '50%',
     className: 'all',
-    orderSequence: ['desc', 'asc'],
+    orderable: false,
     render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
       return columnHelpers.getSizeParams(row.size);
     })
@@ -317,7 +318,7 @@ $(document).ready(function() {
         columns: sizeColumns,
         callbacks: aggregateCallbacks,
         dom: 't',
-        order: [[1, 'desc']],
+        order: false,
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
