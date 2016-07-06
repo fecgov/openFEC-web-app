@@ -48,7 +48,14 @@
 {% if office %}
 <script>
 var context = {
-  office: '{{ office }}'
+  office: '{{ office }}',
+};
+</script>
+{% endif %}
+{% if report_type %}
+<script>
+var context = {
+  reportType: '{{ report_type }}',
 };
 </script>
 {% endif %}

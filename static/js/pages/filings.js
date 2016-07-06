@@ -12,8 +12,7 @@ var columns = require('../modules/columns');
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
-    'total_receipts', 'total_disbursements', 'modal_trigger'
+    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'modal_trigger'
   ]
 );
 

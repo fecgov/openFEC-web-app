@@ -197,6 +197,27 @@ def communication_costs():
         columns=constants.table_columns['communication-costs']
     )
 
+@app.route('/reports/<report_type>/')
+def reports(report_type):
+    if report_type.lower() not in ['presidential', 'house-senate', 'pac-party', 'ie-only']:
+        abort(404)
+    if report_type.lower() == 'presidential':
+        title = 'Presidential committee reports'
+    if report_type.lower() == 'house-senate':
+        title = 'House and Senate committee reports'
+    if report_type.lower() == 'pac-party':
+        title = 'PAC and party committee reports'
+    if report_type.lower() == 'ie-only':
+        title = 'Independent expenditure-only committee reports'
+    return render_template(
+        'datatable.html',
+        slug='reports',
+        title=title,
+        report_type=report_type.lower(),
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['reports-' + report_type.lower()]
+    )
+
 @app.route('/elections/')
 def election_lookup():
     return render_template('election-lookup.html')
