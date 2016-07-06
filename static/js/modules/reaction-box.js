@@ -31,12 +31,12 @@ ReactionBox.prototype.submitReaction = function(e) {
   this.reaction = $(e.target).data('reaction');
   if (helpers.trackerExists()) {
     var gaEventData = {
-      hitType: 'event',
       eventCategory: 'Reactions',
       eventAction: this.location + '-' + this.name + ': ' + this.reaction,
       eventValue: 1
     };
-    ga('send', gaEventData);
+    var trackerName = ga.getAll()[0].get('name');
+    ga(trackerName + '.send', 'event', gaEventData);
   }
 
   this.showTextarea();

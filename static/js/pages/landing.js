@@ -141,11 +141,12 @@ $('.js-ga-event').each(function() {
   $(this).on('click', function() {
     if (helpers.trackerExists()) {
       var gaEventData = {
-        hitType: 'event',
-        eventCategory: eventName,
+        eventCategory: 'Misc. events',
+        eventAction: eventName,
         eventValue: 1
       };
-      ga('send', gaEventData);
+      var trackerName = ga.getAll()[0].get('name');
+      ga(trackerName + '.send', 'event', gaEventData);
     }
   });
 });
