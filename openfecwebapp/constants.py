@@ -240,11 +240,12 @@ table_columns = OrderedDict([
     ('candidates-office-president', ['Name', 'Party', 'Receipts', 'Disbursements']),
     ('candidates-office-senate', ['Name', 'Party', 'State', 'Receipts', 'Disbursements']),
     ('candidates-office-house', ['Name', 'Party', 'State', 'District', 'Receipts', 'Disbursements']),
-    ('committees', ['Name', 'Treasurer', 'State', 'Party', 'First file date', 'Type', 'Designation', 'Organization type']),
-    ('communication-costs', ['Committee', 'Amount', 'Support / oppose', 'Candidate', 'Transaction date']),
-    ('disbursements', ['Recipient name', 'State', 'Amount', 'Disbursement date', 'Purpose', 'Committee']),
-    ('electioneering-communications', ['Spender', 'Disbursement amount', 'Number of candidates', 'Amount per candidate', 'Candidate', 'Disbursement date']),
-    ('filings', ['Document', 'Filer name', 'Amendment indicator', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursement']),
-    ('independent-expenditures', ['Spender', 'Amount', 'Candidate', 'Support / oppose', 'Expenditure date', 'Description']),
-    ('receipts', ['Contributor name', 'State', 'Employer', 'Amount', 'Receipt date', 'Recipient'])
+    ('committees', ['Name', 'Treasurer', 'Type', 'Designation', 'First file date']),
+    ('communication-costs', ['Committee', 'Support / oppose', 'Candidate', 'Amount', 'Date']),
+    ('disbursements', ['Spender', 'Recipient', 'State', 'Purpose', 'Disbursement date', 'Amount']),
+    ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
+    ('filings', ['Filer name', 'Document', 'Amendment indicator', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursement']),
+    ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Expenditure date', 'Amount']),
+    ('individual-contributions', ['Recipient', 'Contributor name', 'State', 'Employer', 'Receipt date', 'Amount']),
+    ('receipts', ['Recipient', 'Contributor name', 'State', 'Receipt date', 'Amount'])
 ])

@@ -12,6 +12,7 @@ var electioneeringTemplate = require('../../templates/communication-costs.hbs');
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
+    autoWidth: false,
     title: 'Communication costs',
     path: ['communication-costs'],
     columns: columns.communicationCosts,

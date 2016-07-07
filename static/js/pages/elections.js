@@ -22,9 +22,12 @@ var candidateStateMapTemplate = require('../../templates/candidateStateMap.hbs')
 var MAX_MAPS = 2;
 
 var independentExpenditureColumns = [
+  columns.committeeColumn({data: 'committee', className: 'all'}),
+  columns.supportOpposeColumn,
+  columns.candidateColumn({data: 'candidate', className: 'all'}),
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
@@ -35,15 +38,15 @@ var independentExpenditureColumns = [
         };
     })
   },
-  columns.committeeColumn({data: 'committee', className: 'all'}),
-  columns.supportOpposeColumn,
-  columns.candidateColumn({data: 'candidate', className: 'all'}),
 ];
 
 var communicationCostColumns = [
+  columns.committeeColumn({data: 'committee', className: 'all'}),
+  columns.supportOpposeColumn,
+  columns.candidateColumn({data: 'candidate', className: 'all'}),
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
@@ -53,15 +56,14 @@ var communicationCostColumns = [
         };
     })
   },
-  columns.committeeColumn({data: 'committee', className: 'all'}),
-  columns.supportOpposeColumn,
-  columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var electioneeringColumns = [
+  columns.committeeColumn({data: 'committee', className: 'all'}),
+  columns.candidateColumn({data: 'candidate', className: 'all'}),
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
@@ -70,15 +72,12 @@ var electioneeringColumns = [
         };
     })
   },
-  columns.committeeColumn({data: 'committee', className: 'all'}),
-  columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
 var electionColumns = [
   {
     data: 'candidate_name',
-    className: 'all',
-    width: '30%',
+    className: 'all column--large',
     render: function(data, type, row, meta) {
       return columnHelpers.buildEntityLink(
         data,
@@ -89,9 +88,9 @@ var electionColumns = [
     }
   },
   {data: 'party_full', className: 'all'},
-  columns.currencyColumn({data: 'total_receipts', orderSequence: ['desc', 'asc']}),
-  columns.currencyColumn({data: 'total_disbursements', orderSequence: ['desc', 'asc']}),
-  columns.barCurrencyColumn({data: 'cash_on_hand_end_period'}),
+  columns.currencyColumn({data: 'total_receipts', className: 'column--number', orderSequence: ['desc', 'asc']}),
+  columns.currencyColumn({data: 'total_disbursements', className: 'column--number', orderSequence: ['desc', 'asc']}),
+  columns.barCurrencyColumn({data: 'cash_on_hand_end_period', className: 'column--number'}),
   {
     render: function(data, type, row, meta) {
       var dates = helpers.cycleDates(context.election.cycle);
@@ -117,11 +116,13 @@ var electionColumns = [
 function makeCommitteeColumn(opts, factory) {
   return _.extend({}, {
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    className: 'column--number',
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       row.cycle = context.election.cycle;
       var column = meta.settings.aoColumns[meta.col].data;
       return _.extend({
-        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids
+        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids,
+        two_year_transaction_period: row.cycle,
       }, factory(data, type, row, meta, column));
     })
   }, opts);
@@ -135,7 +136,7 @@ var sizeColumns = [
   {
     data: 'candidate_name',
     className: 'all',
-    width: '30%',
+    width: 'column--med',
     render: function(data, type, row, meta) {
       return columnHelpers.buildEntityLink(
         data,
@@ -221,6 +222,7 @@ function mapState(response, primary) {
 }
 
 var defaultOpts = {
+  autoWidth: false,
   destroy: true,
   searching: false,
   serverSide: false,
@@ -234,6 +236,7 @@ function destroyTable($table) {
     var api = $table.DataTable();
     api.clear();
     api.destroy();
+    $table.data('max', null);
   }
 }
 
@@ -255,7 +258,9 @@ function drawSizeTable(selected) {
     buildUrl(selected, ['schedules', 'schedule_a', 'by_size', 'by_candidate'])
   ).done(function(response) {
     var data = mapSize(response, primary);
+    destroyTable($table);
     $table.dataTable(_.extend({
+      autoWidth: false,
       data: data,
       columns: sizeColumns,
       order: [[1, 'desc']]
@@ -282,11 +287,14 @@ function drawStateTable(selected) {
       }));
     destroyTable($table);
     $table.dataTable(_.extend({
+      autoWidth: false,
       data: data,
       columns: stateColumns(selected),
-      order: [[1, 'desc']]
+      order: [[1, 'desc']],
+      drawCallback: function(settings, $table) {
+        tables.barsAfterRender(null, this.api());
+      }
     }, defaultOpts));
-    tables.barsAfterRender(null, $table.DataTable());
   });
 }
 
@@ -445,10 +453,11 @@ function initSpendingTables() {
     var opts = tableOpts[dataType];
     if (opts) {
       tables.DataTable.defer($table, {
+        autoWidth: false,
         path: opts.path,
         query: helpers.filterNull(context.election),
         columns: opts.columns,
-        order: [[0, 'desc']],
+        order: [[3, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',
         lengthChange: false,

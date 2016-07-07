@@ -32,6 +32,9 @@
       <div id="candidates" class="option">
         <h2>Candidates</h2>
         <div class="option__content">
+          <p>Search <span class="term" data-term="candidate">candidate</span> data, including money raised, money spent, cash on hand and debt.</p>
+          <p>Statements of Candidacy (Form 2) contain basic information about individuals running
+          for federal office, including their names, addresses and authorized campaign committees.</p>
           <div class="grid--2-wide">
           <ul class="grid__item list--spacious t-sans">
             <li><a class="t-all-data" href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">All candidates</a>
@@ -59,6 +62,10 @@
       <div id="committees" class="option">
         <h2>Committees</h2>
         <div class="option__content">
+          <p>The term <span class="term" data-term="political committee">committee</span> encompasses several different political groups that receive and spend money in federal elections.
+          Search for committees by type, years active, political party, location and treasurer.</p>
+          <p>Statements of Organization (Form 1) contain basic information about committees, including type, address and treasurer.</p>
+          <p>Requests for Additional Information (RFAIs) are sent to committees when a Campaign Finance Analyst needs additional clarification on a committee’s filing or identifies an error, omission or possible prohibited activity. Search RFAIs by committee or date.</p>
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
               <li><a class="t-all-data" href="{{ url_for('committees', election_year=default_cycles) }}">All committees</a>
@@ -97,11 +104,13 @@
       <div id="receipts" class="option">
         <h2>Receipts</h2>
         <div class="option__content">
+          <p><span class="term" data-term="receipt">Receipts</span> are anything of value, like money, services or property. Search candidate and committee receipt data by contributor, amount and date.</p>
+          <p>Search individual contributions to see who is donating to candidates and committees. Search for contributors by name, location, employer and occupation.</p>
           <div class="grid--2-wide">
           <ul class="grid__item list--spacious t-sans">
-            <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=true, max_date=today() | date(fmt='%m-%d-%Y')) }}">All receipts</a>
+            <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=True) }}">All receipts</a>
               <ul>
-                <li><a href="{{ url_for('individual_contributions', max_date=today() | date(fmt='%m-%d-%Y'), is_individual=true) }}">Individual contributions</a></li>
+                <li><a href="{{ url_for('individual_contributions') }}">Individual contributions</a></li>
                 <li><a href="#" class="is-disabled">Contributions from other committees</a></li>
               </ul>
             </li>
@@ -120,9 +129,13 @@
       <div id="spending" class="option">
         <h2>Spending</h2>
         <div class="option__content">
+          <p>Spending includes all the types of <span class="term" data-term="disbursement">dibsursements</span> candidates and committees make.</p>
+          <p>Search all disbursements from committees by the recipient, purpose, amount and date.</p>
+          <p>Search <span class="term" data-term="independent expenditure">independent expenditures</span> to find specific spenders, candidates mentioned and transaction information.</p>
+          <p>Search communication costs and <span class="term" data-term="electioneering communication">electioneering communications</span> for communications that support or oppose specific candidates. Search by date and amount spent.</p>
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('disbursements', max_date=today() | date(fmt='%m-%d-%Y')) }}">All disbursements</a>
+              <li><a class="t-all-data" href="{{ url_for('disbursements') }}">All disbursements</a>
                 <ul>
                   <li><a href="#" class="is-disabled">Operating expenditures</a></li>
                   <li><a href="#" class="is-disabled">Expenditures to committees</a></li>
@@ -146,11 +159,12 @@
         </div>
       </div>
       <div id="filings" class="option">
-        <h2>Reports and filings</h2>
+        <h2>Filings</h2>
         <div class="option__content">
+          <p>Filings contain all the statements, reports and notices that candidates and committees file. Search by date, type and filing candidate or committee.</p>
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('filings') }}">All filings</a></li>
+              <li><a class="t-all-data" href="{{ url_for('filings', max_receipt_date=today() | date(fmt='%m-%d-%Y')) }}">All filings</a></li>
             </ul>
             <ul class="grid__item list--spacious t-sans">
               <li><a class="t-all-data is-disabled">Report summaries</a>

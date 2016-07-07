@@ -13,6 +13,8 @@ MAX_FINANCIALS_COUNT = 4
 
 
 session = requests.Session()
+http_adapter = requests.adapters.HTTPAdapter(max_retries=2)
+session.mount('https://', http_adapter)
 
 if config.cache:
     cachecontrol.CacheControl(session, cache=utils.LRUCache(config.cache_size))
@@ -130,25 +132,43 @@ def result_or_404(data):
 def landing_mock_data():
     return {
         'raising': {
-            'total': 3853120826,
-            'candidates': 1371424716,
-            'pacs': 626416709.5,
-            'parties': 1854850620,
+            'total': 3853120826.25,
+            'candidates': 1371424715.56,
+            'parties': 626416709.50,
+            'pacs': 1854850620.14,
             'other': 428781.05
         },
         'spending': {
-            'total': 3129642094.49,
-            'candidates': 1324010115.09,
-            'pacs': 529010926.10,
-            'parties': 1247556868.45,
-            'other': 29064184.85
+            'total': 2381570667.55,
+            'candidates': 1163308172.64,
+            'pacs': 503205461.58,
+            'parties': 685740891.22,
+            'other': 29316142.11
         }
     }
 
 def load_top_candidates(sort):
         response = _call_api(
             'candidates', 'totals',
-            sort_hide_null=True, election_year=2016, cycle=2016, election_full=True, sort=sort, per_page=5
+            sort_hide_null=True, election_year=2016, cycle=2016, election_full=False, sort=sort, per_page=5
+        )
+        if response['results']:
+            return response['results']
+        return {}
+
+def load_top_pacs(sort):
+        response = _call_api(
+            'totals', 'pac',
+            sort_hide_null=True, cycle=2016, sort=sort, per_page=5
+        )
+        if response['results']:
+            return response['results']
+        return {}
+
+def load_top_parties(sort):
+        response = _call_api(
+            'totals', 'party',
+            sort_hide_null=True, cycle=2016, sort=sort, per_page=5
         )
         if response['results']:
             return response['results']

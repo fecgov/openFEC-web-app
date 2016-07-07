@@ -10,6 +10,7 @@
           href="{{ url_for(
             'disbursements',
             committee_id=committee_id,
+            two_year_transaction_period=cycle,
             min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
             max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y'),
           ) }}">All disbursements data
@@ -40,7 +41,7 @@
         >
         <thead>
           <th scope="col">Purpose</th>
-          <th scope="col">Total received</th>
+          <th scope="col">Total</th>
         </thead>
       </table>
       {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
@@ -58,7 +59,7 @@
         >
         <thead>
           <th scope="col">Recipient</th>
-          <th scope="col">Total received</th>
+          <th scope="col">Total</th>
         </thead>
       </table>
       {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}

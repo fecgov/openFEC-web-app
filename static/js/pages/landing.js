@@ -8,15 +8,16 @@ var GroupedBarChart = require('../modules/bar-charts').GroupedBarChart;
 var TopList = require('../modules/top-list').TopList;
 var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
+var analytics = require('fec-style/js/analytics');
 
 var raisingData = [
   {
     'period': 'Jan 1 - June 30, 2015',
     'status': 'complete',
     'candidates': 305427675.73,
-    'parties': 217813182.16,
-    'pacs': 680219721.08,
-    'other': 7741.44,
+    'parties': 192007717.64,
+    'pacs': 118403743.85,
+    'other': 259698.70,
   },
   {
     'period': 'Jul 1 - Dec 31, 2015',
@@ -64,10 +65,10 @@ var spendingData = [
   {
     'period': 'Jan 1 - June 30, 2015',
     'status': 'complete',
-    'candidates': 305427675.73,
-    'parties': 217813182.16,
-    'pacs': 680219721.08,
-    'other': 7741.44
+    'candidates': 144725733.28,
+    'parties': 192007717.64,
+    'pacs': 118403743.85,
+    'other': 259698.70
   },
   {
     'period': 'Jul 1 - Dec 31, 2015',
@@ -131,21 +132,33 @@ $('.js-reaction-box').each(function() {
   new ReactionBox(this);
 });
 
-$('.js-top-list').each(function() {
+var maxHeight = 0;
+var $topLists = $('.js-top-list');
+
+$topLists.each(function() {
   var dataType = $(this).data('type');
   new TopList(this, dataType);
+
+  var thisHeight = $(this).height();
+  if (thisHeight > maxHeight) {
+    maxHeight = thisHeight;
+  }
+});
+
+$topLists.each(function() {
+  $(this).height(maxHeight);
 });
 
 $('.js-ga-event').each(function() {
   var eventName = $(this).data('ga-event');
   $(this).on('click', function() {
-    if (helpers.trackerExists()) {
+    if (analytics.trackerExists()) {
       var gaEventData = {
-        hitType: 'event',
-        eventCategory: eventName,
+        eventCategory: 'Misc. events',
+        eventAction: eventName,
         eventValue: 1
       };
-      ga('send', gaEventData);
+      ga('nonDAP.send', 'event', gaEventData);
     }
   });
 });

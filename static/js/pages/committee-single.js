@@ -36,7 +36,7 @@ var sizeColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       return columnHelpers.getSizeParams(row.size);
     })
   }
@@ -63,7 +63,7 @@ var committeeColumns = [
     render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
       return {
         committee_id: row.committee_id,
-        recipient_committee_id: row.recipient_id
+        recipient_name: row.recipient_id
       };
     })
   }
@@ -87,10 +87,9 @@ var stateColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       return {
         contributor_state: row.state,
-        is_individual: 'true'
       };
     })
   },
@@ -103,11 +102,10 @@ var employerColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       if (row.employer) {
         return {
           contributor_employer: row.employer,
-          is_individual: 'true'
         };
       } else {
         return null;
@@ -123,11 +121,10 @@ var occupationColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       if (row.occupation) {
         return {
           contributor_occupation: row.occupation,
-          is_individual: 'true'
         };
       } else {
         return null;
@@ -136,14 +133,20 @@ var occupationColumns = [
   }
 ];
 
+var columnKeys =   [
+  'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
+  'total_receipts', 'total_disbursements', 'modal_trigger'
+];
+
+if (context.showIndependentExpenditures) {
+  columnKeys.splice(6, 0, 'total_independent_expenditures');
+}
+
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
-  [
-    'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
-    'total_receipts', 'total_disbursements', 'total_independent_expenditures',
-    'modal_trigger'
-  ]
+  columnKeys
 );
+
 
 var disbursementPurposeColumns = [
   {data: 'purpose', className: 'all', orderable: false},
@@ -190,7 +193,7 @@ var disbursementRecipientIDColumns = [
     orderable: false,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
-      return {recipient_committee_id: row.recipient_id};
+      return {recipient_name: row.recipient_id};
     })
   }
 ];
@@ -386,6 +389,7 @@ $(document).ready(function() {
     case 'filing':
       path = ['committee', committeeId, 'filings'];
       tables.DataTable.defer($table, {
+        autoWidth: false,
         path: path,
         query: query,
         columns: filingsColumns,

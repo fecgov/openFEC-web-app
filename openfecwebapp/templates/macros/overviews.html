@@ -17,18 +17,18 @@
       </div>
       <div class="overview__total">
         <div class="overview__total-title">
-          <span class="term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
-        </div>
-        <span class="overview__total-number">
-          <span class="figure__decimals" aria-hidden="true"></span>{{ data['pacs'] | currency }}
-        </span>
-      </div>
-      <div class="overview__total">
-        <div class="overview__total-title">
           <span class="term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
         </div>
         <span class="overview__total-number">
           <span class="figure__decimals" aria-hidden="true"></span>{{ data['parties'] | currency }}
+        </span>
+      </div>
+      <div class="overview__total">
+        <div class="overview__total-title">
+          <span class="term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals" aria-hidden="true"></span>{{ data['pacs'] | currency }}
         </span>
       </div>
       <div class="overview__total">
@@ -48,10 +48,15 @@
   </div>
 {% endmacro %}
 
-{% macro top(type, title, lower_title, raising_data, spending_data) %}
+{% macro top(type, title, lower_title, raising_data, spending_data, name_field='committee_name', id_field='committee_id', route='committee_page') %}
+  {% if type == 'candidates' %}
+    {% set name_field='name' %}
+    {% set id_field='candidate_id' %}
+    {% set route='candidate_page' %}
+  {% endif %}
   <div class="top-list js-top-list" data-type="{{type}}">
     <h2 class="top-list__title">{{ title }} overview</h2>
-    <h3 class="top-list__subtitle">2015-2016 leaders</h3>
+    <h3 class="top-list__subtitle">Top <span class="js-top-type">raising</span> (2015-2016)</h3>
     <div class="toggles--simple">
       <button class="toggle is-active" aria-controls="{{type}}-top-raising">Top raising</button> |
       <button class="toggle" aria-controls="{{type}}-top-spending">Top spending</button>
@@ -60,7 +65,7 @@
       {% for data in raising_data %}
       <li class="figure__item">
         <span class="figure__label">
-          <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
+          <a href="{{ url_for(route, c_id=data[id_field]) }}" title="{{ data[name_field] }}">{{ loop.index }}. {{ data[name_field] }}</a>
         </span>
         <span class="figure__number"><span class="figure__decimals" aria-hidden="true"></span>{{ data['receipts'] | currency }}</span>
       </li>
@@ -70,7 +75,7 @@
       {% for data in spending_data %}
       <li class="figure__item">
         <span class="figure__label">
-          <a href="/candidate/{{data['candidate_id']}}" title="{{ data['name'] }}">{{ loop.index }}. {{ data['name'] }}</a>
+          <a href="{{ url_for(route, c_id=data[id_field]) }}" title="{{ data[name_field] }}">{{ loop.index }}. {{ data[name_field] }}</a>
         </span>
         <span class="figure__number"><span class="figure__decimals" aria-hidden="true"></span>{{ data['disbursements'] | currency }}</span>
       </li>
