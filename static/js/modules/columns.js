@@ -9,7 +9,7 @@ var decoders = require('./decoders');
 
 
 var dateColumn = columnHelpers.formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc']});
-var currencyColumn = columnHelpers.formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
+var currencyColumn = columnHelpers.formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']}, '$0');
 var barCurrencyColumn = columnHelpers.barColumn(helpers.currency);
 
 var supportOpposeColumn = {
