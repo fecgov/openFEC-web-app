@@ -25,6 +25,12 @@ def search():
             page='home',
             dates=utils.date_ranges(),
             totals= api_caller.landing_mock_data(),
+            top_candidates_raising = api_caller.load_top_candidates('-receipts'),
+            top_candidates_spending = api_caller.load_top_candidates('-disbursements'),
+            top_pacs_raising = api_caller.load_top_pacs('-receipts'),
+            top_pacs_spending = api_caller.load_top_pacs('-disbursements'),
+            top_parties_raising = api_caller.load_top_parties('-receipts'),
+            top_parties_spending = api_caller.load_top_parties('-disbursements'),
             title='Campaign finance data')
 
 @app.route('/api/')

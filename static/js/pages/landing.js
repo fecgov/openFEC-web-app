@@ -131,9 +131,21 @@ $('.js-reaction-box').each(function() {
   new ReactionBox(this);
 });
 
-$('.js-top-list').each(function() {
+var maxHeight = 0;
+var $topLists = $('.js-top-list');
+
+$topLists.each(function() {
   var dataType = $(this).data('type');
   new TopList(this, dataType);
+
+  var thisHeight = $(this).height();
+  if (thisHeight > maxHeight) {
+    maxHeight = thisHeight;
+  }
+});
+
+$topLists.each(function() {
+  $(this).height(maxHeight);
 });
 
 $('.js-ga-event').each(function() {

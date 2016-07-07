@@ -8,6 +8,7 @@ function TopList(selector, dataType) {
   this.$topRaising = this.$element.find('.js-top-raising');
   this.$topSpending = this.$element.find('.js-top-spending');
   this.$toggles = this.$element.find('button');
+  this.$topType = this.$element.find('.js-top-type');
   this.raisingID = this.$topRaising.attr('id');
   this.spendingID = this.$topSpending.attr('id');
   this.dataType = dataType;
@@ -37,12 +38,14 @@ TopList.prototype.setAria = function() {
 TopList.prototype.showRaising = function() {
   this.$topRaising.attr('aria-hidden', 'false');
   this.$topSpending.attr('aria-hidden', 'true');
+  this.$topType.text('raising');
 };
 
 TopList.prototype.showSpending = function() {
   this.$topSpending.attr('aria-hidden', 'false');
   this.$topRaising.attr('aria-hidden', 'true');
-  helpers.zeroPad(this.$topSpending, 'li', '.figure__number', '.figure__decimals');
+  this.$topType.text('spending');
+  helpers.zeroPad(this.$topSpending, '.figure__number', '.figure__decimals');
 };
 
 
