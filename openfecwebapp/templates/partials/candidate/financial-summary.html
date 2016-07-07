@@ -32,12 +32,13 @@
           aggregate.cash != 0 or
           aggregate.debt != 0
          %}
-           <a href="{{ url_for('filings',
-             form_type=['F3', 'F3P'],
-             committee_id=committee_ids,
-             cycle=aggregate_cycles,
-             ) }}">
-             View source filings
+         {% if office == 'P' %}
+          {% set form_type = 'presidential' %}
+         {% else %}
+          {% set form_type = 'house-senate'  %}
+         {% endif %}
+           <a href="{{ url_for('reports', form_type=form_type, committee_id=committee_ids, cycle=aggregate_cycles, is_amended='false' ) }}">
+             View source reports
            </a>
          {% endif %}
       </p>
