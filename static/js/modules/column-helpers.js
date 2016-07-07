@@ -30,16 +30,12 @@ function getColumns(columns, keys) {
   });
 }
 
-function formattedColumn(formatter, defaultOpts, nullValue) {
+function formattedColumn(formatter, defaultOpts) {
   defaultOpts = defaultOpts || {};
   return function(opts) {
     return _.extend({}, defaultOpts, {
       render: function(data, type, row, meta) {
-        if (nullValue && !data) {
-          return nullValue;
-        } else {
-          return formatter(data, type, row, meta, nullValue);
-        }
+        return formatter(data, type, row, meta);
       }
     }, opts);
   };
