@@ -8,9 +8,9 @@ var tables = require('../modules/tables');
 var columns = require('../modules/columns');
 var columnHelpers = require('../modules/column-helpers');
 
-var candidateTemplate = require('../../templates/filings/candidate.hbs');
-var pacPartyTemplate;
-var ieOnlyTemplate;
+var candidateTemplate = require('../../templates/reports/candidate.hbs');
+var pacPartyTemplate = require('../../templates/reports/pac.hbs');
+var ieOnlyTemplate = require('../../templates/reports/ie-only.hbs');
 
 var pageTitle,
     pageTemplate,
@@ -52,7 +52,8 @@ $(document).ready(function() {
     // Order by coverage date descending
     order: [[2, 'desc']],
     useFilters: true,
-    useExport: false,
+    useExport: true,
+    disableExport: true,
     callbacks: {
       afterRender: tables.modalRenderFactory(pageTemplate)
     }

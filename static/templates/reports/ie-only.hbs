@@ -1,0 +1,24 @@
+<div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title">{{report_type_full}}</h4>
+    <span class="panel__subtitle t-bold"><a href="{{basePath}}/committee/{{committee_id}}">{{ committee_name }}</a></span>
+  </div>
+  <table>
+    {{#panelRow "Report coverage"}}
+      {{datetime coverage_start_date format="pretty"}} - {{datetime coverage_end_date format="pretty"}}
+    {{/panelRow}}
+    {{#panelRow "Receipt date"}}
+      {{datetime receipt_date format="pretty"}}
+    {{/panelRow}}
+  </table>
+</div>
+<div class="panel__row">
+  <table>
+    {{#panelRow "Total contributions"}}
+      {{{currency independent_contributions_period }}}
+    {{/panelRow}}
+    {{#panelRow "Total independent expenditures"}}
+      {{{currency independent_expenditures_period }}}
+    {{/panelRow}}
+  </table>
+</div>

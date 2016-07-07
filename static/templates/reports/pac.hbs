@@ -1,0 +1,48 @@
+<div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title">{{report_type_full}}</h4>
+    <span class="panel__subtitle t-bold"><a href="{{basePath}}/committee/{{committee_id}}">{{ committee_name }}</a></span>
+  </div>
+  <table>
+    {{#panelRow "Report coverage"}}
+      {{datetime coverage_start_date format="pretty"}} - {{datetime coverage_end_date format="pretty"}}
+    {{/panelRow}}
+    {{#panelRow "Receipt date"}}
+      {{datetime receipt_date format="pretty"}}
+    {{/panelRow}}
+  </table>
+</div>
+<div class="panel__row">
+  <table>
+    {{#panelRow "Total receipts"}}
+      {{{currency total_receipts_period}}}
+    {{/panelRow}}
+    {{#panelRow "Total disbursements"}}
+      {{{currency total_disbursements_period}}}
+    {{/panelRow}}
+    {{#panelRow "Individual contributions"}}
+      {{{currency total_individual_contributions_period}}}
+    {{/panelRow}}
+    {{#panelRow "Itemized individual contributions"}}
+      {{{currency individual_itemized_contributions_period}}}
+    {{/panelRow}}
+    {{#panelRow "Unitemized individual contributions"}}
+      {{{currency individual_unitemized_contributions_period}}}
+    {{/panelRow}}
+    {{#panelRow "Beginning cash on hand"}}
+      {{{currency cash_on_hand_beginning_period}}}
+    {{/panelRow}}
+    {{#panelRow "Ending cash on hand"}}
+      {{{currency cash_on_hand_end_period}}}
+    {{/panelRow}}
+    {{#panelRow "Net contributions"}}
+      {{{currency net_contributions_period}}}
+    {{/panelRow}}
+    {{#panelRow "Net operating expenditures"}}
+      {{{currency net_operating_expenditures_period}}}
+    {{/panelRow}}
+    {{#panelRow "Debts owed by committee"}}
+      {{{currency debts_owed_by_committee}}}
+    {{/panelRow}}
+  </table>
+</div>
