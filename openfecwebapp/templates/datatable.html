@@ -11,7 +11,6 @@
 {% block body %}
 
 {{ header.header(breadcrumbs_title | title, breadcrumbs, show_search=False) }}
-
 <section class="main__content--full">
   <div class="data-container__widgets sticky-bar js-data-widgets js-sticky-bar">
     <div class="js-filter-tags data-container__tags">
@@ -52,10 +51,10 @@ var context = {
 };
 </script>
 {% endif %}
-{% if report_type %}
+{% if form_type %}
 <script>
 var context = {
-  reportType: '{{ report_type }}',
+  formType: '{{ form_type }}',
 };
 </script>
 {% endif %}

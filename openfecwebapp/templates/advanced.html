@@ -169,9 +169,10 @@
             <ul class="grid__item list--spacious t-sans">
               <li><a class="t-all-data is-disabled">Report summaries</a>
                 <ul>
-                  <li><a class="is-disabled">Authorized committee reports</a></li>
-                  <li><a class="is-disabled">Unauthorized committee reports</a></li>
-                  <li><a class="is-disabled">Independent expenditure (Form 5) filer reports</a></li>
+                  <li><a href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a></li>
+                  <li><a href="{{ url_for('reports', form_type='house-senate', is_amended='false') }}">House and Senate committee reports</a></li>
+                  <li><a href="{{ url_for('reports', form_type='pac-party', is_amended='false') }}">PAC and party committee reports</a></li>
+                  <li><a href="{{ url_for('reports', form_type='ie-only', is_amended='false') }}">Independent expenditure (Form 5) filer reports</a></li>
                 </ul>
               </li>
             </ul>
