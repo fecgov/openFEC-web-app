@@ -117,11 +117,12 @@ function makeCommitteeColumn(opts, factory) {
   return _.extend({}, {
     orderSequence: ['desc', 'asc'],
     className: 'column--number',
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       row.cycle = context.election.cycle;
       var column = meta.settings.aoColumns[meta.col].data;
       return _.extend({
-        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids
+        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids,
+        two_year_transaction_period: row.cycle,
       }, factory(data, type, row, meta, column));
     })
   }, opts);
