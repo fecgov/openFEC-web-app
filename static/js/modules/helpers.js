@@ -204,12 +204,6 @@ function zeroPad(container, item, appendee) {
   });
 }
 
-function trackerExists() {
-  if (typeof ga !== 'undefined') {
-    return true;
-  }
-}
-
 module.exports = {
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
@@ -223,6 +217,5 @@ module.exports = {
   globals: globals,
   isLargeScreen: isLargeScreen,
   isMediumScreen: isMediumScreen,
-  trackerExists: trackerExists,
   zeroPad: zeroPad
 };

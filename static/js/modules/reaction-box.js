@@ -4,6 +4,7 @@
 
 var $ = require('jquery');
 var helpers = require('./helpers');
+var analytics = require('fec-style/js/analytics');
 
 function ReactionBox(selector) {
   this.$element = $(selector);
@@ -29,14 +30,13 @@ function ReactionBox(selector) {
 
 ReactionBox.prototype.submitReaction = function(e) {
   this.reaction = $(e.target).data('reaction');
-  if (helpers.trackerExists()) {
+  if (analytics.trackerExists()) {
     var gaEventData = {
-      hitType: 'event',
       eventCategory: 'Reactions',
       eventAction: this.location + '-' + this.name + ': ' + this.reaction,
       eventValue: 1
     };
-    ga('send', gaEventData);
+    ga('notDAP.send', 'event', gaEventData);
   }
 
   this.showTextarea();

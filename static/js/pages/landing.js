@@ -8,6 +8,7 @@ var GroupedBarChart = require('../modules/bar-charts').GroupedBarChart;
 var TopList = require('../modules/top-list').TopList;
 var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
+var analytics = require('fec-style/js/analytics');
 
 var raisingData = [
   {
@@ -131,21 +132,33 @@ $('.js-reaction-box').each(function() {
   new ReactionBox(this);
 });
 
-$('.js-top-list').each(function() {
+var maxHeight = 0;
+var $topLists = $('.js-top-list');
+
+$topLists.each(function() {
   var dataType = $(this).data('type');
   new TopList(this, dataType);
+
+  var thisHeight = $(this).height();
+  if (thisHeight > maxHeight) {
+    maxHeight = thisHeight;
+  }
+});
+
+$topLists.each(function() {
+  $(this).height(maxHeight);
 });
 
 $('.js-ga-event').each(function() {
   var eventName = $(this).data('ga-event');
   $(this).on('click', function() {
-    if (helpers.trackerExists()) {
+    if (analytics.trackerExists()) {
       var gaEventData = {
-        hitType: 'event',
-        eventCategory: eventName,
+        eventCategory: 'Misc. events',
+        eventAction: eventName,
         eventValue: 1
       };
-      ga('send', gaEventData);
+      ga('nonDAP.send', 'event', gaEventData);
     }
   });
 });
