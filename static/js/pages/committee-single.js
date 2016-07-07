@@ -203,9 +203,11 @@ var disbursementRecipientIDColumns = [
 ];
 
 var expendituresColumns = [
+  columns.supportOpposeColumn,
+  columns.candidateColumn({data: 'candidate', className: 'all'}),
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
@@ -215,15 +217,14 @@ var expendituresColumns = [
         // is_notice: false,
       };
     })
-  },
-  columns.supportOpposeColumn,
-  columns.candidateColumn({data: 'candidate', className: 'all'})
+  }
 ];
 
 var electioneeringColumns = [
+  columns.candidateColumn({data: 'candidate', className: 'all'}),
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
@@ -232,14 +233,15 @@ var electioneeringColumns = [
         candidate_id: row.candidate_id,
       };
     })
-  },
-  columns.candidateColumn({data: 'candidate', className: 'all'})
+  }
 ];
 
 var communicationCostColumns = [
+  columns.supportOpposeColumn,
+  columns.candidateColumn({data: 'candidate', className: 'all'}),
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
@@ -248,9 +250,7 @@ var communicationCostColumns = [
         candidate_id: row.candidate_id,
       };
     })
-  },
-  columns.supportOpposeColumn,
-  columns.candidateColumn({data: 'candidate', className: 'all'})
+  }
 ];
 
 function buildStateUrl($elm) {
@@ -473,7 +473,7 @@ $(document).ready(function() {
         path: path,
         query: query,
         columns: expendituresColumns,
-        order: [[0, 'desc']],
+        order: [[2, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',
         hideEmpty: true,
@@ -490,7 +490,7 @@ $(document).ready(function() {
         path: path,
         query: query,
         columns: electioneeringColumns,
-        order: [[0, 'desc']],
+        order: [[1, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',
         hideEmpty: true,
@@ -507,7 +507,7 @@ $(document).ready(function() {
         path: path,
         query: query,
         columns: communicationCostColumns,
-        order: [[0, 'desc']],
+        order: [[2, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',
         hideEmpty: true,

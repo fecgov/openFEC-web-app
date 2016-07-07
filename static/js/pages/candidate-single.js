@@ -15,9 +15,11 @@ var filingsColumns = [
 ];
 
 var expenditureColumns = [
+  columns.committeeColumn({data: 'committee', className: 'all'}),
+  columns.supportOpposeColumn,
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
@@ -28,14 +30,14 @@ var expenditureColumns = [
         };
     })
   },
-  columns.committeeColumn({data: 'committee', className: 'all'}),
-  columns.supportOpposeColumn
 ];
 
 var communicationCostColumns = [
+  columns.committeeColumn({data: 'committee', className: 'all'}),
+  columns.supportOpposeColumn,
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
@@ -44,22 +46,20 @@ var communicationCostColumns = [
           candidate_id: row.candidate_id,
         };
     })
-  },
-  columns.committeeColumn({data: 'committee', className: 'all'}),
-  columns.supportOpposeColumn
+  }
 ];
 
 var electioneeringColumns = [
+  columns.committeeColumn({data: 'committee', className: 'all'}),
   {
     data: 'total',
-    className: 'all',
+    className: 'all column--number',
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
         return {candidate_id: row.candidate_id};
     })
-  },
-  columns.committeeColumn({data: 'committee', className: 'all'})
+  }
 ];
 
 function initFilingsTable() {
@@ -80,17 +80,20 @@ var tableOpts = {
   'independent-expenditures': {
     path: ['schedules', 'schedule_e', 'by_candidate'],
     columns: expenditureColumns,
-    title: 'independent expenditures'
+    title: 'independent expenditures',
+    order: [[2, 'desc']]
   },
   'communication-costs': {
     path: ['communication_costs', 'by_candidate'],
     columns: communicationCostColumns,
-    title: 'communication costs'
+    title: 'communication costs',
+    order: [[2, 'desc']]
   },
   'electioneering': {
     path: ['electioneering', 'by_candidate'],
     columns: electioneeringColumns,
-    title: 'electioneering communications'
+    title: 'electioneering communications',
+    order: [[1, 'desc']]
   },
 };
 
@@ -109,7 +112,7 @@ function initSpendingTables() {
         path: opts.path,
         query: query,
         columns: opts.columns,
-        order: [[0, 'desc']],
+        order: opts.order,
         dom: tables.simpleDOM,
         pagingType: 'simple',
         lengthChange: false,
