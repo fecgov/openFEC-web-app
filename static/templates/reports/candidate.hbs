@@ -17,15 +17,12 @@
   </table>
 </div>
 <div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title">Raising</h4>
+  </div>
   <table>
     {{#panelRow "Total receipts"}}
       {{{currency total_receipts_period}}}
-    {{/panelRow}}
-    {{#panelRow "Total disbursements"}}
-      {{{currency total_disbursements_period}}}
-    {{/panelRow}}
-    {{#panelRow "Transfers to authorized committees"}}
-      {{{currency transfers_to_other_authorized_committee_period}}}
     {{/panelRow}}
     {{#panelRow "Individual contributions"}}
       {{{currency total_individual_contributions_period}}}
@@ -36,14 +33,11 @@
     {{#panelRow "Unitemized individual contributions"}}
       {{{currency individual_unitemized_contributions_period}}}
     {{/panelRow}}
-    {{#panelRow "Loan repayments"}}
-      {{{currency total_loan_repayments_made_period}}}
+    {{#panelRow "Contributions from PACs"}}
+      {{{currency political_party_committee_contributions_period}}}
     {{/panelRow}}
-    {{#panelRow "Beginning cash on hand"}}
-      {{{currency cash_on_hand_beginning_period}}}
-    {{/panelRow}}
-    {{#panelRow "Ending cash on hand"}}
-      {{{currency cash_on_hand_end_period}}}
+    {{#panelRow "Total contribution refunds"}}
+      {{{currency total_contribution_refunds_period}}}
     {{/panelRow}}
     {{#if net_contributions_period}}
       {{#panelRow "Net contributions period"}}
@@ -54,6 +48,21 @@
         {{{currency net_contributions_cycle_to_date}}}
       {{/panelRow}}
     {{/if}}
+    {{#if federal_funds_period}}
+      {{#panelRow "Presidential public funds accpeted"}}
+        {{{currency federal_funds_period}}}
+      {{/panelRow}}
+    {{/if}}
+  </table>
+</div>
+<div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title">Spending</h4>
+  </div>
+  <table>
+    {{#panelRow "Total disbursements"}}
+      {{{currency total_disbursements_period}}}
+    {{/panelRow}}
     {{#if net_operating_expenditures_period}}
       {{#panelRow "Net operating expenditures period"}}
         {{{currency net_operating_expenditures_period}}}
@@ -63,8 +72,50 @@
         {{{currency net_operating_expenditures_cycle_to_date}}}
       {{/panelRow}}
     {{/if}}
+    {{#panelRow "Transfers to authorized committees"}}
+      {{{currency transfers_to_other_authorized_committee_period}}}
+    {{/panelRow}}
+  </table>
+</div>
+<div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title">Cash on hand</h4>
+  </div>
+  <table>
+    {{#panelRow "Beginning cash on hand"}}
+      {{{currency cash_on_hand_beginning_period}}}
+    {{/panelRow}}
+    {{#panelRow "Ending cash on hand"}}
+      {{{currency cash_on_hand_end_period}}}
+    {{/panelRow}}
+  </table>
+</div>
+<div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title">Debts</h4>
+  </div>
+  <table>
     {{#panelRow "Debts owed by committee"}}
       {{{currency debts_owed_by_committee}}}
+    {{/panelRow}}
+    {{#panelRow "Debts owed to committee"}}
+      {{{currency debts_owed_to_committee}}}
+    {{/panelRow}}
+  </table>
+</div>
+<div class="panel__row">
+  <div class="panel__heading">
+    <h4 class="panel__title">Loans</h4>
+  </div>
+  <table>
+    {{#panelRow "Total loans received"}}
+      {{{currency total_loans_received_period}}}
+    {{/panelRow}}
+    {{#panelRow "Total loans received from candidates"}}
+      {{{currency loans_received_from_candidate_period}}}
+    {{/panelRow}}
+    {{#panelRow "Loan repayments made"}}
+      {{{currency total_loan_repayments_made_period}}}
     {{/panelRow}}
   </table>
 </div>
