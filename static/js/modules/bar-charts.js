@@ -253,7 +253,7 @@ GroupedBarChart.prototype.populateTooltip = function(d) {
 
 GroupedBarChart.prototype.showTooltip = function(x0, d) {
   var top = this.height + this.margin.top + this.margin.bottom;
-  var left = x0(d.period);
+  var left = x0(d.period) - 100;
   var content = this.populateTooltip(d);
 
   this.tooltip
