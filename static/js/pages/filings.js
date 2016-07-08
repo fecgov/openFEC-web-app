@@ -12,7 +12,7 @@ var columns = require('../modules/columns');
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'modal_trigger'
+    'filer_name', 'pdf_url', 'pages', 'amendment_indicator', 'receipt_date', 'modal_trigger'
   ]
 );
 
@@ -25,7 +25,7 @@ $(document).ready(function() {
     columns: filingsColumns,
     rowCallback: filings.renderRow,
     // Order by receipt date descending
-    order: [[3, 'desc']],
+    order: [[4, 'desc']],
     useFilters: true,
     useExport: true,
     callbacks: {

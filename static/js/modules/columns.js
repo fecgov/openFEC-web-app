@@ -233,6 +233,11 @@ var filings = {
     className: 'all column--medium',
     orderable: false
   }),
+  pages: {
+    data: 'pages',
+    className: 'min-tablet column--small',
+    orderable: true,
+  },
   amendment_indicator: amendmentIndicatorColumn,
   receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet hide-panel column--med'}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
