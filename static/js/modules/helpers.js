@@ -117,11 +117,6 @@ Handlebars.registerHelper('electionUrl', function(year, options) {
   return new Handlebars.SafeString(url);
 });
 
-Handlebars.registerHelper('capitalize', function(value) {
-  var string = String(value).charAt(0).toUpperCase() + String(value).slice(1);
-  return new Handlebars.SafeString(string);
-});
-
 Handlebars.registerHelper('convertBoolean', function(bool) {
   if (bool) {
     return new Handlebars.SafeString('Yes');
