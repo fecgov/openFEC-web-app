@@ -117,6 +117,14 @@ Handlebars.registerHelper('electionUrl', function(year, options) {
   return new Handlebars.SafeString(url);
 });
 
+Handlebars.registerHelper('convertBoolean', function(bool) {
+  if (bool) {
+    return new Handlebars.SafeString('Yes');
+  } else {
+    return new Handlebars.SafeString('No');
+  }
+});
+
 function cycleDates(year) {
   return {
     min: '01-01-' + (year - 1),
