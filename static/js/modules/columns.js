@@ -385,6 +385,11 @@ var reports = {
     className: 'all column--medium',
     orderable: false
   }),
+  coverage_start_date: dateColumn({
+    data: 'coverage_start_date',
+    className: 'min-tablet hide-panel column--med',
+    orderable: true
+  }),
   coverage_end_date: dateColumn({
     data: 'coverage_end_date',
     className: 'min-tablet hide-panel column--med',
