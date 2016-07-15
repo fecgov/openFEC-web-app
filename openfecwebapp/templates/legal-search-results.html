@@ -15,7 +15,7 @@
 {% block body %}
 <header class="page-header slab slab--primary">
   {{ breadcrumb.breadcrumbs('Search results', breadcrumb_links) }}
-  {{ legal_search.search('header', result_type, query) }}
+  {{ legal_search.search('header', result_type, query, feature_flag) }}
 </header>
 
 <div class="main">
@@ -29,7 +29,15 @@
               Regulations ({{ results.total_regulations|default(0) }})
               </a>
             </li>
+            {% if feature_flag %}
+            <li class="side-nav__item">
+              <a class="side-nav__link" href="#results-advisory-opinions">
+              Advisory Opinions ({{ results.total_advisory_opinions|default(0) }})
+              </a>
+            </li>
+            {% else %}
             <li class="is-disabled side-nav__item"><span class="side-nav__link">Advisory Opinions (TBD)</span></li>
+            {% endif %}
             <li class="is-disabled side-nav__item"><span class="side-nav__link">Enforcement Matters (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
@@ -85,7 +93,8 @@
             </div>
           {% endif %}
         </div>
-        <div id="results-advisory-opinions" class="content__section" style="display:none;">
+        {% if feature_flag %}
+        <div id="results-advisory-opinions" class="content__section">
           <div class="results-info results-info--simple">
             <div class="results-info__left">
               <h2 class="results-info__title">Advisory Opinions</h2>
@@ -131,6 +140,7 @@
             </div>
           {% endif %}
         </div>
+        {% endif %}
       </section>
     </div>
   </div>

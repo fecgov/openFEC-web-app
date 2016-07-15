@@ -3,7 +3,7 @@
 {% import 'macros/breadcrumbs.html' as breadcrumb %}
 
 {% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
-{% set result_entites = results.get(result_type, []) %}
+{% set result_entities = results.get(result_type, []) %}
 
 {% block title %}
   {% if query %}
@@ -28,15 +28,25 @@
     </div>
     {% if results.total_all %}
     <table class="data-table data-table--text">
-      <thead>
-        <tr>
-          <th class="cell--15">Section</th>
-          <th class="cell--85">Description</th>
-        </tr>
-      </thead>
+      {% if result_type == 'regulations' %}
+        <thead>
+          <tr>
+            <th class="cell--15">Section</th>
+            <th class="cell--85">Description</th>
+          </tr>
+        </thead>
+      {% elif result_type == 'advisory_opinions' %}
+        <thead>
+          <tr>
+            <th class="cell--15">No.</th>
+            <th class="cell--25">Name</th>
+            <th class="cell--60">Hit</th>
+          </tr>
+        </thead>
+      {% endif %}
       <tbody>
         {# TODO this should handle generic document types (aos, murs, regs, etc) #}
-        {% for result in result_entites %}
+        {% for result in result_entities %}
           {% if result_type == 'advisory_opinions' %}
             {% with advisory_opinion = result %}
             {% include 'partials/legal-search-results-advisory-opinion.html' %}
@@ -50,7 +60,7 @@
       </tbody>
     </table>
     <div class="results-info">
-      <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + result_entites|length }} of about {{ results.total_all }}</span></div>
+      <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + result_entities|length }} of about {{ results.total_all }}</span></div>
       <div class="dataTables_paginate">
         {% if results.offset > 0 %}
 	<a class="paginate_button previous" href="{{ url_for(result_type, search=query, offset=(results.offset - results.limit)) }}#results-{{ result_type }}">Previous</a>
