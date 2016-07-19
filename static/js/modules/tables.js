@@ -455,9 +455,6 @@ DataTable.prototype.fetch = function(data, callback) {
   self.xhr = $.getJSON(url);
   self.xhr.done(self.fetchSuccess.bind(self));
   self.xhr.fail(self.fetchError.bind(self));
-  self.xhr.always(function() {
-    self.$processing.hide();
-  });
 };
 
 DataTable.prototype.export = function() {
@@ -483,6 +480,7 @@ DataTable.prototype.buildUrl = function(data, paginate) {
 };
 
 DataTable.prototype.fetchSuccess = function(resp) {
+  var self = this;
   this.paginator.handleResponse(this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
@@ -492,10 +490,28 @@ DataTable.prototype.fetchSuccess = function(resp) {
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
   }
+
+  setTimeout(function() {
+    $('.is-loading').removeClass('is-loading').addClass('is-successful');
+    self.$processing.hide();
+  }, 1000);
+
+  setTimeout(function() {
+    $('.is-successful').removeClass('is-successful');
+  }, 5000);
 };
 
 DataTable.prototype.fetchError = function() {
+  var self = this;
 
+  setTimeout(function() {
+    $('.is-loading').removeClass('is-loading').addClass('is-unsuccessful');
+    self.$processing.hide();
+  }, 500);
+
+  setTimeout(function() {
+    $('.is-error').removeClass('is-unsuccessful');
+  }, 2000);
 };
 
 /**
