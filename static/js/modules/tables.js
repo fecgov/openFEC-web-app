@@ -87,12 +87,18 @@ function mapSort(order, columns) {
   });
 }
 
-function mapResponse(response) {
+function getCount(response) {
   var pagination_count = response.pagination.count;
 
   if (response.pagination.count > 1000) {
     pagination_count = Math.round(response.pagination.count / 1000) * 1000;
   }
+
+  return pagination_count;
+}
+
+function mapResponse(response) {
+  var pagination_count = getCount(response);
 
   return {
     recordsTotal: pagination_count,
@@ -484,12 +490,16 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.paginator.handleResponse(this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
-
+  this.newCount = getCount(resp);
   this.refreshExport();
 
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
   }
+
+  this.$body.trigger($.Event('table:countChanged'), [{
+    countDifference: this.currentCount - this.newCount
+  }]);
 
   setTimeout(function() {
     $('.is-loading').removeClass('is-loading').addClass('is-successful');
@@ -499,6 +509,8 @@ DataTable.prototype.fetchSuccess = function(resp) {
   setTimeout(function() {
     $('.is-successful').removeClass('is-successful');
   }, 5000);
+
+  this.currentCount = this.newCount;
 };
 
 DataTable.prototype.fetchError = function() {
