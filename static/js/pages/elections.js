@@ -169,7 +169,7 @@ function stateColumns(results) {
   return [stateColumn].concat(columns);
 }
 
-function refreshTables() {
+function refreshTables(e) {
   var $comparison = $('#comparison');
   var selected = $comparison.find('input[type="checkbox"]:checked').map(function(_, input) {
     var $input = $(input);
@@ -181,6 +181,18 @@ function refreshTables() {
   if (selected.length > 0) {
     drawSizeTable(selected);
     drawStateTable(selected);
+  }
+
+  if (e) {
+    $(e.target).next('label').addClass('is-loading');
+
+    setTimeout(function() {
+      $comparison.find('.is-loading').removeClass('is-loading').addClass('is-successful');
+    }, helpers.LOADING_DELAY);
+
+    setTimeout(function() {
+      $comparison.find('.is-successful').removeClass('is-successful');
+    }, helpers.SUCCESS_DELAY);
   }
 }
 

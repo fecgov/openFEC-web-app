@@ -507,11 +507,11 @@ DataTable.prototype.fetchError = function() {
   setTimeout(function() {
     $('.is-loading').removeClass('is-loading').addClass('is-unsuccessful');
     self.$processing.hide();
-  }, 500);
+  }, helpers.LOADING_DELAY);
 
   setTimeout(function() {
     $('.is-error').removeClass('is-unsuccessful');
-  }, 2000);
+  }, helpers.SUCCESS_DELAY);
 };
 
 /**
