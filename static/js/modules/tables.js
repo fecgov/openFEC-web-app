@@ -47,6 +47,9 @@ var DOWNLOAD_MESSAGES = {
 
 var DATA_WIDGETS = '.js-data-widgets';
 
+// id for the last changed element on form for status update
+var updateChangeId = '';
+
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
   $('.data-container__body.fade-in').css('opacity', '1');
@@ -236,6 +239,8 @@ function updateOnChange($form, api) {
     e.preventDefault();
     hidePanel(api, $('#datatable-modal'));
     api.ajax.reload();
+
+    updateChangeId = e.target.id;
   }
   $form.on('change', 'input,select', _.debounce(onChange, 250));
 }
@@ -492,6 +497,16 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
   this.newCount = getCount(resp);
   this.refreshExport();
+
+  if (updateChangeId) {
+    var $label = $('label[for="' + updateChangeId + '"]');
+
+    $label.removeClass('is-loading').addClass('is-successful');
+
+    setTimeout(function () {
+      $label.removeClass('is-successful');
+    }, 5000);
+  }
 
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
