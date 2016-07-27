@@ -48,7 +48,8 @@ var DOWNLOAD_MESSAGES = {
 var DATA_WIDGETS = '.js-data-widgets';
 
 // id for the last changed element on form for status update
-var updateChangeId = '';
+var updateChangedEl = '';
+var messageTimer;
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
@@ -240,7 +241,7 @@ function updateOnChange($form, api) {
     hidePanel(api, $('#datatable-modal'));
     api.ajax.reload();
 
-    updateChangeId = e.target.id;
+    updateChangedEl = e.target;
   }
   $form.on('change', 'input,select', _.debounce(onChange, 250));
 }
@@ -490,6 +491,7 @@ DataTable.prototype.buildUrl = function(data, paginate) {
   return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
 };
 
+
 DataTable.prototype.fetchSuccess = function(resp) {
   var self = this;
   this.paginator.handleResponse(this.fetchContext.data, resp);
@@ -498,32 +500,67 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.newCount = getCount(resp);
   this.refreshExport();
 
-  if (updateChangeId) {
-    var $label = $('label[for="' + updateChangeId + '"]');
+  var successEvent = new CustomEvent('table:update', {
+    detail : this.newCount - this.currentCount
+  });
 
-    $label.removeClass('is-loading').addClass('is-successful');
+  window.dispatchEvent(successEvent);
 
-    setTimeout(function () {
-      $label.removeClass('is-successful');
-    }, 5000);
+  // FILTER UPDATES:
+  // - loading/success/fail status
+  // - count change message
+  if (updateChangedEl) {
+    var type = $(updateChangedEl).attr('type');
+
+    if (type === 'checkbox' || type === 'radio') {
+      var $label = $('label[for="' + updateChangedEl.id + '"]');
+      $('.is-successful').removeClass();
+      $label.removeClass('is-loading').addClass('is-successful');
+
+      setTimeout(function () {
+        $label.removeClass('is-successful');
+      }, helpers.SUCCESS_DELAY);
+
+      var changeCount = this.newCount - this.currentCount;
+      var message = '';
+      var filterAction = 'applied';
+      var $filterMessage = $('.filter__message');
+
+      if (!$(updateChangedEl).is(':checked')) {
+        filterAction = 'removed';
+      }
+
+      if (changeCount > 0) {
+        message = 'Filter ' + filterAction + '.<br>' +
+        '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
+      }
+      else {
+        message = 'Filter ' + filterAction + '.<br>' +
+        '<strong>Removed ' + Math.abs(changeCount).toLocaleString() + '</strong> results.';
+      }
+
+      if ($filterMessage.length) {
+        $filterMessage.fadeOut().remove();
+
+        clearTimeout(messageTimer);
+      }
+
+      $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
+        .hide().fadeIn());
+
+      messageTimer = setTimeout(function() {
+        $('.filter__message').fadeOut(function () {
+          $(this).remove();
+        });
+      }, helpers.SUCCESS_DELAY);
+    }
   }
 
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
   }
 
-  this.$body.trigger($.Event('table:countChanged'), [{
-    countDifference: this.currentCount - this.newCount
-  }]);
-
-  setTimeout(function() {
-    $('.is-loading').removeClass('is-loading').addClass('is-successful');
-    self.$processing.hide();
-  }, 1000);
-
-  setTimeout(function() {
-    $('.is-successful').removeClass('is-successful');
-  }, 5000);
+  self.$processing.hide();
 
   this.currentCount = this.newCount;
 };
