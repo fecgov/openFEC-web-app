@@ -504,10 +504,15 @@ DataTable.prototype.fetchSuccess = function(resp) {
   // - loading/success/fail status
   // - count change message
   if (updateChangedEl) {
+    var $label;
     var type = $(updateChangedEl).attr('type');
+    var changeCount = this.newCount - this.currentCount;
+    var message = '';
+    var filterAction = '';
+    var $filterMessage = $('.filter__message');
 
     if (type === 'checkbox' || type === 'radio') {
-      var $label = $('label[for="' + updateChangedEl.id + '"]');
+      $label = $('label[for="' + updateChangedEl.id + '"]');
       $('.is-successful').removeClass();
       $label.removeClass('is-loading').addClass('is-successful');
 
@@ -515,39 +520,53 @@ DataTable.prototype.fetchSuccess = function(resp) {
         $label.removeClass('is-successful');
       }, helpers.SUCCESS_DELAY);
 
-      var changeCount = this.newCount - this.currentCount;
-      var message = '';
-      var filterAction = 'applied';
-      var $filterMessage = $('.filter__message');
+      filterAction = 'Filter applied.';
 
       if (!$(updateChangedEl).is(':checked')) {
-        filterAction = 'removed';
+        filterAction = 'Filter removed.';
       }
+    }
 
-      if (changeCount > 0) {
-        message = 'Filter ' + filterAction + '.<br>' +
-        '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
+    if (type === 'text') {
+      $label = $('.button--loading');
+
+      if ($(updateChangedEl).val()) {
+        filterAction = '"' + $(updateChangedEl).val() + '" applied.';
       }
       else {
-        message = 'Filter ' + filterAction + '.<br>' +
-        '<strong>Removed ' + Math.abs(changeCount).toLocaleString() + '</strong> results.';
+        filterAction = 'Search term removed.';
       }
 
-      if ($filterMessage.length) {
-        $filterMessage.fadeOut().remove();
+      $label.removeClass('button--loading').addClass('button--check');
 
-        clearTimeout(messageTimer);
-      }
-
-      $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
-        .hide().fadeIn());
-
-      messageTimer = setTimeout(function() {
-        $('.filter__message').fadeOut(function () {
-          $(this).remove();
-        });
+      setTimeout(function () {
+        $label.removeClass('button--check');
       }, helpers.SUCCESS_DELAY);
     }
+
+    if (changeCount > 0) {
+      message = filterAction + '<br>' +
+      '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
+    }
+    else {
+      message = filterAction + '<br>' +
+      '<strong>Removed ' + Math.abs(changeCount).toLocaleString() + '</strong> results.';
+    }
+
+    if ($filterMessage.length) {
+      $filterMessage.fadeOut().remove();
+
+      clearTimeout(messageTimer);
+    }
+
+    $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
+      .hide().fadeIn());
+
+    messageTimer = setTimeout(function() {
+      $('.filter__message').fadeOut(function () {
+        $(this).remove();
+      });
+    }, helpers.SUCCESS_DELAY);
   }
 
   if (this.opts.hideEmpty) {
