@@ -500,12 +500,6 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.newCount = getCount(resp);
   this.refreshExport();
 
-  var successEvent = new CustomEvent('table:update', {
-    detail : this.newCount - this.currentCount
-  });
-
-  window.dispatchEvent(successEvent);
-
   // FILTER UPDATES:
   // - loading/success/fail status
   // - count change message
