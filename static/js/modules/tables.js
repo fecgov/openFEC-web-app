@@ -48,7 +48,7 @@ var DOWNLOAD_MESSAGES = {
 var DATA_WIDGETS = '.js-data-widgets';
 
 // id for the last changed element on form for status update
-var updateChangedEl = '';
+var updateChangedEl;
 var messageTimer;
 
 // Only show table after draw
@@ -244,6 +244,86 @@ function updateOnChange($form, api) {
     updateChangedEl = e.target;
   }
   $form.on('change', 'input,select', _.debounce(onChange, 250));
+}
+
+function filterSuccessUpdates(changeCount) {
+  // on filter change update:
+  // - loading/success status
+  // - count change message
+  if (updateChangedEl) {
+    var $label;
+    var type = $(updateChangedEl).attr('type');
+    var message = '';
+    var filterAction = '';
+    var $filterMessage = $('.filter__message');
+
+    if (type === 'checkbox' || type === 'radio') {
+      $label = $('label[for="' + updateChangedEl.id + '"]');
+      $('.is-successful').removeClass();
+      $label.removeClass('is-loading').addClass('is-successful');
+
+      setTimeout(function () {
+        $label.removeClass('is-successful');
+      }, helpers.SUCCESS_DELAY);
+
+      filterAction = 'Filter applied.';
+
+      if (!$(updateChangedEl).is(':checked')) {
+        filterAction = 'Filter removed.';
+      }
+    }
+    else if (type === 'text') {
+      // typeahead
+      if ($(updateChangedEl).hasClass('tt-input')) {
+        $label = $(updateChangedEl);
+
+        filterAction = 'Filter applied.';
+      }
+      // text input search
+      else {
+        $label = $('.button--loading');
+
+        if ($(updateChangedEl).val()) {
+          filterAction = '"' + $(updateChangedEl).val() + '" applied.';
+        }
+        else {
+          filterAction = 'Search term removed.';
+        }
+
+        $label.removeClass('button--loading').addClass('button--check');
+
+        setTimeout(function () {
+          $label.removeClass('button--check');
+        }, helpers.SUCCESS_DELAY);
+      }
+    }
+
+    // build message with number of results returned
+    if (changeCount > 0) {
+      message = filterAction + '<br>' +
+      '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
+    }
+    else {
+      message = filterAction + '<br>' +
+      '<strong>Removed ' + Math.abs(changeCount).toLocaleString() + '</strong> results.';
+    }
+
+    if ($filterMessage.length) {
+      $filterMessage.fadeOut().remove();
+      // if there is a message already, cancel existing message timeout
+      // to avoid timing weirdness
+      clearTimeout(messageTimer);
+    }
+
+    $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
+      .hide().fadeIn());
+
+    messageTimer = setTimeout(function() {
+      $('.filter__message').fadeOut(function () {
+        $(this).remove();
+      });
+    }, helpers.SUCCESS_DELAY);
+  }
 }
 
 function OffsetPaginator() {}
@@ -491,7 +571,6 @@ DataTable.prototype.buildUrl = function(data, paginate) {
   return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
 };
 
-
 DataTable.prototype.fetchSuccess = function(resp) {
   var self = this;
   this.paginator.handleResponse(this.fetchContext.data, resp);
@@ -500,85 +579,9 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.newCount = getCount(resp);
   this.refreshExport();
 
-  // FILTER UPDATES:
-  // - loading/success/fail status
-  // - count change message
-  if (updateChangedEl) {
-    var $label;
-    var type = $(updateChangedEl).attr('type');
-    var changeCount = this.newCount - this.currentCount;
-    var message = '';
-    var filterAction = '';
-    var $filterMessage = $('.filter__message');
+  var changeCount = this.newCount - this.currentCount;
 
-    if (type === 'checkbox' || type === 'radio') {
-      $label = $('label[for="' + updateChangedEl.id + '"]');
-      $('.is-successful').removeClass();
-      $label.removeClass('is-loading').addClass('is-successful');
-
-      setTimeout(function () {
-        $label.removeClass('is-successful');
-      }, helpers.SUCCESS_DELAY);
-
-      filterAction = 'Filter applied.';
-
-      if (!$(updateChangedEl).is(':checked')) {
-        filterAction = 'Filter removed.';
-      }
-    }
-
-    if (type === 'text') {
-      // typeahead
-      if ($(updateChangedEl).hasClass('tt-input')) {
-        $label = $(updateChangedEl);
-
-        filterAction = 'Filter applied.';
-      }
-      // text input search
-      else {
-        $label = $('.button--loading');
-
-        if ($(updateChangedEl).val()) {
-          filterAction = '"' + $(updateChangedEl).val() + '" applied.';
-        }
-        else {
-          filterAction = 'Search term removed.';
-        }
-
-        $label.removeClass('button--loading').addClass('button--check');
-
-        setTimeout(function () {
-          $label.removeClass('button--check');
-        }, helpers.SUCCESS_DELAY);
-      }
-    }
-
-    // build message with number of results returned
-    if (changeCount > 0) {
-      message = filterAction + '<br>' +
-      '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
-    }
-    else {
-      message = filterAction + '<br>' +
-      '<strong>Removed ' + Math.abs(changeCount).toLocaleString() + '</strong> results.';
-    }
-
-    if ($filterMessage.length) {
-      $filterMessage.fadeOut().remove();
-      // if there is a message already, cancel existing message timeout
-      // to avoid timing weirdness
-      clearTimeout(messageTimer);
-    }
-
-    $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
-      .hide().fadeIn());
-
-    messageTimer = setTimeout(function() {
-      $('.filter__message').fadeOut(function () {
-        $(this).remove();
-      });
-    }, helpers.SUCCESS_DELAY);
-  }
+  filterSuccessUpdates(changeCount);
 
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
