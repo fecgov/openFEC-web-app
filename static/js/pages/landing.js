@@ -43,22 +43,6 @@ var raisingData = [
     'pacs': 359289.27,
     'other': 0
   },
-  {
-    'period': 'Jul 1 - Sep 30, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-    'other': 0
-  },
-  {
-    'period': 'Oct 1 - Dec 31, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-    'other': 0
-  }
 ];
 
 var spendingData = [
@@ -93,20 +77,6 @@ var spendingData = [
     'parties': 35904262.78,
     'pacs': 263191.92,
     'other': 242687
-  },
-  {
-    'period': 'Jul 1 - Sep 30, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-  },
-  {
-    'period': 'Oct 1 - Dec 31, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
   }
 ];
 
