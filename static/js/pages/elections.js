@@ -484,7 +484,7 @@ $(document).ready(function() {
     .value();
   var url = helpers.buildUrl(
     ['elections'],
-    _.extend(query, {per_page: 0})
+    _.extend(query, {per_page: 0, sort_hide_null: true})
   );
   $.getJSON(url).done(function(response) {
     $table.dataTable(_.extend({}, defaultOpts, {
