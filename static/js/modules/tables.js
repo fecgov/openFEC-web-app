@@ -528,22 +528,32 @@ DataTable.prototype.fetchSuccess = function(resp) {
     }
 
     if (type === 'text') {
-      $label = $('.button--loading');
+      // typeahead
+      if ($(updateChangedEl).hasClass('tt-input')) {
+        $label = $(updateChangedEl);
 
-      if ($(updateChangedEl).val()) {
-        filterAction = '"' + $(updateChangedEl).val() + '" applied.';
+        filterAction = 'Filter applied.';
       }
+      // text input search
       else {
-        filterAction = 'Search term removed.';
+        $label = $('.button--loading');
+
+        if ($(updateChangedEl).val()) {
+          filterAction = '"' + $(updateChangedEl).val() + '" applied.';
+        }
+        else {
+          filterAction = 'Search term removed.';
+        }
+
+        $label.removeClass('button--loading').addClass('button--check');
+
+        setTimeout(function () {
+          $label.removeClass('button--check');
+        }, helpers.SUCCESS_DELAY);
       }
-
-      $label.removeClass('button--loading').addClass('button--check');
-
-      setTimeout(function () {
-        $label.removeClass('button--check');
-      }, helpers.SUCCESS_DELAY);
     }
 
+    // build message with number of results returned
     if (changeCount > 0) {
       message = filterAction + '<br>' +
       '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
@@ -555,7 +565,8 @@ DataTable.prototype.fetchSuccess = function(resp) {
 
     if ($filterMessage.length) {
       $filterMessage.fadeOut().remove();
-
+      // if there is a message already, cancel existing message timeout
+      // to avoid timing weirdness
       clearTimeout(messageTimer);
     }
 
