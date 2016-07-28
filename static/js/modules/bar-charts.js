@@ -14,15 +14,16 @@ var stripes =
       '</defs>' +
   '</svg>';
 
-
 function GroupedBarChart(selector, data, index) {
   this.element = d3.select(selector);
   this.data = data;
   this.index = index;
 
   this.margin = {top: 0, right: 20, bottom: 50, left: 40};
-  this.height = 320 - this.margin.top - this.margin.bottom;
-  this.width = 500 - this.margin.left - this.margin.right;
+  this.baseWidth = $(selector).width();
+  this.baseHeight = this.baseWidth * 0.7;
+  this.height = this.baseHeight - this.margin.top - this.margin.bottom;
+  this.width = this.baseWidth - this.margin.left - this.margin.right;
 
   if ($('#stripes').length === 0) {
     $('body').append(stripes);
@@ -46,6 +47,7 @@ GroupedBarChart.prototype.buildChart = function() {
   var xAxis = d3.svg.axis()
       .scale(x0)
       .innerTickSize([10])
+
       .orient('bottom');
 
   var yAxis = d3.svg.axis()
@@ -263,6 +265,22 @@ GroupedBarChart.prototype.showTooltip = function(x0, d) {
       'left': left.toString() + 'px'
     })
     .html(content);
+
+  if (!helpers.isMediumScreen()) {
+    left = x0(d.period) + 50;
+    this.tooltip
+      .attr('class', 'tooltip tooltip--chart')
+      .style({
+        'left': 0,
+        'width': '100%'
+      });
+
+    this.tooltip.append('span')
+      .attr('class', 'tooltip__point')
+      .style({
+        'left': left.toString() + 'px'
+      });
+  }
 
   helpers.zeroPad('.tooltip__content', '.figure__item', '.figure__decimals');
 
