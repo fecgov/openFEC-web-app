@@ -250,6 +250,8 @@ function filterSuccessUpdates(changeCount) {
   // on filter change update:
   // - loading/success status
   // - count change message
+
+  // check if there is a changed form element
   if (updateChangedEl) {
     var $label;
     var type = $(updateChangedEl).attr('type');
@@ -260,7 +262,10 @@ function filterSuccessUpdates(changeCount) {
     if (type === 'checkbox' || type === 'radio') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
       $('.is-successful').removeClass();
-      $label.removeClass('is-loading').addClass('is-successful');
+
+      $('.is-loading').removeClass('is-loading');
+
+      $label.addClass('is-successful');
 
       setTimeout(function () {
         $label.removeClass('is-successful');
@@ -281,7 +286,7 @@ function filterSuccessUpdates(changeCount) {
       }
       // text input search
       else {
-        $label = $('.button--loading');
+        $label = $('.is-loading');
 
         if ($(updateChangedEl).val()) {
           filterAction = '"' + $(updateChangedEl).val() + '" applied.';
@@ -290,10 +295,10 @@ function filterSuccessUpdates(changeCount) {
           filterAction = 'Search term removed.';
         }
 
-        $label.removeClass('button--loading').addClass('button--check');
+        $label.removeClass('is-loading').addClass('is-successful');
 
         setTimeout(function () {
-          $label.removeClass('button--check');
+          $label.removeClass('is-successful');
         }, helpers.SUCCESS_DELAY);
       }
     }
