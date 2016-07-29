@@ -13,7 +13,6 @@ api_key_public = env.get_credential('FEC_WEB_API_KEY_PUBLIC', '')
 cache = os.getenv('FEC_WEB_CACHE')
 cache_size = int(os.getenv('FEC_WEB_CACHE_SIZE', 1000))
 
-style_url = os.getenv('FEC_WEB_STYLE_URL')
 cms_url = os.getenv('FEC_CMS_URL', '')
 
 # you can only give a var a string using set-env with Cloud Foundry
