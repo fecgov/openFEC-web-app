@@ -1,4 +1,9 @@
 {% import 'macros/missing.html' as missing %}
+{% if committee_type == 'P' %}
+  {% set form_type = 'F3P' %}
+{% else %}
+  {% set form_type = 'F3' %}
+{% endif %}
 
 <section class="main" id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
   <div class="container">
@@ -7,6 +12,13 @@
         <h2 class="heading__title" id="section-1-heading">
           Financial summary: {{ cycle|fmt_year_range }}
         </h2>
+        <a class="button button--alt button--browse heading__action" href="{{ url_for('filings',
+           form_type=[form_type],
+           committee_id=committee_id,
+           cycle=cycle,
+           ) }}">
+           View source filings
+         </a>
       </div>
       <p>Get the full picture of all of the money received and spent by this <span class="term" data-term="Committee">committee</span>.</p>
     </div>
