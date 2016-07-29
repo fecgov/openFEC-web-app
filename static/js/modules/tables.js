@@ -552,6 +552,10 @@ DataTable.prototype.fetch = function(data, callback) {
   self.xhr = $.getJSON(url);
   self.xhr.done(self.fetchSuccess.bind(self));
   self.xhr.fail(self.fetchError.bind(self));
+
+  self.xhr.always(function() {
+    self.$processing.hide();
+  });
 };
 
 DataTable.prototype.export = function() {
@@ -591,8 +595,6 @@ DataTable.prototype.fetchSuccess = function(resp) {
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
   }
-
-  self.$processing.hide();
 
   this.currentCount = this.newCount;
 };
