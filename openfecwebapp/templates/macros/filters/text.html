@@ -1,13 +1,15 @@
 {% macro field(name, title, attrs={}) %}
 <div class="filter js-filter" id="{{ name }}-field">
   <label class="label" for="{{ name }}">{{ title }}</label>
-  <div class="input--removable">
-    <input id="{{ name }}" type="text" name="{{ name }}"
+  <div class="input--removable combo combo--filter--mini">
+    <input id="{{ name }}" type="text" name="{{ name }}" class="combo__input"
       {% for attr, value in attrs.items() %}
         {{ attr }}="{{ value }}"
       {% endfor %}
     />
-    <button type="button" class="button--remove button" data-removes="{{ name }}"><span class="u-visually-hidden">Remove</span></button>
+    <button class="combo__button button--go button--standard is-disabled" type="button">
+      <span class="u-visually-hidden">Search</span>
+    </button>
   </div>
 </div>
 {% endmacro %}
