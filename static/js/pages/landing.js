@@ -43,22 +43,6 @@ var raisingData = [
     'pacs': 359289.27,
     'other': 0
   },
-  {
-    'period': 'Jul 1 - Sep 30, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-    'other': 0
-  },
-  {
-    'period': 'Oct 1 - Dec 31, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-    'other': 0
-  }
 ];
 
 var spendingData = [
@@ -93,24 +77,11 @@ var spendingData = [
     'parties': 35904262.78,
     'pacs': 263191.92,
     'other': 242687
-  },
-  {
-    'period': 'Jul 1 - Sep 30, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-  },
-  {
-    'period': 'Oct 1 - Dec 31, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
   }
 ];
 
 function Overview(selector, data, index) {
+  this.selector = selector;
   this.$element = $(selector);
   this.data = data;
   this.index = index;
@@ -118,12 +89,16 @@ function Overview(selector, data, index) {
   this.totals = this.$element.find('.js-total');
   this.reactionBox = this.$element.find('.js-reaction-box');
 
-  helpers.zeroPad(selector + ' .js-totals', '.overview__total-number', '.figure__decimals');
+  this.zeroPadTotals();
 
-  if (helpers.isLargeScreen()) {
-    new GroupedBarChart(selector + ' .js-chart', this.data, this.index);
-  }
+  $(window).on('resize', this.zeroPadTotals.bind(this));
+
+  new GroupedBarChart(selector + ' .js-chart', this.data, this.index);
 }
+
+Overview.prototype.zeroPadTotals = function() {
+  helpers.zeroPad(this.selector + ' .js-totals', '.overview__total-number', '.figure__decimals');
+};
 
 new Overview('.js-raised-overview', raisingData, 1);
 new Overview('.js-spent-overview', spendingData, 2);
