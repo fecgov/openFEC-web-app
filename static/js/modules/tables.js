@@ -19,14 +19,11 @@ var filterTags = require('fec-style/js/filter-tags');
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
-var titleTemplate = require('../../templates/tables/title.hbs');
 var missingTemplate = require('../../templates/tables/noData.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
-var browseDOM = '<"js-results-info results-info results-info--simple"' +
-                  '<"results-info__right"ilpr>>' +
-                '<"panel__main"t>' +
-                '<"results-info"ip>';
+var browseDOM = '<"panel__main"t>' +
+                '<"results-info"ilpr>';
 
 var DOWNLOAD_CAP = 100000;
 var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
@@ -387,7 +384,7 @@ var defaultOpts = {
   responsive: {details: false},
   language: {
     lengthMenu: 'Results per page: _MENU_',
-    info: 'Showing _START_–_END_ of about _TOTAL_ records'
+    info: 'Viewing _TOTAL_ filtered results for:'
   },
   pagingType: 'simple',
   title: null,
@@ -474,21 +471,14 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
-
-  var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
+  this.$widgets.find('.js-info').append($('#results_info'));
 
   if (this.opts.useExport) {
-    this.$title = $(titleTemplate({title: this.opts.title}));
-    $paging.prepend(this.$title);
-
-    this.$exportWidget = $(exportWidgetTemplate());
-    this.$widgets.append(this.$exportWidget);
+    this.$exportWidget = $(exportWidgetTemplate({title: this.opts.title}));
+    this.$widgets.prepend(this.$exportWidget);
     this.$exportButton = $('.js-export');
     this.$exportTooltipContainer = $('.js-tooltip-container');
     this.$exportTooltip = this.$exportWidget.find('.tooltip');
-
-    this.$exportInfo = $('.js-info');
-    this.$exportInfo.append($('#results_info'));
   }
 
   if (this.opts.disableExport) {
