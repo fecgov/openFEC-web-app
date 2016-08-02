@@ -412,7 +412,8 @@ function DataTable(selector, opts) {
   // filters are available on fetching initial data
   if (this.opts.useFilters) {
     var tagList = new filterTags.TagList({
-      resultType: 'records',
+      resultType: 'results',
+      showResultCount: true
     });
     this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
     this.filterPanel = new FilterPanel();
@@ -473,7 +474,7 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
-  this.$widgets.find('.js-count').append($('#results_info'));
+  this.$widgets.find('.js-count').find('.tags__count').append($('#results_info'));
 
   if (this.opts.useExport) {
     this.$exportWidget = $(exportWidgetTemplate({title: this.opts.title}));
@@ -481,6 +482,10 @@ DataTable.prototype.ensureWidgets = function() {
     this.$exportButton = $('.js-export');
     this.$exportTooltipContainer = $('.js-tooltip-container');
     this.$exportTooltip = this.$exportWidget.find('.tooltip');
+
+    if (!helpers.isLargeScreen()) {
+      this.$exportWidget.after(this.filterPanel.$body);
+    }
   }
 
   if (this.opts.disableExport) {
