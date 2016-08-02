@@ -384,7 +384,7 @@ var defaultOpts = {
   responsive: {details: false},
   language: {
     lengthMenu: 'Results per page: _MENU_',
-    info: 'Viewing _TOTAL_ filtered results for:'
+    info: '_TOTAL_'
   },
   pagingType: 'simple',
   title: null,
@@ -411,7 +411,9 @@ function DataTable(selector, opts) {
   // Set `this.filterSet` before instantiating the nested `DataTable` so that
   // filters are available on fetching initial data
   if (this.opts.useFilters) {
-    var tagList = new filterTags.TagList({title: 'All records'});
+    var tagList = new filterTags.TagList({
+      resultType: 'records',
+    });
     this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
     this.filterPanel = new FilterPanel();
     this.filterSet = this.filterPanel.filterSet;
@@ -471,7 +473,7 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
-  this.$widgets.find('.js-info').append($('#results_info'));
+  this.$widgets.find('.js-count').append($('#results_info'));
 
   if (this.opts.useExport) {
     this.$exportWidget = $(exportWidgetTemplate({title: this.opts.title}));

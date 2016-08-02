@@ -1,14 +1,14 @@
 <div class="data-container__head">
   <h1>{{this.title}} data</h1>
-  <ul class="list--buttons data-container__export">
-    <li><button class="button--standard button--share is-disabled" type="button">Share</button></li>
-    <li class="results-info__download js-tooltip-container">
+  <div class="data-container__action">
+    <button class="data-container__share button--standard button--share is-disabled" type="button">Share</button>
+    <div class="data-container__export js-tooltip-container">
       <button type="button"
         class="js-export button button--cta button--export">
           Export this data
       </button>
       <div id="export-tooltip" role="tooltip" class="tooltip tooltip--under tooltip__content" aria-hidden="true">
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
