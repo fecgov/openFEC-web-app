@@ -259,17 +259,10 @@ function filterSuccessUpdates(changeCount) {
     var filterAction = '';
     var $filterMessage = $('.filter__message');
 
+    $('.is-successful').removeClass('is-successful');
+
     if (type === 'checkbox' || type === 'radio') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
-      $('.is-successful').removeClass();
-
-      $('.is-loading').removeClass('is-loading');
-
-      $label.addClass('is-successful');
-
-      setTimeout(function () {
-        $label.removeClass('is-successful');
-      }, helpers.SUCCESS_DELAY);
 
       filterAction = 'Filter applied.';
 
@@ -294,14 +287,10 @@ function filterSuccessUpdates(changeCount) {
         else {
           filterAction = 'Search term removed.';
         }
-
-        $label.removeClass('is-loading').addClass('is-successful');
-
-        setTimeout(function () {
-          $label.removeClass('is-successful');
-        }, helpers.SUCCESS_DELAY);
       }
     }
+
+    $('.is-loading').removeClass('is-loading').addClass('is-successful');
 
     // build message with number of results returned
     if (changeCount > 0) {
@@ -324,6 +313,8 @@ function filterSuccessUpdates(changeCount) {
       .hide().fadeIn());
 
     messageTimer = setTimeout(function() {
+      $('.is-successful').removeClass('is-successful');
+
       $('.filter__message').fadeOut(function () {
         $(this).remove();
       });
