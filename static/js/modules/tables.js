@@ -483,7 +483,7 @@ DataTable.prototype.ensureWidgets = function() {
     this.$exportTooltipContainer = $('.js-tooltip-container');
     this.$exportTooltip = this.$exportWidget.find('.tooltip');
 
-    if (!helpers.isLargeScreen()) {
+    if (!helpers.isLargeScreen() && this.filterPanel) {
       this.$exportWidget.after(this.filterPanel.$body);
     }
   }
