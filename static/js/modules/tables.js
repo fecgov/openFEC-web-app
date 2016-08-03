@@ -283,7 +283,7 @@ function filterSuccessUpdates(changeCount) {
       }
       // text input search
       else {
-        $label = $('.is-loading');
+        $label = $('.is-loading:not(.overlay)');
 
         if ($(updateChangedEl).val()) {
           filterAction = '"' + $(updateChangedEl).val() + '" applied.';
@@ -298,6 +298,11 @@ function filterSuccessUpdates(changeCount) {
           $label.removeClass('is-successful');
         }, helpers.SUCCESS_DELAY);
       }
+    }
+    else {
+      // probably a select dropdown
+      $label = $(updateChangedEl);
+      filterAction = '"' + $(updateChangedEl).find('option:selected').text() + '" applied.';
     }
 
     // build message with number of results returned
