@@ -401,7 +401,7 @@ var reports = {
   receipt_date: dateColumn({
     data: 'receipt_date',
     className: 'min-tablet hide-panel column--med',
-    orderable: true
+    orderable: false
   }),
   receipts: currencyColumn({
     data: 'total_receipts_period',
