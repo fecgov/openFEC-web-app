@@ -286,7 +286,7 @@ function filterSuccessUpdates(changeCount) {
       }
       // text input search
       else {
-        $label = $('.is-loading');
+        $label = $('.is-loading:not(.overlay)');
 
         if ($(updateChangedEl).val()) {
           filterAction = '"' + $(updateChangedEl).val() + '" applied.';
