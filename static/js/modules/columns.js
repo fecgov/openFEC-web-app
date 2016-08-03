@@ -377,8 +377,11 @@ var receipts = [
 ];
 
 var reports = {
-  committee: {
-    data: 'committee_id'
+  committee:   {
+    data: 'committee_name',
+    orderable: false,
+    className: 'all column--xl',
+    render: renderCommitteeColumn
   },
   pdf_url: columnHelpers.urlColumn('pdf_url', {
     data: 'report_type_full',
