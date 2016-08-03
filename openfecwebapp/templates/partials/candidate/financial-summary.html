@@ -32,8 +32,13 @@
           aggregate.cash != 0 or
           aggregate.debt != 0
          %}
+          {% if office == 'P' %}
+            {% set form_type = 'F3P' %}
+          {% else %}
+            {% set form_type = 'F3' %}
+          {% endif %}
            <a href="{{ url_for('filings',
-             form_type=['F3', 'F3P'],
+             form_type=[form_type],
              committee_id=committee_ids,
              cycle=aggregate_cycles,
              ) }}">

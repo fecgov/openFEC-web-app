@@ -84,8 +84,8 @@ describe('data table', function() {
     it('only adds widgets once', function() {
       this.table.ensureWidgets();
       this.table.ensureWidgets();
-      var prev = this.table.$body.prev('.is-loading');
-      expect(prev.length).to.equal(1);
+      var $exportButton = $('.js-export');
+      expect($exportButton.length).to.equal(1);
     });
   });
 
