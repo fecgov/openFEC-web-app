@@ -164,17 +164,13 @@
           <p>Filings contain all the statements, reports and notices that candidates and committees file. Search by date, type and filing candidate or committee.</p>
           <div class="grid--2-wide">
             <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('filings', max_receipt_date=today() | date(fmt='%m-%d-%Y')) }}">All filings</a></li>
+              <li><a href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a></li>
+              <li><a href="{{ url_for('reports', form_type='house-senate', is_amended='false') }}">House and Senate committee reports</a></li>
+              <li><a href="{{ url_for('reports', form_type='pac-party', is_amended='false') }}">PAC and party committee reports</a></li>
+              <li><a href="{{ url_for('reports', form_type='ie-only', is_amended='false') }}">Independent expenditure (Form 5) filer reports</a></li>
             </ul>
             <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data is-disabled">Report summaries</a>
-                <ul>
-                  <li><a href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a></li>
-                  <li><a href="{{ url_for('reports', form_type='house-senate', is_amended='false') }}">House and Senate committee reports</a></li>
-                  <li><a href="{{ url_for('reports', form_type='pac-party', is_amended='false') }}">PAC and party committee reports</a></li>
-                  <li><a href="{{ url_for('reports', form_type='ie-only', is_amended='false') }}">Independent expenditure (Form 5) filer reports</a></li>
-                </ul>
-              </li>
+              <li><a class="t-all-data" href="{{ url_for('filings', max_receipt_date=today() | date(fmt='%m-%d-%Y')) }}">All filings</a></li>
             </ul>
           </div>
         </div>

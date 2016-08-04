@@ -7,7 +7,7 @@
 {% import 'macros/filters/date.html' as date %}
 {% import 'macros/filters/checkbox.html' as checkbox %}
 {% import 'macros/filters/report-type.html' as report_types %}
-{% import 'macros/filters/amount.html' as amount %}
+{% import 'macros/filters/range.html' as range %}
 {% block heading %}
 Filter reports
 {% endblock %}
@@ -52,14 +52,14 @@ Filter reports
         </li>
       </ul>
     </<fieldset>
-    {{ amount.amount('receipts_amount', 'Total receipts') }}
-    {{ amount.amount('disbursements_amount', 'Total disbursements') }}
-    {{ amount.amount('cash_on_hand_amount', 'Ending cash on hand') }}
+    {{ range.amount('receipts_amount', 'Total receipts') }}
+    {{ range.amount('disbursements_amount', 'Total disbursements') }}
+    {{ range.amount('cash_on_hand_amount', 'Ending cash on hand') }}
     {% if form_type in ['pac-party', 'ie-only'] %}
-     {{ amount.amount('independent_expenditures', 'Total independent expenditures') }}
+     {{ range.amount('independent_expenditures', 'Total independent expenditures') }}
     {% endif %}
     {% if form_type == 'pac-party' %}
-     {{ amount.amount('party_coordinated_expenditures', 'Total party coordinated expenditures') }}
+     {{ range.amount('party_coordinated_expenditures', 'Total party coordinated expenditures') }}
     {% endif %}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Report date</button>
@@ -69,6 +69,7 @@ Filter reports
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Report type</button>
   <div class="accordion__content">
+    {% include 'partials/filters/primary-general.html' %}
     <fieldset class="js-filter">
       {{ report_types.year_end() }}
       {% if form_type == 'presidential' %}

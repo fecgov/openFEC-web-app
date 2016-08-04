@@ -4,6 +4,7 @@
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/date.html' as date %}
+{% import 'macros/filters/range.html' as range %}
 
 {% block heading %}
 Filter disbursements
@@ -26,8 +27,7 @@ Filter disbursements
   <div class="accordion__content">
     {{ text.field('disbursement_description', 'Description') }}
     {% include 'partials/filters/disbursement-purpose.html' %}
-    {{ text.field('min_amount', 'Minimum expenditure', {'data-suffix': 'or more'}) }}
-    {{ text.field('max_amount', 'Maximum expenditure', {'data-suffix': 'or less'}) }}
+    {{ range.amount('amount', 'Disbursement amount') }}
     {{ date.partition_field('date', 'Disbursement date', dates ) }}
     <div class="message message--info message--small">
       <span class="t-block">Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</span>
