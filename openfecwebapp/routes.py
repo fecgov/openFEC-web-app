@@ -1,6 +1,7 @@
 import http
 
 import furl
+
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from flask import render_template, request, redirect, url_for, abort
@@ -253,12 +254,12 @@ def legal_search(query, result_type):
 def advisory_opinions(query, offset):
     result_type = 'advisory_opinions'
     results = {}
-
     # Only hit the API if there's an actual query
     if query:
         results = api_caller.load_legal_search_results(query, result_type, offset=offset)
-
-    return views.render_legal_doc_search_results(results, query, result_type)
+        return views.render_legal_doc_search_results(results, query, result_type)
+    else: 
+        return views.render_legal_advisory_opinion_landing()
 
 @app.route('/legal/regulations/')
 @use_kwargs({
