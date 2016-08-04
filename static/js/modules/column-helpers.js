@@ -5,16 +5,16 @@ var _ = require('underscore');
 var helpers = require('./helpers');
 
 var sizeInfo = {
-  0: {limits: [0, 199.99], label: 'Under $200'},
-  200: {limits: [200, 499.99], label: '$200—$499'},
+  0: {limits: [0, 200], label: '$200 and under'},
+  200: {limits: [200.01, 499.99], label: '$200.01—$499'},
   500: {limits: [500, 999.99], label: '$500—$999'},
-  1000: {limits: [1000, 1999.99], label: '$1000—$1999'},
-  2000: {limits: [2000, null], label: 'Over $2000'},
+  1000: {limits: [1000, 1999.99], label: '$1,000—$1,999'},
+  2000: {limits: [2000, null], label: '$2,000 and over'},
 };
 
 function getSizeParams(size) {
   var limits = sizeInfo[size].limits;
-  var params = {is_individual: 'true'};
+  var params = {};
   if (limits[0] !== null) {
     params.min_amount = helpers.currency(limits[0]);
   }
@@ -89,12 +89,18 @@ function buildEntityLink(data, url, category, opts) {
   return anchor.outerHTML;
 }
 
-function buildAggregateUrl(cycle) {
+function buildAggregateUrl(cycle, includeTransactionPeriod) {
   var dates = helpers.cycleDates(cycle);
-  return {
-    min_date: dates.min,
-    max_date: dates.max
-  };
+  if (includeTransactionPeriod) {
+    return {
+      two_year_transaction_period: cycle
+    };
+  } else {
+    return {
+      min_date: dates.min,
+      max_date: dates.max
+    };
+  }
 }
 
 function buildTotalLink(path, getParams) {
@@ -102,15 +108,19 @@ function buildTotalLink(path, getParams) {
     data = data || 0;
     var params = getParams(data, type, row, meta);
     var span = document.createElement('div');
+    var includeTransactionPeriod = false;
     span.setAttribute('data-value', data);
     span.setAttribute('data-row', meta.row);
     if (params) {
       var link = document.createElement('a');
       link.textContent = helpers.currency(data);
       link.setAttribute('title', 'View individual transactions');
+      if (path.indexOf('receipts') > -1 || path.indexOf('disbursements') > -1) {
+        includeTransactionPeriod = true;
+      }
       var uri = helpers.buildAppUrl(path, _.extend(
         {committee_id: row.committee_id},
-        buildAggregateUrl(_.extend({}, row, params).cycle),
+        buildAggregateUrl(_.extend({}, row, params).cycle, includeTransactionPeriod),
         params
       ));
       link.setAttribute('href', uri);

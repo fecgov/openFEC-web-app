@@ -8,15 +8,21 @@ function TopList(selector, dataType) {
   this.$topRaising = this.$element.find('.js-top-raising');
   this.$topSpending = this.$element.find('.js-top-spending');
   this.$toggles = this.$element.find('button');
+  this.$topType = this.$element.find('.js-top-type');
   this.raisingID = this.$topRaising.attr('id');
   this.spendingID = this.$topSpending.attr('id');
+  this.$visibleList = this.$topRaising;
   this.dataType = dataType;
-
   this.setAria();
-  helpers.zeroPad(this.$topRaising, '.figure__number', '.figure__decimals');
+  this.zeroPad();
 
   this.$toggles.on('click', this.handleToggle.bind(this));
+  $(window).on('resize', this.zeroPad.bind(this));
 }
+
+TopList.prototype.zeroPad = function() {
+  helpers.zeroPad(this.$visibleList, '.figure__number', '.figure__decimals');
+};
 
 TopList.prototype.handleToggle = function(e) {
   var $target = $(e.target);
@@ -37,12 +43,16 @@ TopList.prototype.setAria = function() {
 TopList.prototype.showRaising = function() {
   this.$topRaising.attr('aria-hidden', 'false');
   this.$topSpending.attr('aria-hidden', 'true');
+  this.$topType.text('raising');
+  this.$visibleList = this.$topRaising;
 };
 
 TopList.prototype.showSpending = function() {
   this.$topSpending.attr('aria-hidden', 'false');
   this.$topRaising.attr('aria-hidden', 'true');
-  helpers.zeroPad(this.$topSpending, 'li', '.figure__number', '.figure__decimals');
+  this.$topType.text('spending');
+  this.$visibleList = this.$topSpending;
+  this.zeroPad();
 };
 
 

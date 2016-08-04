@@ -1,7 +1,7 @@
 {% macro field(name, title, instructions=False, dataset='committees', allow_text=False) %}
 <div class="filter js-filter js-typeahead-filter" id="{{ name }}-field" data-name="{{ name }}" data-dataset="{{ dataset }}" {% if allow_text %}data-allow-text{% endif %}>
   <label class="label" for="{{ name }}">{{ title }}</label>
-  <div class="combo combo--search--mini">
+  <div class="combo combo--search--mini filter__typeahead">
     <ul class="dropdown__selected"></ul>
     <input id="{{ name }}" type="text" class="combo__input">
     <button class="combo__button button--search button--standard" type="button">

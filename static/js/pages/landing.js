@@ -8,6 +8,7 @@ var GroupedBarChart = require('../modules/bar-charts').GroupedBarChart;
 var TopList = require('../modules/top-list').TopList;
 var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
+var analytics = require('fec-style/js/analytics');
 
 var raisingData = [
   {
@@ -42,22 +43,6 @@ var raisingData = [
     'pacs': 359289.27,
     'other': 0
   },
-  {
-    'period': 'Jul 1 - Sep 30, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-    'other': 0
-  },
-  {
-    'period': 'Oct 1 - Dec 31, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-    'other': 0
-  }
 ];
 
 var spendingData = [
@@ -92,24 +77,11 @@ var spendingData = [
     'parties': 35904262.78,
     'pacs': 263191.92,
     'other': 242687
-  },
-  {
-    'period': 'Jul 1 - Sep 30, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
-  },
-  {
-    'period': 'Oct 1 - Dec 31, 2016',
-    'status': 'not-started',
-    'candidates': 0,
-    'parties': 0,
-    'pacs': 0,
   }
 ];
 
 function Overview(selector, data, index) {
+  this.selector = selector;
   this.$element = $(selector);
   this.data = data;
   this.index = index;
@@ -117,12 +89,16 @@ function Overview(selector, data, index) {
   this.totals = this.$element.find('.js-total');
   this.reactionBox = this.$element.find('.js-reaction-box');
 
-  helpers.zeroPad(selector + ' .js-totals', '.overview__total-number', '.figure__decimals');
+  this.zeroPadTotals();
 
-  if (helpers.isLargeScreen()) {
-    new GroupedBarChart(selector + ' .js-chart', this.data, this.index);
-  }
+  $(window).on('resize', this.zeroPadTotals.bind(this));
+
+  new GroupedBarChart(selector + ' .js-chart', this.data, this.index);
 }
+
+Overview.prototype.zeroPadTotals = function() {
+  helpers.zeroPad(this.selector + ' .js-totals', '.overview__total-number', '.figure__decimals');
+};
 
 new Overview('.js-raised-overview', raisingData, 1);
 new Overview('.js-spent-overview', spendingData, 2);
@@ -131,21 +107,33 @@ $('.js-reaction-box').each(function() {
   new ReactionBox(this);
 });
 
-$('.js-top-list').each(function() {
+var maxHeight = 0;
+var $topLists = $('.js-top-list');
+
+$topLists.each(function() {
   var dataType = $(this).data('type');
   new TopList(this, dataType);
+
+  var thisHeight = $(this).height();
+  if (thisHeight > maxHeight) {
+    maxHeight = thisHeight;
+  }
+});
+
+$topLists.each(function() {
+  $(this).height(maxHeight);
 });
 
 $('.js-ga-event').each(function() {
   var eventName = $(this).data('ga-event');
   $(this).on('click', function() {
-    if (helpers.trackerExists()) {
+    if (analytics.trackerExists()) {
       var gaEventData = {
-        hitType: 'event',
-        eventCategory: eventName,
+        eventCategory: 'Misc. events',
+        eventAction: eventName,
         eventValue: 1
       };
-      ga('send', gaEventData);
+      ga('nonDAP.send', 'event', gaEventData);
     }
   });
 });

@@ -123,11 +123,12 @@ function makeCommitteeColumn(opts, factory) {
   return _.extend({}, {
     orderSequence: ['desc', 'asc'],
     className: 'column--number',
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       row.cycle = context.election.cycle;
       var column = meta.settings.aoColumns[meta.col].data;
       return _.extend({
-        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids
+        committee_id: (context.candidates[row.candidate_id] || {}).committee_ids,
+        two_year_transaction_period: row.cycle,
       }, factory(data, type, row, meta, column));
     })
   }, opts);
@@ -174,7 +175,7 @@ function stateColumns(results) {
   return [stateColumn].concat(columns);
 }
 
-function refreshTables() {
+function refreshTables(e) {
   var $comparison = $('#comparison');
   var selected = $comparison.find('input[type="checkbox"]:checked').map(function(_, input) {
     var $input = $(input);
@@ -186,6 +187,18 @@ function refreshTables() {
   if (selected.length > 0) {
     drawSizeTable(selected);
     drawStateTable(selected);
+  }
+
+  if (e) {
+    $(e.target).next('label').addClass('is-loading');
+
+    setTimeout(function() {
+      $comparison.find('.is-loading').removeClass('is-loading').addClass('is-successful');
+    }, helpers.LOADING_DELAY);
+
+    setTimeout(function() {
+      $comparison.find('.is-successful').removeClass('is-successful');
+    }, helpers.SUCCESS_DELAY);
   }
 }
 
@@ -489,7 +502,7 @@ $(document).ready(function() {
     .value();
   var url = helpers.buildUrl(
     ['elections'],
-    _.extend(query, {per_page: 0})
+    _.extend(query, {per_page: 0, sort_hide_null: true})
   );
   $.getJSON(url).done(function(response) {
     $table.dataTable(_.extend({}, defaultOpts, {

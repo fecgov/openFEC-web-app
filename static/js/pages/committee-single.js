@@ -27,6 +27,7 @@ var sizeColumns = [
     data: 'size',
     width: '50%',
     className: 'all',
+    orderable: false,
     render: function(data, type, row, meta) {
       return columnHelpers.sizeInfo[data].label;
     }
@@ -36,7 +37,8 @@ var sizeColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    orderable: false,
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       return columnHelpers.getSizeParams(row.size);
     })
   }
@@ -87,10 +89,9 @@ var stateColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       return {
         contributor_state: row.state,
-        is_individual: 'true'
       };
     })
   },
@@ -103,11 +104,10 @@ var employerColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       if (row.employer) {
         return {
           contributor_employer: row.employer,
-          is_individual: 'true'
         };
       } else {
         return null;
@@ -123,11 +123,10 @@ var occupationColumns = [
     className: 'all',
     orderable: false,
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       if (row.occupation) {
         return {
           contributor_occupation: row.occupation,
-          is_individual: 'true'
         };
       } else {
         return null;
@@ -317,7 +316,7 @@ $(document).ready(function() {
         columns: sizeColumns,
         callbacks: aggregateCallbacks,
         dom: 't',
-        order: [[1, 'desc']],
+        order: false,
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
@@ -392,6 +391,7 @@ $(document).ready(function() {
     case 'filing':
       path = ['committee', committeeId, 'filings'];
       tables.DataTable.defer($table, {
+        autoWidth: false,
         path: path,
         query: query,
         columns: filingsColumns,

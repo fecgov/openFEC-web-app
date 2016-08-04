@@ -6,16 +6,16 @@
   <div class="container">
     <div class="section__heading">
       <h2 class="heading__title" id="section-2-heading">
-        Money received by the committee: {{ cycle|fmt_year_range }}
+        Money raised by the committee: {{ cycle|fmt_year_range }}
       </h2>
       <a class="heading__action button--alt button--browse"
           href="{{ url_for(
-            'receipts',
+            'individual_contributions',
             committee_id=committee_id,
+            two_year_transaction_period=cycle,
             min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y'),
-            is_individual='true'
-          ) }}">All receipts data</a>
+            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+          ) }}">All individual contributions data</a>
     </div>
     <div class="content__section">
       <div class="row filters--horizontal">

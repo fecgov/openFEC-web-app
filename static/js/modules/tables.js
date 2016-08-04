@@ -47,6 +47,10 @@ var DOWNLOAD_MESSAGES = {
 
 var DATA_WIDGETS = '.js-data-widgets';
 
+// id for the last changed element on form for status update
+var updateChangedEl;
+var messageTimer;
+
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
   $('.data-container__body.fade-in').css('opacity', '1');
@@ -87,12 +91,18 @@ function mapSort(order, columns) {
   });
 }
 
-function mapResponse(response) {
+function getCount(response) {
   var pagination_count = response.pagination.count;
 
   if (response.pagination.count > 1000) {
     pagination_count = Math.round(response.pagination.count / 1000) * 1000;
   }
+
+  return pagination_count;
+}
+
+function mapResponse(response) {
+  var pagination_count = getCount(response);
 
   return {
     recordsTotal: pagination_count,
@@ -230,8 +240,100 @@ function updateOnChange($form, api) {
     e.preventDefault();
     hidePanel(api, $('#datatable-modal'));
     api.ajax.reload();
+
+    updateChangedEl = e.target;
   }
   $form.on('change', 'input,select', _.debounce(onChange, 250));
+}
+
+function filterSuccessUpdates(changeCount) {
+  // on filter change update:
+  // - loading/success status
+  // - count change message
+
+  // check if there is a changed form element
+  if (updateChangedEl) {
+    var $label;
+    var type = $(updateChangedEl).attr('type');
+    var message = '';
+    var filterAction = '';
+    var $filterMessage = $('.filter__message');
+
+    if (type === 'checkbox' || type === 'radio') {
+      $label = $('label[for="' + updateChangedEl.id + '"]');
+      $('.is-successful').removeClass();
+
+      $('.is-loading').removeClass('is-loading');
+
+      $label.addClass('is-successful');
+
+      setTimeout(function () {
+        $label.removeClass('is-successful');
+      }, helpers.SUCCESS_DELAY);
+
+      filterAction = 'Filter applied.';
+
+      if (!$(updateChangedEl).is(':checked')) {
+        filterAction = 'Filter removed.';
+      }
+    }
+    else if (type === 'text') {
+      // typeahead
+      if ($(updateChangedEl).hasClass('tt-input')) {
+        $label = $(updateChangedEl);
+
+        filterAction = 'Filter applied.';
+      }
+      // text input search
+      else {
+        $label = $('.is-loading:not(.overlay)');
+
+        if ($(updateChangedEl).val()) {
+          filterAction = '"' + $(updateChangedEl).val() + '" applied.';
+        }
+        else {
+          filterAction = 'Search term removed.';
+        }
+
+        $label.removeClass('is-loading').addClass('is-successful');
+
+        setTimeout(function () {
+          $label.removeClass('is-successful');
+        }, helpers.SUCCESS_DELAY);
+      }
+    }
+    else {
+      // probably a select dropdown
+      $label = $(updateChangedEl);
+      filterAction = '"' + $(updateChangedEl).find('option:selected').text() + '" applied.';
+    }
+
+    // build message with number of results returned
+    if (changeCount > 0) {
+      message = filterAction + '<br>' +
+      '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
+    }
+    else {
+      message = filterAction + '<br>' +
+      '<strong>Removed ' + Math.abs(changeCount).toLocaleString() + '</strong> results.';
+    }
+
+    if ($filterMessage.length) {
+      $filterMessage.fadeOut().remove();
+      // if there is a message already, cancel existing message timeout
+      // to avoid timing weirdness
+      clearTimeout(messageTimer);
+    }
+
+    $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
+      .hide().fadeIn());
+
+    messageTimer = setTimeout(function() {
+      $('.filter__message').fadeOut(function () {
+        $(this).remove();
+      });
+    }, helpers.SUCCESS_DELAY);
+  }
 }
 
 function OffsetPaginator() {}
@@ -455,6 +557,7 @@ DataTable.prototype.fetch = function(data, callback) {
   self.xhr = $.getJSON(url);
   self.xhr.done(self.fetchSuccess.bind(self));
   self.xhr.fail(self.fetchError.bind(self));
+
   self.xhr.always(function() {
     self.$processing.hide();
   });
@@ -483,19 +586,35 @@ DataTable.prototype.buildUrl = function(data, paginate) {
 };
 
 DataTable.prototype.fetchSuccess = function(resp) {
+  var self = this;
   this.paginator.handleResponse(this.fetchContext.data, resp);
   this.fetchContext.callback(mapResponse(resp));
   this.callbacks.afterRender(this.api, this.fetchContext.data, resp);
-
+  this.newCount = getCount(resp);
   this.refreshExport();
+
+  var changeCount = this.newCount - this.currentCount;
+
+  filterSuccessUpdates(changeCount);
 
   if (this.opts.hideEmpty) {
     this.hideEmpty(resp);
   }
+
+  this.currentCount = this.newCount;
 };
 
 DataTable.prototype.fetchError = function() {
+  var self = this;
 
+  setTimeout(function() {
+    $('.is-loading').removeClass('is-loading').addClass('is-unsuccessful');
+    self.$processing.hide();
+  }, helpers.LOADING_DELAY);
+
+  setTimeout(function() {
+    $('.is-error').removeClass('is-unsuccessful');
+  }, helpers.SUCCESS_DELAY);
 };
 
 /**
