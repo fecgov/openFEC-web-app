@@ -8,6 +8,7 @@ from flask import abort
 from openfecwebapp import utils
 from openfecwebapp import config
 
+from collections import OrderedDict
 
 MAX_FINANCIALS_COUNT = 4
 
@@ -74,7 +75,14 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     results = _call_api(url, **filters)
     results['limit'] = limit
     results['offset'] = offset
+    grouped_aos = OrderedDict({})
+    for ao in results['advisory_opinions']:
+        if ao['no'] in grouped_aos:
+            grouped_aos[ao['no']] += ao
+        else:
+            grouped_aos[ao['no']] = [ao]
 
+    results['advisory_opinions'] = grouped_aos
     return results
 
 

@@ -1,3 +1,4 @@
+{% for advisory_opinion in advisory_opinions %}
 <tr class="legal-search-result">
   <td><a title="{{ advisory_opinion.description }}" href="{{ advisory_opinion.url }}">AO {{ advisory_opinion.no }}</a></td>
   <td>{{ advisory_opinion.name }}</td>
@@ -11,3 +12,4 @@
     </div>
   </td>
 </tr>
+{% endfor %}

@@ -45,10 +45,9 @@
         </thead>
       {% endif %}
       <tbody>
-        {# TODO this should handle generic document types (aos, murs, regs, etc) #}
         {% for result in result_entities %}
           {% if result_type == 'advisory_opinions' %}
-            {% with advisory_opinion = result %}
+            {% with advisory_opinions = result_entities[result] %}
             {% include 'partials/legal-search-results-advisory-opinion.html' %}
             {% endwith %}
           {% elif result_type == 'regulations' %}
