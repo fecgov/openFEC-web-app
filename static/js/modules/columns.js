@@ -248,7 +248,7 @@ var filings = {
     className: 'all column--trigger',
     orderable: false,
     render: function(data, type, row) {
-      if (row.form_type && row.form_type.match(/^F3[XP]?$/)) {
+      if (row.form_type && row.form_type.match(/^F[35][XP]?$/)) {
         return tables.MODAL_TRIGGER_HTML;
       } else {
         return '';
