@@ -309,8 +309,13 @@ function filterSuccessUpdates(changeCount) {
       clearTimeout(messageTimer);
     }
 
-    $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
-      .hide().fadeIn());
+    // Clicking on "Clear all filters" will remove all dropdown checkboxes,
+    // so we check to make sure the message isn't shown inside the dropdown panel.
+    if (!$label.parent().parent().hasClass('dropdown__list')) {
+      // append filter change count message after input
+      $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
+        .hide().fadeIn());
+    }
 
     messageTimer = setTimeout(function() {
       $('.is-successful').removeClass('is-successful');
