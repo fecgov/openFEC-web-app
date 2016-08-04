@@ -235,6 +235,26 @@ disbursement_categories = OrderedDict([
     ('other', 'Other'),
 ])
 
+pac_party_types = OrderedDict([
+    ('C', 'Communication cost'),
+    ('D', 'Delegate committee'),
+    ('E', 'Electioneering communication'),
+    ('Z', 'National party nonfederal account'),
+    ('N', 'PAC - nonqualified'),
+    ('Q', 'PAC - qualified'),
+    ('V', 'PAC with non-contribution account - nonqualified'),
+    ('W', 'PAC with non-contribution account - qualified'),
+    ('P', 'Party - nonqualified'),
+    ('Y', 'Party - qualified'),
+    ('U', 'Single candidate independent expenditure'),
+    ('O', 'SuperPAC (independent expenditure-only')
+])
+
+house_senate_types = OrderedDict([
+    ('H', 'House'),
+    ('S', 'Senate')
+])
+
 table_columns = OrderedDict([
     ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District']),
     ('candidates-office-president', ['Name', 'Party', 'Receipts', 'Disbursements']),
