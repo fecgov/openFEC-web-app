@@ -17,6 +17,9 @@ Filter reports
   <button type="button" class="js-accordion-trigger accordion__button">Filer</button>
   <div class="accordion__content">
     {{ typeahead.field('committee_ids', 'Committee name or ID', '') }}
+    {% if form_type in ['presidential', 'house-senate'] %}
+      {{ typeahead.field('auth_committee_candidate_id', 'Related candidate name or ID', dataset='candidates') }}
+    {% endif %}
     {% if form_type == 'house-senate' %}
       {{ checkbox.checkbox_dropdown(
         'type',
