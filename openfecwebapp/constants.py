@@ -248,8 +248,8 @@ table_columns = OrderedDict([
     ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Recipient', 'Contributor name', 'State', 'Employer', 'Receipt date', 'Amount']),
     ('receipts', ['Recipient', 'Contributor name', 'State', 'Receipt date', 'Amount']),
-    ('reports-presidential', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Receipt date', 'Total receipts', 'Total disbursements']),
-    ('reports-house-senate', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Receipt date', 'Total receipts', 'Total disbursements']),
-    ('reports-pac-party', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Receipt date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
-    ('reports-ie-only', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Receipt date', 'Total contributions', 'Total independent expenditures'])
+    ('reports-presidential', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-house-senate', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-pac-party', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
+    ('reports-ie-only', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
 ])
