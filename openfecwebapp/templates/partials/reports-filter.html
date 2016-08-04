@@ -7,7 +7,7 @@
 {% import 'macros/filters/date.html' as date %}
 {% import 'macros/filters/checkbox.html' as checkbox %}
 {% import 'macros/filters/report-type.html' as report_types %}
-
+{% import 'macros/filters/amount.html' as amount %}
 {% block heading %}
 Filter reports
 {% endblock %}
@@ -34,10 +34,15 @@ Filter reports
         </li>
       </ul>
     </<fieldset>
-    {{ text.field('min_receipts_amount', 'Minimum total receipts', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-    {{ text.field('max_receipts_amount', 'Maximum total receipts', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
-    {{ text.field('min_disbursements_amount', 'Minimum total disbursements', {'data-suffix': 'or more', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true' }) }}
-    {{ text.field('max_disbursements_amount', 'Maximum total disbursements', {'data-suffix': 'or less', 'data-inputmask': '"alias": "currency", "rightAlign": false, "clearMaskOnLostFocus": true'}) }}
+    {{ amount.amount('receipts_amount', 'Total receipts') }}
+    {{ amount.amount('disbursements_amount', 'Total disbursements') }}
+    {{ amount.amount('cash_on_hand_amount', 'Ending cash on hand') }}
+    {% if form_type in ['pac-party', 'ie-only'] %}
+     {{ amount.amount('independent_expenditures', 'Total independent expenditures') }}
+    {% endif %}
+    {% if form_type == 'pac-party' %}
+     {{ amount.amount('party_coordinated_expenditures', 'Total party coordinated expenditures') }}
+    {% endif %}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Report date</button>
   <div class="accordion__content">

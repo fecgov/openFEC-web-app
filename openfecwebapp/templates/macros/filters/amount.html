@@ -1,0 +1,16 @@
+{% macro amount(name, label) %}
+<fieldset class="filter" id="{{name}}-field">
+  <legend class="label">{{ label }}</legend>
+  <div class="row">
+    <div class="range-input js-filter">
+      <label>From</label>
+      <input id="min_{{name}}" type="text" name="min_{{name}}" data-suffix="or more" data-inputmask="'alias':'currency', 'rightAlign': false,
+      'clearMaskOnLostFocus': true" tabindex="0">
+    </div>
+    <div class="range-input js-filter">
+      <label>To</label>
+      <input id="max_{{name}}" type="text" name="max_{{name}}" data-suffix="or less" data-inputmask="'alias':'currency', 'rightAlign': false, 'clearMaskOnLostFocus': true" tabindex="0">
+    </div>
+  </div>
+</fieldset>
+{% endmacro %}
