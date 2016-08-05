@@ -1,15 +1,29 @@
-{% for advisory_opinion in advisory_opinions %}
-<tr class="legal-search-result">
-  <td><a title="{{ advisory_opinion.description }}" href="{{ advisory_opinion.url }}">AO {{ advisory_opinion.no }}</a></td>
-  <td>{{ advisory_opinion.name }}</td>
-  <td>
-    <strong>{{ advisory_opinion.summary }}</strong>
-    <div class="t-serif legal-search-result__hit">
-      &hellip;
-      {% for highlight in advisory_opinion.highlights %}
-        {{ highlight|safe }} &hellip;
-      {% endfor %}
-    </div>
-  </td>
-</tr>
-{% endfor %}
+<table>
+  <h3 class="cal-list__title">
+  <a title="{{ advisory_opinion_docs[0].description }}"
+    href="{{ advisory_opinion_docs[0].url }}">
+    <span class="font-bolt">AO {{ advisory_opinion_docs[0].no }}: </span></a>
+    <span class="t-normal">{{ advisory_opinion_docs[0].name }}</span>
+<div class="u-padding--top">
+<span class="t-bold">Summary: </span> <span class="t-normal">
+  {{ advisory_opinion_docs[0].summary }}
+</span>
+</div>
+</h3>
+  <tbody>
+  {% for advisory_opinion_doc in advisory_opinion_docs %}
+  <tr class="legal-search-result">
+    <td><a href="{{ advisory_opinion_doc.url }}" class="t-upper">{{ advisory_opinion_doc.category }}
+    <a></td>
+    <td>
+      <div class="t-serif legal-search-result__hit">
+        &hellip;
+        {% for highlight in advisory_opinion_doc.highlights %}
+          {{ highlight|safe }} &hellip;
+        {% endfor %}
+      </div>
+    </td>
+  </tr>
+  {% endfor %}
+  <tbody>
+<table>

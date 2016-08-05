@@ -27,37 +27,29 @@
       </div>
     </div>
     {% if results.total_all %}
-    <table class="data-table data-table--text">
       {% if result_type == 'regulations' %}
-        <thead>
-          <tr>
-            <th class="cell--15">Section</th>
-            <th class="cell--85">Description</th>
-          </tr>
-        </thead>
-      {% elif result_type == 'advisory_opinions' %}
-        <thead>
-          <tr>
-            <th class="cell--15">No.</th>
-            <th class="cell--25">Name</th>
-            <th class="cell--60">Hit</th>
-          </tr>
-        </thead>
-      {% endif %}
-      <tbody>
+        <table class="data-table data-table--text">
+            <thead>
+              <tr>
+                <th class="cell--15">Section</th>
+                <th class="cell--85">Description</th>
+              </tr>
+            </thead>
+          <tbody>
+            {% for result in result_entities %}
+                {% with section = result %}
+                {% include 'partials/legal-search-results-regulation.html' %}
+                {% endwith %}
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
         {% for result in result_entities %}
-          {% if result_type == 'advisory_opinions' %}
-            {% with advisory_opinions = result_entities[result] %}
+            {% with advisory_opinion_docs = result_entities[result] %}
             {% include 'partials/legal-search-results-advisory-opinion.html' %}
             {% endwith %}
-          {% elif result_type == 'regulations' %}
-            {% with section = result %}
-            {% include 'partials/legal-search-results-regulation.html' %}
-            {% endwith %}
-          {% endif %}
         {% endfor %}
-      </tbody>
-    </table>
+      {% endif %}
     <div class="results-info">
       <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + result_entities|length }} of about {{ results.total_all }}</span></div>
       <div class="dataTables_paginate">
