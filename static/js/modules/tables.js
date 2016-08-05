@@ -259,17 +259,10 @@ function filterSuccessUpdates(changeCount) {
     var filterAction = '';
     var $filterMessage = $('.filter__message');
 
+    $('.is-successful').removeClass('is-successful');
+
     if (type === 'checkbox' || type === 'radio') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
-      $('.is-successful').removeClass();
-
-      $('.is-loading').removeClass('is-loading');
-
-      $label.addClass('is-successful');
-
-      setTimeout(function () {
-        $label.removeClass('is-successful');
-      }, helpers.SUCCESS_DELAY);
 
       filterAction = 'Filter applied.';
 
@@ -294,12 +287,6 @@ function filterSuccessUpdates(changeCount) {
         else {
           filterAction = 'Search term removed.';
         }
-
-        $label.removeClass('is-loading').addClass('is-successful');
-
-        setTimeout(function () {
-          $label.removeClass('is-successful');
-        }, helpers.SUCCESS_DELAY);
       }
     }
     else {
@@ -307,6 +294,8 @@ function filterSuccessUpdates(changeCount) {
       $label = $(updateChangedEl);
       filterAction = '"' + $(updateChangedEl).find('option:selected').text() + '" applied.';
     }
+
+    $('.is-loading').removeClass('is-loading').addClass('is-successful');
 
     // build message with number of results returned
     if (changeCount > 0) {
@@ -325,10 +314,17 @@ function filterSuccessUpdates(changeCount) {
       clearTimeout(messageTimer);
     }
 
-    $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
-      .hide().fadeIn());
+    // Clicking on "Clear all filters" will remove all dropdown checkboxes,
+    // so we check to make sure the message isn't shown inside the dropdown panel.
+    if ($label.closest('.dropdown__list').length < 1) {
+      // append filter change count message after input
+      $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
+        .hide().fadeIn());
+    }
 
     messageTimer = setTimeout(function() {
+      $('.is-successful').removeClass('is-successful');
+
       $('.filter__message').fadeOut(function () {
         $(this).remove();
       });
