@@ -385,7 +385,8 @@ var defaultOpts = {
   responsive: {details: false},
   language: {
     lengthMenu: 'Results per page: _MENU_',
-    info: '_TOTAL_'
+    info: '_TOTAL_',
+    infoEmpty: '_TOTAL_'
   },
   pagingType: 'simple',
   title: null,
