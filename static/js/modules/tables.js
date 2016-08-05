@@ -311,7 +311,7 @@ function filterSuccessUpdates(changeCount) {
 
     // Clicking on "Clear all filters" will remove all dropdown checkboxes,
     // so we check to make sure the message isn't shown inside the dropdown panel.
-    if (!$label.parent().parent().hasClass('dropdown__list')) {
+    if ($label.closest('.dropdown__list').length < 1) {
       // append filter change count message after input
       $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
         .hide().fadeIn());
