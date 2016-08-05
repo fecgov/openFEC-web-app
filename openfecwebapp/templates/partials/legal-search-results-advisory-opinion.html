@@ -4,19 +4,19 @@
     href="{{ advisory_opinion_docs[0].url }}">
     <span class="font-bolt">AO {{ advisory_opinion_docs[0].no }}: </span></a>
     <span class="t-normal">{{ advisory_opinion_docs[0].name }}</span>
-<div class="u-padding--top">
+<p class="u-padding--top">
 <span class="t-bold">Summary: </span> <span class="t-normal">
   {{ advisory_opinion_docs[0].summary }}
 </span>
-</div>
+</p>
 </h3>
   <tbody>
   {% for advisory_opinion_doc in advisory_opinion_docs %}
   <tr class="legal-search-result">
-    <td><a href="{{ advisory_opinion_doc.url }}" class="t-upper">{{ advisory_opinion_doc.category }}
+    <td><a href="{{ advisory_opinion_doc.url }}" class="t-upper t-sans">{{ advisory_opinion_doc.category }}
     <a></td>
     <td>
-      <div class="t-serif legal-search-result__hit">
+      <div class="t-serif legal-search-result__hit u-padding--top">
         &hellip;
         {% for highlight in advisory_opinion_doc.highlights %}
           {{ highlight|safe }} &hellip;

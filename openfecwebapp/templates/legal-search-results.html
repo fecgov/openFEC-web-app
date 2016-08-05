@@ -101,7 +101,10 @@
             </div>
             {% if results.total_advisory_opinions %}
             <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.advisory_opinions|length }} of <a href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}"><strong>{{ results.total_advisory_opinions }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.advisory_opinions|length }} of
+                <a href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">
+                  <strong>{{ results.total_advisory_opinions }}</strong> results
+                </a></span>
             </div>
             {% endif %}
           </div>
@@ -112,7 +115,9 @@
                 {% endwith %}
             {% endfor %}
             <div class="results-info">
-              <a class="button button--browse button--alt" href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">View all results</a>
+              <a class="button button--browse button--alt"
+              href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">
+              View all results</a>
             </div>
           {% else %}
             <div class="message message--alert">
