@@ -23,7 +23,7 @@ var missingTemplate = require('../../templates/tables/noData.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
 var browseDOM = '<"panel__main"t>' +
-                '<"results-info"ilpr>';
+                '<"results-info"lp>';
 
 var DOWNLOAD_CAP = 100000;
 var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
@@ -385,8 +385,6 @@ var defaultOpts = {
   responsive: {details: false},
   language: {
     lengthMenu: 'Results per page: _MENU_',
-    info: '_TOTAL_',
-    infoEmpty: '_TOTAL_'
   },
   pagingType: 'simple',
   title: null,
@@ -476,7 +474,6 @@ DataTable.prototype.ensureWidgets = function() {
   if (this.hasWidgets) { return; }
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
-  this.$widgets.find('.js-count').find('.tags__count').append($('#results_info'));
 
   if (this.opts.useExport) {
     this.$exportWidget = $(exportWidgetTemplate({title: this.opts.title}));
@@ -588,6 +585,11 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.refreshExport();
 
   var changeCount = this.newCount - this.currentCount;
+
+  var countHTML = this.newCount > 0 ?
+    'about <span class="tags__count">' + this.newCount.toLocaleString('en-US') + '</span>' :
+    '<span class="tags__count">0</span>';
+  this.$widgets.find('.js-count').html(countHTML);
 
   filterSuccessUpdates(changeCount);
 
