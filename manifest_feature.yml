@@ -5,7 +5,6 @@ services:
   - fec-creds-feature
 env:
   FEC_CMS_URL: https://fec-feature-proxy.18f.gov
-  FEC_FEATURE_LEGAL: true
   FEC_WEB_API_URL: https://fec-feature-api.18f.gov
   FEC_WEB_DEBUG: true
   FEC_WEB_ENVIRONMENT: dev

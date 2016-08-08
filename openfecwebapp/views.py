@@ -26,14 +26,13 @@ def render_search_results(results, query, result_type):
     )
 
 
-def render_legal_search_results(results, query, result_type, feature_flag):
+def render_legal_search_results(results, query, result_type):
     return render_template(
         'legal-search-results.html',
         legal_include_display_all=True, # includes the display-all link in results
         query=query,
         results=results,
         result_type=result_type,
-        feature_flag=feature_flag
     )
 
 
