@@ -4,6 +4,7 @@ import furl
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from flask import render_template, request, redirect, url_for, abort
+from collections import OrderedDict
 
 from openfecwebapp import views
 from openfecwebapp import utils
@@ -116,7 +117,7 @@ def candidates_office(office):
         result_type='candidates',
         title='candidates for ' + office,
         slug='candidates-office',
-        office=office,
+        context=OrderedDict([('office', office)]),
         columns=constants.table_columns['candidates-office-' + office.lower()]
     )
 
@@ -215,11 +216,12 @@ def reports(form_type):
         title = 'PAC and party committee reports'
     if form_type.lower() == 'ie-only':
         title = 'Independent expenditure-only committee reports'
+    context = OrderedDict([('form_type', form_type.lower())])
     return render_template(
         'datatable.html',
         slug='reports',
         title=title,
-        form_type=form_type.lower(),
+        context=context,
         dates=utils.date_ranges(),
         columns=constants.table_columns['reports-' + form_type.lower()]
     )

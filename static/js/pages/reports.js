@@ -17,19 +17,19 @@ var pageTitle,
     pageColumns,
     columnKeys = ['committee', 'pdf_url', 'coverage_start_date', 'coverage_end_date'];
 
-if (context.formType === 'presidential') {
+if (context.form_type === 'presidential') {
   pageTitle = 'Presidential committee reports';
   pageTemplate = candidateTemplate;
   columnKeys.push('receipts', 'disbursements', 'trigger');
-} else if (context.formType === 'house-senate') {
+} else if (context.form_type === 'house-senate') {
   pageTitle = 'House and Senate committee reports';
   pageTemplate = candidateTemplate;
   columnKeys.push('receipts', 'disbursements', 'trigger');
-} else if (context.formType === 'pac-party') {
+} else if (context.form_type === 'pac-party') {
   pageTitle = 'PAC and party committee reports';
   pageTemplate = pacPartyTemplate;
   columnKeys.push('receipts', 'disbursements', 'independentExpenditures', 'trigger');
-} else if (context.formType === 'ie-only') {
+} else if (context.form_type === 'ie-only') {
   pageTitle = 'Independent expenditure-only committee reports';
   pageTemplate = ieOnlyTemplate;
   columnKeys.push('contributions', 'independentExpenditures', 'trigger');
@@ -45,7 +45,7 @@ $(document).ready(function() {
   new tables.DataTable($table, {
     autoWidth: false,
     title: pageTitle,
-    path: ['reports', context.formType],
+    path: ['reports', context.form_type],
     columns: pageColumns,
     rowCallback: tables.modalRenderRow,
     // Order by coverage date descending

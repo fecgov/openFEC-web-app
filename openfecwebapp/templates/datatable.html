@@ -44,19 +44,12 @@
 {% endblock %}
 
 {% block scripts %}
-{% if office %}
-<script>
-var context = {
-  office: '{{ office }}',
-};
+
+{% if context %}
+<script type="text/javascript">
+var context = {{ context|tojson|safe }};
 </script>
 {% endif %}
-{% if form_type %}
-<script>
-var context = {
-  formType: '{{ form_type }}',
-};
-</script>
-{% endif %}
+
 <script src="{{ asset_for_page(slug) }}"></script>
 {% endblock %}
