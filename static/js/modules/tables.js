@@ -260,6 +260,7 @@ function filterSuccessUpdates(changeCount) {
     var $filterMessage = $('.filter__message');
 
     $('.is-successful').removeClass('is-successful');
+    $('.is-unsuccessful').removeClass('is-unsuccessful');
 
     if (type === 'checkbox' || type === 'radio') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
@@ -609,7 +610,7 @@ DataTable.prototype.fetchError = function() {
   }, helpers.LOADING_DELAY);
 
   setTimeout(function() {
-    $('.is-error').removeClass('is-unsuccessful');
+    $('.is-unsuccessful').removeClass('is-unsuccessful');
   }, helpers.SUCCESS_DELAY);
 };
 
