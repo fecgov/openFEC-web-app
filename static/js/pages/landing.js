@@ -4,7 +4,7 @@
 
 var $ = require('jquery');
 
-var GroupedBarChart = require('../modules/bar-charts').GroupedBarChart;
+var LineChart = require('../modules/line-chart').LineChart;
 var TopList = require('../modules/top-list').TopList;
 var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
@@ -12,73 +12,174 @@ var analytics = require('fec-style/js/analytics');
 
 var raisingData = [
   {
-    'period': 'Jan 1 - June 30, 2015',
-    'status': 'complete',
+    'month': 'Jan 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Feb 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Mar 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Apr 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'May 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Jun 2015',
     'candidates': 305427675.73,
-    'parties': 192007717.64,
-    'pacs': 118403743.85,
-    'other': 259698.70,
+    'parties': 217813182.16,
+    'pacs': 680219721.08,
+    'other': 7741.44
   },
   {
-    'period': 'Jul 1 - Dec 31, 2015',
-    'status': 'complete',
-    'candidates': 529603187.6,
-    'parties': 209606697.26,
-    'pacs': 584266359.97,
-    'other': 19512.72
+    'month': 'Jul 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
   },
   {
-    'period': 'Jan 1 - Mar 31, 2016',
-    'status': 'complete',
-    'candidates': 432197566.98,
-    'parties': 145682466.69,
-    'pacs': 590005249.82,
-    'other': 401526.89
+    'month': 'Aug 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
   },
   {
-    'period': 'Apr 1 - June 30, 2016',
-    'status': 'in-progress',
-    'candidates': 104196285.25,
-    'parties': 53314363.39,
-    'pacs': 359289.27,
-    'other': 0
-  },
-];
-
-var spendingData = [
-  {
-    'period': 'Jan 1 - June 30, 2015',
-    'status': 'complete',
-    'candidates': 144725733.28,
-    'parties': 192007717.64,
-    'pacs': 118403743.85,
-    'other': 259698.70
+    'month': 'Sep 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
   },
   {
-    'period': 'Jul 1 - Dec 31, 2015',
-    'status': 'complete',
-    'candidates': 414159558.73,
-    'parties': 173218529.69,
-    'pacs': 259718445.04,
-    'other': 5482220.81
+    'month': 'Oct 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
   },
   {
-    'period': 'Jan 1 - Mar 31, 2016',
-    'status': 'complete',
-    'candidates': 476623668.08,
-    'parties': 102074951.47,
-    'pacs': 307355510.41,
-    'other': 23331535.6
+    'month': 'Nov 2015',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
   },
   {
-    'period': 'Apr 1 - June 30, 2016',
-    'status': 'in-progress',
-    'candidates': 127799212.55,
-    'parties': 35904262.78,
-    'pacs': 263191.92,
-    'other': 242687
+    'month': 'Dec 2015',
+    'candidates': 835030863.33,
+    'parties': 427419879.42,
+    'pacs': 1264486081.05,
+    'other': 27254.16
+  },
+  {
+    'month': 'Jan 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Feb 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Mar 2016',
+    'candidates': 1267228430.31,
+    'parties': 573102346.11,
+    'pacs': 1854491330.87,
+    'other': 428781.05
+  },
+  {
+    'month': 'Apr 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'May 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Jun 2016',
+    'candidates': 1371424715.56,
+    'parties': 626416709.5,
+    'pacs': 1854850620.14,
+    'other': 428781.05
+  },
+  {
+    'month': 'Jul 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Aug 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Sep 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Oct 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Nov 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
+  },
+  {
+    'month': 'Dec 2016',
+    'candidates': '',
+    'parties': '',
+    'pacs': '',
+    'other': ''
   }
-];
+]
 
 function Overview(selector, data, index) {
   this.selector = selector;
@@ -93,7 +194,7 @@ function Overview(selector, data, index) {
 
   $(window).on('resize', this.zeroPadTotals.bind(this));
 
-  new GroupedBarChart(selector + ' .js-chart', this.data, this.index);
+  new LineChart(selector + ' .js-chart', this.data, this.index);
 }
 
 Overview.prototype.zeroPadTotals = function() {
@@ -101,7 +202,7 @@ Overview.prototype.zeroPadTotals = function() {
 };
 
 new Overview('.js-raised-overview', raisingData, 1);
-new Overview('.js-spent-overview', spendingData, 2);
+// new Overview('.js-spent-overview', spendingData, 2);
 
 $('.js-reaction-box').each(function() {
   new ReactionBox(this);
