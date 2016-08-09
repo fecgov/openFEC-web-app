@@ -1,11 +1,14 @@
-<div class="data-container__export">
-  <div class="js-info"></div>
-  <div class="results-info__download js-tooltip-container">
-    <button type="button"
-      class="js-export button button--cta-primary button--export">
-        Export this data
-    </button>
-    <div id="export-tooltip" role="tooltip" class="tooltip tooltip--under tooltip__content" aria-hidden="true">
+<div class="data-container__head">
+  <h1 class="data-container__title">{{this.title}} data</h1>
+  <div class="data-container__action">
+    <button class="data-container__share button--standard button--share is-disabled" type="button">Share</button>
+    <div class="data-container__export js-tooltip-container">
+      <button type="button"
+        class="js-export button button--cta button--export">
+          Export
+      </button>
+      <div id="export-tooltip" role="tooltip" class="tooltip tooltip--under tooltip__content" aria-hidden="true">
+      </div>
     </div>
   </div>
 </div>
