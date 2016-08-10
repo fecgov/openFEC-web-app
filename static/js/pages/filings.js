@@ -3,11 +3,12 @@
 /* global require, document */
 
 var $ = require('jquery');
+var _ = require('underscore');
 
-var tables = require('../modules/tables');
 var filings = require('../modules/filings');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
+var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
@@ -17,20 +18,43 @@ var filingsColumns = columnHelpers.getColumns(
   ]
 );
 
-$(document).ready(function() {
-  var $table = $('#results');
-  new tables.DataTable($table, {
-    autoWidth: false,
-    title: 'Filings',
+var efilingColumns = columnHelpers.getColumns(
+  columns.filings,
+  ['filer_name', 'pdf_url', 'receipt_date']);
+
+var sharedOpts = {
+  autoWidth: false,
+  title: 'Filings',
+ rowCallback: filings.renderRow,
+  // Order by receipt date descending
+  order: [[3, 'desc']],
+  useFilters: true,
+  useExport: true,
+  efiling: {
+    columns: efilingColumns,
+    path: ['efile', 'filings']
+  },
+  processed: {
     path: ['filings'],
     columns: filingsColumns,
-    rowCallback: filings.renderRow,
-    // Order by receipt date descending
-    order: [[3, 'desc']],
-    useFilters: true,
-    useExport: true,
-    callbacks: {
-      afterRender: filings.renderModal
-    }
-  });
+  },
+  callbacks: {
+    afterRender: filings.renderModal
+  }
+};
+
+var efileOpts = _.extend({}, sharedOpts, {
+  title: 'Filings (e-filings)',
+  path: ['efile','filings'],
+  columns: efilingColumns
+});
+
+var processedOpts = _.extend({}, sharedOpts, {
+  title: 'Filings (processed)',
+  path: ['filings'],
+  columns: filingsColumns,
+});
+
+$(document).ready(function() {
+  new TableSwitcher('.data-container__body', '.js-table-switcher', processedOpts, efileOpts).init();
 });
