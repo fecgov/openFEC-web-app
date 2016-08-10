@@ -80,7 +80,7 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
         grouped_aos = OrderedDict({})
         for ao in results['advisory_opinions']:
             if ao['no'] in grouped_aos:
-                grouped_aos[ao['no']] += ao
+                grouped_aos[ao['no']].append(ao)
             else:
                 grouped_aos[ao['no']] = [ao]
 
