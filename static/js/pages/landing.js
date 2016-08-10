@@ -12,174 +12,120 @@ var analytics = require('fec-style/js/analytics');
 
 var raisingData = [
   {
-    'month': 'Jan 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '1/31/2015',
+    'candidates': 67016.47,
+    'pacs': 38955102.59,
+    'party': 36524891.61
   },
   {
-    'month': 'Feb 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '2/28/2015',
+    'candidates': 599921,
+    'pacs': 79181316.45,
+    'party': 76374954.03
   },
   {
-    'month': 'Mar 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '3/31/2015',
+    'candidates': 141325569.5,
+    'pacs': 142388089.04,
+    'party': 139204709.9
   },
   {
-    'month': 'Apr 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '4/30/2015',
+    'candidates': 142956083.33,
+    'pacs': 178217174.97,
+    'party': 181614636.8
   },
   {
-    'month': 'May 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '5/31/2015',
+    'candidates': 143342406.8,
+    'pacs': 236040056.13,
+    'party': 219702630.8
   },
   {
-    'month': 'Jun 2015',
-    'candidates': 305427675.73,
-    'parties': 217813182.16,
-    'pacs': 680219721.08,
-    'other': 7741.44
+    'date': '6/30/2015',
+    'candidates': 451094822.58,
+    'pacs': 717844843.47,
+    'party': 275288799.3
   },
   {
-    'month': 'Jul 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '7/31/2015',
+    'candidates': 451096289.15,
+    'pacs': 753284533.24,
+    'party': 311721337
   },
   {
-    'month': 'Aug 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '8/31/2015',
+    'candidates': 451325606.68,
+    'pacs': 785322483.13,
+    'party': 347021951.7
   },
   {
-    'month': 'Sep 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '9/30/2015',
+    'candidates': 758125401.53,
+    'pacs': 830308849.88,
+    'party': 387381412.8
   },
   {
-    'month': 'Oct 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '10/31/2015',
+    'candidates': 758256848.49,
+    'pacs': 874518147.3,
+    'party': 428504762.4
   },
   {
-    'month': 'Nov 2015',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '11/30/2015',
+    'candidates': 758303367.58,
+    'pacs': 911888352.09,
+    'party': 474948034.2
   },
   {
-    'month': 'Dec 2015',
-    'candidates': 835030863.33,
-    'parties': 427419879.42,
-    'pacs': 1264486081.05,
-    'other': 27254.16
+    'date': '12/31/2015',
+    'candidates': 1108344185.24,
+    'pacs': 1387739680.53,
+    'party': 535317519.9
   },
   {
-    'month': 'Jan 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '1/31/2016',
+    'candidates': 1173968015.89,
+    'pacs': 1490321191.87,
+    'party': 587043747.7
   },
   {
-    'month': 'Feb 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '2/29/2016',
+    'candidates': 1306638467.96,
+    'pacs': 1659379225.01,
+    'party': 645291322.4
   },
   {
-    'month': 'Mar 2016',
-    'candidates': 1267228430.31,
-    'parties': 573102346.11,
-    'pacs': 1854491330.87,
-    'other': 428781.05
+    'date': '3/31/2016',
+    'candidates': 1617439805.46,
+    'pacs': 1935807904.66,
+    'party': 722474098.1
   },
   {
-    'month': 'Apr 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '4/30/2016',
+    'candidates': 1729070916.9,
+    'pacs': 2080501265.79,
+    'party': 785827631.2
   },
   {
-    'month': 'May 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '5/31/2016',
+    'candidates': 1811770795.98,
+    'pacs': 2198609138.48,
+    'party': 860988752
   },
   {
-    'month': 'Jun 2016',
-    'candidates': 1371424715.56,
-    'parties': 626416709.5,
-    'pacs': 1854850620.14,
-    'other': 428781.05
+    'date': '6/30/2016',
+    'candidates': 2136103644.63,
+    'pacs': 2493168873.62,
+    'party': 953722512.3
   },
   {
-    'month': 'Jul 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
-  },
-  {
-    'month': 'Aug 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
-  },
-  {
-    'month': 'Sep 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
-  },
-  {
-    'month': 'Oct 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
-  },
-  {
-    'month': 'Nov 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
-  },
-  {
-    'month': 'Dec 2016',
-    'candidates': '',
-    'parties': '',
-    'pacs': '',
-    'other': ''
+    'date': '7/31/2016',
+    'candidates': 2150698783.26,
+    'pacs': 2496380499.98,
+    'party': 953771714.2
   }
-]
+];
 
 function Overview(selector, data, index) {
   this.selector = selector;
