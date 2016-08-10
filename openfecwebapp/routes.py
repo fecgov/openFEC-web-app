@@ -277,26 +277,9 @@ def regulations(query, offset):
 
 @app.route('/legal/advisory-opinions/<ao_no>/')
 def advisory_opinion_page(ao_no):
-    #TODO fetch AO from API
-    from datetime import date
-    advisory_opinion = {
-        'id' : 1,
-        'no' : ao_no,
-        'date': date(2016, 2, 1),
-        'name': 'PAC for the PACs',
-        'summary': '''Lorem ipsum
-                ''',
-        'final_url': '#',
-        'related_documents': [
-            {'name': 'Final Advisory Opinion', 'date': date(2016, 2, 1), 'url': '#'},
-            {'name': 'Document A', 'date': date(2016, 2, 1), 'url': '#'},
-            {'name': 'Document B', 'date': date(2016, 2, 1), 'url': '#'},
-            {'name': 'Document C', 'date': date(2016, 2, 1), 'url': '#'},
-        ],
-        'entities': [
-            {'name': 'Citizen', 'url': '#', 'role': 'Requestor', 'type': 'Individual'},
-            {'name': 'Senator', 'url': '#', 'role': 'Requestor', 'type': 'Party committee, national'},
-            {'name': 'National Committee', 'url': '#', 'role': 'Requestor', 'type': 'Party committee, national'},
-        ],
-    }
+    advisory_opinion = api_caller.load_legal_advisory_opinion(ao_no)
+
+    if not advisory_opinion:
+        abort(404)
+
     return views.render_legal_advisory_opinion(advisory_opinion)

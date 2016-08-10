@@ -72,6 +72,32 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     return results
 
 
+def load_legal_advisory_opinion(ao_no):
+    url = '/legal/advisory_opinion/'
+    results = _call_api(url, parse.quote(ao_no))
+
+    if not (results and 'docs' in results):
+        return None
+
+    documents = results['docs']
+    if not (documents and len(documents)):
+        return None
+
+    canonical_document = documents[0]
+    advisory_opinion = {
+        'no' : ao_no,
+        'date': canonical_document['date'],
+        'name': canonical_document['name'],
+        'summary': canonical_document['summary'],
+        'description': canonical_document['description'],
+        'url': canonical_document['url'],
+        'documents': documents,
+        'entities': [],
+    }
+
+    return advisory_opinion
+
+
 def load_single_type(data_type, c_id, *path, **filters):
     data = _call_api(data_type, c_id, *path, **filters)
     return result_or_404(data)

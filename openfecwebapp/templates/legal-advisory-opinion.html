@@ -20,9 +20,9 @@
       </div>
       <div class="sidebar-container">
         <aside class="sidebar sidebar--primary">
-          <h4 class="sidebar__title">Cited in this AO</h4>
-          <div class="sidebar__content">
-            Lorem Ipsum.
+          <h4 class="sidebar__title">Cited in this opinion</h4>
+          <div class="sidebar__content is-disabled">
+            Coming soon.
           </div>
         </aside>
       </div>
@@ -30,45 +30,30 @@
     <section class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
       <div class="content__section">
-        <a class="button button--cta button--browse button--lg" href="{{ advisory_opinion.final_url }}">Final Opinion</a>
+        <a class="button button--cta button--browse button--lg" href="{{ advisory_opinion.url }}">Final opinion</a>
       </div>
       <table class="data-table data-table--text">
         <thead>
           <tr>
             <th class="cell--20">Date</th>
             <th>Name</th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
-          {% for document in advisory_opinion.related_documents %}
+          {% for document in advisory_opinion.documents %}
             <tr>
-              <td>{{ document.date }}</td>
-              <td><a href="{{ document.url }}">{{ document.name }}</a></td>
+              <td>{{ document.date | date }}</td>
+              <td><a href="{{ document.url }}">{{ document.description }}</a></td>
+              <td>{{ document.category }}</td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
     </section>
-    <section class="content__section">
+    <section class="content__section is-disabled">
       <h2 class="t-ruled--bold t-ruled--bottom">Entities</h2>
-      <table class="data-table data-table--text">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for entity in advisory_opinion.entities %}
-            <tr>
-              <td><a href="{{ entity.url }}">{{ entity.name }}</a></td>
-              <td>{{ entity.role }}</td>
-              <td>{{ entity.type }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      Coming soon.
     </section>
   </div>
 </div>
