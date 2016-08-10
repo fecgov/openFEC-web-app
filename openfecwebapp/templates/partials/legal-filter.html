@@ -3,7 +3,7 @@
     <h2 class="filter__header filters__inner">
       Search {{ document_type_display_name }}
     </h2>
-    <form id="category-filters" action="#results-{{ result_type }}">
+    <form id="category-filters" action="{{ search_url }}/#results-{{ result_type }}">
       <div class="filters__inner">
         <div class="filter" id="search-field">
           <label class="label" for="search-input">Search terms</label>

@@ -40,10 +40,13 @@ def render_legal_search_results(results, query, result_type, feature_flag):
 def render_legal_doc_search_results(results, query, result_type):
     if result_type == 'advisory_opinions':
         document_type_display_name = 'Advisory opinions'
+        # search_url = '/legal/search/advisory-opinions'
     elif result_type == 'regulations':
         document_type_display_name = 'Regulations'
+        #search_url = '/legal/search/regulations'
     else:
         document_type_display_name = 'Documents'
+        #search_url = 'legal/search'
 
     return render_template(
         'legal-doc-search-results.html',
@@ -51,12 +54,15 @@ def render_legal_doc_search_results(results, query, result_type):
         results=results,
         result_type=result_type,
         query=query,
+        search_url = search_url
     )
 
 def render_legal_advisory_opinion_landing():
     return render_template(
         'legal_advisory_opinion_landing.html',
-        document_type_display_name='Advisory opinions'
+        document_type_display_name='Advisory opinions',
+        result_type = 'advisory_opinions',
+        search_url = '/legal/search/advisory-opinions'
     )
 
 def to_date(committee, cycle):
