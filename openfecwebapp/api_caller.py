@@ -79,7 +79,8 @@ def load_legal_advisory_opinion(ao_no):
     if not (results and 'docs' in results):
         return None
 
-    documents = results['docs']
+    # sort by chronological date
+    documents = sorted(results['docs'], key=lambda doc: doc['date'])
     if not (documents and len(documents)):
         return None
 
