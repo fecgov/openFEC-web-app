@@ -117,7 +117,7 @@ def candidates_office(office):
         result_type='candidates',
         title='candidates for ' + office,
         slug='candidates-office',
-        context=OrderedDict([('office', office)]),
+        table_context=OrderedDict([('office', office)]),
         columns=constants.table_columns['candidates-office-' + office.lower()]
     )
 
@@ -221,7 +221,7 @@ def reports(form_type):
         'datatable.html',
         slug='reports',
         title=title,
-        context=context,
+        table_context=context,
         dates=utils.date_ranges(),
         columns=constants.table_columns['reports-' + form_type.lower()]
     )

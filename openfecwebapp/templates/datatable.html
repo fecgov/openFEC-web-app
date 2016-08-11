@@ -45,9 +45,9 @@
 
 {% block scripts %}
 
-{% if context %}
+{% if table_context %}
 <script type="text/javascript">
-var context = {{ context|tojson|safe }};
+var context = {{ table_context|tojson|safe }};
 </script>
 {% endif %}
 
