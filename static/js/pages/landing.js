@@ -146,11 +146,11 @@ function Overview(selector, data, index) {
 
   $(window).on('resize', this.zeroPadTotals.bind(this));
 
-  new LineChart(selector + ' .js-chart', this.data, this.index);
+  new LineChart(selector + ' .js-chart', selector + ' .js-snapshot', this.data, this.index);
 }
 
 Overview.prototype.zeroPadTotals = function() {
-  helpers.zeroPad(this.selector + ' .js-totals', '.overview__total-number', '.figure__decimals');
+  helpers.zeroPad(this.selector + ' .js-snapshot', '.overview__total-number', '.figure__decimals');
 };
 
 new Overview('.js-raised-overview', raisingData, 1);
