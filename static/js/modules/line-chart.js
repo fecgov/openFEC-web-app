@@ -8,6 +8,7 @@ var numeral = require('numeral');
 var helpers = require('./helpers');
 
 var parseDate = d3.time.format('%b %Y');
+var parseDateLong = d3.time.format('%b %d %Y');
 var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
 function LineChart(selector, snapshot, data, index) {
@@ -193,7 +194,7 @@ LineChart.prototype.populateSnapshot = function(d) {
 
   this.$snapshot.find('[data-total-for="all"]').html(helpers.currency(total));
 
-  this.$snapshot.find('.js-date').html(parseDate(d.date));
+  this.$snapshot.find('.js-date').html(parseDateLong(d.date));
   helpers.zeroPad(this.$snapshot, '.overview__total-number', '.figure__decimals');
 };
 
