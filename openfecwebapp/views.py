@@ -55,8 +55,7 @@ def render_legal_doc_search_results(results, query, result_type):
 
 def render_legal_advisory_opinion_landing():
     return render_template(
-        'legal_advisory_opinion_landing.html',
-        document_type_display_name='Advisory opinions'
+        'legal-advisory-opinion-landing.html',
     )
 
 def to_date(committee, cycle):

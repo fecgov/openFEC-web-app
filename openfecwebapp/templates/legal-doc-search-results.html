@@ -1,5 +1,5 @@
 {% extends "layouts/main.html" %}
-{% import 'macros/legal-search.html' as legal_search %}
+{% import 'macros/legal.html' as legal %}
 {% import 'macros/breadcrumbs.html' as breadcrumb %}
 
 {% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
@@ -19,7 +19,7 @@
 </header>
 
 <section class="main__content--full data-container__wrapper">
-  {% include 'partials/legal-filter.html' %}
+  {{ legal.filter('Search %s' % (document_type_display_name), result_type, query) }}
   <div id="results-{{ result_type }}" class="content__section data-container__body dataTables_wrapper">
     <div class="results-info results-info--simple">
       <div class="results-info__left">

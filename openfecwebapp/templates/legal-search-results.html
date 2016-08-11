@@ -1,5 +1,5 @@
 {% extends "layouts/main.html" %}
-{% import 'macros/legal-search.html' as legal_search %}
+{% import 'macros/legal.html' as legal %}
 {% import 'macros/breadcrumbs.html' as breadcrumb %}
 
 {% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
@@ -15,7 +15,7 @@
 {% block body %}
 <header class="page-header slab slab--primary">
   {{ breadcrumb.breadcrumbs('Search results', breadcrumb_links) }}
-  {{ legal_search.search('header', result_type, query, feature_flag) }}
+  {{ legal.search('header', result_type, query, feature_flag) }}
 </header>
 
 <div class="main">

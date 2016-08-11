@@ -1,3 +1,28 @@
+{% macro filter(title, result_type, query) %}
+<div id="filters" class="filters filters--fixed is-open">
+  <div class="filters__hider">
+    <h2 class="filter__header filters__inner">
+      {{ title }}
+    </h2>
+    <form id="category-filters" action="{{ url_for(result_type) }}">
+      <div class="filters__inner">
+        <div class="filter" id="search-field">
+          <label class="label" for="search-input">Search terms</label>
+          <div class="combo combo--search--mini">
+            <ul class="dropdown__selected"></ul>
+            <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
+            <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
+            <button class="combo__button button--search button--standard" type="submit">
+              <span class="u-visually-hidden">Search</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endmacro %}
+
 {% macro search(location, result_type, query, feature_flag, button_color="button--standard", select_class="select--alt-primary") %}
 {% if location == 'hero' %}
   {% set size = 'combo--search--large' %}
