@@ -30,6 +30,10 @@ function LineChart(selector, snapshot, data, index) {
   this.$prev = this.$snapshot.find('.js-snapshot-prev');
   this.$next = this.$snapshot.find('.js-snapshot-next');
 
+  if (helpers.isMediumScreen()) {
+    this.$snapshot.height(this.baseHeight - this.margin.bottom);
+  }
+
   this.element.on('mousemove', this.handleMouseMove.bind(this));
   this.$prev.on('click', this.goToPreviousMonth.bind(this));
   this.$next.on('click', this.goToNextMonth.bind(this));
@@ -86,19 +90,9 @@ LineChart.prototype.buildChart = function() {
       .domain([0, Math.ceil(max / 1000000000) * 1000000000])
       .range([this.height, 0]);
 
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .ticks(d3.time.month)
-      .tickFormat(function(d) {
-        if (d.getMonth() === 0) {
-          return parseMY(d);
-        } else if (d.getMonth() % 2 === 0) {
-          return parseM(d);
-        } else {
-          return '';
-        }
-      })
-      .orient('bottom');
+  var xAxis = d3.svg.axis().scale(x);
+
+  this.formatXAxis(xAxis);
 
   var yAxis = d3.svg.axis()
       .scale(y)
@@ -163,6 +157,35 @@ LineChart.prototype.buildChart = function() {
   this.x = x;
 };
 
+LineChart.prototype.formatXAxis = function(axis) {
+  var formatter;
+  if (helpers.isMediumScreen()) {
+    formatter = function(d) {
+      if (d.getMonth() === 0) {
+        return parseMY(d);
+      } else if (d.getMonth() % 2 === 0) {
+        return parseM(d);
+      } else {
+        return '';
+      }
+    };
+  } else {
+    formatter = function(d) {
+      if (d.getMonth() === 0) {
+        return parseMY(d);
+      } else if (d.getMonth() % 4 === 0) {
+        return parseM(d);
+      } else {
+        return '';
+      }
+    };
+  }
+
+    axis.ticks(d3.time.month)
+    .tickFormat(formatter)
+    .orient('bottom');
+};
+
 LineChart.prototype.handleMouseMove = function() {
   var svg = this.element.select('svg')[0][0];
 
@@ -172,12 +195,18 @@ LineChart.prototype.handleMouseMove = function() {
   this.moveCursor(d);
 };
 
-LineChart.prototype.moveCursor = function(d) {
-  var i = this.data.indexOf(d);
-  this.cursor.attr('x1', this.x(d.date)).attr('x2', this.x(d.date));
+LineChart.prototype.moveCursor = function(datum) {
+  var i = this.data.indexOf(datum);
+  this.cursor.attr('x1', this.x(datum.date)).attr('x2', this.x(datum.date));
   this.nextDatum = this.data[i+1];
   this.prevDatum = this.data[i-1];
-  this.populateSnapshot(d);
+  this.populateSnapshot(datum);
+  this.element.selectAll('.line__points circle')
+    .attr('r', 2)
+    .filter(function(d) {
+      return d.date === datum.date;
+    })
+    .attr('r', 4);
 };
 
 LineChart.prototype.populateSnapshot = function(d) {
