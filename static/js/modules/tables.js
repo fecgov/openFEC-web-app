@@ -19,14 +19,11 @@ var filterTags = require('fec-style/js/filter-tags');
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
-var titleTemplate = require('../../templates/tables/title.hbs');
 var missingTemplate = require('../../templates/tables/noData.hbs');
 
 var simpleDOM = 't<"results-info"ip>';
-var browseDOM = '<"js-results-info results-info results-info--simple"' +
-                  '<"results-info__right"ilpr>>' +
-                '<"panel__main"t>' +
-                '<"results-info"ip>';
+var browseDOM = '<"panel__main"t>' +
+                '<"results-info"lp>';
 
 var DOWNLOAD_CAP = 100000;
 var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
@@ -259,17 +256,10 @@ function filterSuccessUpdates(changeCount) {
     var filterAction = '';
     var $filterMessage = $('.filter__message');
 
+    $('.is-successful').removeClass('is-successful');
+
     if (type === 'checkbox' || type === 'radio') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
-      $('.is-successful').removeClass();
-
-      $('.is-loading').removeClass('is-loading');
-
-      $label.addClass('is-successful');
-
-      setTimeout(function () {
-        $label.removeClass('is-successful');
-      }, helpers.SUCCESS_DELAY);
 
       filterAction = 'Filter applied.';
 
@@ -286,7 +276,7 @@ function filterSuccessUpdates(changeCount) {
       }
       // text input search
       else {
-        $label = $('.is-loading');
+        $label = $('.is-loading:not(.overlay)');
 
         if ($(updateChangedEl).val()) {
           filterAction = '"' + $(updateChangedEl).val() + '" applied.';
@@ -294,14 +284,15 @@ function filterSuccessUpdates(changeCount) {
         else {
           filterAction = 'Search term removed.';
         }
-
-        $label.removeClass('is-loading').addClass('is-successful');
-
-        setTimeout(function () {
-          $label.removeClass('is-successful');
-        }, helpers.SUCCESS_DELAY);
       }
     }
+    else {
+      // probably a select dropdown
+      $label = $(updateChangedEl);
+      filterAction = '"' + $(updateChangedEl).find('option:selected').text() + '" applied.';
+    }
+
+    $('.is-loading').removeClass('is-loading').addClass('is-successful');
 
     // build message with number of results returned
     if (changeCount > 0) {
@@ -320,10 +311,17 @@ function filterSuccessUpdates(changeCount) {
       clearTimeout(messageTimer);
     }
 
-    $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
-      .hide().fadeIn());
+    // Clicking on "Clear all filters" will remove all dropdown checkboxes,
+    // so we check to make sure the message isn't shown inside the dropdown panel.
+    if ($label.closest('.dropdown__list').length < 1) {
+      // append filter change count message after input
+      $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
+        .hide().fadeIn());
+    }
 
     messageTimer = setTimeout(function() {
+      $('.is-successful').removeClass('is-successful');
+
       $('.filter__message').fadeOut(function () {
         $(this).remove();
       });
@@ -387,7 +385,6 @@ var defaultOpts = {
   responsive: {details: false},
   language: {
     lengthMenu: 'Results per page: _MENU_',
-    info: 'Showing _START_–_END_ of about _TOTAL_ records'
   },
   pagingType: 'simple',
   title: null,
@@ -414,7 +411,10 @@ function DataTable(selector, opts) {
   // Set `this.filterSet` before instantiating the nested `DataTable` so that
   // filters are available on fetching initial data
   if (this.opts.useFilters) {
-    var tagList = new filterTags.TagList({title: 'All records'});
+    var tagList = new filterTags.TagList({
+      resultType: 'results',
+      showResultCount: true
+    });
     this.$widgets.find('.js-filter-tags').prepend(tagList.$body);
     this.filterPanel = new FilterPanel();
     this.filterSet = this.filterPanel.filterSet;
@@ -475,20 +475,16 @@ DataTable.prototype.ensureWidgets = function() {
   this.$processing = $('<div class="overlay is-loading"></div>').hide();
   this.$body.before(this.$processing);
 
-  var $paging = this.$body.closest('.dataTables_wrapper').find('.js-results-info');
-
   if (this.opts.useExport) {
-    this.$title = $(titleTemplate({title: this.opts.title}));
-    $paging.prepend(this.$title);
-
-    this.$exportWidget = $(exportWidgetTemplate());
-    this.$widgets.append(this.$exportWidget);
+    this.$exportWidget = $(exportWidgetTemplate({title: this.opts.title}));
+    this.$widgets.prepend(this.$exportWidget);
     this.$exportButton = $('.js-export');
     this.$exportTooltipContainer = $('.js-tooltip-container');
     this.$exportTooltip = this.$exportWidget.find('.tooltip');
 
-    this.$exportInfo = $('.js-info');
-    this.$exportInfo.append($('#results_info'));
+    if (!helpers.isLargeScreen() && this.filterPanel) {
+      this.$exportWidget.after(this.filterPanel.$body);
+    }
   }
 
   if (this.opts.disableExport) {
@@ -589,6 +585,11 @@ DataTable.prototype.fetchSuccess = function(resp) {
   this.refreshExport();
 
   var changeCount = this.newCount - this.currentCount;
+
+  var countHTML = this.newCount > 0 ?
+    'about <span class="tags__count">' + this.newCount.toLocaleString('en-US') + '</span>' :
+    '<span class="tags__count">0</span>';
+  this.$widgets.find('.js-count').html(countHTML);
 
   filterSuccessUpdates(changeCount);
 

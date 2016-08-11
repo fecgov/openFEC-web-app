@@ -32,11 +32,11 @@
             {% if feature_flag %}
             <li class="side-nav__item">
               <a class="side-nav__link" href="#results-advisory-opinions">
-              Advisory Opinions ({{ results.total_advisory_opinions|default(0) }})
+              Advisory opinions ({{ results.total_advisory_opinions|default(0) }})
               </a>
             </li>
             {% else %}
-            <li class="is-disabled side-nav__item"><span class="side-nav__link">Advisory Opinions (TBD)</span></li>
+            <li class="is-disabled side-nav__item"><span class="side-nav__link">Advisory opinions (TBD)</span></li>
             {% endif %}
             <li class="is-disabled side-nav__item"><span class="side-nav__link">Enforcement Matters (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
@@ -97,31 +97,27 @@
         <div id="results-advisory-opinions" class="content__section">
           <div class="results-info results-info--simple">
             <div class="results-info__left">
-              <h2 class="results-info__title">Advisory Opinions</h2>
+              <h2 class="results-info__title">Advisory opinions</h2>
             </div>
             {% if results.total_advisory_opinions %}
             <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.advisory_opinions|length }} of <a href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}"><strong>{{ results.total_advisory_opinions }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.advisory_opinions|length }} of
+                <a href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">
+                  <strong>{{ results.total_advisory_opinions }}</strong> results
+                </a></span>
             </div>
             {% endif %}
           </div>
           {% if results.total_advisory_opinions %}
-            <table class="data-table data-table--text">
-              <thead>
-                <tr>
-                  <th class="cell--15">No.</th>
-                  <th class="cell--25">Name</th>
-                  <th class="cell--60">Hit</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for advisory_opinion in results.advisory_opinions %}
-                  {% include 'partials/legal-search-results-advisory-opinion.html' %}
-                {% endfor %}
-              </tbody>
-            </table>
+            {% for ao_no in results.advisory_opinions %}
+                {% with advisory_opinion_docs = results.advisory_opinions[ao_no] %}
+                {% include 'partials/legal-search-results-advisory-opinion.html' %}
+                {% endwith %}
+            {% endfor %}
             <div class="results-info">
-              <a class="button button--browse button--alt" href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">View all results</a>
+              <a class="button button--browse button--alt"
+              href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">
+              View all results</a>
             </div>
           {% else %}
             <div class="message message--alert">
