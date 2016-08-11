@@ -2,25 +2,33 @@
 
 {% macro overview(data, verb, location) %}
   <div class="overview js-{{verb}}-overview">
-    <div class="overview__totals js-totals">
+    <div class="overview__chart js-chart">
+
+    </div>
+    <div class="overview__totals js-snapshot">
+      <div class="snapshot__controls">
+        <button class="button button--standard button--previous js-snapshot-prev"><span class="u-visually-hidden">Previous month</span></button>
+        <h5>Jan 2015 - <span class="js-date">{{ today() | date(fmt='%b %Y')}}</span></h5>
+        <button class="button button--standard button--next js-snapshot-next"><span class="u-visually-hidden">next month</span></button>
+      </div>
       <div class="overview__total">
-        <span class="overview__total-title">Total {{ verb }}</span>
-        <span class="overview__total-number"><span class="figure__decimals" aria-hidden="true"></span>{{ data['total'] | currency }}</span>
+        <div class="overview__total-title">
+          All groups {{ verb }}
+        </div>
+        <div class="overview__total-number">
+          <span class="overview__total-number">
+            <span class="figure__decimals" aria-hidden="true"></span>
+            <span data-total-for="all">{{ data['total'] | currency }}</span>
+          </span>
+        </div>
       </div>
       <div class="overview__total">
         <div class="overview__total-title">
           <span class="term" data-term="candidate"><span class="swatch candidates"></span>Candidates</span>
         </div>
         <span class="overview__total-number">
-          <span class="figure__decimals" aria-hidden="true"></span>{{ data['candidates'] | currency }}
-        </span>
-      </div>
-      <div class="overview__total">
-        <div class="overview__total-title">
-          <span class="term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
-        </div>
-        <span class="overview__total-number">
-          <span class="figure__decimals" aria-hidden="true"></span>{{ data['parties'] | currency }}
+          <span class="figure__decimals" aria-hidden="true"></span>
+          <span data-total-for="candidates">{{ data['candidates'] | currency }}</span>
         </span>
       </div>
       <div class="overview__total">
@@ -28,7 +36,17 @@
           <span class="term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
         </div>
         <span class="overview__total-number">
-          <span class="figure__decimals" aria-hidden="true"></span>{{ data['pacs'] | currency }}
+          <span class="figure__decimals" aria-hidden="true"></span>
+          <span data-total-for="pacs">{{ data['pacs'] | currency }}</span>
+        </span>
+      </div>
+      <div class="overview__total">
+        <div class="overview__total-title">
+          <span class="term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
+        </div>
+        <span class="overview__total-number">
+          <span class="figure__decimals" aria-hidden="true"></span>
+          <span data-total-for="party">{{ data['parties'] | currency }}</span>
         </span>
       </div>
       <div class="overview__total">
@@ -36,15 +54,14 @@
           <span class="swatch other"></span>Other
         </div>
         <span class="overview__total-number">
-          <span class="figure__decimals" aria-hidden="true"></span>{{ data['other'] | currency }}</a>
+          <span class="figure__decimals" aria-hidden="true"></span>
+          <span data-total-for="other">{{ data['other'] | currency }}</span>
         </span>
       </div>
     </div>
-    <div class="overview__chart js-chart">
-    </div>
-    <div class="overview__feedback">
-      {{ reaction_box.reaction_box(verb, location)}}
-    </div>
+  </div>
+  <div class="overview__feedback">
+    {{ reaction_box.reaction_box(verb, location)}}
   </div>
 {% endmacro %}
 
