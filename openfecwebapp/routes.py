@@ -257,6 +257,7 @@ def advisory_opinions_landing():
 def advisory_opinions(query, offset):
     result_type = 'advisory_opinions'
     results = {}
+
     # Only hit the API if there's an actual query
     if query:
         results = api_caller.load_legal_search_results(query, result_type, offset=offset)
