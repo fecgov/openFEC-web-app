@@ -225,7 +225,7 @@ LineChart.prototype.populateSnapshot = function(d) {
   this.$snapshot.find('[data-total-for="all"]').html(helpers.currency(total));
 
   this.$snapshot.find('.js-date').html(parseMDY(d.date));
-  helpers.zeroPad(this.$snapshot, '.overview__total-number', '.figure__decimals');
+  helpers.zeroPad(this.$snapshot, '.snapshot__item-number', '.figure__decimals');
 };
 
 LineChart.prototype.goToNextMonth = function() {

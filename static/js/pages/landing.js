@@ -273,7 +273,7 @@ function Overview(selector, data, index) {
 }
 
 Overview.prototype.zeroPadTotals = function() {
-  helpers.zeroPad(this.selector + ' .js-snapshot', '.overview__total-number', '.figure__decimals');
+  helpers.zeroPad(this.selector + ' .js-snapshot', '.snapshot__item-number', '.figure__decimals');
 };
 
 new Overview('.js-raised-overview', raisingData, 1);

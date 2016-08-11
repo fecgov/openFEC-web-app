@@ -5,55 +5,55 @@
     <div class="overview__chart js-chart">
 
     </div>
-    <div class="overview__totals js-snapshot">
+    <div class="snapshot js-snapshot">
       <div class="snapshot__controls">
         <button class="button button--standard button--previous js-snapshot-prev"><span class="u-visually-hidden">Previous month</span></button>
         <h5>Jan 1, 2015 - <span class="js-date">Jul 31, 2016</span></h5>
         <button class="button button--standard button--next js-snapshot-next"><span class="u-visually-hidden">next month</span></button>
       </div>
-      <div class="overview__total">
-        <div class="overview__total-title">
+      <div class="snapshot__item">
+        <div class="snapshot__item-title">
           All groups
         </div>
-        <div class="overview__total-number">
-          <span class="overview__total-number">
+        <div class="snapshot__item-number">
+          <span class="snapshot__item-number">
             <span class="figure__decimals" aria-hidden="true"></span>
             <span data-total-for="all">{{ data['total'] | currency }}</span>
           </span>
         </div>
       </div>
-      <div class="overview__total">
-        <div class="overview__total-title">
+      <div class="snapshot__item">
+        <div class="snapshot__item-title">
           <span class="term" data-term="candidate"><span class="swatch candidates"></span>Candidates</span>
         </div>
-        <span class="overview__total-number">
+        <span class="snapshot__item-number">
           <span class="figure__decimals" aria-hidden="true"></span>
           <span data-total-for="candidates">{{ data['candidates'] | currency }}</span>
         </span>
       </div>
-      <div class="overview__total">
-        <div class="overview__total-title">
+      <div class="snapshot__item">
+        <div class="snapshot__item-title">
           <span class="term" data-term="political action committee (pac)"><span class="swatch pacs"></span>PACs</span>
         </div>
-        <span class="overview__total-number">
+        <span class="snapshot__item-number">
           <span class="figure__decimals" aria-hidden="true"></span>
           <span data-total-for="pacs">{{ data['pacs'] | currency }}</span>
         </span>
       </div>
-      <div class="overview__total">
-        <div class="overview__total-title">
+      <div class="snapshot__item">
+        <div class="snapshot__item-title">
           <span class="term" data-term="party committee"><span class="swatch parties"></span>Party committees</span>
         </div>
-        <span class="overview__total-number">
+        <span class="snapshot__item-number">
           <span class="figure__decimals" aria-hidden="true"></span>
           <span data-total-for="party">{{ data['parties'] | currency }}</span>
         </span>
       </div>
-      <div class="overview__total">
-        <div class="overview__total-title">
+      <div class="snapshot__item">
+        <div class="snapshot__item-title">
           <span class="swatch other"></span>Other
         </div>
-        <span class="overview__total-number">
+        <span class="snapshot__item-number">
           <span class="figure__decimals" aria-hidden="true"></span>
           <span data-total-for="other">{{ data['other'] | currency }}</span>
         </span>
