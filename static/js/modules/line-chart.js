@@ -7,8 +7,10 @@ var d3 = require('d3');
 var numeral = require('numeral');
 var helpers = require('./helpers');
 
-var parseDate = d3.time.format('%b %Y');
-var parseDateLong = d3.time.format('%b %d %Y');
+var parseM = d3.time.format('%b');
+var parseMY = d3.time.format('%b %Y');
+var parseMDY = d3.time.format('%b %e, %Y');
+
 var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
 function LineChart(selector, snapshot, data, index) {
@@ -65,11 +67,18 @@ LineChart.prototype.buildChart = function() {
     entityTotals[type] = totals;
   });
 
+  var minYear = d3.min(data, function(d) {
+    return d.date.getFullYear();
+  });
+
+  var maxYear = minYear + 1;
+
   // Build the scales
   var x = d3.time.scale()
-    .domain(d3.extent(data, function(d) {
-      return d.date;
-    }))
+    // .domain(d3.extent(data, function(d) {
+    //   return d.date;
+    // }))
+    .domain([new Date('01/01/' + minYear), new Date('12/31/' + maxYear)])
     .nice(d3.time.month)
     .range([0, this.width]);
 
@@ -81,8 +90,10 @@ LineChart.prototype.buildChart = function() {
       .scale(x)
       .ticks(d3.time.month)
       .tickFormat(function(d) {
-        if (d.getMonth() % 2 === 0) {
-          return parseDate(d);
+        if (d.getMonth() === 0) {
+          return parseMY(d);
+        } else if (d.getMonth() % 2 === 0) {
+          return parseM(d);
         } else {
           return '';
         }
@@ -157,17 +168,7 @@ LineChart.prototype.handleMouseMove = function() {
 
   var x0 = this.x.invert(d3.mouse(svg)[0]),
     i = bisectDate(this.data, x0, 1),
-    d0 = this.data[i - 1],
-    d1 = this.data[i],
-    d;
-    if (d1) {
-      d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-    } else {
-      d = d0;
-    }
-  this.currentDatum = d;
-  this.prevDatum = d0;
-  this.nextDatum = d1;
+    d = this.data[i - 1];
   this.moveCursor(d);
 };
 
@@ -194,7 +195,7 @@ LineChart.prototype.populateSnapshot = function(d) {
 
   this.$snapshot.find('[data-total-for="all"]').html(helpers.currency(total));
 
-  this.$snapshot.find('.js-date').html(parseDateLong(d.date));
+  this.$snapshot.find('.js-date').html(parseMDY(d.date));
   helpers.zeroPad(this.$snapshot, '.overview__total-number', '.figure__decimals');
 };
 

@@ -12,6 +12,12 @@ var analytics = require('fec-style/js/analytics');
 
 var raisingData = [
   {
+    'date': '1/1/2015',
+    'candidates': 0,
+    'pacs': 0,
+    'party': 0
+  },
+  {
     'date': '1/31/2015',
     'candidates': 67016.47,
     'pacs': 38955102.59,
@@ -127,6 +133,129 @@ var raisingData = [
   }
 ];
 
+var spendingData = [
+  {
+    'date': '1/1/2015',
+    'candidates': 0,
+    'pacs': 0,
+    'party': 0
+  },
+  {
+    'date': '1/31/2015',
+    'candidates': 227763.19,
+    'pacs': 25947453.71,
+    'party': 27811236.28
+  },
+  {
+    'date': '2/28/2015',
+    'candidates': 783132.3,
+    'pacs': 55240015.65,
+    'party': 60591273.81
+  },
+  {
+    'date': '3/31/2015',
+    'candidates': 73439011.21,
+    'pacs': 115577004.52,
+    'party': 111245945
+  },
+  {
+    'date': '4/30/2015',
+    'candidates': 74985576.34,
+    'pacs': 137638870.04,
+    'party': 150952935.1
+  },
+  {
+    'date': '5/31/2015',
+    'candidates': 75769838.83,
+    'pacs': 183291635.63,
+    'party': 181896244.5
+  },
+  {
+    'date': '6/30/2015',
+    'candidates': 214916127.78,
+    'pacs': 413091706.72,
+    'party': 226026838.5
+  },
+  {
+    'date': '7/31/2015',
+    'candidates': 214989770.8,
+    'pacs': 436348720.02,
+    'party': 257041225.1
+  },
+  {
+    'date': '8/31/2015',
+    'candidates': 215194520.81,
+    'pacs': 455086172.24,
+    'party': 289188936.8
+  },
+  {
+    'date': '9/30/2015',
+    'candidates': 411755128.84,
+    'pacs': 500531518.44,
+    'party': 320950572.4
+  },
+  {
+    'date': '10/31/2015',
+    'candidates': 411908033.43,
+    'pacs': 530702773.98,
+    'party': 355357721
+  },
+  {
+    'date': '11/30/2015',
+    'candidates': 411953887.49,
+    'pacs': 563624700.76,
+    'party': 400423226
+  },
+  {
+    'date': '12/31/2015',
+    'candidates': 687806889.27,
+    'pacs': 1061427629.57,
+    'party': 447487838.2
+  },
+  {
+    'date': '1/31/2016',
+    'candidates': 798544746.75,
+    'pacs': 1199744449.75,
+    'party': 485613544.7
+  },
+  {
+    'date': '2/29/2016',
+    'candidates': 953995628.51,
+    'pacs': 1373474055,
+    'party': 531383939.9
+  },
+  {
+    'date': '3/31/2016',
+    'candidates': 1194644485.23,
+    'pacs': 1630734145.19,
+    'party': 580075654.9
+  },
+  {
+    'date': '4/30/2016',
+    'candidates': 1322789939.62,
+    'pacs': 1750364318.75,
+    'party': 628746131.3
+  },
+  {
+    'date': '5/31/2016',
+    'candidates': 1407588285.03,
+    'pacs': 1888293884.23,
+    'party': 683355085.8
+  },
+  {
+    'date': '6/30/2016',
+    'candidates': 1670515133.28,
+    'pacs': 2197511985.06,
+    'party': 752247602.2
+  },
+  {
+    'date': '7/31/2016',
+    'candidates': 1688172685.96,
+    'pacs': 2201455575.39,
+    'party': 752338545.7
+  }
+];
+
 function Overview(selector, data, index) {
   this.selector = selector;
   this.$element = $(selector);
@@ -148,7 +277,7 @@ Overview.prototype.zeroPadTotals = function() {
 };
 
 new Overview('.js-raised-overview', raisingData, 1);
-// new Overview('.js-spent-overview', spendingData, 2);
+new Overview('.js-spent-overview', spendingData, 2);
 
 $('.js-reaction-box').each(function() {
   new ReactionBox(this);

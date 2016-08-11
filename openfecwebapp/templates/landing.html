@@ -48,20 +48,14 @@
       </div>
     </div>
   </section>
-  <div class="content__section--ruled content__section--extra">
-    <div class="icon-heading content__section">
-      <img class="icon-heading__image" src="{{ url_for('static', filename='img/i-overviews--primary.svg') }}" alt="Icon representing interactive overviews">
-      <div class="icon-heading__content">
-        <h2 class="icon-heading__title">Interactive overviews</h2>
-        <p>You don’t have to be an expert to learn more about campaign finance. These overviews are a visual introduction to how money is raised and spent in federal elections.</p>
-      </div>
-    </div>
+  <div class="content__section--extra">
+    <h2 class="t-ruled--bottom">Get started with campaign finance data</h2>
     <h3 class="u-no-margin">Raising</h3>
-    <p>This total amount raised by all groups until a specific point in time.</p>
+    <p>This total amount raised, by group, until specific points in time.</p>
     <section class="content__section">
       <div class="content__section">
         <div class="section__heading">
-          <h4 class="heading__title heading__title--with-action t-upper">All elections, 2015–2016</h4>
+          <h4 class="heading__title heading__title--with-action t-upper">Cumulative amount raised in all elections, 2015–2016</h4>
           <div class="heading__action">
             <ul class="list--buttons">
               <li><a class="button button--standard button--table" href="{{ url_for('receipts') }}">Explore data</a></li>
@@ -98,11 +92,11 @@
       </div>
     </section>
     <section class="content__secton--extra">
-      <h3 class="u-no-margin">Spending overview</h3>
-      <p>This chart shows <span class="term" data-term="total disbursements">total disbursements</span> for the past year. Disbursements include all payments and purchases made by a committee.</p>
+      <h3 class="u-no-margin">Spending</h3>
+      <p>The total amount spent, by group, in all elections up until specific points in time. Calculated using total disbursements, which include all payments and purchases made by a committee.</p>
       <div class="content__section">
         <div class="section__heading">
-          <h4 class="heading__title heading__title--with-action t-upper">All elections, 2015–2016</h4>
+          <h4 class="heading__title heading__title--with-action t-upper">Cumulative amount spent in all elections, 2015–2016</h4>
           <div class="heading__action">
             <ul class="list--buttons">
               <li><a class="button button--standard button--table" href="{{ url_for('disbursements') }}">Explore data</a></li>
