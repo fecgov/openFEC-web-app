@@ -76,6 +76,7 @@
     "leaflet": "0.7.7",
     "leaflet-providers": "1.1.6",
     "moment": "2.10.3",
+    "numeral": "1.5.3",
     "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
     "raven-js": "1.2.0",
     "topojson": "1.6.19",
