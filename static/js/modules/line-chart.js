@@ -79,9 +79,6 @@ LineChart.prototype.buildChart = function() {
 
   // Build the scales
   var x = d3.time.scale()
-    // .domain(d3.extent(data, function(d) {
-    //   return d.date;
-    // }))
     .domain([new Date('01/01/' + minYear), new Date('12/31/' + maxYear)])
     .nice(d3.time.month)
     .range([0, this.width]);
@@ -181,7 +178,7 @@ LineChart.prototype.formatXAxis = function(axis) {
     };
   }
 
-    axis.ticks(d3.time.month)
+  axis.ticks(d3.time.month)
     .tickFormat(formatter)
     .orient('bottom');
 };
