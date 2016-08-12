@@ -53,6 +53,13 @@ def render_legal_doc_search_results(results, query, result_type):
     )
 
 
+def render_legal_advisory_opinion(advisory_opinion):
+    return render_template(
+        'legal-advisory-opinion.html',
+        advisory_opinion=advisory_opinion,
+    )
+
+
 def to_date(committee, cycle):
     if committee['committee_type'] in ['H', 'S', 'P']:
         return None
