@@ -20,13 +20,13 @@
 </div>
 {% endmacro %}
 
-{% macro search(location, result_type, query, feature_flag, button_color="button--standard", select_class="select--alt-primary") %}
+{% macro search(location, result_type, query, button_color="button--standard", select_class="select--alt-primary") %}
 {% if location == 'hero' %}
   {% set size = 'combo--search--large' %}
 {% endif %}
 <form id="{{ location }}-search" action="{{ url_for('legal_search') }}" autocomplete="off" class="search__container">
   <div class="combo combo--search {{ size }}">
-    {% if feature_flag %}
+    {% if features.legal %}
     <select class="search__select {{select_class}}" name="search_type" aria-label="Select a document type">
       {% for value, name in (('all', 'All'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions')) %}
       <option value="{{ value }}" {% if result_type == value %}selected{% endif %}>{{ name }}</option>

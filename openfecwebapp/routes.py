@@ -236,14 +236,17 @@ def elections(office, cycle, state=None, district=None):
     'result_type': fields.Str(load_from='search_type', missing='all'),
 })
 def legal_search(query, result_type):
+    if result_type != 'all':
+        # search_type is used for google analytics
+        return redirect(url_for(result_type, search=query, search_type=result_type))
+
     results = {}
 
     # Only hit the API if there's an actual query
     if query:
         results = api_caller.load_legal_search_results(query, result_type, limit=3)
 
-    return views.render_legal_search_results(results, query,
-                    result_type, config.features['legal'])
+    return views.render_legal_search_results(results, query, result_type)
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():

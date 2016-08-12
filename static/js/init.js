@@ -6,6 +6,7 @@ var $ = require('jquery');
 var Sticky = require('component-sticky');
 var Accordion = require('aria-accordion').Accordion;
 var Glossary = require('glossary-panel');
+var A11yDialog = require('a11y-dialog');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
@@ -105,6 +106,9 @@ $(document).ready(function() {
     new toc.TOC(this);
   });
 
+  $('.js-modal').each(function() {
+    new A11yDialog(this);
+  })
   // TODO: Restore
   // @if DEBUG
   // var perf = require('./modules/performance');

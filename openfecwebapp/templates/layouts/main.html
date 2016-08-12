@@ -70,7 +70,6 @@
   <main id="main" {% if section %} data-section="{{section}}"{% endif %}>
     {% block body %}{% endblock %}
   </main>
-
 <footer class="footer">
   <div class="container">
     <div class="seal">
@@ -88,6 +87,7 @@
 </footer>
 
 {% include './partials/glossary.html' %}
+{% block modals %}{% endblock %}
 
 <script src="{{ asset_for('dist/js/common.js') }}"></script>
 <script src="{{ asset_for('dist/js/init.js') }}"></script>
