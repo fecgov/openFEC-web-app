@@ -10,10 +10,13 @@
   {{ breadcrumb.breadcrumbs('AO %s' % (advisory_opinion.no,), breadcrumb_links) }}
 </header>
 
+<div class="main">
 <div class="container">
   <div class="row">
-    <h1 class="t-no-rules">AO {{ advisory_opinion.no }}</h1>
-    <h2 class="t-ruled--bold t-ruled--bottom">{{ advisory_opinion.name }}</h2>
+    <div class="section__heading">
+      <h1 class="heading__title heading__title--main">AO {{ advisory_opinion.no }}</h1>
+      <span class="heading__subtitle">{{ advisory_opinion.name }}</span>
+    </div>
     <section class="content__section">
       <div id="advisory-opinion-summary" class="main__content">
         {{ advisory_opinion.summary }}
@@ -30,7 +33,7 @@
     <section class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
       <div class="content__section">
-        <a class="button button--cta button--browse button--lg" href="{{ advisory_opinion.url }}">Final opinion</a>
+        <a class="button button--cta button--document button--lg" href="{{ advisory_opinion.url }}">Final opinion</a>
       </div>
       <table class="data-table data-table--text">
         <thead>
@@ -56,5 +59,6 @@
       Coming soon.
     </section>
   </div>
+</div>
 </div>
 {% endblock %}

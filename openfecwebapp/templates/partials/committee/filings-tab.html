@@ -1,7 +1,7 @@
 <section class="main" id="section-5" role="tabpanel" aria-hidden="true" aria-labelledby="section-5-heading">
   <div class="container">
     <div class="section__heading u-no-margin">
-      <h2 class="heading__title" id="section-5-heading">
+      <h2 class="heading__title heading__title--with-action" id="section-5-heading">
         Committee filings: {{ cycle|fmt_year_range }}
       </h2>
       <a class="heading__action button--alt button--browse" href="{{ url_for('filings', committee_id=committee_id) }}">All filings</a>
