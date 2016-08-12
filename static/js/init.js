@@ -108,7 +108,14 @@ $(document).ready(function() {
 
   $('.js-modal').each(function() {
     new A11yDialog(this);
-  })
+    this.addEventListener('dialog:show', function(e) {
+      $('body').css('overflow', 'hidden');
+    });
+    this.addEventListener('dialog:hide', function(e) {
+      $('body').css('overflow', 'scroll');
+    });
+  });
+
   // TODO: Restore
   // @if DEBUG
   // var perf = require('./modules/performance');
