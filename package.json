@@ -59,6 +59,7 @@
     "url": "https://github.com/18F/openfec-web-app/issues"
   },
   "dependencies": {
+    "a11y-dialog": "2.3.1",
     "aria-accordion": "0.1.1",
     "chroma-js": "1.0.1",
     "colorbrewer": "0.0.2",
@@ -76,6 +77,7 @@
     "leaflet": "0.7.7",
     "leaflet-providers": "1.1.6",
     "moment": "2.10.3",
+    "numeral": "1.5.3",
     "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
     "raven-js": "1.2.0",
     "topojson": "1.6.19",

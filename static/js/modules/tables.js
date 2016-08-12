@@ -50,7 +50,6 @@ var messageTimer;
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
-  $('.data-container__body.fade-in').css('opacity', '1');
   $('.dataTable tbody td:first-child').attr('scope','row');
 });
 
@@ -257,6 +256,7 @@ function filterSuccessUpdates(changeCount) {
     var $filterMessage = $('.filter__message');
 
     $('.is-successful').removeClass('is-successful');
+    $('.is-unsuccessful').removeClass('is-unsuccessful');
 
     if (type === 'checkbox' || type === 'radio') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
@@ -270,7 +270,8 @@ function filterSuccessUpdates(changeCount) {
     else if (type === 'text') {
       // typeahead
       if ($(updateChangedEl).hasClass('tt-input')) {
-        $label = $(updateChangedEl);
+        // show message after generated checkbox (last item in list)
+        $label = $('.js-typeahead-filter li').last();
 
         filterAction = 'Filter applied.';
       }
@@ -609,7 +610,7 @@ DataTable.prototype.fetchError = function() {
   }, helpers.LOADING_DELAY);
 
   setTimeout(function() {
-    $('.is-error').removeClass('is-unsuccessful');
+    $('.is-unsuccessful').removeClass('is-unsuccessful');
   }, helpers.SUCCESS_DELAY);
 };
 
