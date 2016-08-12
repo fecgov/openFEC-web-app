@@ -246,8 +246,7 @@ def legal_search(query, result_type):
     if query:
         results = api_caller.load_legal_search_results(query, result_type, limit=3)
 
-    return views.render_legal_search_results(results, query,
-                    result_type, config.features['legal'])
+    return views.render_legal_search_results(results, query, result_type)
 
 @app.route('/legal/advisory-opinions/')
 @use_kwargs({

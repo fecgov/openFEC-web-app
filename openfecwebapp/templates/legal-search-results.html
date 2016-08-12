@@ -15,7 +15,7 @@
 {% block body %}
 <header class="page-header slab slab--primary">
   {{ breadcrumb.breadcrumbs('Search results', breadcrumb_links) }}
-  {{ legal_search.search('header', result_type, query, feature_flag) }}
+  {{ legal_search.search('header', result_type, query) }}
 </header>
 
 <div class="main">
@@ -29,7 +29,7 @@
               Regulations ({{ results.total_regulations|default(0) }})
               </a>
             </li>
-            {% if feature_flag %}
+            {% if features.legal %}
             <li class="side-nav__item">
               <a class="side-nav__link" href="#results-advisory-opinions">
               Advisory opinions ({{ results.total_advisory_opinions|default(0) }})
@@ -93,7 +93,7 @@
             </div>
           {% endif %}
         </div>
-        {% if feature_flag %}
+        {% if features.legal %}
         <div id="results-advisory-opinions" class="content__section">
           <div class="results-info results-info--simple">
             <div class="results-info__left">
