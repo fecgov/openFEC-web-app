@@ -24,7 +24,7 @@ class TestLegalSearch(unittest.TestCase):
 
         url = urlparse(response.location)
         query = parse_qs(url.query)
-        self.assertEqual(url.path, '/legal/regulations/')
+        self.assertEqual(url.path, '/legal/search/regulations/')
         self.assertIn('search', query)
         self.assertIn('search_type', query)
         self.assertEqual(query['search'], ['in kind donation'])
