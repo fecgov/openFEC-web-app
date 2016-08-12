@@ -38,7 +38,7 @@ def render_legal_search_results(results, query, result_type):
 
 def render_legal_doc_search_results(results, query, result_type):
     if result_type == 'advisory_opinions':
-        document_type_display_name = 'Advisory Opinions'
+        document_type_display_name = 'Advisory opinions'
     elif result_type == 'regulations':
         document_type_display_name = 'Regulations'
     else:
@@ -52,6 +52,10 @@ def render_legal_doc_search_results(results, query, result_type):
         query=query,
     )
 
+def render_legal_advisory_opinion_landing():
+    return render_template(
+        'legal-advisory-opinion-landing.html',
+    )
 
 def render_legal_advisory_opinion(advisory_opinion):
     return render_template(

@@ -249,6 +249,10 @@ def legal_search(query, result_type):
     return views.render_legal_search_results(results, query, result_type)
 
 @app.route('/legal/advisory-opinions/')
+def advisory_opinions_landing():
+        return views.render_legal_advisory_opinion_landing()
+
+@app.route('/legal/search/advisory-opinions/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'offset': fields.Int(missing=0),
@@ -263,7 +267,12 @@ def advisory_opinions(query, offset):
 
     return views.render_legal_doc_search_results(results, query, result_type)
 
+# TODO migrating from /legal/regulations -> /legal/search/regulations, eventually there will be a regulations landing page
 @app.route('/legal/regulations/')
+def regulations_landing(*args, **kwargs):
+    return redirect(url_for('regulations', *args, **kwargs))
+
+@app.route('/legal/search/regulations/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'offset': fields.Int(missing=0),
