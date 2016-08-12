@@ -4,7 +4,7 @@ host: fec-dev-web
 services:
   - fec-creds-dev
 env:
-  FEC_CMS_URL: https://fec-proxy.18f.gov
+  FEC_CMS_URL: https://fec-dev-proxy.18f.gov
   FEC_WEB_API_URL: https://fec-dev-api.18f.gov
   FEC_WEB_DEBUG: true
   FEC_WEB_ENVIRONMENT: dev
