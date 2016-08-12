@@ -5,7 +5,7 @@
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
     <div class="section__heading">
-      <h2 class="heading__title" id="section-2-heading">
+      <h2 class="heading__title heading__title--with-action" id="section-2-heading">
         Money raised by the committee: {{ cycle|fmt_year_range }}
       </h2>
       <a class="heading__action button--alt button--browse"
@@ -46,7 +46,7 @@
           </div>
           <div class="map-table">
             <table
-                class="data-table"
+                class="data-table data-table--heading-borders"
                 data-type="receipts-by-state"
                 data-committee="{{ committee.committee_id }}"
                 data-cycle="{{ cycle }}"
@@ -72,7 +72,7 @@
             <h3 class="results-info__title">Receipts by size</h3>
           </div>
           <table
-             class="data-table"
+             class="data-table data-table--heading-borders"
              data-type="contribution-size"
              data-committee="{{ committee.committee_id }}"
              data-cycle="{{ cycle }}">
@@ -87,7 +87,7 @@
             <h3 class="results-info__title">Receipts by individual's employer</h3>
           </div>
           <table
-              class="data-table"
+              class="data-table data-table--heading-borders"
               data-type="receipts-by-employer"
               data-committee="{{ committee.committee_id }}"
               data-cycle="{{ cycle }}"
@@ -105,7 +105,7 @@
             <h3 class="results-info__title">Receipts by individual's occupation</h3>
           </div>
           <table
-              class="data-table"
+              class="data-table data-table--heading-borders"
               data-type="receipts-by-occupation"
               data-committee="{{ committee.committee_id }}"
               data-cycle="{{ cycle }}"
