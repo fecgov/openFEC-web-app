@@ -274,3 +274,12 @@ def regulations(query, offset):
         results = api_caller.load_legal_search_results(query, result_type, offset=offset)
 
     return views.render_legal_doc_search_results(results, query, result_type)
+
+@app.route('/legal/advisory-opinions/<ao_no>/')
+def advisory_opinion_page(ao_no):
+    advisory_opinion = api_caller.load_legal_advisory_opinion(ao_no)
+
+    if not advisory_opinion:
+        abort(404)
+
+    return views.render_legal_advisory_opinion(advisory_opinion)
