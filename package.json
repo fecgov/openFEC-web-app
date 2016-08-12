@@ -59,6 +59,7 @@
     "url": "https://github.com/18F/openfec-web-app/issues"
   },
   "dependencies": {
+    "a11y-dialog": "2.3.1",
     "aria-accordion": "0.1.1",
     "chroma-js": "1.0.1",
     "colorbrewer": "0.0.2",
