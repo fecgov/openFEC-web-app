@@ -30,18 +30,6 @@
             </tr>
           </thead>
         </table>
-        {% if efiling_columns %}
-        <table id="efiling-results" class="data-table" aria-live="polite" aria-hidden="true">
-          <thead>
-            <tr>
-              {% for column in efiling_columns %}
-                <th scope="col">{{ column }}</th>
-              {% endfor %}
-              <th scope="col"></th>
-            </tr>
-          </thead>
-        </table>
-        {% endif %}
       </div>
     </div>
 </section>

@@ -171,7 +171,6 @@ def filings():
         dates=utils.date_ranges(),
         result_type='committees',
         columns=constants.table_columns['filings'],
-        efiling_columns=constants.table_columns['filings-efiling']
     )
 
 @app.route('/independent-expenditures/')
