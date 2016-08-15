@@ -86,7 +86,11 @@ def load_legal_advisory_opinion(ao_no):
     if not (documents and len(documents)):
         return None
 
-    canonical_document = documents[0]
+    for document in documents:
+        canonical_document = document
+        if (document['category'] == 'Final Opinion'):
+            break        
+    
     advisory_opinion = {
         'no' : ao_no,
         'date': canonical_document['date'],
@@ -94,6 +98,7 @@ def load_legal_advisory_opinion(ao_no):
         'summary': canonical_document['summary'],
         'description': canonical_document['description'],
         'url': canonical_document['url'],
+        'category' : canonical_document['category'],
         'documents': documents,
         'entities': [],
     }
