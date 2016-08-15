@@ -18,15 +18,18 @@ var columns = columnHelpers.getColumns(
   ]
 );
 
+
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
     autoWidth: false,
+    tableSwitcher: true,
     title: 'Filings',
     path: ['filings'],
     columns: columns,
     rowCallback: filings.renderRow,
     // Order by receipt date descending
+    hideColumns: '.hide-processed',
     order: [[3, 'desc']],
     useFilters: true,
     useExport: true,   
@@ -39,11 +42,17 @@ $(document).ready(function() {
     efiling: {
       path: ['efile', 'filings'],
       disableFilters: true,
-      enabledFilters: ['committee_id', 'data_type']
+      enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
+      hideColumns: '.hide-efiling',
+      order: [[5, 'desc']],
+      disableExport: true
     }, 
     processed: {
       path: ['filings'],
       disableFilters: false,
+      hideColumns: '.hide-processed',
+      order: [[3, 'desc']],
+      disableExport: false
     }
-  });
+  }).init();
 });

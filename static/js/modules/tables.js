@@ -418,14 +418,20 @@ function DataTable(selector, opts) {
   var Paginator = this.opts.paginator || OffsetPaginator;
   this.paginator = new Paginator();
 
-  this.api = this.$body.DataTable(this.opts);
-  DataTable.registry[this.$body.attr('id')] = this;
+  if (!this.opts.tableSwitcher) {
+    this.initTable();
+  }
 
   if (this.opts.useExport) {
     $(document.body).on('download:countChanged', this.refreshExport.bind(this));
   }
 
-  $(document.body).on('table:switch', this.handleSwitch.bind(this));
+  $(document.body).on('table:switch', this.handleSwitch.bind(this));  
+}
+
+DataTable.prototype.initTable = function() {
+  this.api = this.$body.DataTable(this.opts);
+  DataTable.registry[this.$body.attr('id')] = this;
 
   if (!_.isEmpty(this.filterPanel)) {
     updateOnChange(this.filterSet.$body, this.api);
@@ -433,7 +439,7 @@ function DataTable(selector, opts) {
   }
 
   this.$body.css('width', '100%');
-  this.$body.find('tbody').addClass('js-panel-toggle');
+  this.$body.find('tbody').addClass('js-panel-toggle');  
 }
 
 DataTable.prototype.initFilters = function() {
@@ -465,6 +471,8 @@ DataTable.prototype.refreshExport = function() {
     } else {
       this.enableExport();
     }
+  } else if (this.opts.disableExport) {
+    this.disableExport({message: DOWNLOAD_MESSAGES.comingSoon});
   }
 };
 
@@ -609,6 +617,12 @@ DataTable.prototype.fetchSuccess = function(resp) {
   }
 
   this.currentCount = this.newCount;
+
+  if (this.opts.hideColumns) {
+    this.api.columns().visible(true);
+    this.api.columns(this.opts.hideColumns).visible(false);
+  }
+
 };
 
 DataTable.prototype.fetchError = function() {
@@ -646,13 +660,22 @@ DataTable.defer = function($table, opts) {
 };
 
 DataTable.prototype.handleSwitch = function(e, opts) {
-  // Change the table path
+  this.opts.order = opts.order;
+  this.opts.hideColumns = opts.hideColumns;
+  this.opts.disableExport = opts.disableExport;
   this.opts.path = opts.path;
+
   if (opts.disableFilters) {
     this.filterSet.disableFilters(opts.enabledFilters);
   } else {
     this.filterSet.enableFilters();
   }
+
+  if (!this.api) {
+    this.initTable();
+  }
+
+  this.refreshExport();
 };
 
 module.exports = {
