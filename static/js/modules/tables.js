@@ -585,13 +585,23 @@ DataTable.prototype.isPending = function() {
 };
 
 DataTable.prototype.buildUrl = function(data, paginate) {
+  var order = data.order;
   var query = _.extend({sort_hide_null: true}, this.filters || {});
   paginate = typeof paginate === 'undefined' ? true : paginate;
-  query.sort = mapSort(data.order, this.opts.columns);
+
+  if (this.opts.initialOrder) {
+    order = [{
+      column: this.opts.initialOrder[0][0],
+      dir: this.opts.initialOrder[0][1]
+    }]
+  }
+
+  query.sort = mapSort(order, this.opts.columns);
 
   if (paginate) {
     query = _.extend(query, this.paginator.mapQuery(data, query));
   }
+
   return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
 };
 
@@ -623,6 +633,7 @@ DataTable.prototype.fetchSuccess = function(resp) {
     this.api.columns(this.opts.hideColumns).visible(false);
   }
 
+  this.opts.initialOrder = null;
 };
 
 DataTable.prototype.fetchError = function() {
@@ -663,6 +674,7 @@ DataTable.prototype.handleSwitch = function(e, opts) {
   this.opts.order = opts.order;
   this.opts.hideColumns = opts.hideColumns;
   this.opts.disableExport = opts.disableExport;
+  this.opts.initialOrder = opts.order;
   this.opts.path = opts.path;
 
   if (opts.disableFilters) {
