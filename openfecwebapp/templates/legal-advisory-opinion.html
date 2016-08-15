@@ -33,7 +33,9 @@
     <section class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
       <div class="content__section">
-        <a class="button button--cta button--document button--lg" href="{{ advisory_opinion.url }}">Final opinion</a>
+      {% if advisory_opinion.category == "Final Opinion" %}
+        <a class="button button--cta button--document button--lg" href="{{ advisory_opinion.url }}">{{ advisory_opinion.category | lower | capitalize }}</a>
+      {% endif %}
       </div>
       <table class="data-table data-table--text">
         <thead>
