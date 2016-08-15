@@ -9,6 +9,7 @@ var decoders = require('./decoders');
 
 
 var dateColumn = columnHelpers.formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc']});
+var timestampColumn = columnHelpers.formattedColumn(columnHelpers.timestampFormatter, {orderSequence: ['desc', 'asc']});
 var currencyColumn = columnHelpers.formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = columnHelpers.barColumn(helpers.currency);
 
@@ -21,7 +22,7 @@ var supportOpposeColumn = {
 
 var amendmentIndicatorColumn = {
   data: 'amendment_indicator',
-  className: 'hide-panel min-desktop',
+  className: 'hide-panel hide-efiling min-desktop',
   render: function(data) {
     return decoders.amendments[data] || '';
   },
@@ -230,18 +231,23 @@ var filings = {
   },
   pdf_url: columnHelpers.urlColumn('pdf_url', {
     data: 'document_description',
-    className: 'all column--medium',
+    className: 'all column--med hide-efiling',
     orderable: false
   }),
+  form_type: {
+    data: 'form_type',
+    className: 'hide-processed column--med'
+  },
   amendment_indicator: amendmentIndicatorColumn,
-  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet hide-panel column--med'}),
+  loaded_timestamp: timestampColumn({data: 'load_timestamp', className: 'min-tablet hide-panel hide-processed column--med'}),
+  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet hide-efiling hide-panel column--med'}),
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   total_receipts: currencyColumn({data: 'total_receipts', className: 'min-desktop hide-panel column--number'}),
   total_disbursements: currencyColumn({data: 'total_disbursements', className: 'min-desktop hide-panel column--number'}),
   total_independent_expenditures: currencyColumn({data: 'total_independent_expenditures', className: 'min-desktop hide-panel column--number'}),
   modal_trigger: {
-    className: 'all column--trigger',
+    className: 'all column--trigger hide-efiling',
     orderable: false,
     render: function(data, type, row) {
       if (row.form_type && row.form_type.match(/^F3[XP]?$/)) {

@@ -11,10 +11,10 @@ var columns = require('../modules/columns');
 var tables = require('../modules/tables');
 var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 
-var filingsColumns = columnHelpers.getColumns(
+var columns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_start_date', 'coverage_end_date', 'modal_trigger'
+    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'form_type', 'loaded_timestamp', 'coverage_start_date', 'coverage_end_date', 'modal_trigger'
   ]
 );
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
     autoWidth: false,
     title: 'Filings',
     path: ['filings'],
-    columns: filingsColumns,
+    columns: columns,
     rowCallback: filings.renderRow,
     // Order by receipt date descending
     order: [[3, 'desc']],
