@@ -88,8 +88,15 @@ def load_legal_advisory_opinion(ao_no):
 
     for document in documents:
         canonical_document = document
-        if (document['category'] == 'Final Opinion'):
+        if document['category'] == 'Final Opinion':
             break        
+    
+    if not canonical_document:
+        return None
+
+    # manipulating category for display purposes
+    canonical_document['category'] = canonical_document['category'].lower()
+    canonical_document['category'] = canonical_document['category'].capitalize()
     
     advisory_opinion = {
         'no' : ao_no,
