@@ -93,10 +93,6 @@ def load_legal_advisory_opinion(ao_no):
     
     if not canonical_document:
         return None
-
-    # manipulating category for display purposes
-    canonical_document['category'] = canonical_document['category'].lower()
-    canonical_document['category'] = canonical_document['category'].capitalize()
     
     advisory_opinion = {
         'no' : ao_no,
