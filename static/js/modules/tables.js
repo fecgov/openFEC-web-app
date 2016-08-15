@@ -254,6 +254,7 @@ function filterSuccessUpdates(changeCount) {
     var type = $(updateChangedEl).attr('type');
     var message = '';
     var filterAction = '';
+    var filterResult = '';
     var $filterMessage = $('.filter__message');
 
     $('.is-successful').removeClass('is-successful');
@@ -262,10 +263,10 @@ function filterSuccessUpdates(changeCount) {
     if (type === 'checkbox' || type === 'radio') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
 
-      filterAction = 'Filter applied.';
+      filterAction = 'Filter added';
 
       if (!$(updateChangedEl).is(':checked')) {
-        filterAction = 'Filter removed.';
+        filterAction = 'Filter removed';
       }
     }
     else if (type === 'text') {
@@ -274,7 +275,7 @@ function filterSuccessUpdates(changeCount) {
         // show message after generated checkbox (last item in list)
         $label = $('.js-typeahead-filter li').last();
 
-        filterAction = 'Filter applied.';
+        filterAction = 'Filter applied';
       }
       // text input search
       else {
@@ -284,7 +285,7 @@ function filterSuccessUpdates(changeCount) {
           filterAction = '"' + $(updateChangedEl).val() + '" applied.';
         }
         else {
-          filterAction = 'Search term removed.';
+          filterAction = 'Search term removed';
         }
       }
     }
@@ -297,14 +298,18 @@ function filterSuccessUpdates(changeCount) {
     $('.is-loading').removeClass('is-loading').addClass('is-successful');
 
     // build message with number of results returned
+
     if (changeCount > 0) {
-      message = filterAction + '<br>' +
-      '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
+      filterResult = 'Expanded by ' + changeCount.toLocaleString() + ' results';
+    }
+    else if (changeCount === 0) {
+      filterResult = 'No change in results';
     }
     else {
-      message = filterAction + '<br>' +
-      '<strong>Removed ' + Math.abs(changeCount).toLocaleString() + '</strong> results.';
+      filterResult = 'Narrowed by ' + Math.abs(changeCount).toLocaleString() + ' results';
     }
+
+    message = '<strong>' + filterAction + '</strong><br>' + filterResult;
 
     if ($filterMessage.length) {
       $filterMessage.fadeOut().remove();
