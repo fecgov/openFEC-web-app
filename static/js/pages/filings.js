@@ -42,13 +42,12 @@ $(document).ready(function() {
     efiling: {
       path: ['efile', 'filings'],
       disableFilters: true,
-      enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
+      enabledFilters: ['committee_id', 'data_type'],
       hideColumns: '.hide-efiling',
       disableExport: true
     },
     processed: {
       path: ['filings'],
-      disableFilters: false,
       hideColumns: '.hide-processed',
       disableExport: false
     }

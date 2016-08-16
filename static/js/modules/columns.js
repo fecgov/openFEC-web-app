@@ -238,9 +238,9 @@ var filings = {
     data: 'receipt_date',
     className: 'min-tablet hide-panel column--med',
     orderable: true,
-    render: function(data, type, row) {
-      if (row.load_timestamp) {
-        var parsed = moment(row.load_timestamp, 'YYYY-MM-DDTHH:mm:ss');
+    render: function(data, type, row, meta) {
+      if (meta.settings.oInit.path.indexOf('efile') >= 0) {
+        var parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
         return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : 'Invalid date';
       } else {
         return data;
