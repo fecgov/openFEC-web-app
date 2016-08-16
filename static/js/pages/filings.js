@@ -14,7 +14,7 @@ var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var columns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'form_type', 'loaded_timestamp', 'coverage_start_date', 'coverage_end_date', 'modal_trigger'
+    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_start_date', 'coverage_end_date', 'modal_trigger'
   ]
 );
 
@@ -32,7 +32,7 @@ $(document).ready(function() {
     hideColumns: '.hide-processed',
     order: [[3, 'desc']],
     useFilters: true,
-    useExport: true,   
+    useExport: true,
     callbacks: {
       afterRender: filings.renderModal
     }
@@ -44,14 +44,12 @@ $(document).ready(function() {
       disableFilters: true,
       enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
       hideColumns: '.hide-efiling',
-      order: [[5, 'desc']],
       disableExport: true
-    }, 
+    },
     processed: {
       path: ['filings'],
       disableFilters: false,
       hideColumns: '.hide-processed',
-      order: [[3, 'desc']],
       disableExport: false
     }
   }).init();

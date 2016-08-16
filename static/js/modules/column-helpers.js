@@ -3,7 +3,6 @@
 var _ = require('underscore');
 
 var helpers = require('./helpers');
-var moment = require('moment');
 
 var sizeInfo = {
   0: {limits: [0, 200], label: '$200 and under'},
@@ -133,17 +132,11 @@ function buildTotalLink(path, getParams) {
   };
 }
 
-function timestampFormatter(value) {
-  var parsed = moment(value, 'YYYY-MM-DDTHH:mm:ss');
-  return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : null;
-}
-
 module.exports = {
   barColumn: barColumn,
   buildAggregateUrl: buildAggregateUrl,
   buildEntityLink: buildEntityLink,
   buildTotalLink: buildTotalLink,
-  timestampFormatter: timestampFormatter,
   formattedColumn: formattedColumn,
   getColumns: getColumns,
   getSizeParams: getSizeParams,

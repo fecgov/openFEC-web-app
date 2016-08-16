@@ -428,7 +428,7 @@ function DataTable(selector, opts) {
     $(document.body).on('download:countChanged', this.refreshExport.bind(this));
   }
 
-  $(document.body).on('table:switch', this.handleSwitch.bind(this));  
+  $(document.body).on('table:switch', this.handleSwitch.bind(this));
 }
 
 DataTable.prototype.initTable = function() {
@@ -441,7 +441,7 @@ DataTable.prototype.initTable = function() {
   }
 
   this.$body.css('width', '100%');
-  this.$body.find('tbody').addClass('js-panel-toggle');  
+  this.$body.find('tbody').addClass('js-panel-toggle');
 }
 
 DataTable.prototype.initFilters = function() {
@@ -591,13 +591,6 @@ DataTable.prototype.buildUrl = function(data, paginate) {
   var query = _.extend({sort_hide_null: true}, this.filters || {});
   paginate = typeof paginate === 'undefined' ? true : paginate;
 
-  if (this.opts.initialOrder) {
-    order = [{
-      column: this.opts.initialOrder[0][0],
-      dir: this.opts.initialOrder[0][1]
-    }]
-  }
-
   query.sort = mapSort(order, this.opts.columns);
 
   if (paginate) {
@@ -634,8 +627,6 @@ DataTable.prototype.fetchSuccess = function(resp) {
     this.api.columns().visible(true);
     this.api.columns(this.opts.hideColumns).visible(false);
   }
-
-  this.opts.initialOrder = null;
 };
 
 DataTable.prototype.fetchError = function() {
@@ -673,10 +664,8 @@ DataTable.defer = function($table, opts) {
 };
 
 DataTable.prototype.handleSwitch = function(e, opts) {
-  this.opts.order = opts.order;
   this.opts.hideColumns = opts.hideColumns;
   this.opts.disableExport = opts.disableExport;
-  this.opts.initialOrder = opts.order;
   this.opts.path = opts.path;
 
   if (opts.disableFilters) {
