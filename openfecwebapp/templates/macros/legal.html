@@ -1,10 +1,32 @@
-{% macro search(location, result_type, query, feature_flag, button_color="button--standard", select_class="select--alt-primary") %}
+{% macro filter(title, result_type, query) %}
+<div id="filters" class="filters is-open">
+  <h2 class="filters__inner">
+    {{ title }}
+  </h2>
+  <form id="category-filters" action="{{ url_for(result_type) }}">
+    <div class="filters__inner">
+      <div class="filter" id="search-field">
+        <label class="label" for="search-input">Search terms</label>
+        <div class="combo combo--search--mini">
+          <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
+          <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
+          <button class="combo__button button--search button--standard" type="submit">
+            <span class="u-visually-hidden">Search</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endmacro %}
+
+{% macro search(location, result_type, query, button_color="button--standard", select_class="select--alt-primary") %}
 {% if location == 'hero' %}
   {% set size = 'combo--search--large' %}
 {% endif %}
 <form id="{{ location }}-search" action="{{ url_for('legal_search') }}" autocomplete="off" class="search__container">
   <div class="combo combo--search {{ size }}">
-    {% if feature_flag %}
+    {% if features.legal %}
     <select class="search__select {{select_class}}" name="search_type" aria-label="Select a document type">
       {% for value, name in (('all', 'All'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions')) %}
       <option value="{{ value }}" {% if result_type == value %}selected{% endif %}>{{ name }}</option>

@@ -1,5 +1,5 @@
 {% extends "layouts/main.html" %}
-{% import 'macros/legal-search.html' as legal_search %}
+{% import 'macros/legal.html' as legal %}
 {% import 'macros/breadcrumbs.html' as breadcrumb %}
 
 {% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
@@ -7,9 +7,9 @@
 
 {% block title %}
   {% if query %}
-  Searching {{ document_type_display_name }} for &ldquo;{{ query }}&rdquo;
+  Searching {{ document_type_display_name.lower() }} for &ldquo;{{ query }}&rdquo;
   {% else %}
-  Search {{ document_type_display_name }}
+  Search {{ document_type_display_name.lower() }}
   {% endif %}
 {% endblock %}
 
@@ -19,16 +19,16 @@
 </header>
 
 <section class="main__content--full data-container__wrapper">
-  {% include 'partials/legal-filter.html' %}
-  <div id="results-{{ result_type }}" class="content__section data-container__body dataTables_wrapper">
+  {{ legal.filter('Search %s' % (document_type_display_name.lower()), result_type, query) }}
+  <div id="results-{{ result_type }}" class="content__section data-container__body">
     <div class="results-info results-info--simple">
       <div class="results-info__left">
-        <h2 class="results-info__title">Searching {{ document_type_display_name }}{% if query %} for &ldquo;{{ query }}&rdquo;{% endif %}</h2>
+        <h2 class="results-info__title">Searching {{ document_type_display_name.lower() }}{% if query %} for &ldquo;{{ query }}&rdquo;{% endif %}</h2>
       </div>
     </div>
     {% if results.total_all %}
       {% if result_type == 'regulations' %}
-        <table class="data-table data-table--text">
+        <table class="data-table data-table--text data-table--heading-borders">
             <thead>
               <tr>
                 <th class="cell--15">Section</th>
