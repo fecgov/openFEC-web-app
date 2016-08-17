@@ -306,7 +306,7 @@ function filterSuccessUpdates(changeCount) {
       filterResult = 'No change in results';
     }
     else {
-      filterResult = Math.abs(changeCount).toLocaleString() + ' less results';
+      filterResult = Math.abs(changeCount).toLocaleString() + ' fewer results';
     }
 
     message = '<strong>' + filterAction + '</strong><br>' + filterResult;
