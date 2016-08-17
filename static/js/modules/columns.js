@@ -228,11 +228,24 @@ var filings = {
       }
     },
   },
-  pdf_url: columnHelpers.urlColumn('pdf_url', {
+  pdf_url: {
     data: 'document_description',
     className: 'all column--med',
-    orderable: false
-  }),
+    orderable: false,
+    render: function(data, type, row) {
+      var text = row.document_description ? row.document_description : row.form_type;
+      var url = row.pdf_url ? row.pdf_url : null;
+      if (url) {
+        var anchor = document.createElement('a');
+        anchor.textContent = text;
+        anchor.setAttribute('href', url);
+        anchor.setAttribute('target', '_blank');
+        return anchor.outerHTML;
+      } else {
+        return text;
+      }
+    }
+  },
   amendment_indicator: amendmentIndicatorColumn,
   receipt_date: {
     data: 'receipt_date',
