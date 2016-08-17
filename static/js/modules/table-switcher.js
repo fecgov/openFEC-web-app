@@ -16,13 +16,14 @@ function TableSwitcher(control, opts) {
 }
 
 TableSwitcher.prototype.init = function() {
-  var opts = this.opts[this.$control.find('input:checked').val()];
+  var table = this.$control.find('input:checked').val();
+  var opts = this.opts[table];
   this.$control.trigger('table:switch', opts);
 };
 
 TableSwitcher.prototype.handleChange = function(e) {
-  var $target = $(e.target);
-  var opts = this.opts[$target.val()];
+  var table = $(e.target).val();
+  var opts = this.opts[table];
   this.$control.trigger('table:switch', opts);
 };
 
