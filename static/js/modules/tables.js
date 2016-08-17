@@ -610,14 +610,25 @@ DataTable.prototype.fetchSuccess = function(resp) {
 DataTable.prototype.fetchError = function() {
   var self = this;
 
-  setTimeout(function() {
-    $('.is-loading').removeClass('is-loading').addClass('is-unsuccessful');
-    self.$processing.hide();
-  }, helpers.LOADING_DELAY);
+  $('.filter__message').remove();
 
-  setTimeout(function() {
+  $('.is-loading')
+    .removeClass('is-loading')
+    .addClass('is-unsuccessful')
+    .after($('<div class="filter__message filter__message--error">' +
+      '<strong>We had trouble processing your request</strong><br>' +
+      'Please try again. If you still have trouble let us know</div>'))
+    .hide().fadeIn();
+
+  self.$processing.hide();
+
+  messageTimer = setTimeout(function() {
     $('.is-unsuccessful').removeClass('is-unsuccessful');
-  }, helpers.SUCCESS_DELAY);
+
+    $('.filter__message').fadeOut(function () {
+      $(this).remove();
+    });
+  }, helpers.LOADING_DELAY);
 };
 
 /**
