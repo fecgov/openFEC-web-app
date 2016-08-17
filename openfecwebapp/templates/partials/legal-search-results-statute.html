@@ -1,0 +1,27 @@
+<table class="data-table data-table--text data-table--heading-borders">
+  <thead>
+    <tr>
+      <th class="cell--15">Name</th>
+      <th class="cell--85">Hit</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for statute in statutes %}
+    <tr class="legal-search-result">
+      <td>
+        <a title="{{ statute.no }} USC §{{ statute.section }}" href="{{ statute.url }}">
+          {{ statute.no }} USC §{{ statute.section }} {{ statute.name }}
+        </a>
+      </td>
+      <td>
+        <div class="t-serif legal-search-result__hit">
+          &hellip;
+          {% for highlight in statute.highlights %}
+            {{ highlight|safe }} &hellip;
+          {% endfor %}
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

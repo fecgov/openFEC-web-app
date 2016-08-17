@@ -47,6 +47,27 @@ def load_search_results(query, query_type='candidates'):
 
     return results['results'] if len(results) else []
 
+def mock_statute_results():
+    def mock_statute():
+        return {
+            "no": "51",
+            "section": "31602",
+            "name": "Fifteen Percent Threshold",
+            "highlights": [
+                "(B) if the <em>Administrator</em> intends to continue with the program, promptly initiate an analysis of the program, which shall include, at a minimum-",
+                "(i) the projected cost and <em>schedule</em> for completing the program if current requirements of the program are not modified;",
+                "(ii) the projected cost and the schedule for completing the <em>program</em> after instituting the actions described under subparagraph (A)(ii); and",
+                "(iii) a description of, and the <em>projected</em> cost and schedule for, a broad range of alternatives to the program.",
+            ],
+        }
+
+    return [
+        mock_statute(),
+        mock_statute(),
+        mock_statute(),
+    ]
+
+
 def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     filters = {}
     if query:
@@ -67,6 +88,10 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
                 grouped_aos[ao['no']].append(ao)
             else:
                 grouped_aos[ao['no']] = [ao]
+
+    # Mock statutes
+    results['statutes'] = mock_statute_results()
+    results['total_statutes'] = 8
 
     for ao_no in grouped_aos:
         grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
