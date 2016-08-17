@@ -46,9 +46,13 @@ Install Python dependencies:
 
     pip install -r requirements.txt
 
+Dependencies for test:
+
+    pip install -r requirements.test.txt
+
 Install client side dependencies:
 
-    $ npm install
+    npm install
 
 ### Configuration
 
