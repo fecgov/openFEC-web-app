@@ -300,13 +300,13 @@ function filterSuccessUpdates(changeCount) {
     // build message with number of results returned
 
     if (changeCount > 0) {
-      filterResult = 'Expanded by ' + changeCount.toLocaleString() + ' results';
+      filterResult = changeCount.toLocaleString() + ' more results';
     }
     else if (changeCount === 0) {
       filterResult = 'No change in results';
     }
     else {
-      filterResult = 'Narrowed by ' + Math.abs(changeCount).toLocaleString() + ' results';
+      filterResult = Math.abs(changeCount).toLocaleString() + ' less results';
     }
 
     message = '<strong>' + filterAction + '</strong><br>' + filterResult;
