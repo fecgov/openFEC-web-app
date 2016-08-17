@@ -586,11 +586,9 @@ DataTable.prototype.isPending = function() {
 };
 
 DataTable.prototype.buildUrl = function(data, paginate) {
-  var order = data.order;
   var query = _.extend({sort_hide_null: true}, this.filters || {});
   paginate = typeof paginate === 'undefined' ? true : paginate;
-
-  query.sort = mapSort(order, this.opts.columns);
+  query.sort = mapSort(data.order, this.opts.columns);
 
   if (paginate) {
     query = _.extend(query, this.paginator.mapQuery(data, query));
