@@ -50,7 +50,6 @@ var messageTimer;
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
-  $('.data-container__body.fade-in').css('opacity', '1');
   $('.dataTable tbody td:first-child').attr('scope','row');
 });
 
@@ -259,9 +258,17 @@ function filterSuccessUpdates(changeCount) {
     $('.is-successful').removeClass('is-successful');
     $('.is-unsuccessful').removeClass('is-unsuccessful');
 
-    if (type === 'checkbox' || type === 'radio') {
+    if (type === 'checkbox') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
 
+      filterAction = 'Filter applied.';
+
+      if (!$(updateChangedEl).is(':checked')) {
+        filterAction = 'Filter removed.';
+      }
+    } else if (type === 'radio') {
+      // Add the message after the last radio button / toggle
+      $label = $('label[for="' + updateChangedEl.id + '"]').closest('fieldset');
       filterAction = 'Filter applied.';
 
       if (!$(updateChangedEl).is(':checked')) {
@@ -402,14 +409,41 @@ function DataTable(selector, opts) {
   this.$body = $(selector);
   this.opts = _.extend({}, defaultOpts, {ajax: this.fetch.bind(this)}, opts);
   this.callbacks = _.extend({}, defaultCallbacks, opts.callbacks);
-
   this.xhr = null;
   this.fetchContext = null;
   this.hasWidgets = null;
   this.filters = null;
-
   this.$widgets = $(DATA_WIDGETS);
+  this.initFilters();
 
+  var Paginator = this.opts.paginator || OffsetPaginator;
+  this.paginator = new Paginator();
+
+  if (!this.opts.tableSwitcher) {
+    this.initTable();
+  }
+
+  if (this.opts.useExport) {
+    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
+  }
+
+  $(document.body).on('table:switch', this.handleSwitch.bind(this));
+}
+
+DataTable.prototype.initTable = function() {
+  this.api = this.$body.DataTable(this.opts);
+  DataTable.registry[this.$body.attr('id')] = this;
+
+  if (!_.isEmpty(this.filterPanel)) {
+    updateOnChange(this.filterSet.$body, this.api);
+    urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
+  }
+
+  this.$body.css('width', '100%');
+  this.$body.find('tbody').addClass('js-panel-toggle');
+}
+
+DataTable.prototype.initFilters = function() {
   // Set `this.filterSet` before instantiating the nested `DataTable` so that
   // filters are available on fetching initial data
   if (this.opts.useFilters) {
@@ -422,25 +456,7 @@ function DataTable(selector, opts) {
     this.filterSet = this.filterPanel.filterSet;
     $(window).on('popstate', this.handlePopState.bind(this));
   }
-
-  var Paginator = this.opts.paginator || OffsetPaginator;
-  this.paginator = new Paginator();
-  this.api = this.$body.DataTable(this.opts);
-
-  DataTable.registry[this.$body.attr('id')] = this;
-
-  if (this.opts.useExport) {
-    $(document.body).on('download:countChanged', this.refreshExport.bind(this));
-  }
-
-  if (!_.isEmpty(this.filterPanel)) {
-    updateOnChange(this.filterSet.$body, this.api);
-    urls.updateQuery(this.filterSet.serialize(), this.filterSet.fields);
-  }
-
-  this.$body.css('width', '100%');
-  this.$body.find('tbody').addClass('js-panel-toggle');
-}
+};
 
 DataTable.prototype.refreshExport = function() {
   if (this.opts.useExport && !this.opts.disableExport) {
@@ -456,6 +472,8 @@ DataTable.prototype.refreshExport = function() {
     } else {
       this.enableExport();
     }
+  } else if (this.opts.disableExport) {
+    this.disableExport({message: DOWNLOAD_MESSAGES.comingSoon});
   }
 };
 
@@ -575,6 +593,7 @@ DataTable.prototype.buildUrl = function(data, paginate) {
   if (paginate) {
     query = _.extend(query, this.paginator.mapQuery(data, query));
   }
+
   return helpers.buildUrl(this.opts.path, _.extend({}, query, this.opts.query || {}));
 };
 
@@ -600,6 +619,11 @@ DataTable.prototype.fetchSuccess = function(resp) {
   }
 
   this.currentCount = this.newCount;
+
+  if (this.opts.hideColumns) {
+    this.api.columns().visible(true);
+    this.api.columns(this.opts.hideColumns).visible(false);
+  }
 };
 
 DataTable.prototype.fetchError = function() {
@@ -634,6 +658,24 @@ DataTable.defer = function($table, opts) {
   tabs.onShow($table, function() {
     new DataTable($table, opts);
   });
+};
+
+DataTable.prototype.handleSwitch = function(e, opts) {
+  this.opts.hideColumns = opts.hideColumns;
+  this.opts.disableExport = opts.disableExport;
+  this.opts.path = opts.path;
+
+  if (opts.disableFilters) {
+    this.filterSet.disableFilters(opts.enabledFilters);
+  } else {
+    this.filterSet.enableFilters();
+  }
+
+  if (!this.api) {
+    this.initTable();
+  }
+
+  this.refreshExport();
 };
 
 module.exports = {
