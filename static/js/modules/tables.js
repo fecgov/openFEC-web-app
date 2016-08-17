@@ -269,7 +269,7 @@ function filterSuccessUpdates(changeCount) {
       }
     } else if (type === 'radio') {
       // Add the message after the last radio button / toggle
-      $label = $('label[for="' + updateChangedEl.id + '"]').siblings('label:last-child');
+      $label = $('label[for="' + updateChangedEl.id + '"]').closest('fieldset');
       filterAction = 'Filter applied.';
 
       if (!$(updateChangedEl).is(':checked')) {
