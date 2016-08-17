@@ -50,7 +50,6 @@ var messageTimer;
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
-  $('.data-container__body.fade-in').css('opacity', '1');
   $('.dataTable tbody td:first-child').attr('scope','row');
 });
 
