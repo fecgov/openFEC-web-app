@@ -56,19 +56,9 @@
             {% endif %}
           </div>
           {% if results.total_regulations %}
-            <table class="data-table data-table--text data-table--heading-borders">
-              <thead>
-                <tr>
-                  <th class="cell--15">Section</th>
-                  <th class="cell--85">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for section in results.regulations %}
-                  {% include 'partials/legal-search-results-regulation.html' %}
-                {% endfor %}
-              </tbody>
-            </table>
+            {% with regulations = results.regulations %}
+            {% include 'partials/legal-search-results-regulation.html' %}
+            {% endwith %}
             <div class="results-info">
               <a class="button button--browse button--alt" href="{{ url_for('regulations', search=query, search_type='regulations') }}">View all results</a>
             </div>
@@ -104,11 +94,9 @@
             {% endif %}
           </div>
           {% if results.total_advisory_opinions %}
-            {% for ao_no in results.advisory_opinions %}
-                {% with advisory_opinion_docs = results.advisory_opinions[ao_no] %}
-                {% include 'partials/legal-search-results-advisory-opinion.html' %}
-                {% endwith %}
-            {% endfor %}
+            {% with advisory_opinions = results.advisory_opinions %}
+            {% include 'partials/legal-search-results-advisory-opinion.html' %}
+            {% endwith %}
             <div class="results-info">
               <a class="button button--browse button--alt"
               href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">

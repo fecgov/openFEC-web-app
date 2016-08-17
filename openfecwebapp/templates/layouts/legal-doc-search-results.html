@@ -27,44 +27,22 @@
       </div>
     </div>
     {% if results.total_all %}
-      {% if result_type == 'regulations' %}
-        <table class="data-table data-table--text data-table--heading-borders">
-            <thead>
-              <tr>
-                <th class="cell--15">Section</th>
-                <th class="cell--85">Description</th>
-              </tr>
-            </thead>
-          <tbody>
-            {% for result in result_entities %}
-                {% with section = result %}
-                {% include 'partials/legal-search-results-regulation.html' %}
-                {% endwith %}
-            {% endfor %}
-          </tbody>
-        </table>
-      {% else %}
-        {% for result in result_entities %}
-            {% with advisory_opinion_docs = result_entities[result] %}
-            {% include 'partials/legal-search-results-advisory-opinion.html' %}
-            {% endwith %}
-        {% endfor %}
-      {% endif %}
-    <div class="results-info">
-      <div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + result_entities|length }} of about {{ results.total_all }}</span></div>
-      <div class="dataTables_paginate">
-        {% if results.offset > 0 %}
-	<a class="paginate_button previous" href="{{ url_for(result_type, search=query, offset=(results.offset - results.limit)) }}#results-{{ result_type }}">Previous</a>
-        {% else %}
-        <span class="paginate_button previous is-disabled">Previous</span>
-        {% endif %}
-        {% if results.offset + results.limit < results.total_all %}
-	<a class="paginate_button next" href="{{ url_for(result_type, search=query, offset=(results.offset + results.limit)) }}#results-{{ result_type }}">Next</a>
-        {% else %}
-        <span class="paginate_button next is-disabled">Next</span>
-        {% endif %}
+      {% block results %}{% endblock %}
+      <div class="results-info">
+	<div class="dataTables_info">Showing {{ results.offset + 1 }}&ndash;{{ results.offset + result_entities|length }} of about {{ results.total_all }}</span></div>
+	<div class="dataTables_paginate">
+	  {% if results.offset > 0 %}
+	  <a class="paginate_button previous" href="{{ url_for(result_type, search=query, offset=(results.offset - results.limit)) }}#results-{{ result_type }}">Previous</a>
+	  {% else %}
+	  <span class="paginate_button previous is-disabled">Previous</span>
+	  {% endif %}
+	  {% if results.offset + results.limit < results.total_all %}
+	  <a class="paginate_button next" href="{{ url_for(result_type, search=query, offset=(results.offset + results.limit)) }}#results-{{ result_type }}">Next</a>
+	  {% else %}
+	  <span class="paginate_button next is-disabled">Next</span>
+	  {% endif %}
+	</div>
       </div>
-    </div>
     {% else %}
     <div class="message message--alert">
       <h2 class="message__title">No results</h2>
