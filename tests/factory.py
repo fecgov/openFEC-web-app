@@ -35,6 +35,30 @@ def advisory_opinion():
     }
 
 @factory
+def statute():
+    return {
+        "no": "%s" % faker.random_int(max=100),
+        "section": "%s" % faker.random_int(max=100000),
+        "name": faker.sentence(),
+        "highlights": [
+            faker.sentence(),
+            faker.sentence(),
+            faker.sentence(),
+        ],
+    }
+
+@factory
+def statutes_search_results():
+    return {
+        "total_statutes": 10,
+        "statutes": [
+            statute(),
+            statute(),
+            statute(),
+        ]
+    }
+
+@factory
 def regulations_search_results():
     return {
         "total_regulations": 17,

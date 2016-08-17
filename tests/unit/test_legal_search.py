@@ -78,6 +78,16 @@ class TestLegalSearch(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         load_legal_search_results.assert_called_once_with('in kind donation', 'regulations', offset=20)
 
+    @mock.patch.object(api_caller, 'load_legal_search_results')
+    def test_search_statutes(self, load_legal_search_results):
+        load_legal_search_results.return_value = factory.statutes_search_results()
+        response = self.app.get('/legal/search/statutes/',
+                data={
+                    'search': 'in kind donation',
+                    'search_type': 'statutes'})
+        self.assertEqual(response.status_code, 200)
+        load_legal_search_results.assert_called_once_with('in kind donation', 'statutes', offset=0)
+
 
 if __name__ == '__main__':
     unittest.main()
