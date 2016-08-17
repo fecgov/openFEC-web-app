@@ -42,7 +42,7 @@ $(document).ready(function() {
     efiling: {
       path: ['efile', 'filings'],
       disableFilters: true,
-      enabledFilters: ['committee_id', 'data_type'],
+      enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
       hideColumns: '.hide-efiling',
       disableExport: true
     },
