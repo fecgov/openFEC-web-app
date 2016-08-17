@@ -612,15 +612,18 @@ DataTable.prototype.fetchError = function() {
 
   $('.filter__message').remove();
 
-  $('.is-loading')
+  $('.filters .is-loading')
     .removeClass('is-loading')
     .addClass('is-unsuccessful')
     .after($('<div class="filter__message filter__message--error">' +
       '<strong>We had trouble processing your request</strong><br>' +
-      'Please try again. If you still have trouble let us know</div>'))
+      'Please try again. If you still have trouble ' +
+      '<span class="js-filter-feedback">let us know</a></div>'))
     .hide().fadeIn();
 
   self.$processing.hide();
+
+  clearTimeout(messageTimer);
 
   messageTimer = setTimeout(function() {
     $('.is-unsuccessful').removeClass('is-unsuccessful');
@@ -628,7 +631,7 @@ DataTable.prototype.fetchError = function() {
     $('.filter__message').fadeOut(function () {
       $(this).remove();
     });
-  }, helpers.LOADING_DELAY);
+  }, helpers.ERROR_DELAY);
 };
 
 /**
