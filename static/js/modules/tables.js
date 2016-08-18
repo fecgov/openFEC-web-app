@@ -253,6 +253,7 @@ function filterSuccessUpdates(changeCount) {
     var type = $(updateChangedEl).attr('type');
     var message = '';
     var filterAction = '';
+    var filterResult = '';
     var $filterMessage = $('.filter__message');
 
     $('.is-successful').removeClass('is-successful');
@@ -261,10 +262,10 @@ function filterSuccessUpdates(changeCount) {
     if (type === 'checkbox') {
       $label = $('label[for="' + updateChangedEl.id + '"]');
 
-      filterAction = 'Filter applied.';
+      filterAction = 'Filter added';
 
       if (!$(updateChangedEl).is(':checked')) {
-        filterAction = 'Filter removed.';
+        filterAction = 'Filter removed';
       }
     } else if (type === 'radio') {
       // Add the message after the last radio button / toggle
@@ -281,7 +282,7 @@ function filterSuccessUpdates(changeCount) {
         // show message after generated checkbox (last item in list)
         $label = $('.js-typeahead-filter li').last();
 
-        filterAction = 'Filter applied.';
+        filterAction = 'Filter added';
       }
       // text input search
       else {
@@ -291,7 +292,7 @@ function filterSuccessUpdates(changeCount) {
           filterAction = '"' + $(updateChangedEl).val() + '" applied.';
         }
         else {
-          filterAction = 'Search term removed.';
+          filterAction = 'Search term removed';
         }
       }
     }
@@ -304,14 +305,18 @@ function filterSuccessUpdates(changeCount) {
     $('.is-loading').removeClass('is-loading').addClass('is-successful');
 
     // build message with number of results returned
+
     if (changeCount > 0) {
-      message = filterAction + '<br>' +
-      '<strong>Added  ' + changeCount.toLocaleString() + '</strong> results.';
+      filterResult = changeCount.toLocaleString() + ' more results';
+    }
+    else if (changeCount === 0) {
+      filterResult = 'No change in results';
     }
     else {
-      message = filterAction + '<br>' +
-      '<strong>Removed ' + Math.abs(changeCount).toLocaleString() + '</strong> results.';
+      filterResult = Math.abs(changeCount).toLocaleString() + ' fewer results';
     }
+
+    message = '<strong>' + filterAction + '</strong><br>' + filterResult;
 
     if ($filterMessage.length) {
       $filterMessage.fadeOut().remove();
@@ -628,15 +633,28 @@ DataTable.prototype.fetchSuccess = function(resp) {
 
 DataTable.prototype.fetchError = function() {
   var self = this;
+  var errorMessage = '<div class="filter__message filter__message--error">' +
+      '<strong>We had trouble processing your request</strong><br>' +
+      'Please try again. If you still have trouble, ' +
+      '<button class="js-filter-feedback">let us know</button></div>';
 
-  setTimeout(function() {
-    $('.is-loading').removeClass('is-loading').addClass('is-unsuccessful');
-    self.$processing.hide();
-  }, helpers.LOADING_DELAY);
+  $('.filter__message').remove();
 
-  setTimeout(function() {
-    $('.is-unsuccessful').removeClass('is-unsuccessful');
-  }, helpers.SUCCESS_DELAY);
+  // text search error message
+  if ($(updateChangedEl).attr('type') === 'text' && $(updateChangedEl).hasClass('tt-input') === false) {
+    $(updateChangedEl).parent().after($(errorMessage));
+  }
+  else {
+    $('label.is-loading')
+      .removeClass('is-loading')
+      .addClass('is-unsuccessful')
+      .after($(errorMessage))
+      .hide().fadeIn();
+  }
+
+  $('button.is-loading').removeClass('is-loading');
+
+  self.$processing.hide();
 };
 
 /**
