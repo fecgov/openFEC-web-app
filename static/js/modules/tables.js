@@ -631,16 +631,6 @@ DataTable.prototype.fetchError = function() {
   $('button.is-loading').removeClass('is-loading');
 
   self.$processing.hide();
-
-  clearTimeout(messageTimer);
-
-  messageTimer = setTimeout(function() {
-    $('.is-unsuccessful').removeClass('is-unsuccessful');
-
-    $('.filter__message').fadeOut(function () {
-      $(this).remove();
-    });
-  }, helpers.ERROR_DELAY);
 };
 
 /**
