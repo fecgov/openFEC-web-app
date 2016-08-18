@@ -1,6 +1,6 @@
 'use strict';
 
-/* global window, document, BASE_PATH, CMS_URL */
+/* global window, document, ANALYTICS, BASE_PATH, CMS_URL */
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
@@ -122,10 +122,10 @@ $(document).ready(function() {
   // perf.bar();
   // @endif
 
-  // @if ANALYTICS
-  analytics.init();
-  analytics.pageView();
-  // @endif
+  if (ANALYTICS) {
+    analytics.init();
+    analytics.pageView();
+  }
 
   // Initialize cycle selects
   $('.js-cycle').each(function(idx, elm) {
