@@ -67,7 +67,7 @@ LineChart.prototype.buildChart = function() {
       return d.amount;
     });
 
-    max = entityMax > max ? entityMax : max;
+    max = Math.max(entityMax, max);
     entityTotals[type] = totals;
   });
 
