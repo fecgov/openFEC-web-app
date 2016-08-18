@@ -1,15 +1,13 @@
-<table class="data-table data-table--text data-table--heading-borders">
-  <thead>
-    <tr>
-      <th class="cell--15">Section</th>
-      <th class="cell--85">Description</th>
-    </tr>
-  </thead>
-  <tbody>
+<div class="legal-search-results">
+  <div class="legal-search-results__header-row">
+    <div class="legal-search-results__header cell--15">Section</div>
+    <div class="legal-search-results__header">Description</div>
+  </div>
+  <div class="legal-search-results__list">
   {% for section in regulations %}
-    <tr class="legal-search-result">
-      <td><a title="{{ section.description }}" href="{{ section.url }}">§ {{ section.no }}</a></td>
-      <td>
+    <div class="legal-search-result">
+      <div class="legal-search-result__field"><a title="{{ section.description }}" href="{{ section.url }}">§ {{ section.no }}</a></div>
+      <div class="legal-search-result__field">
         <strong>{{ section.name }}</strong>
         <div class="t-serif legal-search-result__hit">
           &hellip;
@@ -17,8 +15,8 @@
             {{ highlight|safe }} &hellip;
           {% endfor %}
         </div>
-      </td>
-    </tr>
+      </div>
+    </div>
   {% endfor %}
-  </tbody>
-</table>
+  </div>
+</div>
