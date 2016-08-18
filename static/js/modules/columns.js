@@ -6,7 +6,7 @@ var columnHelpers = require('./column-helpers');
 var tables = require('./tables');
 var helpers = require('./helpers');
 var decoders = require('./decoders');
-
+var moment = require('moment');
 
 var dateColumn = columnHelpers.formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc']});
 var currencyColumn = columnHelpers.formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
@@ -21,7 +21,7 @@ var supportOpposeColumn = {
 
 var amendmentIndicatorColumn = {
   data: 'amendment_indicator',
-  className: 'hide-panel min-desktop',
+  className: 'hide-panel hide-efiling column--med min-desktop',
   render: function(data) {
     return decoders.amendments[data] || '';
   },
@@ -228,24 +228,50 @@ var filings = {
       }
     },
   },
-  pdf_url: columnHelpers.urlColumn('pdf_url', {
+  pdf_url: {
     data: 'document_description',
-    className: 'all column--medium',
-    orderable: false
-  }),
+    className: 'all column--med',
+    orderable: false,
+    render: function(data, type, row) {
+      var text = row.document_description ? row.document_description : row.form_type;
+      var url = row.pdf_url ? row.pdf_url : null;
+      if (url) {
+        var anchor = document.createElement('a');
+        anchor.textContent = text;
+        anchor.setAttribute('href', url);
+        anchor.setAttribute('target', '_blank');
+        return anchor.outerHTML;
+      } else {
+        return text;
+      }
+    }
+  },
   pages: {
     data: 'pages',
-    className: 'min-tablet column--small',
+    className: 'min-tablet hide-efiling column--small',
     orderable: true,
   },
   amendment_indicator: amendmentIndicatorColumn,
-  receipt_date: dateColumn({data: 'receipt_date', className: 'min-tablet hide-panel column--med'}),
+  receipt_date: {
+    data: 'receipt_date',
+    className: 'min-tablet hide-panel column--med',
+    orderable: true,
+    render: function(data, type, row, meta) {
+      if (meta.settings.oInit.path.indexOf('efile') >= 0) {
+        var parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
+        return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : 'Invalid date';
+      } else {
+        return data;
+      }
+    }
+  },
+  coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   total_receipts: currencyColumn({data: 'total_receipts', className: 'min-desktop hide-panel column--number'}),
   total_disbursements: currencyColumn({data: 'total_disbursements', className: 'min-desktop hide-panel column--number'}),
   total_independent_expenditures: currencyColumn({data: 'total_independent_expenditures', className: 'min-desktop hide-panel column--number'}),
   modal_trigger: {
-    className: 'all column--trigger',
+    className: 'all column--trigger hide-efiling',
     orderable: false,
     render: function(data, type, row) {
       if (row.form_type && row.form_type.match(/^F[35][XP]?$/)) {

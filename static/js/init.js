@@ -1,11 +1,12 @@
 'use strict';
 
-/* global window, document, BASE_PATH, CMS_URL */
+/* global window, document, ANALYTICS, BASE_PATH, CMS_URL */
 
 var $ = require('jquery');
 var Sticky = require('component-sticky');
 var Accordion = require('aria-accordion').Accordion;
 var Glossary = require('glossary-panel');
+var A11yDialog = require('a11y-dialog');
 
 // Hack: Append jQuery to `window` for use by legacy libraries
 window.$ = window.jQuery = $;
@@ -105,16 +106,26 @@ $(document).ready(function() {
     new toc.TOC(this);
   });
 
+  $('.js-modal').each(function() {
+    new A11yDialog(this);
+    this.addEventListener('dialog:show', function(e) {
+      $('body').css('overflow', 'hidden');
+    });
+    this.addEventListener('dialog:hide', function(e) {
+      $('body').css('overflow', 'scroll');
+    });
+  });
+
   // TODO: Restore
   // @if DEBUG
   // var perf = require('./modules/performance');
   // perf.bar();
   // @endif
 
-  // @if ANALYTICS
-  analytics.init();
-  analytics.pageView();
-  // @endif
+  if (ANALYTICS) {
+    analytics.init();
+    analytics.pageView();
+  }
 
   // Initialize cycle selects
   $('.js-cycle').each(function(idx, elm) {

@@ -259,16 +259,23 @@ def elections(office, cycle, state=None, district=None):
     'result_type': fields.Str(load_from='search_type', missing='all'),
 })
 def legal_search(query, result_type):
+    if result_type != 'all':
+        # search_type is used for google analytics
+        return redirect(url_for(result_type, search=query, search_type=result_type))
+
     results = {}
 
     # Only hit the API if there's an actual query
     if query:
         results = api_caller.load_legal_search_results(query, result_type, limit=3)
 
-    return views.render_legal_search_results(results, query,
-                    result_type, config.features['legal'])
+    return views.render_legal_search_results(results, query, result_type)
 
 @app.route('/legal/advisory-opinions/')
+def advisory_opinions_landing():
+        return views.render_legal_advisory_opinion_landing()
+
+@app.route('/legal/search/advisory-opinions/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'offset': fields.Int(missing=0),
@@ -283,7 +290,12 @@ def advisory_opinions(query, offset):
 
     return views.render_legal_doc_search_results(results, query, result_type)
 
+# TODO migrating from /legal/regulations -> /legal/search/regulations, eventually there will be a regulations landing page
 @app.route('/legal/regulations/')
+def regulations_landing(*args, **kwargs):
+    return redirect(url_for('regulations', *args, **kwargs))
+
+@app.route('/legal/search/regulations/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'offset': fields.Int(missing=0),
@@ -297,3 +309,12 @@ def regulations(query, offset):
         results = api_caller.load_legal_search_results(query, result_type, offset=offset)
 
     return views.render_legal_doc_search_results(results, query, result_type)
+
+@app.route('/legal/advisory-opinions/<ao_no>/')
+def advisory_opinion_page(ao_no):
+    advisory_opinion = api_caller.load_legal_advisory_opinion(ao_no)
+
+    if not advisory_opinion:
+        abort(404)
+
+    return views.render_legal_advisory_opinion(advisory_opinion)

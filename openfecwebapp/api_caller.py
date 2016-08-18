@@ -47,22 +47,6 @@ def load_search_results(query, query_type='candidates'):
 
     return results['results'] if len(results) else []
 
-def _transform_advisory_opinion(advisory_opinion):
-    #TODO move this to the API
-    source = advisory_opinion['_source']
-    return {
-        'id': source.get('AO_Id'),
-        'no': source.get('AO_No'),
-        'name': source.get('AO_name'),
-        'summary': source.get('AO_Summary'),
-        'tags': source.get('AO_tags'),
-        'description': source.get('description'),
-        'doc_id': source.get('doc_id'),
-        'highlights': advisory_opinion.get('highlight', {}).get('text', []),
-        'pdf_url': advisory_opinion.get('pdf_url'),
-    }
-
-
 def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     filters = {}
     if query:
@@ -80,12 +64,49 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
         grouped_aos = OrderedDict({})
         for ao in results['advisory_opinions']:
             if ao['no'] in grouped_aos:
-                grouped_aos[ao['no']] += ao
+                grouped_aos[ao['no']].append(ao)
             else:
                 grouped_aos[ao['no']] = [ao]
 
-        results['advisory_opinions'] = grouped_aos
+    for ao_no in grouped_aos:
+        grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
+    results['advisory_opinions'] = grouped_aos
     return results
+
+
+def load_legal_advisory_opinion(ao_no):
+    url = '/legal/advisory_opinion/'
+    results = _call_api(url, parse.quote(ao_no))
+
+    if not (results and 'docs' in results):
+        return None
+
+    # sort by chronological date
+    documents = sorted(results['docs'], key=lambda doc: doc['date'])
+    if not (documents and len(documents)):
+        return None
+
+    for document in documents:
+        canonical_document = document
+        if document['category'] == 'Final Opinion':
+            break        
+    
+    if not canonical_document:
+        return None
+    
+    advisory_opinion = {
+        'no' : ao_no,
+        'date': canonical_document['date'],
+        'name': canonical_document['name'],
+        'summary': canonical_document['summary'],
+        'description': canonical_document['description'],
+        'url': canonical_document['url'],
+        'category' : canonical_document['category'],
+        'documents': documents,
+        'entities': [],
+    }
+
+    return advisory_opinion
 
 
 def load_single_type(data_type, c_id, *path, **filters):
@@ -142,18 +163,18 @@ def result_or_404(data):
 def landing_mock_data():
     return {
         'raising': {
-            'total': 3853120826.25,
-            'candidates': 1371424715.56,
-            'parties': 626416709.50,
-            'pacs': 1854850620.14,
-            'other': 428781.05
+            'total': 4676956435.04,
+            'candidates': 1665946695.00,
+            'pacs': 2243677389.00,
+            'parties': 764080071.50,
+            'other': 3252279.54
         },
         'spending': {
-            'total': 2381570667.55,
-            'candidates': 1163308172.64,
-            'pacs': 503205461.58,
-            'parties': 685740891.22,
-            'other': 29316142.11
+            'total': 2411307904.24,
+            'candidates': 1479430004.00,
+            'pacs': 878776312.70,
+            'parties': 803844.00,
+            'other': 52297743.54
         }
     }
 

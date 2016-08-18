@@ -11,20 +11,16 @@
 {% block body %}
 
 {{ header.header(breadcrumbs_title | title, breadcrumbs, show_search=False) }}
-<section class="main__content--full">
-  <div class="data-container__widgets sticky-bar js-data-widgets js-sticky-bar">
-    <div class="js-filter-tags data-container__tags">
-      <div class="js-panel-controls panel__controls">
-        <button type="button" class="js-filter-toggle filters__toggle" aria-hidden="true">Add filters +</button>
-        <button type="button" class="js-filter-clear filters__toggle filters__clear" aria-hidden="true">Clear all filters</button>
-      </div>
-    </div>
-  </div>
-  <div class="data-container__wrapper">
-    {% include 'partials/' + slug + '-filter.html' %}
+
+<section class="main__content--full data-container__wrapper">
+  {% include 'partials/' + slug + '-filter.html' %}
     <div class="data-container">
-      <div id="{{slug}}" class="data-container__body fade-in">
-        <table id="results" class="data-table" aria-live="polite">
+      <div class="data-container__widgets js-data-widgets">
+        <div class="js-filter-tags data-container__tags">
+        </div>
+      </div>
+      <div id="{{slug}}" class="data-container__datatable">
+        <table id="results" class="data-table data-table--heading-borders" aria-live="polite">
           <thead>
             <tr>
               {% for column in columns %}
@@ -36,7 +32,6 @@
         </table>
       </div>
     </div>
-  </div>
 </section>
 
 {% include 'partials/datatable-modal.html' %}

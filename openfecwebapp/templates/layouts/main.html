@@ -16,6 +16,7 @@
   {% endif %}
   {% if api_location %}
   <script>
+    ANALYTICS = {{ use_analytics|json }};
     BASE_PATH = '{{ base_path() }}';
     CMS_URL = '{{ cms_url }}',
     API_LOCATION = '{{ api_location }}';
@@ -70,7 +71,6 @@
   <main id="main" {% if section %} data-section="{{section}}"{% endif %}>
     {% block body %}{% endblock %}
   </main>
-
 <footer class="footer">
   <div class="container">
     <div class="seal">
@@ -88,6 +88,7 @@
 </footer>
 
 {% include './partials/glossary.html' %}
+{% block modals %}{% endblock %}
 
 <script src="{{ asset_for('dist/js/common.js') }}"></script>
 <script src="{{ asset_for('dist/js/init.js') }}"></script>
