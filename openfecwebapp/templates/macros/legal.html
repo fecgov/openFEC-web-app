@@ -26,19 +26,11 @@
 {% endif %}
 <form id="{{ location }}-search" action="{{ url_for('legal_search') }}" autocomplete="off" class="search__container">
   <div class="combo combo--search {{ size }}">
-    {% if features.legal %}
     <select class="search__select {{select_class}}" name="search_type" aria-label="Select a document type">
       {% for value, name in (('all', 'All'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions')) %}
       <option value="{{ value }}" {% if result_type == value %}selected{% endif %}>{{ name }}</option>
       {% endfor %}
     </select>
-    {% else %}
-    <select class="search__select {{select_class}}" name="search_type" aria-label="Select a document type">
-      {% for value, name in (('regulations', 'Regulations'),) %}
-      <option value="{{ value }}" {% if result_type == value %}selected{% endif %}>{{ name }}</option>
-      {% endfor %}
-    </select>
-    {% endif %}
     <input class="combo__input" type="text" name="search"
     aria-label="Search for legal documents"
     placeholder="Search for legal documents" autocomplete="off"
