@@ -609,17 +609,26 @@ DataTable.prototype.fetchSuccess = function(resp) {
 
 DataTable.prototype.fetchError = function() {
   var self = this;
+  var errorMessage = '<div class="filter__message filter__message--error">' +
+      '<strong>We had trouble processing your request</strong><br>' +
+      'Please try again. If you still have trouble, ' +
+      '<button class="js-filter-feedback">let us know</button></div>';
 
   $('.filter__message').remove();
 
-  $('.filters .is-loading')
-    .removeClass('is-loading')
-    .addClass('is-unsuccessful')
-    .after($('<div class="filter__message filter__message--error">' +
-      '<strong>We had trouble processing your request</strong><br>' +
-      'Please try again. If you still have trouble, ' +
-      '<button class="js-filter-feedback">let us know</button></div>'))
-    .hide().fadeIn();
+  // text search error message
+  if (updateChangedEl.type === 'text' && $(updateChangedEl).hasClass('tt-input') === false) {
+    $(updateChangedEl).parent().after($(errorMessage));
+  }
+  else {
+    $('label.is-loading')
+      .removeClass('is-loading')
+      .addClass('is-unsuccessful')
+      .after($(errorMessage))
+      .hide().fadeIn();
+  }
+
+  $('button.is-loading').removeClass('is-loading');
 
   self.$processing.hide();
 
