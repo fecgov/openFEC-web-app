@@ -618,7 +618,7 @@ DataTable.prototype.fetchError = function() {
     .after($('<div class="filter__message filter__message--error">' +
       '<strong>We had trouble processing your request</strong><br>' +
       'Please try again. If you still have trouble ' +
-      '<span class="js-filter-feedback">let us know</a></div>'))
+      '<button class="js-filter-feedback">let us know</button></div>'))
     .hide().fadeIn();
 
   self.$processing.hide();
