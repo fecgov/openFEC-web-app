@@ -226,6 +226,6 @@ module.exports = {
   isLargeScreen: isLargeScreen,
   isMediumScreen: isMediumScreen,
   LOADING_DELAY: helpers.LOADING_DELAY,
-  SUCCESS_DELAY: helpers.SUCCESS_DELAY
+  SUCCESS_DELAY: helpers.SUCCESS_DELAY,
   zeroPad: zeroPad
 };
