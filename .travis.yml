@@ -22,7 +22,7 @@ before_script:
   - nvm use v5.5.0
 
   - travis_retry npm install
-  - npm run build
+  - if [[ ${BRANCH} == "master" ]] ; then export FEC_WEB_GOOGLE_ANALYTICS=1; fi; npm run build
 
 script:
   - py.test
