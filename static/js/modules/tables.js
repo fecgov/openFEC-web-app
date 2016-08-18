@@ -275,7 +275,7 @@ function filterSuccessUpdates(changeCount) {
         // show message after generated checkbox (last item in list)
         $label = $('.js-typeahead-filter li').last();
 
-        filterAction = 'Filter applied';
+        filterAction = 'Filter added';
       }
       // text input search
       else {
