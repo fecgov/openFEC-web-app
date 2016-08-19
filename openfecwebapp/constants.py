@@ -241,8 +241,6 @@ table_columns = OrderedDict([
     ('disbursements', ['Spender', 'Recipient', 'State', 'Purpose', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
     ('filings', ['Filer name', 'Document', 'Amendment indicator', 'Receipt date', 'Coverage start date', 'Coverage end date']),
-    ('individual-contributions', ['Recipient', 'Contributor name', 'State', 'Employer', 'Receipt date', 'Amount']),
-    ('receipts', ['Recipient', 'Contributor name', 'State', 'Receipt date', 'Amount'])
     ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
     ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount'])
