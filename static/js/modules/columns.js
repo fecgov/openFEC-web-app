@@ -313,6 +313,11 @@ var independentExpenditures = [
     }
   },
   columnHelpers.urlColumn('pdf_url', {data: 'expenditure_description', className: 'min-desktop hide-panel', orderable: false}),
+  {
+    data: 'payee_name',
+    orderable: false,
+    className: 'min-desktop hide-panel column--medium'
+  },
   dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'expenditure_amount', className: 'min-tablet hide-panel column--number column--med'}),
   modalTriggerColumn
