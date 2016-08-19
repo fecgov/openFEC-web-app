@@ -396,6 +396,11 @@ var receipts = [
       }
     }
   },
+  {
+    data: 'fec_election_type_desc',
+    orderable: false,
+    className: 'min-desktop column--med',
+  },
   {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--state'},
   dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet hide-panel column--med column--number'}),
