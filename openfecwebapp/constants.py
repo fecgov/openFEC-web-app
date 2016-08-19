@@ -248,4 +248,6 @@ table_columns = OrderedDict([
     ('individual-contributions', ['Recipient', 'Contributor name', 'State', 'Employer', 'Receipt date', 'Amount']),
     ('receipts', ['Recipient', 'Contributor name', 'State', 'Receipt date', 'Amount'])
     ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
+    ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
+    ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount'])
 ])

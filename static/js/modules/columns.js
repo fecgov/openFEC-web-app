@@ -325,22 +325,6 @@ var independentExpenditures = [
 
 var individualContributions = [
   {
-    data: 'committee',
-    orderable: false,
-    className: 'all column--xl',
-    render: function(data, type, row, meta) {
-      if (data) {
-        return columnHelpers.buildEntityLink(
-          data.name,
-          helpers.buildAppUrl(['committee', data.committee_id]),
-          'committee'
-        );
-      } else {
-        return '';
-      }
-    }
-  },
-  {
     data: 'contributor',
     orderable: false,
     className: 'all hide-panel-tablet column--large',
@@ -356,14 +340,6 @@ var individualContributions = [
       }
     }
   },
-  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--state '},
-  {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
-  dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel column--med'}),
-  currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet hide-panel column--number column--med'}),
-  modalTriggerColumn
-];
-
-var receipts = [
   {
     data: 'committee',
     orderable: false,
@@ -380,6 +356,14 @@ var receipts = [
       }
     }
   },
+  {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--state '},
+  {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
+  dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel column--med'}),
+  currencyColumn({data: 'contribution_receipt_amount', className: 'min-tablet hide-panel column--number column--med'}),
+  modalTriggerColumn
+];
+
+var receipts = [
   {
     data: 'contributor',
     orderable: false,
@@ -393,6 +377,22 @@ var receipts = [
         );
       } else {
         return row.contributor_name;
+      }
+    }
+  },
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--xl',
+    render: function(data, type, row, meta) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
       }
     }
   },
