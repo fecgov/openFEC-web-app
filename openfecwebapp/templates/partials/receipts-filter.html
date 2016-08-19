@@ -35,6 +35,7 @@ Filter receipts
     </div>
     {{ typeahead.field('contributor_name', 'Contributor name or ID', dataset='committees', allow_text=True) }}
     {{ text.field('contributor_city', 'City') }}
+    {{ text.field('contributor_zip', 'ZIP code') }}
     {{ states.field('contributor_state') }}
     {{ text.field('contributor_employer', 'Employer') }}
     {{ text.field('contributor_occupation', 'Occupation') }}
