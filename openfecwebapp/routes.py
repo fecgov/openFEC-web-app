@@ -248,6 +248,16 @@ def legal_search(query, result_type):
 
     return views.render_legal_search_results(results, query, result_type)
 
+def legal_doc_search(query, result_type, **kwargs):
+    """Legal search for a specific document type."""
+    results = {}
+
+    # Only hit the API if there's an actual query
+    if query:
+        results = api_caller.load_legal_search_results(query, result_type, **kwargs)
+
+    return views.render_legal_doc_search_results(results, query, result_type)
+
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
         return views.render_legal_advisory_opinion_landing()
@@ -258,14 +268,15 @@ def advisory_opinions_landing():
     'offset': fields.Int(missing=0),
 })
 def advisory_opinions(query, offset):
-    result_type = 'advisory_opinions'
-    results = {}
+    return legal_doc_search(query, 'advisory_opinions', offset=offset)
 
-    # Only hit the API if there's an actual query
-    if query:
-        results = api_caller.load_legal_search_results(query, result_type, offset=offset)
-
-    return views.render_legal_doc_search_results(results, query, result_type)
+@app.route('/legal/search/statutes/')
+@use_kwargs({
+    'query': fields.Str(load_from='search'),
+    'offset': fields.Int(missing=0),
+})
+def statutes(query, offset):
+    return legal_doc_search(query, 'statutes', offset=offset)
 
 # TODO migrating from /legal/regulations -> /legal/search/regulations, eventually there will be a regulations landing page
 @app.route('/legal/regulations/')
@@ -278,14 +289,7 @@ def regulations_landing(*args, **kwargs):
     'offset': fields.Int(missing=0),
 })
 def regulations(query, offset):
-    result_type = 'regulations'
-    results = {}
-
-    # Only hit the API if there's an actual query
-    if query:
-        results = api_caller.load_legal_search_results(query, result_type, offset=offset)
-
-    return views.render_legal_doc_search_results(results, query, result_type)
+    return legal_doc_search(query, 'regulations', offset=offset)
 
 @app.route('/legal/advisory-opinions/<ao_no>/')
 def advisory_opinion_page(ao_no):

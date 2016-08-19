@@ -1,12 +1,22 @@
-<tr class="legal-search-result">
-  <td><a title="{{ section.description }}" href="{{ section.url }}">§ {{ section.no }}</a></td>
-  <td>
-    <strong>{{ section.name }}</strong>
-    <div class="t-serif legal-search-result__hit">
-      &hellip;
-      {% for highlight in section.highlights %}
-        {{ highlight|safe }} &hellip;
-      {% endfor %}
+<div class="legal-search-results">
+  <div class="legal-search-results__header-row">
+    <div class="legal-search-results__header cell--15">Section</div>
+    <div class="legal-search-results__header">Description</div>
+  </div>
+  <div class="legal-search-results__list">
+  {% for section in regulations %}
+    <div class="legal-search-result">
+      <div class="legal-search-result__field"><a title="{{ section.description }}" href="{{ section.url }}">§ {{ section.no }}</a></div>
+      <div class="legal-search-result__field">
+        <strong>{{ section.name }}</strong>
+        <div class="t-serif legal-search-result__hit">
+          &hellip;
+          {% for highlight in section.highlights %}
+            {{ highlight|safe }} &hellip;
+          {% endfor %}
+        </div>
+      </div>
     </div>
-  </td>
-</tr>
+  {% endfor %}
+  </div>
+</div>

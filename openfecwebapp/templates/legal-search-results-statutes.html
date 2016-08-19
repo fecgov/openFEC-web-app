@@ -1,0 +1,8 @@
+{% extends "layouts/legal-doc-search-results.html" %}
+{% set document_type_display_name = 'statutes' %}
+
+{% block results %}
+{% with statutes = results.statutes %}
+{% include 'partials/legal-search-results-statute.html' %}
+{% endwith %}
+{% endblock %}

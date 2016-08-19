@@ -28,7 +28,7 @@ environment = (
 )
 
 features = {
-    'legal': bool(env.get_credential('FEC_FEATURE_LEGAL', '')),
+    'legal_statutes': bool(env.get_credential('FEC_FEATURE_LEGAL_STATUTES', '')),
 }
 
 # Whether the app should force HTTPS/HSTS.

@@ -29,7 +29,6 @@ def render_search_results(results, query, result_type):
 def render_legal_search_results(results, query, result_type):
     return render_template(
         'legal-search-results.html',
-        legal_include_display_all=True, # includes the display-all link in results
         query=query,
         results=results,
         result_type=result_type,
@@ -37,16 +36,8 @@ def render_legal_search_results(results, query, result_type):
 
 
 def render_legal_doc_search_results(results, query, result_type):
-    if result_type == 'advisory_opinions':
-        document_type_display_name = 'Advisory opinions'
-    elif result_type == 'regulations':
-        document_type_display_name = 'Regulations'
-    else:
-        document_type_display_name = 'Documents'
-
     return render_template(
-        'legal-doc-search-results.html',
-        document_type_display_name=document_type_display_name,
+        'legal-search-results-%s.html' % result_type,
         results=results,
         result_type=result_type,
         query=query,

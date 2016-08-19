@@ -1,0 +1,28 @@
+<div class="legal-search-results">
+  <div class="legal-search-results__header-row">
+    <div class="legal-search-results__header">
+      Name <span class="legal-search-results__subtext">| Hit</span>
+    </div>
+  </div>
+  <div class="legal-search-results__list">
+  {% for statute in statutes %}
+    <div class="legal-search-result">
+      <div class="legal-search-result__field">
+        <div class="legal-search-result__name">
+          <a title="{{ statute.title }}.{{ statute.no }}" href="{{ statute.url }}">
+            {{ statute.title }} USC §{{ statute.no }} {{ statute.name }}
+          </a>
+        </div>
+        <div class="legal-search-result__text">
+          <div class="t-serif legal-search-result__hit">
+            &hellip;
+            {% for highlight in statute.highlights %}
+              {{ highlight|safe }} &hellip;
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>

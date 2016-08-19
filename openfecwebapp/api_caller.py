@@ -47,6 +47,7 @@ def load_search_results(query, query_type='candidates'):
 
     return results['results'] if len(results) else []
 
+
 def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     filters = {}
     if query:
@@ -68,9 +69,10 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
             else:
                 grouped_aos[ao['no']] = [ao]
 
-    for ao_no in grouped_aos:
-        grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
-    results['advisory_opinions'] = grouped_aos
+        for ao_no in grouped_aos:
+            grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
+        results['advisory_opinions'] = grouped_aos
+
     return results
 
 

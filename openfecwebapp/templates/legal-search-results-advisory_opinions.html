@@ -1,0 +1,8 @@
+{% extends "layouts/legal-doc-search-results.html" %}
+{% set document_type_display_name = 'advisory opinions' %}
+
+{% block results %}
+{% with advisory_opinions = results.advisory_opinions %}
+{% include 'partials/legal-search-results-advisory-opinion.html' %}
+{% endwith %}
+{% endblock %}
