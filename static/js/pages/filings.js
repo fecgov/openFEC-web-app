@@ -3,7 +3,6 @@
 /* global require, document */
 
 var $ = require('jquery');
-var _ = require('underscore');
 
 var filings = require('../modules/filings');
 var columnHelpers = require('../modules/column-helpers');
