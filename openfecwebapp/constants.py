@@ -147,11 +147,7 @@ election_sensitive_reports = OrderedDict([
     ('30P', 'Post-primary'),
     ('60D', 'Post-convention'),
     ('10D', 'Pre-election (10D)'),
-    ('30D', 'Post-election (30D)'),
-    ('10G', 'Pre-general (last used: 1982)'),
-    ('10P', 'Pre-primary (last used: 1982)'),
-    ('10R', 'Pre-runoff (last used: 1980)'),
-    ('10S', 'Pre-special (last used: 1980)'),
+    ('30D', 'Post-election (30D)')
 ])
 
 bundling_reports = OrderedDict([
