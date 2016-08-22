@@ -7,6 +7,7 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
 var columnHelpers = require('../modules/column-helpers');
+var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 
 var candidateTemplate = require('../../templates/reports/candidate.hbs');
 var pacPartyTemplate = require('../../templates/reports/pac.hbs');
@@ -15,7 +16,7 @@ var ieOnlyTemplate = require('../../templates/reports/ie-only.hbs');
 var pageTitle,
     pageTemplate,
     pageColumns,
-    columnKeys = ['committee', 'pdf_url', 'coverage_start_date', 'coverage_end_date'];
+    columnKeys = ['committee', 'pdf_url', 'receipt_date', 'coverage_start_date', 'coverage_end_date'];
 
 if (context.form_type === 'presidential') {
   pageTitle = 'Presidential committee reports';
@@ -44,6 +45,7 @@ $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
     autoWidth: false,
+    tableSwitcher: true,
     title: pageTitle,
     path: ['reports', context.form_type],
     columns: pageColumns,
@@ -57,4 +59,17 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(pageTemplate)
     }
   });
+
+  new TableSwitcher('.js-table-switcher', {
+    efiling: {
+      path: ['efile', 'reports', context.form_type],
+      disableFilters: true,
+      enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
+      disableExport: true
+    },
+    processed: {
+      path: ['reports', context.form_type],
+      disableExport: false
+    }
+  }).init();
 });
