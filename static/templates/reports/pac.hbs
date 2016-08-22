@@ -1,6 +1,6 @@
 <div class="panel__row">
   <div class="panel__heading">
-    <h4 class="panel__title">{{document_description}} report</h4>
+    <h4 class="panel__title">{{report_type_full}}</h4>
     <span class="panel__subtitle t-bold"><a href="{{basePath}}/committee/{{committee_id}}">{{ committee_name }}</a></span>
   </div>
   <table>
@@ -9,9 +9,6 @@
     {{/panelRow}}
     {{#panelRow "Receipt date"}}
       {{datetime receipt_date format="pretty"}}
-    {{/panelRow}}
-    {{#panelRow "Amendment indicator"}}
-      {{decodeAmendment amendment_indicator}}
     {{/panelRow}}
   </table>
 </div>
@@ -23,9 +20,6 @@
     {{#panelRow "Total disbursements"}}
       {{{currency total_disbursements_period}}}
     {{/panelRow}}
-    {{#panelRow "Transfers to authorized committees"}}
-      {{{currency transfers_to_other_authorized_committee_period}}}
-    {{/panelRow}}
     {{#panelRow "Individual contributions"}}
       {{{currency total_individual_contributions_period}}}
     {{/panelRow}}
@@ -35,35 +29,26 @@
     {{#panelRow "Unitemized individual contributions"}}
       {{{currency individual_unitemized_contributions_period}}}
     {{/panelRow}}
-    {{#panelRow "Loan repayments"}}
-      {{{currency total_loan_repayments_made_period}}}
-    {{/panelRow}}
     {{#panelRow "Beginning cash on hand"}}
       {{{currency cash_on_hand_beginning_period}}}
     {{/panelRow}}
     {{#panelRow "Ending cash on hand"}}
       {{{currency cash_on_hand_end_period}}}
     {{/panelRow}}
-    {{#if net_contributions_period}}
-      {{#panelRow "Net contributions period"}}
-        {{{currency net_contributions_period}}}
-      {{/panelRow}}
-    {{else}}
-      {{#panelRow "Net contributions cycle to date"}}
-        {{{currency net_contributions_cycle_to_date}}}
-      {{/panelRow}}
-    {{/if}}
-    {{#if net_operating_expenditures_period}}
-      {{#panelRow "Net operating expenditures period"}}
-        {{{currency net_operating_expenditures_period}}}
-      {{/panelRow}}
-    {{else}}
-      {{#panelRow "Net operating expenditures cycle to date"}}
-        {{{currency net_operating_expenditures_cycle_to_date}}}
-      {{/panelRow}}
-    {{/if}}
+    {{#panelRow "Net contributions"}}
+      {{{currency net_contributions_period}}}
+    {{/panelRow}}
+    {{#panelRow "Net operating expenditures"}}
+      {{{currency net_operating_expenditures_period}}}
+    {{/panelRow}}
     {{#panelRow "Debts owed by committee"}}
       {{{currency debts_owed_by_committee}}}
+    {{/panelRow}}
+    {{#panelRow "Coordinated expenditures by party committee this period"}}
+      {{{currency coordinated_expenditures_by_party_committee_period}}}
+    {{/panelRow}}
+    {{#panelRow "Independent expenditures this period"}}
+      {{{currency independent_expenditures_period}}}
     {{/panelRow}}
   </table>
 </div>

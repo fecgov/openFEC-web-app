@@ -4,6 +4,7 @@ import furl
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from flask import render_template, request, redirect, url_for, abort
+from collections import OrderedDict
 
 from openfecwebapp import views
 from openfecwebapp import utils
@@ -116,7 +117,7 @@ def candidates_office(office):
         result_type='candidates',
         title='candidates for ' + office,
         slug='candidates-office',
-        office=office,
+        table_context=OrderedDict([('office', office)]),
         columns=constants.table_columns['candidates-office-' + office.lower()]
     )
 
@@ -201,6 +202,28 @@ def communication_costs():
         title='Communication costs',
         dates=utils.date_ranges(),
         columns=constants.table_columns['communication-costs']
+    )
+
+@app.route('/reports/<form_type>/')
+def reports(form_type):
+    if form_type.lower() not in ['presidential', 'house-senate', 'pac-party', 'ie-only']:
+        abort(404)
+    if form_type.lower() == 'presidential':
+        title = 'Presidential committee reports'
+    if form_type.lower() == 'house-senate':
+        title = 'House and Senate committee reports'
+    if form_type.lower() == 'pac-party':
+        title = 'PAC and party committee reports'
+    if form_type.lower() == 'ie-only':
+        title = 'Independent expenditure-only committee reports'
+    context = OrderedDict([('form_type', form_type.lower())])
+    return render_template(
+        'datatable.html',
+        slug='reports',
+        title=title,
+        table_context=context,
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['reports-' + form_type.lower()]
     )
 
 @app.route('/elections/')

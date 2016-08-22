@@ -3,7 +3,6 @@
 /* global require, document */
 
 var $ = require('jquery');
-var _ = require('underscore');
 
 var filings = require('../modules/filings');
 var columnHelpers = require('../modules/column-helpers');
@@ -14,7 +13,7 @@ var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var columns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_start_date', 'coverage_end_date', 'modal_trigger'
+    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'modal_trigger'
   ]
 );
 
@@ -28,9 +27,8 @@ $(document).ready(function() {
     path: ['filings'],
     columns: columns,
     rowCallback: filings.renderRow,
-    // Order by receipt date descending
-    hideColumns: '.hide-processed',
     order: [[3, 'desc']],
+    hideColumns: '.hide-processed',
     useFilters: true,
     useExport: true,
     callbacks: {
