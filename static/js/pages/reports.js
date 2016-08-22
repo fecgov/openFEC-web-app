@@ -51,7 +51,7 @@ $(document).ready(function() {
     columns: pageColumns,
     rowCallback: tables.modalRenderRow,
     // Order by coverage date descending
-    order: [[3, 'desc']],
+    order: [[2, 'desc']],
     useFilters: true,
     useExport: true,
     disableExport: true,
