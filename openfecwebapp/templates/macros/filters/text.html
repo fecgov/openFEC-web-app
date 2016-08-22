@@ -1,7 +1,7 @@
 {% macro field(name, title, attrs={}) %}
-<div class="filter js-filter" id="{{ name }}-field">
+<div class="filter js-filter js-text-filter" id="{{ name }}-field">
   <label class="label" for="{{ name }}">{{ title }}</label>
-  <div class="input--removable combo combo--filter--mini">
+  <div class="combo combo--filter--mini">
     <input id="{{ name }}" type="text" name="{{ name }}" class="combo__input"
       {% for attr, value in attrs.items() %}
         {{ attr }}="{{ value }}"
