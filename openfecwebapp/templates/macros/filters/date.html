@@ -53,6 +53,26 @@
       <label for="max_{{ name }}">To</label>
       <input type="text" id="max_{{ name }}" name="max_{{ name }}" class="js-max-date" data-prefix="Ending" data-inputmask="'alias': 'mm/dd/yyyy'">
     </div>
+    <div class="date-range-calendar">
+      <div class="date-range-year">
+        {{ dates['year'][0] | date(fmt='%Y') }}
+      </div>
+      <ul class="date-range-months">
+        <li>Jan</li>
+        <li>Feb</li>
+        <li>Mar</li>
+        <li>Apr</li>
+        <li>May</li>
+        <li>Jun</li>
+        <li>Jul</li>
+        <li>Aug</li>
+        <li>Sep</li>
+        <li>Oct</li>
+        <li>Nov</li>
+        <li>Dec</li>
+      </ul>
+    </div>
+
   </fieldset>
 </div>
 
