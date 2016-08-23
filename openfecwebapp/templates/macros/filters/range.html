@@ -3,20 +3,17 @@
   <legend class="label">{{ label }}</legend>
   <div class="range">
     <div class="js-filter">
-      <label for="min_{{name}}">From</label>
-      <div class="combo combo--filter--mini">
-        <input id="min_{{name}}" class="combo__input" type="text" name="min_{{name}}" data-inputmask="'alias': 'currency', 'rightAlign': false, 'clearMaskOnLostFocus': true" data-suffix="or more" tabindex="0">
-        <button class="combo__button button--go button--standard is-disabled" type="button">
-          <span class="u-visually-hidden">Search</span>
-        </button>
+      <div class="financial-range-input financial-range-input-min">
+        <label for="min_{{name}}">From</label>
+        <input id="min_{{name}}" type="text" name="min_{{name}}" data-suffix="or more" tabindex="0">
       </div>
     </div>
-    <!-- <span class="range__hyphen">-</span> -->
+    <div class="range__hyphen">-</div>
     <div class="js-filter">
-      <label for="max_{{name}}">To</label>
-      <div class="combo combo--filter--mini">
-        <input id="max_{{name}}" class="combo__input" type="text" name="min_{{name}}" data-inputmask="'alias': 'currency', 'rightAlign': false, 'clearMaskOnLostFocus': true" data-suffix="or more" tabindex="0">
-        <button class="combo__button button--go button--standard is-disabled" type="button">
+      <div class="financial-range-input financial-range-input-max">
+        <label for="max_{{name}}">To</label>
+        <input id="max_{{name}}" type="text" name="min_{{name}}" data-suffix="or more" tabindex="0">
+        <button class="button--go button--standard is-disabled" type="button">
           <span class="u-visually-hidden">Search</span>
         </button>
       </div>
