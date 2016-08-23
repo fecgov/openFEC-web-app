@@ -1,5 +1,5 @@
 {% macro field(name, title, attrs={}) %}
-<div class="filter js-filter js-text-filter" id="{{ name }}-field">
+<div class="filter js-filter" id="{{ name }}-field" data-filter="text">
   <label class="label" for="{{ name }}">{{ title }}</label>
   <div class="combo combo--filter--mini">
     <input id="{{ name }}" type="text" name="{{ name }}" class="combo__input"

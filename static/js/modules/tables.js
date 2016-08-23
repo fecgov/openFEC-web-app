@@ -280,7 +280,7 @@ function filterSuccessUpdates(changeCount) {
       // typeahead
       if ($(updateChangedEl).hasClass('tt-input')) {
         // show message after generated checkbox (last item in list)
-        $label = $('.js-typeahead-filter li').last();
+        $label = $('[data-filter="typeahead"] li').last();
         filterAction = 'Filter added';
       }
       // text input search

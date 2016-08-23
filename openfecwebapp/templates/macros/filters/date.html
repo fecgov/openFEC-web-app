@@ -1,6 +1,6 @@
 {% macro field(name, label, dates) %}
 
-  <div class="filter js-filter js-date-choice-field" id="{{ name }}" data-name="{{ name }}">
+  <div class="filter js-filter" id="{{ name }}" data-name="{{ name }}" data-filter="date">
   <fieldset>
     <legend for="{{ name }}" class="label">{{ label }}</legend>
     <ul>
@@ -30,7 +30,7 @@
 
 {% macro partition_field(name, label, dates) %}
   {% set current_year = dates['year'][1] | date(fmt='%Y') %}
-  <div class="filter js-filter js-select-filter js-filter-control" data-validate="true" data-modifies-filter="{{ name }}" data-modifies-property="data-transaction-year" data-required-default="{{ current_year }}">
+  <div class="filter js-filter js-filter-control" data-filter="select" data-validate="true" data-modifies-filter="{{ name }}" data-modifies-property="data-transaction-year" data-required-default="{{ current_year }}">
     <label class="label t-inline-block" for="two-year-transaction-period">Transaction period</label>
     <div class="tooltip__container">
       <button class="tooltip__trigger" type="button"><span class="u-visually-hidden">Learn more</span></button>
@@ -44,7 +44,7 @@
       {% endfor %}
     </select>
   </div>
-  <div class="filter js-filter js-date-choice-field" id="{{ name }}" data-name="{{ name }}">
+  <div class="filter js-filter" id="{{ name }}" data-filter="date" data-name="{{ name }}">
     <fieldset>
     <legend class="label">{{ label }}</legend>
     <div>
