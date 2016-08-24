@@ -1,0 +1,24 @@
+{% extends "layouts/main.html" %}
+{% import 'macros/legal.html' as legal %}
+{% import 'macros/breadcrumbs.html' as breadcrumb %}
+
+{% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources')] %}
+
+{% block title %}{{ display_name | capitalize }}{% endblock %}
+
+{% block body %}
+<header class="page-header slab slab--primary">
+  {{ breadcrumb.breadcrumbs(display_name.capitalize(), breadcrumb_links) }}
+</header>
+
+<section class="main__content--full data-container__wrapper">
+  {{ legal.filter('Search %s' % display_name, result_type) }}
+  <div class="content__section data-container__body">
+    <div class="main">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</section>
+
+{% include 'partials/legal-disclaimer.html' %}
+{% endblock %}
