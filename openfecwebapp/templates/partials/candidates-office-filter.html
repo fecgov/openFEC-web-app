@@ -10,7 +10,7 @@
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
     {{ typeahead.field('q', 'Candidate name or ID', '', dataset='candidates', allow_text=True) }}
-    {{ election_filter.field('election_year', 'Election cycle', 'cycle', 'election_full', office) }}
+    {{ election_filter.field('election_year', 'Election cycle', 'cycle', 'election_full', table_context['office']) }}
     <input id="election_full" name="election_full" type="checkbox" value="true">
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Candidate information</button>
