@@ -3,20 +3,20 @@
   <legend class="label">{{ label }}</legend>
   <div class="range">
     <div class="js-filter">
-      <div class="financial-range-input financial-range-input-min">
+      <div class="range__input range__input--min">
         <label for="min_{{name}}">From</label>
         <input id="min_{{name}}" type="text" name="min_{{name}}" data-suffix="or more" tabindex="0">
       </div>
     </div>
     <div class="range__hyphen">-</div>
     <div class="js-filter">
-      <div class="financial-range-input financial-range-input-max">
+      <div class="range__input range__input--max">
         <label for="max_{{name}}">To</label>
-        <input id="max_{{name}}" type="text" name="min_{{name}}" data-suffix="or more" tabindex="0">
-        <button class="button--go button--standard is-disabled" type="button">
-          <span class="u-visually-hidden">Search</span>
-        </button>
+        <input id="max_{{name}}" type="text" name="max_{{name}}" data-suffix="or less" tabindex="0">
       </div>
+      <button class="button--go button--standard" type="button">
+        <span class="u-visually-hidden">Search</span>
+      </button>
     </div>
   </div>
 </fieldset>
