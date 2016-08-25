@@ -40,11 +40,13 @@ var receiptDateColumn = {
   className: 'min-tablet hide-panel column--med',
   orderable: true,
   render: function(data, type, row, meta) {
+    var parsed;
     if (meta.settings.oInit.path.indexOf('efile') >= 0) {
-      var parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
+      parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
       return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : 'Invalid date';
     } else {
-      return data;
+      parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
+      return parsed.isValid() ? parsed.format('MM-DD-YYYY') : 'Invalid date';
     }
   }
 };
