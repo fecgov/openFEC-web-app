@@ -1,13 +1,14 @@
 import unittest
 from unittest import mock
 from urllib.parse import urlparse, parse_qs
+import codecs
+import json
+from collections import OrderedDict
 
-import flask
 
 from openfecwebapp import api_caller
 from openfecwebapp.app import app
 from tests import factory
-
 
 class TestLegalSearch(unittest.TestCase):
 
@@ -65,6 +66,7 @@ class TestLegalSearch(unittest.TestCase):
                     'search': 'in kind donation',
                     'search_type': 'advisory_opinions'})
         self.assertEqual(response.status_code, 200)
+
         load_legal_search_results.assert_called_once_with('in kind donation', 'advisory_opinions', offset=0)
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
@@ -88,6 +90,29 @@ class TestLegalSearch(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         load_legal_search_results.assert_called_once_with('in kind donation', 'statutes', offset=0)
 
+    @mock.patch.object(api_caller, '_call_api')
+    def test_advisory_opinion_grouping(self, _call_api_mock):
+        _call_api_mock.return_value = {'advisory_opinions':
+                [{'no': 1, 'date': '2016'}, {'no': 1, 'date': '2015'},
+                 {'no': 2, 'date': '1999'}]}
+        results = api_caller.load_legal_search_results(query='president')
+        assert results == {'advisory_opinions': OrderedDict([(1,
+            [{'no': 1, 'date': '2016'}, {'no': 1, 'date': '2015'}]),
+            (2, [{'no': 2, 'date': '1999'}])]),
+            'limit': 20, 'offset': 0, 'advisory_opinions_returned': 3}
+
+    @mock.patch.object(api_caller, '_call_api')
+    def test_result_counts(self, _call_api_mock):
+        _call_api_mock.return_value = {'advisory_opinions':
+            [{'no': 1, 'date': '2016'}, {'no': 1, 'date': '2015'},
+            {'no': 2, 'date': '1999'}], 'statutes': [{}] * 4,
+            'regulations': [{}] * 5}
+        results = api_caller.load_legal_search_results(query='president')
+
+        assert len(results['advisory_opinions']) == 2
+        assert results['advisory_opinions_returned'] == 3
+        assert results['statutes_returned'] == 4
+        assert results['regulations_returned'] == 5
 
 if __name__ == '__main__':
     unittest.main()
