@@ -260,19 +260,12 @@ table_columns = OrderedDict([
     ('communication-costs', ['Committee', 'Support / oppose', 'Candidate', 'Amount', 'Date']),
     ('disbursements', ['Spender', 'Recipient', 'State', 'Purpose', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
-<<<<<<< HEAD
-    ('filings', ['Filer name', 'Document', 'Amendment indicator', 'Receipt date', 'Coverage start date', 'Coverage end date']),
+    ('filings', ['Filer name', 'Document', 'Amendment indicator', 'Receipt date']),
     ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
-    ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount'])
-=======
-    ('filings', ['Filer name', 'Document', 'Amendment indicator', 'Receipt date']),
-    ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Expenditure date', 'Amount']),
-    ('individual-contributions', ['Recipient', 'Contributor name', 'State', 'Employer', 'Receipt date', 'Amount']),
-    ('receipts', ['Recipient', 'Contributor name', 'State', 'Receipt date', 'Amount']),
+    ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount']),
     ('reports-presidential', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
     ('reports-house-senate', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
     ('reports-pac-party', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
     ('reports-ie-only', ['Committee ID', 'Report type', 'Coverage start date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
->>>>>>> d4fcec6230b70ab68e9ba0819f7c9b916fd0101c
 ])
