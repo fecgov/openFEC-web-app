@@ -8,13 +8,15 @@ var _ = require('underscore');
 var tables = require('./tables');
 var helpers = require('../modules/helpers');
 
-var candidateTemplate = require('../../templates/filings/candidate.hbs');
-var pacTemplate = require('../../templates/filings/pac.hbs');
+var candidateTemplate = require('../../templates/reports/candidate.hbs');
+var pacTemplate = require('../../templates/reports/pac.hbs');
+var ieTemplate = require('../../templates/reports/ie-only.hbs');
 
 var templates = {
   F3: candidateTemplate,
   F3P: candidateTemplate,
-  F3X: pacTemplate
+  F3X: pacTemplate,
+  F5: ieTemplate
 };
 
 function resolveTemplate(row) {
@@ -38,7 +40,7 @@ var renderModal = tables.modalRenderFactory(
 );
 
 function renderRow(row, data, index) {
-  if (data.form_type && data.form_type.match(/^F3[XP]?$/)) {
+  if (data.form_type && data.form_type.match(/^F[35][XP]?$/)) {
     row.classList.add(tables.MODAL_TRIGGER_CLASS, 'row--has-panel');
   }
 }

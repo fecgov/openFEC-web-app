@@ -24,6 +24,13 @@
       <div class="sidebar-container sidebar-container--left">
         <nav class="sidebar sidebar--neutral side-nav js-sticky-side" data-sticky-container="main">
           <ul class="sidebar__content">
+            {% if features.legal_statutes %}
+            <li class="side-nav__item">
+              <a class="side-nav__link" href="#results-statutes">
+              Statutes ({{ results.total_statutes|default(0) }})
+              </a>
+            </li>
+            {% endif %}
             <li class="side-nav__item">
               <a class="side-nav__link" href="#results-regulations">
                 Regulations ({{ results.total_regulations|default(0) }})
@@ -36,13 +43,49 @@
             </li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">Enforcement Matters (TBD)</span></li>
             <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
-            <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
           </ul>
         </nav>
       </div>
       <section class="main__content--right">
         {% if query %}
         <h1 class="main__title">Results for &ldquo;{{ query }}&rdquo;</h1>
+        {% endif %}
+        {% if features.legal_statutes %}
+        <div id="results-statutes" class="content__section">
+          <div class="results-info results-info--simple">
+            <div class="results-info__left">
+              <h2 class="results-info__title">Statutes</h2>
+            </div>
+            {% if results.total_statutes %}
+            <div class="results-info__right">
+              <span class="results-info__details">1&ndash;{{ results.statutes_returned }} of <a href="{{ url_for('statutes', search=query, search_type='statutes') }}"><strong>{{ results.total_statutes }}</strong> results</a></span>
+            </div>
+            {% endif %}
+          </div>
+          {% if results.total_statutes %}
+            {% with statutes = results.statutes %}
+            {% include 'partials/legal-search-results-statute.html' %}
+            {% endwith %}
+            <div class="results-info">
+              <a class="button button--browse button--alt" href="{{ url_for('statutes', search=query, search_type='statutes') }}">View all results</a>
+            </div>
+          {% else %}
+            <div class="message message--alert">
+              <h2 class="message__title">No results</h2>
+              <p>Sorry, we didn&rsquo;t find any statutes matching {% if query %}<span class="t-bold">{{ query }}</span>{% else %}your search{% endif %}.</p>
+              <div class="message--alert__bottom">
+                <p>Think this was a mistake?</p>
+                <ul class="list--buttons">
+                  {% if query %}
+                  <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
+                  {% endif %}
+                  <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
+                  <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
+                </ul>
+              </div>
+            </div>
+          {% endif %}
+        </div>
         {% endif %}
         <div id="results-regulations" class="content__section">
           <div class="results-info results-info--simple">
@@ -51,24 +94,14 @@
             </div>
             {% if results.total_regulations %}
             <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.regulations|length }} of <a href="{{ url_for('regulations', search=query, search_type='regulations') }}"><strong>{{ results.total_regulations }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.regulations_returned }} of <a href="{{ url_for('regulations', search=query, search_type='regulations') }}"><strong>{{ results.total_regulations }}</strong> results</a></span>
             </div>
             {% endif %}
           </div>
           {% if results.total_regulations %}
-            <table class="data-table data-table--text data-table--heading-borders">
-              <thead>
-                <tr>
-                  <th class="cell--15">Section</th>
-                  <th class="cell--85">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for section in results.regulations %}
-                  {% include 'partials/legal-search-results-regulation.html' %}
-                {% endfor %}
-              </tbody>
-            </table>
+            {% with regulations = results.regulations %}
+            {% include 'partials/legal-search-results-regulation.html' %}
+            {% endwith %}
             <div class="results-info">
               <a class="button button--browse button--alt" href="{{ url_for('regulations', search=query, search_type='regulations') }}">View all results</a>
             </div>
@@ -96,7 +129,7 @@
             </div>
             {% if results.total_advisory_opinions %}
             <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.advisory_opinions|length }} of
+              <span class="results-info__details">1&ndash;{{ results.advisory_opinions_returned }} of
                 <a href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">
                   <strong>{{ results.total_advisory_opinions }}</strong> results
                 </a></span>
@@ -104,11 +137,9 @@
             {% endif %}
           </div>
           {% if results.total_advisory_opinions %}
-            {% for ao_no in results.advisory_opinions %}
-                {% with advisory_opinion_docs = results.advisory_opinions[ao_no] %}
-                {% include 'partials/legal-search-results-advisory-opinion.html' %}
-                {% endwith %}
-            {% endfor %}
+            {% with advisory_opinions = results.advisory_opinions %}
+            {% include 'partials/legal-search-results-advisory-opinion.html' %}
+            {% endwith %}
             <div class="results-info">
               <a class="button button--browse button--alt"
               href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">

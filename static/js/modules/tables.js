@@ -284,6 +284,11 @@ function filterSuccessUpdates(changeCount) {
 
         filterAction = 'Filter added';
       }
+      else if ($(updateChangedEl).parent().hasClass('range__input')) {
+        $label = $(updateChangedEl).closest('.range');
+
+        filterAction = 'Filter applied';
+      }
       // text input search
       else {
         $label = $('.is-loading:not(.overlay)');
@@ -640,8 +645,10 @@ DataTable.prototype.fetchError = function() {
 
   $('.filter__message').remove();
 
-  // text search error message
-  if ($(updateChangedEl).attr('type') === 'text' && $(updateChangedEl).hasClass('tt-input') === false) {
+  if ($(updateChangedEl).parent().hasClass('range__input')) {
+    $(updateChangedEl).closest('.range').after($(errorMessage));
+  }
+  else if ($(updateChangedEl).attr('type') === 'text' && $(updateChangedEl).hasClass('tt-input') === false) {
     $(updateChangedEl).parent().after($(errorMessage));
   }
   else {

@@ -207,7 +207,7 @@ var electioneeringCommunications = [
 var filings = {
   filer_name: {
     data: 'committee_id',
-    className: 'all column--large',
+    className: 'all column--xl',
     orderable: false,
     render: function(data, type, row, meta) {
       var cycle = tables.getCycle([row.cycle], meta);
@@ -246,6 +246,11 @@ var filings = {
       }
     }
   },
+  pages: {
+    data: 'pages',
+    className: 'min-tablet hide-efiling column--small',
+    orderable: true,
+  },
   amendment_indicator: amendmentIndicatorColumn,
   receipt_date: {
     data: 'receipt_date',
@@ -269,7 +274,7 @@ var filings = {
     className: 'all column--trigger hide-efiling',
     orderable: false,
     render: function(data, type, row) {
-      if (row.form_type && row.form_type.match(/^F3[XP]?$/)) {
+      if (row.form_type && row.form_type.match(/^F[35][XP]?$/)) {
         return tables.MODAL_TRIGGER_HTML;
       } else {
         return '';
@@ -407,6 +412,57 @@ var receipts = [
   modalTriggerColumn
 ];
 
+var reports = {
+  committee:   {
+    data: 'committee_name',
+    orderable: false,
+    className: 'all column--xl',
+    render: renderCommitteeColumn
+  },
+  pdf_url: columnHelpers.urlColumn('pdf_url', {
+    data: 'report_type_full',
+    className: 'all column--medium',
+    orderable: false
+  }),
+  coverage_start_date: dateColumn({
+    data: 'coverage_start_date',
+    className: 'min-tablet hide-panel column--med',
+    orderable: true
+  }),
+  coverage_end_date: dateColumn({
+    data: 'coverage_end_date',
+    className: 'min-tablet hide-panel column--med',
+    orderable: true
+  }),
+  receipt_date: dateColumn({
+    data: 'receipt_date',
+    className: 'min-tablet hide-panel column--med',
+    orderable: false
+  }),
+  receipts: currencyColumn({
+    data: 'total_receipts_period',
+    className: 'min-desktop hide-panel column--number'
+  }),
+  disbursements: currencyColumn({
+    data: 'total_disbursements_period',
+    className: 'min-desktop hide-panel column--number'
+  }),
+  independentExpenditures: currencyColumn({
+    data: 'independent_expenditures_period',
+    className: 'min-desktop hide-panel column--number'
+  }),
+  contributions: currencyColumn({
+    data: 'independent_contributions_period',
+    className: 'min-desktop hide-panel column--number'
+  }),
+  trigger: {
+    className: 'all column--trigger',
+    orderable: false,
+    render: function() {
+      return tables.MODAL_TRIGGER_HTML;
+    }
+  }
+};
 
 module.exports = {
   candidateColumn: candidateColumn,
@@ -425,5 +481,6 @@ module.exports = {
   independentExpenditures: independentExpenditures,
   individualContributions: individualContributions,
   filings: filings,
-  receipts: receipts
+  receipts: receipts,
+  reports: reports
 };

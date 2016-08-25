@@ -1,0 +1,21 @@
+{% macro amount(name, label) %}
+<fieldset class="filter" id="{{name}}-field">
+  <legend class="label">{{ label }}</legend>
+  <div class="js-filter">
+    <div class="range">
+      <div class="range__input range__input--min">
+        <label for="min_{{name}}">From</label>
+        <input id="min_{{name}}" type="text" name="min_{{name}}" data-prefix="$" data-suffix="or more" tabindex="0">
+      </div>
+      <div class="range__hyphen">-</div>
+      <div class="range__input range__input--max">
+        <label for="max_{{name}}">To</label>
+        <input id="max_{{name}}" type="text" name="max_{{name}}" data-prefix="$" data-suffix="or less" tabindex="0">
+      </div>
+      <button class="button--go button--standard" type="button">
+        <span class="u-visually-hidden">Search</span>
+      </button>
+    </div>
+  </div>
+</fieldset>
+{% endmacro %}

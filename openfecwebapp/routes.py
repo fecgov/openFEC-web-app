@@ -4,6 +4,7 @@ import furl
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from flask import render_template, request, redirect, url_for, abort
+from collections import OrderedDict
 
 from openfecwebapp import views
 from openfecwebapp import utils
@@ -116,7 +117,7 @@ def candidates_office(office):
         result_type='candidates',
         title='candidates for ' + office,
         slug='candidates-office',
-        office=office,
+        table_context=OrderedDict([('office', office)]),
         columns=constants.table_columns['candidates-office-' + office.lower()]
     )
 
@@ -203,6 +204,28 @@ def communication_costs():
         columns=constants.table_columns['communication-costs']
     )
 
+@app.route('/reports/<form_type>/')
+def reports(form_type):
+    if form_type.lower() not in ['presidential', 'house-senate', 'pac-party', 'ie-only']:
+        abort(404)
+    if form_type.lower() == 'presidential':
+        title = 'Presidential committee reports'
+    if form_type.lower() == 'house-senate':
+        title = 'House and Senate committee reports'
+    if form_type.lower() == 'pac-party':
+        title = 'PAC and party committee reports'
+    if form_type.lower() == 'ie-only':
+        title = 'Independent expenditure-only committee reports'
+    context = OrderedDict([('form_type', form_type.lower())])
+    return render_template(
+        'datatable.html',
+        slug='reports',
+        title=title,
+        table_context=context,
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['reports-' + form_type.lower()]
+    )
+
 @app.route('/elections/')
 def election_lookup():
     return render_template('election-lookup.html')
@@ -248,6 +271,16 @@ def legal_search(query, result_type):
 
     return views.render_legal_search_results(results, query, result_type)
 
+def legal_doc_search(query, result_type, **kwargs):
+    """Legal search for a specific document type."""
+    results = {}
+
+    # Only hit the API if there's an actual query
+    if query:
+        results = api_caller.load_legal_search_results(query, result_type, **kwargs)
+
+    return views.render_legal_doc_search_results(results, query, result_type)
+
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
         return views.render_legal_advisory_opinion_landing()
@@ -258,14 +291,15 @@ def advisory_opinions_landing():
     'offset': fields.Int(missing=0),
 })
 def advisory_opinions(query, offset):
-    result_type = 'advisory_opinions'
-    results = {}
+    return legal_doc_search(query, 'advisory_opinions', offset=offset)
 
-    # Only hit the API if there's an actual query
-    if query:
-        results = api_caller.load_legal_search_results(query, result_type, offset=offset)
-
-    return views.render_legal_doc_search_results(results, query, result_type)
+@app.route('/legal/search/statutes/')
+@use_kwargs({
+    'query': fields.Str(load_from='search'),
+    'offset': fields.Int(missing=0),
+})
+def statutes(query, offset):
+    return legal_doc_search(query, 'statutes', offset=offset)
 
 # TODO migrating from /legal/regulations -> /legal/search/regulations, eventually there will be a regulations landing page
 @app.route('/legal/regulations/')
@@ -278,14 +312,7 @@ def regulations_landing(*args, **kwargs):
     'offset': fields.Int(missing=0),
 })
 def regulations(query, offset):
-    result_type = 'regulations'
-    results = {}
-
-    # Only hit the API if there's an actual query
-    if query:
-        results = api_caller.load_legal_search_results(query, result_type, offset=offset)
-
-    return views.render_legal_doc_search_results(results, query, result_type)
+    return legal_doc_search(query, 'regulations', offset=offset)
 
 @app.route('/legal/advisory-opinions/<ao_no>/')
 def advisory_opinion_page(ao_no):
