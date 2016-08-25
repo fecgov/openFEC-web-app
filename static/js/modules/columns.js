@@ -49,6 +49,15 @@ var receiptDateColumn = {
   }
 };
 
+var pagesColumn = {
+  data: 'beginning_image_number',
+  orderable: false,
+  className: 'min-tablet hide-panel column--small',
+  render: function(data, type, row) {
+    return row.ending_image_number - row.beginning_image_number + 1;
+  }
+};
+
 var candidateColumn = columnHelpers.formattedColumn(function(data, type, row) {
   if (row) {
     return columnHelpers.buildEntityLink(row.candidate_name, helpers.buildAppUrl(['candidate', row.candidate_id]), 'candidate');
@@ -260,11 +269,7 @@ var filings = {
       }
     }
   },
-  pages: {
-    data: 'pages',
-    className: 'min-tablet hide-efiling column--small',
-    orderable: true,
-  },
+  pages: pagesColumn,
   amendment_indicator: amendmentIndicatorColumn,
   receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),

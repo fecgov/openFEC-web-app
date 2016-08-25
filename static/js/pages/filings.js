@@ -13,7 +13,7 @@ var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var columns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'modal_trigger'
+    'filer_name', 'pdf_url', 'amendment_indicator', 'pages', 'receipt_date', 'modal_trigger'
   ]
 );
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
     path: ['filings'],
     columns: columns,
     rowCallback: filings.renderRow,
-    order: [[3, 'desc']],
+    order: [[4, 'desc']],
     hideColumns: '.hide-processed',
     useFilters: true,
     useExport: true,
