@@ -16,7 +16,7 @@ $(document).ready(function() {
     path: ['schedules', 'schedule_a'],
     columns: columns.receipts,
     paginator: tables.SeekPaginator,
-    order: [[3, 'desc']],
+    order: [[4, 'desc']],
     useFilters: true,
     useExport: true,
     rowCallback: tables.modalRenderRow,
