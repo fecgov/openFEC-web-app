@@ -42,8 +42,7 @@ var receiptDateColumn = {
   render: function(data, type, row, meta) {
     if (meta.settings.oInit.path.indexOf('efile') >= 0) {
       var parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
-      // return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : 'Invalid date';
-      return parsed;
+      return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : 'Invalid date';
     } else {
       return data;
     }
@@ -413,7 +412,7 @@ var reports = {
     render: renderCommitteeColumn
   },
   pdf_url: columnHelpers.urlColumn('pdf_url', {
-    data: 'report_type_full',
+    data: 'report_type',
     className: 'all column--medium',
     orderable: false
   }),
