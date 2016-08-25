@@ -35,6 +35,31 @@ var modalTriggerColumn = {
   }
 };
 
+var receiptDateColumn = {
+  data: 'receipt_date',
+  className: 'min-tablet hide-panel column--med',
+  orderable: true,
+  render: function(data, type, row, meta) {
+    var parsed;
+    if (meta.settings.oInit.path.indexOf('efile') >= 0) {
+      parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
+      return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : 'Invalid date';
+    } else {
+      parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
+      return parsed.isValid() ? parsed.format('MM-DD-YYYY') : 'Invalid date';
+    }
+  }
+};
+
+var pagesColumn = {
+  data: 'beginning_image_number',
+  orderable: false,
+  className: 'min-tablet hide-panel column--small',
+  render: function(data, type, row) {
+    return row.ending_image_number - row.beginning_image_number + 1;
+  }
+};
+
 var candidateColumn = columnHelpers.formattedColumn(function(data, type, row) {
   if (row) {
     return columnHelpers.buildEntityLink(row.candidate_name, helpers.buildAppUrl(['candidate', row.candidate_id]), 'candidate');
@@ -246,25 +271,9 @@ var filings = {
       }
     }
   },
-  pages: {
-    data: 'pages',
-    className: 'min-tablet hide-efiling column--small',
-    orderable: true,
-  },
+  pages: pagesColumn,
   amendment_indicator: amendmentIndicatorColumn,
-  receipt_date: {
-    data: 'receipt_date',
-    className: 'min-tablet hide-panel column--med',
-    orderable: true,
-    render: function(data, type, row, meta) {
-      if (meta.settings.oInit.path.indexOf('efile') >= 0) {
-        var parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
-        return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : 'Invalid date';
-      } else {
-        return data;
-      }
-    }
-  },
+  receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   total_receipts: currencyColumn({data: 'total_receipts', className: 'min-desktop hide-panel column--number'}),
@@ -410,10 +419,11 @@ var reports = {
     render: renderCommitteeColumn
   },
   pdf_url: columnHelpers.urlColumn('pdf_url', {
-    data: 'report_type_full',
+    data: 'report_type',
     className: 'all column--medium',
     orderable: false
   }),
+  receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({
     data: 'coverage_start_date',
     className: 'min-tablet hide-panel column--med',
@@ -423,11 +433,6 @@ var reports = {
     data: 'coverage_end_date',
     className: 'min-tablet hide-panel column--med',
     orderable: true
-  }),
-  receipt_date: dateColumn({
-    data: 'receipt_date',
-    className: 'min-tablet hide-panel column--med',
-    orderable: false
   }),
   receipts: currencyColumn({
     data: 'total_receipts_period',
