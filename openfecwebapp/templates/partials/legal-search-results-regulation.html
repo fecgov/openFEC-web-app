@@ -1,14 +1,14 @@
-<div class="legal-search-results">
-  <div class="legal-search-results__header-row">
-    <div class="legal-search-results__header cell--15">Section</div>
-    <div class="legal-search-results__header">Description</div>
+<div class="simple-table simple-table--responsive simple-table--display">
+  <div class="simple-table__header">
+    <div class="simple-table__header-cell cell--15">Section</div>
+    <div class="simple-table__header-cell">Description</div>
   </div>
-  <div class="legal-search-results__list">
+  <div class="simple-table__row-group">
   {% for section in regulations %}
-    <div class="legal-search-result">
-      <div class="legal-search-result__field"><a title="{{ section.description }}" href="{{ section.url }}">§ {{ section.no }}</a></div>
-      <div class="legal-search-result__field">
-        <strong>{{ section.name }}</strong>
+    <div class="simple-table__row legal-search-result">
+      <div class="simple-table__cell"><a title="{{ section.description }}" href="{{ section.url }}">§ {{ section.no }}</a></div>
+      <div class="simple-table__cell">
+        <div cllass="legal-search-result__name">{{ section.name }}</div>
         <div class="t-serif legal-search-result__hit">
           &hellip;
           {% for highlight in section.highlights %}
