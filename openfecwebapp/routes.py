@@ -283,7 +283,15 @@ def legal_doc_search(query, result_type, **kwargs):
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
-        return views.render_legal_advisory_opinion_landing()
+    return render_template('legal-advisory-opinions-landing.html',
+        result_type='advisory_opinions',
+        display_name='advisory opinions')
+
+@app.route('/legal/statutes/')
+def statutes_landing():
+    return render_template('legal-statutes-landing.html',
+        result_type='statutes',
+        display_name='statutes')
 
 @app.route('/legal/search/advisory-opinions/')
 @use_kwargs({

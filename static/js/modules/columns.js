@@ -327,28 +327,17 @@ var independentExpenditures = [
     }
   },
   columnHelpers.urlColumn('pdf_url', {data: 'expenditure_description', className: 'min-desktop hide-panel', orderable: false}),
+  {
+    data: 'payee_name',
+    orderable: false,
+    className: 'min-desktop hide-panel column--medium'
+  },
   dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'expenditure_amount', className: 'min-tablet hide-panel column--number column--med'}),
   modalTriggerColumn
 ];
 
 var individualContributions = [
-  {
-    data: 'committee',
-    orderable: false,
-    className: 'all column--xl',
-    render: function(data, type, row, meta) {
-      if (data) {
-        return columnHelpers.buildEntityLink(
-          data.name,
-          helpers.buildAppUrl(['committee', data.committee_id]),
-          'committee'
-        );
-      } else {
-        return '';
-      }
-    }
-  },
   {
     data: 'contributor',
     orderable: false,
@@ -365,6 +354,22 @@ var individualContributions = [
       }
     }
   },
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--xl',
+    render: function(data, type, row, meta) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
+    }
+  },
   {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--state '},
   {data: 'contributor_employer', orderable: false, className: 'min-desktop hide-panel'},
   dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel column--med'}),
@@ -373,6 +378,22 @@ var individualContributions = [
 ];
 
 var receipts = [
+  {
+    data: 'contributor',
+    orderable: false,
+    className: 'all column--xl',
+    render: function(data, type, row, meta) {
+      if (data && row.receipt_type !== helpers.globals.EARMARKED_CODE) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return row.contributor_name;
+      }
+    }
+  },
   {
     data: 'committee',
     orderable: false,
@@ -390,20 +411,9 @@ var receipts = [
     }
   },
   {
-    data: 'contributor',
+    data: 'fec_election_type_desc',
     orderable: false,
-    className: 'all column--xl',
-    render: function(data, type, row, meta) {
-      if (data && row.receipt_type !== helpers.globals.EARMARKED_CODE) {
-        return columnHelpers.buildEntityLink(
-          data.name,
-          helpers.buildAppUrl(['committee', data.committee_id]),
-          'committee'
-        );
-      } else {
-        return row.contributor_name;
-      }
-    }
+    className: 'min-desktop column--med',
   },
   {data: 'contributor_state', orderable: false, className: 'min-desktop hide-panel column--state'},
   dateColumn({data: 'contribution_receipt_date', className: 'min-tablet hide-panel column--med'}),
