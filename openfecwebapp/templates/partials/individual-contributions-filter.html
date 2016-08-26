@@ -19,7 +19,7 @@ Filter individual contributions
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Contributor information</button>
   <div class="accordion__content">
-    {{ typeahead.field('contributor_name', 'Contributor name', dataset='', allow_text=True) }}
+    {{ text.field('contributor_name', 'Contributor name') }}
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
     {{ text.field('contributor_employer', 'Employer') }}

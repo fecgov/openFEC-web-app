@@ -280,8 +280,7 @@ function filterSuccessUpdates(changeCount) {
       // typeahead
       if ($(updateChangedEl).hasClass('tt-input')) {
         // show message after generated checkbox (last item in list)
-        $label = $('.js-typeahead-filter li').last();
-
+        $label = $('[data-filter="typeahead"] li').last();
         filterAction = 'Filter added';
       }
       else if ($(updateChangedEl).parent().hasClass('range__input')) {
@@ -292,13 +291,7 @@ function filterSuccessUpdates(changeCount) {
       // text input search
       else {
         $label = $('.is-loading:not(.overlay)');
-
-        if ($(updateChangedEl).val()) {
-          filterAction = '"' + $(updateChangedEl).val() + '" applied.';
-        }
-        else {
-          filterAction = 'Search term removed';
-        }
+        filterAction = 'Filter added';
       }
     }
     else {

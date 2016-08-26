@@ -24,7 +24,7 @@
 
 {% macro checkbox_dropdown(name, label, selected={}, options={}) %}
 <div class="filter">
-  <fieldset class="js-dropdown js-filter">
+  <fieldset class="js-dropdown js-filter" data-filter="checkbox">
     <legend class="label" for="{{ name }}">{{ label }}</legend>
     {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
     {% if options %}
@@ -36,7 +36,7 @@
 
 <!-- Used when there are multiple dropdowns within a single filter -->
 {% macro checkbox_dropdown_multiple(name, label, selected={}, options={}) %}
-<div class="filter">
+<div class="filter" data-filter="checkbox">
   <div class="js-dropdown">
     <span class="label" for="{{ name }}">{{ label }}</span>
     {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
