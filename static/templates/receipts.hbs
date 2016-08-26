@@ -47,14 +47,11 @@
     {{#panelRow "Receipt date"}}
       {{{datetime contribution_receipt_date format="pretty"}}}
     {{/panelRow}}
-    {{#panelRow "Filing date"}}
-      {{{datetime receipt_date format="pretty"}}}
-    {{/panelRow}}
     {{#panelRow "Memo"}}
       {{memo_text}}
     {{/panelRow}}
     {{#panelRow "Election type"}}
-      {{election_type_full}}
+      {{fec_election_type_desc}}
     {{/panelRow}}
   </table>
 </div>

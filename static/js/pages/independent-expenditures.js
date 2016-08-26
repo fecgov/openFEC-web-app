@@ -24,7 +24,7 @@ $(document).ready(function() {
     paginator: tables.SeekPaginator,
     rowCallback: tables.modalRenderRow,
     useExport: true,
-    order: [[4, 'desc']],
+    order: [[5, 'desc']],
     useFilters: true,
     callbacks: {
       afterRender: tables.modalRenderFactory(expenditureTemplate)

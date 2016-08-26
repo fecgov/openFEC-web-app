@@ -58,7 +58,7 @@
             </div>
             {% if results.total_statutes %}
             <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.statutes|length }} of <a href="{{ url_for('statutes', search=query, search_type='statutes') }}"><strong>{{ results.total_statutes }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.statutes_returned }} of <a href="{{ url_for('statutes', search=query, search_type='statutes') }}"><strong>{{ results.total_statutes }}</strong> results</a></span>
             </div>
             {% endif %}
           </div>
@@ -94,7 +94,7 @@
             </div>
             {% if results.total_regulations %}
             <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.regulations|length }} of <a href="{{ url_for('regulations', search=query, search_type='regulations') }}"><strong>{{ results.total_regulations }}</strong> results</a></span>
+              <span class="results-info__details">1&ndash;{{ results.regulations_returned }} of <a href="{{ url_for('regulations', search=query, search_type='regulations') }}"><strong>{{ results.total_regulations }}</strong> results</a></span>
             </div>
             {% endif %}
           </div>
@@ -129,7 +129,7 @@
             </div>
             {% if results.total_advisory_opinions %}
             <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.advisory_opinions|length }} of
+              <span class="results-info__details">1&ndash;{{ results.advisory_opinions_returned }} of
                 <a href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">
                   <strong>{{ results.total_advisory_opinions }}</strong> results
                 </a></span>
