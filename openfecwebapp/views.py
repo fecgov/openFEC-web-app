@@ -43,10 +43,6 @@ def render_legal_doc_search_results(results, query, result_type):
         query=query,
     )
 
-def render_legal_advisory_opinion_landing():
-    return render_template(
-        'legal-advisory-opinion-landing.html',
-    )
 
 def render_legal_advisory_opinion(advisory_opinion):
     return render_template(
