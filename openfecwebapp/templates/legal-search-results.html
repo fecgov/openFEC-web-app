@@ -24,13 +24,11 @@
       <div class="sidebar-container sidebar-container--left">
         <nav class="sidebar sidebar--neutral side-nav js-sticky-side" data-sticky-container="main">
           <ul class="sidebar__content">
-            {% if features.legal_statutes %}
             <li class="side-nav__item">
               <a class="side-nav__link" href="#results-statutes">
               Statutes ({{ results.total_statutes|default(0) }})
               </a>
             </li>
-            {% endif %}
             <li class="side-nav__item">
               <a class="side-nav__link" href="#results-regulations">
                 Regulations ({{ results.total_regulations|default(0) }})
