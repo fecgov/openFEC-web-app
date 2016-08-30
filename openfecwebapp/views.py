@@ -158,6 +158,7 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         None,
     )
 
+    tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
     return render_template('candidates-single.html', **tmpl_vars)
