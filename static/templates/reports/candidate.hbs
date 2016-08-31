@@ -1,6 +1,6 @@
 <div class="panel__row">
   <div class="panel__heading">
-    <h4 class="panel__title">{{report_type_full}}
+    <h4 class="panel__title">{{document_description}}
     {{#if is_amended}}
       (This report has been amended)
     {{/if}}
@@ -110,9 +110,6 @@
   <table>
     {{#panelRow "Total loans received"}}
       {{{currency total_loans_received_period}}}
-    {{/panelRow}}
-    {{#panelRow "Total loans received from candidates"}}
-      {{{currency loans_received_from_candidate_period}}}
     {{/panelRow}}
     {{#panelRow "Loan repayments made"}}
       {{{currency total_loan_repayments_made_period}}}
