@@ -69,7 +69,7 @@ $(document).ready(function() {
     },
     processed: {
       path: ['reports', context.form_type],
-      disableExport: false
+      disableExport: true
     }
   }).init();
 });
