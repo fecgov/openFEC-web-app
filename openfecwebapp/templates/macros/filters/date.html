@@ -31,7 +31,7 @@
 {% macro partition_field(name, label, dates) %}
   {% set current_year = dates['year'][1] | date(fmt='%Y') %}
   <div class="filter js-filter js-filter-control" data-filter="select" data-validate="true" data-modifies-filter="{{ name }}" data-modifies-property="data-transaction-year" data-required-default="{{ current_year }}">
-    <label class="label t-inline-block" for="two-year-transaction-period">Transaction period</label>
+    <label class="label t-inline-block" for="two-year-transaction-period">Time period</label>
     <div class="tooltip__container">
       <button class="tooltip__trigger" type="button"><span class="u-visually-hidden">Learn more</span></button>
       <div id="year-tooltip" role="tooltip" class="tooltip tooltip--under tooltip--left">
@@ -61,23 +61,40 @@
         <span class="u-visually-hidden">Search</span>
       </button>
     </div>
-    <div class="date-range-calendar">
+    <div class="date-range-grid">
       <div class="date-range-year">
-        {{ dates['year'][0] | date(fmt='%Y') }}
+      {{ current_year|int - 1 }}
       </div>
-      <ul class="date-range-months">
-        <li>Jan</li>
-        <li>Feb</li>
-        <li>Mar</li>
-        <li>Apr</li>
-        <li>May</li>
-        <li>Jun</li>
-        <li>Jul</li>
-        <li>Aug</li>
-        <li>Sep</li>
-        <li>Oct</li>
-        <li>Nov</li>
-        <li>Dec</li>
+      <ul data-year="{{ current_year|int - 1 }}" class="date-range-months">
+        <li data-month="01" class="beginning">Jan</li>
+        <li data-month="02">Feb</li>
+        <li data-month="03">Mar</li>
+        <li data-month="04">Apr</li>
+        <li data-month="05">May</li>
+        <li data-month="06">Jun</li>
+        <li data-month="07">Jul</li>
+        <li data-month="08">Aug</li>
+        <li data-month="09">Sep</li>
+        <li data-month="10">Oct</li>
+        <li data-month="11">Nov</li>
+        <li data-month="12">Dec</li>
+      </ul>
+      <div class="date-range-year">
+        {{ current_year }}
+      </div>
+      <ul data-year="{{ current_year }}" class="date-range-months">
+        <li data-month="01">Jan</li>
+        <li data-month="02">Feb</li>
+        <li data-month="03">Mar</li>
+        <li data-month="04">Apr</li>
+        <li data-month="05">May</li>
+        <li data-month="06">Jun</li>
+        <li data-month="07">Jul</li>
+        <li data-month="08">Aug</li>
+        <li data-month="09">Sep</li>
+        <li data-month="10">Oct</li>
+        <li data-month="11">Nov</li>
+        <li data-month="12" class="end">Dec</li>
       </ul>
     </div>
 
