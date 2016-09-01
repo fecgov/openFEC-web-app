@@ -60,12 +60,12 @@
         <span class="u-visually-hidden">Search</span>
       </button>
     </div>
-    <div class="date-range-grid">
-      <div class="date-range-first">
-        <div class="date-range-year">
+    <div class="date__range--grid">
+      <div class="date__range--row">
+        <div class="date__range--year">
         {{ current_year|int - 1 }}
         </div>
-        <ul data-year="{{ current_year|int - 1 }}" class="date-range-months">
+        <ul data-year="{{ current_year|int - 1 }}" class="date__range--months">
           <li data-month="01"><div>Jan</div></li>
           <li data-month="02"><div>Feb</div></li>
           <li data-month="03"><div>Mar</div></li>
@@ -79,11 +79,12 @@
           <li data-month="11"><div>Nov</div></li>
           <li data-month="12"><div>Dec</div></li>
         </ul>
-      <div class="date-range-second">
-        <div class="date-range-year">
+      </div>
+      <div class="date__range--row">
+        <div class="date__range--year">
           {{ current_year }}
         </div>
-        <ul data-year="{{ current_year }}" class="date-range-months">
+        <ul data-year="{{ current_year }}" class="date__range--months">
           <li data-month="01"><div>Jan</div></li>
           <li data-month="02"><div>Feb</div></li>
           <li data-month="03"><div>Mar</div></li>
