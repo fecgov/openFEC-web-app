@@ -429,7 +429,7 @@ var reports = {
     render: renderCommitteeColumn
   },
   pdf_url: columnHelpers.urlColumn('pdf_url', {
-    data: 'report_type',
+    data: 'document_description',
     className: 'all column--medium',
     orderable: false
   }),

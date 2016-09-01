@@ -77,15 +77,16 @@ def render_committee(committee, candidates, cycle):
 
     # add related candidates a level below
     tmpl_vars['candidates'] = candidates
-
     financials = api_caller.load_cmte_financials(committee['committee_id'], cycle=cycle)
+
+    tmpl_vars['report_type'] = report_types.get(committee['committee_type'], 'pac-party')
     tmpl_vars['reports'] = financials['reports']
     tmpl_vars['totals'] = financials['totals']
 
     tmpl_vars['context_vars'] = {
         'cycle': cycle,
         'timePeriod': str(cycle - 1) + '–' + str(cycle),
-        'name': committee['name']
+        'name': committee['name'],
     }
     return render_template('committees-single.html', **tmpl_vars)
 
@@ -102,6 +103,13 @@ election_durations = {
     'P': 4,
     'S': 6,
     'H': 2,
+}
+
+report_types = {
+    'P': 'presidential',
+    'S': 'house-senate',
+    'H': 'house-senate',
+    'I': 'ie-only'
 }
 
 def render_candidate(candidate, committees, cycle, election_full=True):
@@ -150,6 +158,7 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         None,
     )
 
+    tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
     return render_template('candidates-single.html', **tmpl_vars)
