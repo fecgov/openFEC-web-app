@@ -25,7 +25,7 @@ function currency(value) {
   if (!isNaN(parseInt(value))) {
     return currencyFormatter.format(value);
   } else {
-    return null;
+    return '--';
   }
 }
 Handlebars.registerHelper('currency', currency);

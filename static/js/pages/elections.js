@@ -94,12 +94,18 @@ var electionColumns = [
   {
     render: function(data, type, row, meta) {
       var dates = helpers.cycleDates(context.election.cycle);
+      var urlBase;
+      if (context.election.office === 'president') {
+        urlBase = ['reports', 'presidential'];
+      } else {
+        urlBase = ['reports','house-senate'];
+      }
       var url = helpers.buildAppUrl(
-        ['filings'],
+        urlBase,
         {
           committee_id: row.committee_ids,
-          min_receipt_date: dates.min,
-          max_receipt_date: dates.max
+          cycle: context.election.cycle,
+          is_amended: 'false'
         }
       );
       var anchor = document.createElement('a');

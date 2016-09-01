@@ -47,6 +47,7 @@ def load_search_results(query, query_type='candidates'):
 
     return results['results'] if len(results) else []
 
+
 def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     filters = {}
     if query:
@@ -60,7 +61,14 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     results['limit'] = limit
     results['offset'] = offset
 
+    if 'statutes' in results:
+        results['statutes_returned'] = len(results['statutes'])
+
+    if 'regulations' in results:
+        results['regulations_returned'] = len(results['regulations'])
+
     if 'advisory_opinions' in results:
+        results['advisory_opinions_returned'] = len(results['advisory_opinions'])
         grouped_aos = OrderedDict({})
         for ao in results['advisory_opinions']:
             if ao['no'] in grouped_aos:
@@ -68,9 +76,10 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
             else:
                 grouped_aos[ao['no']] = [ao]
 
-    for ao_no in grouped_aos:
-        grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
-    results['advisory_opinions'] = grouped_aos
+        for ao_no in grouped_aos:
+            grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
+        results['advisory_opinions'] = grouped_aos
+
     return results
 
 
@@ -89,11 +98,11 @@ def load_legal_advisory_opinion(ao_no):
     for document in documents:
         canonical_document = document
         if document['category'] == 'Final Opinion':
-            break        
-    
+            break
+
     if not canonical_document:
         return None
-    
+
     advisory_opinion = {
         'no' : ao_no,
         'date': canonical_document['date'],

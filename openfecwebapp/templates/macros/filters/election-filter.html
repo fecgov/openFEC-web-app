@@ -1,18 +1,18 @@
 {% macro field(name, title, cycle_name, full_name, office) %}
   {% if office == 'president' %}
     {% set duration = 4 %}
-    {% set years = range(2016, 1976, -4) %}
+    {% set years = range(2020, 1976, -4) %}
   {% elif office == 'senate' %}
     {% set duration = 6 %}
-    {% set years = range(2016, 1976, -2) %}
-  {% elif office == 'senate' %}
+    {% set years = range(2020, 1976, -2) %}
   {% else %}
     {% set duration = 2 %}
-    {% set years = range(2016, 1976, -2) %}
+    {% set years = range(2020, 1976, -2) %}
   {% endif %}
   <div
       id="{{ name }}-field"
-      class="filter js-filter js-election-filter"
+      class="filter js-filter"
+      data-filter="election"
       data-name="{{ name }}"
       data-cycle-name="{{ cycle_name }}"
       data-full-name="{{ full_name }}"
