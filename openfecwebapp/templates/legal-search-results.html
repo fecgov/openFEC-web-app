@@ -67,20 +67,7 @@
               <a class="button button--browse button--alt" href="{{ url_for('statutes', search=query, search_type='statutes') }}">View all results</a>
             </div>
           {% else %}
-            <div class="message message--alert">
-              <h2 class="message__title">No results</h2>
-              <p>Sorry, we didn&rsquo;t find any statutes matching {% if query %}<span class="t-bold">{{ query }}</span>{% else %}your search{% endif %}.</p>
-              <div class="message--alert__bottom">
-                <p>Think this was a mistake?</p>
-                <ul class="list--buttons">
-                  {% if query %}
-                  <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
-                  {% endif %}
-                  <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
-                  <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
-                </ul>
-              </div>
-            </div>
+          {{ legal.no_results('statutes', 'statutes', query, fec_resources=['fec.gov']) }}
           {% endif %}
         </div>
         <div id="results-regulations" class="content__section">
@@ -102,20 +89,7 @@
               <a class="button button--browse button--alt" href="{{ url_for('regulations', search=query, search_type='regulations') }}">View all results</a>
             </div>
           {% else %}
-            <div class="message message--alert">
-              <h2 class="message__title">No results</h2>
-              <p>Sorry, we didn&rsquo;t find any regulations matching {% if query %}<span class="t-bold">{{ query }}</span>{% else %}your search{% endif %}.</p>
-              <div class="message--alert__bottom">
-                <p>Think this was a mistake?</p>
-                <ul class="list--buttons">
-                  {% if query %}
-                  <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
-                  {% endif %}
-                  <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
-                  <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
-                </ul>
-              </div>
-            </div>
+          {{ legal.no_results('regulations', 'regulations', query, fec_resources=['Rulemaster', 'fec.gov']) }}
           {% endif %}
         </div>
         <div id="results-advisory-opinions" class="content__section">
@@ -142,20 +116,7 @@
               View all results</a>
             </div>
           {% else %}
-            <div class="message message--alert">
-              <h2 class="message__title">No results</h2>
-              <p>Sorry, we didn&rsquo;t find any advisory opinions matching {% if query %}<span class="t-bold">{{ query }}</span>{% else %}your query{% endif %}.</p>
-              <div class="message--alert__bottom">
-                <p>Think this was a mistake?</p>
-                <ul class="list--buttons">
-                  {% if query %}
-                  <li><a class="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
-                  {% endif %}
-                  <li><a class="button button--standard" href="mailto:{{ contact_email }}">Email our team</a></li>
-                  <li><a class="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
-                </ul>
-              </div>
-            </div>
+          {{ legal.no_results('advisory opinions', 'advisory_opinions', query, fec_resources=['Advisory_Opinion', 'fec.gov']) }}
           {% endif %}
         </div>
       </section>
