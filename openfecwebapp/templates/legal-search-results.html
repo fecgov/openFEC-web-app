@@ -39,8 +39,15 @@
               Advisory opinions ({{ results.total_advisory_opinions|default(0) }})
               </a>
             </li>
-            <li class="is-disabled side-nav__item"><span class="side-nav__link">Enforcement Matters (TBD)</span></li>
-            <li class="is-disabled side-nav__item"><span class="side-nav__link">(Resource TBD)</span></li>
+            {% if features.legal_murs %}
+            <li class="side-nav__item">
+              <a class="side-nav__link" href="#results-murs">
+              Enforcement matters ({{ results.total_murs|default(0) }})
+              </a>
+            </li>
+            {% else %}
+            <li class="is-disabled side-nav__item"><span class="side-nav__link">Enforcement matters (TBD)</span></li>
+            {% endif %}
           </ul>
         </nav>
       </div>
@@ -119,6 +126,35 @@
           {{ legal.no_results('advisory opinions', 'advisory_opinions', query, fec_resources=['Advisory_Opinion', 'fec.gov']) }}
           {% endif %}
         </div>
+        {% if features.legal_murs %}
+        <div id="results-murs" class="content__section">
+          <div class="results-info results-info--simple">
+            <div class="results-info__left">
+              <h2 class="results-info__title">Enforcement matters</h2>
+            </div>
+            {% if results.total_murs %}
+            <div class="results-info__right">
+              <span class="results-info__details">1&ndash;{{ results.murs_returned }} of
+                <a href="{{ url_for('murs', search=query, search_type='murs') }}">
+                  <strong>{{ results.total_murs }}</strong> results
+                </a></span>
+            </div>
+            {% endif %}
+          </div>
+          {% if results.total_murs %}
+            {% with murs = results.murs %}
+            {% include 'partials/legal-search-results-mur.html' %}
+            {% endwith %}
+            <div class="results-info">
+              <a class="button button--browse button--alt"
+              href="{{ url_for('murs', search=query, search_type='murs') }}">
+              View all results</a>
+            </div>
+          {% else %}
+          {{ legal.no_results('enforcement matters', 'murs', query, fec_resources=['Administrative_Fine', 'Alternative_Dispute_Resolution', 'Audit_Reports', 'Matters_Under_Review', 'Matters_Under_Review_Archived', 'fec.gov']) }}
+          {% endif %}
+        </div>
+        {% endif %}
       </section>
     </div>
   </div>
