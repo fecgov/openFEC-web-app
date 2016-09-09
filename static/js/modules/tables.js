@@ -283,8 +283,13 @@ function filterSuccessUpdates(changeCount) {
         $label = $('[data-filter="typeahead"] li').last();
         filterAction = 'Filter added';
       }
-      else if ($(updateChangedEl).parent().hasClass('range__input')) {
+      else if ($(updateChangedEl).closest('.range').hasClass('range--currency')) {
         $label = $(updateChangedEl).closest('.range');
+
+        filterAction = 'Filter applied';
+      }
+      else if ($(updateChangedEl).closest('.range').hasClass('range--date')) {
+        $label = $('.date-range-grid');
 
         filterAction = 'Filter applied';
       }
@@ -337,6 +342,9 @@ function filterSuccessUpdates(changeCount) {
       $('.filter__message').fadeOut(function () {
         $(this).remove();
       });
+
+      $('.date-range-grid').fadeOut();
+
     }, helpers.SUCCESS_DELAY);
   }
 }
