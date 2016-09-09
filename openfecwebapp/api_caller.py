@@ -172,17 +172,17 @@ def result_or_404(data):
 def landing_mock_data():
     return {
         'raising': {
-            'total': 4676956435.04,
-            'candidates': 1665946695.00,
-            'pacs': 2243677389.00,
-            'parties': 764080071.50,
+            'total': 4676956434.73,
+            'candidates': 1665946694.70,
+            'pacs': 2243677388.98,
+            'parties': 764080071.51,
             'other': 3252279.54
         },
         'spending': {
-            'total': 2411307904.24,
-            'candidates': 1479430004.00,
-            'pacs': 878776312.70,
-            'parties': 803844.00,
+            'total': 2997382025.67,
+            'candidates': 1479430004.24,
+            'pacs': 878776312.73,
+            'parties': 586877965.16,
             'other': 52297743.54
         }
     }
