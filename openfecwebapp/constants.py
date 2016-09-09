@@ -147,11 +147,7 @@ election_sensitive_reports = OrderedDict([
     ('30P', 'Post-primary'),
     ('60D', 'Post-convention'),
     ('10D', 'Pre-election (10D)'),
-    ('30D', 'Post-election (30D)'),
-    ('10G', 'Pre-general (last used: 1982)'),
-    ('10P', 'Pre-primary (last used: 1982)'),
-    ('10R', 'Pre-runoff (last used: 1980)'),
-    ('10S', 'Pre-special (last used: 1980)'),
+    ('30D', 'Post-election (30D)')
 ])
 
 bundling_reports = OrderedDict([
@@ -235,6 +231,26 @@ disbursement_categories = OrderedDict([
     ('other', 'Other'),
 ])
 
+pac_party_types = OrderedDict([
+    ('C', 'Communication cost'),
+    ('D', 'Delegate committee'),
+    ('E', 'Electioneering communication'),
+    ('Z', 'National party nonfederal account'),
+    ('N', 'PAC - nonqualified'),
+    ('Q', 'PAC - qualified'),
+    ('V', 'PAC with non-contribution account - nonqualified'),
+    ('W', 'PAC with non-contribution account - qualified'),
+    ('P', 'Party - nonqualified'),
+    ('Y', 'Party - qualified'),
+    ('U', 'Single candidate independent expenditure'),
+    ('O', 'SuperPAC (independent expenditure-only')
+])
+
+house_senate_types = OrderedDict([
+    ('H', 'House'),
+    ('S', 'Senate')
+])
+
 table_columns = OrderedDict([
     ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District']),
     ('candidates-office-president', ['Name', 'Party', 'Receipts', 'Disbursements']),
@@ -244,8 +260,12 @@ table_columns = OrderedDict([
     ('communication-costs', ['Committee', 'Support / oppose', 'Candidate', 'Amount', 'Date']),
     ('disbursements', ['Spender', 'Recipient', 'State', 'Purpose', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
-    ('filings', ['Filer name', 'Document', 'Amendment indicator', 'Receipt date', 'Coverage start date', 'Coverage end date']),
-    ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Expenditure date', 'Amount']),
-    ('individual-contributions', ['Recipient', 'Contributor name', 'State', 'Employer', 'Receipt date', 'Amount']),
-    ('receipts', ['Recipient', 'Contributor name', 'State', 'Receipt date', 'Amount'])
+    ('filings', ['Filer name', 'Document', 'Amendment indicator', 'Receipt date']),
+    ('independent-expenditures', ['Spender', 'Support / oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
+    ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
+    ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount']),
+    ('reports-presidential', ['Committee', 'Report type', 'Receipt date', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-house-senate', ['Committee', 'Report type', 'Receipt date', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-pac-party', ['Committee', 'Report type', 'Receipt date', 'Coverage start date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
+    ('reports-ie-only', ['Filer', 'Report type', 'Receipt date', 'Coverage start date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
 ])

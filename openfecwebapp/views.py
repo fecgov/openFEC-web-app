@@ -29,7 +29,6 @@ def render_search_results(results, query, result_type):
 def render_legal_search_results(results, query, result_type):
     return render_template(
         'legal-search-results.html',
-        legal_include_display_all=True, # includes the display-all link in results
         query=query,
         results=results,
         result_type=result_type,
@@ -37,25 +36,13 @@ def render_legal_search_results(results, query, result_type):
 
 
 def render_legal_doc_search_results(results, query, result_type):
-    if result_type == 'advisory_opinions':
-        document_type_display_name = 'Advisory opinions'
-    elif result_type == 'regulations':
-        document_type_display_name = 'Regulations'
-    else:
-        document_type_display_name = 'Documents'
-
     return render_template(
-        'legal-doc-search-results.html',
-        document_type_display_name=document_type_display_name,
+        'legal-search-results-%s.html' % result_type,
         results=results,
         result_type=result_type,
         query=query,
     )
 
-def render_legal_advisory_opinion_landing():
-    return render_template(
-        'legal-advisory-opinion-landing.html',
-    )
 
 def render_legal_advisory_opinion(advisory_opinion):
     return render_template(
@@ -90,15 +77,16 @@ def render_committee(committee, candidates, cycle):
 
     # add related candidates a level below
     tmpl_vars['candidates'] = candidates
-
     financials = api_caller.load_cmte_financials(committee['committee_id'], cycle=cycle)
+
+    tmpl_vars['report_type'] = report_types.get(committee['committee_type'], 'pac-party')
     tmpl_vars['reports'] = financials['reports']
     tmpl_vars['totals'] = financials['totals']
 
     tmpl_vars['context_vars'] = {
         'cycle': cycle,
         'timePeriod': str(cycle - 1) + '–' + str(cycle),
-        'name': committee['name']
+        'name': committee['name'],
     }
     return render_template('committees-single.html', **tmpl_vars)
 
@@ -115,6 +103,13 @@ election_durations = {
     'P': 4,
     'S': 6,
     'H': 2,
+}
+
+report_types = {
+    'P': 'presidential',
+    'S': 'house-senate',
+    'H': 'house-senate',
+    'I': 'ie-only'
 }
 
 def render_candidate(candidate, committees, cycle, election_full=True):
@@ -163,6 +158,7 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         None,
     )
 
+    tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
     return render_template('candidates-single.html', **tmpl_vars)

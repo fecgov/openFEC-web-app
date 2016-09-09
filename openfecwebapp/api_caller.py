@@ -47,6 +47,7 @@ def load_search_results(query, query_type='candidates'):
 
     return results['results'] if len(results) else []
 
+
 def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     filters = {}
     if query:
@@ -60,7 +61,14 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     results['limit'] = limit
     results['offset'] = offset
 
+    if 'statutes' in results:
+        results['statutes_returned'] = len(results['statutes'])
+
+    if 'regulations' in results:
+        results['regulations_returned'] = len(results['regulations'])
+
     if 'advisory_opinions' in results:
+        results['advisory_opinions_returned'] = len(results['advisory_opinions'])
         grouped_aos = OrderedDict({})
         for ao in results['advisory_opinions']:
             if ao['no'] in grouped_aos:
@@ -68,9 +76,10 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
             else:
                 grouped_aos[ao['no']] = [ao]
 
-    for ao_no in grouped_aos:
-        grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
-    results['advisory_opinions'] = grouped_aos
+        for ao_no in grouped_aos:
+            grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
+        results['advisory_opinions'] = grouped_aos
+
     return results
 
 
@@ -89,11 +98,11 @@ def load_legal_advisory_opinion(ao_no):
     for document in documents:
         canonical_document = document
         if document['category'] == 'Final Opinion':
-            break        
-    
+            break
+
     if not canonical_document:
         return None
-    
+
     advisory_opinion = {
         'no' : ao_no,
         'date': canonical_document['date'],
@@ -163,17 +172,17 @@ def result_or_404(data):
 def landing_mock_data():
     return {
         'raising': {
-            'total': 4676956435.04,
-            'candidates': 1665946695.00,
-            'pacs': 2243677389.00,
-            'parties': 764080071.50,
+            'total': 4676956434.73,
+            'candidates': 1665946694.70,
+            'pacs': 2243677388.98,
+            'parties': 764080071.51,
             'other': 3252279.54
         },
         'spending': {
-            'total': 2411307904.24,
-            'candidates': 1479430004.00,
-            'pacs': 878776312.70,
-            'parties': 803844.00,
+            'total': 2997382025.67,
+            'candidates': 1479430004.24,
+            'pacs': 878776312.73,
+            'parties': 586877965.16,
             'other': 52297743.54
         }
     }
