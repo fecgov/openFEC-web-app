@@ -46,7 +46,7 @@
   </div>
   <div class="filter js-filter" id="{{ name }}" data-filter="date" data-name="{{ name }}" data-validate="true">
     <fieldset>
-    <div class="range range--date">
+    <div class="range range--date js-date-range">
       <div class="range__input range__input--min" data-filter="range">
         <label for="min_{{ name }}">Beginning</label>
         <input type="text" id="min_{{ name }}" name="min_{{ name }}" data-range="min" class="js-min-date" data-prefix="Beginning" data-inputmask="'alias': 'mm/dd/yyyy'">
@@ -60,7 +60,7 @@
         <span class="u-visually-hidden">Search</span>
       </button>
     </div>
-    <div class="date-range__grid">
+    <div class="date-range__grid js-date-grid">
       <div class="date-range__row">
         <div class="date-range__year">
         {{ current_year|int - 1 }}
