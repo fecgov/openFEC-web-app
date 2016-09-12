@@ -1,0 +1,8 @@
+{% extends "layouts/legal-doc-search-results.html" %}
+{% set document_type_display_name = 'enforcement matters' %}
+
+{% block results %}
+{% with murs = results.murs %}
+{% include 'partials/legal-search-results-mur.html' %}
+{% endwith %}
+{% endblock %}
