@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 {% import 'macros/breadcrumbs.html' as breadcrumb %}
 
-{% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources'), (url_for('advisory_opinions'), 'Advisory opinions')] %}
+{% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources'), (url_for('advisory_opinions_landing'), 'Advisory opinions')] %}
 
 {% block title %}AO {{ advisory_opinion.no }}{% endblock %}
 
