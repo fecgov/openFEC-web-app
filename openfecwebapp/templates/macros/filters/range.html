@@ -1,7 +1,7 @@
 {% macro amount(name, label) %}
 <fieldset class="filter" id="{{name}}-field">
   <legend class="label">{{ label }}</legend>
-  <div class="range">
+  <div class="range range--currency">
     <div class="range__input range__input--min js-filter" data-filter="range">
       <label for="min_{{name}}">From</label>
       <input id="min_{{name}}" type="text" name="min_{{name}}" data-range="min" data-prefix="$" data-suffix="or more" tabindex="0">
