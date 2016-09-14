@@ -56,8 +56,7 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
         filters['type'] = query_type
         filters['from_hit'] = offset
 
-    url = '/legal/search/'
-    results = _call_api(url, **filters)
+    results = _call_api('legal', 'search', **filters)
     results['limit'] = limit
     results['offset'] = offset
 
@@ -79,6 +78,9 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
         for ao_no in grouped_aos:
             grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
         results['advisory_opinions'] = grouped_aos
+
+    if 'murs' in results:
+        results['murs_returned'] = len(results['murs'])
 
     return results
 
