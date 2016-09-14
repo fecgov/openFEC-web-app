@@ -9,7 +9,7 @@
       <div class="simple-table__cell">
         <div class="legal-search-result__name"><a title="{{ mur.name }}" href="{{ mur.url }}">MUR #{{ mur.no }}</a></div>
         <div><a title="{{ mur.name }}" href="{{ mur.url }}">{{ mur.name }}</a></div>
-        {% if mur.archived or 1 %}
+        {% if mur.mur_type == 'archived' %}
         <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
         {% endif %}
       </div>
