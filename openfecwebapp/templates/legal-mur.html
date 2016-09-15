@@ -8,7 +8,7 @@
 
 {% block body %}
 <header class="page-header slab slab--primary">
-  {{ breadcrumb.breadcrumbs('MUR %s' % (mur.no,), breadcrumb_links) }}
+  {{ breadcrumb.breadcrumbs('MUR #%s' % (mur.no,), breadcrumb_links) }}
 </header>
 
 <div class="container main">
@@ -56,13 +56,13 @@
             <h5>Regulations</h5>
             <ul>
               {% for citation in mur.citations.regulations %}
-              <li><a href="{{ citation.url }}">{{ citation.text }}</a></li>
+              <li><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
               {% endfor %}
             </ul>
             <h5>Statutes</h5>
             <ul>
               {% for citation in mur.citations.us_code %}
-              <li><a href="{{ citation.url }}">{{ citation.text }}</a></li>
+              <li><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
               {% endfor %}
             </ul>
           </div>
@@ -72,8 +72,8 @@
     <section id="documents" class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
       <div class="content__section">
-        <a class="button button--cta button--document button--lg" href="{{ mur.url }}">View case</a>
-        (<a href="{{ mur.url }}">{{ mur.pdf_size | filesize}}</a>)
+        <a class="button button--cta button--document button--lg" href="{{ mur.url }}" target="_blank">View case</a>
+        (<a class="t-sans" href="{{ mur.url }}" target="_blank">{{ mur.pdf_size | filesize}}</a>)
       </div>
     </section>
     <section id="participants" class="content__section">
