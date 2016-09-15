@@ -54,7 +54,7 @@ $(document).ready(function() {
     order: [[2, 'desc']],
     useFilters: true,
     useExport: true,
-    disableExport: true,
+    disableExport: false,
     callbacks: {
       afterRender: tables.modalRenderFactory(pageTemplate)
     }
@@ -65,11 +65,11 @@ $(document).ready(function() {
       path: ['efile', 'reports', context.form_type],
       disableFilters: true,
       enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
-      disableExport: true
+      disableExport: false
     },
     processed: {
       path: ['reports', context.form_type],
-      disableExport: true
+      disableExport: false
     }
   }).init();
 });

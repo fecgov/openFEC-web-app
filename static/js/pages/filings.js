@@ -42,7 +42,7 @@ $(document).ready(function() {
       disableFilters: true,
       enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
       hideColumns: '.hide-efiling',
-      disableExport: true
+      disableExport: false
     },
     processed: {
       path: ['filings'],
