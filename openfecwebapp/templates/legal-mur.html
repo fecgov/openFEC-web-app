@@ -80,15 +80,21 @@
       <table class="data-table data-table--text">
         <thead>
           <tr>
+            <th>Relationship</th>
             <th>Name</th>
           </tr>
         </thead>
         <tbody>
-          {% for respondent in mur.respondents %}
-          <tr>
-            <td>{{ respondent }}</td>
-          </tr>
-          {% endfor %}
+          {% if 'respondents' in mur and mur.respondents %}
+            {% for respondent in mur.respondents %}
+            <tr>
+              {% if loop.first %}
+              <td rowspan="{{ mur.respondents | length }}">Respondent(s)</td>
+              {% endif %}
+              <td>{{ respondent }}</td>
+            </tr>
+            {% endfor %}
+          {% endif %}
         </tbody>
       </table>
     </section>
