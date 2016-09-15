@@ -29,18 +29,19 @@
   </div>
   <div class="main__content--right">
     <section id="summary" class="content__section">
-      <div class="main__content">
+      <div class="main__content legal-mur">
+        <h2>Summary</h2>
         {% if mur.mur_type == 'archived' %}
         <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
         {% endif %}
-        <div>
-        OPEN DATE: {{ mur.open_date }}
+        <div class="legal-mur__property">
+          <strong>OPEN DATE:</strong> {{ mur.open_date | date('%Y-%m-%d') }}
         </div>
-        <div>
-        CLOSE DATE: {{ mur.close_date }}
+        <div class="legal-mur__property">
+        <strong>CLOSE DATE:</strong> {{ mur.close_date | date('%Y-%m-%d') }}
         </div>
-        <div>
-        SUBJECT:
+        <div class="legal-mur__property">
+        <strong>SUBJECT:</strong>
         {% for node in mur.subject %}
         <div>
           {{ legal.mur_subject(node) }}

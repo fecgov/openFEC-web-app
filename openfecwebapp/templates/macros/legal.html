@@ -69,9 +69,9 @@
 
 {% macro mur_subject(node) %}
 {{ node.text }}
-<ul>
+<ul class="legal-mur__subject-list">
   {% for child in node.children %}
-  <li>{{ mur_subject(child) }}</li>
+  <li class="legal-mur__subject-list-item">{{ mur_subject(child) }}</li>
   {% endfor %}
 </ul>
 {% endmacro %}
