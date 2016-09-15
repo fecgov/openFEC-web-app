@@ -86,9 +86,19 @@
           </tr>
         </thead>
         <tbody>
+          {% if 'complainants' in mur and mur.complainants %}
+            {% for complaintant in mur.complainants %}
+            <tr class="row-color-normal">
+              {% if loop.first %}
+              <td rowspan="{{ mur.complainants | length }}">Complaintant</td>
+              {% endif %}
+              <td>{{ complaintant }}</td>
+            </tr>
+            {% endfor %}
+          {% endif %}
           {% if 'respondents' in mur and mur.respondents %}
             {% for respondent in mur.respondents %}
-            <tr>
+            <tr class="row-color-contrast">
               {% if loop.first %}
               <td rowspan="{{ mur.respondents | length }}">Respondent(s)</td>
               {% endif %}
