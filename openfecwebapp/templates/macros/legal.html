@@ -66,3 +66,12 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro mur_subject(node) %}
+{{ node.text }}
+<ul>
+  {% for child in node.children %}
+  <li>{{ mur_subject(child) }}</li>
+  {% endfor %}
+</ul>
+{% endmacro %}

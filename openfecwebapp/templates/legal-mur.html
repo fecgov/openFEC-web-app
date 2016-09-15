@@ -1,0 +1,88 @@
+{% extends "layouts/main.html" %}
+{% import 'macros/breadcrumbs.html' as breadcrumb %}
+{% import 'macros/legal.html' as legal %}
+
+{% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources'), (url_for('advisory_opinions_landing'), 'Enforcement')] %}
+
+{% block title %}MUR #{{ mur.no }}{% endblock %}
+
+{% block body %}
+<header class="page-header slab slab--primary">
+  {{ breadcrumb.breadcrumbs('MUR %s' % (mur.no,), breadcrumb_links) }}
+</header>
+
+<div class="main">
+<div class="container">
+  <div class="row">
+    <div class="section__heading">
+      <h1 class="heading__title heading__title--main">MUR #{{ mur.no }}</h1>
+      <span class="heading__subtitle">{{ mur.name }}</span>
+    </div>
+    <section class="content__section">
+      <div class="main__content">
+        {% if mur.mur_type == 'archived' %}
+        <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
+        {% endif %}
+        <div>
+        OPEN DATE: {{ mur.open_date }}
+        </div>
+        <div>
+        CLOSE DATE: {{ mur.close_date }}
+        </div>
+        <div>
+        SUBJECT:
+        {% for node in mur.subject %}
+        <div>
+          {{ legal.mur_subject(node) }}
+        </div>
+        {% endfor %}
+        </div>
+      </div>
+      <div class="sidebar-container">
+        <aside class="sidebar sidebar--primary">
+          <h4 class="sidebar__title">Cited in this case</h4>
+          <div class="sidebar__content">
+            <h5>Regulations</h5>
+            <ul>
+              {% for citation in mur.citations.regulations %}
+              <li><a href="{{ citation.url }}">{{ citation.text }}</a></li>
+              {% endfor %}
+            </ul>
+            <h5>Statutes</h5>
+            <ul>
+              {% for citation in mur.citations.us_code %}
+              <li><a href="{{ citation.url }}">{{ citation.text }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <section class="content__section">
+      <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
+      <div class="content__section">
+        <a class="button button--cta button--document button--lg" href="{{ mur.url }}">View case</a>
+        (<a href="{{ mur.url }}">{{ mur.pdf_size | filesize}}</a>)
+      </div>
+    </section>
+    <section class="content__section">
+      <h2 class="t-ruled--bold t-ruled--bottom">Participants</h2>
+      <table class="data-table data-table--text">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for respondent in mur.respondents %}
+          <tr>
+            <td>{{ respondent }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+</div>
+{% endblock %}
