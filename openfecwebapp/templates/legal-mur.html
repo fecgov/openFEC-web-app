@@ -11,14 +11,24 @@
   {{ breadcrumb.breadcrumbs('MUR %s' % (mur.no,), breadcrumb_links) }}
 </header>
 
-<div class="main">
-<div class="container">
-  <div class="row">
+<div class="container main">
+  <div class="content__section">
     <div class="section__heading">
       <h1 class="heading__title heading__title--main">MUR #{{ mur.no }}</h1>
       <span class="heading__subtitle">{{ mur.name }}</span>
     </div>
-    <section class="content__section">
+  </div>
+  <div class="sidebar-container sidebar-container--left js-sticky-side" data-sticky-container="main">
+      <nav class="sidebar sidebar--neutral sidebar--left side-nav js-toc">
+        <ul class="sidebar__content">
+          <li class="side-nav__item"><a class="side-nav__link" href="#summary">Summary</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="#documents">Documents</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="#participants">Participants</a></li>
+        </ul>
+      </nav>
+  </div>
+  <div class="main__content--right">
+    <section id="summary" class="content__section">
       <div class="main__content">
         {% if mur.mur_type == 'archived' %}
         <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
@@ -58,14 +68,14 @@
         </aside>
       </div>
     </section>
-    <section class="content__section">
+    <section id="documents" class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
       <div class="content__section">
         <a class="button button--cta button--document button--lg" href="{{ mur.url }}">View case</a>
         (<a href="{{ mur.url }}">{{ mur.pdf_size | filesize}}</a>)
       </div>
     </section>
-    <section class="content__section">
+    <section id="participants" class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom">Participants</h2>
       <table class="data-table data-table--text">
         <thead>
@@ -83,6 +93,5 @@
       </table>
     </section>
   </div>
-</div>
 </div>
 {% endblock %}
