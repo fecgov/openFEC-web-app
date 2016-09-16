@@ -87,12 +87,12 @@
         </thead>
         <tbody>
           {% if 'complainants' in mur and mur.complainants %}
-            {% for complaintant in mur.complainants %}
+            {% for complainant in mur.complainants %}
             <tr class="row-color-normal">
               {% if loop.first %}
-              <td rowspan="{{ mur.complainants | length }}">Complaintant</td>
+              <td rowspan="{{ mur.complainants | length }}">Complainant</td>
               {% endif %}
-              <td>{{ complaintant }}</td>
+              <td>{{ complainant }}</td>
             </tr>
             {% endfor %}
           {% endif %}
