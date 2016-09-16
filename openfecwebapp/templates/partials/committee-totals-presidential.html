@@ -22,7 +22,7 @@
    ]
 %}
 {{ tables.totals('Total receipts', totals.0.receipts, table_data,
-    committee.report_year, header_description='Money raised by the committee' ) }}
+    committee.report_year, 'receipts', committee_id, reports.0.cycle ) }}
 
 {% set table_data = [
      (totals.0.operating_expenditures, 'Operating expenditures'),
@@ -39,6 +39,6 @@
    ]
 %}
 {{ tables.totals('Total disbursements', totals.0.disbursements, table_data,
-    committee.report_year, header_description='Money spent by the committee' ) }}
+    committee.report_year, 'disbursements', committee_id, reports.0.cycle ) }}
 
 {% endwith %}
