@@ -34,6 +34,16 @@ def date_filter(value, fmt='%m/%d/%Y'):
 def json_filter(value):
     return json.dumps(value)
 
+@app.template_filter('filesize')
+def filesize_filter(value):
+    units = ['B', 'KB', 'MB', 'GB']
+    unit = 0
+    while value > 1024 and unit < len(units):
+        value = value / 1024
+        unit += 1
+
+    return '%d %s' % (value, units[unit])
+
 def _unique(values):
     ret = []
     for value in values:

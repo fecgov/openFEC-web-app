@@ -51,6 +51,13 @@ def render_legal_advisory_opinion(advisory_opinion):
     )
 
 
+def render_legal_mur(mur):
+    return render_template(
+        'legal-mur.html',
+        mur=mur,
+    )
+
+
 def to_date(committee, cycle):
     if committee['committee_type'] in ['H', 'S', 'P']:
         return None
