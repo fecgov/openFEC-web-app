@@ -38,7 +38,6 @@ $(document).ready(function() {
     order: [[defaultSort[context.office], 'desc']],
     useFilters: true,
     useExport: true,
-    disableExport: false,
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tablePanels.renderCandidatePanel(true)

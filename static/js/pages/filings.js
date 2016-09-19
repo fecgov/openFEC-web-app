@@ -41,13 +41,11 @@ $(document).ready(function() {
       path: ['efile', 'filings'],
       disableFilters: true,
       enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
-      hideColumns: '.hide-efiling',
-      disableExport: false
+      hideColumns: '.hide-efiling'
     },
     processed: {
       path: ['filings'],
-      hideColumns: '.hide-processed',
-      disableExport: false
+      hideColumns: '.hide-processed'
     }
   }).init();
 });
