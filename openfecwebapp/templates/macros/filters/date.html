@@ -5,12 +5,12 @@
     <div class="range range--date js-date-range">
       <div class="range__input range__input--min" data-filter="range">
         <label for="min_{{ name }}">Beginning</label>
-        <input type="text" id="min_{{ name }}" name="min_{{ name }}" data-range="min" class="js-min-date" data-prefix="Beginning" data-min-date={{ dates['year'][0] | date(fmt='%m/%d/%Y') }}>
+        <input type="text" id="min_{{ name }}" name="min_{{ name }}" data-range="min" class="js-min-date" data-prefix="Beginning">
       </div>
       <div class="range__hyphen">-</div>
       <div class="range__input range__input--max" data-filter="range">
         <label for="max_{{ name }}">Ending</label>
-        <input type="text" id="max_{{ name }}" name="max_{{ name }}" data-range="max" class="js-max-date" data-prefix="Ending" data-max-date={{ dates['year'][1] | date(fmt='%m/%d/%Y') }}>
+        <input type="text" id="max_{{ name }}" name="max_{{ name }}" data-range="max" class="js-max-date" data-prefix="Ending">
       </div>
       <button class="button--go button--standard" type="button">
         <span class="u-visually-hidden">Search</span>
