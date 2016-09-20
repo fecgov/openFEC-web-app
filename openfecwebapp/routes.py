@@ -287,6 +287,12 @@ def advisory_opinions_landing():
         result_type='advisory_opinions',
         display_name='advisory opinions')
 
+@app.route('/legal/enforcement-matters/')
+def enforcement_landing():
+    return render_template('legal-enforcement-landing.html',
+        result_type='murs',
+        display_name='enforcement matters')
+
 @app.route('/legal/statutes/')
 def statutes_landing():
     return render_template('legal-statutes-landing.html',
