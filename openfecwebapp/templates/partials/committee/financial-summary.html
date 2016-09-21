@@ -3,14 +3,14 @@
 <section class="main" id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
   <div class="container">
     <div class="content__section">
-      <div class="section__heading">
-        <h2 class="heading__title heading__title--with-action" id="section-1-heading">
+      <div class="heading--section">
+        <h2 class="heading__left" id="section-1-heading">
           Financial summary: {{ cycle|fmt_year_range }}
           {{ committee_type }}
           {{ committee_designation }}
           {{ report_type }}
         </h2>
-        <a class="button button--alt button--browse heading__action" href="{{ url_for('reports',
+        <a class="heading__right button button--alt button--browse" href="{{ url_for('reports',
            form_type=report_type,
            committee_id=committee_id,
            cycle=cycle,

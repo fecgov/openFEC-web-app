@@ -2,11 +2,11 @@
 
 <section class="main" id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
   <div class="container">
-    <div class="section__heading">
-      <h2 class="heading__title heading__title--with-action" id="section-2-heading">
+    <div class="heading--section">
+      <h2 class="heading__left" id="section-2-heading">
         Money spent by this committee: {{ cycle|fmt_year_range }}
       </h2>
-      <a class="heading__action button--alt button--browse"
+      <a class="heading__right button--alt button--browse"
           href="{{ url_for(
             'disbursements',
             committee_id=committee_id,
