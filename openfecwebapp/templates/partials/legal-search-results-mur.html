@@ -21,6 +21,15 @@
           {% endfor %}
         </div>
         <div><strong>Date closed:</strong> {{ mur.close_date | date('%Y') | default('Unknown', True) }}</div>
+        {% if mur.mur_type == 'current' %}
+        {# Archived MUR subjects are a tree-structure so we don't render them inline #}
+          <div>
+            <strong>Subject:</strong>
+            {% for node in mur.subject -%}
+              {% if not loop.first %}; {% endif %}{{ node['text'] }}
+            {%- endfor %}
+          </div>
+        {% endif %}
       </div>
     </div>
   {% endfor %}
