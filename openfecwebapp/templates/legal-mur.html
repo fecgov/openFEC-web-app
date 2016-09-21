@@ -49,25 +49,31 @@
         {% endfor %}
         </div>
       </div>
+      {% if mur.citations.regulations or mur.citations.us_code %}
       <div class="sidebar-container">
         <aside class="sidebar sidebar--primary">
           <h4 class="sidebar__title">Cited in this case</h4>
           <div class="sidebar__content">
-            <h5>Regulations</h5>
-            <ul>
-              {% for citation in mur.citations.regulations %}
-              <li><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
-              {% endfor %}
-            </ul>
-            <h5>Statutes</h5>
-            <ul>
-              {% for citation in mur.citations.us_code %}
-              <li><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
-              {% endfor %}
-            </ul>
+            {% if mur.citations.regulations %}
+              <h5>Regulations</h5>
+              <ul>
+                {% for citation in mur.citations.regulations %}
+                <li><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if mur.citations.us_code %}
+              <h5>Statutes</h5>
+              <ul>
+                {% for citation in mur.citations.us_code %}
+                <li><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
           </div>
         </aside>
       </div>
+      {% endif %}
     </section>
     <section id="documents" class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
