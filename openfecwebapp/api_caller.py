@@ -86,7 +86,7 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
 
 
 def load_legal_advisory_opinion(ao_no):
-    url = '/legal/advisory_opinion/'
+    url = '/legal/docs/advisory_opinions/'
     results = _call_api(url, parse.quote(ao_no))
 
     if not (results and 'docs' in results):
@@ -121,9 +121,9 @@ def load_legal_advisory_opinion(ao_no):
 
 
 def load_legal_mur(mur_no):
-    #TODO use mur API
-    results = load_legal_search_results(mur_no, query_type='murs', offset=0, limit=1)
-    mur = results['murs'][0]
+
+    url = '/legal/docs/murs/'
+    mur = _call_api(url, parse.quote(mur_no))['results'][0]
 
     if not mur:
         abort(404)
