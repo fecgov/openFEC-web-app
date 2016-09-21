@@ -6,9 +6,6 @@
       <div class="heading--section">
         <h2 class="heading__left" id="section-1-heading">
           Financial summary: {{ cycle|fmt_year_range }}
-          {{ committee_type }}
-          {{ committee_designation }}
-          {{ report_type }}
         </h2>
         <a class="heading__right button button--alt button--browse" href="{{ url_for('reports',
            form_type=report_type,
