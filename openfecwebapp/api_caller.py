@@ -120,6 +120,17 @@ def load_legal_advisory_opinion(ao_no):
     return advisory_opinion
 
 
+def load_legal_mur(mur_no):
+    #TODO use mur API
+    results = load_legal_search_results(mur_no, query_type='murs', offset=0, limit=1)
+    mur = results['murs'][0]
+
+    if not mur:
+        abort(404)
+
+    return mur
+
+
 def load_single_type(data_type, c_id, *path, **filters):
     data = _call_api(data_type, c_id, *path, **filters)
     return result_or_404(data)

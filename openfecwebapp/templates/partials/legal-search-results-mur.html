@@ -1,4 +1,4 @@
-<div class="simple-table simple-table--responsive simple-table--display legal-search-results">
+<div class="simple-table simple-table--responsive simple-table--display legal-search-results legal-mur">
   <div class="simple-table__header">
     <div class="simple-table__header-cell cell--25">Name</div>
     <div class="simple-table__header-cell">Matches</div>
@@ -7,9 +7,9 @@
   {% for mur in murs %}
     <div class="simple-table__row legal-search-result">
       <div class="simple-table__cell">
-        <div class="legal-search-result__name"><a title="{{ mur.name }}" href="{{ mur.url }}">MUR #{{ mur.no }}</a></div>
-        <div><a title="{{ mur.name }}" href="{{ mur.url }}">{{ mur.name }}</a></div>
-        {% if mur.archived or 1 %}
+        <div class="legal-search-result__name"><a title="{{ mur.name }}" href="{{ url_for('mur_page', mur_no=mur.no) }}">MUR #{{ mur.no }}</a></div>
+        <div><a title="{{ mur.name }}" href="{{  url_for('mur_page', mur_no=mur.no) }}">{{ mur.name }}</a></div>
+        {% if mur.mur_type == 'archived' %}
         <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
         {% endif %}
       </div>
