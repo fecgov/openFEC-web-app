@@ -1,43 +1,94 @@
 {% extends "layouts/legal-doc-landing.html" %}
-{% import 'macros/document.html' as document %}
 
 {% block content %}
 <div class="section__heading">
   <h1 class="heading__title">Enforcement matters</h1>
 </div>
 <div class="content__section">
-  <p>Enforcement.</p>
+  <p>
+    The FEC exclusively enforces civil federal campaign finance law. Possible
+    violations of the law are identified one of four ways:
+  </p>
+  <ol class="list--numbered">
+    <li>The FEC regularly reviews committee reports and conducts audits.</li>
+    <li>Anyone may file a sworn complaint with the FEC that a violation has occurred or is about to occur.</li>
+    <li>Other government agencies may refer possible violations to the FEC.</li>
+    <li>Any person or entity who believes it has committed a violation may self report to the Commission.</li>
+  </ol>
 </div>
-<div class="content__section">
+<div class="content__section content__section--narrow">
   <div class="grid grid--3-wide">
     <div class="grid__item">
-      <h5><a href="">Administrative Fine Program</a></h5>
-      <p>Procedure and penalties for late and missed filings.</p>
+      <h4>Audits</h4>
+      <p>
+        Coming soon: Generally, the Commission audits a committee when it
+        appears not to have complied with the Federal Election Campaign Act.
+        The Commission is also required to audit all presidential campaigns and
+        convention committees that accept public funds.
+      </p>
     </div>
     <div class="grid__item">
-      <h5><a href="">Alternative Dispute Program</a></h5>
-      <p>Procedure and penalties for late and missed filings.</p>
+      <h4>Complainants and respondents</h4>
+      <p>
+        Coming soon: Step-by-step guide through the Commission’s enforcement
+        process and enforcement programs.
+      </p>
     </div>
     <div class="grid__item">
-      <h5><a href="">Matters Under Review</a></h5>
-      <p>Procedure and penalties for late and missed filings.</p>
-    </div>
-    <div class="grid__item">
-      <h5><a href="">Alternative Dispute Program</a></h5>
-      <p>Procedure and penalties for late and missed filings.</p>
-    </div>
-    <div class="grid__item">
-      <h5><a href="">Matters Under Review</a></h5>
-      <p>Procedure and penalties for late and missed filings.</p>
-    </div>
-    <div class="grid__item">
-      <h5><a href="">Alternative Dispute Program</a></h5>
-      <p>Procedure and penalties for late and missed filings.</p>
-    </div>
-    <div class="grid__item">
-      <h5><a href="">Matters Under Review</a></h5>
-      <p>Procedure and penalties for late and missed filings.</p>
+      <h4>Report a violation</h4>
+      <p>
+        Coming soon: How to file a complaint with the Commission and how
+        complaints are processed.
+      </p>
     </div>
   </div>
+</div>
+<div class="content__section">
+  <div class="heading--section">
+    <h2 class="t-ruled--bottom">Enforcement programs</h2>
+  </div>
+  <h4>Matters Under Review (MURs)</h4>
+  <p>
+    MURs are standard enforcement cases. By law, the Commission must attempt to
+    resolve MURs through a confidential investigative process. If that process
+    fails to end with a conciliation agreement, either the Commission or the
+    respondent(s) can choose to pursue the matter to court.
+  </p>
+  <div class="content__section--narrow u-no-print">
+    <div class="slab slab--neutral slab--inline">
+      <div class="container">
+        <div class="row">
+          <div class="usa-width-one-whole">
+            <form action="{{ url_for('murs') }}" autocomplete="off" class="search__container  js-search">
+              <div class="combo combo--search--mini">
+                <input id="search-input" type="text" name="search" class="combo__input" placeholder="Search MURs">
+                <input id="search-type" type="hidden" name="search_type" value="murs">
+                <button class="combo__button button--search button--standard" type="submit">
+                  <span class="u-visually-hidden">Search</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="usa-width-one-whole">
+            <span class="t-note t-sans">Examples: filings; 2405</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Administrative Fine Program</h4>
+  <p>
+    Coming soon: The Administrative Fine Program assesses civil money penalties
+    for late and non-filed reports.
+  </p>
+  <h4>Alternative Dispute Resolution Program</h4>
+  <p>
+    Coming soon: Alternative Dispute Resolution is a series of procedures for
+    resolving enforcement disputes through the mutual consent of the parties
+    involved.
+  </p>
 </div>
 {% endblock %}
