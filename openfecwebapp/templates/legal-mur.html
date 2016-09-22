@@ -55,7 +55,7 @@
           <h4 class="sidebar__title">Cited in this case</h4>
           <div class="sidebar__content">
             {% if mur.citations.regulations %}
-              <h5>Regulations</h5>
+              <p class="t-bold">Regulations</p>
               <ul>
                 {% for citation in mur.citations.regulations %}
                 <li class="u-padding--bottom"><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
@@ -63,7 +63,7 @@
               </ul>
             {% endif %}
             {% if mur.citations.us_code %}
-              <h5>Statutes</h5>
+              <p class="t-bold">Statutes</p>
               <ul>
                 {% for citation in mur.citations.us_code %}
                 <li class="u-padding--bottom"><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
