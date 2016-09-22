@@ -28,87 +28,79 @@
       </nav>
   </div>
   <div class="main__content--right">
-    <!--
     <section id="summary" class="content__section">
-      <div class="main__content legal-mur">
-        <h2>Summary</h2>
-        <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
-        <div class="legal-mur__property">
-          <strong>OPEN DATE:</strong> {{ mur.open_date | date('%Y-%m-%d') }}
-        </div>
-        <div class="legal-mur__property">
-        <strong>CLOSE DATE:</strong> {{ mur.close_date | date('%Y-%m-%d') }}
-        </div>
-        <div class="legal-mur__property">
-        <strong>SUBJECT:</strong>
-        {% for node in mur.subject %}
-        <div>
-          {{ legal.mur_subject(node) }}
-        </div>
-        {% endfor %}
-        </div>
+    <div class="main__content legal-mur">
+      <h2>Summary</h2>
+      <div class="legal-mur__property">
+        <strong>COMPLAINANT:</strong> {{ '; '.join(mur['complainants']) }}
       </div>
-      <div class="sidebar-container">
-        <aside class="sidebar sidebar--primary">
-          <h4 class="sidebar__title">Cited in this case</h4>
-          <div class="sidebar__content">
-            <h5>Regulations</h5>
-            <ul>
-              {% for citation in mur.citations.regulations %}
-              <li><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
-              {% endfor %}
-            </ul>
-            <h5>Statutes</h5>
-            <ul>
-              {% for citation in mur.citations.us_code %}
-              <li><a href="{{ citation.url }}" target="_blank">{{ citation.text }}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-        </aside>
+      <div class="legal-mur__property">
+        <strong>RESPONDENT:</strong> {{ '; '.join(mur['respondents']) }}
       </div>
-    </section>
-    <section id="documents" class="content__section">
-      <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
-      <div class="content__section">
-        <a class="button button--cta button--document button--lg" href="{{ mur.url }}" target="_blank">View case</a>
-        (<a class="t-sans" href="{{ mur.url }}" target="_blank">{{ mur.pdf_size | filesize}}</a>)
+      <div class="legal-mur__property">
+        <strong>SUBJECT:</strong> {{ '; '.join(mur.subject) }}
       </div>
-    </section>
-    <section id="participants" class="content__section">
-      <h2 class="t-ruled--bold t-ruled--bottom">Participants</h2>
-      <table class="data-table data-table--text">
-        <thead>
-          <tr>
-            <th>Relationship</th>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% if 'complainants' in mur and mur.complainants %}
-            {% for complaintant in mur.complainants %}
-            <tr class="row-color-normal">
-              {% if loop.first %}
-              <td rowspan="{{ mur.complainants | length }}">Complaintant</td>
-              {% endif %}
-              <td>{{ complaintant }}</td>
-            </tr>
+    </div>
+  </section>
+  <section id="documents" class="content__section">
+    <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
+    <table class="data-table data-table--text">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Document</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if 'documents' in mur and mur.documents_by_type %}
+          {% for category in mur.documents_by_type %}
+            {% for document in mur.documents_by_type[category] %}
+              <tr class="row-color-normal">
+                {% if loop.first %}
+                <td rowspan="{{ mur.documents_by_type[category] | length }}">{{ category }}</td>
+                {% endif %}
+                <td>{{ document.document_date | date('%m/%d/%Y')}}</td>
+                <td><a href="{{ document.url }}">{{ document.description }}</a>  {{ document.length | filesize }}</td>
+              </tr>
             {% endfor %}
-          {% endif %}
-          {% if 'respondents' in mur and mur.respondents %}
-            {% for respondent in mur.respondents %}
-            <tr class="row-color-contrast">
-              {% if loop.first %}
-              <td rowspan="{{ mur.respondents | length }}">Respondent(s)</td>
-              {% endif %}
-              <td>{{ respondent }}</td>
-            </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </section>
+  <section id="participants" class="content__section">
+    <h2 class="t-ruled--bold t-ruled--bottom">Participants</h2>
+    <table class="data-table data-table--text">
+      <thead>
+        <tr>
+          <th>Relationship</th>
+          <th>Name</th>
+          <th>Citations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if 'participants' in mur and mur.participants_by_type %}
+          {% for role in mur.participants_by_type %}
+            {% for participant in mur.participants_by_type[role] %}
+              <tr class="row-color-normal">
+                {% if loop.first %}
+                <td rowspan="{{ mur.participants_by_type[role] | length }}">{{ role }}</td>
+                {% endif %}
+                <td>{{ participant.name }}</td>
+                <td>
+                  {% for citation in participant.citations %}
+                  <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %};{% endif %}
+                  </a>
+                  {% endfor %}
+                </td>
+              </tr>
             {% endfor %}
-          {% endif %}
-        </tbody>
-      </table>
-    </section>
-    !-->
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </section>
   </div>
 </div>
 {% endblock %}

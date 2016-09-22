@@ -1,5 +1,6 @@
 import os
 from urllib import parse
+import re
 
 import requests
 import cachecontrol
@@ -123,11 +124,50 @@ def load_legal_advisory_opinion(ao_no):
 def load_legal_mur(mur_no):
 
     url = '/legal/docs/murs/'
-    mur = _call_api(url, parse.quote(mur_no))['results'][0]
+    mur = _call_api(url, parse.quote(mur_no))['docs'][0]
 
     if not mur:
         abort(404)
 
+    if mur['mur_type'] == 'current':
+        participants_by_type = OrderedDict()
+        complainants = []
+        respondents = []
+        for participant in mur['participants']:
+            citations = []
+            for stage in participant['citations']:
+                for url in participant['citations'][stage]:
+                    if 'uscode' in url:
+                        section = re.search('section=([0-9]+)', url).group(1)
+                        citations.append({'text': section, 'url': url})
+                    if 'cfr' in url:
+                        title_no = re.search('titlenum=([0-9]+)', url).group(1)
+                        part_no = re.search('partnum=([0-9]+)', url).group(1)
+                        section_no = re.search('sectionnum=([0-9]+)', url).group(1)
+                        text = '%s C.F.R. %s.%s' % (title_no, part_no, section_no)
+                        citations.append({'text': text, 'url': url})
+            participant['citations'] = citations
+            if participant['role'] in participants_by_type:
+                participants_by_type[participant['role']].append(participant)
+            else:
+                participants_by_type[participant['role']] = [participant]
+
+            if 'respondent' in participant['role'].lower():
+                respondents.append(participant['name'])
+            if 'complainant' in participant['role'].lower():
+                complainants.append(participant['name'])
+
+        mur['complainants'] = complainants
+        mur['respondents'] = respondents
+        mur['participants_by_type'] = participants_by_type
+
+        documents_by_type = OrderedDict()
+        for doc in mur['documents']:
+            if doc['category'] in documents_by_type:
+                documents_by_type[doc['category']].append(doc)
+            else:
+                documents_by_type[doc['category']] = [doc]
+        mur['documents_by_type'] = documents_by_type
     return mur
 
 
