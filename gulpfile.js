@@ -2,7 +2,6 @@
 
 var _ = require('underscore');
 
-var watchify = require('watchify');
 var browserify = require('browserify');
 
 var gulp = require('gulp');
@@ -27,9 +26,6 @@ var production = ['stage', 'prod'].indexOf(process.env.FEC_WEB_ENVIRONMENT) !== 
 var sentryPublicDsn = process.env.SENTRY_PUBLIC_DSN;
 var sentryPublicDsn = (appEnv.getServiceCreds(/fec-creds/) || {}).SENTRY_PUBLIC_DSN ||
   process.env.SENTRY_PUBLIC_DSN;
-
-// TODO(jmcarp) Restore `watch-js`
-// gulp.task('watch-js', bundle.bind(this, true));
 
 gulp.task('copy-vendor-images', function() {
   return gulp.src('./node_modules/datatables/media/images/**/*')

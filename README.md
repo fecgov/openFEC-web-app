@@ -77,10 +77,20 @@ To run the server in debug mode set:
 
     export FEC_WEB_DEBUG=true
 
+### Watch for changes
+To watch for changes to .js and .scss:
+
+    npm run watch
+
 ### Developing with fec-style (optional)
 If you're developing with a local instance of [fec-style](https://github.com/18F/fec-style) and want to pull in styles and script changes as you go, use `npm link` to create a symbolic link to your local fec-style repo:
 
-    npm link fec-style > ~/[path to fec-style]/fec-style
+    cd ~/fec-style
+    npm link
+    cd ~/openFEC-web-app
+    npm link fec-style
+
+After linking fec-style, `npm run watch` will rebuild on changes to your local copy of fec-style's .scss and .js files.
 
 ### Developing with fec-cms (optional)
 To be able to have links between this app and a local installation of [fec-cms](https://github.com/18F/fec-cms):
