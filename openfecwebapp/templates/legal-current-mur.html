@@ -1,0 +1,109 @@
+{% extends "layouts/main.html" %}
+{% import 'macros/breadcrumbs.html' as breadcrumb %}
+{% import 'macros/legal.html' as legal %}
+
+{% set breadcrumb_links=[(cms_url + '/legal-resources', 'Legal resources'), (url_for('advisory_opinions_landing'), 'Enforcement')] %}
+
+{% block title %}MUR #{{ mur.no }}{% endblock %}
+
+{% block body %}
+<header class="page-header slab slab--primary">
+  {{ breadcrumb.breadcrumbs('MUR #%s' % (mur.no,), breadcrumb_links) }}
+</header>
+
+<div class="container main legal-mur">
+  <div class="content__section">
+    <div class="section__heading">
+      <h1 class="heading__title heading__title--main">MUR #{{ mur.no }}</h1>
+      <span class="heading__subtitle">{{ mur.name }}</span>
+    </div>
+  </div>
+  <div class="sidebar-container sidebar-container--left js-sticky-side" data-sticky-container="main">
+      <nav class="sidebar sidebar--neutral sidebar--left side-nav js-toc">
+        <ul class="sidebar__content">
+          <li class="side-nav__item"><a class="side-nav__link" href="#summary">Summary</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="#documents">Documents</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="#participants">Participants</a></li>
+        </ul>
+      </nav>
+  </div>
+  <div class="main__content--right">
+    <section id="summary" class="content__section">
+    <div class="main__content">
+      <h2 class="t-ruled--bold t-ruled--bottom">Summary</h2>
+      <div class="legal-mur__property">
+        <strong>COMPLAINANT:</strong> {{ '; '.join(mur['complainants']) }}
+      </div>
+      <div class="legal-mur__property">
+        <strong>RESPONDENT:</strong> {{ '; '.join(mur['respondents']) }}
+      </div>
+      <div class="legal-mur__property">
+        <strong>SUBJECT:</strong> {{ '; '.join(mur['subject']['text']) }}
+      </div>
+    </div>
+  </section>
+  <section id="documents" class="content__section">
+    <h2 class="t-ruled--bold t-ruled--bottom u-no-margin">Documents</h2>
+    <table class="data-table data-table--text data-table--heading-borders">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Document</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if 'documents' in mur and mur.documents_by_type %}
+          {% for category in mur.documents_by_type %}
+            {% for document in mur.documents_by_type[category] %}
+              <tr class="row-color-normal">
+                {% if loop.first %}
+                <td rowspan="{{ mur.documents_by_type[category] | length }}">{{ category }}</td>
+                {% endif %}
+                <td>{{ document.document_date | date('%m/%d/%Y')}}</td>
+                <td><a href="{{ document.url }}">{{ document.description }}</a>  {{ document.length | filesize }}</td>
+              </tr>
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </section>
+  <section id="participants" class="content__section">
+    <h2 class="t-ruled--bold t-ruled--bottom u-no-margin">Participants</h2>
+    <table class="data-table data-table--text data-table--heading-borders">
+      <thead>
+        <tr>
+          <th>Relationship</th>
+          <th>Name</th>
+          <th>Citations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if 'participants' in mur and mur.participants_by_type %}
+          {% for role in mur.participants_by_type %}
+            {% for participant in mur.participants_by_type[role] %}
+              <tr class="row-color-normal">
+                {% if loop.first %}
+                <td rowspan="{{ mur.participants_by_type[role] | length }}">{{ role }}</td>
+                {% endif %}
+                <td>{{ participant.name }}</td>
+                <td>
+                  {% for citation in participant.citations %}
+                  <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %};{% endif %}
+                  </a>
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+    <div class="results-info results-info--bottom">
+ +        <a class="legal-top" href="#">Top of page</a>
+ +  </div>
+  </section>
+  </div>
+</div>
+{% endblock %}
