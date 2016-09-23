@@ -52,10 +52,16 @@ def render_legal_advisory_opinion(advisory_opinion):
 
 
 def render_legal_mur(mur):
-    return render_template(
-        'legal-mur.html',
-        mur=mur,
-    )
+    if mur['mur_type'] == 'archived':
+        return render_template(
+            'legal-archived-mur.html',
+            mur=mur,
+        )
+    else:
+        return render_template(
+            'legal-current-mur.html',
+            mur=mur,
+        )
 
 
 def to_date(committee, cycle):
