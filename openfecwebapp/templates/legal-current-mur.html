@@ -11,7 +11,7 @@
   {{ breadcrumb.breadcrumbs('MUR #%s' % (mur.no,), breadcrumb_links) }}
 </header>
 
-<div class="container main">
+<div class="container main legal-mur">
   <div class="content__section">
     <div class="section__heading">
       <h1 class="heading__title heading__title--main">MUR #{{ mur.no }}</h1>
@@ -29,8 +29,8 @@
   </div>
   <div class="main__content--right">
     <section id="summary" class="content__section">
-    <div class="main__content legal-mur">
-      <h2>Summary</h2>
+    <div class="main__content">
+      <h2 class="t-ruled--bold t-ruled--bottom">Summary</h2>
       <div class="legal-mur__property">
         <strong>COMPLAINANT:</strong> {{ '; '.join(mur['complainants']) }}
       </div>
@@ -43,8 +43,8 @@
     </div>
   </section>
   <section id="documents" class="content__section">
-    <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
-    <table class="data-table data-table--text">
+    <h2 class="t-ruled--bold t-ruled--bottom u-no-margin">Documents</h2>
+    <table class="data-table data-table--text data-table--heading-borders">
       <thead>
         <tr>
           <th>Type</th>
@@ -70,8 +70,8 @@
     </table>
   </section>
   <section id="participants" class="content__section">
-    <h2 class="t-ruled--bold t-ruled--bottom">Participants</h2>
-    <table class="data-table data-table--text">
+    <h2 class="t-ruled--bold t-ruled--bottom u-no-margin">Participants</h2>
+    <table class="data-table data-table--text data-table--heading-borders">
       <thead>
         <tr>
           <th>Relationship</th>
@@ -100,6 +100,9 @@
         {% endif %}
       </tbody>
     </table>
+    <div class="results-info results-info--bottom">
+ +        <a class="legal-top" href="#">Top of page</a>
+ +  </div>
   </section>
   </div>
 </div>
