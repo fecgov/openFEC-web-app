@@ -83,6 +83,13 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     if 'murs' in results:
         results['murs_returned'] = len(results['murs'])
 
+        for mur in results['murs']:
+            #TODO these eventually should come from the API
+            mur['close_date'] = None
+            mur['open_date'] = None
+            mur['url'] = None
+
+
     return results
 
 
