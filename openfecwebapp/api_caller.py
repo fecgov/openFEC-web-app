@@ -1,5 +1,6 @@
 import os
 from urllib import parse
+import re
 
 import requests
 import cachecontrol
@@ -56,8 +57,7 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
         filters['type'] = query_type
         filters['from_hit'] = offset
 
-    url = '/legal/search/'
-    results = _call_api(url, **filters)
+    results = _call_api('legal', 'search', **filters)
     results['limit'] = limit
     results['offset'] = offset
 
@@ -80,11 +80,21 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
             grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
         results['advisory_opinions'] = grouped_aos
 
+    if 'murs' in results:
+        results['murs_returned'] = len(results['murs'])
+
+        for mur in results['murs']:
+            #TODO these eventually should come from the API
+            mur['close_date'] = None
+            mur['open_date'] = None
+            mur['url'] = None
+
+
     return results
 
 
 def load_legal_advisory_opinion(ao_no):
-    url = '/legal/advisory_opinion/'
+    url = '/legal/docs/advisory_opinions/'
     results = _call_api(url, parse.quote(ao_no))
 
     if not (results and 'docs' in results):
@@ -116,6 +126,56 @@ def load_legal_advisory_opinion(ao_no):
     }
 
     return advisory_opinion
+
+
+def load_legal_mur(mur_no):
+
+    url = '/legal/docs/murs/'
+    mur = _call_api(url, parse.quote(mur_no))['docs'][0]
+
+    if not mur:
+        abort(404)
+
+    if mur['mur_type'] == 'current':
+        participants_by_type = OrderedDict()
+        complainants = []
+        respondents = []
+        for participant in mur['participants']:
+            citations = []
+            for stage in participant['citations']:
+                for url in participant['citations'][stage]:
+                    if 'uscode' in url:
+                        section = re.search('section=([0-9]+)', url).group(1)
+                        citations.append({'text': section, 'url': url})
+                    if 'cfr' in url:
+                        title_no = re.search('titlenum=([0-9]+)', url).group(1)
+                        part_no = re.search('partnum=([0-9]+)', url).group(1)
+                        section_no = re.search('sectionnum=([0-9]+)', url).group(1)
+                        text = '%s C.F.R. %s.%s' % (title_no, part_no, section_no)
+                        citations.append({'text': text, 'url': url})
+            participant['citations'] = citations
+            if participant['role'] in participants_by_type:
+                participants_by_type[participant['role']].append(participant)
+            else:
+                participants_by_type[participant['role']] = [participant]
+
+            if 'respondent' in participant['role'].lower():
+                respondents.append(participant['name'])
+            if 'complainant' in participant['role'].lower():
+                complainants.append(participant['name'])
+
+        mur['complainants'] = complainants
+        mur['respondents'] = respondents
+        mur['participants_by_type'] = participants_by_type
+
+        documents_by_type = OrderedDict()
+        for doc in mur['documents']:
+            if doc['category'] in documents_by_type:
+                documents_by_type[doc['category']].append(doc)
+            else:
+                documents_by_type[doc['category']] = [doc]
+        mur['documents_by_type'] = documents_by_type
+    return mur
 
 
 def load_single_type(data_type, c_id, *path, **filters):
@@ -172,18 +232,18 @@ def result_or_404(data):
 def landing_mock_data():
     return {
         'raising': {
-            'total': 4676956434.73,
-            'candidates': 1665946694.70,
-            'pacs': 2243677388.98,
-            'parties': 764080071.51,
-            'other': 3252279.54
+            'total': 5409774242.62,
+            'candidates': 1883399322.78,
+            'pacs': 2525845906.85,
+            'parties': 997221077.99,
+            'other': 3307935.00
         },
         'spending': {
-            'total': 2997382025.67,
-            'candidates': 1479430004.24,
-            'pacs': 878776312.73,
-            'parties': 586877965.16,
-            'other': 52297743.54
+            'total': 3571287377.71,
+            'candidates': 1669086332.88,
+            'pacs': 1014344445.93,
+            'parties': 734898386.06,
+            'other': 152958212.84
         }
     }
 

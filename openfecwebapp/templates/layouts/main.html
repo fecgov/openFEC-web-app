@@ -8,12 +8,8 @@
   {% include 'partials/meta-tags.html' %}
 
   <link rel="stylesheet" href="{{ asset_for('dist/styles/styles.css') }}" />
-
-  {% if style_url %}
-  <link rel="stylesheet" href="{{ style_url }}" />
-  {% else %}
   <link rel="stylesheet" href="{{ asset_for('dist/styles/fec.css') }}" />
-  {% endif %}
+
   {% if api_location %}
   <script>
     ANALYTICS = {{ use_analytics|json }};
