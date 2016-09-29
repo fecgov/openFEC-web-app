@@ -28,13 +28,13 @@ $(document).ready(function() {
   new TableSwitcher('.js-table-switcher', {
     summary: {
       path: ['schedules', 'schedule_e']
-      // disableFilters: true,
-      // enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
-      // hideColumns: '.hide-efiling',
     },
     notice: {
-      path: ['schedules', 'schedule_e', 'notice']
-      // hideColumns: '.hide-processed',
+      path: ['schedules', 'schedule_e', 'notice'],
+      disableFilters: true,
+      enabledFilters: ['committee_id', 'cycle', 'data_type', 'candidate_id',
+                      'support_oppose_indicator', 'payee_name', 'min_amount',
+                      'max_amount', 'date'],
     }
   }).init();
 });
