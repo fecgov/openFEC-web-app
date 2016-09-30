@@ -51,10 +51,10 @@
 {% endmacro %}
 
 {% macro no_results(display_name, result_type, query, fec_resources=None) %}
-<div class="message message--alert">
+<div class="message message--no-icon">
   <h2 class="message__title">No results</h2>
   <p>Sorry, we didn&rsquo;t find any {{ display_name }} matching {% if query %}<span class="t-bold">{{ query }}</span>{% else %}your query{% endif %}.</p>
-  <div class="message--alert__bottom">
+  <div class="message--no-icon__bottom">
     <p>Think this was a mistake?</p>
     <ul class="list--buttons">
       {% if query %}
