@@ -6,7 +6,7 @@
   <h2 class="message__title">Not finding what you're looking for?</h2>
   {% endif %}
   <p>View <a class="t-bold" href="{{ url_for('search', search_type=alt_type, search=query )}}">{{alt_type}} results</a> matching <span class="t-bold">"{{ query }}."</span></p>
-  <div class="message--no-icon__bottom">
+  <div class="message--alert__bottom">
     <p>Or browse a different data set:</p>
     <ul class="list--buttons">
       <li><a class="button--browse button--standard" href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">Candidates</a></li>
