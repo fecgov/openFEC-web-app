@@ -16,19 +16,19 @@ Filter independent expenditures
   <div class="filters__inner">
     {{ typeahead.field('committee_id', 'Spender name or ID') }}
     {{ years.years('cycle', 'Years') }}
-    <fieldset class="filter toggles toggles--vertical js-table-switcher js-filter js-toggle-filter" data-filter="toggle">
+    <fieldset class="filter toggles toggles--vertical js-filter js-toggle-filter" data-filter="toggle">
       <legend class="label">Report type</legend>
       <label for="summary" class="toggle">
-        <input type="radio" class="toggle" value="summary" id="summary" checked name="data_type">
-        <span class="button--alt">Summary reports</span>
+        <input type="radio" class="toggle" value="false" id="summary" checked name="is_notice" data-tag-value="Regularly scheduled reports">
+        <span class="button--alt">Regularly scheduled reports</span>
       </label>
       <label for="notice" class="toggle">
-        <input type="radio" class="toggle" value="notice" id="notice" name="data_type">
-        <span class="button--alt">24 and 48 hour notices</span>
+        <input type="radio" class="toggle" value="true" id="notice" name="is_notice" data-tag-value="24 and 48 hour reports">
+        <span class="button--alt">24 and 48 hour reports</span>
       </label>
     </fieldset>
     <fieldset class="filter js-filter" data-filter="checkbox">
-      <legend class="label">Summary form type</legend>
+      <legend class="label">Regularly scheduled report form</legend>
       <ul>
         <li>
           <input id="filing-form-f3x" name="filing_form" type="checkbox" value="F3X">
