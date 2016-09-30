@@ -29,7 +29,7 @@
 <form id="{{ location }}-search" action="{{ url_for('legal_search') }}" autocomplete="off" class="search__container">
   <div class="combo combo--search {{ size }}">
     {% if features.legal_murs %}
-    {% set document_types = (('all', 'All'),('statutes', 'Statutes'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions'),('murs', 'Enforcement matters')) %}
+    {% set document_types = (('all', 'All'),('statutes', 'Statutes'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions'),('murs', 'Matters under review')) %}
     {% else %}
     {% set document_types = (('all', 'All'),('statutes', 'Statutes'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions')) %}
     {% endif %}
