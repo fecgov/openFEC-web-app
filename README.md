@@ -10,14 +10,14 @@
 
 ## Campaign finance for everyone
 
-The Federal Election Commission (FEC) releases information to the public about money that’s raised and spent in federal elections — that’s elections for US president, Senate, and House of Representatives. 
+The Federal Election Commission (FEC) releases information to the public about money that’s raised and spent in federal elections — that’s elections for US president, Senate, and House of Representatives.
 
 Are you interested in seeing how much money a candidate raised? Or spent? How much debt they took on? Who contributed to their campaign? The FEC is the authoritative source for that information.
 
-betaFEC is a collaboration between [18F](http://18f.gsa.gov) and the FEC. It aims to make campaign finance information more accessible (and understandable) to all users. 
+betaFEC is a collaboration between [18F](http://18f.gsa.gov) and the FEC. It aims to make campaign finance information more accessible (and understandable) to all users.
 
 ## FEC repositories
-We welcome you to explore, make suggestions, and contribute to our code. 
+We welcome you to explore, make suggestions, and contribute to our code.
 
 This repository, [openFEC-web-app](https://github.com/18f/openfec-web-app), houses the betaFEC web app for exploring campaign finance data.
 
@@ -29,7 +29,7 @@ This repository, [openFEC-web-app](https://github.com/18f/openfec-web-app), hous
 - [fec-cms](https://github.com/18F/fec-cms): the content management system (CMS) for betaFEC
 
 ## Get involved
-We’re thrilled you want to get involved! 
+We’re thrilled you want to get involved!
 - Read our [contributing guidelines](https://github.com/18F/openfec/blob/master/CONTRIBUTING.md). Then, [file an issue](https://github.com/18F/fec/issues) or submit a pull request.
 - [Send us an email](mailto:betafeedback@fec.gov).
 - If you’re a developer, follow the installation instructions in the README.md page of each repository to run the apps on your computer.
@@ -77,14 +77,25 @@ To run the server in debug mode set:
 
     export FEC_WEB_DEBUG=true
 
-To use styles served from a custom location (e.g., if developing against a local `fec-style`):
+### Watch for changes
+To watch for changes to .js and .scss:
 
-    export FEC_WEB_STYLE_URL=http://localhost:8080/css/styles.css
+    npm run watch
 
-To be able to have links between this app and a local installation of the cms:
+### Developing with fec-style (optional)
+If you're developing with a local instance of [fec-style](https://github.com/18F/fec-style) and want to pull in styles and script changes as you go, use `npm link` to create a symbolic link to your local fec-style repo:
+
+    cd ~/fec-style
+    npm link
+    cd ~/openFEC-web-app
+    npm link fec-style
+
+After linking fec-style, `npm run watch` will rebuild on changes to your local copy of fec-style's .scss and .js files.
+
+### Developing with fec-cms (optional)
+To be able to have links between this app and a local installation of [fec-cms](https://github.com/18F/fec-cms):
 
     export FEC_CMS_URL=http://localhost:8000
-
 
 ### Features
 

@@ -29,7 +29,7 @@
 <form id="{{ location }}-search" action="{{ url_for('legal_search') }}" autocomplete="off" class="search__container">
   <div class="combo combo--search {{ size }}">
     {% if features.legal_murs %}
-    {% set document_types = (('all', 'All'),('statutes', 'Statutes'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions'),('murs', 'Enforcement matters')) %}
+    {% set document_types = (('all', 'All'),('statutes', 'Statutes'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions'),('murs', 'Matters under review')) %}
     {% else %}
     {% set document_types = (('all', 'All'),('statutes', 'Statutes'),('regulations', 'Regulations'),('advisory_opinions', 'Advisory opinions')) %}
     {% endif %}
@@ -51,7 +51,7 @@
 {% endmacro %}
 
 {% macro no_results(display_name, result_type, query, fec_resources=None) %}
-<div class="message message--alert">
+<div class="message message--no-icon">
   <h2 class="message__title">No results</h2>
   <p>Sorry, we didn&rsquo;t find any {{ display_name }} matching {% if query %}<span class="t-bold">{{ query }}</span>{% else %}your query{% endif %}.</p>
   <div class="message--alert__bottom">
@@ -65,4 +65,13 @@
     </ul>
   </div>
 </div>
+{% endmacro %}
+
+{% macro mur_subject(node) %}
+{{ node.text }}
+<ul class="legal-mur__subject-list">
+  {% for child in node.children %}
+  <li class="legal-mur__subject-list-item">{{ mur_subject(child) }}</li>
+  {% endfor %}
+</ul>
 {% endmacro %}

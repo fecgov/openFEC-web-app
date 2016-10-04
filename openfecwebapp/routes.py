@@ -338,3 +338,12 @@ def advisory_opinion_page(ao_no):
         abort(404)
 
     return views.render_legal_advisory_opinion(advisory_opinion)
+
+@app.route('/legal/matter-under-review/<mur_no>/')
+def mur_page(mur_no):
+    mur = api_caller.load_legal_mur(mur_no)
+
+    if not mur:
+        abort(404)
+
+    return views.render_legal_mur(mur)
