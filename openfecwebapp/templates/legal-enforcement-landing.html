@@ -46,35 +46,37 @@
   <header class="heading--section">
     <h2>Enforcement programs</h2>
   </header>
-  <h4>Matters Under Review (MURs)</h4>
-  <p>
-    FEC enforcement matters (called MURs) must, by law, remain confidential until they are closed. 
-    Law requires the Commission to try to resolve enforcement matters through conciliation.  
-    If the Commission fails to reach a conciliation agreement with a respondent, the Commission may choose 
-    to pursue the matter in federal court.
-  </p>
-  <p>
-    Search or browse closed MURs.
-  </p>
-  <div class="content__section--narrow u-no-print">
-    <div class="slab slab--neutral slab--inline">
-      <div class="container">
-        <div class="row">
-          <div class="usa-width-one-whole">
-            <form action="{{ url_for('murs') }}" autocomplete="off" class="search__container  js-search">
-              <div class="combo combo--search--large combo--search--inline">
-                <input id="search-input" type="text" name="search" class="combo__input" placeholder="Search MURs">
-                <input id="search-type" type="hidden" name="search_type" value="murs">
-                <button class="combo__button button--search button--standard" type="submit">
-                  <span class="u-visually-hidden">Search</span>
-                </button>
-              </div>
-            </form>
+  <div class="content__section content__section--narrow">
+    <h4>Matters Under Review (MURs)</h4>
+    <p>
+      FEC enforcement matters (called MURs) must, by law, remain confidential until they are closed. 
+      Law requires the Commission to try to resolve enforcement matters through conciliation.  
+      If the Commission fails to reach a conciliation agreement with a respondent, the Commission may choose 
+      to pursue the matter in federal court.
+    </p>
+    <p>
+      Search or browse closed MURs.
+    </p>
+    <div class="u-no-print">
+      <div class="slab slab--neutral slab--inline">
+        <div class="container">
+          <div class="row">
+            <div class="usa-width-one-whole">
+              <form action="{{ url_for('murs') }}" autocomplete="off" class="search__container  js-search">
+                <div class="combo combo--search--large combo--search--inline">
+                  <input id="search-input" type="text" name="search" class="combo__input" placeholder="Search MURs">
+                  <input id="search-type" type="hidden" name="search_type" value="murs">
+                  <button class="combo__button button--search button--standard" type="submit">
+                    <span class="u-visually-hidden">Search</span>
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="usa-width-one-whole">
-            <span class="t-note t-sans search__example">Examples: filings; 2405</span>
+          <div class="row">
+            <div class="usa-width-one-whole">
+              <span class="t-note t-sans search__example">Examples: filings; 2405</span>
+            </div>
           </div>
         </div>
       </div>
