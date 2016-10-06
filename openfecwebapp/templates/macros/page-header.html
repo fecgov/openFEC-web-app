@@ -1,6 +1,6 @@
 {% macro header(title, links, show_search=True, search_type='candidates') %}
 {% import 'macros/search.html' as search %}
-<header class="page-header page-header--primary">
+<div class="page-header page-header--primary">
   <ul class="breadcrumbs">
     <li class="breadcrumbs__item"><a href="{{ cms_url }}" class="breadcrumbs__link" rel="Home">Home</a></li>
     {% if title != 'Campaign finance data' %}
@@ -27,5 +27,5 @@
   {% if show_search %}
     {{ search.search('page-header', search_type) }}
   {% endif %}
-</header>
+</div>
 {% endmacro %}
