@@ -11,14 +11,9 @@
   {{ breadcrumb.breadcrumbs(display_name.capitalize(), breadcrumb_links) }}
 </header>
 
-<section class="main__content--full data-container__wrapper">
-  {{ legal.filter('Search %s' % display_name, result_type) }}
-  <div class="content__section data-container__body">
-    <div class="main">
-      {% block content %}{% endblock %}
-    </div>
-  </div>
-</section>
+<div class="main container">
+  {% block content %}{% endblock %}
+</div>
 
 {% include 'partials/legal-disclaimer.html' %}
 {% endblock %}

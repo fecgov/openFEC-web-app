@@ -1,0 +1,95 @@
+{% extends "layouts/legal-doc-landing.html" %}
+
+{% block content %}
+<header class="heading--main">
+  <h1>Enforcement matters</h1>
+</header>
+<div class="content__section content__section--narrow">
+  <p>
+    The FEC has exclusive jurisdiction over the civil enforcement of the federal campaign finance law.
+    The FEC learns of possible violations through a number of sources including:
+  </p>
+  <ol class="list--numbered">
+    <li>Internal referrals, which result from the FEC’s routine review of committee reports and audits of political committees.</li>
+    <li>Sworn complaints filed with the FEC by anyone alleging that a violation has occurred or is about to occur.</li>
+    <li>Referrals to the FEC from other government agencies of possible campaign finance violations.</li>
+    <li>Self reported submissions to the FEC by any person or entity that believes it may have  committed a campaign finance violation.</li>
+  </ol>
+</div>
+<div class="content__section content__section--narrow">
+  <div class="grid grid--3-wide">
+    <div class="grid__item">
+      <h4>Audits</h4>
+      <p class="t-italic">
+        Coming soon: Generally, the Commission may audit a committee when an internal review of the committee’s reports
+        filed meet thresholds of substantial compliance with the Federal Election Campaign Act. Also, the Commission is
+        required to audit all presidential campaigns and convention committees that accept public funds.
+      </p>
+    </div>
+    <div class="grid__item">
+      <h4>Complainants and respondents</h4>
+      <p class="t-italic">
+        Coming soon: Step-by-step guide through the Commission’s enforcement
+        process and enforcement programs.
+      </p>
+    </div>
+    <div class="grid__item">
+      <h4>Report a violation</h4>
+      <p class="t-italic">
+        Coming soon: How to file a complaint with the Commission and how
+        complaints are processed.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="content__section">
+  <header class="heading--section">
+    <h2>Enforcement programs</h2>
+  </header>
+  <div class="content__section content__section--narrow">
+    <h4>Matters Under Review (MURs)</h4>
+    <p>
+      FEC enforcement matters (called MURs) must, by law, remain confidential until they are closed.
+      Law requires the Commission to try to resolve enforcement matters through conciliation.
+      If the Commission fails to reach a conciliation agreement with a respondent, the Commission may choose
+      to pursue the matter in federal court.
+    </p>
+    <div class="u-no-print">
+      <div class="slab slab--neutral slab--inline">
+        <div class="container">
+          <div class="row">
+            <div class="usa-width-one-whole">
+              <form action="{{ url_for('murs') }}" autocomplete="off" class="search__container  js-search">
+                <label for="search-input" class="label">Search or browse MURs</label>
+                <div class="combo combo--search--large combo--search--inline">
+                  <input id="search-input" type="text" name="search" class="combo__input" placeholder="Search MURs">
+                  <input id="search-type" type="hidden" name="search_type" value="murs">
+                  <button class="combo__button button--search button--standard" type="submit">
+                    <span class="u-visually-hidden">Search</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="usa-width-one-whole">
+              <span class="t-note t-sans search__example">Examples: filings; 2405</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h4>Administrative Fine Program</h4>
+  <p class="t-italic">
+    Coming soon: The Administrative Fine Program assesses civil money penalties
+    for late and non-filed reports.
+  </p>
+  <h4>Alternative Dispute Resolution Program</h4>
+  <p class="t-italic">
+    Coming soon: Alternative Dispute Resolution is a series of procedures for
+    resolving enforcement disputes through the mutual consent of the parties
+    involved.
+  </p>
+</div>
+{% endblock %}
