@@ -62,15 +62,13 @@
       If the Commission fails to reach a conciliation agreement with a respondent, the Commission may choose 
       to pursue the matter in federal court.
     </p>
-    <p>
-      Search or browse closed MURs.
-    </p>
     <div class="u-no-print">
       <div class="slab slab--neutral slab--inline">
         <div class="container">
           <div class="row">
             <div class="usa-width-one-whole">
               <form action="{{ url_for('murs') }}" autocomplete="off" class="search__container  js-search">
+                <label class="label">Search or browse MURs</label>
                 <div class="combo combo--search--large combo--search--inline">
                   <input id="search-input" type="text" name="search" class="combo__input" placeholder="Search MURs">
                   <input id="search-type" type="hidden" name="search_type" value="murs">
