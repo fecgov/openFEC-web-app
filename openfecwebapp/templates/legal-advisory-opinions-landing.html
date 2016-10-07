@@ -4,7 +4,7 @@
 <header class="heading--main">
   <h1>Advisory opinions</h1>
 </header>
-<div class="content__section">
+<div class="content__section content__section--narrow">
   <p>
     Advisory opinions are official Commission responses to questions about how federal campaign finance law applies to specific, factual situations.
   </p>
@@ -14,6 +14,30 @@
   <p>
     Learn how to <a href="http://www.fec.gov/pages/brochures/ao.shtml">request an advisory opinion or submit a public comment</a> on an advisory opinion.
   </p>
+  <div class="u-no-print">
+    <div class="slab slab--neutral slab--inline">
+      <div class="container">
+        <div class="row">
+          <div class="usa-width-one-whole">
+            <form action="{{ url_for('advisory_opinions') }}" autocomplete="off" class="search__container  js-search">
+              <label for="search-input" class="label">Search or browse advisory opinions</label>
+              <div class="combo combo--search--medium combo--search--inline">
+                <input id="search-input" type="text" name="search" class="combo__input">
+                <button class="combo__button button--search button--standard" type="submit">
+                  <span class="u-visually-hidden">Search</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="usa-width-one-whole">
+            <span class="t-note t-sans search__example">Examples: spending prohibitions; 2003-38</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="content__section is-disabled">
   <div class="heading--section">

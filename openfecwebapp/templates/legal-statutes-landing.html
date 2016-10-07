@@ -5,7 +5,7 @@
 <header class="heading--main">
   <h1>Statutes</h1>
 </header>
-<div class="content__section">
+<div class="content__section content__section--narrow">
   <p>
     The FEC administers and enforces the Federal Election Campaign Act, the
     Presidential Election Campaign Fund Act and the Presidential Primary
@@ -13,6 +13,30 @@
     by Congress and signed by the President, are collected and restated as law
     in Title 52 and Title 26 of the U.S. Code.
   </p>
+  <div class="u-no-print">
+    <div class="slab slab--neutral slab--inline">
+      <div class="container">
+        <div class="row">
+          <div class="usa-width-one-whole">
+            <form action="{{ url_for('statutes') }}" autocomplete="off" class="search__container  js-search">
+              <label for="search-input" class="label">Search or browse statutes</label>
+              <div class="combo combo--search--medium combo--search--inline">
+                <input id="search-input" type="text" name="search" class="combo__input">
+                <button class="combo__button button--search button--standard" type="submit">
+                  <span class="u-visually-hidden">Search</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="usa-width-one-whole">
+            <span class="t-note t-sans search__example">Examples: spending; 52 USC 30123</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="content__section">
   <div class="heading--section">
