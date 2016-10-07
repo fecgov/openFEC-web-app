@@ -31,14 +31,11 @@
 <div class="panel__row">
   <h4 class="panel__title">Filing information</h4>
   <table>
-    {{#panelRow "Form type"}}
-      {{decodeForm form_type}}
-    {{/panelRow}}
     {{#panelRow "Report type"}}
       {{decodeReport report_type}}
     {{/panelRow}}
-    {{#panelRow "Receipt date"}}
-      {{datetime receipt_date format="pretty"}}
+    {{#panelRow "Form type"}}
+      {{decodeForm filing_form}} ({{filing_form}})
     {{/panelRow}}
   </table>
 </div>
