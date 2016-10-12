@@ -485,6 +485,9 @@ DataTable.prototype.refreshExport = function() {
     }
   } else if (this.opts.disableExport) {
     this.disableExport({message: DOWNLOAD_MESSAGES.comingSoon});
+  } else if (this.opts.aggregateExport) {
+    // If it's an aggregate table, just enable the export
+    this.enableExport();
   }
 };
 
@@ -522,21 +525,23 @@ DataTable.prototype.ensureWidgets = function() {
     this.disableExport({message: DOWNLOAD_MESSAGES.comingSoon});
   }
 
+  if (this.opts.aggregateExport) {
+    this.$exportButton = $('[data-export-for="' + this.$body.data('type') + '"]');
+  }
+
   this.hasWidgets = true;
 };
 
-DataTable.prototype.disableExport = function(opts) {
-  this.$exportButton.addClass('is-disabled');
-  this.$exportButton.off('click');
-
+DataTable.prototype.initTooltip = function(message) {
   // Adding everything we need for the tooltip
   this.$exportButton.attr('aria-describedby', 'export-tooltip');
   var $exportTooltip = this.$exportTooltip;
-  $exportTooltip.html(opts.message);
+  $exportTooltip.html(message);
 
   function hideTooltip() {
     $exportTooltip.attr('aria-hidden', 'true');
   }
+
   function showTooltip() {
     $exportTooltip.attr('aria-hidden', 'false');
   }
@@ -546,16 +551,30 @@ DataTable.prototype.disableExport = function(opts) {
   this.$exportButton.blur(hideTooltip);
 };
 
+DataTable.prototype.removeTooltip = function() {
+  // Remove all tooltip stuff
+  this.$exportTooltip.attr('aria-hidden', 'true');
+  this.$exportButton.removeAttr('aria-describedby');
+  this.$exportTooltipContainer.off('mouseenter mouseleave');
+  this.$exportButton.off('focus blur');
+};
+
+DataTable.prototype.disableExport = function(opts) {
+  this.$exportButton.addClass('is-disabled');
+  this.$exportButton.off('click');
+
+  if (this.$exportTooltip) {
+    this.initTooltip(opts.message);
+  }
+};
+
 DataTable.prototype.enableExport = function() {
   this.$exportButton.off('click');
   this.$exportButton.removeClass('is-disabled');
   this.$exportButton.on('click', this.export.bind(this));
-  this.$exportTooltip.attr('aria-hidden', 'true');
-
-  // Remove all tooltip stuff
-  this.$exportButton.removeAttr('aria-describedby');
-  this.$exportTooltipContainer.off('mouseenter mouseleave');
-  this.$exportButton.off('focus blur');
+  if (this.$exportTooltip) {
+    this.removeTooltip();
+  }
 };
 
 DataTable.prototype.fetch = function(data, callback) {

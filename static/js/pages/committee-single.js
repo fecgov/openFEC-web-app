@@ -20,7 +20,8 @@ var tableOpts = {
   lengthChange: true,
   lengthMenu: [10, 50, 100],
   pageLength: 10,
-  hideEmpty: true
+  hideEmpty: true,
+  aggregateExport: true
 };
 
 var sizeColumns = [
@@ -301,6 +302,7 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: true,
         pageLength: 10,
+        aggregateExport: true,
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: 'disbursements received from other committees',
@@ -321,6 +323,7 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
+        aggregateExport: true,
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: 'individual contributions',
@@ -337,6 +340,7 @@ $(document).ready(function() {
         query: query,
         columns: stateColumns,
         callbacks: aggregateCallbacks,
+        aggregateExport: true,
         dom: 't',
         order: [[1, 'desc']],
         paging: false,
