@@ -70,7 +70,7 @@ function initFilingsTable() {
     path: path,
     columns: filingsColumns,
     order: [[2, 'desc']],
-    dom: 't<"results-info"lpi>',
+    dom: tables.simpleDOM,
     pagingType: 'simple',
     hideEmpty: true
   });
@@ -110,7 +110,7 @@ function initSpendingTables() {
         query: query,
         columns: opts.columns,
         order: [[0, 'desc']],
-        dom: 't<"results-info"lpi>',
+        dom: tables.simpleDOM,
         pagingType: 'simple',
         lengthChange: true,
         pageLength: 10,

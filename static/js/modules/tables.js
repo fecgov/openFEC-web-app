@@ -21,7 +21,7 @@ var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 var exportWidgetTemplate = require('../../templates/tables/exportWidget.hbs');
 var missingTemplate = require('../../templates/tables/noData.hbs');
 
-var simpleDOM = 't<"results-info"ip>';
+var simpleDOM = 't<"results-info"lpi>';
 var browseDOM = '<"panel__main"t>' +
                 '<"results-info"lp>';
 
