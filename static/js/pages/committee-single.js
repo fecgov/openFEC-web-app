@@ -17,9 +17,11 @@ var columns = require('../modules/columns');
 var tableOpts = {
   dom: tables.simpleDOM,
   pagingType: 'simple',
-  lengthChange: false,
+  lengthChange: true,
+  lengthMenu: [10, 50, 100],
   pageLength: 10,
-  hideEmpty: true
+  hideEmpty: true,
+  aggregateExport: true
 };
 
 var sizeColumns = [
@@ -298,8 +300,10 @@ $(document).ready(function() {
         dom: tables.simpleDOM,
         order: [[1, 'desc']],
         pagingType: 'simple',
-        lengthChange: false,
+        lengthChange: true,
         pageLength: 10,
+        lengthMenu: [10, 50, 100],
+        aggregateExport: true,
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: 'disbursements received from other committees',
@@ -320,6 +324,7 @@ $(document).ready(function() {
         pagingType: 'simple',
         lengthChange: false,
         pageLength: 10,
+        aggregateExport: true,
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: 'individual contributions',
@@ -336,6 +341,7 @@ $(document).ready(function() {
         query: query,
         columns: stateColumns,
         callbacks: aggregateCallbacks,
+        aggregateExport: true,
         dom: 't',
         order: [[1, 'desc']],
         paging: false,
@@ -396,7 +402,7 @@ $(document).ready(function() {
         query: query,
         columns: filingsColumns,
         rowCallback: filings.renderRow,
-        dom: '<"panel__main"t><"results-info"frip>',
+        dom: '<"panel__main"t><"results-info"frlpi>',
         pagingType: 'simple',
         // Order by receipt date descending
         order: [[2, 'desc']],

@@ -287,6 +287,12 @@ def advisory_opinions_landing():
         result_type='advisory_opinions',
         display_name='advisory opinions')
 
+@app.route('/legal/enforcement/')
+def enforcement_landing():
+    return render_template('legal-enforcement-landing.html',
+        result_type='murs',
+        display_name='enforcement matters')
+
 @app.route('/legal/statutes/')
 def statutes_landing():
     return render_template('legal-statutes-landing.html',
@@ -309,7 +315,7 @@ def advisory_opinions(query, offset):
 def statutes(query, offset):
     return legal_doc_search(query, 'statutes', offset=offset)
 
-@app.route('/legal/search/enforcement-matters/')
+@app.route('/legal/search/enforcement/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'offset': fields.Int(missing=0),

@@ -2,6 +2,10 @@
 
 /* global window, document, ANALYTICS, BASE_PATH, CMS_URL */
 
+// Implementing a polyfill for js native WeakMap
+// in order to patch functionality in an included library
+require('es6-weak-map/implement');
+
 var $ = require('jquery');
 var Sticky = require('component-sticky');
 var Accordion = require('aria-accordion').Accordion;

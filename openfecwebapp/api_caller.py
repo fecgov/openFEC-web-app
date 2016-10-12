@@ -83,13 +83,6 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20):
     if 'murs' in results:
         results['murs_returned'] = len(results['murs'])
 
-        for mur in results['murs']:
-            #TODO these eventually should come from the API
-            mur['close_date'] = None
-            mur['open_date'] = None
-            mur['url'] = None
-
-
     return results
 
 
@@ -131,10 +124,12 @@ def load_legal_advisory_opinion(ao_no):
 def load_legal_mur(mur_no):
 
     url = '/legal/docs/murs/'
-    mur = _call_api(url, parse.quote(mur_no))['docs'][0]
+    mur = _call_api(url, parse.quote(mur_no))
 
     if not mur:
         abort(404)
+
+    mur = mur['docs'][0]
 
     if mur['mur_type'] == 'current':
         participants_by_type = OrderedDict()
@@ -164,6 +159,17 @@ def load_legal_mur(mur_no):
             if 'complainant' in participant['role'].lower():
                 complainants.append(participant['name'])
 
+        mur['disposition_text'] = [d['text'] for d in mur['disposition']['text']]
+
+        disposition_data = OrderedDict()
+        for row in mur['disposition']['data']:
+            if row['disposition'] in disposition_data\
+                    and row['penalty'] in disposition_data[row['disposition']]:
+                disposition_data[row['disposition']][row['penalty']].append(row)
+            else:
+                disposition_data[row['disposition']] = OrderedDict({row['penalty']: [row]})
+
+        mur['disposition_data'] = disposition_data
         mur['complainants'] = complainants
         mur['respondents'] = respondents
         mur['participants_by_type'] = participants_by_type

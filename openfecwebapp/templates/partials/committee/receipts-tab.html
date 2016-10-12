@@ -4,7 +4,7 @@
 
 <section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
   <div class="container">
-    <div class="heading--section">
+    <div class="heading--section heading--with-action">
       <h2 class="heading__left" id="section-2-heading">
         Money raised by the committee: {{ cycle|fmt_year_range }}
       </h2>
@@ -43,6 +43,7 @@
         <div id="by-state" class="panel-toggle-element">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Individual contributions by state</h3>
+            <button type="button" class="js-export button button--cta button--export" data-export-for="receipts-by-state">Export</button>
           </div>
           <div class="map-table">
             <table
@@ -70,6 +71,7 @@
         <div id="by-contribution-size" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Receipts by size</h3>
+            <button type="button" class="js-export button button--cta button--export" data-export-for="contribution-size">Export</button>
           </div>
           <table
              class="data-table data-table--heading-borders"
@@ -85,6 +87,7 @@
         <div id="by-employer" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Receipts by individual's employer</h3>
+            <button type="button" class="js-export button button--cta button--export" data-export-for="receipts-by-employer">Export</button>
           </div>
           <table
               class="data-table data-table--heading-borders"
@@ -103,6 +106,7 @@
         <div id="by-occupation" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">Receipts by individual's occupation</h3>
+            <button type="button" class="js-export button button--cta button--export" data-export-for="receipts-by-occupation">Export</button>
           </div>
           <table
               class="data-table data-table--heading-borders"
