@@ -80,9 +80,11 @@
         <li>
           <a href="{{ cms_url }}/contact-us/">Contact us</a>
         </li>
+        {% if features.press %}
         <li>
           <a href="{{ cms_url }}/press/">Press</a>
         </li>
+        {% endif %}
       </ul>
     </div>
   </div>
