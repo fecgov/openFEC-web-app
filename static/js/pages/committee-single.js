@@ -18,6 +18,7 @@ var tableOpts = {
   dom: 't<"results-info"lpi>',
   pagingType: 'simple',
   lengthChange: true,
+  lengthMenu: [10, 50, 100],
   pageLength: 10,
   hideEmpty: true
 };
@@ -396,7 +397,7 @@ $(document).ready(function() {
         query: query,
         columns: filingsColumns,
         rowCallback: filings.renderRow,
-        dom: '<"panel__main"t><"results-info"frlip>',
+        dom: '<"panel__main"t><"results-info"frlpi>',
         pagingType: 'simple',
         // Order by receipt date descending
         order: [[2, 'desc']],

@@ -114,7 +114,7 @@ function initSpendingTables() {
         pagingType: 'simple',
         lengthChange: true,
         pageLength: 10,
-        lengthMenu: [10, 30, 50, 100],
+        lengthMenu: [10, 50, 100],
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: opts.title,
