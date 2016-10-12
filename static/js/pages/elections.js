@@ -244,8 +244,11 @@ var defaultOpts = {
   destroy: true,
   searching: false,
   serverSide: false,
-  lengthChange: false,
-  dom: tables.simpleDOM,
+  lengthChange: true,
+  dom: 't<"results-info"lpi>',
+  language: {
+    lengthMenu: 'Results per page: _MENU_',
+  },
   pagingType: 'simple'
 };
 
@@ -476,10 +479,11 @@ function initSpendingTables() {
         query: helpers.filterNull(context.election),
         columns: opts.columns,
         order: [[3, 'desc']],
-        dom: tables.simpleDOM,
+        dom: 't<"results-info"lpi>',
         pagingType: 'simple',
-        lengthChange: false,
+        lengthChange: true,
         pageLength: 10,
+        lengthMenu: [10, 30, 50, 100],
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: opts.title,
