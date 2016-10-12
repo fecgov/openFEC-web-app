@@ -15,9 +15,9 @@ var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 
 var tableOpts = {
-  dom: tables.simpleDOM,
+  dom: 't<"results-info"lpi>',
   pagingType: 'simple',
-  lengthChange: false,
+  lengthChange: true,
   pageLength: 10,
   hideEmpty: true
 };
@@ -295,10 +295,10 @@ $(document).ready(function() {
         query: _.extend({recipient_id: committeeId}, query),
         columns: committeeColumns,
         callbacks: aggregateCallbacks,
-        dom: tables.simpleDOM,
+        dom: 't<"results-info"lpi>',
         order: [[1, 'desc']],
         pagingType: 'simple',
-        lengthChange: false,
+        lengthChange: true,
         pageLength: 10,
         hideEmpty: true,
         hideEmptyOpts: {
@@ -396,7 +396,7 @@ $(document).ready(function() {
         query: query,
         columns: filingsColumns,
         rowCallback: filings.renderRow,
-        dom: '<"panel__main"t><"results-info"frip>',
+        dom: '<"panel__main"t><"results-info"frlip>',
         pagingType: 'simple',
         // Order by receipt date descending
         order: [[2, 'desc']],
@@ -473,7 +473,7 @@ $(document).ready(function() {
         query: query,
         columns: expendituresColumns,
         order: [[0, 'desc']],
-        dom: tables.simpleDOM,
+        dom: 't<"results-info"lpi>',
         pagingType: 'simple',
         hideEmpty: true,
         hideEmptyOpts: {
@@ -490,7 +490,7 @@ $(document).ready(function() {
         query: query,
         columns: electioneeringColumns,
         order: [[0, 'desc']],
-        dom: tables.simpleDOM,
+        dom: 't<"results-info"lpi>',
         pagingType: 'simple',
         hideEmpty: true,
         hideEmptyOpts: {
@@ -507,7 +507,7 @@ $(document).ready(function() {
         query: query,
         columns: communicationCostColumns,
         order: [[0, 'desc']],
-        dom: tables.simpleDOM,
+        dom: 't<"results-info"lpi>',
         pagingType: 'simple',
         hideEmpty: true,
         hideEmptyOpts: {
