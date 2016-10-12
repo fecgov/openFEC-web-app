@@ -112,8 +112,9 @@ function initSpendingTables() {
         order: [[0, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',
-        lengthChange: false,
+        lengthChange: true,
         pageLength: 10,
+        lengthMenu: [10, 50, 100],
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: opts.title,
