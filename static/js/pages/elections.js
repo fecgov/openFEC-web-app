@@ -244,8 +244,11 @@ var defaultOpts = {
   destroy: true,
   searching: false,
   serverSide: false,
-  lengthChange: false,
+  lengthChange: true,
   dom: tables.simpleDOM,
+  language: {
+    lengthMenu: 'Results per page: _MENU_',
+  },
   pagingType: 'simple'
 };
 
@@ -478,8 +481,9 @@ function initSpendingTables() {
         order: [[3, 'desc']],
         dom: tables.simpleDOM,
         pagingType: 'simple',
-        lengthChange: false,
+        lengthChange: true,
         pageLength: 10,
+        lengthMenu: [10, 30, 50, 100],
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: opts.title,
