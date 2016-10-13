@@ -27,11 +27,14 @@ def render_search_results(results, query, result_type):
 
 
 def render_legal_search_results(results, query, result_type):
+    category_order = ["statutes", "regulations", "advisory_opinions", "murs"]
+    category_order.sort(key=lambda x: results.get("total_" + x, 0), reverse=True)
     return render_template(
         'legal-search-results.html',
         query=query,
         results=results,
         result_type=result_type,
+        category_order=category_order,
     )
 
 
