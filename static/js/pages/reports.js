@@ -8,6 +8,7 @@ var tables = require('../modules/tables');
 var columns = require('../modules/columns');
 var columnHelpers = require('../modules/column-helpers');
 var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
+var dropdown = require('fec-style/js/dropdowns');
 
 var candidateTemplate = require('../../templates/reports/candidate.hbs');
 var pacPartyTemplate = require('../../templates/reports/pac.hbs');
@@ -56,6 +57,11 @@ $(document).ready(function() {
     useExport: true,
     callbacks: {
       afterRender: tables.modalRenderFactory(pageTemplate)
+    },
+    initComplete: function () {
+      this.dropdowns = $table.find('.dropdown').map(function(idx, elm) {
+        return new dropdown.Dropdown($(elm), {checkboxes: false});
+      });
     }
   });
 
