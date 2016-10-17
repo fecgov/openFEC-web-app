@@ -8,6 +8,8 @@ var helpers = require('./helpers');
 var decoders = require('./decoders');
 var moment = require('moment');
 
+var reportType = require('../../templates/reports/reportType.hbs');
+
 var dateColumn = columnHelpers.formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc']});
 var currencyColumn = columnHelpers.formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = columnHelpers.barColumn(helpers.currency);
@@ -255,20 +257,18 @@ var filings = {
   },
   pdf_url: {
     data: 'document_description',
-    className: 'all column--med',
+    className: 'all report-type-col column--large',
     orderable: false,
     render: function(data, type, row) {
-      var text = row.document_description ? row.document_description : row.form_type;
-      var url = row.pdf_url ? row.pdf_url : null;
-      if (url) {
-        var anchor = document.createElement('a');
-        anchor.textContent = text;
-        anchor.setAttribute('href', url);
-        anchor.setAttribute('target', '_blank');
-        return anchor.outerHTML;
-      } else {
-        return text;
-      }
+      var document_description = row.document_description ? row.document_description : row.form_type;
+      var pdf_url = row.pdf_url ? row.pdf_url : null;
+      var csv_url = row.csv_url ? row.csv_url : null;
+
+      return reportType({
+        document_description: document_description,
+        pdf_url: pdf_url,
+        csv_url: csv_url
+      });
     }
   },
   pages: pagesColumn,
@@ -428,11 +428,22 @@ var reports = {
     className: 'all column--xl',
     render: renderCommitteeColumn
   },
-  pdf_url: columnHelpers.urlColumn('pdf_url', {
+  pdf_url: {
     data: 'document_description',
-    className: 'all column--medium',
-    orderable: false
-  }),
+    className: 'all report-type-col column--large',
+    orderable: false,
+    render: function(data, type, row) {
+      var document_description = row.document_description ? row.document_description : row.form_type;
+      var pdf_url = row.pdf_url ? row.pdf_url : null;
+      var csv_url = row.csv_url ? row.csv_url : null;
+
+      return reportType({
+        document_description: document_description,
+        pdf_url: pdf_url,
+        csv_url: csv_url
+      });
+    }
+  },
   receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({
     data: 'coverage_start_date',

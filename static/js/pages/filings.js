@@ -17,7 +17,6 @@ var columns = columnHelpers.getColumns(
   ]
 );
 
-
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
