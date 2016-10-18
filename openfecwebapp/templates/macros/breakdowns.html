@@ -1,0 +1,68 @@
+{% macro top_entities(
+  data,
+  coverage_start_date,
+  coverage_end_date,
+  cycle,
+  action,
+  category
+) %}
+
+{% if category in ['P', 'S', 'H'] %}
+  {% set name_field='name' %}
+  {% set id_field='candidate_id' %}
+  {% set route='candidate_page' %}
+{% else %}
+  {% set name_field='committee_name' %}
+  {% set id_field='committee_id' %}
+  {% set route='committee_page' %}
+{% endif %}
+
+{% if action == 'raised' %}
+  {% set value_field='receipts' %}
+{% else %}
+  {% set value_field='disbursements' %}
+{% endif %}
+<div class="js-top-entities" data-category="{{ category }}" data-cycle="{{ cycle }}">
+  <form action="" method="GET">
+    <h3>
+      <label for="top-category" class="label t-inline-block">How much has been {{ action }} by: </label>
+      <select id="top-category" name="top_category" class="js-category form-element--inline">
+        <optgroup label="candidates">
+          <option value="P" {% if category == 'P' %}selected{% endif %}>President</option>
+          <option value="S" {% if category == 'S' %}selected{% endif %}>Senate</option>
+          <option value="H" {% if category == 'H' %}selected{% endif %}>House</option>
+        </optgroup>
+        <option value="pac" {% if category == 'pac' %}selected{% endif %}>PACs</option>
+        <option value="party" {% if category == 'party' %}selected{% endif %}>Political party committees</option>
+      </select>
+      <noscript>
+        <button type="submit" class="button button--cta">Submit</button>
+      </noscript>
+    </h3>
+  </form>
+  </h3>
+  <span class="t-sans">{{ coverage_start_date }}&ndash;{{ coverage_end_date }}</span>
+  <table class="simple-table">
+    <thead>
+      <tr class="simple-table__header">
+        <th class="cell--30">Name</th>
+        <th class="cell--20 t-right-aligned">Total {{ action }}</th>
+        <th class="cell--50"></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for datum in data %}
+      <tr class="simple-table__row ">
+        <td class="simple-table__cell"><a href="{{ url_for(route, c_id=datum[id_field]) }}" title="{{ datum[name_field] }}">{{ datum[name_field] }}</td>
+        <td class="simple-table__cell t-right-aligned">{{ datum[value_field] | currency }}</td>
+        <td class="simple-table__cell">
+          <div class="bar-container">
+            <div class="value-bar" data-value="{{ datum[value_field] }}" data-party="{{ datum.party }}"></div>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</a>
+{% endmacro %}

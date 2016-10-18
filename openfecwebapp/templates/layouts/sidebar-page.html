@@ -1,0 +1,30 @@
+{% extends "layouts/main.html" %}
+
+{% import 'macros/page-header.html' as header %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block body %}
+
+{{ header.header(title, '', show_search=False) }}
+
+<div class="main">
+  <div class="container">
+    <header class="heading--main">
+      <h1>{{ title }}</h1>
+    </header>
+  </div>
+  <div id="options" class="container">
+  <div class="sidebar-container sidebar-container--left">
+    {% block sidebar %}{% endblock %}
+  </div>
+  <section class="main__content--right">
+    {% block sections %}{% endblock %}
+  </section>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
