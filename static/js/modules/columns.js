@@ -256,11 +256,11 @@ var filings = {
     },
   },
   pdf_url: {
-    data: 'doc_description',
+    data: 'document_description',
     className: 'all report-type-col column--large',
     orderable: false,
     render: function(data, type, row) {
-      var doc_description = row.doc_description ? row.doc_description : row.form_type;
+      var doc_description = row.document_description ? row.document_description : row.form_type;
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
 
@@ -433,12 +433,12 @@ var reports = {
     className: 'all report-type-col column--large',
     orderable: false,
     render: function(data, type, row) {
-      var document_description = row.document_description ? row.document_description : row.form_type;
+      var doc_description = row.document_description ? row.document_description : row.form_type;
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
 
       return reportType({
-        document_description: document_description,
+        doc_description: doc_description,
         pdf_url: pdf_url,
         csv_url: csv_url
       });
