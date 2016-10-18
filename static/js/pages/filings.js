@@ -34,7 +34,7 @@ $(document).ready(function() {
     callbacks: {
       afterRender: filings.renderModal
     },
-    initComplete: function () {
+    drawCallback: function () {
       this.dropdowns = $table.find('.dropdown').map(function(idx, elm) {
         return new dropdown.Dropdown($(elm), {checkboxes: false});
       });
