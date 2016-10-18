@@ -253,28 +253,28 @@ def landing_mock_data():
         }
     }
 
-def load_top_candidates(sort):
+def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
         response = _call_api(
             'candidates', 'totals',
-            sort_hide_null=True, election_year=2016, cycle=2016, election_full=False, sort=sort, per_page=5
+            sort_hide_null=True, election_year=cycle, cycle=cycle, election_full=False, office=office, sort=sort, per_page=per_page
         )
         if response['results']:
             return response['results']
         return {}
 
-def load_top_pacs(sort):
+def load_top_pacs(sort, cycle=2016, per_page=5):
         response = _call_api(
             'totals', 'pac',
-            sort_hide_null=True, cycle=2016, sort=sort, per_page=5
+            sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
         if response['results']:
             return response['results']
         return {}
 
-def load_top_parties(sort):
+def load_top_parties(sort, cycle=2016, per_page=5):
         response = _call_api(
             'totals', 'party',
-            sort_hide_null=True, cycle=2016, sort=sort, per_page=5
+            sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
         if response['results']:
             return response['results']
