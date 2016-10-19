@@ -163,11 +163,15 @@ def load_legal_mur(mur_no):
 
         disposition_data = OrderedDict()
         for row in mur['disposition']['data']:
+            penalty = row['penalty']
+            if row['penalty']:
+                penalty = "${:,.2f}".format(float(penalty))
+
             if row['disposition'] in disposition_data\
-                    and row['penalty'] in disposition_data[row['disposition']]:
-                disposition_data[row['disposition']][row['penalty']].append(row)
+                    and penalty in disposition_data[row['disposition']]:
+                disposition_data[row['disposition']][penalty].append(row)
             else:
-                disposition_data[row['disposition']] = OrderedDict({row['penalty']: [row]})
+                disposition_data[row['disposition']] = OrderedDict({penalty: [row]})
 
         mur['disposition_data'] = disposition_data
         mur['complainants'] = complainants
