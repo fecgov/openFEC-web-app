@@ -1,10 +1,13 @@
 'use strict';
 
-/* global context */
+/* global context, ga */
 
 var $ = require('jquery');
 var _ = require('underscore');
+var analytics = require('fec-style/js/analytics');
 var helpers = require('../modules/helpers');
+var ReactionBox = require('../modules/reaction-box').ReactionBox;
+var moment = require('moment');
 
 var TOP_ROW = _.template(
   '<tr class="simple-table__row">' +
@@ -22,13 +25,16 @@ var candidateCategories = ['P', 'S', 'H'];
 function TopEntities(elm, type) {
   this.$elm = $(elm);
   this.type = type === 'raising' ? 'receipts' : 'disbursements';
-  this.$table = this.$elm.find('tbody');
   this.category = this.$elm.data('category');
   this.cycle = this.$elm.data('cycle');
+
+  this.$table = this.$elm.find('tbody');
+  this.$dates = this.$elm.find('.js-dates');
   this.$previous = this.$elm.find('.js-previous');
   this.$next = this.$elm.find('.js-next');
 
   this.init();
+
   $('.js-cycle').on('change', this.handleCycleChange.bind(this));
   this.$elm.find('.js-category').on('change', this.handleCategoryChange.bind(this));
   this.$elm.find('.js-previous').on('click', this.handlePagination.bind(this, 'previous'));
@@ -81,7 +87,7 @@ TopEntities.prototype.handleCycleChange = function(e) {
     });
   }
   this.loadData(this.currentQuery);
-  // update query
+  this.updateDates();
 };
 
 TopEntities.prototype.handleCategoryChange = function(e) {
@@ -133,7 +139,10 @@ TopEntities.prototype.loadData = function(query) {
           amount: helpers.currency(result[self.type]),
           value: result[self.type],
           party: result.party,
-          url: helpers.buildAppUrl(['candidate', result.candidate_id], {cycle: self.cycle})
+          url: helpers.buildAppUrl(['candidate', result.candidate_id], {
+            cycle: self.cycle,
+            election_full: false
+          })
         };
       } else {
         data = {
@@ -141,7 +150,9 @@ TopEntities.prototype.loadData = function(query) {
           amount: helpers.currency(result[self.type]),
           value: result[self.type],
           party: '',
-          url: helpers.buildAppUrl(['committee', result.committee_id], {cycle: self.cycle})
+          url: helpers.buildAppUrl(['committee', result.committee_id], {
+            cycle: self.cycle
+          })
         };
       }
       self.$table.append(TOP_ROW(data));
@@ -165,4 +176,29 @@ TopEntities.prototype.drawBars = function() {
   });
 };
 
+TopEntities.prototype.updateDates = function() {
+  var today = new Date();
+  var startDate = '01/01/' + String(this.cycle - 1);
+  var endDate = this.cycle !== today.getFullYear() ? '12/31/' + this.cycle : moment(today, 'DD/MM/YYYY');
+  this.$dates.html(startDate + '–' + endDate);
+};
+
 new TopEntities('.js-top-entities', context.type);
+
+$('.js-reaction-box').each(function() {
+  new ReactionBox(this);
+});
+
+$('.js-ga-event').each(function() {
+  var eventName = $(this).data('ga-event');
+  $(this).on('click', function() {
+    if (analytics.trackerExists()) {
+      var gaEventData = {
+        eventCategory: 'Misc. events',
+        eventAction: eventName,
+        eventValue: 1
+      };
+      ga('nonDAP.send', 'event', gaEventData);
+    }
+  });
+});

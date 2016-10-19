@@ -1,5 +1,7 @@
 import http
 
+import datetime
+
 import furl
 from webargs import fields
 from webargs.flaskparser import use_kwargs
@@ -265,12 +267,18 @@ def raising_breakdown(top_category, cycle):
         top_raisers = api_caller.load_top_parties('-receipts', cycle=cycle, per_page=10)
     else:
         top_raisers = api_caller.load_top_candidates('-receipts', office=top_category, cycle=cycle, per_page=10)
+
+    if cycle == datetime.datetime.today().year:
+        coverage_end_date = datetime.datetime.today()
+    else:
+        coverage_end_date = datetime.date(cycle, 12, 31)
+
     return render_template(
         'raising-breakdown.html',
         title='Raising breakdown',
         top_category=top_category,
-        coverage_start_date=cycle,
-        coverage_end_date=cycle,
+        coverage_start_date=datetime.date(cycle - 1, 1, 1),
+        coverage_end_date=coverage_end_date,
         cycle=cycle,
         top_raisers=top_raisers
     )
