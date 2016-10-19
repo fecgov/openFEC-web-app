@@ -2,27 +2,28 @@
 {% import "macros/breakdowns.html" as breakdowns %}
 
 {% block sidebar %}
-  <form action="" method="get">
-    <label for="cycle" class="label">Time period</label>
-    <select id="cycle" name="cycle" class="js-cycle">
-      <option value="2016" {% if cycle == '2016' %}selected{% endif %}>2015&ndash;2016</option>
-      <option value="2012" {% if cycle == '2012' %}selected{% endif %}>2011&ndash;2012</option>
-    </select>
-    <noscript>
-      <button type="submit" class="button button--cta">Submit</button>
-    </noscript>
-  </form>
-  <nav class="sidebar sidebar--neutral sidebar--left side-nav js-sticky-side js-toc" data-sticky-container="options">
-    <ul class="sidebar__content">
-      <li class="side-nav__item"><a class="side-nav__link" href="#top-raisers">Who's raising the most</a></li>
-      <li class="side-nav__item"><span class="side-nav__link is-disabled">Where contributions come from</span></li>
-      <li class="side-nav__item"><span class="side-nav__link is-disabled">The size of contributions</span></li>
-    </ul>
-  </nav>
+<form action="" method="get" class="breakdown-cycle">
+  <label for="cycle" class="label">Time period</label>
+  <select id="cycle" name="cycle" class="js-cycle">
+    <option value="2016" {% if cycle == '2016' %}selected{% endif %}>2015&ndash;2016</option>
+    <option value="2012" {% if cycle == '2012' %}selected{% endif %}>2011&ndash;2012</option>
+  </select>
+  <noscript>
+    <button type="submit" class="button button--cta">Submit</button>
+  </noscript>
+</form>
+<nav class="sidebar sidebar--breakdown sidebar--left side-nav js-sticky-side" data-sticky-container="options">
+  <a class="sidebar__title">&laquo; Raising overview</a>
+  <ul class="sidebar__content js-toc">
+    <li class="side-nav__item"><a class="side-nav__link" href="#top-raisers">Who's raising the most</a></li>
+    <li class="side-nav__item"><span class="side-nav__link is-disabled">Where contributions come from</span></li>
+    <li class="side-nav__item"><span class="side-nav__link is-disabled">The size of contributions</span></li>
+  </ul>
+</nav>
 {% endblock %}
 
 {% block sections %}
-<div id="top-raisers" class="option">
+<div id="top-raisers" class="content__section">
   <h2>Who's raising the most</h2>
   {{ breakdowns.top_entities(top_raisers, coverage_start_date, coverage_end_date, cycle, 'raised', top_category ) }}
 </div>
@@ -31,8 +32,7 @@
 {% block scripts %}
   <script type="text/javascript">
   var context = {
-    type: 'raising',
-    cycle: {{ cycle }}
+    type: 'raising'
   }
   </script>
   <script src="{{ asset_for('dist/js/pages/breakdowns.js') }}"></script>

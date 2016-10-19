@@ -24,13 +24,13 @@
 {% endif %}
 <div class="js-top-entities" data-category="{{ category }}" data-cycle="{{ cycle }}">
   <form action="" method="GET">
-    <h3>
-      <label for="top-category" class="label t-inline-block">How much has been {{ action }} by: </label>
+    <h3 class="u-no-margin">
+      <label for="top-category" class="breakdown__title label t-inline-block">How much has been {{ action }} by: </label>
       <select id="top-category" name="top_category" class="js-category form-element--inline">
         <optgroup label="candidates">
-          <option value="P" {% if category == 'P' %}selected{% endif %}>President</option>
-          <option value="S" {% if category == 'S' %}selected{% endif %}>Senate</option>
-          <option value="H" {% if category == 'H' %}selected{% endif %}>House</option>
+          <option value="P" {% if category == 'P' %}selected{% endif %}>presidential candidates</option>
+          <option value="S" {% if category == 'S' %}selected{% endif %}>Senate candidates</option>
+          <option value="H" {% if category == 'H' %}selected{% endif %}>House candidates</option>
         </optgroup>
         <option value="pac" {% if category == 'pac' %}selected{% endif %}>PACs</option>
         <option value="party" {% if category == 'party' %}selected{% endif %}>Political party committees</option>
@@ -40,9 +40,8 @@
       </noscript>
     </h3>
   </form>
-  </h3>
   <span class="t-sans">{{ coverage_start_date }}&ndash;{{ coverage_end_date }}</span>
-  <table class="simple-table">
+  <table class="chart-table">
     <thead>
       <tr class="simple-table__header">
         <th class="cell--30">Name</th>
@@ -64,5 +63,9 @@
     {% endfor %}
     </tbody>
   </table>
+  <div class="results-info results-info--buttom">
+    <button class="js-previous button button--standard button--previous"><span class="u-visually-hidden">Previous page</span></button>
+    <button class="js-next button button--standard button--next"><span class="u-visually-hidden">Next page</span></button>
+  </div>
 </a>
 {% endmacro %}
