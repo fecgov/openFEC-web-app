@@ -21,7 +21,7 @@ var candidateCategories = ['P', 'S', 'H'];
 
 function TopEntities(elm, type) {
   this.$elm = $(elm);
-  this.type = type;
+  this.type = type === 'raising' ? 'receipts' : 'disbursements';
   this.$table = this.$elm.find('tbody');
   this.category = this.$elm.data('category');
   this.cycle = this.$elm.data('cycle');
@@ -42,7 +42,7 @@ TopEntities.prototype.init = function() {
     this.basePath = ['totals', this.category];
   }
   this.baseQuery = {
-    sort: '-receipts',
+    sort: '-' + this.type,
     per_page: 10,
     sort_hide_null: true,
     cycle: this.cycle
@@ -76,7 +76,8 @@ TopEntities.prototype.handleCycleChange = function(e) {
     });
   } else {
     this.currentQuery = _.extend({}, this.baseQuery, {
-      cycle: this.cycle
+      cycle: this.cycle,
+      page: 1
     });
   }
   this.loadData(this.currentQuery);
@@ -97,7 +98,9 @@ TopEntities.prototype.handleCategoryChange = function(e) {
    } else {
     this.basePath = ['totals', category];
     this.category = category;
-    this.currentQuery = this.baseQuery;
+    this.currentQuery = _.extend({}, this.baseQuery, {
+      page: 1
+    });
   }
   this.loadData(this.currentQuery);
 };
@@ -127,16 +130,16 @@ TopEntities.prototype.loadData = function(query) {
       if (self.category === 'candidates') {
         data = {
           name: result.name,
-          amount: helpers.currency(result.receipts),
-          value: result.receipts,
+          amount: helpers.currency(result[self.type]),
+          value: result[self.type],
           party: result.party,
           url: helpers.buildAppUrl(['candidate', result.candidate_id], {cycle: self.cycle})
         };
       } else {
         data = {
           name: result.committee_name,
-          amount: helpers.currency(result.receipts),
-          value: result.receipts,
+          amount: helpers.currency(result[self.type]),
+          value: result[self.type],
           party: '',
           url: helpers.buildAppUrl(['committee', result.committee_id], {cycle: self.cycle})
         };

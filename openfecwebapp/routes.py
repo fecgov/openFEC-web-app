@@ -275,6 +275,28 @@ def raising_breakdown(top_category, cycle):
         top_raisers=top_raisers
     )
 
+@app.route('/breakdown/spending/')
+@use_kwargs({
+    'top_category': fields.Str(load_from='top_category', missing='P'),
+    'cycle': fields.Int(load_from='cycle', missing=2016),
+})
+def spending_breakdown(top_category, cycle):
+    if top_category in ['pac']:
+        top_spenders = api_caller.load_top_pacs('-disbursements', cycle=cycle, per_page=10)
+    elif top_category in ['party']:
+        top_spenders = api_caller.load_top_parties('-disbursements', cycle=cycle, per_page=10)
+    else:
+        top_spenders = api_caller.load_top_candidates('-disbursements', office=top_category, cycle=cycle, per_page=10)
+    return render_template(
+        'spending-breakdown.html',
+        title='Spending breakdown',
+        top_category=top_category,
+        coverage_start_date=cycle,
+        coverage_end_date=cycle,
+        cycle=cycle,
+        top_spenders=top_spenders
+    )
+
 @app.route('/legal/search/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
