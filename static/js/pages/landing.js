@@ -45,14 +45,14 @@ Overview.prototype.zeroPadTotals = function() {
 $.getJSON(raisingUrl).done(function(data) {
   var raisingData = [];
 
-  _.each(_.groupBy(data.results, 'date'), function(item) {
-    _.each(item, function(o) {
-      o[o.type] = o.receipts;
-      delete o.cycle;
-      delete o.receipts;
-      delete o.type;
+  _.each(_.groupBy(data.results, 'date'), function(dateGroup) {
+    _.each(dateGroup, function(object) {
+      object[object.type] = object.receipts;
+      delete object.cycle;
+      delete object.receipts;
+      delete object.type;
     });
-    raisingData.push(_.extend.apply(null, item));
+    raisingData.push(_.extend.apply(null, dateGroup));
   });
 
   new Overview('.js-raised-overview', raisingData, 1);
@@ -61,14 +61,14 @@ $.getJSON(raisingUrl).done(function(data) {
 $.getJSON(spendingUrl).done(function(data) {
   var spendingData = [];
 
-  _.each(_.groupBy(data.results, 'date'), function(item) {
-    _.each(item, function(o) {
-      o[o.type] = o.disbursements;
-      delete o.cycle;
-      delete o.disbursements;
-      delete o.type;
+  _.each(_.groupBy(data.results, 'date'), function(dateGroup) {
+    _.each(dateGroup, function(object) {
+      object[object.type] = object.disbursements;
+      delete object.cycle;
+      delete object.disbursements;
+      delete object.type;
     });
-    spendingData.push(_.extend.apply(null, item));
+    spendingData.push(_.extend.apply(null, dateGroup));
   });
 
   new Overview('.js-spent-overview', spendingData, 2);
