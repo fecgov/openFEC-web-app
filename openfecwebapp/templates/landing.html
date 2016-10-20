@@ -67,9 +67,10 @@
           </div>
         </div>
         {{ overviews.overview(totals['raising'], 'raised', 'landing')}}
+        <a class="h4 breakdown-link" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
       </div>
     </section>
-    <section class="content__section--extra" id="spending">
+    <section class="content__section content__section--ruled" id="spending">
       <h3 class="u-no-margin">Spending</h3>
       <p>The total amount spent, by group, in all elections up until specific points in time. Calculated using total disbursements, which include all payments and purchases made by a committee.</p>
       <p>This chart is a static snapshot. Search the most up-to-date data in the <a href="{{ url_for('advanced') }}">advanced data section</a>.</p>
@@ -85,6 +86,7 @@
           </div>
         </div>
         {{ overviews.overview(totals['spending'], 'spent', 'landing')}}
+        <a class="h4 breakdown-link" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
       </div>
     </section>
     <section class="content__section--extra">
