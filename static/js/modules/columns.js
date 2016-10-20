@@ -234,7 +234,7 @@ var electioneeringCommunications = [
 var filings = {
   filer_name: {
     data: 'committee_id',
-    className: 'all column--xl',
+    className: 'all column--large',
     orderable: false,
     render: function(data, type, row, meta) {
       var cycle = tables.getCycle([row.cycle], meta);
@@ -425,7 +425,7 @@ var reports = {
   committee:   {
     data: 'committee_name',
     orderable: false,
-    className: 'all column--xl',
+    className: 'all column--large',
     render: renderCommitteeColumn
   },
   document_type: {
