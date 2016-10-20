@@ -259,7 +259,7 @@ def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
             sort_hide_null=True, election_year=cycle, cycle=cycle, election_full=False, office=office, sort=sort, per_page=per_page
         )
         if response['results']:
-            return response['results']
+            return response
         return {}
 
 def load_top_pacs(sort, cycle=2016, per_page=5):
@@ -268,7 +268,7 @@ def load_top_pacs(sort, cycle=2016, per_page=5):
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
         if response['results']:
-            return response['results']
+            return response
         return {}
 
 def load_top_parties(sort, cycle=2016, per_page=5):
@@ -277,5 +277,5 @@ def load_top_parties(sort, cycle=2016, per_page=5):
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
         if response['results']:
-            return response['results']
+            return response
         return {}

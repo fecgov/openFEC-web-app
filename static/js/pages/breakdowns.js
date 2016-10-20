@@ -32,7 +32,7 @@ function TopEntities(elm, type) {
   this.$dates = this.$elm.find('.js-dates');
   this.$previous = this.$elm.find('.js-previous');
   this.$next = this.$elm.find('.js-next');
-
+  this.$pageInfo = this.$elm.find('.js-page-info');
   this.init();
 
   $('.js-cycle').on('change', this.handleCycleChange.bind(this));
@@ -131,14 +131,20 @@ TopEntities.prototype.loadData = function(query) {
     helpers.buildUrl(this.basePath, query)
   ).done(function(response) {
     self.$table.empty();
+    var index = 1;
+    var rankBase = (response.pagination.page - 1) * 10; // So that page 2 starts at 11
+
     _.each(response.results, function(result) {
       var data;
+      var rank = rankBase + index;
       if (self.category === 'candidates') {
         data = {
           name: result.name,
           amount: helpers.currency(result[self.type]),
+          rank: rank,
           value: result[self.type],
           party: result.party,
+          party_code: '[' + result.party.charAt('0').toUpperCase() + ']',
           url: helpers.buildAppUrl(['candidate', result.candidate_id], {
             cycle: self.cycle,
             election_full: false
@@ -149,13 +155,16 @@ TopEntities.prototype.loadData = function(query) {
           name: result.committee_name,
           amount: helpers.currency(result[self.type]),
           value: result[self.type],
+          rank: rank,
           party: '',
+          party_code: '',
           url: helpers.buildAppUrl(['committee', result.committee_id], {
             cycle: self.cycle
           })
         };
       }
       self.$table.append(TOP_ROW(data));
+      index++;
     });
 
     // Set max value if it's the first page
@@ -163,6 +172,7 @@ TopEntities.prototype.loadData = function(query) {
       self.maxValue = response.results[0].receipts;
       self.$previous.addClass('is-disabled');
     }
+    self.updatePagination(response.pagination);
     self.drawBars();
   });
 };
@@ -181,6 +191,16 @@ TopEntities.prototype.updateDates = function() {
   var startDate = '01/01/' + String(this.cycle - 1);
   var endDate = this.cycle !== today.getFullYear() ? '12/31/' + this.cycle : moment(today, 'DD/MM/YYYY');
   this.$dates.html(startDate + '–' + endDate);
+};
+
+TopEntities.prototype.updatePagination = function(pagination) {
+    var page = pagination.page;
+    var per_page = pagination.per_page;
+    var count = pagination.count.toLocaleString();
+    var range_start = String(per_page * (page - 1) + 1);
+    var range_end = String((page - 1) * 10 + per_page);
+    var info = range_start + '-' + range_end + ' of ' + count;
+    this.$pageInfo.html(info);
 };
 
 new TopEntities('.js-top-entities', context.type);
