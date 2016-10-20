@@ -255,7 +255,7 @@ def elections(office, cycle, state=None, district=None):
         title=utils.election_title(cycle, office, state, district),
     )
 
-@app.route('/breakdown/raising/')
+@app.route('/raising/')
 @use_kwargs({
     'top_category': fields.Str(load_from='top_category', missing='P'),
     'cycle': fields.Int(load_from='cycle', missing=2016),
@@ -283,7 +283,7 @@ def raising_breakdown(top_category, cycle):
         top_raisers=top_raisers
     )
 
-@app.route('/breakdown/spending/')
+@app.route('/spending/')
 @use_kwargs({
     'top_category': fields.Str(load_from='top_category', missing='P'),
     'cycle': fields.Int(load_from='cycle', missing=2016),
