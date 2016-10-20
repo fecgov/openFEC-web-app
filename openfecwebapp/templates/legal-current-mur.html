@@ -64,7 +64,7 @@
               <tr class="row-color-normal">
                 {% if loop.first %}
                 <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}">{{ disposition }}</td>
-                <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}"> {{ penalty or '' }} </td>
+                <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}"> {{ penalty | currency or '' }} </td>
                 {% endif %}
                 <td> {{ entry.respondent }}</td>
                 <td>
@@ -132,8 +132,8 @@
       </tbody>
     </table>
     <div class="results-info results-info--bottom">
- +        <a class="legal-top" href="#">Top of page</a>
- +  </div>
+         <a class="legal-top" href="#">Top of page</a>
+   </div>
   </section>
   </div>
 </div>
