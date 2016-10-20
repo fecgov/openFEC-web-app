@@ -10,12 +10,12 @@ var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var moment = require('moment');
 
 var TOP_ROW = _.template(
-  '<tr class="simple-table__row">' +
-    '<td class="simple-table__cell"><a href="{{ url }}">{{ name }}</a></td>' +
-    '<td class="simple-table__cell t-right-aligned">{{ amount }}</td>' +
-    '<td class="simple-table__cell"><div class="bar-container">' +
+  '<div role="row" class="simple-table__row">' +
+    '<div class="simple-table__cell"><a href="{{ url }}">{{ name }}</a></div>' +
+    '<div class="simple-table__cell t-right-aligned">{{ amount }}</div>' +
+    '<div class="simple-table__cell"><div class="bar-container">' +
       '<div class="value-bar" data-value="{{ value }}" data-party="{{ party }}"></div>' +
-    '</div></td>',
+    '</div></div>',
     {interpolate: /\{\{(.+?)\}\}/g}
 );
 
@@ -28,7 +28,7 @@ function TopEntities(elm, type) {
   this.category = this.$elm.data('category');
   this.cycle = this.$elm.data('cycle');
 
-  this.$table = this.$elm.find('tbody');
+  this.$table = this.$elm.find('.js-top-table');
   this.$dates = this.$elm.find('.js-dates');
   this.$previous = this.$elm.find('.js-previous');
   this.$next = this.$elm.find('.js-next');
@@ -53,7 +53,7 @@ TopEntities.prototype.init = function() {
     sort_hide_null: true,
     cycle: this.cycle
   };
-  this.maxValue = Number(this.$table.find('tr:first-child .value-bar').data('value'));
+  this.maxValue = Number(this.$table.find('.value-bar').first().data('value'));
 
   // Store the current query for use in pagination and more
   this.currentQuery = this.baseQuery;
