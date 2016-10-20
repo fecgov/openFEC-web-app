@@ -255,7 +255,7 @@ var filings = {
       }
     },
   },
-  pdf_url: {
+  document_type: {
     data: 'document_description',
     className: 'all report-type-col column--large',
     orderable: false,
@@ -428,7 +428,7 @@ var reports = {
     className: 'all column--xl',
     render: renderCommitteeColumn
   },
-  pdf_url: {
+  document_type: {
     data: 'document_description',
     className: 'all report-type-col column--large',
     orderable: false,
