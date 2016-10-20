@@ -10,8 +10,8 @@ var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var moment = require('moment');
 
 var TOP_ROW = _.template(
-  '<div role="row" class="simple-table__row">' +
-    '<div class="simple-table__cell"><a href="{{ url }}">{{ name }}</a></div>' +
+  '<div role="row" class="simple-table__row js-top-row">' +
+    '<div class="simple-table__cell">{{ rank }}. <a href="{{ url }}">{{ name }}</a> {{ party_code }}</div>' +
     '<div class="simple-table__cell t-right-aligned">{{ amount }}</div>' +
     '<div class="simple-table__cell"><div class="bar-container">' +
       '<div class="value-bar" data-value="{{ value }}" data-party="{{ party }}"></div>' +
