@@ -24,7 +24,7 @@ var candidateCategories = ['P', 'S', 'H'];
 
 function TopEntities(elm, type) {
   this.$elm = $(elm);
-  this.type = type === 'raising' ? 'receipts' : 'disbursements';
+  this.type = type;
   this.category = this.$elm.data('category');
   this.cycle = this.$elm.data('cycle');
 
@@ -130,7 +130,7 @@ TopEntities.prototype.loadData = function(query) {
   $.getJSON(
     helpers.buildUrl(this.basePath, query)
   ).done(function(response) {
-    self.$table.empty();
+    self.$table.find('.js-top-row').remove();
     var index = 1;
     var rankBase = (response.pagination.page - 1) * 10; // So that page 2 starts at 11
 
