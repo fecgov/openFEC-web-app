@@ -254,8 +254,6 @@ describe('Top entities breakdown', function() {
             name: 'Thing B',
             amount: '$1,000.00',
             rank: 1,
-            party: '',
-            party_code: '',
             value: 1000,
             url: '//committee/1234/?cycle=2016'
           });

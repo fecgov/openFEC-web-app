@@ -5,15 +5,7 @@ var _ = require('underscore');
 var helpers = require('../modules/helpers');
 var moment = require('moment');
 
-var TOP_ROW = _.template(
-  '<div role="row" class="simple-table__row js-top-row">' +
-    '<div class="simple-table__cell">{{ rank }}. <a href="{{ url }}">{{ name }}</a> {{ party_code }}</div>' +
-    '<div class="simple-table__cell t-right-aligned">{{ amount }}</div>' +
-    '<div class="simple-table__cell"><div class="bar-container">' +
-      '<div class="value-bar" data-value="{{ value }}" data-party="{{ party }}"></div>' +
-    '</div></div>',
-    {interpolate: /\{\{(.+?)\}\}/g}
-);
+var TOP_ROW = require('../../templates/top-entity-row.hbs');
 
 // Store candidate office letters for to look up when a chart category is a candidate
 var candidateCategories = ['P', 'S', 'H'];
@@ -175,8 +167,6 @@ TopEntities.prototype.formatData = function(result, rank) {
       amount: helpers.currency(result[this.type]),
       value: result[this.type],
       rank: rank,
-      party: '',
-      party_code: '',
       url: helpers.buildAppUrl(['committee', result.committee_id], {
         cycle: this.cycle
       })
