@@ -125,7 +125,7 @@ def page_info(pagination):
     """
     page = pagination['page']
     per_page = pagination['per_page']
-    count = pagination['count']
+    count = '{:,}'.format(pagination['count'])
     range_start = per_page * (page - 1) + 1
     range_end = (page - 1) * 10 + per_page
-    return str(range_start) + '-' + str(range_end) + ' of ' + '{:,}'.format(count)
+    return '{range_start}-{range_end} of {count}'.format(range_start=range_start, range_end=range_end, count=count)
