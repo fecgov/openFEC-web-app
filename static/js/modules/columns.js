@@ -257,7 +257,7 @@ var filings = {
   },
   document_type: {
     data: 'document_description',
-    className: 'all report-type-col column--large',
+    className: 'all column--doc-download column--large',
     orderable: false,
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
@@ -430,7 +430,7 @@ var reports = {
   },
   document_type: {
     data: 'document_description',
-    className: 'all report-type-col column--large',
+    className: 'all column--doc-download column--large',
     orderable: false,
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
