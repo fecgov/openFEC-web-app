@@ -102,15 +102,13 @@ TopEntities.prototype.handleCategoryChange = function(e) {
   this.loadData(this.currentQuery);
 };
 
-TopEntities.prototype.handlePagination = function(direction) {
+TopEntities.prototype.handlePagination = function(direction, e) {
+  if ($(e.target).hasClass('is-disabled')) { return; }
   var currentPage = this.currentQuery.page || 1;
   if (direction === 'next') {
     this.currentQuery.page = currentPage + 1;
-    this.$previous.removeClass('is-disabled');
-  } else if (direction === 'previous' && currentPage > 1) {
+  } else if (direction === 'previous') {
     this.currentQuery.page = currentPage - 1;
-  } else {
-    return;
   }
 
   this.loadData(this.currentQuery);
@@ -198,6 +196,19 @@ TopEntities.prototype.updatePagination = function(pagination) {
     var range_start = String(per_page * (page - 1) + 1);
     var range_end = String((page - 1) * 10 + per_page);
     var info = range_start + '-' + range_end + ' of ' + count;
+
+    if (page === pagination.pages) {
+      this.$next.addClass('is-disabled');
+    } else {
+      this.$next.removeClass('is-disabled');
+    }
+
+    if (page === 1) {
+      this.$previous.addClass('is-disabled');
+    } else {
+      this.$previous.removeClass('is-disabled');
+    }
+
     this.$pageInfo.html(info);
 };
 

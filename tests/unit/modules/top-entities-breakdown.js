@@ -170,23 +170,22 @@ describe('Top entities breakdown', function() {
       });
 
       describe('handlePagination()', function() {
-        it('handles goes to the next page', function() {
-          this.chart.handlePagination('next');
+        it('goes to the next page', function() {
+          this.chart.handlePagination('next', {target: this.chart.$next});
           expect(this.chart.currentQuery.page).to.equal(2);
-          expect(this.chart.$previous.hasClass('is-disabled')).to.be.false;
           expect(this.chart.loadData).to.have.been.called;
         });
 
         it('goes to the previous page if possible', function() {
           this.chart.currentQuery.page = 2;
-          this.chart.handlePagination('previous');
+          this.chart.$previous.removeClass('is-disabled');
+          this.chart.handlePagination('previous', {target: this.chart.$previous});
           expect(this.chart.currentQuery.page).to.equal(1);
-          expect(this.chart.$previous.hasClass('is-disabled')).to.be.true;
         });
 
         it('prevents you from paging before page 1', function() {
           this.chart.currentQuery.page = 1;
-          this.chart.handlePagination('previous');
+          this.chart.handlePagination('previous', {target: this.chart.$previous});
           expect(this.chart.loadData).to.have.not.been.called;
         });
       });
@@ -298,6 +297,17 @@ describe('Top entities breakdown', function() {
           count: 1000,
         });
         expect(this.chart.$pageInfo.html()).to.equal('11-20 of 1,000');
+        expect(this.chart.$previous.hasClass('is-disabled')).to.be.false;
+      });
+
+      it('disables the next button on the last page', function() {
+        this.chart.updatePagination({
+          page: 20,
+          pages: 20,
+          per_page: 10,
+          count: 200,
+        });
+        expect(this.chart.$next.hasClass('is-disabled')).to.be.true;
       });
     });
   });
