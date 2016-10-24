@@ -263,9 +263,11 @@ var filings = {
       var doc_description = row.document_description ? row.document_description : row.form_type;
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
+      var fec_url = row.fec_url ? row.fec_url : null;
 
       return reportType({
         doc_description: doc_description,
+        fec_url: fec_url,
         pdf_url: pdf_url,
         csv_url: csv_url
       });
