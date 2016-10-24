@@ -1,5 +1,7 @@
 import http
 
+import datetime
+
 import furl
 from webargs import fields
 from webargs.flaskparser import use_kwargs
@@ -26,12 +28,12 @@ def search():
             page='home',
             dates=utils.date_ranges(),
             totals= api_caller.landing_mock_data(),
-            top_candidates_raising = api_caller.load_top_candidates('-receipts'),
-            top_candidates_spending = api_caller.load_top_candidates('-disbursements'),
-            top_pacs_raising = api_caller.load_top_pacs('-receipts'),
-            top_pacs_spending = api_caller.load_top_pacs('-disbursements'),
-            top_parties_raising = api_caller.load_top_parties('-receipts'),
-            top_parties_spending = api_caller.load_top_parties('-disbursements'),
+            top_candidates_raising = api_caller.load_top_candidates('-receipts')['results'],
+            top_candidates_spending = api_caller.load_top_candidates('-disbursements')['results'],
+            top_pacs_raising = api_caller.load_top_pacs('-receipts')['results'],
+            top_pacs_spending = api_caller.load_top_pacs('-disbursements')['results'],
+            top_parties_raising = api_caller.load_top_parties('-receipts')['results'],
+            top_parties_spending = api_caller.load_top_parties('-disbursements')['results'],
             title='Campaign finance data')
 
 @app.route('/api/')
@@ -251,6 +253,65 @@ def elections(office, cycle, state=None, district=None):
         state_full=constants.states[state.upper()] if state else None,
         district=district,
         title=utils.election_title(cycle, office, state, district),
+    )
+
+@app.route('/raising/')
+@use_kwargs({
+    'top_category': fields.Str(load_from='top_category', missing='P'),
+    'cycle': fields.Int(load_from='cycle', missing=2016),
+})
+def raising_breakdown(top_category, cycle):
+    if top_category in ['pac']:
+        top_raisers = api_caller.load_top_pacs('-receipts', cycle=cycle, per_page=10)
+    elif top_category in ['party']:
+        top_raisers = api_caller.load_top_parties('-receipts', cycle=cycle, per_page=10)
+    else:
+        top_raisers = api_caller.load_top_candidates('-receipts', office=top_category, cycle=cycle, per_page=10)
+
+    if cycle == datetime.datetime.today().year:
+        coverage_end_date = datetime.datetime.today()
+    else:
+        coverage_end_date = datetime.date(cycle, 12, 31)
+
+    page_info = top_raisers['pagination']
+    return render_template(
+        'raising-breakdown.html',
+        title='Raising breakdown',
+        top_category=top_category,
+        coverage_start_date=datetime.date(cycle - 1, 1, 1),
+        coverage_end_date=coverage_end_date,
+        cycle=cycle,
+        top_raisers=top_raisers['results'],
+        page_info=utils.page_info(top_raisers['pagination'])
+    )
+
+@app.route('/spending/')
+@use_kwargs({
+    'top_category': fields.Str(load_from='top_category', missing='P'),
+    'cycle': fields.Int(load_from='cycle', missing=2016),
+})
+def spending_breakdown(top_category, cycle):
+    if top_category in ['pac']:
+        top_spenders = api_caller.load_top_pacs('-disbursements', cycle=cycle, per_page=10)
+    elif top_category in ['party']:
+        top_spenders = api_caller.load_top_parties('-disbursements', cycle=cycle, per_page=10)
+    else:
+        top_spenders = api_caller.load_top_candidates('-disbursements', office=top_category, cycle=cycle, per_page=10)
+
+    if cycle == datetime.datetime.today().year:
+        coverage_end_date = datetime.datetime.today()
+    else:
+        coverage_end_date = datetime.date(cycle, 12, 31)
+
+    return render_template(
+        'spending-breakdown.html',
+        title='Spending breakdown',
+        top_category=top_category,
+        coverage_start_date=datetime.date(cycle - 1, 1, 1),
+        coverage_end_date=coverage_end_date,
+        cycle=cycle,
+        top_spenders=top_spenders['results'],
+        page_info=utils.page_info(top_spenders['pagination'])
     )
 
 @app.route('/legal/search/')
