@@ -8,6 +8,8 @@ var helpers = require('./helpers');
 var decoders = require('./decoders');
 var moment = require('moment');
 
+var reportType = require('../../templates/reports/reportType.hbs');
+
 var dateColumn = columnHelpers.formattedColumn(helpers.datetime, {orderSequence: ['desc', 'asc']});
 var currencyColumn = columnHelpers.formattedColumn(helpers.currency, {orderSequence: ['desc', 'asc']});
 var barCurrencyColumn = columnHelpers.barColumn(helpers.currency);
@@ -232,7 +234,7 @@ var electioneeringCommunications = [
 var filings = {
   filer_name: {
     data: 'committee_id',
-    className: 'all column--xl',
+    className: 'all column--large',
     orderable: false,
     render: function(data, type, row, meta) {
       var cycle = tables.getCycle([row.cycle], meta);
@@ -253,22 +255,22 @@ var filings = {
       }
     },
   },
-  pdf_url: {
+  document_type: {
     data: 'document_description',
-    className: 'all column--med',
+    className: 'all column--doc-download column--large',
     orderable: false,
     render: function(data, type, row) {
-      var text = row.document_description ? row.document_description : row.form_type;
-      var url = row.pdf_url ? row.pdf_url : null;
-      if (url) {
-        var anchor = document.createElement('a');
-        anchor.textContent = text;
-        anchor.setAttribute('href', url);
-        anchor.setAttribute('target', '_blank');
-        return anchor.outerHTML;
-      } else {
-        return text;
-      }
+      var doc_description = row.document_description ? row.document_description : row.form_type;
+      var pdf_url = row.pdf_url ? row.pdf_url : null;
+      var csv_url = row.csv_url ? row.csv_url : null;
+      var fec_url = row.fec_url ? row.fec_url : null;
+
+      return reportType({
+        doc_description: doc_description,
+        fec_url: fec_url,
+        pdf_url: pdf_url,
+        csv_url: csv_url
+      });
     }
   },
   pages: pagesColumn,
@@ -425,14 +427,25 @@ var reports = {
   committee:   {
     data: 'committee_name',
     orderable: false,
-    className: 'all column--xl',
+    className: 'all column--large',
     render: renderCommitteeColumn
   },
-  pdf_url: columnHelpers.urlColumn('pdf_url', {
+  document_type: {
     data: 'document_description',
-    className: 'all column--medium',
-    orderable: false
-  }),
+    className: 'all column--doc-download column--large',
+    orderable: false,
+    render: function(data, type, row) {
+      var doc_description = row.document_description ? row.document_description : row.form_type;
+      var pdf_url = row.pdf_url ? row.pdf_url : null;
+      var csv_url = row.csv_url ? row.csv_url : null;
+
+      return reportType({
+        doc_description: doc_description,
+        pdf_url: pdf_url,
+        csv_url: csv_url
+      });
+    }
+  },
   receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({
     data: 'coverage_start_date',
