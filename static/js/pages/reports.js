@@ -17,7 +17,7 @@ var ieOnlyTemplate = require('../../templates/reports/ie-only.hbs');
 var pageTitle,
     pageTemplate,
     pageColumns,
-    columnKeys = ['committee', 'document_type', 'receipt_date', 'coverage_start_date', 'coverage_end_date'];
+    columnKeys = ['committee', 'document_type', 'receipt_date', 'coverage_end_date'];
 
 if (context.form_type === 'presidential') {
   pageTitle = 'Presidential committee reports';
