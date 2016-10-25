@@ -34,6 +34,8 @@ function LineChart(selector, snapshot, data, index) {
     this.$snapshot.height(this.baseHeight - this.margin.bottom);
   }
 
+  this.moveCursor(this.data[this.data.length - 1]);
+
   this.element.on('mousemove', this.handleMouseMove.bind(this));
   this.$prev.on('click', this.goToPreviousMonth.bind(this));
   this.$next.on('click', this.goToNextMonth.bind(this));
