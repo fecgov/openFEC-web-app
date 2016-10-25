@@ -108,13 +108,13 @@ def load_legal_advisory_opinion(ao_no):
         return None
 
     advisory_opinion = {
-        'no' : ao_no,
+        'no': ao_no,
         'date': canonical_document['date'],
         'name': canonical_document['name'],
         'summary': canonical_document['summary'],
         'description': canonical_document['description'],
         'url': canonical_document['url'],
-        'category' : canonical_document['category'],
+        'category': canonical_document['category'],
         'documents': documents,
         'entities': [],
     }
@@ -257,7 +257,12 @@ def landing_mock_data():
 def load_top_candidates(sort):
         response = _call_api(
             'candidates', 'totals',
-            sort_hide_null=True, election_year=2016, cycle=2016, election_full=False, sort=sort, per_page=5
+            sort_hide_null=True,
+            election_year=2016,
+            cycle=2016,
+            election_full=False,
+            sort=sort,
+            per_page=5
         )
         if response['results']:
             return response['results']
