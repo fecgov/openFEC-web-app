@@ -12,6 +12,7 @@ from openfecwebapp import config
 from collections import OrderedDict
 
 MAX_FINANCIALS_COUNT = 4
+RESPONDENT_ROLES = ['Respondent', 'Primary Respondent', 'Previous Respondent']
 
 
 session = requests.Session()
@@ -154,7 +155,7 @@ def load_legal_mur(mur_no):
             else:
                 participants_by_type[participant['role']] = [participant]
 
-            if 'respondent' in participant['role'].lower():
+            if participant['role'] in RESPONDENT_ROLES:
                 respondents.append(participant['name'])
             if 'complainant' in participant['role'].lower():
                 complainants.append(participant['name'])
