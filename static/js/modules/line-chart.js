@@ -50,18 +50,14 @@ LineChart.prototype.buildChart = function() {
     d.date = new Date(d.date);
   });
 
-  // Transform the data
-  var entityNames = d3.keys(data[0])
-    .filter(function(key) {
-      return key !== 'date';
-    });
+  var entityNames = ['candidate', 'party', 'pac', 'other'];
 
   // Create different objects for each entity type
   entityNames.forEach(function(type) {
     var totals = data.map(function(d) {
       return {
         date: d.date,
-        amount: d[type]
+        amount: d[type] || 0
       };
     });
 
