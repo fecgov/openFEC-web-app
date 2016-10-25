@@ -65,7 +65,7 @@
             </ul>
           </div>
         </div>
-        {{ overviews.overview(totals['raising'], 'raised', 'landing')}}
+        {{ overviews.overview('raised', 'landing')}}
         <a class="breakdown-link" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
       </div>
     </section>
@@ -83,7 +83,7 @@
             </ul>
           </div>
         </div>
-        {{ overviews.overview(totals['spending'], 'spent', 'landing')}}
+        {{ overviews.overview('spent', 'landing')}}
         <a class="breakdown-link" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
       </div>
     </section>
