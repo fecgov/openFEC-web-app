@@ -27,7 +27,6 @@ def search():
         return render_template('landing.html',
             page='home',
             dates=utils.date_ranges(),
-            totals= api_caller.landing_mock_data(),
             top_candidates_raising = api_caller.load_top_candidates('-receipts')['results'],
             top_candidates_spending = api_caller.load_top_candidates('-disbursements')['results'],
             top_pacs_raising = api_caller.load_top_pacs('-receipts')['results'],
