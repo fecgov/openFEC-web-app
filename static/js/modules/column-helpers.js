@@ -114,7 +114,7 @@ function buildTotalLink(path, getParams) {
     if (params) {
       var link = document.createElement('a');
       link.textContent = helpers.currency(data);
-      link.setAttribute('title', 'View individual transactions');
+      link.setAttribute('title', 'Show individual transactions');
       if (path.indexOf('receipts') > -1 || path.indexOf('disbursements') > -1) {
         includeTransactionPeriod = true;
       }

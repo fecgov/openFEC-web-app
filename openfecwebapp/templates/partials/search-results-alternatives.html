@@ -5,7 +5,7 @@
   {% else %}
   <h2 class="message__title">Not finding what you're looking for?</h2>
   {% endif %}
-  <p>View <a class="t-bold" href="{{ url_for('search', search_type=alt_type, search=query )}}">{{alt_type}} results</a> matching <span class="t-bold">"{{ query }}."</span></p>
+  <p>Check out <a class="t-bold" href="{{ url_for('search', search_type=alt_type, search=query )}}">{{alt_type}} results</a> matching <span class="t-bold">"{{ query }}."</span></p>
   <div class="message--alert__bottom">
     <p>Or browse a different data set:</p>
     <ul class="list--buttons">
