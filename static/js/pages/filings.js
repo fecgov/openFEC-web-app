@@ -9,14 +9,14 @@ var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 var tables = require('../modules/tables');
 var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
+var dropdown = require('fec-style/js/dropdowns');
 
 var columns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'pdf_url', 'amendment_indicator', 'receipt_date', 'modal_trigger'
+    'filer_name', 'document_type', 'amendment_indicator', 'receipt_date', 'modal_trigger'
   ]
 );
-
 
 $(document).ready(function() {
   var $table = $('#results');
@@ -33,6 +33,11 @@ $(document).ready(function() {
     useExport: true,
     callbacks: {
       afterRender: filings.renderModal
+    },
+    drawCallback: function () {
+      this.dropdowns = $table.find('.dropdown').map(function(idx, elm) {
+        return new dropdown.Dropdown($(elm), {checkboxes: false});
+      });
     }
   });
 

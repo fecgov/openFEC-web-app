@@ -1,6 +1,6 @@
 {% import 'macros/reaction-box.html' as reaction_box %}
 
-{% macro overview(data, verb, location) %}
+{% macro overview(verb, location) %}
   <div class="overview js-{{verb}}-overview">
     <div class="overview__chart js-chart">
 
@@ -18,7 +18,7 @@
         <div class="snapshot__item-number">
           <span class="snapshot__item-number">
             <span class="figure__decimals" aria-hidden="true"></span>
-            <span data-total-for="all">{{ data['total'] | currency }}</span>
+            <span data-total-for="all"></span>
           </span>
         </div>
       </div>
@@ -28,7 +28,7 @@
         </div>
         <span class="snapshot__item-number">
           <span class="figure__decimals" aria-hidden="true"></span>
-          <span data-total-for="candidates">{{ data['candidates'] | currency }}</span>
+          <span data-total-for="candidate"></span>
         </span>
       </div>
       <div class="snapshot__item">
@@ -37,7 +37,7 @@
         </div>
         <span class="snapshot__item-number">
           <span class="figure__decimals" aria-hidden="true"></span>
-          <span data-total-for="pacs">{{ data['pacs'] | currency }}</span>
+          <span data-total-for="pac"></span>
         </span>
       </div>
       <div class="snapshot__item">
@@ -46,16 +46,16 @@
         </div>
         <span class="snapshot__item-number">
           <span class="figure__decimals" aria-hidden="true"></span>
-          <span data-total-for="party">{{ data['parties'] | currency }}</span>
+          <span data-total-for="party"></span>
         </span>
       </div>
       <div class="snapshot__item">
         <div class="snapshot__item-title">
-          <span class="swatch other"></span>Other
+          <span class="term" data-term="Communications filers"><span class="swatch other"></span>Communications filers</span>
         </div>
         <span class="snapshot__item-number">
           <span class="figure__decimals" aria-hidden="true"></span>
-          <span data-total-for="other">{{ data['other'] | currency }}</span>
+          <span data-total-for="other"></span>
         </span>
       </div>
     </div>
