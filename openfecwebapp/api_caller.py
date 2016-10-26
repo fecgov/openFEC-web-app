@@ -236,52 +236,35 @@ def result_or_404(data):
         abort(404)
     return data['results'][0]
 
-def landing_mock_data():
-    return {
-        'raising': {
-            'total': 5409774242.62,
-            'candidates': 1883399322.78,
-            'pacs': 2525845906.85,
-            'parties': 997221077.99,
-            'other': 3307935.00
-        },
-        'spending': {
-            'total': 3571287377.71,
-            'candidates': 1669086332.88,
-            'pacs': 1014344445.93,
-            'parties': 734898386.06,
-            'other': 152958212.84
-        }
-    }
-
-def load_top_candidates(sort):
+def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
         response = _call_api(
             'candidates', 'totals',
             sort_hide_null=True,
-            election_year=2016,
-            cycle=2016,
+            election_year=cycle,
+            cycle=cycle,
             election_full=False,
+            office=office,
             sort=sort,
-            per_page=5
+            per_page=per_page
         )
         if response['results']:
-            return response['results']
+            return response
         return {}
 
-def load_top_pacs(sort):
+def load_top_pacs(sort, cycle=2016, per_page=5):
         response = _call_api(
             'totals', 'pac',
-            sort_hide_null=True, cycle=2016, sort=sort, per_page=5
+            sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
         if response['results']:
-            return response['results']
+            return response
         return {}
 
-def load_top_parties(sort):
+def load_top_parties(sort, cycle=2016, per_page=5):
         response = _call_api(
             'totals', 'party',
-            sort_hide_null=True, cycle=2016, sort=sort, per_page=5
+            sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
         if response['results']:
-            return response['results']
+            return response
         return {}

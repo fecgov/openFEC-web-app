@@ -34,6 +34,8 @@ function LineChart(selector, snapshot, data, index) {
     this.$snapshot.height(this.baseHeight - this.margin.bottom);
   }
 
+  this.moveCursor(this.data[this.data.length - 1]);
+
   this.element.on('mousemove', this.handleMouseMove.bind(this));
   this.$prev.on('click', this.goToPreviousMonth.bind(this));
   this.$next.on('click', this.goToNextMonth.bind(this));
@@ -48,18 +50,14 @@ LineChart.prototype.buildChart = function() {
     d.date = new Date(d.date);
   });
 
-  // Transform the data
-  var entityNames = d3.keys(data[0])
-    .filter(function(key) {
-      return key !== 'date';
-    });
+  var entityNames = ['candidate', 'party', 'pac', 'other'];
 
   // Create different objects for each entity type
   entityNames.forEach(function(type) {
     var totals = data.map(function(d) {
       return {
         date: d.date,
-        amount: d[type]
+        amount: d[type] || 0
       };
     });
 

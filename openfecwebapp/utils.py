@@ -118,3 +118,14 @@ def election_title(cycle, office, state=None, district=None):
     if district:
         parts.append('District {0}'.format(district))
     return ' - '.join(parts)
+
+def page_info(pagination):
+    """Generate a string showing number of results out of how many
+    based on a pagination object from an API response
+    """
+    page = pagination['page']
+    per_page = pagination['per_page']
+    count = '{:,}'.format(pagination['count'])
+    range_start = per_page * (page - 1) + 1
+    range_end = (page - 1) * 10 + per_page
+    return '{range_start}-{range_end} of {count}'.format(range_start=range_start, range_end=range_end, count=count)
