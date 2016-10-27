@@ -8,27 +8,6 @@
 {% endblock %}
 
 {% block body %}
-<style>
-.placeholder--raising,
-.placeholder--spending {
-  background-size: 100%;
-  color: #fff;
-  font-family: 'karla', sans-serif;
-  height: 370px;
-  padding: 5rem 8rem;
-  width: 100%;
-}
-
-.placeholder--raising {
-  background-image: url('/static/img/raising-placeholder.png');
-}
-
-.placeholder--spending {
-  background-image: url('/static/img/spending-placeholder.png');
-}
-
-</style>
-
 <section class="hero hero--primary hero--data" aria-labelledby="hero-heading">
   <div class="hero__image"></div>
   <div class="container">
@@ -76,9 +55,11 @@
       <p>The total amount raised, by group, until specific points in time.</p>
       <div class="content__section">
         <div class="placeholder--raising">
-          <p><strong>Coming soon:</strong> Cumulative raising graphs with live data.</p>
-          <p><strong>Available now:</strong> Find out who's raising the most this election cycle.</p>
-          <a class="button button--cta-primary" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
+          <div class="placeholder__content">
+            <p><strong>Coming soon:</strong> Cumulative raising graphs with live data.</p>
+            <p><strong>Available now:</strong> Find out who's raising the most this election cycle.</p>
+            <a class="button button--cta-primary" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
+          </div>
         </div>
       </div>
     </section>
@@ -87,9 +68,11 @@
       <p>The total amount spent, by group, in all elections up until specific points in time. Calculated using total disbursements, which include all payments and purchases made by a committee.</p>
       <div class="content__section">
         <div class="placeholder--spending">
-          <p><strong>Coming soon:</strong> Cumulative spending graphs with live data.</p>
-          <p><strong>Available now:</strong> Find out who's spending the most this election cycle.</p>
-          <a class="button button--cta-primary" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
+          <div class="placeholder__content">
+            <p><strong>Coming soon:</strong> Cumulative spending graphs with live data.</p>
+            <p><strong>Available now:</strong> Find out who's spending the most this election cycle.</p>
+            <a class="button button--cta-primary" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
+          </div>
         </div>
       </div>
     </section>
