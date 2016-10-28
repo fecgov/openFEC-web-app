@@ -70,7 +70,7 @@
                 <td> {{ entry.respondent }}</td>
                 <td>
                 {% for citation in entry.citations %}
-                  <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %};{% endif %}
+                <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %}<br>{% endif %}
                   </a>
                 {% endfor %}
                 </td>
