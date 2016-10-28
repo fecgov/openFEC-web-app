@@ -59,9 +59,10 @@
       </thead>
       <tbody>
         {% for disposition in mur.disposition_data %}
+          {% set dispositionloop = loop %}
           {% for penalty in mur.disposition_data[disposition] %}
             {% for entry in mur.disposition_data[disposition][penalty] %}
-              <tr class="row-color-normal">
+              <tr class="{{ dispositionloop.cycle('row-color-normal', 'row-color-contrast') }}">
                 {% if loop.first %}
                 <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}">{{ disposition }}</td>
                 <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}"> {{ penalty | currency or '' }} </td>
@@ -93,8 +94,9 @@
       <tbody>
         {% if 'documents' in mur and mur.documents_by_type %}
           {% for category in mur.documents_by_type %}
+            {% set categoryloop = loop %}
             {% for document in mur.documents_by_type[category] %}
-              <tr class="row-color-normal">
+              <tr class="{{ categoryloop.cycle('row-color-normal', 'row-color-contrast') }}">
                 {% if loop.first %}
                 <td rowspan="{{ mur.documents_by_type[category] | length }}">{{ category }}</td>
                 {% endif %}
@@ -119,8 +121,9 @@
       <tbody>
         {% if 'participants' in mur and mur.participants_by_type %}
           {% for role in mur.participants_by_type %}
+            {% set roleloop = loop %}
             {% for participant in mur.participants_by_type[role] %}
-              <tr class="row-color-normal">
+              <tr class="{{ roleloop.cycle('row-color-normal', 'row-color-contrast') }}">
                 {% if loop.first %}
                 <td rowspan="{{ mur.participants_by_type[role] | length }}">{{ role }}</td>
                 {% endif %}
