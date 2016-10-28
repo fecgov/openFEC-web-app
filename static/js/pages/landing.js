@@ -10,7 +10,6 @@ var TopList = require('../modules/top-list').TopList;
 var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
 var analytics = require('fec-style/js/analytics');
-var staticData = require('../data/entity-totals.json');
 
 var raisingUrl = helpers.buildUrl(
   ['totals', 'entity-receipts'],
@@ -74,12 +73,9 @@ Overview.prototype.zeroPadTotals = function() {
 //   new Overview('.js-spent-overview', spendingData, 2);
 // });
 
-new Overview('.js-raised-overview', staticData.raising, 1);
-new Overview('.js-spent-overview', staticData.spending, 2);
-
-$('.js-reaction-box').each(function() {
-  new ReactionBox(this);
-});
+// $('.js-reaction-box').each(function() {
+//   new ReactionBox(this);
+// });
 
 var maxHeight = 0;
 var $topLists = $('.js-top-list');
