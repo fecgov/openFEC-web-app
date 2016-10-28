@@ -19,7 +19,7 @@
     </div>
     {% if reports and totals %}
       <div class="content__section">
-        <h3 class="results-info results-info--simple results-info__title">Detailed summary {{ reports.0.cycle-1 }}–{{ reports.0.cycle }}</h3>
+        <h3 class="results-info results-info--simple results-info__title">Detailed summary: {{ reports.0.cycle-1 }}–{{ reports.0.cycle }}</h3>
         <div class="js-accordion accordion--neutral">
           {% if committee_type == 'P' %}
             {% include 'partials/committee-totals-presidential.html' %}
