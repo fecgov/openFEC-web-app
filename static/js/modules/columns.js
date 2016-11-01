@@ -255,6 +255,13 @@ var filings = {
       }
     },
   },
+  pdf_url: columnHelpers.urlColumn('pdf_url', {
+    // This is just used by the committee pages because those tables
+    // are too narrow to support the combo button
+    data: 'document_description',
+    className: 'all column--medium',
+    orderable: false
+  }),
   document_type: {
     data: 'document_description',
     className: 'all column--doc-download column--large',
