@@ -75,3 +75,68 @@
   {% endfor %}
 </ul>
 {% endmacro %}
+
+{% macro mur_subjects(subjects, func) %}
+{% if subjects|length > 0 %}
+    {% for node in subjects %}
+    <div>
+      {{ mur_subject(node) }}
+    </div>
+    {% endfor %}
+{% else %}
+    Unavailable
+
+    <div class="message message--no-icon">
+        <p>
+            <strong>No content available</strong>. Sometimes this information exists in case documents but isn't readable by computers. Open the case for more information.
+        </p>
+    </div>
+{% endif %}
+{% endmacro %}
+
+{% macro mur_date(date_property) %}
+{% if date_property %}
+    {{ date_property | date('%Y-%m-%d') }}
+{% else %}
+    Unavailable
+{% endif %}
+{% endmacro %}
+
+{% macro mur_participants(mur) %}
+{% if ('complainants' in mur and mur.complainants|length > 0) or ('respondents' in mur and mur.respondents|length > 0) %}
+      <h2 class="t-ruled--bold t-ruled--bottom u-no-margin">Participants</h2>
+      <table class="data-table data-table--text data-table--heading-borders">
+        <thead>
+          <tr>
+            <th>Relationship</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if 'complainants' in mur and mur.complainants %}
+            {% for complainant in mur.complainants %}
+            <tr class="row-color-normal">
+              {% if loop.first %}
+              <td rowspan="{{ mur.complainants | length }}">Complainant</td>
+              {% endif %}
+              <td>{{ complainant }}</td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+          {% if 'respondents' in mur and mur.respondents %}
+            {% for respondent in mur.respondents %}
+            <tr class="row-color-contrast">
+              {% if loop.first %}
+              <td rowspan="{{ mur.respondents | length }}">Respondent(s)</td>
+              {% endif %}
+              <td>{{ respondent }}</td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+      <div class="results-info results-info--bottom">
+        <a class="legal-top" href="#">Top of page</a>
+      </div>
+{% endif %}
+{% endmacro %}

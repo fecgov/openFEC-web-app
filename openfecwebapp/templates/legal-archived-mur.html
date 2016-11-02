@@ -35,18 +35,19 @@
         <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
         {% endif %}
         <div class="legal-mur__property">
-          <strong>OPEN DATE:</strong> {{ mur.open_date | date('%Y-%m-%d') }}
+            <strong>OPEN DATE:</strong> {{ legal.mur_date(mur.open_date) }}
         </div>
         <div class="legal-mur__property">
-        <strong>CLOSE DATE:</strong> {{ mur.close_date | date('%Y-%m-%d') }}
+        <strong>CLOSE DATE:</strong> {{ legal.mur_date(mur.close_date) }}
         </div>
         <div class="legal-mur__property">
         <strong>SUBJECT:</strong>
-        {% for node in mur.subject %}
+        {{ legal.mur_subjects(mur.subject) }}
+        {#% for node in mur.subject %}
         <div>
           {{ legal.mur_subject(node) }}
         </div>
-        {% endfor %}
+        {% endfor %#}
         </div>
       </div>
       {% if mur.citations.regulations or mur.citations.us_code %}
@@ -84,6 +85,7 @@
     </section>
     <section id="participants" class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom u-no-margin">Participants</h2>
+      {% if ('complainants' in mur and mur.complainants) or ('respondents' in mur and mur.respondents) %}
       <table class="data-table data-table--text data-table--heading-borders">
         <thead>
           <tr>
@@ -117,6 +119,13 @@
       <div class="results-info results-info--bottom">
         <a class="legal-top" href="#">Top of page</a>
       </div>
+      {% else %}
+        <div class="message message--no-icon">
+            <p>
+                <strong>No content available</strong>. Sometimes this information exists in case documents but isn't readable by computers. Open the case for more information.
+            </p>
+        </div>
+      {% endif %}
     </section>
   </div>
 </div>
