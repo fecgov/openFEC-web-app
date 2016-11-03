@@ -33,16 +33,24 @@
     <div>
       <h2 class="t-ruled--bold t-ruled--bottom">Summary</h2>
       <div class="legal-mur__property">
-        <strong>COMPLAINANT:</strong> {{ '; '.join(mur['complainants']) }}
+        <p>
+          <strong>COMPLAINANT:</strong> {{ '; '.join(mur['complainants']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>RESPONDENT:</strong> {{ '; '.join(mur['respondents']) }}
+        <p>
+          <strong>RESPONDENT:</strong> {{ '; '.join(mur['respondents']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>SUBJECT:</strong> {{ '; '.join(mur['subject']['text']) }}
+        <p>
+          <strong>SUBJECT:</strong> {{ '; '.join(mur['subject']['text']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>DISPOSITION:</strong> {{ '<br>'.join(mur['disposition_text']) | safe }}
+        <p>
+          <strong>DISPOSITION:</strong> {{ '<br>'.join(mur['disposition_text']) | safe }}
+        </p>
       </div>
     </div>
   </section>
