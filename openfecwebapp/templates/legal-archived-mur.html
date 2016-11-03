@@ -94,23 +94,23 @@
           </tr>
         </thead>
         <tbody>
+          {% if 'respondents' in mur %}
+            {% for respondent in mur.respondents %}
+            <tr class="row-color-normal">
+              {% if loop.first %}
+              <td rowspan="{{ mur.respondents | length }}">Respondent</td>
+              {% endif %}
+              <td>{{ respondent }}</td>
+            </tr>
+            {% endfor %}
+          {% endif %}
           {% if 'complainants' in mur %}
             {% for complainant in mur.complainants %}
-            <tr class="row-color-normal">
+            <tr class="row-color-contrast">
               {% if loop.first %}
               <td rowspan="{{ mur.complainants | length }}">Complainant</td>
               {% endif %}
               <td>{{ complainant }}</td>
-            </tr>
-            {% endfor %}
-          {% endif %}
-          {% if 'respondents' in mur %}
-            {% for respondent in mur.respondents %}
-            <tr class="row-color-contrast">
-              {% if loop.first %}
-              <td rowspan="{{ mur.respondents | length }}">Respondent(s)</td>
-              {% endif %}
-              <td>{{ respondent }}</td>
             </tr>
             {% endfor %}
           {% endif %}
