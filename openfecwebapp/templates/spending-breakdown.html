@@ -34,10 +34,10 @@
   </section>
 
   <section id="by-state" class="content__section--extra content__section--ruled js-breakdown-map" data-cycle="{{ cycle }}">
-    <h2>Where contributions come from</h2>
+    <h2>Where money is spent to support and oppose candidates</h2>
     <form action="" method="GET">
       <h3 class="u-no-margin">
-        <label for="top-category" class="breakdown__title label t-inline-block">A state-by-state breakdown of independent expenditures to all: </label>
+        <label for="top-category" class="breakdown__title label t-inline-block">A state-by-state breakdown of independent expenditures made by: </label>
         <select id="top-category" name="top_category" class="js-category form-element--inline" aria-controls="top-table">
           <optgroup label="Candidates">
             <option value="P" {% if category == 'P' %}selected{% endif %}>Presidential candidates</option>
@@ -72,6 +72,13 @@
       </div>
     </div>
   </section>
+
+  <ul class="list--buttons u-float-right">
+    <li><button class="button button--standard button--share is-disabled">Share</button></li>
+    <li><a class="button button--standard button--table" href="">Data</a></li>
+    <li><button class="button button--alt js-ga-event"  data-a11y-dialog-show="modal" data-ga-event="methodology modal clicked" aria-controls="-modal">Methodology</button></li>
+  </ul>
+
 </section>
 {% endblock %}
 
