@@ -66,6 +66,7 @@
           </div>
         </div>
         {{ overviews.overview('raised', 'landing')}}
+         <a class="breakdown-link" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
       </div>
     </section>
     <section class="content__section content__section--ruled" id="spending">
@@ -83,6 +84,7 @@
           </div>
         </div>
         {{ overviews.overview('spent', 'landing')}}
+        <a class="breakdown-link" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
       </div>
     </section>
     <section class="content__section--extra">
