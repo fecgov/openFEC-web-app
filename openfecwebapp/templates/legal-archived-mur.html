@@ -43,11 +43,6 @@
         <div class="legal-mur__property">
         <strong>SUBJECT:</strong>
         {{ legal.mur_subjects(mur.subject) }}
-        {#% for node in mur.subject %}
-        <div>
-          {{ legal.mur_subject(node) }}
-        </div>
-        {% endfor %#}
         </div>
       </div>
       {% if mur.citations.regulations or mur.citations.us_code %}
