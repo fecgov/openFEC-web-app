@@ -34,12 +34,26 @@
       <h2 class="t-ruled--bold t-ruled--bottom">Summary</h2>
       <div class="legal-mur__property">
         <p>
-          <strong>RESPONDENT:</strong> {{ '; '.join(mur['respondents']) }}
+          <strong>
+              {% if mur['respondents']|length > 1 %}
+                RESPONDENTS:
+              {% else %}
+                RESPONDENT:
+              {% endif %}
+          </strong>
+          {{ '; '.join(mur['respondents']) }}
         </p>
       </div>
       <div class="legal-mur__property">
         <p>
-          <strong>COMPLAINANT:</strong> {{ '; '.join(mur['complainants']) }}
+          <strong>
+              {% if mur['complainants']|length > 1 %}
+                COMPLAINANTS:
+              {% else %}
+                COMPLAINANT:
+              {% endif %}
+          </strong>
+          {{ '; '.join(mur['complainants']) }}
         </p>
       </div>
       <div class="legal-mur__property">
