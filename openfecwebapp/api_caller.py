@@ -12,7 +12,6 @@ from openfecwebapp import config
 from collections import OrderedDict
 
 MAX_FINANCIALS_COUNT = 4
-RESPONDENT_ROLES = ['Respondent', 'Primary Respondent', 'Previous Respondent']
 
 
 session = requests.Session()
@@ -135,7 +134,6 @@ def load_legal_mur(mur_no):
     if mur['mur_type'] == 'current':
         participants_by_type = OrderedDict()
         complainants = []
-        respondents = []
         for participant in mur['participants']:
             citations = []
             for stage in participant['citations']:
@@ -155,8 +153,6 @@ def load_legal_mur(mur_no):
             else:
                 participants_by_type[participant['role']] = [participant]
 
-            if participant['role'] in RESPONDENT_ROLES:
-                respondents.append(participant['name'])
             if 'complainant' in participant['role'].lower():
                 complainants.append(participant['name'])
 
@@ -172,7 +168,7 @@ def load_legal_mur(mur_no):
 
         mur['disposition_data'] = disposition_data
         mur['complainants'] = complainants
-        mur['respondents'] = respondents
+        mur['respondents'] = _get_sorted_respondents(mur)
         mur['participants_by_type'] = participants_by_type
 
         documents_by_type = OrderedDict()
@@ -268,3 +264,12 @@ def load_top_parties(sort, cycle=2016, per_page=5):
         if response['results']:
             return response
         return {}
+
+def _get_sorted_respondents(mur):
+    """
+    Returns the respondents in a MUR sorted in the order of most important to least important
+    """
+    respondents = []
+    for role in ['Primary Respondent', 'Respondent', 'Previous Respondent']:
+        respondents.extend(sorted([p['name'] for p in mur['participants'] if p['role'] == role]))
+    return respondents
