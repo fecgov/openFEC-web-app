@@ -7,7 +7,7 @@
     <form id="category-filters" action="{{ url_for(result_type) }}">
       <div class="filters__inner">
         <div class="filter" id="search-field">
-          <label class="label" for="search-input">Search terms</label>
+          <label class="label" for="search-input">Search keywords</label>
           <div class="combo combo--search--mini">
             <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
             <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
@@ -40,7 +40,7 @@
     </select>
     <input class="combo__input" type="text" name="search"
     aria-label="Search for legal documents"
-    placeholder="Search for legal documents" autocomplete="off"
+    autocomplete="off"
     autocorrect="off" autocapitalize="off" spellcheck="false"
     value="{{ query or '' }}">
     <button type="submit" class="combo__button button--search {{ button_color }}">
