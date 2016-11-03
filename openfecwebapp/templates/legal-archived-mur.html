@@ -89,7 +89,7 @@
           </tr>
         </thead>
         <tbody>
-          {% if 'complainants' in mur and mur.complainants %}
+          {% if 'complainants' in mur %}
             {% for complainant in mur.complainants %}
             <tr class="row-color-normal">
               {% if loop.first %}
@@ -99,7 +99,7 @@
             </tr>
             {% endfor %}
           {% endif %}
-          {% if 'respondents' in mur and mur.respondents %}
+          {% if 'respondents' in mur %}
             {% for respondent in mur.respondents %}
             <tr class="row-color-contrast">
               {% if loop.first %}
