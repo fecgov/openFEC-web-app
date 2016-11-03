@@ -28,10 +28,12 @@
 
 {% block sections %}
 <section id="raising-breakdowns">
+
   <section id="top-raisers" class="content__section">
     <h2>Who's raising the most</h2>
     {{ breakdowns.top_entities(top_raisers, coverage_start_date, coverage_end_date, cycle, 'raised', top_category, pagination ) }}
   </section>
+
   <section id="by-state" class="content__section--extra content__section--ruled js-breakdown-map" data-cycle="{{ cycle }}">
     <h2>Where contributions come from</h2>
     <form action="" method="GET">
