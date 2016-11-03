@@ -80,7 +80,9 @@
 {% if subjects|length > 0 %}
     {% for node in subjects %}
     <div>
-      {{ mur_subject(node) }}
+        <p>
+          {{ mur_subject(node) }}
+        </p>
     </div>
     {% endfor %}
 {% else %}

@@ -35,13 +35,19 @@
         <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
         {% endif %}
         <div class="legal-mur__property">
+          <p>
             <strong>OPEN DATE:</strong> {{ legal.mur_date(mur.open_date) }}
+          </p>
         </div>
         <div class="legal-mur__property">
-        <strong>CLOSE DATE:</strong> {{ legal.mur_date(mur.close_date) }}
+          <p>
+            <strong>CLOSE DATE:</strong> {{ legal.mur_date(mur.close_date) }}
+          </p>
         </div>
         <div class="legal-mur__property">
-        <strong>SUBJECT:</strong>
+          <p>
+            <strong>SUBJECT:</strong>
+          </p>
         {{ legal.mur_subjects(mur.subject) }}
         </div>
       </div>
