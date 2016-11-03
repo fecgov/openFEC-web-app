@@ -52,28 +52,39 @@
     <h2 class="t-ruled--bottom">Get started with campaign finance data</h2>
     <section class="content__section" id="raising">
       <h3 class="u-no-margin">Raising</h3>
-      <p>The total amount raised, by group, until specific points in time.</p>
+      <p>The total amount raised, by committee type, until specific points in time.</p>
       <div class="content__section">
-        <div class="placeholder--raising">
-          <div class="placeholder__content">
-            <p><strong>Coming soon:</strong> Cumulative raising graphs with live data.</p>
-            <p><strong>Available now:</strong> Find out who's raising the most this election cycle.</p>
-            <a class="button button--cta-primary" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
+        <div class="heading--section heading--with-action">
+          <h4 class="heading__left t-upper">Cumulative amount raised by committees, 2015–2016</h4>
+          <div class="heading__right">
+            <ul class="list--buttons">
+              <li><a class="button button--standard button--table" href="{{ url_for('receipts') }}">Explore data</a></li>
+              <li><button class="button button--standard js-ga-event"  data-a11y-dialog-show="raised-modal" data-ga-event="Raised methodology modal clicked" aria-controls="raised-modal">
+              Methodology</button></li>
+              <li><button class="button button--standard button--share is-disabled">Share</button></li>
+            </ul>
           </div>
         </div>
+        {{ overviews.overview('raised', 'landing')}}
+         <a class="breakdown-link" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
       </div>
     </section>
     <section class="content__section content__section--ruled" id="spending">
       <h3 class="u-no-margin">Spending</h3>
-      <p>The total amount spent, by group, in all elections up until specific points in time. Calculated using total disbursements, which include all payments and purchases made by a committee.</p>
+      <p>The total amount spent, by committee type, up until specific points in time.</p>
       <div class="content__section">
-        <div class="placeholder--spending">
-          <div class="placeholder__content">
-            <p><strong>Coming soon:</strong> Cumulative spending graphs with live data.</p>
-            <p><strong>Available now:</strong> Find out who's spending the most this election cycle.</p>
-            <a class="button button--cta-primary" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
+        <div class="heading--section heading--with-action">
+          <h4 class="heading__left t-upper">Cumulative amount spent by committees, 2015–2016</h4>
+          <div class="heading__right">
+            <ul class="list--buttons">
+              <li><a class="button button--standard button--table" href="{{ url_for('disbursements') }}">Explore data</a></li>
+              <li><button class="button button--standard js-ga-event"  data-a11y-dialog-show="spending-modal" data-ga-event="Spending methodology modal clicked" aria-controls="spending-modal">Methodology</button></li>
+              <li><button class="button button--standard button--share is-disabled">Share</button></li>
+            </ul>
           </div>
         </div>
+        {{ overviews.overview('spent', 'landing')}}
+        <a class="breakdown-link" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
       </div>
     </section>
     <section class="content__section--extra">
@@ -92,13 +103,11 @@
     <div role="document">
       <button type="button" class="modal__close button--close--primary" data-a11y-dialog-hide title="Close this dialog window"></button>
       <h2 id="raised-modal-title" tabindex="0">Methodology</h2>
-      <p>This data includes Forms 3, 3P, 3X, 5, 7 and 9 from January 1, 2015 to August 31, 2016.</p>
+      <p>This data includes Forms 3, 3P, and 3X.</p>
       <h5>Methodology overview</h5>
       <p><strong>Money raised</strong> includes each of the following:</p>
       <ul class="list--bulleted">
         <li><em>Adjusted receipts</em> for PACs, parties, congressional filers and presidential filers</li>
-        <li>Total contributions for independent expenditure (Form 5) filers</li>
-        <li>Total donations for electioneering communications (Form 9) filers</li>
       </ul>
       <p><em>Adjusted receipts</em> are the total receipts minus the following:</p>
       <ul class="list--bulleted">
@@ -123,14 +132,11 @@
     <div role="document">
       <button type="button" class="modal__close button--close--primary" data-a11y-dialog-hide title="Close this dialog window"></button>
       <h2 id="spending-modal-title">Methodology</h2>
-      <p>This data includes Forms 3, 3P, 3X, 5, 7 and 9 from January 1, 2015 to August 31, 2016.</p>
+      <p>This data includes Forms 3, 3P, and 3X.</p>
       <h5>Methodology overview</h5>
       <p><strong>Money spent</strong> includes each of the following:</p>
       <ul class="list--bulleted">
         <li><em>Adjusted disbursements</em> for PACs, parties, congressional filers and presidential filers</li>
-        <li>Total independent expenditures for independent expenditure (Form 5) filers</li>
-        <li>Total disbursements and obligations electioneering communication (Form 9) filers</li>
-        <li>Total communications costs for communication cost (Form 7) filers</li>
       </ul>
       <p><em>Adjusted disbursements</em> are total disbursements minus the following:</p>
       <ul class="list--bulleted">
