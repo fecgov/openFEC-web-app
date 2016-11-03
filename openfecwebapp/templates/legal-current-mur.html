@@ -135,7 +135,7 @@
                 {% if loop.first %}
                 <td rowspan="{{ mur.participants_by_type[role] | length }}">{{ role }}</td>
                 {% endif %}
-                <td>{{ participant.name }}</td>
+                <td>{{ participant }}</td>
               </tr>
             {% endfor %}
           {% endfor %}
