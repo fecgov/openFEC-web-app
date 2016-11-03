@@ -36,25 +36,18 @@
         {% endif %}
         <div class="legal-mur__property">
           <p>
-            <strong>OPEN DATE:</strong> {{ mur.open_date | date('%Y-%m-%d') }}
+            <strong>OPEN DATE:</strong> {{ legal.mur_date(mur.open_date) }}
           </p>
         </div>
         <div class="legal-mur__property">
           <p>
-            <strong>CLOSE DATE:</strong> {{ mur.close_date | date('%Y-%m-%d') }}
+            <strong>CLOSE DATE:</strong> {{ legal.mur_date(mur.close_date) }}
           </p>
         </div>
         <div class="legal-mur__property">
           <p>
             <strong>SUBJECT:</strong>
-            {% for node in mur.subject %}
-          </p>
-            <div>
-              <p>
-                {{ legal.mur_subject(node) }}
-              </p>
-            </div>
-              {% endfor %}
+        {{ legal.mur_subjects(mur.subject) }}
         </div>
       </div>
       {% if mur.citations.regulations or mur.citations.us_code %}
@@ -92,6 +85,7 @@
     </section>
     <section id="participants" class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom u-no-margin">Participants</h2>
+      {% if ('complainants' in mur and mur.complainants) or ('respondents' in mur and mur.respondents) %}
       <table class="data-table data-table--text data-table--heading-borders">
         <thead>
           <tr>
@@ -100,7 +94,7 @@
           </tr>
         </thead>
         <tbody>
-          {% if 'complainants' in mur and mur.complainants %}
+          {% if 'complainants' in mur %}
             {% for complainant in mur.complainants %}
             <tr class="row-color-normal">
               {% if loop.first %}
@@ -110,7 +104,7 @@
             </tr>
             {% endfor %}
           {% endif %}
-          {% if 'respondents' in mur and mur.respondents %}
+          {% if 'respondents' in mur %}
             {% for respondent in mur.respondents %}
             <tr class="row-color-contrast">
               {% if loop.first %}
@@ -125,6 +119,13 @@
       <div class="results-info results-info--bottom">
         <a class="legal-top" href="#">Top of page</a>
       </div>
+      {% else %}
+        <div class="message message--no-icon">
+            <p>
+                <strong>No content available</strong>. Sometimes this information exists in case documents but isn't readable by computers. Open the case for more information.
+            </p>
+        </div>
+      {% endif %}
     </section>
   </div>
 </div>
