@@ -35,19 +35,25 @@
         <div class="legal-mur__archive"><span class="legal-mur__archive-icon"><span class="u-visually-hidden">Icon representing an archived case</span></span>Archived case</div>
         {% endif %}
         <div class="legal-mur__property">
-          <strong>OPEN DATE:</strong> {{ mur.open_date | date('%Y-%m-%d') }}
+          <p>
+            <strong>OPEN DATE:</strong> {{ mur.open_date | date('%Y-%m-%d') }}
+          </p>
         </div>
         <div class="legal-mur__property">
-        <strong>CLOSE DATE:</strong> {{ mur.close_date | date('%Y-%m-%d') }}
+          <p>
+            <strong>CLOSE DATE:</strong> {{ mur.close_date | date('%Y-%m-%d') }}
+          </p>
         </div>
         <div class="legal-mur__property">
-        <strong>SUBJECT:</strong>
-        {% for node in mur.subject %}
-        <div>
-          {{ legal.mur_subject(node) }}
-        </div>
-        {% endfor %}
-        </div>
+          <p>
+            <strong>SUBJECT:</strong>
+            {% for node in mur.subject %}
+            <div>
+              {{ legal.mur_subject(node) }}
+            </div>
+            {% endfor %}
+            </div>
+          </p>
       </div>
       {% if mur.citations.regulations or mur.citations.us_code %}
       <div class="sidebar-container">
