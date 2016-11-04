@@ -54,7 +54,8 @@ $.getJSON(raisingUrl).done(function(data) {
     raisingData.push(_.extend.apply(null, dateGroup));
   });
 
-  new Overview('.js-raised-overview', raisingData, 1);
+  var sorted = _.sortBy(raisingData, 'date');
+  new Overview('.js-raised-overview', sorted, 1);
 });
 
 $.getJSON(spendingUrl).done(function(data) {
@@ -70,7 +71,8 @@ $.getJSON(spendingUrl).done(function(data) {
     spendingData.push(_.extend.apply(null, dateGroup));
   });
 
-  new Overview('.js-spent-overview', spendingData, 2);
+  var sorted = _.sortBy(spendingData, 'date');
+  new Overview('.js-spent-overview', sorted, 2);
 });
 
 $('.js-reaction-box').each(function() {
