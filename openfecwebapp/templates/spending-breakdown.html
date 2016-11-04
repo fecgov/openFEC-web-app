@@ -1,5 +1,6 @@
 {% extends "layouts/sidebar-page.html" %}
 {% import "macros/breakdowns.html" as breakdowns %}
+{% import 'macros/reaction-box.html' as reaction_box %}
 
 {% block page_title %}
   <h1 class="icon-heading--spending-circle">{{ title }}</h1>
@@ -73,13 +74,18 @@
     </div>
   </section>
 
-  <ul class="list--buttons u-float-right">
-    <li><button class="button button--standard button--share is-disabled">Share</button></li>
-    <li><a class="button button--standard button--table" href="">Data</a></li>
-    <li><button class="button button--alt js-ga-event"  data-a11y-dialog-show="modal" data-ga-event="methodology modal clicked" aria-controls="-modal">Methodology</button></li>
-  </ul>
+  <div class="content__section row">
+    <ul class="list--buttons u-float-right">
+      <li><button class="button button--standard button--share is-disabled">Share</button></li>
+      <li><a class="button button--standard button--table" href="">Data</a></li>
+      <li><button class="button button--alt js-ga-event"  data-a11y-dialog-show="modal" data-ga-event="methodology modal clicked" aria-controls="-modal">Methodology</button></li>
+    </ul>
+  </div>
+
+  {{ reaction_box.reaction_box('top-entities', 'spending-breakdown')}}
 
 </section>
+
 {% endblock %}
 
 {% block modals %}
