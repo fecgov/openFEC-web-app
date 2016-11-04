@@ -50,7 +50,7 @@ LineChart.prototype.buildChart = function() {
     d.date = new Date(d.date);
   });
 
-  var entityNames = ['candidate', 'party', 'pac', 'other'];
+  var entityNames = ['candidate', 'party', 'pac'];
 
   // Create different objects for each entity type
   entityNames.forEach(function(type) {
