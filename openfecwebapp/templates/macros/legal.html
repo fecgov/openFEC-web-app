@@ -104,7 +104,7 @@
 
 {% macro mur_date(date_property) %}
 {% if date_property %}
-    {{ date_property | date('%m/%d/%Y') }}
+    {{ date_property | date('%B %e, %Y') }}
 {% else %}
     Unavailable
 {% endif %}
