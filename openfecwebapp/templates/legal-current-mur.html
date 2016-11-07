@@ -33,16 +33,38 @@
     <div>
       <h2 class="t-ruled--bold t-ruled--bottom">Summary</h2>
       <div class="legal-mur__property">
-        <strong>COMPLAINANT:</strong> {{ '; '.join(mur['complainants']) }}
+        <p>
+          <strong>
+              {% if mur['respondents']|length > 1 %}
+                RESPONDENTS:
+              {% else %}
+                RESPONDENT:
+              {% endif %}
+          </strong>
+          {{ '; '.join(mur['respondents']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>RESPONDENT:</strong> {{ '; '.join(mur['respondents']) }}
+        <p>
+          <strong>
+              {% if mur['complainants']|length > 1 %}
+                COMPLAINANTS:
+              {% else %}
+                COMPLAINANT:
+              {% endif %}
+          </strong>
+          {{ '; '.join(mur['complainants']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>SUBJECT:</strong> {{ '; '.join(mur['subject']['text']) }}
+        <p>
+          <strong>SUBJECT:</strong> {{ '; '.join(mur['subject']['text']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>DISPOSITION:</strong> {{ '<br>'.join(mur['disposition_text']) | safe }}
+        <p>
+          <strong>DISPOSITION:</strong> {{ '<br>'.join(mur['disposition_text']) | safe }}
+        </p>
       </div>
     </div>
   </section>
@@ -125,9 +147,9 @@
             {% for participant in mur.participants_by_type[role] %}
               <tr class="{{ roleloop.cycle('row-color-normal', 'row-color-contrast') }}">
                 {% if loop.first %}
-                <td rowspan="{{ mur.participants_by_type[role] | length }}">{{ role }}</td>
+                <td rowspan="{{ mur.participants_by_type[role] | length }}">{{ role | capitalize }}</td>
                 {% endif %}
-                <td>{{ participant.name }}</td>
+                <td>{{ participant }}</td>
               </tr>
             {% endfor %}
           {% endfor %}
