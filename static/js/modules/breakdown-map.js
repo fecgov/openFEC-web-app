@@ -52,9 +52,10 @@ function BreakdownMap(elm, type) {
 }
 
 BreakdownMap.prototype.init = function() {
-  // Update to use correct path
-  this.basePath = ['committee', 'C00213512', 'schedules', 'schedule_a', 'by_state'];
+  this.basePath = ['schedules', 'schedule_a', 'by_state', 'totals'];
+
   this.baseQuery = {
+    committee_type: 'P',
     per_page: 100,
     sort_hide_null: true,
     cycle: this.cycle
@@ -88,6 +89,7 @@ BreakdownMap.prototype.handleCategoryChange = function(e) {
 
 BreakdownMap.prototype.loadData = function(query) {
   var self = this;
+
   $.getJSON(
     helpers.buildUrl(this.basePath, query)
   ).done(function(response) {
@@ -123,6 +125,7 @@ BreakdownMap.prototype.buildMap = function(data) {
 
 BreakdownMap.prototype.buildTable = function() {
   var self = this;
+
   new tables.DataTable(this.$table, {
     path: this.basePath,
     query: this.baseQuery,
