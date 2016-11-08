@@ -22,7 +22,7 @@
   <ul class="sidebar__content js-toc">
     <li class="side-nav__item"><a class="side-nav__link" href="#top-spenders">Who's spending the most</a></li>
     <li class="side-nav__item"><span class="side-nav__link is-disabled">What's spent on day-to-day operating activities</span></li>
-    <li class="side-nav__item"><a class="side-nav__link" href="#by-state">Where money is spent to support and oppose candidates</a></li>
+    <li class="side-nav__item"><a class="side-nav__link is-disabled">Where money is spent to support and oppose candidates</a></li>
   </ul>
 </nav>
 {% endblock %}
@@ -34,7 +34,7 @@
     {{ breakdowns.top_entities(top_spenders, coverage_start_date, coverage_end_date, cycle, 'spent', top_category, page_info ) }}
   </section>
 
-  <section id="by-state" class="content__section--extra content__section--ruled js-breakdown-map" data-cycle="{{ cycle }}">
+{#   <section id="by-state" class="content__section--extra content__section--ruled js-breakdown-map" data-cycle="{{ cycle }}">
     <h2>Where money is spent to support and oppose candidates</h2>
     <form action="" method="GET">
       <h3 class="u-no-margin">
@@ -82,7 +82,7 @@
     </ul>
   </div>
 
-  {{ reaction_box.reaction_box('top-entities', 'spending-breakdown')}}
+  {{ reaction_box.reaction_box('top-entities', 'spending-breakdown')}} #}
 
 </section>
 
