@@ -10,7 +10,6 @@ var TopList = require('../modules/top-list').TopList;
 var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
 var analytics = require('fec-style/js/analytics');
-var staticData = require('../data/entity-totals.json');
 
 var raisingUrl = helpers.buildUrl(
   ['totals', 'entity-receipts'],
@@ -42,40 +41,39 @@ Overview.prototype.zeroPadTotals = function() {
   helpers.zeroPad(this.selector + ' .js-snapshot', '.snapshot__item-number', '.figure__decimals');
 };
 
-// $.getJSON(raisingUrl).done(function(data) {
-//   var raisingData = [];
+$.getJSON(raisingUrl).done(function(data) {
+  var raisingData = [];
 
-//   _.each(_.groupBy(data.results, 'date'), function(dateGroup) {
-//     _.each(dateGroup, function(object) {
-//       object[object.type] = object.receipts;
-//       delete object.cycle;
-//       delete object.receipts;
-//       delete object.type;
-//     });
-//     raisingData.push(_.extend.apply(null, dateGroup));
-//   });
+  _.each(_.groupBy(data.results, 'date'), function(dateGroup) {
+    _.each(dateGroup, function(object) {
+      object[object.type] = object.receipts;
+      delete object.cycle;
+      delete object.receipts;
+      delete object.type;
+    });
+    raisingData.push(_.extend.apply(null, dateGroup));
+  });
 
-//   new Overview('.js-raised-overview', raisingData, 1);
-// });
+  var sorted = _.sortBy(raisingData, 'date');
+  new Overview('.js-raised-overview', sorted, 1);
+});
 
-// $.getJSON(spendingUrl).done(function(data) {
-//   var spendingData = [];
+$.getJSON(spendingUrl).done(function(data) {
+  var spendingData = [];
 
-//   _.each(_.groupBy(data.results, 'date'), function(dateGroup) {
-//     _.each(dateGroup, function(object) {
-//       object[object.type] = object.disbursements;
-//       delete object.cycle;
-//       delete object.disbursements;
-//       delete object.type;
-//     });
-//     spendingData.push(_.extend.apply(null, dateGroup));
-//   });
+  _.each(_.groupBy(data.results, 'date'), function(dateGroup) {
+    _.each(dateGroup, function(object) {
+      object[object.type] = object.disbursements;
+      delete object.cycle;
+      delete object.disbursements;
+      delete object.type;
+    });
+    spendingData.push(_.extend.apply(null, dateGroup));
+  });
 
-//   new Overview('.js-spent-overview', spendingData, 2);
-// });
-
-new Overview('.js-raised-overview', staticData.raising, 1);
-new Overview('.js-spent-overview', staticData.spending, 2);
+  var sorted = _.sortBy(spendingData, 'date');
+  new Overview('.js-spent-overview', sorted, 2);
+});
 
 $('.js-reaction-box').each(function() {
   new ReactionBox(this);

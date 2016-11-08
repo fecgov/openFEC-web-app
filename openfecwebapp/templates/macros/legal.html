@@ -7,7 +7,7 @@
     <form id="category-filters" action="{{ url_for(result_type) }}">
       <div class="filters__inner">
         <div class="filter" id="search-field">
-          <label class="label" for="search-input">Search terms</label>
+          <label class="label" for="search-input">Search keywords</label>
           <div class="combo combo--search--mini">
             <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
             <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
@@ -40,7 +40,7 @@
     </select>
     <input class="combo__input" type="text" name="search"
     aria-label="Search for legal documents"
-    placeholder="Search for legal documents" autocomplete="off"
+    autocomplete="off"
     autocorrect="off" autocapitalize="off" spellcheck="false"
     value="{{ query or '' }}">
     <button type="submit" class="combo__button button--search {{ button_color }}">
@@ -71,7 +71,41 @@
 {{ node.text }}
 <ul class="legal-mur__subject-list">
   {% for child in node.children %}
-  <li class="legal-mur__subject-list-item">{{ mur_subject(child) }}</li>
+  <li class="legal-mur__subject-list-item">
+    <p>
+      {{ mur_subject(child) }}
+    </p>
+  </li>
   {% endfor %}
 </ul>
+{% endmacro %}
+
+{% macro mur_subjects(subjects, func) %}
+{% if subjects|length > 0 %}
+    {% for node in subjects %}
+    </p>
+    <div>
+        <p>
+          {{ mur_subject(node) }}
+        </p>
+    </div>
+    {% endfor %}
+{% else %}
+    Unavailable
+    </p>
+
+    <div class="message message--no-icon">
+        <p>
+            <strong>No content available</strong>. Sometimes this information exists in case documents but isn't readable by computers. Open the case for more information.
+        </p>
+    </div>
+{% endif %}
+{% endmacro %}
+
+{% macro mur_date(date_property) %}
+{% if date_property %}
+    {{ date_property | date('%Y-%m-%d') }}
+{% else %}
+    Unavailable
+{% endif %}
 {% endmacro %}
