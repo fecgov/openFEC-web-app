@@ -7,9 +7,7 @@ var moment = require('moment');
 var maps = require('../modules/maps');
 var events = require('fec-style/js/events');
 var tables = require('../modules/tables');
-var columnHelpers = require('../modules/column-helpers');
 
-// Refactor to share code with committee-single.js
 var stateColumns = [
   {
     data: 'state_full',
@@ -28,11 +26,9 @@ var stateColumns = [
     width: '50%',
     className: 'all',
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row) {
-      return {
-        contributor_state: row.state,
-      };
-    })
+    render: function(data) {
+      return helpers.currency(data);
+    }
   },
 ];
 
@@ -55,10 +51,11 @@ BreakdownMap.prototype.init = function() {
   this.basePath = ['schedules', 'schedule_a', 'by_state', 'totals'];
 
   this.baseQuery = {
-    committee_type: 'P',
+    committee_type: 'ALL',
     per_page: 100,
     sort_hide_null: true,
-    cycle: this.cycle
+    cycle: this.cycle,
+    sort: '-total'
   };
 
   this.loadData(this.baseQuery);
@@ -66,25 +63,15 @@ BreakdownMap.prototype.init = function() {
 
 BreakdownMap.prototype.handleCycleChange = function(e) {
   e.preventDefault();
-  this.cycle = e.target.value;
-  if (this.category === 'candidates') {
-      this.currentQuery = _.extend({}, this.baseQuery, {
-      cycle: this.cycle,
-      office: this.office,
-      page: 1
-    });
-  } else {
-    this.currentQuery = _.extend({}, this.baseQuery, {
-      cycle: this.cycle,
-      page: 1
-    });
-  }
-  this.loadData(this.currentQuery);
-  this.updateDates();
+  this.baseQuery.cycle = e.target.value;
+  this.destroyTableAndMap();
+  this.loadData(this.baseQuery);
 };
 
 BreakdownMap.prototype.handleCategoryChange = function(e) {
-  // Re do everything when the category filter changes
+  this.baseQuery.committee_type = e.target.value;
+  this.destroyTableAndMap();
+  this.loadData(this.baseQuery);
 };
 
 BreakdownMap.prototype.loadData = function(query) {
@@ -126,12 +113,12 @@ BreakdownMap.prototype.buildMap = function(data) {
 BreakdownMap.prototype.buildTable = function() {
   var self = this;
 
-  new tables.DataTable(this.$table, {
+  this.stateTable = new tables.DataTable(this.$table, {
     path: this.basePath,
     query: this.baseQuery,
     columns: stateColumns,
     dom: 't',
-    order: [[1, 'desc']],
+    ordering: false,
     paging: false,
     scrollY: 400,
     scrollCollapse: true
@@ -147,7 +134,6 @@ BreakdownMap.prototype.buildTable = function() {
 };
 
 BreakdownMap.prototype.highlightRowAndState = function(state, scroll) {
-  // Consider refactoring to share code with committee-single.js
   var $scrollBody = this.$table.closest('.dataTables_scrollBody');
   var $row = $scrollBody.find('span[data-state="' + state + '"]');
 
@@ -164,7 +150,9 @@ BreakdownMap.prototype.highlightRowAndState = function(state, scroll) {
 };
 
 BreakdownMap.prototype.destroyTableAndMap = function() {
-  // Remove the table and map from the DOM
+  this.stateTable.destroy();
+  this.$map.find('svg').remove();
+  this.$map.find('.legend-container').append('<svg></svg>');
 };
 
 BreakdownMap.prototype.updateDates = function() {

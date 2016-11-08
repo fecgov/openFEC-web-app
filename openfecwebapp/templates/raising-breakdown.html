@@ -41,13 +41,13 @@
       <h3 class="u-no-margin">
         <label for="top-category" class="breakdown__title label t-inline-block">A state-by-state breakdown of individual contributions from each state to </label>
         <select id="top-category" name="top_category" class="js-category form-element--inline" aria-controls="top-table">
+          <option value="ALL" {% if category == 'ALL' %}selected{% endif %}>All candidates</option>
           <optgroup label="Candidates">
             <option value="P" {% if category == 'P' %}selected{% endif %}>Presidential candidates</option>
             <option value="S" {% if category == 'S' %}selected{% endif %}>Senate candidates</option>
             <option value="H" {% if category == 'H' %}selected{% endif %}>House candidates</option>
           </optgroup>
-          <option value="pac" {% if category == 'pac' %}selected{% endif %}>PACs</option>
-          <option value="party" {% if category == 'party' %}selected{% endif %}>Political party committees</option>
+          <option value="ALL_PACS" {% if category == 'pac' %}selected{% endif %}>PACs</option>
         </select>
         <noscript>
           <button type="submit" class="button button--cta">Submit</button>
