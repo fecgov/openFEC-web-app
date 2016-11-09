@@ -243,7 +243,7 @@ pac_party_types = OrderedDict([
     ('P', 'Party - nonqualified'),
     ('Y', 'Party - qualified'),
     ('U', 'Single candidate independent expenditure'),
-    ('O', 'Super PAC (independent-expenditure only')
+    ('O', 'Super PAC (independent expenditure only')
 ])
 
 house_senate_types = OrderedDict([
