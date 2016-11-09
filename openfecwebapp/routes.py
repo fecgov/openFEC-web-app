@@ -216,7 +216,7 @@ def reports(form_type):
     if form_type.lower() == 'pac-party':
         title = 'PAC and party committee reports'
     if form_type.lower() == 'ie-only':
-        title = 'Independent expenditure-only committee reports'
+        title = 'Independent-expenditure only committee reports'
     context = OrderedDict([('form_type', form_type.lower())])
     return render_template(
         'datatable.html',
