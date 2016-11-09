@@ -75,6 +75,10 @@ Handlebars.registerHelper('decodeParty', function(value) {
   return decoders.parties[value] || value;
 });
 
+Handlebars.registerHelper('decodeMeans', function(value) {
+  return decoders.means[value] || value;
+});
+
 Handlebars.registerHelper('basePath', BASE_PATH);
 
 Handlebars.registerHelper('panelRow', function(label, options) {

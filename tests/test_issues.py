@@ -1,6 +1,6 @@
 import mock
 import pytest
-from webtest import TestApp
+from webtest import TestApp as WebTestApp
 
 import github3
 from flask import url_for
@@ -11,7 +11,7 @@ from openfecwebapp.app import app
 @pytest.yield_fixture
 def client():
     with app.test_request_context():
-        yield TestApp(app)
+        yield WebTestApp(app)
 
 class TestGithub:
 

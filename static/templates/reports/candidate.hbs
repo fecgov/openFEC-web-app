@@ -14,6 +14,9 @@
     {{#panelRow "Receipt date"}}
       {{datetime receipt_date format="pretty"}}
     {{/panelRow}}
+    {{#panelRow "Filing method"}}
+      {{ decodeMeans means_filed}}
+    {{/panelRow}}
   </table>
 </div>
 <div class="panel__row">
@@ -49,7 +52,7 @@
       {{/panelRow}}
     {{/if}}
     {{#if federal_funds_period}}
-      {{#panelRow "Presidential public funds accpeted"}}
+      {{#panelRow "Presidential public funds accepted"}}
         {{{currency federal_funds_period}}}
       {{/panelRow}}
     {{/if}}

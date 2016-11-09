@@ -24,30 +24,18 @@
       <div class="sidebar-container sidebar-container--left">
         <nav class="sidebar sidebar--neutral side-nav js-sticky-side" data-sticky-container="main">
           <ul class="sidebar__content">
-            <li class="side-nav__item">
-              <a class="side-nav__link" href="#results-statutes">
-              Statutes ({{ results.total_statutes|default(0) }})
-              </a>
-            </li>
-            <li class="side-nav__item">
-              <a class="side-nav__link" href="#results-regulations">
-                Regulations ({{ results.total_regulations|default(0) }})
-              </a>
-            </li>
-            <li class="side-nav__item">
-              <a class="side-nav__link" href="#results-advisory-opinions">
-              Advisory opinions ({{ results.total_advisory_opinions|default(0) }})
-              </a>
-            </li>
-            {% if features.legal_murs %}
-            <li class="side-nav__item">
-              <a class="side-nav__link" href="#results-murs">
-              Enforcement matters ({{ results.total_murs|default(0) }})
-              </a>
-            </li>
-            {% else %}
-            <li class="is-disabled side-nav__item"><span class="side-nav__link">Enforcement matters (TBD)</span></li>
-            {% endif %}
+            {% for category in category_order %}
+                {% set category_title = "Enforcement matters" if category == "murs" else category.replace('_', ' ').capitalize() %}
+                {% if features.legal_murs or category != 'murs' %}
+                    <li class="side-nav__item">
+                        <a class="side-nav__link" href="#results-{{ category|replace('_', '-') }}">
+                            {{ category_title }} ({{ results["total_" + category]|default(0) }})
+                    </a>
+                    </li>
+                {% else %}
+                <li class="is-disabled side-nav__item"><span class="side-nav__link">{{ category_title }} (TBD)</span></li>
+                {% endif %}
+            {% endfor %}
           </ul>
         </nav>
       </div>
@@ -55,106 +43,68 @@
         {% if query %}
         <h1 class="main__title">Results for &ldquo;{{ query }}&rdquo;</h1>
         {% endif %}
-        <div id="results-statutes" class="content__section">
-          <div class="results-info results-info--simple">
-            <div class="results-info__left">
-              <h2 class="results-info__title">Statutes</h2>
-            </div>
-            {% if results.total_statutes %}
-            <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.statutes_returned }} of <a href="{{ url_for('statutes', search=query, search_type='statutes') }}"><strong>{{ results.total_statutes }}</strong> results</a></span>
-            </div>
+        {% for category in category_order %}
+            {% set category_title = "Enforcement matters" if category == "murs" else category.replace('_', ' ').capitalize() %}
+            {% if features.legal_murs or category != 'murs' %}
+            <div id="results-{{ category|replace('_', '-') }}" class="content__section">
+                <div class="results-info results-info--simple">
+                    <div class="results-info__left">
+                        <h2 class="results-info__title">{{ category_title }}</h2>
+                    </div>
+                {% if results["total_" + category] %}
+                    <div class="results-info__right">
+                    <span class="results-info__details">1&ndash;{{ results[category + "_returned"] }} of <a href="{{ url_for(category, search=query, search_type=category) }}"><strong>{{ results["total_" + category] }}</strong> results</a></span>
+                    </div>
+                {% endif %}
+                </div>
+                {% if category == "statutes" %}
+                    {% if results["total_" + category] %}
+                        {% with statutes = results[category] %}
+                        {% include 'partials/legal-search-results-statute.html' %}
+                        {% endwith %}
+                        <div class="results-info">
+                        <a class="button button--browse button--alt" href="{{ url_for(category, search=query, search_type=category) }}">All results</a>
+                        </div>
+                    {% else %}
+                    {{ legal.no_results("statutes", category, query, fec_resources=['fec.gov']) }}
+                    {% endif %}
+                {% elif category == "regulations" %}
+                    {% if results["total_" + category] %}
+                        {% with regulations = results[category] %}
+                        {% include 'partials/legal-search-results-regulation.html' %}
+                        {% endwith %}
+                        <div class="results-info">
+                        <a class="button button--browse button--alt" href="{{ url_for(category, search=query, search_type=category) }}">All results</a>
+                        </div>
+                    {% else %}
+                    {{ legal.no_results("regulations", category, query, fec_resources=['Rulemaster', 'fec.gov']) }}
+                    {% endif %}
+                {% elif category == "advisory_opinions" %}
+                    {% if results["total_" + category] %}
+                        {% with advisory_opinions = results[category] %}
+                        {% include 'partials/legal-search-results-advisory-opinion.html' %}
+                        {% endwith %}
+                        <div class="results-info">
+                        <a class="button button--browse button--alt" href="{{ url_for(category, search=query, search_type=category) }}">All results</a>
+                        </div>
+                    {% else %}
+                    {{ legal.no_results("advisory opinions", category, query, fec_resources=['Advisory_Opinion', 'fec.gov']) }}
+                    {% endif %}
+                {% else %}
+                    {% if results["total_" + category] %}
+                        {% with murs = results[category] %}
+                        {% include 'partials/legal-search-results-mur.html' %}
+                        {% endwith %}
+                        <div class="results-info">
+                        <a class="button button--browse button--alt" href="{{ url_for(category, search=query, search_type=category) }}">All results</a>
+                        </div>
+                    {% else %}
+                    {{ legal.no_results("enforcement matters", category, query, fec_resources=['Administrative_Fine', 'Alternative_Dispute_Resolution', 'Audit_Reports', 'Matters_Under_Review', 'Matters_Under_Review_Archived', 'fec.gov']) }}
+                    {% endif %}
+                {% endif %}
+                </div>
             {% endif %}
-          </div>
-          {% if results.total_statutes %}
-            {% with statutes = results.statutes %}
-            {% include 'partials/legal-search-results-statute.html' %}
-            {% endwith %}
-            <div class="results-info">
-              <a class="button button--browse button--alt" href="{{ url_for('statutes', search=query, search_type='statutes') }}">View all results</a>
-            </div>
-          {% else %}
-          {{ legal.no_results('statutes', 'statutes', query, fec_resources=['fec.gov']) }}
-          {% endif %}
-        </div>
-        <div id="results-regulations" class="content__section">
-          <div class="results-info results-info--simple">
-            <div class="results-info__left">
-              <h2 class="results-info__title">Regulations</h2>
-            </div>
-            {% if results.total_regulations %}
-            <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.regulations_returned }} of <a href="{{ url_for('regulations', search=query, search_type='regulations') }}"><strong>{{ results.total_regulations }}</strong> results</a></span>
-            </div>
-            {% endif %}
-          </div>
-          {% if results.total_regulations %}
-            {% with regulations = results.regulations %}
-            {% include 'partials/legal-search-results-regulation.html' %}
-            {% endwith %}
-            <div class="results-info">
-              <a class="button button--browse button--alt" href="{{ url_for('regulations', search=query, search_type='regulations') }}">View all results</a>
-            </div>
-          {% else %}
-          {{ legal.no_results('regulations', 'regulations', query, fec_resources=['Rulemaster', 'fec.gov']) }}
-          {% endif %}
-        </div>
-        <div id="results-advisory-opinions" class="content__section">
-          <div class="results-info results-info--simple">
-            <div class="results-info__left">
-              <h2 class="results-info__title">Advisory opinions</h2>
-            </div>
-            {% if results.total_advisory_opinions %}
-            <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.advisory_opinions_returned }} of
-                <a href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">
-                  <strong>{{ results.total_advisory_opinions }}</strong> results
-                </a></span>
-            </div>
-            {% endif %}
-          </div>
-          {% if results.total_advisory_opinions %}
-            {% with advisory_opinions = results.advisory_opinions %}
-            {% include 'partials/legal-search-results-advisory-opinion.html' %}
-            {% endwith %}
-            <div class="results-info">
-              <a class="button button--browse button--alt"
-              href="{{ url_for('advisory_opinions', search=query, search_type='advisory_opinions') }}">
-              View all results</a>
-            </div>
-          {% else %}
-          {{ legal.no_results('advisory opinions', 'advisory_opinions', query, fec_resources=['Advisory_Opinion', 'fec.gov']) }}
-          {% endif %}
-        </div>
-        {% if features.legal_murs %}
-        <div id="results-murs" class="content__section">
-          <div class="results-info results-info--simple">
-            <div class="results-info__left">
-              <h2 class="results-info__title">Enforcement matters</h2>
-            </div>
-            {% if results.total_murs %}
-            <div class="results-info__right">
-              <span class="results-info__details">1&ndash;{{ results.murs_returned }} of
-                <a href="{{ url_for('murs', search=query, search_type='murs') }}">
-                  <strong>{{ results.total_murs }}</strong> results
-                </a></span>
-            </div>
-            {% endif %}
-          </div>
-          {% if results.total_murs %}
-            {% with murs = results.murs %}
-            {% include 'partials/legal-search-results-mur.html' %}
-            {% endwith %}
-            <div class="results-info">
-              <a class="button button--browse button--alt"
-              href="{{ url_for('murs', search=query, search_type='murs') }}">
-              View all results</a>
-            </div>
-          {% else %}
-          {{ legal.no_results('enforcement matters', 'murs', query, fec_resources=['Administrative_Fine', 'Alternative_Dispute_Resolution', 'Audit_Reports', 'Matters_Under_Review', 'Matters_Under_Review_Archived', 'fec.gov']) }}
-          {% endif %}
-        </div>
-        {% endif %}
+        {% endfor %}
       </section>
     </div>
   </div>

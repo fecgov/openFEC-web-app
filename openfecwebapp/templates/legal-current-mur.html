@@ -30,19 +30,41 @@
   </div>
   <div class="main__content--right">
     <section id="summary" class="content__section">
-    <div class="main__content">
+    <div>
       <h2 class="t-ruled--bold t-ruled--bottom">Summary</h2>
       <div class="legal-mur__property">
-        <strong>COMPLAINANT:</strong> {{ '; '.join(mur['complainants']) }}
+        <p>
+          <strong>
+              {% if mur['respondents']|length > 1 %}
+                RESPONDENTS:
+              {% else %}
+                RESPONDENT:
+              {% endif %}
+          </strong>
+          {{ '; '.join(mur['respondents']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>RESPONDENT:</strong> {{ '; '.join(mur['respondents']) }}
+        <p>
+          <strong>
+              {% if mur['complainants']|length > 1 %}
+                COMPLAINANTS:
+              {% else %}
+                COMPLAINANT:
+              {% endif %}
+          </strong>
+          {{ '; '.join(mur['complainants']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>SUBJECT:</strong> {{ '; '.join(mur['subject']['text']) }}
+        <p>
+          <strong>SUBJECT:</strong> {{ '; '.join(mur['subject']['text']) }}
+        </p>
       </div>
       <div class="legal-mur__property">
-        <strong>DISPOSITION:</strong> {{ '<br>'.join(mur['disposition_text']) | safe }}
+        <p>
+          <strong>DISPOSITION:</strong> {{ '<br>'.join(mur['disposition_text']) | safe }}
+        </p>
       </div>
     </div>
   </section>
@@ -59,9 +81,10 @@
       </thead>
       <tbody>
         {% for disposition in mur.disposition_data %}
+          {% set dispositionloop = loop %}
           {% for penalty in mur.disposition_data[disposition] %}
             {% for entry in mur.disposition_data[disposition][penalty] %}
-              <tr class="row-color-normal">
+              <tr class="{{ dispositionloop.cycle('row-color-normal', 'row-color-contrast') }}">
                 {% if loop.first %}
                 <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}">{{ disposition }}</td>
                 <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}"> {{ penalty | currency or '' }} </td>
@@ -69,7 +92,7 @@
                 <td> {{ entry.respondent }}</td>
                 <td>
                 {% for citation in entry.citations %}
-                  <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %};{% endif %}
+                <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %}<br>{% endif %}
                   </a>
                 {% endfor %}
                 </td>
@@ -93,8 +116,9 @@
       <tbody>
         {% if 'documents' in mur and mur.documents_by_type %}
           {% for category in mur.documents_by_type %}
+            {% set categoryloop = loop %}
             {% for document in mur.documents_by_type[category] %}
-              <tr class="row-color-normal">
+              <tr class="{{ categoryloop.cycle('row-color-normal', 'row-color-contrast') }}">
                 {% if loop.first %}
                 <td rowspan="{{ mur.documents_by_type[category] | length }}">{{ category }}</td>
                 {% endif %}
@@ -119,12 +143,13 @@
       <tbody>
         {% if 'participants' in mur and mur.participants_by_type %}
           {% for role in mur.participants_by_type %}
+            {% set roleloop = loop %}
             {% for participant in mur.participants_by_type[role] %}
-              <tr class="row-color-normal">
+              <tr class="{{ roleloop.cycle('row-color-normal', 'row-color-contrast') }}">
                 {% if loop.first %}
-                <td rowspan="{{ mur.participants_by_type[role] | length }}">{{ role }}</td>
+                <td rowspan="{{ mur.participants_by_type[role] | length }}">{{ role | capitalize }}</td>
                 {% endif %}
-                <td>{{ participant.name }}</td>
+                <td>{{ participant }}</td>
               </tr>
             {% endfor %}
           {% endfor %}

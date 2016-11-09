@@ -32,6 +32,7 @@ def render_legal_search_results(results, query, result_type):
         query=query,
         results=results,
         result_type=result_type,
+        category_order=get_legal_category_order(results, config.features['legal_murs']),
     )
 
 
@@ -52,16 +53,10 @@ def render_legal_advisory_opinion(advisory_opinion):
 
 
 def render_legal_mur(mur):
-    if mur['mur_type'] == 'archived':
-        return render_template(
-            'legal-archived-mur.html',
-            mur=mur,
-        )
-    else:
-        return render_template(
-            'legal-current-mur.html',
-            mur=mur,
-        )
+    return render_template(
+        'legal-%s-mur.html' % mur['mur_type'],
+        mur=mur,
+    )
 
 
 def to_date(committee, cycle):
@@ -217,3 +212,18 @@ class GithubView(MethodView):
         body = render_template('feedback.html', headers=request.headers, **kwargs)
         issue = self.repo.create_issue(title, body=body)
         return jsonify(issue.to_json()), 201
+
+def get_legal_category_order(results, murs_enabled=True):
+    """ Return categories in pre-defined order, moving categories with empty results
+        to the end. MURs must be at the end if not enabled.
+    """
+    if murs_enabled:
+        categories = ["statutes", "regulations", "advisory_opinions", "murs"]
+        category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
+                        [x for x in categories if results.get("total_" + x, 0) == 0]
+    else:
+        categories = ["statutes", "regulations", "advisory_opinions"]
+        category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
+                        [x for x in categories if results.get("total_" + x, 0) == 0] +\
+                        ["murs"]
+    return category_order

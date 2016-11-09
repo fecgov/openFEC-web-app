@@ -12,14 +12,14 @@
            committee_id=committee_id,
            cycle=cycle,
            ) }}">
-           View source reports
+           Open source reports
          </a>
       </div>
       <p>Get the full picture of all of the money received and spent by this <span class="term" data-term="Committee">committee</span>.</p>
     </div>
     {% if reports and totals %}
       <div class="content__section">
-        <h3 class="results-info results-info--simple results-info__title">Detailed summary {{ reports.0.cycle-1 }}–{{ reports.0.cycle }}</h3>
+        <h3 class="results-info results-info--simple results-info__title">Detailed summary: {{ reports.0.cycle-1 }}–{{ reports.0.cycle }}</h3>
         <div class="js-accordion accordion--neutral">
           {% if committee_type == 'P' %}
             {% include 'partials/committee-totals-presidential.html' %}

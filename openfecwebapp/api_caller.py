@@ -107,13 +107,13 @@ def load_legal_advisory_opinion(ao_no):
         return None
 
     advisory_opinion = {
-        'no' : ao_no,
+        'no': ao_no,
         'date': canonical_document['date'],
         'name': canonical_document['name'],
         'summary': canonical_document['summary'],
         'description': canonical_document['description'],
         'url': canonical_document['url'],
-        'category' : canonical_document['category'],
+        'category': canonical_document['category'],
         'documents': documents,
         'entities': [],
     }
@@ -132,9 +132,7 @@ def load_legal_mur(mur_no):
     mur = mur['docs'][0]
 
     if mur['mur_type'] == 'current':
-        participants_by_type = OrderedDict()
         complainants = []
-        respondents = []
         for participant in mur['participants']:
             citations = []
             for stage in participant['citations']:
@@ -149,13 +147,7 @@ def load_legal_mur(mur_no):
                         text = '%s C.F.R. %s.%s' % (title_no, part_no, section_no)
                         citations.append({'text': text, 'url': url})
             participant['citations'] = citations
-            if participant['role'] in participants_by_type:
-                participants_by_type[participant['role']].append(participant)
-            else:
-                participants_by_type[participant['role']] = [participant]
 
-            if 'respondent' in participant['role'].lower():
-                respondents.append(participant['name'])
             if 'complainant' in participant['role'].lower():
                 complainants.append(participant['name'])
 
@@ -171,8 +163,8 @@ def load_legal_mur(mur_no):
 
         mur['disposition_data'] = disposition_data
         mur['complainants'] = complainants
-        mur['respondents'] = respondents
-        mur['participants_by_type'] = participants_by_type
+        mur['respondents'] = _get_sorted_respondents(mur)
+        mur['participants_by_type'] = _get_sorted_participants_by_type(mur)
 
         documents_by_type = OrderedDict()
         for doc in mur['documents']:
@@ -238,7 +230,13 @@ def result_or_404(data):
 def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
         response = _call_api(
             'candidates', 'totals',
-            sort_hide_null=True, election_year=cycle, cycle=cycle, election_full=False, office=office, sort=sort, per_page=per_page
+            sort_hide_null=True,
+            election_year=cycle,
+            cycle=cycle,
+            election_full=False,
+            office=office,
+            sort=sort,
+            per_page=per_page
         )
         if response['results']:
             return response
@@ -261,3 +259,47 @@ def load_top_parties(sort, cycle=2016, per_page=5):
         if response['results']:
             return response
         return {}
+
+def _get_sorted_respondents(mur):
+    """
+    Returns the respondents in a MUR sorted in the order of most important to least important
+    """
+    SORTED_RESPONDENT_ROLES = ['Primary Respondent', 'Respondent', 'Previous Respondent']
+    respondents = []
+    for role in SORTED_RESPONDENT_ROLES:
+        respondents.extend(sorted([p['name'] for p in mur['participants'] if p['role'] == role]))
+    return respondents
+
+def _get_sorted_participants_by_type(mur):
+    """
+    Returns the participants in a MUR sorted in the order of most important to least important
+    """
+    SORTED_PARTICIPANT_ROLES = [
+        "Primary Respondent",
+        "Respondent",
+        "Previous Respondent",
+        "Treasurer",
+        "Previous Treasurer",
+        "Complainant",
+        "Respondent's Counsel",
+        "Opposing counsel",
+        "Representative",
+        "Law Firm",
+    ]
+    participants_by_type = OrderedDict()
+
+    # Prime with sorted roles
+    for role in SORTED_PARTICIPANT_ROLES:
+        participants_by_type[role] = []
+
+    for participant in mur['participants']:
+        participants_by_type[participant['role']].append(participant['name'])
+
+    # Sort participants, remove roles without participants
+    for key, value in participants_by_type.items():
+        if not value:
+            del participants_by_type[key]
+        else:
+            participants_by_type[key] = sorted(participants_by_type[key])
+
+    return participants_by_type

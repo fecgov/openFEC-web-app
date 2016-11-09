@@ -17,7 +17,7 @@
       <div class="entity__header--info">
         <div class="entity__header__top row">
           {% if office == 'president' %}
-            <h1 class="entity__name">US president</h1>
+            <h1 class="entity__name">US President</h1>
             <span class="t-data">{{ cycle }} Presidential election</span>
           {% else %}
             <h1 class="entity__name">{{ state|fmt_state_full }}
@@ -52,7 +52,7 @@
           <ul class="page-tabs__list" role="tablist" data-name="tab">
             <li class="page-tabs__item page-tabs__years"><h2 class="u-no-margin"> {{ cycle|fmt_year_range }}: </h2></li>
             {{ tabs.tab('Candidate comparison', 'comparison', 'panel1', '#section-1') }}
-            {{ tabs.tab('Spending by others to oppose/support', 's[emdomg', 'panel2', '#section-2') }}
+            {{ tabs.tab('Spending by others to support/oppose', 's[emdomg', 'panel2', '#section-2') }}
           </ul>
         </nav>
       </div>

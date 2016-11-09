@@ -34,7 +34,7 @@
          %}
            <span class="t-sans">Coverage period: {{ aggregate.coverage_start_date|date}}&ndash;{{ aggregate.coverage_end_date|date }}</span>  | 
            <a class="t-sans" href="{{ url_for('reports', form_type=report_type, committee_id=committee_ids, cycle=aggregate_cycles, is_amended='false' ) }}">
-             View source reports
+             Open source reports
            </a>
          {% endif %}
       </p>

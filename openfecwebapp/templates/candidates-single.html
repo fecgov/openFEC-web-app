@@ -65,7 +65,7 @@
       </ul>
       <div class="entity__header__bottom">
         <div class="entity__cycle">
-          <span class="label">View data for</span>
+          <span class="label">Show data for</span>
           {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
         </div>
         <div class="entity__election">
@@ -98,7 +98,7 @@
           <ul class="page-tabs__list" role="tablist" data-name="tab">
             <li class="page-tabs__item page-tabs__years"><h2 class="u-no-margin">{{ format_election_years(cycle, election_full, duration) }}: </h2></li>
             {{ tabs.tab('Financial summary', 'summary', 'panel1', '#section-1') }}
-            {{ tabs.tab('Spending by others to oppose/support', 'other-spending', 'panel2', '#section-2') }}
+            {{ tabs.tab('Spending by others to support/oppose', 'other-spending', 'panel2', '#section-2') }}
           </ul>
         </nav>
       </div>
