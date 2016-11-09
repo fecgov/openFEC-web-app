@@ -164,8 +164,8 @@ bundling_reports = OrderedDict([
 
 other_reports = OrderedDict([
     ('TER', 'Termination'),
-    ('24', '24-hour notification'),
-    ('48', '48-hour notification'),
+    ('24', '24-Hour Report'),
+    ('48', '48-Hour Report'),
     ('90D', 'Post inaugural'),
     ('90S', 'Post inaugural supplement'),
     ('CA', 'Comprehensive amendment'),
