@@ -9,8 +9,8 @@ python:
 
 env:
   global:
-    - secure: "ZhAiWoa6e/cPRTaLc6VTXK90VJnB/ADBwp/DCFr0PCkQonopPLvD7iQTPiZnXbrOUutZcHeniZ6NFuroGHCnkal8tXUY4iAcsLx31W6+ONmG6E2V+ugCDzXp+5Jeunrntrl9Ga3jhTe4QnhAiM65TUFPj+o5Bf/bCky3jukUtZk=" # FEC_CF_USERNAME
-    - secure: "N5+QR+vUBCKMR8rAfNbwI1rKqFrp4cupso9ZJXBK70N2S623/LmSPTpnBG9olYohppV5Z1Kp8qe13kCJYsrWpXkGo4nLPNWXPnsn/OiPkVbphrUBizL96yhRMPDnnV8y3rhFQjt6ZFnHSsiHcyTKoKU2ePuy8tStbhvNlWea3Lk=" # FEC_CF_PASSWORD
+    - secure: "Q0GUBC4Si9WJ4eZV9KDIDe8LifLRawqW0wuw3bhZOANdYNPbkSjX4aaeOh5v6Qz437tCt3ewLpMsXINWyGQ9/hVEUAXXe+14Gu4cYwvclQFYu4udhnN1OUeIb6ryH2MDHw1ie0+6qXuvTXYxJSntk0zTriWPd6/u8jUyXhB4fS8=" # FEC_CF_USERNAME
+    - secure: "VsFWJ0K2AbtU5i+P4TcTGmpbdIYIZ1wucqw+DF60F/KnNx3CMN/Nda9ww+OGq9fFky9sxAqcq+M3KO6+XvcTzojuk9dwwWfw8JagCJgsuKzjS0LHcx1WPAF9+RBvrXALV3V1q93ANu/DecDsmhKHF5ixrsvSUP3v37M9Qm5+vnM=" # FEC_CF_PASSWORD
 
 before_script:
   - travis_retry pip install -U pip wheel
