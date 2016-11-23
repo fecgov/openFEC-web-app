@@ -3,6 +3,7 @@
 
 {% block results %}
 {% with murs = results.murs %}
+<div class="message message--info"><p>Results don't include microfilm cases closed between 1975 and 1998. Search those cases on <a href="http://www.fec.gov/MUR/">FEC.gov.</a></p></div>
 {% include 'partials/legal-search-results-mur.html' %}
 {% endwith %}
 {% endblock %}
