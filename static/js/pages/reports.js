@@ -32,7 +32,7 @@ if (context.form_type === 'presidential') {
   pageTemplate = pacPartyTemplate;
   columnKeys.push('receipts', 'disbursements', 'independentExpenditures', 'trigger');
 } else if (context.form_type === 'ie-only') {
-  pageTitle = 'Independent expenditure-only committee reports';
+  pageTitle = 'Independent expenditure only committee reports';
   pageTemplate = ieOnlyTemplate;
   columnKeys.push('contributions', 'independentExpenditures', 'trigger');
 }
