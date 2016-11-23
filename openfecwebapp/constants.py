@@ -164,8 +164,8 @@ bundling_reports = OrderedDict([
 
 other_reports = OrderedDict([
     ('TER', 'Termination'),
-    ('24', '24-hour notification'),
-    ('48', '48-hour notification'),
+    ('24', '24-Hour Notification'),
+    ('48', '48-Hour Notification'),
     ('90D', 'Post inaugural'),
     ('90S', 'Post inaugural supplement'),
     ('CA', 'Comprehensive amendment'),
@@ -243,7 +243,7 @@ pac_party_types = OrderedDict([
     ('P', 'Party - nonqualified'),
     ('Y', 'Party - qualified'),
     ('U', 'Single candidate independent expenditure'),
-    ('O', 'SuperPAC (independent expenditure-only')
+    ('O', 'Super PAC (independent expenditure only')
 ])
 
 house_senate_types = OrderedDict([
