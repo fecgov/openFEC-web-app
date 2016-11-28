@@ -4,7 +4,7 @@
 <header class="heading--main">
   <h1>Enforcement matters</h1>
 </header>
-<section class="content__section"> 
+<section class="content__section">
   <div class="main__content">
     <p>
       The FEC has exclusive jurisdiction over the civil enforcement of the federal campaign finance law.
@@ -92,7 +92,6 @@
             <div class="usa-width-one-whole">
               <form action="{{ url_for('murs') }}" autocomplete="off" class="search__container  js-search">
                 <label for="search-input" class="label">Search closed MURs</label>
-                <div class="message message--info"><p>Results don't include most of the cases closed between 1975 and 1998. Search those cases on <a href="http://www.fec.gov/MUR/">FEC.gov.</a></p></div>
                 <div class="combo combo--search--medium combo--search--inline">
                   <input id="search-input" type="text" name="search" class="combo__input">
                   <input id="search-type" type="hidden" name="search_type" value="murs">
@@ -105,9 +104,10 @@
           </div>
           <div class="row">
             <div class="usa-width-one-whole">
-              <span class="t-note t-sans search__example">Examples: filings; 2405</span>
+              <p class="t-note t-sans search__example">Examples: filings; 2405</p>
             </div>
           </div>
+          <p><i class="icon icon--inline--left i-bang-circle"></i>Results don't include most of the cases closed between 1975 and 1998. Search those cases on <a href="http://www.fec.gov/MUR/">FEC.gov.</a></p>
         </div>
       </div>
     </div>
