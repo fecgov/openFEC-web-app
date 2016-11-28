@@ -1,7 +1,7 @@
 {% macro filter(title, result_type, query) %}
 <div id="filters" class="filters is-open">
   <button class="filters__header js-filter-toggle" type="button">
-    {{ title }}
+    <span class="filters__title">{{ title }}</span>
   </button>
   <div class="filters__content">
     <form id="category-filters" action="{{ url_for(result_type) }}">
