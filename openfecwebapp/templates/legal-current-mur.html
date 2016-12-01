@@ -92,8 +92,14 @@
                 <td> {{ entry.respondent }}</td>
                 <td>
                 {% for citation in entry.citations %}
-                <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %}<br>{% endif %}
-                  </a>
+                    {{ citation.title }}
+                    {% if citation.type == 'statute' %}
+                    U.S.C. &sect;
+                    {% else %}
+                    CFR
+                    {% endif %}
+                    <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %}<br>{% endif %}
+                    </a>
                 {% endfor %}
                 </td>
               </tr>
