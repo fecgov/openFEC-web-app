@@ -94,11 +94,17 @@
                 {% for citation in entry.citations %}
                     {{ citation.title }}
                     {% if citation.type == 'statute' %}
-                    U.S.C. &sect;
+                        U.S.C.
                     {% else %}
-                    CFR
+                        CFR
                     {% endif %}
-                    <a href="{{ citation.url }}">{{ citation.text }}{% if not loop.last %}<br>{% endif %}
+                    <a href="{{ citation.url }}">
+                    {% if citation.type == 'statute' %}
+                        &sect;{{ citation.text -}}
+                    {% else %}
+                        {{ citation.text }}
+                    {% endif %}
+                    {% if not loop.last %}<br>{% endif %}
                     </a>
                 {% endfor %}
                 </td>
