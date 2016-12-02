@@ -26,6 +26,7 @@ def search():
     else:
         return render_template('landing.html',
             page='home',
+            parent='data',
             dates=utils.date_ranges(),
             top_candidates_raising = api_caller.load_top_candidates('-receipts')['results'],
             top_candidates_spending = api_caller.load_top_candidates('-disbursements')['results'],
@@ -96,6 +97,7 @@ def committee_page(c_id, cycle=None):
 def advanced():
     return render_template(
         'advanced.html',
+        parent='data',
         title='Advanced data'
     )
 
@@ -103,6 +105,7 @@ def advanced():
 def candidates():
     return render_template(
         'datatable.html',
+        parent='data',
         result_type='candidates',
         slug='candidates',
         title='Candidates',
@@ -115,6 +118,7 @@ def candidates_office(office):
         abort(404)
     return render_template(
         'datatable.html',
+        parent='data',
         result_type='candidates',
         title='candidates for ' + office,
         slug='candidates-office',
@@ -126,6 +130,7 @@ def candidates_office(office):
 def committees():
     return render_template(
         'datatable.html',
+        parent='data',
         result_type='committees',
         slug='committees',
         title='Committees',
@@ -137,6 +142,7 @@ def committees():
 def receipts():
     return render_template(
         'datatable.html',
+        parent='data',
         slug='receipts',
         title='Receipts',
         dates=utils.date_ranges(),
@@ -147,6 +153,7 @@ def receipts():
 def individual_contributions():
     return render_template(
         'datatable.html',
+        parent='data',
         result_type='receipts',
         title='Individual contributions',
         slug='individual-contributions',
@@ -158,6 +165,7 @@ def individual_contributions():
 def disbursements():
     return render_template(
         'datatable.html',
+        parent='data',
         slug='disbursements',
         title='Disbursements',
         dates=utils.date_ranges(),
@@ -168,6 +176,7 @@ def disbursements():
 def filings():
     return render_template(
         'datatable.html',
+        parent='data',
         slug='filings',
         title='Filings',
         dates=utils.date_ranges(),
@@ -179,6 +188,7 @@ def filings():
 def independent_expenditures():
     return render_template(
         'datatable.html',
+        parent='data',
         slug='independent-expenditures',
         title='Independent expenditures',
         dates=utils.date_ranges(),
@@ -189,6 +199,7 @@ def independent_expenditures():
 def electioneering_communications():
     return render_template(
         'datatable.html',
+        parent='data',
         slug='electioneering-communications',
         title='Electioneering communications',
         dates=utils.date_ranges(),
@@ -199,6 +210,7 @@ def electioneering_communications():
 def communication_costs():
     return render_template(
         'datatable.html',
+        parent='data',
         slug='communication-costs',
         title='Communication costs',
         dates=utils.date_ranges(),
@@ -220,6 +232,7 @@ def reports(form_type):
     context = OrderedDict([('form_type', form_type.lower())])
     return render_template(
         'datatable.html',
+        parent='data',
         slug='reports',
         title=title,
         table_context=context,
@@ -229,7 +242,7 @@ def reports(form_type):
 
 @app.route('/elections/')
 def election_lookup():
-    return render_template('election-lookup.html')
+    return render_template('election-lookup.html', parent='data')
 
 @app.route('/elections/<office>/<int:cycle>/')
 @app.route('/elections/<office>/<state>/<int:cycle>/')
@@ -246,6 +259,7 @@ def elections(office, cycle, state=None, district=None):
         'elections.html',
         office=office,
         office_code=office[0],
+        parent='data',
         cycle=cycle,
         cycles=cycles,
         state=state,
@@ -275,6 +289,7 @@ def raising_breakdown(top_category, cycle):
     page_info = top_raisers['pagination']
     return render_template(
         'raising-breakdown.html',
+        parent='data',
         title='Raising breakdown',
         top_category=top_category,
         coverage_start_date=datetime.date(cycle - 1, 1, 1),
@@ -304,6 +319,7 @@ def spending_breakdown(top_category, cycle):
 
     return render_template(
         'spending-breakdown.html',
+        parent='data',
         title='Spending breakdown',
         top_category=top_category,
         coverage_start_date=datetime.date(cycle - 1, 1, 1),
@@ -344,18 +360,21 @@ def legal_doc_search(query, result_type, **kwargs):
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
     return render_template('legal-advisory-opinions-landing.html',
+        parent='legal',
         result_type='advisory_opinions',
         display_name='advisory opinions')
 
 @app.route('/legal/enforcement/')
 def enforcement_landing():
     return render_template('legal-enforcement-landing.html',
+        parent='legal',
         result_type='murs',
         display_name='enforcement matters')
 
 @app.route('/legal/statutes/')
 def statutes_landing():
     return render_template('legal-statutes-landing.html',
+        parent='legal',
         result_type='statutes',
         display_name='statutes')
 
