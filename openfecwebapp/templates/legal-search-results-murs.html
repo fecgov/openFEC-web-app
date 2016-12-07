@@ -1,8 +1,9 @@
 {% extends "layouts/legal-doc-search-results.html" %}
-{% set document_type_display_name = 'enforcement matters' %}
+{% set document_type_display_name = 'Matters Under Review' %}
 
 {% block results %}
 {% with murs = results.murs %}
+<div class="message message--info"><p>Results don't include most of the cases closed between 1975 and 1998. Search those cases on <a href="http://www.fec.gov/MUR/">FEC.gov.</a></p></div>
 {% include 'partials/legal-search-results-mur.html' %}
 {% endwith %}
 {% endblock %}

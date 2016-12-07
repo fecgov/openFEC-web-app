@@ -20,6 +20,7 @@ from openfecwebapp import api_caller
 def render_search_results(results, query, result_type):
     return render_template(
         'search-results.html',
+        parent='data',
         results=results,
         result_type=result_type,
         query=query,
@@ -29,6 +30,7 @@ def render_search_results(results, query, result_type):
 def render_legal_search_results(results, query, result_type):
     return render_template(
         'legal-search-results.html',
+        parent='legal',
         query=query,
         results=results,
         result_type=result_type,
@@ -39,6 +41,7 @@ def render_legal_search_results(results, query, result_type):
 def render_legal_doc_search_results(results, query, result_type):
     return render_template(
         'legal-search-results-%s.html' % result_type,
+        parent='legal',
         results=results,
         result_type=result_type,
         query=query,
@@ -49,6 +52,7 @@ def render_legal_advisory_opinion(advisory_opinion):
     return render_template(
         'legal-advisory-opinion.html',
         advisory_opinion=advisory_opinion,
+        parent='legal'
     )
 
 
@@ -56,6 +60,7 @@ def render_legal_mur(mur):
     return render_template(
         'legal-%s-mur.html' % mur['mur_type'],
         mur=mur,
+        parent='legal'
     )
 
 
@@ -69,6 +74,7 @@ def render_committee(committee, candidates, cycle):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
+    tmpl_vars['parent'] = 'data'
     tmpl_vars['cycle'] = cycle
     tmpl_vars['year'] = to_date(committee, cycle)
     tmpl_vars['result_type'] = 'committees'
@@ -124,6 +130,7 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
+    tmpl_vars['parent'] = 'data'
     tmpl_vars['cycle'] = cycle
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
