@@ -23,12 +23,12 @@
     <div class="range range--date js-date-range">
       <div class="range__input range__input--min" data-filter="range">
         <label for="{{ min_name }}">Beginning</label>
-        <input type="text" id="{{ min_name }}" name="{{ min_name }}">
+        <input type="text" id="{{ min_name }}" name="{{ min_name }}" class="js-date-mask">
       </div>
       <div class="range__hyphen">-</div>
       <div class="range__input range__input--max" data-filter="range">
         <label for="{{ max_name }}">Ending</label>
-        <input type="text" id="{{ max_name }}" name="{{ max_name }}">
+        <input type="text" id="{{ max_name }}" name="{{ max_name }}"  class="js-date-mask">
       </div>
     </div>
   </fieldset>
