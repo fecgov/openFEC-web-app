@@ -1,23 +1,12 @@
-{% macro filter(title, result_type, query) %}
-<div id="filters" class="filters is-open">
-  <button class="filters__header js-filter-toggle" type="button">
-    <span class="filters__title">{{ title }}</span>
-  </button>
-  <div class="filters__content">
-    <form id="category-filters" action="{{ url_for(result_type) }}">
-      <div class="filters__inner">
-        <div class="filter" id="search-field">
-          <label class="label" for="search-input">Search keywords</label>
-          <div class="combo combo--search--mini">
-            <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
-            <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
-            <button class="combo__button button--search button--standard" type="submit">
-              <span class="u-visually-hidden">Search</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
+{% macro keyword_search(result_type, query) %}
+<div class="filter">
+  <label class="label" for="search-input">Search keywords</label>
+  <div class="combo combo--search--mini">
+    <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
+    <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
+    <button class="combo__button button--search button--standard" type="submit">
+      <span class="u-visually-hidden">Search</span>
+    </button>
   </div>
 </div>
 {% endmacro %}

@@ -1,5 +1,10 @@
 {% extends "layouts/legal-doc-search-results.html" %}
+{% import 'macros/legal.html' as legal %}
 {% set document_type_display_name = 'advisory opinions' %}
+
+{% block filters %}
+  {{ legal.keyword_search(result_type, query) }}
+{% endblock %}
 
 {% block results %}
 {% with advisory_opinions = results.advisory_opinions %}

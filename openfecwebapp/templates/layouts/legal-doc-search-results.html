@@ -19,7 +19,21 @@
 </header>
 
 <section class="main__content--full data-container__wrapper">
-  {{ legal.filter('Search %s' % (document_type_display_name), result_type, query) }}
+  <div id="filters" class="filters is-open">
+    <button class="filters__header js-filter-toggle" type="button">
+      <span class="filters__title">Search {{ document_type_display_name }}</span>
+    </button>
+    <div class="filters__content">
+      <form id="category-filters" action="{{ url_for(result_type) }}">
+        <div class="filters__inner">
+          <div class="filter" id="search-field">
+            {% block filters %}
+            {% endblock %}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   <div id="results-{{ result_type }}" class="content__section data-container__body">
     <div class="results-info results-info--simple">
       <div class="results-info__left">
