@@ -155,9 +155,11 @@ def load_legal_mur(mur_no):
 
         disposition_data = OrderedDict()
         for row in mur['disposition']['data']:
-            if row['disposition'] in disposition_data\
-                    and row['penalty'] in disposition_data[row['disposition']]:
-                disposition_data[row['disposition']][row['penalty']].append(row)
+            if row['disposition'] in disposition_data:
+                if row['penalty'] in disposition_data[row['disposition']]:
+                    disposition_data[row['disposition']][row['penalty']].append(row)
+                else:
+                    disposition_data[row['disposition']][row['penalty']] = [row]
             else:
                 disposition_data[row['disposition']] = OrderedDict({row['penalty']: [row]})
 
