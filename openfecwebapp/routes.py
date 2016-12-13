@@ -385,8 +385,8 @@ def advisory_opinions_landing():
         parent='legal',
         result_type='advisory_opinions',
         display_name='advisory opinions',
-        pending_aos=pending_aos,
-        recent_aos=pending_aos)
+        pending_aos=mock_pending,
+        recent_aos=mock_recent)
 
 @app.route('/legal/enforcement/')
 def enforcement_landing():
