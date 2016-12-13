@@ -5,10 +5,12 @@
   <h1>Advisory opinions</h1>
 </header>
 <section class="content__section content__section--narrow">
-  <p class="t-lead">
-    Advisory opinions are official Commission responses to questions about how federal campaign finance law applies to specific, factual situations.
-  </p>
-  <a class="button button--cta button--go" href="{{ FEC_CMS_URL }}/legal/advisory-opinions/process">The advisory opinion process</a>
+  <div class="content__section">
+    <p class="t-lead">
+      Advisory opinions are official Commission responses to questions about how federal campaign finance law applies to specific, factual situations.
+    </p>
+    <a class="button button--cta button--go" href="{{ FEC_CMS_URL }}/legal/advisory-opinions/process">The advisory opinion process</a>
+  </div>
   <div class="u-no-print">
     <div class="slab slab--neutral slab--inline">
       <div class="container">
@@ -37,9 +39,11 @@
   <div class="heading--section">
     <h2>Pending advisory opinion requests</h2>
   </div>
-  <p>Once the Office of the General Counsel has determined that an advisory opinion request meets all of the requirements to move forward for conisderation by the Commission, the request is made public and is available for public comment for ten days.</p>
-  <a class="button button--standard button--go" href="{{ FEC_CMS_URL }}/legal/advisory-opinions/process#commenting">Learn how to comment</a>
-  <div class="content__section--ruled">
+  <div class="content__section">
+    <p>Once the Office of the General Counsel has determined that an advisory opinion request meets all of the requirements to move forward for conisderation by the Commission, the request is made public and is available for public comment for ten days.</p>
+    <a class="button button--standard button--go" href="{{ FEC_CMS_URL }}/legal/advisory-opinions/process#commenting">Learn how to comment</a>
+  </div>
+  <div class="post-feed">
     {% for post in pending_aos %}
     <article class="post">
       <h3 class="pending-ao__title"><a href="{{ url_for('advisory_opinion_page', ao_no=post.number) }}">{{ post.title }}</a></h3>
@@ -53,9 +57,11 @@
   <div class="heading--section">
     <h2>Recent advisory opinions issued</h2>
   </div>
-  <p>The Commission issues an advisory opinion when four or more Commissioners vote to approve it. These votes almost always occur during an <a href="{{ FEC_CMS_URL }}/calendar/?category=Open+Meetings">open meeting</a>.</p>
-  <a class="button button--standard button--browse" href="{{url_for('advisory_opinions')}}">Explore all advisory opinions</a>
-  <div class="content__section--ruled">
+  <div class="content__section">
+    <p>The Commission issues an advisory opinion when four or more Commissioners vote to approve it. These votes almost always occur during an <a href="{{ FEC_CMS_URL }}/calendar/?category=Open+Meetings">open meeting</a>.</p>
+    <a class="button button--standard button--browse" href="{{url_for('advisory_opinions')}}">Explore all advisory opinions</a>
+  </div>
+  <div class="post-feed">
     {% for post in recent_aos %}
     <article class="post">
       <h3><a href="{{ url_for('advisory_opinion_page', ao_no=post.number) }}">{{ post.title }}</a></h3>
