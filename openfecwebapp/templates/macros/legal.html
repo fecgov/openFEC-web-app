@@ -1,25 +1,37 @@
-{% macro filter(title, result_type, query) %}
-<div id="filters" class="filters is-open">
-  <button class="filters__header js-filter-toggle" type="button">
-    <span class="filters__title">{{ title }}</span>
-  </button>
-  <div class="filters__content">
-    <form id="category-filters" action="{{ url_for(result_type) }}">
-      <div class="filters__inner">
-        <div class="filter" id="search-field">
-          <label class="label" for="search-input">Search keywords</label>
-          <div class="combo combo--search--mini">
-            <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
-            <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
-            <button class="combo__button button--search button--standard" type="submit">
-              <span class="u-visually-hidden">Search</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
+{% macro keyword_search(result_type, query) %}
+<div class="filter">
+  <label class="label" for="search-input">Search keywords</label>
+  <div class="combo combo--search--mini">
+    <input id="search-input" type="text" name="search" class="combo__input"{% if query %} value="{{ query }}"{% endif %}>
+    <button class="combo__button button--search button--standard" type="submit">
+      <span class="u-visually-hidden">Search</span>
+    </button>
   </div>
 </div>
+{% endmacro %}
+
+{% macro text_filter(name, label, value) %}
+  <div class="filter">
+    <label class="label" for="{{name}}-filter">{{ label }}</label>
+    <input type="text" name="{{name}}" id="{{name}}-filter"{% if value%} value="{{ value }}"{% endif %}>
+  </div>
+{% endmacro %}
+
+{% macro date_filter(min_name, max_name, label, value) %}
+  <fieldset class="filter">
+    <legend class="label">{{ label }}</legend>
+    <div class="range range--date js-date-range">
+      <div class="range__input range__input--min" data-filter="range">
+        <label for="{{ min_name }}">Beginning</label>
+        <input type="text" id="{{ min_name }}" name="{{ min_name }}" class="js-date-mask">
+      </div>
+      <div class="range__hyphen">-</div>
+      <div class="range__input range__input--max" data-filter="range">
+        <label for="{{ max_name }}">Ending</label>
+        <input type="text" id="{{ max_name }}" name="{{ max_name }}"  class="js-date-mask">
+      </div>
+    </div>
+  </fieldset>
 {% endmacro %}
 
 {% macro search(location, result_type, query, button_color="button--standard", select_class="select--alt-primary") %}
