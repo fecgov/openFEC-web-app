@@ -1,5 +1,16 @@
 {% extends "layouts/legal-doc-search-results.html" %}
+{% import 'macros/legal.html' as legal %}
 {% set document_type_display_name = 'advisory opinions' %}
+
+{% block filters %}
+  {{ legal.text_filter('search', 'Keywords', query) }}
+  {{ legal.text_filter('ao_name', 'AO name')}}
+  {{ legal.text_filter('ao_no', 'AO number')}}
+  {{ legal.date_filter('ao_min_date', 'ao_max_date', 'Date issued')}}
+  <div class="filter">
+    <button class="button button--standard" type="submit">Search</button>
+  </div>
+{% endblock %}
 
 {% block results %}
 {% with advisory_opinions = results.advisory_opinions %}
