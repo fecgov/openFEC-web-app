@@ -50,6 +50,7 @@ def load_search_results(query, query_type='candidates'):
 
 
 def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
+                                ao_min_date=None, ao_max_date=None,
                                 offset=0, limit=20):
     filters = {}
     if query:
@@ -63,6 +64,12 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
 
         if ao_name and ao_name[0]:
             filters['ao_name'] = ao_name
+
+        if ao_min_date:
+            filters['ao_min_date'] = ao_min_date
+
+        if ao_max_date:
+            filters['ao_max_date'] = ao_max_date
 
     results = _call_api('legal', 'search', **filters)
     results['limit'] = limit

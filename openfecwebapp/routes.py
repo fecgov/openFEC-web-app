@@ -332,15 +332,12 @@ def spending_breakdown(top_category, cycle):
 @app.route('/legal/search/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
-    'result_type': fields.Str(load_from='search_type', missing='all'),
-    'ao_no': fields.List(fields.Str, required=False),
-    'ao_name': fields.List(fields.Str, required=False)
+    'result_type': fields.Str(load_from='search_type', missing='all')
 })
-def legal_search(query, result_type, ao_no):
+def legal_search(query, result_type):
     if result_type != 'all':
         # search_type is used for google analytics
-        return redirect(url_for(result_type, search=query, search_type=result_type,
-                    ao_no=ao_no, ao_name=ao_name))
+        return redirect(url_for(result_type, search=query, search_type=result_type))
 
     results = {}
 
@@ -350,13 +347,15 @@ def legal_search(query, result_type, ao_no):
 
     return views.render_legal_search_results(results, query, result_type)
 
-def legal_doc_search(query, result_type, ao_no, ao_name, **kwargs):
+def legal_doc_search(query, result_type, ao_no, ao_name, ao_min_date,
+                        ao_max_date, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
     # Only hit the API if there's an actual query
     if query:
-        results = api_caller.load_legal_search_results(query, result_type, ao_no, ao_name, **kwargs)
+        results = api_caller.load_legal_search_results(query, result_type,
+                    ao_no, ao_name, ao_min_date, ao_max_date, **kwargs)
 
     if ao_no:
         if ao_no[0]:
@@ -370,7 +369,18 @@ def legal_doc_search(query, result_type, ao_no, ao_name, **kwargs):
         else:
             ao_name = None
 
-    return views.render_legal_doc_search_results(results, query, result_type, ao_no, ao_name)
+    if not ao_min_date:
+        ao_min_date = '04/01/1975'
+    else:
+        ao_min_date = ao_min_date.strftime('%m/%d/%Y')
+
+    if not ao_max_date:
+        ao_max_date = datetime.date.today().strftime('%m/%d/%Y')
+    else:
+        ao_max_date = ao_max_date.strftime('%m/%d/%Y')
+
+    return views.render_legal_doc_search_results(results, query, result_type,
+                        ao_no, ao_name, ao_min_date, ao_max_date)
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
@@ -397,12 +407,15 @@ def statutes_landing():
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'offset': fields.Int(missing=0),
-    'ao_no': fields.List(fields.Str, required=False),
-    'ao_name': fields.List(fields.Str, required=False)
+    'ao_no': fields.List(fields.Str, missing=None),
+    'ao_name': fields.List(fields.Str, missing=None),
+    'ao_min_date': fields.Date(missing=None),
+    'ao_max_date': fields.Date(missing=None)
 })
-def advisory_opinions(query, offset, ao_no, ao_name):
+def advisory_opinions(query, offset, ao_no, ao_name, ao_min_date, ao_max_date):
     return legal_doc_search(query, 'advisory_opinions', offset=offset,
-                            ao_no=ao_no, ao_name=ao_name)
+                            ao_no=ao_no, ao_name=ao_name,
+                            ao_min_date=ao_min_date, ao_max_date=ao_max_date)
 
 @app.route('/legal/search/statutes/')
 @use_kwargs({
