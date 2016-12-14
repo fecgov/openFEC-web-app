@@ -333,11 +333,14 @@ def spending_breakdown(top_category, cycle):
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'result_type': fields.Str(load_from='search_type', missing='all'),
+    'ao_no': fields.List(fields.Str, required=False),
+    'ao_name': fields.List(fields.Str, required=False)
 })
-def legal_search(query, result_type):
+def legal_search(query, result_type, ao_no):
     if result_type != 'all':
         # search_type is used for google analytics
-        return redirect(url_for(result_type, search=query, search_type=result_type))
+        return redirect(url_for(result_type, search=query, search_type=result_type,
+                    ao_no=ao_no, ao_name=ao_name))
 
     results = {}
 
@@ -347,15 +350,27 @@ def legal_search(query, result_type):
 
     return views.render_legal_search_results(results, query, result_type)
 
-def legal_doc_search(query, result_type, **kwargs):
+def legal_doc_search(query, result_type, ao_no, ao_name, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
     # Only hit the API if there's an actual query
     if query:
-        results = api_caller.load_legal_search_results(query, result_type, **kwargs)
+        results = api_caller.load_legal_search_results(query, result_type, ao_no, ao_name, **kwargs)
 
-    return views.render_legal_doc_search_results(results, query, result_type)
+    if ao_no:
+        if ao_no[0]:
+            ao_no = ao_no[0]
+        else:
+            ao_no = None
+
+    if ao_name:
+        if ao_name[0]:
+            ao_name = ao_name[0]
+        else:
+            ao_name = None
+
+    return views.render_legal_doc_search_results(results, query, result_type, ao_no, ao_name)
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
@@ -382,9 +397,12 @@ def statutes_landing():
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'offset': fields.Int(missing=0),
+    'ao_no': fields.List(fields.Str, required=False),
+    'ao_name': fields.List(fields.Str, required=False)
 })
-def advisory_opinions(query, offset):
-    return legal_doc_search(query, 'advisory_opinions', offset=offset)
+def advisory_opinions(query, offset, ao_no, ao_name):
+    return legal_doc_search(query, 'advisory_opinions', offset=offset,
+                            ao_no=ao_no, ao_name=ao_name)
 
 @app.route('/legal/search/statutes/')
 @use_kwargs({
