@@ -347,8 +347,8 @@ def legal_search(query, result_type):
 
     return views.render_legal_search_results(results, query, result_type)
 
-def legal_doc_search(query, result_type, ao_no, ao_name, ao_min_date,
-                        ao_max_date, **kwargs):
+def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=None,
+                        ao_max_date=None, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
@@ -412,7 +412,7 @@ def statutes_landing():
     'ao_min_date': fields.Date(missing=None),
     'ao_max_date': fields.Date(missing=None)
 })
-def advisory_opinions(query, offset, ao_no, ao_name, ao_min_date, ao_max_date):
+def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None, ao_max_date=None):
     return legal_doc_search(query, 'advisory_opinions', offset=offset,
                             ao_no=ao_no, ao_name=ao_name,
                             ao_min_date=ao_min_date, ao_max_date=ao_max_date)
