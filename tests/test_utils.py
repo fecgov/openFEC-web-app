@@ -29,7 +29,7 @@ def test_fmt_chart_ticks_single_key():
         'coverage_end_date': datetime.datetime(2015, 1, 1).isoformat(),
     }
     keys = 'coverage_start_date'
-    assert filters.fmt_chart_ticks(group, keys) == '01/01/15'
+    assert filters.fmt_chart_ticks(group, keys) == '01/01/2015'
 
 
 def test_fmt_chart_ticks_two_keys():
@@ -38,7 +38,7 @@ def test_fmt_chart_ticks_two_keys():
         'coverage_end_date': datetime.datetime(2015, 2, 1).isoformat(),
     }
     keys = ('coverage_start_date', 'coverage_end_date')
-    assert filters.fmt_chart_ticks(group, keys) == '01/01/15 – 02/01/15'
+    assert filters.fmt_chart_ticks(group, keys) == '01/01/2015 – 02/01/2015'
 
 
 def test_fmt_chart_ticks_two_keys_repeated_value():
@@ -47,7 +47,7 @@ def test_fmt_chart_ticks_two_keys_repeated_value():
         'coverage_end_date': datetime.datetime(2015, 1, 15).isoformat(),
     }
     keys = ('coverage_start_date', 'coverage_end_date')
-    assert filters.fmt_chart_ticks(group, keys) == '01/01/15 – 01/15/15'
+    assert filters.fmt_chart_ticks(group, keys) == '01/01/2015 – 01/15/2015'
 
 
 def test_fmt_state_full():
