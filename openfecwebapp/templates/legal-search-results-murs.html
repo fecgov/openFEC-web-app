@@ -1,5 +1,10 @@
 {% extends "layouts/legal-doc-search-results.html" %}
+{% import 'macros/legal.html' as legal %}
 {% set document_type_display_name = 'Matters Under Review' %}
+
+{% block filters %}
+  {{ legal.keyword_search(result_type, query) }}
+{% endblock %}
 
 {% block results %}
 {% with murs = results.murs %}

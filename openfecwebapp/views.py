@@ -38,13 +38,17 @@ def render_legal_search_results(results, query, result_type):
     )
 
 
-def render_legal_doc_search_results(results, query, result_type):
+def render_legal_doc_search_results(results, query, result_type, ao_no, ao_name, ao_min_date, ao_max_date):
     return render_template(
         'legal-search-results-%s.html' % result_type,
         parent='legal',
         results=results,
         result_type=result_type,
         query=query,
+        ao_no=ao_no,
+        ao_name=ao_name,
+        ao_min_date=ao_min_date,
+        ao_max_date=ao_max_date
     )
 
 
