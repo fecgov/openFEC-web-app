@@ -359,10 +359,34 @@ def legal_doc_search(query, result_type, **kwargs):
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
+    mock_pending = [
+        {
+            'title': 'AO 2011-28: Western Representation PAC',
+            'number': '2011-28',
+            'summary': 'Including the cost of internet ads in independent expenditure reports.',
+            'deadline': 'January 1, 2017'
+        }
+    ]
+
+    mock_recent = [
+        {
+            'title': 'AO 2011-28: Western Representation PAC',
+            'number': '2011-28',
+            'summary': 'Including the cost of internet ads in independent expenditure reports.',
+            'doc': {
+                'title': 'Final opinion',
+                'size': '100kb',
+                'type': 'PDF',
+                'url': ''
+            }
+        }
+    ]
     return render_template('legal-advisory-opinions-landing.html',
         parent='legal',
         result_type='advisory_opinions',
-        display_name='advisory opinions')
+        display_name='advisory opinions',
+        pending_aos=mock_pending,
+        recent_aos=mock_recent)
 
 @app.route('/legal/enforcement/')
 def enforcement_landing():
