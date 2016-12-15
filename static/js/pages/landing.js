@@ -11,13 +11,8 @@ var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
 var analytics = require('fec-style/js/analytics');
 
-var raisingUrl = helpers.buildUrl(
-  ['totals', 'entity-receipts'],
-  { 'cycle': '2016', 'per_page': '100'}
-);
-
-var spendingUrl = helpers.buildUrl(
-  ['totals', 'entity-disbursements'],
+var entityTotalsURL = helpers.buildUrl(
+  ['totals', 'by_entity'],
   { 'cycle': '2016', 'per_page': '100'}
 );
 
@@ -41,38 +36,34 @@ Overview.prototype.zeroPadTotals = function() {
   helpers.zeroPad(this.selector + ' .js-snapshot', '.snapshot__item-number', '.figure__decimals');
 };
 
-$.getJSON(raisingUrl).done(function(data) {
-  var raisingData = [];
+$.getJSON(entityTotalsURL).done(function(data) {
+  var spent = [];
+  var raised = [];
+  var sortedRaised;
+  var sortedSpent;
 
-  _.each(_.groupBy(data.results, 'date'), function(dateGroup) {
-    _.each(dateGroup, function(object) {
-      object[object.type] = object.receipts;
-      delete object.cycle;
-      delete object.receipts;
-      delete object.type;
-    });
-    raisingData.push(_.extend.apply(null, dateGroup));
+  _.each(data.results, function(object) {
+    var raisedDatum = {
+      'date': object.date,
+      'candidate': object.cumulative_candidate_receipts,
+      'pac': object.cumulative_pac_receipts,
+      'party': object.cumulative_party_receipts
+    };
+    var spentDatum = {
+      'date': object.date,
+      'candidate': object.cumulative_candidate_disbursements,
+      'pac': object.cumulative_pac_disbursements,
+      'party': object.cumulative_party_disbursements
+    };
+
+    raised.push(raisedDatum);
+    spent.push(spentDatum);
   });
 
-  var sorted = _.sortBy(raisingData, 'date');
-  new Overview('.js-raised-overview', sorted, 1);
-});
-
-$.getJSON(spendingUrl).done(function(data) {
-  var spendingData = [];
-
-  _.each(_.groupBy(data.results, 'date'), function(dateGroup) {
-    _.each(dateGroup, function(object) {
-      object[object.type] = object.disbursements;
-      delete object.cycle;
-      delete object.disbursements;
-      delete object.type;
-    });
-    spendingData.push(_.extend.apply(null, dateGroup));
-  });
-
-  var sorted = _.sortBy(spendingData, 'date');
-  new Overview('.js-spent-overview', sorted, 2);
+  sortedRaised = _.sortBy(raised, 'date');
+  sortedSpent = _.sortBy(spent, 'date');
+  new Overview('.js-raised-overview', sortedRaised, 1);
+  new Overview('.js-spent-overview', sortedSpent, 2);
 });
 
 $('.js-reaction-box').each(function() {
