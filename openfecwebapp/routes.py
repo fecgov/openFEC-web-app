@@ -384,12 +384,7 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
-    recent_aos = []
-    return render_template('legal-advisory-opinions-landing.html',
-        parent='legal',
-        result_type='advisory_opinions',
-        display_name='advisory opinions',
-        recent_aos=recent_aos)
+    return views.render_legal_ao_landing()
 
 @app.route('/legal/enforcement/')
 def enforcement_landing():

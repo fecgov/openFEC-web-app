@@ -67,6 +67,17 @@ def render_legal_mur(mur):
         parent='legal'
     )
 
+def render_legal_ao_landing():
+    today = datetime.date.today()
+    ao_min_date = today - datetime.timedelta(weeks=20)
+    results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
+    recent_aos=results['advisory_opinions']
+    return render_template('legal-advisory-opinions-landing.html',
+        parent='legal',
+        result_type='advisory_opinions',
+        display_name='advisory opinions',
+        recent_aos=recent_aos)
+
 
 def to_date(committee, cycle):
     if committee['committee_type'] in ['H', 'S', 'P']:
