@@ -352,8 +352,8 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
     """Legal search for a specific document type."""
     results = {}
 
-    # Only hit the API if there's an actual query
-    if query:
+    # Only hit the API if there's an actual query or if the result_type is AOs
+    if query or result_type == 'advisory_opinions':
         results = api_caller.load_legal_search_results(query, result_type,
                     ao_no, ao_name, ao_min_date, ao_max_date, **kwargs)
 
@@ -384,34 +384,7 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
-    mock_pending = [
-        {
-            'title': 'AO 2011-28: Western Representation PAC',
-            'number': '2011-28',
-            'summary': 'Including the cost of internet ads in independent expenditure reports.',
-            'deadline': 'January 1, 2017'
-        }
-    ]
-
-    mock_recent = [
-        {
-            'title': 'AO 2011-28: Western Representation PAC',
-            'number': '2011-28',
-            'summary': 'Including the cost of internet ads in independent expenditure reports.',
-            'doc': {
-                'title': 'Final opinion',
-                'size': '100kb',
-                'type': 'PDF',
-                'url': ''
-            }
-        }
-    ]
-    return render_template('legal-advisory-opinions-landing.html',
-        parent='legal',
-        result_type='advisory_opinions',
-        display_name='advisory opinions',
-        pending_aos=mock_pending,
-        recent_aos=mock_recent)
+    return views.render_legal_ao_landing()
 
 @app.route('/legal/enforcement/')
 def enforcement_landing():
