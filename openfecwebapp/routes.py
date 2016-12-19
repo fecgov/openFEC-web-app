@@ -352,8 +352,8 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
     """Legal search for a specific document type."""
     results = {}
 
-    # Only hit the API if there's an actual query
-    if query:
+    # Only hit the API if there's an actual query or if the result_type is AOs
+    if query or result_type == 'advisory_opinions':
         results = api_caller.load_legal_search_results(query, result_type,
                     ao_no, ao_name, ao_min_date, ao_max_date, **kwargs)
 
