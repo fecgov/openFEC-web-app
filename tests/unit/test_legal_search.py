@@ -57,7 +57,7 @@ class TestLegalSearch(unittest.TestCase):
 
         assert response.status_code == 200
         load_legal_search_results.assert_called_once_with('in kind donation',
-            'regulations', offset=0)
+            'regulations', None, None, None, None, offset=0)
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_advisory_opinions(self, load_legal_search_results):
@@ -69,7 +69,7 @@ class TestLegalSearch(unittest.TestCase):
         assert response.status_code == 200
 
         load_legal_search_results.assert_called_once_with('in kind donation',
-            'advisory_opinions', offset=0)
+            'advisory_opinions', None, None, None, None, offset=0)
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_pagination(self, load_legal_search_results):
@@ -81,7 +81,7 @@ class TestLegalSearch(unittest.TestCase):
                     'offset': 20})
         assert response.status_code == 200
         load_legal_search_results.assert_called_once_with('in kind donation',
-         'regulations', offset=20)
+         'regulations', None, None, None, None, offset=20)
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_statutes(self, load_legal_search_results):
@@ -91,7 +91,8 @@ class TestLegalSearch(unittest.TestCase):
                     'search': 'in kind donation',
                     'search_type': 'statutes'})
         assert response.status_code == 200
-        load_legal_search_results.assert_called_once_with('in kind donation', 'statutes', offset=0)
+        load_legal_search_results.assert_called_once_with('in kind donation', 'statutes',
+            None, None, None, None, offset=0)
 
     @mock.patch.object(api_caller, '_call_api')
     def test_advisory_opinion_grouping(self, _call_api_mock):

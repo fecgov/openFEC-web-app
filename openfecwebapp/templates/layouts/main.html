@@ -80,16 +80,12 @@
         <li>
           <a href="{{ cms_url }}/contact-us/">Contact us</a>
         </li>
-        {% if features.press %}
         <li>
           <a href="{{ cms_url }}/press/">Press</a>
         </li>
-        {% endif %}
-        {% if features.latest_updates %}
           <li>
             <a href="{{ cms_url }}/updates/">Latest updates</a>
           </li>
-        {% endif %}
       </ul>
     </div>
   </div>
@@ -98,7 +94,7 @@
 <footer class="footer">
   <div class="container">
     <div class="seal">
-      <img class="seal__img" width="140" height="140" src="{{ url_for('static', filename='img/seal--white.svg') }}" alt="Seal of the Federal Election Commission | United States of America">
+      <img class="seal__img" width="140" height="140" src="{{ url_for('static', filename='img/seal--inverse.svg') }}" alt="Seal of the Federal Election Commission | United States of America">
       <p class="address__title">Federal Election Commission</p>
     </div>
 

@@ -45,10 +45,10 @@ var receiptDateColumn = {
     var parsed;
     if (meta.settings.oInit.path.indexOf('efile') >= 0) {
       parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
-      return parsed.isValid() ? parsed.format('MM-DD-YYYY, h:mma') : 'Invalid date';
+      return parsed.isValid() ? parsed.format('MM/DD/YYYY, h:mma') : 'Invalid date';
     } else {
       parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
-      return parsed.isValid() ? parsed.format('MM-DD-YYYY') : 'Invalid date';
+      return parsed.isValid() ? parsed.format('MM/DD/YYYY') : 'Invalid date';
     }
   }
 };
