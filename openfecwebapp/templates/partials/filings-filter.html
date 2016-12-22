@@ -16,7 +16,7 @@ Filter reports
 
 {% block efiling_filters %}
   <div class="filters__inner">
-    {{ typeahead.field('committee_id', 'Committee name or ID', '', filter_name='committee_id_efiling') }}
+    {{ typeahead.field('committee_id', 'Committee name or ID', '') }}
     {{ date.field('receipt_date', 'Receipt date', dates) }}
   </div>
 {% endblock %}
