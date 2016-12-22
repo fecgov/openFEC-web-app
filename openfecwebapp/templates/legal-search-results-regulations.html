@@ -1,5 +1,10 @@
 {% extends "layouts/legal-doc-search-results.html" %}
+{% import 'macros/legal.html' as legal %}
 {% set document_type_display_name = 'regulations' %}
+
+{% block filters %}
+  {{ legal.keyword_search(result_type, query) }}
+{% endblock %}
 
 {% block results %}
 {% with regulations = results.regulations %}
