@@ -11,6 +11,11 @@
   <div class="filters__content" id="category-filters" aria-hidden="true">
 {% endif %}
     {% block message %}{% endblock %}
-    {% block filters %}{% endblock %}
+    <div class="js-filters" data-filters-data="efiling" aria-hidden="true">
+      {% block efiling_filters %}{% endblock %}
+    </div>
+    <div class="js-filters" data-filters-data="processed">
+      {% block filters %}{% endblock %}
+    </div>
   </div>
 </div>

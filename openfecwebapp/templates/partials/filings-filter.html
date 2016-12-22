@@ -14,6 +14,13 @@ Filter reports
   {% include 'partials/filters/efiling.html' %}
 {% endblock %}
 
+{% block efiling_filters %}
+  <div class="filters__inner">
+    {{ typeahead.field('committee_id', 'Committee name or ID', '') }}
+    {{ date.field('receipt_date', 'Receipt date', dates ) }}
+  </div>
+{% endblock %}
+
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
   <button type="button" class="js-accordion-trigger accordion__button">Filer</button>

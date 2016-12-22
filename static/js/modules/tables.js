@@ -709,12 +709,7 @@ DataTable.prototype.handleSwitch = function(e, opts) {
   this.opts.hideColumns = opts.hideColumns;
   this.opts.disableExport = opts.disableExport;
   this.opts.path = opts.path;
-
-  if (opts.disableFilters) {
-    this.filterSet.disableFilters(opts.enabledFilters);
-  } else {
-    this.filterSet.enableFilters();
-  }
+  this.filterSet.switchFilters(opts.dataType);
 
   if (!this.api) {
     this.initTable();
