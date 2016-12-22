@@ -9,6 +9,7 @@ from flask.ext.cors import cross_origin
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
+from collections import OrderedDict
 
 import github3
 from werkzeug.utils import cached_property
@@ -66,6 +67,17 @@ def render_legal_mur(mur):
         mur=mur,
         parent='legal'
     )
+
+def render_legal_ao_landing():
+    today = datetime.date.today()
+    ao_min_date = today - datetime.timedelta(weeks=26)
+    results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
+    recent_aos=OrderedDict(sorted(results['advisory_opinions'].items(), key=lambda item: item, reverse=True))
+    return render_template('legal-advisory-opinions-landing.html',
+        parent='legal',
+        result_type='advisory_opinions',
+        display_name='advisory opinions',
+        recent_aos=recent_aos)
 
 
 def to_date(committee, cycle):
