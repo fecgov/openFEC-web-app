@@ -181,6 +181,7 @@ def filings():
         title='Filings',
         dates=utils.date_ranges(),
         result_type='committees',
+        has_data_type_toggle=True,
         columns=constants.table_columns['filings']
     )
 
@@ -237,6 +238,7 @@ def reports(form_type):
         title=title,
         table_context=context,
         dates=utils.date_ranges(),
+        has_data_type_toggle=True,
         columns=constants.table_columns['reports-' + form_type.lower()]
     )
 
