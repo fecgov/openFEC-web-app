@@ -241,7 +241,7 @@ describe('data table', function() {
     it('calls fetch on reload', function() {
       var serialized = {name: 'bartlet'};
       this.table.filterSet = {
-        activate: function() {},
+        activateAll: function() {},
         serialize: function() { return serialized; }
       };
       this.table.filters = null;
@@ -252,7 +252,7 @@ describe('data table', function() {
     it('does not call fetch on reload when state is unchanged', function() {
       var serialized = {name: 'bartlet'};
       this.table.filterSet = {
-        activate: function() {},
+        activateAll: function() {},
         serialize: function() { return serialized; }
       };
       this.table.filters = serialized;
