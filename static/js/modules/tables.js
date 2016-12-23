@@ -497,7 +497,7 @@ DataTable.prototype.destroy = function() {
 };
 
 DataTable.prototype.handlePopState = function() {
-  this.filterSet.activate();
+  this.filterSet.activateAll();
   var filters = this.filterSet.serialize();
   if (!_.isEqual(filters, this.filters)) {
     this.api.ajax.reload();
