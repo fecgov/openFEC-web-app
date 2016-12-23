@@ -4,6 +4,8 @@ var $ = require('jquery');
 
 /* TableSwitcher
  * For switching between efile and processed results
+ * All this does toggle the visibility of the appropriate message
+ * And trigger an event with a set of options that is then received by DataTable
  */
 
 function TableSwitcher(control, opts) {
