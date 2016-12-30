@@ -29,6 +29,14 @@ var amendmentIndicatorColumn = {
   },
 };
 
+var mostRecentColumn = {
+  data: 'most_recent',
+  className: 'hide-panel hide-efiling column--med min-desktop',
+  render: function(data) {
+    return decoders.most_recent[data] || '<div class="icon icon--inline--left i-clock-reverse"></div>Past version';
+  },
+};
+
 var modalTriggerColumn = {
   className: 'all column--trigger',
   orderable: false,
@@ -281,7 +289,7 @@ var filings = {
     }
   },
   pages: pagesColumn,
-  amendment_indicator: amendmentIndicatorColumn,
+  amendment_indicator: mostRecentColumn,
   receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
