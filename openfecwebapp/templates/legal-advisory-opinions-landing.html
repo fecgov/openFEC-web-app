@@ -9,7 +9,7 @@
     <p class="t-lead">
       Advisory opinions are official Commission responses to questions about how federal campaign finance law applies to specific, factual situations.
     </p>
-    <a class="button button--cta button--go" href="{{ FEC_CMS_URL }}/legal/advisory-opinions/process">The advisory opinion process</a>
+    <a class="button button--cta button--go" href="{{ cms_url }}/legal/advisory-opinions/process">The advisory opinion process</a>
   </div>
   <div class="u-no-print">
     <div class="slab slab--neutral slab--inline">
@@ -41,7 +41,7 @@
   </div>
   <div class="content__section">
     <p>Once the Office of the General Counsel has determined that an advisory opinion request meets all of the requirements to move forward for conisderation by the Commission, the request is made public and is available for public comment for ten days.</p>
-    <a class="button button--standard button--go" href="{{ FEC_CMS_URL }}/legal/advisory-opinions/process#commenting">Learn how to comment</a>
+    <a class="button button--standard button--go" href="{{ cms_url }}/legal/advisory-opinions/process#commenting">Learn how to comment</a>
   </div>
   <div class="post-feed">
     {% for post in pending_aos %}
@@ -58,7 +58,7 @@
     <h2>Recent advisory opinions issued</h2>
   </div>
   <div class="content__section">
-    <p>The Commission issues an advisory opinion when four or more Commissioners vote to approve it. These votes almost always occur during an <a href="{{ FEC_CMS_URL }}/calendar/?category=Open+Meetings">open meeting</a>.</p>
+    <p>The Commission issues an advisory opinion when four or more Commissioners vote to approve it. These votes almost always occur during an <a href="{{ cms_url }}/calendar/?category=Open+Meetings">open meeting</a>.</p>
     <a class="button button--standard button--browse" href="{{url_for('advisory_opinions')}}">Explore all advisory opinions</a>
   </div>
   <div class="post-feed">
