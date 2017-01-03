@@ -289,7 +289,7 @@ var filings = {
       var fec_url = row.fec_url ? row.fec_url : null;
 
       // because of messy data, do not show if not e-filing or null amendment indicator
-      if(row.means_filed !== "e-file" || row.amendment_indicator === null) {
+      if(row.means_filed !== 'e-file'|| row.amendment_indicator === null) {
         show_version = false;
       }
 
