@@ -281,11 +281,17 @@ var filings = {
     orderable: false,
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
+      var show_version = true;
       var is_original = false;
       var amendment_num = 1;
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
+
+      // because of messy data, do not show if not e-filing or null amendment indicator
+      if(row.means_filed !== "e-file" || row.amendment_indicator === null) {
+        show_version = false;
+      }
 
       if (row.amendment_indicator === 'N') {
         is_original = true;
@@ -297,6 +303,7 @@ var filings = {
 
       return reportType({
         doc_description: doc_description,
+        show_version: show_version,
         is_original: is_original,
         amendment_num: amendment_num,
         fec_url: fec_url,
