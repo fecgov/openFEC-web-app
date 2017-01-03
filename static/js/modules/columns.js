@@ -29,7 +29,7 @@ var amendmentIndicatorColumn = {
   },
 };
 
-var mostRecentColumn = {
+var versionColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
   render: function(data) {
@@ -281,12 +281,18 @@ var filings = {
     orderable: false,
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
+      var is_original = false;
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
 
+      if (row.is_amended === false) {
+        is_original = true;
+      }
+
       return reportType({
         doc_description: doc_description,
+        is_original: is_original,
         fec_url: fec_url,
         pdf_url: pdf_url,
         csv_url: csv_url
@@ -294,7 +300,7 @@ var filings = {
     }
   },
   pages: pagesColumn,
-  amendment_indicator: mostRecentColumn,
+  version: versionColumn,
   receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
