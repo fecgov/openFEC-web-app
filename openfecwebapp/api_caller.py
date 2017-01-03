@@ -313,11 +313,12 @@ def _get_sorted_participants_by_type(mur):
     for participant in mur['participants']:
         participants_by_type[participant['role']].append(participant['name'])
 
-    # Sort participants, remove roles without participants
+    # Remove roles without participants
+    for role in [key for key, value in participants_by_type.items() if not value]:
+        del participants_by_type[role]
+
+    # Sort remaining participants
     for key, value in participants_by_type.items():
-        if not value:
-            del participants_by_type[key]
-        else:
-            participants_by_type[key] = sorted(participants_by_type[key])
+        participants_by_type[key] = sorted(participants_by_type[key])
 
     return participants_by_type
