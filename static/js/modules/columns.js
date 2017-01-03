@@ -33,7 +33,12 @@ var mostRecentColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
   render: function(data) {
-    return decoders.most_recent[data] || '<div class="icon icon--inline--left i-clock-reverse"></div>Past version';
+    if (data === true) {
+      return '<div class="icon-circle--check-outline--inline--left"></div>Most recent version';
+    }
+    else {
+      return '<div class="icon-circle--clock-reverse--inline--left"></div>Past version';
+    }
   },
 };
 

@@ -183,7 +183,6 @@ var parties = {
 
 module.exports = {
   amendments: {A: 'Amendment', N: 'New'},
-  most_recent: {true: '<div class="icon icon--inline--left i-check-circle-outline"></div>Most recent version'},
   office: {P: 'President', S: 'Senate', H: 'House of Representatives'},
   supportOppose: {S: 'Support', O: 'Oppose'},
   means: {'e-file': 'Electronic filing', 'paper': 'Paper filing'},
