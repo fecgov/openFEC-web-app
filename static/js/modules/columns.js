@@ -282,17 +282,23 @@ var filings = {
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
       var is_original = false;
+      var amendment_num = 1;
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
 
-      if (row.is_amended === false) {
+      if (row.amendment_indicator === 'N') {
         is_original = true;
+      }
+
+      if (row.amendment_chain) {
+        amendment_num = row.amendment_chain.length;
       }
 
       return reportType({
         doc_description: doc_description,
         is_original: is_original,
+        amendment_num: amendment_num,
         fec_url: fec_url,
         pdf_url: pdf_url,
         csv_url: csv_url
