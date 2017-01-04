@@ -4,6 +4,7 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
+var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 
 var expenditureTemplate = require('../../templates/independent-expenditures.hbs');
 
@@ -23,4 +24,17 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(expenditureTemplate)
     }
   });
+
+  new TableSwitcher('.js-table-switcher', {
+    efiling: {
+      path: ['schedules', 'schedule_e', 'efile'],
+      dataType: 'efiling',
+      hideColumns: '.hide-efiling'
+    },
+    processed: {
+      path: ['schedules', 'schedule_e'],
+      dataType: 'processed',
+      hideColumns: '.hide-processed'
+    }
+  }).init();
 });

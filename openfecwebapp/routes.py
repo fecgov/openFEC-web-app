@@ -193,7 +193,8 @@ def independent_expenditures():
         slug='independent-expenditures',
         title='Independent expenditures',
         dates=utils.date_ranges(),
-        columns=constants.table_columns['independent-expenditures']
+        columns=constants.table_columns['independent-expenditures'],
+        has_data_type_toggle=True
     )
 
 @app.route('/electioneering-communications/')
