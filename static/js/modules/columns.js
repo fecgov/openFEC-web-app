@@ -29,6 +29,19 @@ var amendmentIndicatorColumn = {
   },
 };
 
+var versionColumn = {
+  data: 'most_recent',
+  className: 'hide-panel hide-efiling column--med min-desktop',
+  render: function(data) {
+    if (data === true) {
+      return '<i class="icon-circle--check-outline--inline--left"></i>Most recent version';
+    }
+    else {
+      return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
+    }
+  },
+};
+
 var modalTriggerColumn = {
   className: 'all column--trigger',
   orderable: false,
@@ -268,12 +281,31 @@ var filings = {
     orderable: false,
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
+      var show_version = true;
+      var is_original = false;
+      var amendment_num = 1;
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
 
+      // because of messy data, do not show if not e-filing or null amendment indicator
+      if(row.means_filed !== 'e-file'|| row.amendment_indicator === null) {
+        show_version = false;
+      }
+
+      if (row.amendment_indicator === 'N') {
+        is_original = true;
+      }
+
+      if (row.amendment_chain) {
+        amendment_num = row.amendment_chain.length - 1;
+      }
+
       return reportType({
         doc_description: doc_description,
+        show_version: show_version,
+        is_original: is_original,
+        amendment_num: amendment_num,
         fec_url: fec_url,
         pdf_url: pdf_url,
         csv_url: csv_url
@@ -281,7 +313,7 @@ var filings = {
     }
   },
   pages: pagesColumn,
-  amendment_indicator: amendmentIndicatorColumn,
+  version: versionColumn,
   receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
