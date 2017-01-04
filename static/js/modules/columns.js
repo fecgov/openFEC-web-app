@@ -34,10 +34,10 @@ var versionColumn = {
   className: 'hide-panel hide-efiling column--med min-desktop',
   render: function(data) {
     if (data === true) {
-      return '<div class="icon-circle--check-outline--inline--left"></div>Most recent version';
+      return '<i class="icon-circle--check-outline--inline--left"></i>Most recent version';
     }
     else {
-      return '<div class="icon-circle--clock-reverse--inline--left"></div>Past version';
+      return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
     }
   },
 };
@@ -298,7 +298,7 @@ var filings = {
       }
 
       if (row.amendment_chain) {
-        amendment_num = row.amendment_chain.length;
+        amendment_num = row.amendment_chain.length - 1;
       }
 
       return reportType({
