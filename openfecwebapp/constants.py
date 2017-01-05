@@ -243,7 +243,7 @@ pac_party_types = OrderedDict([
     ('P', 'Party - nonqualified'),
     ('Y', 'Party - qualified'),
     ('U', 'Single candidate independent expenditure'),
-    ('O', 'SuperPAC (independent expenditure-only')
+    ('O', 'Super PAC (independent expenditure only')
 ])
 
 house_senate_types = OrderedDict([
@@ -260,7 +260,7 @@ table_columns = OrderedDict([
     ('communication-costs', ['Committee', 'Support/Oppose', 'Candidate', 'Amount', 'Date']),
     ('disbursements', ['Spender', 'Recipient', 'State', 'Purpose', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
-    ('filings', ['Filer name', 'Document', 'Amendment indicator', 'Receipt date']),
+    ('filings', ['Filer name', 'Document', 'Version', 'Receipt date']),
     ('independent-expenditures', ['Spender', 'Support/Oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
     ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount']),

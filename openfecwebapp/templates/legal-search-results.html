@@ -25,7 +25,7 @@
         <nav class="sidebar sidebar--neutral side-nav js-sticky-side" data-sticky-container="main">
           <ul class="sidebar__content">
             {% for category in category_order %}
-                {% set category_title = "Enforcement matters" if category == "murs" else category.replace('_', ' ').capitalize() %}
+                {% set category_title = "Matters Under Review" if category == "murs" else category.replace('_', ' ').capitalize() %}
                 {% if features.legal_murs or category != 'murs' %}
                     <li class="side-nav__item">
                         <a class="side-nav__link" href="#results-{{ category|replace('_', '-') }}">
@@ -44,7 +44,7 @@
         <h1 class="main__title">Results for &ldquo;{{ query }}&rdquo;</h1>
         {% endif %}
         {% for category in category_order %}
-            {% set category_title = "Enforcement matters" if category == "murs" else category.replace('_', ' ').capitalize() %}
+            {% set category_title = "Matters Under Review" if category == "murs" else category.replace('_', ' ').capitalize() %}
             {% if features.legal_murs or category != 'murs' %}
             <div id="results-{{ category|replace('_', '-') }}" class="content__section">
                 <div class="results-info results-info--simple">
@@ -93,6 +93,7 @@
                 {% else %}
                     {% if results["total_" + category] %}
                         {% with murs = results[category] %}
+                        <div class="message message--info"><p>Results don't include most of the cases closed between 1975 and 1998. Search those cases on <a href="http://www.fec.gov/MUR/">FEC.gov.</a></p></div>
                         {% include 'partials/legal-search-results-mur.html' %}
                         {% endwith %}
                         <div class="results-info">

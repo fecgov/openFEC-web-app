@@ -53,7 +53,7 @@ def _unique(values):
 
 def _fmt_chart_tick(value):
     try:
-        return parse_date(value).strftime('%m/%d/%y')
+        return parse_date(value).strftime('%m/%d/%Y')
     except (AttributeError, ValueError):
         return '?'
 

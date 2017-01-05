@@ -14,7 +14,7 @@ var dropdown = require('fec-style/js/dropdowns');
 var columns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'document_type', 'amendment_indicator', 'receipt_date', 'modal_trigger'
+    'filer_name', 'document_type', 'version', 'receipt_date', 'modal_trigger'
   ]
 );
 
@@ -44,12 +44,12 @@ $(document).ready(function() {
   new TableSwitcher('.js-table-switcher', {
     efiling: {
       path: ['efile', 'filings'],
-      disableFilters: true,
-      enabledFilters: ['committee_id', 'data_type', 'receipt_date'],
+      dataType: 'efiling',
       hideColumns: '.hide-efiling'
     },
     processed: {
       path: ['filings'],
+      dataType: 'processed',
       hideColumns: '.hide-processed'
     }
   }).init();

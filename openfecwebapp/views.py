@@ -9,6 +9,7 @@ from flask.ext.cors import cross_origin
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
+from collections import OrderedDict
 
 import github3
 from werkzeug.utils import cached_property
@@ -20,6 +21,7 @@ from openfecwebapp import api_caller
 def render_search_results(results, query, result_type):
     return render_template(
         'search-results.html',
+        parent='data',
         results=results,
         result_type=result_type,
         query=query,
@@ -29,6 +31,7 @@ def render_search_results(results, query, result_type):
 def render_legal_search_results(results, query, result_type):
     return render_template(
         'legal-search-results.html',
+        parent='legal',
         query=query,
         results=results,
         result_type=result_type,
@@ -36,12 +39,17 @@ def render_legal_search_results(results, query, result_type):
     )
 
 
-def render_legal_doc_search_results(results, query, result_type):
+def render_legal_doc_search_results(results, query, result_type, ao_no, ao_name, ao_min_date, ao_max_date):
     return render_template(
         'legal-search-results-%s.html' % result_type,
+        parent='legal',
         results=results,
         result_type=result_type,
         query=query,
+        ao_no=ao_no,
+        ao_name=ao_name,
+        ao_min_date=ao_min_date,
+        ao_max_date=ao_max_date
     )
 
 
@@ -49,6 +57,7 @@ def render_legal_advisory_opinion(advisory_opinion):
     return render_template(
         'legal-advisory-opinion.html',
         advisory_opinion=advisory_opinion,
+        parent='legal'
     )
 
 
@@ -56,7 +65,19 @@ def render_legal_mur(mur):
     return render_template(
         'legal-%s-mur.html' % mur['mur_type'],
         mur=mur,
+        parent='legal'
     )
+
+def render_legal_ao_landing():
+    today = datetime.date.today()
+    ao_min_date = today - datetime.timedelta(weeks=26)
+    results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
+    recent_aos=OrderedDict(sorted(results['advisory_opinions'].items(), key=lambda item: item, reverse=True))
+    return render_template('legal-advisory-opinions-landing.html',
+        parent='legal',
+        result_type='advisory_opinions',
+        display_name='advisory opinions',
+        recent_aos=recent_aos)
 
 
 def to_date(committee, cycle):
@@ -69,6 +90,7 @@ def render_committee(committee, candidates, cycle):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
+    tmpl_vars['parent'] = 'data'
     tmpl_vars['cycle'] = cycle
     tmpl_vars['year'] = to_date(committee, cycle)
     tmpl_vars['result_type'] = 'committees'
@@ -124,6 +146,7 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
+    tmpl_vars['parent'] = 'data'
     tmpl_vars['cycle'] = cycle
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)

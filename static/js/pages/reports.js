@@ -32,7 +32,7 @@ if (context.form_type === 'presidential') {
   pageTemplate = pacPartyTemplate;
   columnKeys.push('receipts', 'disbursements', 'independentExpenditures', 'trigger');
 } else if (context.form_type === 'ie-only') {
-  pageTitle = 'Independent expenditure-only committee reports';
+  pageTitle = 'Independent expenditure only committee reports';
   pageTemplate = ieOnlyTemplate;
   columnKeys.push('contributions', 'independentExpenditures', 'trigger');
 }
@@ -67,11 +67,11 @@ $(document).ready(function() {
 
   new TableSwitcher('.js-table-switcher', {
     efiling: {
-      path: ['efile', 'reports', context.form_type],
-      disableFilters: true,
-      enabledFilters: ['committee_id', 'data_type', 'receipt_date']
+      dataType: 'efiling',
+      path: ['efile', 'reports', context.form_type]
     },
     processed: {
+      dataType: 'processed',
       path: ['reports', context.form_type]
     }
   }).init();

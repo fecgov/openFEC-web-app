@@ -49,13 +49,29 @@ def load_search_results(query, query_type='candidates'):
     return results['results'] if len(results) else []
 
 
-def load_legal_search_results(query, query_type='all', offset=0, limit=20):
+def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
+                                ao_min_date=None, ao_max_date=None,
+                                offset=0, limit=20):
     filters = {}
-    if query:
-        filters['q'] = query
+    if query or query_type == 'advisory_opinions':
         filters['hits_returned'] = limit
         filters['type'] = query_type
         filters['from_hit'] = offset
+
+        if query:
+            filters['q'] = query
+
+        if ao_no and ao_no[0]:
+            filters['ao_no'] = ao_no
+
+        if ao_name and ao_name[0]:
+            filters['ao_name'] = ao_name
+
+        if ao_min_date:
+            filters['ao_min_date'] = ao_min_date
+
+        if ao_max_date:
+            filters['ao_max_date'] = ao_max_date
 
     results = _call_api('legal', 'search', **filters)
     results['limit'] = limit
@@ -155,9 +171,11 @@ def load_legal_mur(mur_no):
 
         disposition_data = OrderedDict()
         for row in mur['disposition']['data']:
-            if row['disposition'] in disposition_data\
-                    and row['penalty'] in disposition_data[row['disposition']]:
-                disposition_data[row['disposition']][row['penalty']].append(row)
+            if row['disposition'] in disposition_data:
+                if row['penalty'] in disposition_data[row['disposition']]:
+                    disposition_data[row['disposition']][row['penalty']].append(row)
+                else:
+                    disposition_data[row['disposition']][row['penalty']] = [row]
             else:
                 disposition_data[row['disposition']] = OrderedDict({row['penalty']: [row]})
 
@@ -295,11 +313,12 @@ def _get_sorted_participants_by_type(mur):
     for participant in mur['participants']:
         participants_by_type[participant['role']].append(participant['name'])
 
-    # Sort participants, remove roles without participants
+    # Remove roles without participants
+    for role in [key for key, value in participants_by_type.items() if not value]:
+        del participants_by_type[role]
+
+    # Sort remaining participants
     for key, value in participants_by_type.items():
-        if not value:
-            del participants_by_type[key]
-        else:
-            participants_by_type[key] = sorted(participants_by_type[key])
+        participants_by_type[key] = sorted(participants_by_type[key])
 
     return participants_by_type

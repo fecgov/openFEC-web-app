@@ -24,6 +24,7 @@ var typeahead = require('fec-style/js/typeahead');
 var analytics = require('fec-style/js/analytics');
 var stickyBar = require('fec-style/js/sticky-bar');
 var toc = require('fec-style/js/toc');
+var Search = require('fec-style/js/search');
 
 // @if SENTRY_PUBLIC_DSN
 require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
@@ -33,7 +34,6 @@ require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
 require('./vendor/tablist').init();
 
 var charts = require('./modules/charts');
-var Search = require('./modules/search');
 var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
 var download = require('./modules/download');

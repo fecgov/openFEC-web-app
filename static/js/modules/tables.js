@@ -250,7 +250,8 @@ function filterSuccessUpdates(changeCount) {
   // check if there is a changed form element
   if (updateChangedEl) {
     var $label;
-    var type = $(updateChangedEl).attr('type');
+    var $elm = $(updateChangedEl);
+    var type = $elm.attr('type');
     var message = '';
     var filterAction = '';
     var filterResult = '';
@@ -264,33 +265,32 @@ function filterSuccessUpdates(changeCount) {
 
       filterAction = 'Filter added';
 
-      if (!$(updateChangedEl).is(':checked')) {
+      if (!$elm.is(':checked')) {
         filterAction = 'Filter removed';
       }
     } else if (type === 'radio') {
       // Add the message after the last radio button / toggle
       $label = $('label[for="' + updateChangedEl.id + '"]').closest('fieldset');
-      filterAction = 'Filter applied.';
+      filterAction = $elm.attr('name') == 'data_type' ?
+        'Data type changed.' : 'Filter applied.';
 
-      if (!$(updateChangedEl).is(':checked')) {
+      if (!$elm.is(':checked')) {
         filterAction = 'Filter removed.';
       }
     }
     else if (type === 'text') {
       // typeahead
-      if ($(updateChangedEl).hasClass('tt-input')) {
+      if ($elm.hasClass('tt-input')) {
         // show message after generated checkbox (last item in list)
         $label = $('[data-filter="typeahead"] li').last();
         filterAction = 'Filter added';
       }
-      else if ($(updateChangedEl).closest('.range').hasClass('range--currency')) {
-        $label = $(updateChangedEl).closest('.range');
-
+      else if ($elm.closest('.range').hasClass('range--currency')) {
+        $label = $elm.closest('.range');
         filterAction = 'Filter applied';
       }
-      else if ($(updateChangedEl).closest('.range').hasClass('range--date')) {
+      else if ($elm.closest('.range').hasClass('range--date')) {
         $label = $('.date-range-grid');
-
         filterAction = 'Filter applied';
       }
       // text input search
@@ -301,8 +301,8 @@ function filterSuccessUpdates(changeCount) {
     }
     else {
       // probably a select dropdown
-      $label = $(updateChangedEl);
-      filterAction = '"' + $(updateChangedEl).find('option:selected').text() + '" applied.';
+      $label = $elm;
+      filterAction = '"' + $elm.find('option:selected').text() + '" applied.';
     }
 
     $('.is-loading').removeClass('is-loading').addClass('is-successful');
@@ -497,7 +497,7 @@ DataTable.prototype.destroy = function() {
 };
 
 DataTable.prototype.handlePopState = function() {
-  this.filterSet.activate();
+  this.filterSet.activateAll();
   var filters = this.filterSet.serialize();
   if (!_.isEqual(filters, this.filters)) {
     this.api.ajax.reload();
@@ -709,12 +709,7 @@ DataTable.prototype.handleSwitch = function(e, opts) {
   this.opts.hideColumns = opts.hideColumns;
   this.opts.disableExport = opts.disableExport;
   this.opts.path = opts.path;
-
-  if (opts.disableFilters) {
-    this.filterSet.disableFilters(opts.enabledFilters);
-  } else {
-    this.filterSet.enableFilters();
-  }
+  this.filterSet.switchFilters(opts.dataType);
 
   if (!this.api) {
     this.initTable();
