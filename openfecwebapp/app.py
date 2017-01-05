@@ -183,9 +183,6 @@ if config.environment in ['stage', 'prod']:
 #     )
 #     app.wsgi_app = hmacauth.HmacMiddleware(app.wsgi_app, auth)
 
-app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
-app.wsgi_app = ProxyFix(app.wsgi_app)
-
 def initialize_newrelic():
     license_key = env.get_credential('NEW_RELIC_LICENSE_KEY')
     if license_key:
@@ -198,3 +195,6 @@ initialize_newrelic()
 
 if config.sentry_dsn:
     Sentry(app, dsn=config.sentry_dsn)
+
+app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
+app.wsgi_app = ProxyFix(app.wsgi_app)
