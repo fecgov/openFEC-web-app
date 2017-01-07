@@ -11,6 +11,18 @@
 Filter independent expenditures
 {% endblock %}
 
+{% block data_type_toggle %}
+  {% include 'partials/filters/efiling.html' %}
+{% endblock %}
+
+{% block efiling_filters %}
+  <div class="filters__inner">
+    {{ typeahead.field('committee_id', 'Committee name or ID', '') }}
+    {{ text.field('candidate_name', 'Candidate')}}
+    {{ date.field('expenditure_date', 'Expenditure date', dates) }}
+  </div>
+{% endblock %}
+
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
