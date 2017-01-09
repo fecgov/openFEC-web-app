@@ -17,9 +17,9 @@
   </div>
 {% endmacro %}
 
-{% macro checkbox_filter(name) %}
+{% macro checkbox_filter(name, value) %}
 <div class="filter">
-  <input type="checkbox" id="{{ name }}" name="{{ name }}" value="true">
+  <input type="checkbox" id="{{ name }}" name="{{ name }}" value="true" {% if value %} checked="true" {% endif %}>
   <label for="{{ name }}">Is Pending</label>
 </div>
 {% endmacro %}
