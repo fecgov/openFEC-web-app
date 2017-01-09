@@ -28,6 +28,15 @@
     {'value': 15, 'text': 'Individual'},
     {'value': 16, 'text': 'Other'}],
   ao_requestor_type) }}
+  {{ legal.checkbox_list('ao_category', 'Document Type',
+  [{'value' : 'F', 'text': 'Final Opinion'},
+   {'value' : 'V', 'text': 'Votes'},
+   {'value' : 'D', 'text': 'Draft Documents'},
+   {'value' : 'R', 'text': 'AO Request, Supplemental Material, and Extensions of Time'},
+   {'value' : 'W', 'text': 'Withdrawal of Request'},
+   {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
+   {'value' : 'S', 'text': 'Commissioner Statements'}],
+      ao_category) }}
   <div class="filter">
     <button class="button button--standard" type="submit" id="search-advisory-opinions">Search</button>
   </div>
