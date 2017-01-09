@@ -7,6 +7,7 @@
   {{ legal.text_filter('ao_name', 'AO name', ao_name)}}
   {{ legal.text_filter('ao_no', 'AO number', ao_no)}}
   {{ legal.date_filter('ao_min_date', 'ao_max_date', 'Issued date', ao_min_date, ao_max_date)}}
+  {{ legal.checkbox_filter('ao_is_pending')}}
   <div class="filter">
     <button class="button button--standard" type="submit" id="search-advisory-opinions">Search</button>
   </div>

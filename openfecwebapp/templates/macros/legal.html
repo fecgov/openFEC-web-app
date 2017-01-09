@@ -17,6 +17,13 @@
   </div>
 {% endmacro %}
 
+{% macro checkbox_filter(name) %}
+<div class="filter">
+  <input type="checkbox" id="{{ name }}" name="{{ name }}" value="true">
+  <label for="{{ name }}">Is Pending</label>
+</div>
+{% endmacro %}
+
 {% macro date_filter(min_name, max_name, label, min_value, max_value) %}
   <fieldset class="filter">
     <legend class="label">{{ label }}</legend>
