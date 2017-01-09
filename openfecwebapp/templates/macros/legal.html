@@ -17,10 +17,21 @@
   </div>
 {% endmacro %}
 
-{% macro checkbox_filter(name, value) %}
+{% macro checkbox_filter(name, label, value) %}
 <div class="filter">
   <input type="checkbox" id="{{ name }}" name="{{ name }}" value="true" {% if value %} checked="true" {% endif %}>
-  <label for="{{ name }}">Is Pending</label>
+  <label for="{{ name }}">{{ label }}</label>
+</div>
+{% endmacro %}
+
+{% macro dropdown(name, label, options, value) %}
+<div class="filter">
+<label for="{{ name }}">{{ label }}</label>
+<select id={{ name }} name="{{ name }}">
+  {% for option in options %}
+  <option value={{ option['value'] }} {% if option['value'] == value %} selected="true" {% endif %}>{{ option['text'] }}</option>
+  {% endfor %}
+</select>
 </div>
 {% endmacro %}
 

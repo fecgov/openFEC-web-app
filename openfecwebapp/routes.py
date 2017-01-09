@@ -350,7 +350,8 @@ def legal_search(query, result_type):
     return views.render_legal_search_results(results, query, result_type)
 
 def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=None,
-                        ao_max_date=None, ao_is_pending=None, ao_requestor=None, **kwargs):
+                        ao_max_date=None, ao_is_pending=None, ao_requestor=None,
+                        ao_requestor_type=None, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
@@ -358,7 +359,7 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
     if query or result_type == 'advisory_opinions':
         results = api_caller.load_legal_search_results(query, result_type,
                     ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
-                    ao_requestor, **kwargs)
+                    ao_requestor, ao_requestor_type, **kwargs)
 
     if ao_no:
         if ao_no[0]:
@@ -384,7 +385,7 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
 
     return views.render_legal_doc_search_results(results, query, result_type,
                         ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
-                        ao_requestor)
+                        ao_requestor, ao_requestor_type)
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
@@ -413,15 +414,17 @@ def statutes_landing():
     'ao_min_date': fields.Date(missing=None),
     'ao_max_date': fields.Date(missing=None),
     'ao_is_pending': fields.Bool(missing=None),
-    'ao_requestor': fields.Str(missing=None)
+    'ao_requestor': fields.Str(missing=None),
+    'ao_requestor_type': fields.Int(missing=0)
 })
 def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None, ao_max_date=None,
-                        ao_is_pending=None, ao_requestor=None):
+                        ao_is_pending=None, ao_requestor=None, ao_requestor_type=None):
     return legal_doc_search(query, 'advisory_opinions', offset=offset,
                             ao_no=ao_no, ao_name=ao_name,
                             ao_min_date=ao_min_date, ao_max_date=ao_max_date,
                             ao_is_pending=ao_is_pending,
-                            ao_requestor=ao_requestor)
+                            ao_requestor=ao_requestor,
+                            ao_requestor_type=ao_requestor_type)
 
 @app.route('/legal/search/statutes/')
 @use_kwargs({
