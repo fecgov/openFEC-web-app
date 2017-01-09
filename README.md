@@ -97,6 +97,11 @@ To be able to have links between this app and a local installation of [fec-cms](
 
     export FEC_CMS_URL=http://localhost:8000
 
+### Developing with openFEC, the API (optional)
+To be able to have links between this app and a local installation of [openFEC](https://github.com/18F/openFEC):
+
+    export FEC_API_URL=http://localhost:5000
+
 ### Features
 
 [config.py](https://github.com/18F/openFEC-web-app/blob/develop/openfecwebapp/config.py)
