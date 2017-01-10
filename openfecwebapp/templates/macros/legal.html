@@ -39,7 +39,7 @@
 
 {% macro dropdown(name, label, options, value) %}
 <div class="filter">
-<label for="{{ name }}">{{ label }}</label>
+<label for="{{ name }}" class="label">{{ label }}</label>
 <select id={{ name }} name="{{ name }}">
   {% for option in options %}
   <option value={{ option['value'] }} {% if option['value'] == value %} selected="true" {% endif %}>{{ option['text'] }}</option>

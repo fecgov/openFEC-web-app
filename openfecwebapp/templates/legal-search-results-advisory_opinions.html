@@ -7,6 +7,15 @@
   {{ legal.text_filter('ao_name', 'AO name', ao_name)}}
   {{ legal.text_filter('ao_no', 'AO number', ao_no)}}
   {{ legal.date_filter('ao_min_date', 'ao_max_date', 'Issued date', ao_min_date, ao_max_date)}}
+  {{ legal.checkbox_list('ao_category', 'Document Type',
+  [{'value' : 'F', 'text': 'Final Opinion'},
+   {'value' : 'V', 'text': 'Votes'},
+   {'value' : 'D', 'text': 'Draft Documents'},
+   {'value' : 'R', 'text': 'AO Request, Supplemental Material, and Extensions of Time'},
+   {'value' : 'W', 'text': 'Withdrawal of Request'},
+   {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
+   {'value' : 'S', 'text': 'Commissioner Statements'}],
+      ao_category) }}
   {{ legal.checkbox_filter('ao_is_pending', 'Show only pending requests', ao_is_pending)}}
   {{ legal.text_filter('ao_requestor', 'Requestor Name', ao_requestor) }}
   {{ legal.dropdown('ao_requestor_type', 'Requestor Type',
@@ -28,15 +37,6 @@
     {'value': 15, 'text': 'Individual'},
     {'value': 16, 'text': 'Other'}],
   ao_requestor_type) }}
-  {{ legal.checkbox_list('ao_category', 'Document Type',
-  [{'value' : 'F', 'text': 'Final Opinion'},
-   {'value' : 'V', 'text': 'Votes'},
-   {'value' : 'D', 'text': 'Draft Documents'},
-   {'value' : 'R', 'text': 'AO Request, Supplemental Material, and Extensions of Time'},
-   {'value' : 'W', 'text': 'Withdrawal of Request'},
-   {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
-   {'value' : 'S', 'text': 'Commissioner Statements'}],
-      ao_category) }}
   <div class="filter">
     <button class="button button--standard" type="submit" id="search-advisory-opinions">Search</button>
   </div>
