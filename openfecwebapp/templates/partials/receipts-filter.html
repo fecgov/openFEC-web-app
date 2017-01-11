@@ -16,20 +16,14 @@ Filter receipts
 {% endblock %}
 
 {% block efiling_filters %}
-<div class="js-accordion accordion--neutral" data-content-prefix="raw-filter" data-open-first="true">
-  <button type="button" class="js-accordion-trigger accordion__button">Recipient information</button>
-  <div class="accordion__content">
-    {{ typeahead.field('committee_id', 'Committee name or ID') }}
-  </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Contributor information</button>
-  <div class="accordion__content">
-    {{ text.field('contributor_name', 'Contributor name') }}
-    {{ text.field('contributor_city', 'City') }}
-    {{ states.field('contributor_state') }}
-    {{ text.field('contributor_employer', 'Employer') }}
-    {{ text.field('contributor_occupation', 'Occupation') }}
-    {{ date.field('date', 'Expenditure date', dates) }}
-  </div>
+<div class="filters__inner">
+  {{ typeahead.field('committee_id', 'Committee name or ID') }}
+  {{ text.field('contributor_name', 'Contributor name') }}
+  {{ text.field('contributor_city', 'Contributor city') }}
+  {{ states.field('contributor_state') }}
+  {{ text.field('contributor_employer', 'Contributor employer') }}
+  {{ text.field('contributor_occupation', 'Contributor occupation') }}
+  {{ date.field('date', 'Receipt date', dates) }}
 </div>
 {% endblock %}
 
