@@ -1,5 +1,5 @@
 {% macro type(id_suffix) %}
-<fieldset class="filter toggles toggles--vertical js-filter" data-filter="toggle">
+<fieldset class="filter toggles toggles--vertical js-filter" data-filter="toggle" data-remove-on-switch="true" id="is_notice-toggle{{id_suffix}}">
   <legend class="label t-inline-block u-float-left">Report type</legend>
   <div class="tooltip__container">
     <button class="tooltip__trigger" type="button" aria-controls="data-type-tooltip"><span class="u-visually-hidden">Learn more</span></button>
