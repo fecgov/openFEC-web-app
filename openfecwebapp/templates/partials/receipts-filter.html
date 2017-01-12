@@ -17,12 +17,12 @@ Filter receipts
 
 {% block efiling_filters %}
 <div class="filters__inner">
-  {{ typeahead.field('committee_id', 'Committee name or ID') }}
-  {{ text.field('contributor_name', 'Contributor name') }}
-  {{ text.field('contributor_city', 'Contributor city') }}
-  {{ states.field('contributor_state') }}
-  {{ text.field('contributor_employer', 'Contributor employer') }}
-  {{ text.field('contributor_occupation', 'Contributor occupation') }}
+  {{ typeahead.field('committee_id', 'Committee name or ID', id_suffix='_raw') }}
+  {{ text.field('contributor_name', 'Contributor name', id_suffix='_raw') }}
+  {{ text.field('contributor_city', 'Contributor city', id_suffix='_raw') }}
+  {{ states.field('contributor_state', id_suffix='_raw') }}
+  {{ text.field('contributor_employer', 'Contributor employer', id_suffix='_raw') }}
+  {{ text.field('contributor_occupation', 'Contributor occupation', id_suffix='_raw') }}
 </div>
 {% endblock %}
 
