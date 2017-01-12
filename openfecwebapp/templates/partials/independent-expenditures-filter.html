@@ -6,7 +6,8 @@
 {% import 'macros/filters/years.html' as years %}
 {% import 'macros/filters/date.html' as date %}
 {% import 'macros/filters/range.html' as range %}
-
+{% import 'macros/filters/ie-reports.html' as reports %}
+{% import 'macros/filters/misc.html' as misc %}
 {% block heading %}
 Filter independent expenditures
 {% endblock %}
@@ -17,12 +18,11 @@ Filter independent expenditures
 
 {% block efiling_filters %}
 <div class="filters__inner">
-  {{ typeahead.field('committee_id', 'Spender name or ID', '') }}
-  {% include 'partials/filters/ie-report-type.html' %}
-  {% include 'partials/filters/ie-form-type.html' %}
-  {{ text.field('candidate', 'Candidate mentioned')}}
-  {% include 'partials/filters/support-oppose.html' %}
-  {{ date.field('expenditure_date', 'Expenditure date', dates) }}
+  {{ typeahead.field('committee_id', 'Spender name or ID', id_suffix='_raw') }}
+  {{ reports.form('_raw')}}
+  {{ text.field('candidate', 'Candidate mentioned', id_suffix='_raw')}}
+  {{ misc.support_oppose('_raw') }}
+  {{ date.field('expenditure_date', 'Expenditure date', dates, id_suffix='_raw') }}
 </div>
 {% endblock %}
 
@@ -31,13 +31,13 @@ Filter independent expenditures
   <div class="filters__inner">
     {{ typeahead.field('committee_id', 'Spender name or ID') }}
     {{ years.years('cycle', 'Years') }}
-    {% include 'partials/filters/ie-report-type.html' %}
-    {% include 'partials/filters/ie-form-type.html' %}
+    {{ reports.type('processed')}}
+    {{ reports.form('processed')}}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Candidate mentioned</button>
   <div class="accordion__content">
     {{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
-    {% include 'partials/filters/support-oppose.html' %}
+    {{ misc.support_oppose('raw') }}
   </div>
 
   <button type="button" class="js-accordion-trigger accordion__button">Transaction information</button>
