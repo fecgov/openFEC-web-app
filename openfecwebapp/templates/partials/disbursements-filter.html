@@ -19,6 +19,7 @@ Filter disbursements
   {{ typeahead.field('committee_id', 'Committee name or ID', id_suffix='_raw') }}
   {{ text.field('recipient_name', 'Recipient name', id_suffix='_raw') }}
   {{ text.field('disbursement_description', 'Description', id_suffix='_raw') }}
+  {{ date.field('date', 'Disbursement date', dates, id_suffix='_raw') }}
 </div>
 {% endblock %}
 

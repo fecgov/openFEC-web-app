@@ -23,6 +23,7 @@ Filter receipts
   {{ states.field('contributor_state', id_suffix='_raw') }}
   {{ text.field('contributor_employer', 'Contributor employer', id_suffix='_raw') }}
   {{ text.field('contributor_occupation', 'Contributor occupation', id_suffix='_raw') }}
+  {{ date.field('date', 'Receipt date', dates, id_suffix='_raw') }}
 </div>
 {% endblock %}
 
