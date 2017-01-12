@@ -31,8 +31,8 @@ Filter independent expenditures
   <div class="filters__inner">
     {{ typeahead.field('committee_id', 'Spender name or ID') }}
     {{ years.years('cycle', 'Years') }}
-    {{ reports.type('processed')}}
-    {{ reports.form('processed')}}
+    {{ reports.type()}}
+    {{ reports.form()}}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Candidate mentioned</button>
   <div class="accordion__content">
