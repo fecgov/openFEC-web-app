@@ -3,10 +3,40 @@
 {% set document_type_display_name = 'advisory opinions' %}
 
 {% block filters %}
-  {{ legal.text_filter('search', 'Search keywords', query) }}
+  {{ legal.text_filter('search', 'Keywords', query) }}
   {{ legal.text_filter('ao_name', 'AO name', ao_name)}}
   {{ legal.text_filter('ao_no', 'AO number', ao_no)}}
   {{ legal.date_filter('ao_min_date', 'ao_max_date', 'Issued date', ao_min_date, ao_max_date)}}
+  {{ legal.checkbox_list('ao_category', 'Document Type',
+  [{'value' : 'F', 'text': 'Final Opinion'},
+   {'value' : 'V', 'text': 'Votes'},
+   {'value' : 'D', 'text': 'Draft Documents'},
+   {'value' : 'R', 'text': 'AO Request, Supplemental Material, and Extensions of Time'},
+   {'value' : 'W', 'text': 'Withdrawal of Request'},
+   {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
+   {'value' : 'S', 'text': 'Commissioner Statements'}],
+      ao_category) }}
+  {{ legal.checkbox_filter('ao_is_pending', 'Show only pending requests', ao_is_pending)}}
+  {{ legal.text_filter('ao_requestor', 'Requestor Name', ao_requestor) }}
+  {{ legal.dropdown('ao_requestor_type', 'Requestor Type',
+  [ {'value': 0, 'text': 'Any'},
+    {'value': 1, 'text': 'Federal candidate/candidate committee/officeholder'},
+    {'value': 2, 'text': 'Publicly funded candidates/committees'},
+    {'value': 3, 'text': 'Party committee, national'},
+    {'value': 4, 'text': 'Party committee, state or local'},
+    {'value': 5, 'text': 'Nonconnected political committee'},
+    {'value': 6, 'text': 'Separate segregated fund'},
+    {'value': 7, 'text': 'Labor Organization'},
+    {'value': 8, 'text': 'Trade Association'},
+    {'value': 9, 'text': 'Membership Organization, Cooperative, Corporation W/O Capital Stock'},
+    {'value': 10, 'text': 'Corporation (including LLCs electing corporate status)'},
+    {'value': 11, 'text': 'Partnership (including LLCs electing partnership status)'},
+    {'value': 12, 'text': 'Governmental entity'},
+    {'value': 13, 'text': 'Research/Public Interest/Educational Institution'},
+    {'value': 14, 'text': 'Law Firm'},
+    {'value': 15, 'text': 'Individual'},
+    {'value': 16, 'text': 'Other'}],
+  ao_requestor_type) }}
   <div class="filter">
     <button class="button button--standard" type="submit" id="search-advisory-opinions">Search</button>
   </div>

@@ -39,7 +39,9 @@ def render_legal_search_results(results, query, result_type):
     )
 
 
-def render_legal_doc_search_results(results, query, result_type, ao_no, ao_name, ao_min_date, ao_max_date):
+def render_legal_doc_search_results(results, query, result_type, ao_no, ao_name,
+                ao_min_date, ao_max_date, ao_is_pending, ao_requestor, ao_requestor_type,
+                ao_category):
     return render_template(
         'legal-search-results-%s.html' % result_type,
         parent='legal',
@@ -49,7 +51,11 @@ def render_legal_doc_search_results(results, query, result_type, ao_no, ao_name,
         ao_no=ao_no,
         ao_name=ao_name,
         ao_min_date=ao_min_date,
-        ao_max_date=ao_max_date
+        ao_max_date=ao_max_date,
+        ao_is_pending=ao_is_pending,
+        ao_requestor=ao_requestor,
+        ao_requestor_type=ao_requestor_type,
+        ao_category=ao_category
     )
 
 
