@@ -31,12 +31,14 @@ $(document).ready(function() {
     efiling: {
       path: ['schedules', 'schedule_b', 'efile'],
       dataType: 'efiling',
-      hideColumns: '.hide-efiling'
+      hideColumns: '.hide-efiling',
+      paginator: tables.OffsetPaginator
     },
     processed: {
       path: ['schedules', 'schedule_b'],
       dataType: 'processed',
-      hideColumns: '.hide-processed'
+      hideColumns: '.hide-processed',
+      paginator: tables.SeekPaginator
     }
   }).init();
 });
