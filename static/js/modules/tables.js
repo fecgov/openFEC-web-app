@@ -709,6 +709,11 @@ DataTable.prototype.handleSwitch = function(e, opts) {
   this.opts.hideColumns = opts.hideColumns;
   this.opts.disableExport = opts.disableExport;
   this.opts.path = opts.path;
+
+  if (opts.paginator) {
+    this.paginator = new opts.paginator();
+  }
+
   this.filterSet.switchFilters(opts.dataType);
 
   if (!this.api) {
