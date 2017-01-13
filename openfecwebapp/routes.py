@@ -351,7 +351,7 @@ def legal_search(query, result_type):
 
 def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=None,
                         ao_max_date=None, ao_is_pending=None, ao_requestor=None,
-                        ao_requestor_type=None, ao_category=None, **kwargs):
+                        ao_requestor_type=None, ao_category=None, mur_no=None, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
@@ -359,7 +359,7 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
     if query or result_type == 'advisory_opinions':
         results = api_caller.load_legal_search_results(query, result_type,
                     ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
-                    ao_requestor, ao_requestor_type, ao_category, **kwargs)
+                    ao_requestor, ao_requestor_type, ao_category, mur_no, **kwargs)
 
     if ao_no:
         if ao_no[0]:
@@ -385,7 +385,7 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
 
     return views.render_legal_doc_search_results(results, query, result_type,
                         ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
-                        ao_requestor, ao_requestor_type, ao_category)
+                        ao_requestor, ao_requestor_type, ao_category, mur_no)
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
