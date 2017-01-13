@@ -83,7 +83,7 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
         if ao_category:
             filters['ao_category'] = ao_category
 
-        if ao_requestor_type > 0:
+        if ao_requestor_type and ao_requestor_type > 0:
             filters['ao_requestor_type'] = ao_requestor_type
 
     results = _call_api('legal', 'search', **filters)
