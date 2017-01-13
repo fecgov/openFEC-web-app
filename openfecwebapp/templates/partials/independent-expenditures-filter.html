@@ -19,7 +19,6 @@ Filter independent expenditures
 {% block efiling_filters %}
 <div class="filters__inner">
   {{ typeahead.field('committee_id', 'Spender name or ID', id_suffix='_raw') }}
-  {{ reports.form('_raw')}}
   {{ text.field('candidate', 'Candidate mentioned', id_suffix='_raw')}}
   {{ misc.support_oppose('_raw') }}
   {{ date.field('expenditure_date', 'Expenditure date', dates, id_suffix='_raw') }}
