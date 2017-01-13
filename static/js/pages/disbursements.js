@@ -5,7 +5,7 @@
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
-var helpers = require('../modules/helpers');
+var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var columns = require('../modules/columns');
 
 var disbursementTemplate = require('../../templates/disbursements.hbs');
@@ -26,4 +26,19 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(disbursementTemplate)
     }
   });
+
+  new TableSwitcher('.js-table-switcher', {
+    efiling: {
+      path: ['schedules', 'schedule_b', 'efile'],
+      dataType: 'efiling',
+      hideColumns: '.hide-efiling',
+      paginator: tables.OffsetPaginator
+    },
+    processed: {
+      path: ['schedules', 'schedule_b'],
+      dataType: 'processed',
+      hideColumns: '.hide-processed',
+      paginator: tables.SeekPaginator
+    }
+  }).init();
 });

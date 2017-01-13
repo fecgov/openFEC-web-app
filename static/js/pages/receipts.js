@@ -3,7 +3,7 @@
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
-var helpers = require('../modules/helpers');
+var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var columns = require('../modules/columns');
 
 var donationTemplate = require('../../templates/receipts.hbs');
@@ -24,4 +24,19 @@ $(document).ready(function() {
       afterRender: tables.modalRenderFactory(donationTemplate)
     }
   });
+
+  new TableSwitcher('.js-table-switcher', {
+    efiling: {
+      path: ['schedules', 'schedule_a', 'efile'],
+      dataType: 'efiling',
+      hideColumns: '.hide-efiling',
+      paginator: tables.OffsetPaginator
+    },
+    processed: {
+      path: ['schedules', 'schedule_a'],
+      dataType: 'processed',
+      hideColumns: '.hide-processed',
+      paginator: tables.SeekPaginator
+    }
+  }).init();
 });
