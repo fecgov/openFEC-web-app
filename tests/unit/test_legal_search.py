@@ -73,14 +73,13 @@ class TestLegalSearch(unittest.TestCase):
     @mock.patch.object(api_caller, '_call_api')
     def test_api_invoked_correctly_for_ao(self, _call_api):
         _call_api.return_value = {}
-        response = self.app.get(
+        self.app.get(
             '/legal/search/advisory-opinions/',
             data={
                 'search': 'in kind donation',
                 'search_type': 'advisory_opinions'
             }
         )
-        assert response.status_code == 200
         _call_api.assert_called_once_with('legal',
                                           'search',
                                           from_hit=0,
