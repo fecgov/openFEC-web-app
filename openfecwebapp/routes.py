@@ -339,7 +339,10 @@ def spending_breakdown(top_category, cycle):
 def legal_search(query, result_type):
     if result_type != 'all':
         # search_type is used for google analytics
+        print("Redirecting")
         return redirect(url_for(result_type, search=query, search_type=result_type))
+    else:
+        print('Not redirecting')
 
     results = {}
 
@@ -441,9 +444,10 @@ def statutes(query, offset):
 @use_kwargs({
     'query': fields.Str(load_from='search'),
     'offset': fields.Int(missing=0),
+    'mur_no': fields.Str(missing=None)
 })
-def murs(query, offset):
-    return legal_doc_search(query, 'murs', offset=offset)
+def murs(query, offset, mur_no):
+    return legal_doc_search(query, 'murs', offset=offset, mur_no=mur_no)
 
 # TODO migrating from /legal/regulations -> /legal/search/regulations, eventually there will be a regulations landing page
 @app.route('/legal/regulations/')

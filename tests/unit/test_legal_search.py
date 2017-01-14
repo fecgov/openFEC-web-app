@@ -102,7 +102,7 @@ class TestLegalSearch(unittest.TestCase):
                                           'search',
                                           from_hit=0,
                                           hits_returned=20,
-                                          murs_no='6995',
+                                          mur_no='6995',
                                           q='presidents',
                                           type='murs')
 

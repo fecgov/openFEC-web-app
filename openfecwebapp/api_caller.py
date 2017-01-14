@@ -50,9 +50,9 @@ def load_search_results(query, query_type='candidates'):
 
 
 def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
-                                ao_min_date=None, ao_max_date=None, ao_is_pending=None,
-                                ao_requestor=None, ao_requestor_type=0,
-                                ao_category=None, mur_no=None, offset=0, limit=20):
+                              ao_min_date=None, ao_max_date=None, ao_is_pending=None,
+                              ao_requestor=None, ao_requestor_type=0,
+                              ao_category=None, mur_no=None, offset=0, limit=20):
     filters = {}
     if query or query_type == 'advisory_opinions':
         filters['hits_returned'] = limit
