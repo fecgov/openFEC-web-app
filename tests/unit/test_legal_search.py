@@ -87,6 +87,25 @@ class TestLegalSearch(unittest.TestCase):
                                           q='in kind donation',
                                           type='advisory_opinions')
 
+    @mock.patch.object(api_caller, '_call_api')
+    def test_api_invoked_correctly_for_mur(self, _call_api):
+        _call_api.return_value = {}
+        self.app.get(
+            '/legal/search/enforcement/',
+            data={
+                'mur_no': '6695',
+                'search': 'presidents',
+                'search_type': 'murs',
+            }
+        )
+        _call_api.assert_called_once_with('legal',
+                                          'search',
+                                          from_hit=0,
+                                          hits_returned=20,
+                                          murs_no='6995',
+                                          q='presidents',
+                                          type='murs')
+
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_pagination(self, load_legal_search_results):
         load_legal_search_results.return_value = factory.regulations_search_results()
