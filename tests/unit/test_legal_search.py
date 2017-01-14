@@ -1,14 +1,13 @@
 import unittest
 from unittest import mock
 from urllib.parse import urlparse, parse_qs
-import codecs
-import json
 from collections import OrderedDict
 
 
 from openfecwebapp import api_caller
 from openfecwebapp.app import app
 from tests import factory
+
 
 class TestLegalSearch(unittest.TestCase):
 
@@ -71,6 +70,24 @@ class TestLegalSearch(unittest.TestCase):
         load_legal_search_results.assert_called_once_with('in kind donation',
             'advisory_opinions', None, None, None, None, None, None, 0, None, None, offset=0)
 
+    @mock.patch.object(api_caller, '_call_api')
+    def test_api_invoked_correctly_for_ao(self, _call_api):
+        _call_api.return_value = {}
+        response = self.app.get(
+            '/legal/search/advisory-opinions/',
+            data={
+                'search': 'in kind donation',
+                'search_type': 'advisory_opinions'
+            }
+        )
+        assert response.status_code == 200
+        _call_api.assert_called_once_with('legal',
+                                          'search',
+                                          from_hit=0,
+                                          hits_returned=20,
+                                          q='in kind donation',
+                                          type='advisory_opinions')
+
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_pagination(self, load_legal_search_results):
         load_legal_search_results.return_value = factory.regulations_search_results()
@@ -117,6 +134,7 @@ class TestLegalSearch(unittest.TestCase):
         assert results['advisory_opinions_returned'] == 3
         assert results['statutes_returned'] == 4
         assert results['regulations_returned'] == 5
+
 
 if __name__ == '__main__':
     unittest.main()
