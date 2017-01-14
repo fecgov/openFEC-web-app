@@ -66,15 +66,9 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
         filters['ao_min_date'] = ao_min_date
         filters['ao_requestor'] = ao_requestor
         filters['mur_no'] = mur_no
-
-        if ao_no and ao_no[0]:
-            filters['ao_no'] = ao_no
-
-        if ao_name and ao_name[0]:
-            filters['ao_name'] = ao_name
-
-        if ao_requestor_type and ao_requestor_type > 0:
-            filters['ao_requestor_type'] = ao_requestor_type
+        filters['ao_no'] = ao_no if ao_no and ao_no[0] else None
+        filters['ao_name'] = ao_name if ao_name and ao_name[0] else None
+        filters['ao_requestor_type'] = ao_requestor_type if ao_requestor_type and ao_requestor_type > 0 else None
 
         filters = __compact(filters)
 
