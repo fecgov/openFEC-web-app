@@ -59,14 +59,20 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
                               ao_requestor=None, ao_requestor_type=0,
                               ao_category=None, mur_no=None, offset=0, limit=20):
     filters = {}
-    # TODO: Ensure this line is event. fixed.
+    # TODO: Ensure this line is fixed.
     if query or query_type == 'advisory_opinions':
         filters['hits_returned'] = limit
         filters['type'] = query_type
         filters['from_hit'] = offset
+        filters['q'] = query
+        filters['ao_min_date'] = ao_min_date
+        filters['ao_max_date'] = ao_max_date
+        filters['ao_requestor'] = ao_requestor
+        filters['ao_category'] = ao_category
+        filters['mur_no'] = mur_no
 
-        if query:
-            filters['q'] = query
+        if ao_is_pending:
+            filters['ao_is_pending'] = True
 
         if ao_no and ao_no[0]:
             filters['ao_no'] = ao_no
@@ -74,26 +80,8 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
         if ao_name and ao_name[0]:
             filters['ao_name'] = ao_name
 
-        if ao_min_date:
-            filters['ao_min_date'] = ao_min_date
-
-        if ao_max_date:
-            filters['ao_max_date'] = ao_max_date
-
-        if ao_is_pending:
-            filters['ao_is_pending'] = True
-
-        if ao_requestor:
-            filters['ao_requestor'] = ao_requestor
-
-        if ao_category:
-            filters['ao_category'] = ao_category
-
         if ao_requestor_type and ao_requestor_type > 0:
             filters['ao_requestor_type'] = ao_requestor_type
-
-        if mur_no:
-            filters['mur_no'] = mur_no
 
         filters = __compact(filters)
 
