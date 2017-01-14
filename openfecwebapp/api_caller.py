@@ -49,11 +49,17 @@ def load_search_results(query, query_type='candidates'):
     return results['results'] if len(results) else []
 
 
+def __compact(a_dict) -> dict:
+    """Return a copy with None-valued entries removed"""
+    return {k: v for k, v in a_dict.items() if v is not None}
+
+
 def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
                               ao_min_date=None, ao_max_date=None, ao_is_pending=None,
                               ao_requestor=None, ao_requestor_type=0,
                               ao_category=None, mur_no=None, offset=0, limit=20):
     filters = {}
+    # TODO: Ensure this line is event. fixed.
     if query or query_type == 'advisory_opinions':
         filters['hits_returned'] = limit
         filters['type'] = query_type
@@ -88,6 +94,8 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
 
         if mur_no:
             filters['mur_no'] = mur_no
+
+        filters = __compact(filters)
 
     results = _call_api('legal', 'search', **filters)
     results['limit'] = limit
