@@ -93,7 +93,7 @@ class TestLegalSearch(unittest.TestCase):
         self.app.get(
             '/legal/search/enforcement/',
             data={
-                'mur_no': '6695',
+                'mur_no': '1234',
                 'search': 'presidents',
                 'search_type': 'murs',
             }
@@ -102,7 +102,7 @@ class TestLegalSearch(unittest.TestCase):
                                           'search',
                                           from_hit=0,
                                           hits_returned=20,
-                                          mur_no='6995',
+                                          mur_no='1234',
                                           q='presidents',
                                           type='murs')
 
