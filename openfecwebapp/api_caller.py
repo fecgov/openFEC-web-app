@@ -65,14 +65,12 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
         filters['type'] = query_type
         filters['from_hit'] = offset
         filters['q'] = query
-        filters['ao_min_date'] = ao_min_date
-        filters['ao_max_date'] = ao_max_date
-        filters['ao_requestor'] = ao_requestor
         filters['ao_category'] = ao_category
+        filters['ao_is_pending'] = True if ao_is_pending else None
+        filters['ao_max_date'] = ao_max_date
+        filters['ao_min_date'] = ao_min_date
+        filters['ao_requestor'] = ao_requestor
         filters['mur_no'] = mur_no
-
-        if ao_is_pending:
-            filters['ao_is_pending'] = True
 
         if ao_no and ao_no[0]:
             filters['ao_no'] = ao_no
