@@ -49,11 +49,6 @@ def load_search_results(query, query_type='candidates'):
     return results['results'] if len(results) else []
 
 
-def __compact(a_dict) -> dict:
-    """Return a copy with None-valued entries removed"""
-    return {k: v for k, v in a_dict.items() if v is not None}
-
-
 def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
                               ao_min_date=None, ao_max_date=None, ao_is_pending=None,
                               ao_requestor=None, ao_requestor_type=0,
@@ -255,6 +250,7 @@ def result_or_404(data):
         abort(404)
     return data['results'][0]
 
+
 def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
         response = _call_api(
             'candidates', 'totals',
@@ -270,6 +266,7 @@ def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
             return response
         return {}
 
+
 def load_top_pacs(sort, cycle=2016, per_page=5):
         response = _call_api(
             'totals', 'pac',
@@ -278,6 +275,7 @@ def load_top_pacs(sort, cycle=2016, per_page=5):
         if response['results']:
             return response
         return {}
+
 
 def load_top_parties(sort, cycle=2016, per_page=5):
         response = _call_api(
@@ -288,6 +286,7 @@ def load_top_parties(sort, cycle=2016, per_page=5):
             return response
         return {}
 
+
 def _get_sorted_respondents(mur):
     """
     Returns the respondents in a MUR sorted in the order of most important to least important
@@ -297,6 +296,7 @@ def _get_sorted_respondents(mur):
     for role in SORTED_RESPONDENT_ROLES:
         respondents.extend(sorted([p['name'] for p in mur['participants'] if p['role'] == role]))
     return respondents
+
 
 def _get_sorted_participants_by_type(mur):
     """
@@ -332,3 +332,8 @@ def _get_sorted_participants_by_type(mur):
         participants_by_type[key] = sorted(participants_by_type[key])
 
     return participants_by_type
+
+
+def __compact(a_dict) -> dict:
+    """Return a copy with None-valued entries removed"""
+    return {k: v for k, v in a_dict.items() if v is not None}
