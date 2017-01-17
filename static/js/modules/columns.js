@@ -26,7 +26,7 @@ var amendmentIndicatorColumn = {
   className: 'hide-panel hide-efiling column--med min-desktop',
   render: function(data) {
     return decoders.amendments[data] || '';
-  },
+  }
 };
 
 var versionColumn = {
@@ -39,7 +39,7 @@ var versionColumn = {
     else {
       return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
     }
-  },
+  }
 };
 
 var modalTriggerColumn = {
@@ -281,6 +281,7 @@ var filings = {
     orderable: false,
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
+      var most_recent = row.most_recent;
       var show_version = true;
       var is_original = false;
       var amendment_num = 1;
@@ -303,6 +304,7 @@ var filings = {
 
       return reportType({
         doc_description: doc_description,
+        most_recent: most_recent,
         show_version: show_version,
         is_original: is_original,
         amendment_num: amendment_num,
