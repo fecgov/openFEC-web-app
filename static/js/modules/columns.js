@@ -36,11 +36,11 @@ var versionColumn = {
     if (data === true) {
       return '<i class="icon-circle--check-outline--inline--left"></i>Most recent version';
     }
-    else if (data === null) {
-      return '';
+    else if (data === false) {
+      return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
     }
     else {
-      return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
+      return '';
     }
   },
 };
