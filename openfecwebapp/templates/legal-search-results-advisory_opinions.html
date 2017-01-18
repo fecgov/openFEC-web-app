@@ -15,7 +15,7 @@
    {'value' : 'W', 'text': 'Withdrawal of Request'},
    {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
    {'value' : 'S', 'text': 'Commissioner Statements'}],
-      ao_category) }}
+      ao_category or ['F']) }}
   {{ legal.checkbox_filter('ao_is_pending', 'Show only pending requests', ao_is_pending)}}
   {{ legal.text_filter('ao_requestor', 'Requestor Name', ao_requestor) }}
   {{ legal.dropdown('ao_requestor_type', 'Requestor Type',
