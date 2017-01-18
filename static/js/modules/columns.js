@@ -292,17 +292,20 @@ var filings = {
       var fec_url = row.fec_url ? row.fec_url : null;
 
       // because of messy data, do not show if not e-filing or null amendment indicator
-      if(row.means_filed !== 'e-file'|| row.amendment_indicator === null) {
-        show_version = false;
-      }
+      // if(row.means_filed !== 'e-file'|| row.amendment_indicator === null) {
+      //   show_version = false;
+      // }
 
-      if (row.amendment_indicator === 'N') {
-        is_original = true;
-      }
+      // if (row.amendment_indicator === 'N') {
+      //   is_original = true;
+      // }
 
-      if (row.amendment_chain) {
-        amendment_num = row.amendment_chain.length - 1;
-      }
+      // if (row.amendment_chain) {
+      //   amendment_num = row.amendment_chain.length - 1;
+      // }
+      //
+      // don't show amendment version until data is QA'd
+      show_version = false;
 
       return reportType({
         doc_description: doc_description,
@@ -316,7 +319,7 @@ var filings = {
     }
   },
   pages: pagesColumn,
-  version: versionColumn,
+  amendment_indicator: amendmentIndicatorColumn,
   receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
