@@ -5,11 +5,11 @@
       (This report has been amended)
     {{/if}}
     </h4>
-    {{#if most_recent}}
-    <i class="icon-circle--check-outline--inline--left"></i>Most recent version
-    {{else}}
-    <i class="icon-circle--clock-reverse--inline--left"></i>Past version
+    {{#if amendment_version_description}}
+    <i class="icon-document--inline--left"></i>
+    {{{amendment_version_description}}} |
     {{/if}}
+    {{{amendment_version}}}
   </div>
   <table>
     {{#panelRow "Filer"}}
