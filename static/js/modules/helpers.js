@@ -184,7 +184,6 @@ function getTimePeriod(electionYear, cycle, electionFull, office) {
   }
 
   return min.toString() + '–' + max.toString();
-
 }
 
 /*
@@ -216,6 +215,40 @@ function zeroPad(container, item, appendee) {
   });
 }
 
+function amendmentVersion(data) {
+  if (data === true) {
+    return '<i class="icon-circle--check-outline--inline--left"></i>Most recent version';
+  }
+  else if (data === false) {
+    return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
+  }
+  else {
+    return '';
+  }
+}
+
+function amendmentVersionDescription(row) {
+  var description = '';
+  var amendment_num = 1;
+
+
+  // because of messy data, do not show if not e-filing or null amendment indicator
+  if (row.means_filed === 'e-file' && row.amendment_indicator !== null) {
+
+    if (row.amendment_indicator === 'N') {
+      description = ' Original';
+    }
+    else {
+      if (row.amendment_chain) {
+        amendment_num = row.amendment_chain.length - 1;
+      }
+      description = ' Amendment ' + amendment_num;
+    }
+  }
+
+  return description;
+}
+
 module.exports = {
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
@@ -231,5 +264,7 @@ module.exports = {
   isMediumScreen: isMediumScreen,
   LOADING_DELAY: helpers.LOADING_DELAY,
   SUCCESS_DELAY: helpers.SUCCESS_DELAY,
-  zeroPad: zeroPad
+  zeroPad: zeroPad,
+  amendmentVersion: amendmentVersion,
+  amendmentVersionDescription: amendmentVersionDescription
 };
