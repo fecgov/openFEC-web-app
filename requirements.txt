@@ -8,13 +8,13 @@ github3.py==0.9.4
 hmac-authentication==1.0.0
 python-dateutil==2.4.2
 requests==2.10.0
-newrelic==2.50.0.39
+newrelic==2.78.0.57
 gunicorn==19.3.0
 webargs==0.18.0
 CacheControl==0.11.5
 cachetools==1.0.2
 raven[flask]==5.8.1
-cfenv==0.4.0
+cfenv==0.5.2
 slacker==0.8.6
 
 # Development

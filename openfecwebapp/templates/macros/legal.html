@@ -17,6 +17,37 @@
   </div>
 {% endmacro %}
 
+{% macro checkbox_filter(name, label, value) %}
+<div class="filter">
+  <input type="checkbox" id="{{ name }}" name="{{ name }}" value="true" {% if value %} checked="true" {% endif %}>
+  <label for="{{ name }}">{{ label }}</label>
+</div>
+{% endmacro %}
+
+{% macro checkbox_list(name, label, options, value) %}
+<div class="filter">
+  <legend class="label">{{ label }}</legend>
+  {% for option in options %}
+    <div>
+      <input type="checkbox" id="ao_category_{{ option['value'] }}" name="{{ name }}" value="{{ option['value'] }}"
+        {% if value and option['value'] in value %} checked="true" {% endif %}>
+      <label for="ao_category_{{ option['value'] }}">{{ option['text'] }}</label>
+    </div>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro dropdown(name, label, options, value) %}
+<div class="filter">
+<label for="{{ name }}" class="label">{{ label }}</label>
+<select id={{ name }} name="{{ name }}">
+  {% for option in options %}
+  <option value={{ option['value'] }} {% if option['value'] == value %} selected="true" {% endif %}>{{ option['text'] }}</option>
+  {% endfor %}
+</select>
+</div>
+{% endmacro %}
+
 {% macro date_filter(min_name, max_name, label, min_value, max_value) %}
   <fieldset class="filter">
     <legend class="label">{{ label }}</legend>

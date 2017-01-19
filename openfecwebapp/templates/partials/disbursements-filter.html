@@ -10,6 +10,17 @@
 Filter disbursements
 {% endblock %}
 
+{% block data_type_toggle %}
+  {% include 'partials/filters/efiling.html' %}
+{% endblock %}
+
+{% block efiling_filters %}
+<div class="filters__inner">
+  {{ typeahead.field('committee_id', 'Committee name or ID', id_suffix='_raw') }}
+  {{ text.field('disbursement_description', 'Description', id_suffix='_raw') }}
+</div>
+{% endblock %}
+
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
   <button type="button" class="js-accordion-trigger accordion__button">Spender information</button>

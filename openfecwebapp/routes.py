@@ -146,7 +146,8 @@ def receipts():
         slug='receipts',
         title='Receipts',
         dates=utils.date_ranges(),
-        columns=constants.table_columns['receipts']
+        columns=constants.table_columns['receipts'],
+        has_data_type_toggle=True
     )
 
 @app.route('/receipts/individual-contributions/')
@@ -169,7 +170,8 @@ def disbursements():
         slug='disbursements',
         title='Disbursements',
         dates=utils.date_ranges(),
-        columns=constants.table_columns['disbursements']
+        columns=constants.table_columns['disbursements'],
+        has_data_type_toggle=True
     )
 
 @app.route('/filings/')
@@ -193,7 +195,8 @@ def independent_expenditures():
         slug='independent-expenditures',
         title='Independent expenditures',
         dates=utils.date_ranges(),
-        columns=constants.table_columns['independent-expenditures']
+        columns=constants.table_columns['independent-expenditures'],
+        has_data_type_toggle=True
     )
 
 @app.route('/electioneering-communications/')
@@ -350,14 +353,16 @@ def legal_search(query, result_type):
     return views.render_legal_search_results(results, query, result_type)
 
 def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=None,
-                        ao_max_date=None, **kwargs):
+                        ao_max_date=None, ao_is_pending=None, ao_requestor=None,
+                        ao_requestor_type=None, ao_category=None, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
     # Only hit the API if there's an actual query or if the result_type is AOs
     if query or result_type == 'advisory_opinions':
         results = api_caller.load_legal_search_results(query, result_type,
-                    ao_no, ao_name, ao_min_date, ao_max_date, **kwargs)
+                    ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
+                    ao_requestor, ao_requestor_type, ao_category, **kwargs)
 
     if ao_no:
         if ao_no[0]:
@@ -382,7 +387,8 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
         ao_max_date = ao_max_date.strftime('%m/%d/%Y')
 
     return views.render_legal_doc_search_results(results, query, result_type,
-                        ao_no, ao_name, ao_min_date, ao_max_date)
+                        ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
+                        ao_requestor, ao_requestor_type, ao_category)
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
@@ -409,12 +415,22 @@ def statutes_landing():
     'ao_no': fields.List(fields.Str, missing=None),
     'ao_name': fields.List(fields.Str, missing=None),
     'ao_min_date': fields.Date(missing=None),
-    'ao_max_date': fields.Date(missing=None)
+    'ao_max_date': fields.Date(missing=None),
+    'ao_is_pending': fields.Bool(missing=None),
+    'ao_requestor': fields.Str(missing=None),
+    'ao_requestor_type': fields.Int(missing=0),
+    'ao_category': fields.List(fields.Str, missing=None)
 })
-def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None, ao_max_date=None):
+def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None, ao_max_date=None,
+                        ao_is_pending=None, ao_requestor=None, ao_requestor_type=None,
+                        ao_category=None):
     return legal_doc_search(query, 'advisory_opinions', offset=offset,
                             ao_no=ao_no, ao_name=ao_name,
-                            ao_min_date=ao_min_date, ao_max_date=ao_max_date)
+                            ao_min_date=ao_min_date, ao_max_date=ao_max_date,
+                            ao_is_pending=ao_is_pending,
+                            ao_requestor=ao_requestor,
+                            ao_requestor_type=ao_requestor_type,
+                            ao_category=ao_category)
 
 @app.route('/legal/search/statutes/')
 @use_kwargs({

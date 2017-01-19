@@ -18,8 +18,8 @@ Filter reports
 
 {% block efiling_filters %}
   <div class="filters__inner">
-    {{ typeahead.field('committee_id', 'Committee name or ID', '') }}
-    {{ date.field('receipt_date', 'Receipt date', dates ) }}
+    {{ typeahead.field('committee_id', 'Committee name or ID', id_suffix='raw') }}
+    {{ date.field('receipt_date', 'Receipt date', dates, id_suffix='raw') }}
   </div>
 {% endblock %}
 
