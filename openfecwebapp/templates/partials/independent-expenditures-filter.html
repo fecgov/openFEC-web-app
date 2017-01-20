@@ -6,9 +6,23 @@
 {% import 'macros/filters/years.html' as years %}
 {% import 'macros/filters/date.html' as date %}
 {% import 'macros/filters/range.html' as range %}
-
+{% import 'macros/filters/ie-reports.html' as reports %}
+{% import 'macros/filters/misc.html' as misc %}
 {% block heading %}
 Filter independent expenditures
+{% endblock %}
+
+{% block data_type_toggle %}
+  {% include 'partials/filters/efiling.html' %}
+{% endblock %}
+
+{% block efiling_filters %}
+<div class="filters__inner">
+  {{ typeahead.field('committee_id', 'Spender name or ID', id_suffix='_raw') }}
+  {{ text.field('candidate', 'Candidate mentioned', id_suffix='_raw')}}
+  {{ misc.support_oppose('_raw') }}
+  {{ date.field('expenditure_date', 'Expenditure date', dates, id_suffix='_raw') }}
+</div>
 {% endblock %}
 
 {% block filters %}
@@ -16,44 +30,13 @@ Filter independent expenditures
   <div class="filters__inner">
     {{ typeahead.field('committee_id', 'Spender name or ID') }}
     {{ years.years('cycle', 'Years') }}
-    <fieldset class="filter toggles toggles--vertical js-filter js-toggle-filter" data-filter="toggle">
-      <legend class="label t-inline-block">Report type</legend>
-      <div class="tooltip__container">
-        <button class="tooltip__trigger" type="button" aria-controls="data-type-tooltip"><span class="u-visually-hidden">Learn more</span></button>
-        <div id="data-type-tooltip" role="tooltip" class="tooltip tooltip--under tooltip--left">
-          <div class="tooltip__content">
-            <p class="tooltip__content">Political committees file regular reports about their financial activity.</p>
-            <p class="tooltip__content">In certain circumstances — in addition to regularly scheduled repots — committees must also report independent expenditures within 24 or 48 hours.</p>
-          </div>
-        </div>
-      </div>
-      <label for="summary" class="toggle">
-        <input type="radio" class="toggle" value="false" id="summary" checked name="is_notice" data-tag-value="Regularly scheduled reports">
-        <span class="button--alt">Regularly scheduled reports</span>
-      </label>
-      <label for="notice" class="toggle">
-        <input type="radio" class="toggle" value="true" id="notice" name="is_notice" data-tag-value="24- and 48-Hour Reports">
-        <span class="button--alt">24- and 48-Hour Reports</span>
-      </label>
-    </fieldset>
-    <fieldset class="filter js-filter" data-filter="checkbox">
-      <legend class="label">Regularly scheduled report form</legend>
-      <ul>
-        <li>
-          <input id="filing-form-f3x" name="filing_form" type="checkbox" value="F3X">
-          <label for="filing-form-f3x">Form 3X</label>
-        </li>
-        <li>
-          <input id="filing-form-f5" name="filing_form" type="checkbox" value="F5">
-          <label for="filing-form-f5">Form 5</label>
-        </li>
-      </ul>
-    </fieldset>
+    {{ reports.type()}}
+    {{ reports.form()}}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Candidate mentioned</button>
   <div class="accordion__content">
     {{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
-    {% include 'partials/filters/support-oppose.html' %}
+    {{ misc.support_oppose('raw') }}
   </div>
 
   <button type="button" class="js-accordion-trigger accordion__button">Transaction information</button>

@@ -11,6 +11,21 @@
 Filter receipts
 {% endblock %}
 
+{% block data_type_toggle %}
+  {% include 'partials/filters/efiling.html' %}
+{% endblock %}
+
+{% block efiling_filters %}
+<div class="filters__inner">
+  {{ typeahead.field('committee_id', 'Committee name or ID', id_suffix='_raw') }}
+  {{ text.field('contributor_name', 'Contributor name', id_suffix='_raw') }}
+  {{ text.field('contributor_city', 'Contributor city', id_suffix='_raw') }}
+  {{ states.field('contributor_state', id_suffix='_raw') }}
+  {{ text.field('contributor_employer', 'Contributor employer', id_suffix='_raw') }}
+  {{ text.field('contributor_occupation', 'Contributor occupation', id_suffix='_raw') }}
+</div>
+{% endblock %}
+
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
   <button type="button" class="js-accordion-trigger accordion__button">Recipient information</button>

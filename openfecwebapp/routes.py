@@ -146,7 +146,8 @@ def receipts():
         slug='receipts',
         title='Receipts',
         dates=utils.date_ranges(),
-        columns=constants.table_columns['receipts']
+        columns=constants.table_columns['receipts'],
+        has_data_type_toggle=True
     )
 
 @app.route('/receipts/individual-contributions/')
@@ -169,7 +170,8 @@ def disbursements():
         slug='disbursements',
         title='Disbursements',
         dates=utils.date_ranges(),
-        columns=constants.table_columns['disbursements']
+        columns=constants.table_columns['disbursements'],
+        has_data_type_toggle=True
     )
 
 @app.route('/filings/')
@@ -193,7 +195,8 @@ def independent_expenditures():
         slug='independent-expenditures',
         title='Independent expenditures',
         dates=utils.date_ranges(),
-        columns=constants.table_columns['independent-expenditures']
+        columns=constants.table_columns['independent-expenditures'],
+        has_data_type_toggle=True
     )
 
 @app.route('/electioneering-communications/')
