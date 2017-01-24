@@ -181,7 +181,6 @@ def load_legal_mur(mur_no):
 
         mur['disposition_data'] = disposition_data
         mur['complainants'] = complainants
-        mur['respondents'] = _get_sorted_respondents(mur)
         mur['participants_by_type'] = _get_sorted_participants_by_type(mur)
 
         documents_by_type = OrderedDict()
