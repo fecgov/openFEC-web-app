@@ -67,7 +67,7 @@
                       <p><a href="/legal/advisory-opinions/{{ citation.no }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
                     {% endfor %}
                     {% else %}
-                      <p>Does not cite other opinions</p>
+                      <p><em>Doesn't cite other opinions</em></p>
                     {% endif %}
                   </div>
                 </div>
@@ -78,7 +78,7 @@
                     <p><a href="/legal/advisory-opinions/{{ citation.no }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
                   {% endfor %}
                   {% else %}
-                    <p>Is not cited by other opinions</p>
+                    <p><em>Isn't cited by other opinions</em></p>
                   {% endif %}
                 </div>
             </div>
