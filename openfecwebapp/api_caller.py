@@ -53,7 +53,7 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
                               ao_min_date=None, ao_max_date=None, ao_is_pending=None,
                               ao_requestor=None, ao_requestor_type=0,
                               ao_category=None, mur_no=None, offset=0, limit=20):
-    # TODO: Ensure this line is fixed.
+
     if query or query_type == 'advisory_opinions':
         filters = {
             'hits_returned': limit,
@@ -68,7 +68,7 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
             'mur_no': mur_no,
             'ao_no': ao_no if ao_no and ao_no[0] else None,
             'ao_name': ao_name if ao_name and ao_name[0] else None,
-            'ao_requestor_type': ao_requestor_type if ao_requestor_type and ao_requestor_type > 0 else None,
+            'ao_requestor_type': ao_requestor_type if _is_positive(ao_requestor_type) else None,
         }
     else:
         filters = {}
@@ -326,6 +326,10 @@ def _get_sorted_participants_by_type(mur):
         participants_by_type[key] = sorted(participants_by_type[key])
 
     return participants_by_type
+
+
+def _is_positive(putative_number):
+    putative_number is not None and putative_number > 0
 
 
 def __compact(a_dict) -> dict:
