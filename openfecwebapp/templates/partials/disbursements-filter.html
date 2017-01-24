@@ -17,7 +17,6 @@ Filter disbursements
 {% block efiling_filters %}
 <div class="filters__inner">
   {{ typeahead.field('committee_id', 'Committee name or ID', id_suffix='_raw') }}
-  {{ text.field('recipient_name', 'Recipient name', id_suffix='_raw') }}
   {{ text.field('disbursement_description', 'Description', id_suffix='_raw') }}
 </div>
 {% endblock %}
