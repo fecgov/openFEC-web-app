@@ -23,14 +23,6 @@
           {{ advisory_opinion.summary }}
         </p>
       </div>
-      <div class="sidebar-container">
-        <aside class="sidebar sidebar--primary">
-          <h4 class="sidebar__title">Cited in this opinion</h4>
-          <div class="sidebar__content is-disabled">
-            Coming soon.
-          </div>
-        </aside>
-      </div>
     </section>
     <section class="content__section">
       <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
@@ -61,6 +53,37 @@
     <section class="content__section is-disabled">
       <h2 class="t-ruled--bold t-ruled--bottom">Entities</h2>
       Coming soon.
+    </section>
+    <section class="content__section">
+      <aside id="legal-citations" class="sidebar sidebar--primary">
+          <h4 class="sidebar__title">Legal citations</h4>
+          <div class="sidebar__content">
+            <div class="grid grid--2-wide">
+                <div class="grid__item">
+                  <p class="t-bold">This opinion cites earlier opinions</p>
+                  <div class="rich-text">
+                    {% if advisory_opinion.citations %}
+                    {% for citation in advisory_opinion.citations %}
+                      <p><a href="/legal/advisory-opinions/{{ citation.no }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
+                    {% endfor %}
+                    {% else %}
+                      <p><em>Doesn't cite other opinions</em></p>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="grid__item">
+                  <p class="t-bold">This opinion is cited by these later opinions</p>
+                  {% if advisory_opinion.cited_by %}
+                  {% for citation in advisory_opinion.cited_by %}
+                    <p><a href="/legal/advisory-opinions/{{ citation.no }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
+                  {% endfor %}
+                  {% else %}
+                    <p><em>Isn't cited by other opinions</em></p>
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+        </aside>
     </section>
   </div>
 </div>

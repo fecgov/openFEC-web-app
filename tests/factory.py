@@ -32,6 +32,8 @@ def advisory_opinion():
             'Draft Documents',
             'Votes',
         )),
+        'citations': [{'no': '1993-01', 'name': 'RNC'}, {'no': '1998-01', 'name': 'DNC'}],
+        'cited_by': [{'no': '2000-03', 'name': 'Church'}, {'no': '2010', 'name': 'New City'}]
     }
 
 @factory
