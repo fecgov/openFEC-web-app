@@ -60,14 +60,14 @@
           <div class="sidebar__content">
             <div class="grid grid--2-wide">
                 <div class="grid__item">
-                  <p class="t-bold">This opinion cites earlier opinions</p>
+                  <p class="t-bold">This opinion cites these earlier opinions</p>
                   <div class="rich-text">
                     {% if advisory_opinion.citations %}
                     {% for citation in advisory_opinion.citations %}
-                      <p><a href="/legal/advisory-opinions/{{ citation.no }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
+                      <p><a href="{{ url_for('advisory_opinion_page', ao_no=citation.no) }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
                     {% endfor %}
                     {% else %}
-                      <p><em>Doesn't cite other opinions</em></p>
+                      <p><em>Doesn't cite earlier opinions</em></p>
                     {% endif %}
                   </div>
                 </div>
@@ -75,10 +75,10 @@
                   <p class="t-bold">This opinion is cited by these later opinions</p>
                   {% if advisory_opinion.cited_by %}
                   {% for citation in advisory_opinion.cited_by %}
-                    <p><a href="/legal/advisory-opinions/{{ citation.no }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
+                    <p><a href="{{ url_for('advisory_opinion_page', ao_no=citation.no) }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
                   {% endfor %}
                   {% else %}
-                    <p><em>Isn't cited by other opinions</em></p>
+                    <p><em>Isn't cited by later opinions</em></p>
                   {% endif %}
                 </div>
             </div>
