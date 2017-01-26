@@ -276,7 +276,6 @@ var filings = {
     orderable: false,
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
-      var most_recent = row.most_recent;
       var amendment_version = helpers.amendmentVersionDescription(row);
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
@@ -284,7 +283,6 @@ var filings = {
 
       return reportType({
         doc_description: doc_description,
-        most_recent: most_recent,
         amendment_version: amendment_version,
         fec_url: fec_url,
         pdf_url: pdf_url,

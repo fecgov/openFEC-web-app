@@ -217,20 +217,19 @@ function zeroPad(container, item, appendee) {
 
 function amendmentVersion(data) {
   if (data === true) {
-    return '<i class="icon-circle--check-outline--inline--left"></i>Most recent version';
+    return '<i class="icon-circle--check-outline--inline--left"></i>Current version';
   }
   else if (data === false) {
     return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
   }
   else {
-    return '';
+    return 'Version Unknown';
   }
 }
 
 function amendmentVersionDescription(row) {
   var description = '';
   var amendment_num = 1;
-
 
   // because of messy data, do not show if not e-filing or null amendment indicator
   if (row.means_filed === 'e-file' && row.amendment_indicator !== null) {
