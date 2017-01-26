@@ -54,7 +54,7 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
                               ao_requestor=None, ao_requestor_type=0,
                               ao_category=None, mur_no=None, offset=0, limit=20):
 
-    if query or query_type == 'advisory_opinions':
+    if query or query_type == 'advisory_opinions' or query_type == 'murs':
         filters = {
             'hits_returned': limit,
             'type': query_type,

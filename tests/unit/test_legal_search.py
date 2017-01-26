@@ -87,6 +87,7 @@ class TestLegalSearch(unittest.TestCase):
                                           q='in kind donation',
                                           type='advisory_opinions')
 
+
     @mock.patch.object(api_caller, '_call_api')
     def test_api_invoked_correctly_for_mur(self, _call_api):
         _call_api.return_value = {}
@@ -106,23 +107,25 @@ class TestLegalSearch(unittest.TestCase):
                                           q='presidents',
                                           type='murs')
 
-    # TODO: Create an Issue for making this test pass. (?)
-    # @mock.patch.object(api_caller, '_call_api')
-    # def test_api_invoked_correctly_if_only_mur_search(self, _call_api):
-    #     _call_api.return_value = {}
-    #     self.app.get(
-    #         '/legal/search/enforcement/',
-    #         data={
-    #             'mur_no': '1234',
-    #             'search_type': 'murs',
-    #         }
-    #     )
-    #     _call_api.assert_called_once_with('legal',
-    #                                       'search',
-    #                                       from_hit=0,
-    #                                       hits_returned=20,
-    #                                       mur_no='1234',
-    #                                       type='murs')
+
+    @mock.patch.object(api_caller, '_call_api')
+    def test_api_invoked_correctly_if_only_mur_search(self, _call_api):
+        _call_api.return_value = {}
+        self.app.get(
+            '/legal/search/enforcement/',
+            data={
+                'mur_no': '1234',
+                'search_type': 'murs',
+            }
+        )
+        _call_api.assert_called_once_with('legal',
+                                          'search',
+                                          from_hit=0,
+                                          hits_returned=20,
+                                          mur_no='1234',
+                                          q='',
+                                          type='murs')
+
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_pagination(self, load_legal_search_results):
@@ -136,6 +139,7 @@ class TestLegalSearch(unittest.TestCase):
         load_legal_search_results.assert_called_once_with('in kind donation',
          'regulations', None, None, None, None, None, None, None, None, None, offset=20)
 
+
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_statutes(self, load_legal_search_results):
         load_legal_search_results.return_value = factory.statutes_search_results()
@@ -146,6 +150,7 @@ class TestLegalSearch(unittest.TestCase):
         assert response.status_code == 200
         load_legal_search_results.assert_called_once_with('in kind donation', 'statutes',
             None, None, None, None, None, None, None, None, None, offset=0)
+
 
     @mock.patch.object(api_caller, '_call_api')
     def test_advisory_opinion_grouping(self, _call_api_mock):
