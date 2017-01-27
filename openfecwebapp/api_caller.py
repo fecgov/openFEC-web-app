@@ -132,6 +132,8 @@ def load_legal_advisory_opinion(ao_no):
         'category': canonical_document['category'],
         'documents': documents,
         'entities': [],
+        'citations': canonical_document['citations'],
+        'cited_by': canonical_document['cited_by']
     }
 
     return advisory_opinion
