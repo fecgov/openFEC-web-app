@@ -1,14 +1,10 @@
 'use strict';
 
 /* global require */
-require('jquery.inputmask');
-require('jquery.inputmask/dist/inputmask/inputmask.date.extensions.js');
 
 var $ = require('jquery');
-var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
+var LegalSearch = require('../modules/legal-search').LegalSearch;
 
 $(function () {
-  new FilterPanel();
-
-  $('.js-date-mask').inputmask('mm/dd/yyyy');
+  new LegalSearch();
 });

@@ -251,6 +251,39 @@ house_senate_types = OrderedDict([
     ('S', 'Senate')
 ])
 
+ao_doc_types = OrderedDict([
+   ('F', 'Final Opinion'),
+   ('V', 'Votes'),
+])
+
+ao_doc_types_extended = OrderedDict([
+   ('D', 'Draft Documents'),
+   ('R', 'AO Request, Supplemental Material, and Extensions of Time'),
+   ('W', 'Withdrawal of Request'),
+   ('C', 'Comments and Ex parte Communications'),
+   ('S', 'Commissioner Statements')
+])
+
+ao_requestor_types = OrderedDict([
+    (0, 'Any'),
+    (1, 'Federal candidate/candidate committee/officeholder'),
+    (2, 'Publicly funded candidates/committees'),
+    (3, 'Party committee, national'),
+    (4, 'Party committee, state or local'),
+    (5, 'Nonconnected political committee'),
+    (6, 'Separate segregated fund'),
+    (7, 'Labor Organization'),
+    (8, 'Trade Association'),
+    (9, 'Membership Organization, Cooperative, Corporation W/O Capital Stock'),
+    (10, 'Corporation (including LLCs electing corporate status)'),
+    (11, 'Partnership (including LLCs electing partnership status)'),
+    (12, 'Governmental entity'),
+    (13, 'Research/Public Interest/Educational Institution'),
+    (14, 'Law Firm'),
+    (15, 'Individual'),
+    (16, 'Other')
+])
+
 table_columns = OrderedDict([
     ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District']),
     ('candidates-office-president', ['Name', 'Party', 'Receipts', 'Disbursements']),
