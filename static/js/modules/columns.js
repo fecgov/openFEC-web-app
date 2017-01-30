@@ -529,6 +529,28 @@ var reports = {
   }
 };
 
+var debts = [
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--large',
+  },
+  {
+    data: 'creditor_debtor_name',
+    orderable: false,
+    className: 'all column--large',
+  },
+  {
+    data: 'nature_of_debt',
+    orderable: false,
+    className: 'all column--med',
+  },
+  // dateColumn({data: 'date', className: 'min-tablet hide-panel column--med'}),
+  currencyColumn({data: 'amount_incurred_period', className: 'min-desktop hide-panel column--number'}),
+  currencyColumn({data: 'payment_period', className: 'min-desktop hide-panel column--number'}),
+  modalTriggerColumn
+];
+
 module.exports = {
   candidateColumn: candidateColumn,
   committeeColumn: committeeColumn,
@@ -547,5 +569,6 @@ module.exports = {
   individualContributions: individualContributions,
   filings: filings,
   receipts: receipts,
-  reports: reports
+  reports: reports,
+  debts: debts
 };
