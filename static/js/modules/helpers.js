@@ -223,7 +223,7 @@ function amendmentVersion(data) {
     return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
   }
   else {
-    return 'Version Unknown';
+    return 'Version unknown';
   }
 }
 

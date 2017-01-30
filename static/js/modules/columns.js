@@ -33,7 +33,12 @@ var versionColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
   render: function(data) {
-    return helpers.amendmentVersion(data);
+    if (helpers.amendmentVersion(data) === 'Version unknown') {
+      return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Version unknown';
+    }
+    else {
+      return helpers.amendmentVersion(data);
+    }
   }
 };
 
