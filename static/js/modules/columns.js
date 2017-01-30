@@ -534,6 +534,9 @@ var debts = [
     data: 'committee',
     orderable: false,
     className: 'all column--large',
+    render: function (data, type, row) {
+      return row.committee.name;
+    }
   },
   {
     data: 'creditor_debtor_name',
@@ -543,9 +546,9 @@ var debts = [
   {
     data: 'nature_of_debt',
     orderable: false,
-    className: 'all column--med',
+    className: 'all column--large',
   },
-  // dateColumn({data: 'date', className: 'min-tablet hide-panel column--med'}),
+  dateColumn({data: 'load_date', orderable: true, className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'amount_incurred_period', className: 'min-desktop hide-panel column--number'}),
   currencyColumn({data: 'payment_period', className: 'min-desktop hide-panel column--number'}),
   modalTriggerColumn
