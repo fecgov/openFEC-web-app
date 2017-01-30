@@ -195,10 +195,6 @@ form_types = OrderedDict([
     ('RFAI', "Request For Additional Information"),
 ])
 
-amendment_indicators = OrderedDict([
-    ('N', 'New'),
-    ('A', 'Amendment'),
-])
 amendment_indicators_extended = OrderedDict([
     ('T', 'Terminated'),
     ('C', 'Consolidated'),
