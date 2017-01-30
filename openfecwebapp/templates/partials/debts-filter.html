@@ -3,38 +3,16 @@
 {% import 'macros/filters/text.html' as text %}
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 
-{% import 'macros/filters/states.html' as states %}
-{% import 'macros/filters/date.html' as date %}
-{% import 'macros/filters/range.html' as range %}
-
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
-  <button type="button" class="js-accordion-trigger accordion__button">Recipient information</button>
+  <button type="button" class="js-accordion-trigger accordion__button">Committee information</button>
   <div class="accordion__content">
     {{ typeahead.field('committee_id', 'Committee name or ID') }}
   </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Contributor information</button>
+  <button type="button" class="js-accordion-trigger accordion__button">Creditor information</button>
   <div class="accordion__content">
-    <div class="filter">
-      <fieldset class="js-filter js-filter-control" data-filter="checkbox" data-modifies-filter="contributor_name" data-modifies-property="dataset">
-        <legend class="label">Received from</legend>
-        <ul>
-          <li>
-            <input id="contributor-type-individual" name="contributor_type" type="checkbox" value="individual">
-            <label for="contributor-type-individual">Individuals</label>
-          </li>
-          <li>
-            <input id="contributor-type-committee" name="contributor_type" type="checkbox" value="committee">
-            <label for="contributor-type-committee">Committees</label>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
-    {{ typeahead.field('contributor_name', 'Contributor name or ID', dataset='committees', allow_text=True) }}
-    {{ text.field('contributor_city', 'City') }}
-    {{ states.field('contributor_state') }}
-    {{ text.field('contributor_employer', 'Employer') }}
-    {{ text.field('contributor_occupation', 'Occupation') }}
+    {{ typeahead.field('creditor_debtor_name', 'Creditor name', allow_text=True) }}
+    {{ text.field('nature_of_debt', 'Purpose') }}
   </div>
 </div>
 {% endblock %}
