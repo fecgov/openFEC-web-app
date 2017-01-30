@@ -233,13 +233,15 @@ function amendmentVersionDescription(row) {
 
   // because of messy data, do not show if not e-filing or null amendment indicator
   if (row.means_filed === 'e-file' && row.amendment_indicator !== null) {
-
     if (row.amendment_indicator === 'N') {
       description = ' Original';
     }
     else {
       if (row.amendment_chain) {
         amendment_num = row.amendment_chain.length - 1;
+      }
+      if (amendment_num === 0) {
+        amendment_num = '';
       }
       description = ' Amendment ' + amendment_num;
     }
