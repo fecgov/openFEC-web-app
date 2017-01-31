@@ -215,11 +215,11 @@ function zeroPad(container, item, appendee) {
   });
 }
 
-function amendmentVersion(data) {
-  if (data === true) {
+function amendmentVersion(most_recent) {
+  if (most_recent === true) {
     return '<i class="icon-circle--check-outline--inline--left"></i>Current version';
   }
-  else if (data === false) {
+  else if (most_recent === false) {
     return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
   }
   else {
