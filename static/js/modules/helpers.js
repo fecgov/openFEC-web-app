@@ -232,19 +232,21 @@ function amendmentVersionDescription(row) {
   var amendment_num = 1;
 
   // because of messy data, do not show if not e-filing or null amendment indicator
-  if (row.means_filed === 'e-file' && row.amendment_indicator !== null) {
-    if (row.amendment_indicator === 'N') {
-      description = ' Original';
+  if (row.means_filed !== 'e-file' || row.amendment_indicator === null) {
+    return description;
+  }
+
+  if (row.amendment_indicator === 'N') {
+    description = ' Original';
+  }
+  else {
+    if (row.amendment_chain) {
+      amendment_num = row.amendment_chain.length - 1;
     }
-    else {
-      if (row.amendment_chain) {
-        amendment_num = row.amendment_chain.length - 1;
-      }
-      if (amendment_num === 0) {
-        amendment_num = '';
-      }
-      description = ' Amendment ' + amendment_num;
+    if (amendment_num === 0) {
+      amendment_num = '';
     }
+    description = ' Amendment ' + amendment_num;
   }
 
   return description;
