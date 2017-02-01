@@ -120,7 +120,7 @@ function modalRenderRow(row, data, index) {
   row.classList.add(MODAL_TRIGGER_CLASS, 'row--has-panel');
 }
 
-function modalRenderFactory(template, fetch, pageType) {
+function modalRenderFactory(template, fetch) {
   var callback;
   fetch = fetch || identity;
 
@@ -148,10 +148,6 @@ function modalRenderFactory(template, fetch, pageType) {
         if (!$target.closest('td').hasClass('dataTables_empty')) {
           var index = api.row($row).index();
           $.when(fetch(response.results[index])).done(function(fetched) {
-            if (pageType === 'reports') {
-              fetched.amendment_version = helpers.amendmentVersion(fetched.most_recent);
-              fetched.amendment_version_description = helpers.amendmentVersionDescription(fetched);
-            }
             $modal.find('.js-panel-content').html(template(fetched));
             $modal.attr('aria-hidden', 'false');
             $row.siblings().toggleClass('row-active', false);

@@ -56,7 +56,7 @@ $(document).ready(function() {
     useFilters: true,
     useExport: true,
     callbacks: {
-      afterRender: tables.modalRenderFactory(pageTemplate, undefined, 'reports')
+      afterRender: tables.modalRenderFactory(pageTemplate)
     },
     drawCallback: function () {
       this.dropdowns = $table.find('.dropdown').map(function(idx, elm) {

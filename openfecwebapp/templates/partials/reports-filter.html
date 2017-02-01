@@ -31,33 +31,19 @@ Filter reports
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Report details</button>
   <div class="accordion__content">
-    <div class="filter">
-      <fieldset class="js-filter" data-filter="checkbox">
-        <legend class="label">Version</legend>
-        <ul>
-          <li>
-            <input id="most_recent_true" name="most_recent" type="checkbox" value="true">
-            <label for="most_recent_true">Most recent version</label>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
-
-    <div class="filter">
-      <fieldset class="js-filter" data-filter="checkbox">
-        <legend class="label">Document status</legend>
-        <ul>
-          <li>
-            <input id="amendment_indicator_original" name="amendment_indicator" type="checkbox" value="N">
-            <label for="amendment_indicator_original">Original</label>
-          </li>
-          <li>
-            <input id="amendment_indicator_amendment" name="amendment_indicator" type="checkbox" value="A">
-            <label for="amendment_indicator_amendment">Amendment</label>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
+    <fieldset class="filter js-filter" data-filter="checkbox">
+      <legend class="label">Report status</legend>
+      <ul>
+        <li>
+          <input id="is_amended_true" name="is_amended" type="checkbox" value="true">
+          <label for="is_amended_true">Amended report</label>
+        </li>
+        <li>
+          <input id="is_amended_false" name="is_amended" type="checkbox" value="false">
+          <label for="is_amended_false">Non-amended report</label>
+        </li>
+      </ul>
+    </fieldset>
     {{ range.amount('receipts_amount', 'Total receipts') }}
     {{ range.amount('disbursements_amount', 'Total disbursements') }}
     {{ range.amount('cash_on_hand_amount', 'Ending cash on hand') }}
