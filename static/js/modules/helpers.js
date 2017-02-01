@@ -18,6 +18,12 @@ var datetime = helpers.datetime;
 var isLargeScreen = helpers.isLargeScreen;
 var isMediumScreen = helpers.isMediumScreen;
 
+// set parameters from the API
+var API = {
+  amendment_indicator_new: 'N',
+  means_filed_e_file: 'e-file'
+};
+
 Handlebars.registerHelper('datetime', datetime);
 
 var currencyFormatter = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
@@ -184,7 +190,6 @@ function getTimePeriod(electionYear, cycle, electionFull, office) {
   }
 
   return min.toString() + '–' + max.toString();
-
 }
 
 /*
@@ -216,6 +221,43 @@ function zeroPad(container, item, appendee) {
   });
 }
 
+function amendmentVersion(most_recent) {
+  if (most_recent === true) {
+    return '<i class="icon-circle--check-outline--inline--left"></i>Current version';
+  }
+  else if (most_recent === false) {
+    return '<i class="icon-circle--clock-reverse--inline--left"></i>Past version';
+  }
+  else {
+    return 'Version unknown';
+  }
+}
+
+function amendmentVersionDescription(row) {
+  var description = '';
+  var amendment_num = 1;
+
+  // because of messy data, do not show if not e-filing or null amendment indicator
+  if (row.means_filed !== API.means_filed_e_file || row.amendment_indicator === null) {
+    return description;
+  }
+
+  if (row.amendment_indicator === API.amendment_indicator_new) {
+    description = ' Original';
+  }
+  else {
+    if (row.amendment_chain) {
+      amendment_num = row.amendment_chain.length - 1;
+    }
+    if (amendment_num === 0) {
+      amendment_num = '';
+    }
+    description = ' Amendment ' + amendment_num;
+  }
+
+  return description;
+}
+
 module.exports = {
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
@@ -231,5 +273,7 @@ module.exports = {
   isMediumScreen: isMediumScreen,
   LOADING_DELAY: helpers.LOADING_DELAY,
   SUCCESS_DELAY: helpers.SUCCESS_DELAY,
-  zeroPad: zeroPad
+  zeroPad: zeroPad,
+  amendmentVersion: amendmentVersion,
+  amendmentVersionDescription: amendmentVersionDescription
 };

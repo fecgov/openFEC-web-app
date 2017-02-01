@@ -65,6 +65,8 @@ $(document).ready(function() {
     }
   });
 
+  $('.panel__navigation').hide();
+
   new TableSwitcher('.js-table-switcher', {
     efiling: {
       dataType: 'efiling',
