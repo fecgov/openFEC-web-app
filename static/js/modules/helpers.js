@@ -18,6 +18,13 @@ var datetime = helpers.datetime;
 var isLargeScreen = helpers.isLargeScreen;
 var isMediumScreen = helpers.isMediumScreen;
 
+// set parameters from the API
+var API = {
+  amendment_indicator_new: 'N',
+  means_filed_e_file: 'e-file'
+};
+
+
 Handlebars.registerHelper('datetime', datetime);
 
 var currencyFormatter = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
@@ -232,11 +239,11 @@ function amendmentVersionDescription(row) {
   var amendment_num = 1;
 
   // because of messy data, do not show if not e-filing or null amendment indicator
-  if (row.means_filed !== 'e-file' || row.amendment_indicator === null) {
+  if (row.means_filed !== API.means_filed_e_file || row.amendment_indicator === null) {
     return description;
   }
 
-  if (row.amendment_indicator === 'N') {
+  if (row.amendment_indicator === API.amendment_indicator_new) {
     description = ' Original';
   }
   else {
