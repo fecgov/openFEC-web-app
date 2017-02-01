@@ -24,7 +24,6 @@ var API = {
   means_filed_e_file: 'e-file'
 };
 
-
 Handlebars.registerHelper('datetime', datetime);
 
 var currencyFormatter = Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
