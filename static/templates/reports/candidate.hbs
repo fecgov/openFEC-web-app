@@ -5,9 +5,16 @@
       (This report has been amended)
     {{/if}}
     </h4>
-    <span class="panel__subtitle t-bold"><a href="{{basePath}}/committee/{{committee_id}}">{{ committee_name }}</a></span>
+    {{#if amendment_version_description}}
+    <i class="icon-document--inline--left"></i>
+    {{{amendment_version_description}}} |
+    {{/if}}
+    {{{amendment_version}}}
   </div>
   <table>
+    {{#panelRow "Filer"}}
+      <a href="{{basePath}}/committee/{{committee_id}}">{{ committee_name }}</a>
+    {{/panelRow}}
     {{#panelRow "Report coverage"}}
       {{datetime coverage_start_date format="pretty"}} to {{datetime coverage_end_date format="pretty"}}
     {{/panelRow}}
@@ -16,6 +23,15 @@
     {{/panelRow}}
     {{#panelRow "Filing method"}}
       {{ decodeMeans means_filed}}
+    {{/panelRow}}
+    {{#panelRow "Download"}}
+      {{#if csv_url}}
+      <a target="_blank" href="{{ csv_url }}">CSV</a> |
+      {{/if}}
+      <a target="_blank" href="{{ pdf_url }}">PDF</a>
+      {{#if fec_url}}
+      | <a target="_blank" href="{{ fec_url }}">FEC</a>
+      {{/if}}
     {{/panelRow}}
   </table>
 </div>
