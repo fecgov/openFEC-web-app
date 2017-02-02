@@ -145,6 +145,8 @@ def load_legal_advisory_opinion(ao_no):
         'category': canonical_document['category'],
         'documents': documents,
         'entities': [],
+        'citations': canonical_document['citations'],
+        'cited_by': canonical_document['cited_by']
     }
 
     return advisory_opinion
@@ -194,7 +196,6 @@ def load_legal_mur(mur_no):
 
         mur['disposition_data'] = disposition_data
         mur['complainants'] = complainants
-        mur['respondents'] = _get_sorted_respondents(mur)
         mur['participants_by_type'] = _get_sorted_participants_by_type(mur)
 
         documents_by_type = OrderedDict()
@@ -290,16 +291,6 @@ def load_top_parties(sort, cycle=2016, per_page=5):
         if response['results']:
             return response
         return {}
-
-def _get_sorted_respondents(mur):
-    """
-    Returns the respondents in a MUR sorted in the order of most important to least important
-    """
-    SORTED_RESPONDENT_ROLES = ['Primary Respondent', 'Respondent', 'Previous Respondent']
-    respondents = []
-    for role in SORTED_RESPONDENT_ROLES:
-        respondents.extend(sorted([p['name'] for p in mur['participants'] if p['role'] == role]))
-    return respondents
 
 def _get_sorted_participants_by_type(mur):
     """

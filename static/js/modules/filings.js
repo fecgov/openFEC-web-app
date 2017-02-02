@@ -34,6 +34,10 @@ var renderModal = tables.modalRenderFactory(
       var result = response.results.length ?
         response.results[0] :
         {};
+
+      result.amendment_version = helpers.amendmentVersion(result.most_recent);
+      result.amendment_version_description = helpers.amendmentVersionDescription(row);
+
       return _.extend({}, row, result);
     });
   }
