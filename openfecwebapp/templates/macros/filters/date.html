@@ -31,6 +31,7 @@
         </div>
       </div>
       <select id="two-year-transaction-period" name="two_year_transaction_period" aria-describedby="unique-tooltip">
+          <option value="">Select a value</option>
         {% for year in range(constants.END_YEAR, constants.START_YEAR, -2) %}
           <option value="{{year}}">{{ year | fmt_year_range }}</option>
         {% endfor %}
