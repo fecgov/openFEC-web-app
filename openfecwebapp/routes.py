@@ -24,16 +24,22 @@ def search():
         results = api_caller.load_search_results(query, result_type)
         return views.render_search_results(results, query, result_type)
     else:
+        top_candidates_raising = api_caller.load_top_candidates('-receipts')
+        top_candidates_spending = api_caller.load_top_candidates('-disbursements')
+        top_pacs_raising = api_caller.load_top_pacs('-receipts')
+        top_pacs_spending = api_caller.load_top_pacs('-disbursements')
+        top_parties_raising = api_caller.load_top_parties('-receipts')
+        top_parties_spending = api_caller.load_top_parties('-disbursements')
         return render_template('landing.html',
             page='home',
             parent='data',
             dates=utils.date_ranges(),
-            top_candidates_raising = api_caller.load_top_candidates('-receipts')['results'],
-            top_candidates_spending = api_caller.load_top_candidates('-disbursements')['results'],
-            top_pacs_raising = api_caller.load_top_pacs('-receipts')['results'],
-            top_pacs_spending = api_caller.load_top_pacs('-disbursements')['results'],
-            top_parties_raising = api_caller.load_top_parties('-receipts')['results'],
-            top_parties_spending = api_caller.load_top_parties('-disbursements')['results'],
+            top_candidates_raising = top_candidates_raising['results'] if top_candidates_raising else None,
+            top_candidates_spending = top_candidates_spending['results'] if top_candidates_spending else None,
+            top_pacs_raising = top_pacs_raising['results'] if top_pacs_raising else None,
+            top_pacs_spending = top_pacs_spending['results'] if top_pacs_spending else None,
+            top_parties_raising = top_parties_raising['results'] if top_parties_raising else None,
+            top_parties_spending = top_parties_spending['results'] if top_parties_spending else None,
             title='Campaign finance data')
 
 @app.route('/api/')
