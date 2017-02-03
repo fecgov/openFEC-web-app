@@ -69,11 +69,11 @@ LineChart.prototype.buildChart = function() {
     entityTotals[type] = totals;
   });
 
-  var minYear = d3.min(data, function(d) {
-    return d.date.getFullYear();
-  });
-
-  var maxYear = minYear + 1;
+  var minYear = window.DEFAULT_TIME_PERIOD - 1;
+  var maxYear = window.DEFAULT_TIME_PERIOD;
+  var maxY = function() {
+    return 1000000000;
+  };
 
   // Build the scales
   var x = d3.time.scale()
@@ -82,7 +82,7 @@ LineChart.prototype.buildChart = function() {
     .range([0, this.width]);
 
   var y = d3.scale.linear()
-      .domain([0, Math.ceil(max / 1000000000) * 1000000000])
+      .domain([0, Math.ceil(max / maxY) * maxY])
       .range([this.height, 0]);
 
   var xAxis = d3.svg.axis().scale(x);

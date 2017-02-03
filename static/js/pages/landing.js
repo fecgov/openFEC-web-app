@@ -13,7 +13,7 @@ var analytics = require('fec-style/js/analytics');
 
 var entityTotalsURL = helpers.buildUrl(
   ['totals', 'by_entity'],
-  { 'cycle': '2016', 'per_page': '100'}
+  { 'cycle': window.DEFAULT_TIME_PERIOD, 'per_page': '100'}
 );
 
 function Overview(selector, data, index) {
