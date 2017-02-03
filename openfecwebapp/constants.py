@@ -195,10 +195,6 @@ form_types = OrderedDict([
     ('RFAI', "Request For Additional Information"),
 ])
 
-amendment_indicators = OrderedDict([
-    ('N', 'New'),
-    ('A', 'Amendment'),
-])
 amendment_indicators_extended = OrderedDict([
     ('T', 'Terminated'),
     ('C', 'Consolidated'),
@@ -261,7 +257,7 @@ table_columns = OrderedDict([
     ('communication-costs', ['Committee', 'Support/Oppose', 'Candidate', 'Amount', 'Date']),
     ('disbursements', ['Spender', 'Recipient', 'State', 'Description', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
-    ('filings', ['Filer name', 'Document', 'Amendment Indicator', 'Receipt date']),
+    ('filings', ['Filer name', 'Document', 'Version', 'Receipt date']),
     ('independent-expenditures', ['Spender', 'Support/Oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
     ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount']),

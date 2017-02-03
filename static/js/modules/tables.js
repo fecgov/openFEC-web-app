@@ -123,6 +123,7 @@ function modalRenderRow(row, data, index) {
 function modalRenderFactory(template, fetch) {
   var callback;
   fetch = fetch || identity;
+
   return function(api, data, response) {
     var $table = $(api.table().node());
     var $modal = $('#datatable-modal');
