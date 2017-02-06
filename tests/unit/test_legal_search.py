@@ -1,14 +1,13 @@
 import unittest
 from unittest import mock
 from urllib.parse import urlparse, parse_qs
-import codecs
-import json
 from collections import OrderedDict
 
 
 from openfecwebapp import api_caller
 from openfecwebapp.app import app
 from tests import factory
+
 
 class TestLegalSearch(unittest.TestCase):
 
@@ -57,7 +56,7 @@ class TestLegalSearch(unittest.TestCase):
 
         assert response.status_code == 200
         load_legal_search_results.assert_called_once_with('in kind donation',
-            'regulations', None, None, None, None, None, None, None, None, offset=0)
+            'regulations', None, None, None, None, None, None, None, None, None, offset=0)
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_advisory_opinions(self, load_legal_search_results):
@@ -69,7 +68,64 @@ class TestLegalSearch(unittest.TestCase):
         assert response.status_code == 200
 
         load_legal_search_results.assert_called_once_with('in kind donation',
-            'advisory_opinions', None, None, None, None, None, None, 0, None, offset=0)
+            'advisory_opinions', None, None, None, None, None, None, 0, None, None, offset=0)
+
+    @mock.patch.object(api_caller, '_call_api')
+    def test_api_invoked_correctly_for_ao(self, _call_api):
+        _call_api.return_value = {}
+        self.app.get(
+            '/legal/search/advisory-opinions/',
+            data={
+                'search': 'in kind donation',
+                'search_type': 'advisory_opinions'
+            }
+        )
+        _call_api.assert_called_once_with('legal',
+                                          'search',
+                                          from_hit=0,
+                                          hits_returned=20,
+                                          q='in kind donation',
+                                          type='advisory_opinions')
+
+
+    @mock.patch.object(api_caller, '_call_api')
+    def test_api_invoked_correctly_for_mur(self, _call_api):
+        _call_api.return_value = {}
+        self.app.get(
+            '/legal/search/enforcement/',
+            data={
+                'mur_no': '1234',
+                'search': 'presidents',
+                'search_type': 'murs',
+            }
+        )
+        _call_api.assert_called_once_with('legal',
+                                          'search',
+                                          from_hit=0,
+                                          hits_returned=20,
+                                          mur_no='1234',
+                                          q='presidents',
+                                          type='murs')
+
+
+    @mock.patch.object(api_caller, '_call_api')
+    def test_api_invoked_correctly_if_only_mur_search(self, _call_api):
+        _call_api.return_value = {}
+        self.app.get(
+            '/legal/search/enforcement/',
+            data={
+                'mur_no': '1234',
+                'search_type': 'murs',
+            }
+        )
+        _call_api.assert_called_once_with('legal',
+                                          'search',
+                                          from_hit=0,
+                                          hits_returned=20,
+                                          mur_no='1234',
+                                          q='',
+                                          type='murs')
+
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_pagination(self, load_legal_search_results):
@@ -81,7 +137,8 @@ class TestLegalSearch(unittest.TestCase):
                     'offset': 20})
         assert response.status_code == 200
         load_legal_search_results.assert_called_once_with('in kind donation',
-         'regulations', None, None, None, None, None, None, None, None, offset=20)
+         'regulations', None, None, None, None, None, None, None, None, None, offset=20)
+
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_statutes(self, load_legal_search_results):
@@ -92,7 +149,8 @@ class TestLegalSearch(unittest.TestCase):
                     'search_type': 'statutes'})
         assert response.status_code == 200
         load_legal_search_results.assert_called_once_with('in kind donation', 'statutes',
-            None, None, None, None, None, None, None, None, offset=0)
+            None, None, None, None, None, None, None, None, None, offset=0)
+
 
     @mock.patch.object(api_caller, '_call_api')
     def test_advisory_opinion_grouping(self, _call_api_mock):
@@ -117,6 +175,7 @@ class TestLegalSearch(unittest.TestCase):
         assert results['advisory_opinions_returned'] == 3
         assert results['statutes_returned'] == 4
         assert results['regulations_returned'] == 5
+
 
 if __name__ == '__main__':
     unittest.main()

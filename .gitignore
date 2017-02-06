@@ -9,7 +9,12 @@ node_modules
 rev-manifest.json
 openfecwebapp/local_config.py
 app/
+
 /.env
+/env
+/.idea
+/.cache
 .DS_Store
+
 coverage/
 dist

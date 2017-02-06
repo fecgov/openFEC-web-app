@@ -342,7 +342,10 @@ def spending_breakdown(top_category, cycle):
 def legal_search(query, result_type):
     if result_type != 'all':
         # search_type is used for google analytics
+        print("Redirecting")
         return redirect(url_for(result_type, search=query, search_type=result_type))
+    else:
+        print('Not redirecting')
 
     results = {}
 
@@ -354,15 +357,15 @@ def legal_search(query, result_type):
 
 def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=None,
                         ao_max_date=None, ao_is_pending=None, ao_requestor=None,
-                        ao_requestor_type=None, ao_category=None, **kwargs):
+                        ao_requestor_type=None, ao_category=None, mur_no=None, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
     # Only hit the API if there's an actual query or if the result_type is AOs
-    if query or result_type == 'advisory_opinions':
+    if query or result_type == 'advisory_opinions' or result_type == 'murs':
         results = api_caller.load_legal_search_results(query, result_type,
                     ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
-                    ao_requestor, ao_requestor_type, ao_category, **kwargs)
+                    ao_requestor, ao_requestor_type, ao_category, mur_no, **kwargs)
 
     if ao_no:
         if ao_no[0]:
@@ -388,7 +391,7 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
 
     return views.render_legal_doc_search_results(results, query, result_type,
                         ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
-                        ao_requestor, ao_requestor_type, ao_category)
+                        ao_requestor, ao_requestor_type, ao_category, mur_no)
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
@@ -440,13 +443,16 @@ def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None,
 def statutes(query, offset):
     return legal_doc_search(query, 'statutes', offset=offset)
 
+
 @app.route('/legal/search/enforcement/')
 @use_kwargs({
-    'query': fields.Str(load_from='search'),
+    'query': fields.Str(load_from='search', missing=''),
     'offset': fields.Int(missing=0),
+    'mur_no': fields.Str(missing=None)
 })
-def murs(query, offset):
-    return legal_doc_search(query, 'murs', offset=offset)
+def murs(query, offset, mur_no):
+    return legal_doc_search(query, 'murs', offset=offset, mur_no=mur_no)
+
 
 # TODO migrating from /legal/regulations -> /legal/search/regulations, eventually there will be a regulations landing page
 @app.route('/legal/regulations/')
