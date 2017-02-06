@@ -1,0 +1,33 @@
+{% extends 'layouts/main.html' %}
+{% import 'macros/cycle-select.html' as select %}
+{% import 'macros/tabs.html' as tabs %}
+{% import 'macros/page-header.html' as header %}
+
+{% block title %}
+    {{ name }} - Candidate overview
+{% endblock %}
+
+{% set breadcrumbs=[('', 'Candidate profiles')] %}
+
+{% block body %}
+<div class="tab-interface">
+  {{ header.header(name, breadcrumbs) }}
+  <header class="entity__header entity__header--neutral">
+    <div class="container">
+      <div class="entity__header__top row">
+        <h1 class="entity__name">{{ name }}</h1>
+        <div class="heading--section">
+          <span class="t-data t-bold entity__type">Candidate for {{ office_full }}</span>
+          {% if office == 'S' %}<span class="t-data t-bold entity__type">{{ constants.states[state] }}</span>{% endif %}
+          <span class="t-data t-bold entity__type">ID: {{ candidate_id }}</span>
+          <span class="t-data t-bold">{{ party_full }}</span>
+          </h5>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+</div>
+
+{% endblock %}
