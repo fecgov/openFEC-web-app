@@ -21,7 +21,7 @@ $(document).ready(function() {
     title: 'Debts',
     path: ['schedules', 'schedule_d'],
     columns: columns.debts,
-    order: [[4, 'desc']],
+    order: [[3, 'desc']],
     useFilters: true,
     useExport: true,
     rowCallback: tables.modalRenderRow
