@@ -10,24 +10,40 @@
 {% set breadcrumbs=[('', 'Candidate profiles')] %}
 
 {% block body %}
-<div class="tab-interface">
-  {{ header.header(name, breadcrumbs) }}
-  <header class="entity__header entity__header--neutral">
-    <div class="container">
-      <div class="entity__header__top row">
-        <h1 class="entity__name">{{ name }}</h1>
-        <div class="heading--section">
-          <span class="t-data t-bold entity__type">Candidate for {{ office_full }}</span>
-          {% if office == 'S' %}<span class="t-data t-bold entity__type">{{ constants.states[state] }}</span>{% endif %}
-          <span class="t-data t-bold entity__type">ID: {{ candidate_id }}</span>
-          <span class="t-data t-bold">{{ party_full }}</span>
-          </h5>
-        </div>
+
+{{ header.header(name, breadcrumbs) }}
+<header class="entity__header entity__header--neutral">
+  <div class="container">
+
+    <div class="entity__header__top row">
+      <h1 class="entity__name">{{ name }}</h1>
+      <div class="heading--section">
+        <span class="t-data t-bold entity__type">Candidate for {{ office_full }}</span>
+        {% if office == 'S' %}<span class="t-data t-bold entity__type">{{ constants.states[state] }}</span>{% endif %}
+        <span class="t-data t-bold entity__type">ID: {{ candidate_id }}</span>
+        <span class="t-data t-bold">{{ party_full }}</span>
+        </h5>
       </div>
-
     </div>
-  </header>
 
-</div>
+    <div class="sidebar-container sidebar-container--left">
+      <nav class="sidebar sidebar--breakdown sidebar--left side-nav-alt">
+        <ul>
+          <li class="side-nav__item"><a class="side-nav__link is-active">Financial Summary</a></li>
+          <li class="side-nav__item"><span class="side-nav__link">Elections and Committees</span></li>
+          <li class="side-nav__item"><span class="side-nav__link">Individual Contributions</span></li>
+          <li class="side-nav__item"><span class="side-nav__link">Disbursements</span></li>
+          <li class="side-nav__item"><span class="side-nav__link">Spending by others to support or oppose</span></li>
+          <li class="side-nav__item"><span class="side-nav__link">Filings</span></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="main__content--right">
+      <h2>Financial summary</h2>
+    </div>
+
+  </div>
+</header>
 
 {% endblock %}
