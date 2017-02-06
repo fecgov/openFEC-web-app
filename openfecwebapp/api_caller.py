@@ -182,19 +182,9 @@ def load_legal_mur(mur_no):
             if 'complainant' in participant['role'].lower():
                 complainants.append(participant['name'])
 
-        mur['disposition_text'] = [d['text'] for d in mur['disposition']['text']]
+        mur['disposition_text'] = [d['action'] for d in mur['commission_votes']]
 
-        disposition_data = OrderedDict()
-        for row in mur['disposition']['data']:
-            if row['disposition'] in disposition_data:
-                if row['penalty'] in disposition_data[row['disposition']]:
-                    disposition_data[row['disposition']][row['penalty']].append(row)
-                else:
-                    disposition_data[row['disposition']][row['penalty']] = [row]
-            else:
-                disposition_data[row['disposition']] = OrderedDict({row['penalty']: [row]})
-
-        mur['disposition_data'] = disposition_data
+        mur['collated_dispositions'] = collate_dispositions(mur['dispositions'])
         mur['complainants'] = complainants
         mur['participants_by_type'] = _get_sorted_participants_by_type(mur)
 
@@ -206,6 +196,19 @@ def load_legal_mur(mur_no):
                 documents_by_type[doc['category']] = [doc]
         mur['documents_by_type'] = documents_by_type
     return mur
+
+def collate_dispositions(dispositions):
+    """ Collate dispositions - group them by disposition, penalty """
+    collated_dispositions = OrderedDict()
+    for row in dispositions:
+        if row['disposition'] in collated_dispositions:
+            if row['penalty'] in collated_dispositions[row['disposition']]:
+                collated_dispositions[row['disposition']][row['penalty']].append(row)
+            else:
+                collated_dispositions[row['disposition']][row['penalty']] = [row]
+        else:
+            collated_dispositions[row['disposition']] = OrderedDict({row['penalty']: [row]})
+    return collated_dispositions
 
 
 def load_single_type(data_type, c_id, *path, **filters):
