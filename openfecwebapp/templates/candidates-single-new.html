@@ -44,9 +44,18 @@
   <div class="main__content--right">
 
     <div class="container">
+
       <div class="heading--section">
         <h2>Financial summary: {{ format_election_years(cycle, election_full, duration) }}</h2>
       </div>
+
+      <div class="content__section">
+        <div class="entity__cycle">
+          <span class="label">Show data for</span>
+          {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
+        </div>
+      </div>
+
       {% if aggregate %}
       <div class="content__section">
         <figure class="candidate__totals">
