@@ -52,22 +52,26 @@ def developers():
     url.path.add('developers')
     return redirect(url.url, http.client.MOVED_PERMANENTLY)
 
+@app.route('/candidate/<c_id>/<flag>/')
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
     'election_full': fields.Bool(missing=True),
 })
-def candidate_page(c_id, cycle=None, election_full=True):
+def candidate_page(c_id, flag=None, cycle=None, election_full=True):
     """Fetch and render data for candidate detail page.
 
     :param int cycle: Optional cycle for associated committees and financials.
     :param bool election_full: Load full election period
+
+    TEMPORARY: feature flag (flag) to load in a different template.
     """
     candidate, committees, cycle = api_caller.load_with_nested(
         'candidate', c_id, 'committees',
         cycle=cycle, cycle_key='two_year_period',
         election_full=election_full,
     )
+
     if election_full and cycle and cycle not in candidate['election_years']:
         next_cycle = next(
             (
@@ -76,10 +80,16 @@ def candidate_page(c_id, cycle=None, election_full=True):
             ),
             max(candidate['election_years']),
         )
-        return redirect(
-            url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
-        )
-    return views.render_candidate(candidate, committees, cycle, election_full)
+        if flag:
+            return redirect(
+                url_for('candidate_page', c_id=c_id, flag=flag, cycle=next_cycle, election_full='true')
+            )
+        else:
+            return redirect(
+                url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
+            )
+
+    return views.render_candidate(candidate, committees, flag, cycle, election_full)
 
 @app.route('/committee/<c_id>/')
 @use_kwargs({
