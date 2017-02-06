@@ -1,3 +1,10 @@
+/**
+* modules/columns.js
+* -------------------
+* This file contains objects to support column data for datatable pages.
+*
+*/
+
 'use strict';
 
 var _ = require('underscore');
