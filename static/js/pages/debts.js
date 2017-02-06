@@ -1,3 +1,5 @@
+'use strict';
+
 /**
 * Debts datatable page
 * ---------------------
@@ -5,9 +7,6 @@
 * the committee that are required to be disclosed.
 *
 */
-
-
-'use strict';
 
 var $ = require('jquery');
 
