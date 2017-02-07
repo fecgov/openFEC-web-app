@@ -34,20 +34,19 @@ def _call_api(*path_parts, **filters):
     return results.json() if results.ok else {}
 
 
-def load_search_results(query, query_type='candidates'):
+def load_search_results(query, query_type=None):
     filters = {}
 
     if query:
         filters['q'] = query
         filters['sort'] = ['-receipts']
+        candidates = _call_api('/candidates/search', **filters)
+        committees = _call_api('/committees', **filters)
 
-    url = '/' + query_type
-    if query_type == 'candidates':
-        url += '/search'
-    results = _call_api(url, **filters)
-
-    return results['results'] if len(results) else []
-
+        return {
+            'candidates': candidates['results'] if len(candidates) else [],
+            'committees': committees['results'] if len(committees) else []
+        }
 
 def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
                                 ao_min_date=None, ao_max_date=None, ao_is_pending=None,

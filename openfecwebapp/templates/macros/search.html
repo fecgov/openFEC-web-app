@@ -10,16 +10,12 @@
 <form id="{{ location }}-search" action="{{ url_for('search') }}" autocomplete="off" class="search__container js-search">
   <div class="combo combo--search {{ size }}">
     <select class="search__select js-search-type {{select_class}}" name="search_type" aria-label="Select a search type">
-      <option value="candidates"
-        {% if result_type != 'committees' %}
+      <option value="all"
+        {% if result_type == 'all' %}
           selected
-        {% endif %}
-      >{{ candidate_option}}</option>
-      <option value="committees"
-        {% if result_type == 'committees' %}
-          selected
-        {% endif %}
-      >{{committee_option}}</option>
+        {% endif %}>All</option>
+      <option value="candidates">{{ candidate_option}}</option>
+      <option value="committees">{{committee_option}}</option>
     </select>
     <input class="js-search-input combo__input" type="text" name="search"
     aria-label="Search for {{ result_type }}"
