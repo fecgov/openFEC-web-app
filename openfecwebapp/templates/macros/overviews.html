@@ -64,11 +64,12 @@
   {% endif %}
   <div class="top-list js-top-list" data-type="{{type}}">
     <h2 class="top-list__title">{{ title }} overview</h2>
-    <h3 class="top-list__subtitle">Top <span class="js-top-type">raising</span> (2015–2016)</h3>
+    <h3 class="top-list__subtitle">Top <span class="js-top-type">raising</span> ({{ constants.DEFAULT_TIME_PERIOD|fmt_year_range }})</h3>
     <div class="toggles--simple">
       <button class="toggle is-active" aria-controls="{{type}}-top-raising">Top raising</button> |
       <button class="toggle" aria-controls="{{type}}-top-spending">Top spending</button>
     </div>
+    {% if raising_data %}
     <ol class="figure--zero-pad js-top-raising" id="{{type}}-top-raising">
       {% for data in raising_data %}
       <li class="figure__item">
@@ -79,6 +80,8 @@
       </li>
       {% endfor %}
     </ol>
+    {% endif %}
+    {% if spending_data %}
     <ol class="figure--zero-pad js-top-spending" id="{{type}}-top-spending">
       {% for data in spending_data %}
       <li class="figure__item">
@@ -89,5 +92,6 @@
       </li>
       {% endfor %}
     </ol>
+    {% endif %}
   </div>
 {% endmacro %}

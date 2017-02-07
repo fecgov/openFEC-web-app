@@ -8,6 +8,7 @@ from flask import abort
 
 from openfecwebapp import utils
 from openfecwebapp import config
+from openfecwebapp import constants
 
 from collections import OrderedDict
 
@@ -262,7 +263,7 @@ def result_or_404(data):
         abort(404)
     return data['results'][0]
 
-def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
+def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'candidates', 'totals',
             sort_hide_null=True,
@@ -277,7 +278,7 @@ def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
             return response
         return {}
 
-def load_top_pacs(sort, cycle=2016, per_page=5):
+def load_top_pacs(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'pac',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
@@ -286,7 +287,7 @@ def load_top_pacs(sort, cycle=2016, per_page=5):
             return response
         return {}
 
-def load_top_parties(sort, cycle=2016, per_page=5):
+def load_top_parties(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'party',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
