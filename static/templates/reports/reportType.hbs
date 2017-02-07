@@ -5,13 +5,8 @@
     {{ else }}
     {{ doc_description }}
     {{/if}}
-    {{#if show_version }}
-    |
-    {{#if is_original }}
-    Original
-    {{ else }}
-    Amendment {{ amendment_num }}
-    {{/if}}
+    {{#if amendment_version }}
+    | {{ amendment_version }}
     {{/if}}
   </div>
 

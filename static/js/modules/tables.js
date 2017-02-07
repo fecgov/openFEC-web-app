@@ -123,6 +123,7 @@ function modalRenderRow(row, data, index) {
 function modalRenderFactory(template, fetch) {
   var callback;
   fetch = fetch || identity;
+
   return function(api, data, response) {
     var $table = $(api.table().node());
     var $modal = $('#datatable-modal');
@@ -452,7 +453,7 @@ DataTable.prototype.initTable = function() {
 
   this.$body.css('width', '100%');
   this.$body.find('tbody').addClass('js-panel-toggle');
-}
+};
 
 DataTable.prototype.initFilters = function() {
   // Set `this.filterSet` before instantiating the nested `DataTable` so that

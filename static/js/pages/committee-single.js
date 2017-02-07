@@ -138,7 +138,7 @@ var occupationColumns = [
 ];
 
 var columnKeys =   [
-  'pdf_url', 'amendment_indicator', 'receipt_date', 'coverage_end_date',
+  'pdf_url', 'version', 'receipt_date', 'coverage_end_date',
   'total_receipts', 'total_disbursements', 'modal_trigger'
 ];
 
