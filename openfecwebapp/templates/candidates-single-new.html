@@ -30,7 +30,7 @@
       <ul class="tablist" role="tablist" data-name="tab">
         <li class="side-nav__item" role="presentation">
           <a
-            class="side-nav__link side-nav__tab"
+            class="side-nav__link"
             role="tab"
             data-name="summary"
             tabindex="0"
@@ -40,12 +40,12 @@
         </li>
         <li class="side-nav__item" role="presentation">
           <a
-            class="side-nav__link side-nav__tab"
+            class="side-nav__link"
             role="tab"
             data-name="other-spending"
             tabindex-"1"
             aria-controls="panel2"
-            href="#section-2">Spending by others to support or oppose</span>
+            href="#section-2">Spending by others to support or oppose</a>
         </li>
       </ul>
     </nav>
@@ -57,6 +57,12 @@
       {{ tabs.tab('Financial summary', 'summary', 'panel1', '#section-1') }}
       {{ tabs.tab('Spending by others to support/oppose', 'other-spending', 'panel2', '#section-2') }}
     </ul>
+
+    <section id="section-0" role="tabpanel" aria-hidden="false">
+      <div class="container overlay__container">
+        <div class="overlay overlay--neutral is-loading"></div>
+      </div>
+    </section>
 
     {% include 'partials/candidate/financial-summary-new.html' %}
     {% include 'partials/candidate/other-spending-tab-new.html' %}
