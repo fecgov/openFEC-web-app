@@ -15,10 +15,13 @@
       <nav class="sidebar sidebar--neutral side-nav js-sticky-side" data-sticky-container="main">
         <ul class="sidebar__content">
           <li class="side-nav__item">
-              <a class="side-nav__link" href="#results-candidates">Candidates</a>
+              <a class="side-nav__link" href="#candidates">Candidates</a>
           </li>
           <li class="side-nav__item">
-              <a class="side-nav__link" href="#results-committees">Committees</a>
+              <a class="side-nav__link" href="#committees">Committees</a>
+          </li>
+          <li class="side-nav__item">
+              <a class="side-nav__link" href="#contributions">Contributions</a>
           </li>
         </ul>
       </nav>
@@ -28,7 +31,7 @@
         <h1>Results for "{{ query }}"</h1>
       </header>
         {% if results %}
-        <div class="content__section" id="candidate-results">
+        <div class="content__section" id="candidates">
           <h2>Candidates</h2>
           {% with candidates=results['candidates'] %}
             {% for candidate in candidates %}
@@ -36,12 +39,22 @@
             {% endfor %}
           {% endwith %}
         </div>
-        <div class="content__section" id="committee-results">
+        <div class="content__section" id="committees">
           <h2>Committees</h2>
           {% with committees=results['committees'] %}
             {% for committee in committees %}
               {% include 'partials/search-results-committee.html' %}
             {% endfor %}
+          {% endwith %}
+        </div>
+        <div class="content__section" id="contributions">
+          <h2>Contributions</h2>
+          {% with contributions=results['contributions'] %}
+            <ul class="list--bulleted">
+            {% for contribution in contributions %}
+              <li>{{contribution['contributor_name']}}</li>
+            {% endfor %}
+            </ul>
           {% endwith %}
         </div>
     {% endif %}
