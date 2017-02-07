@@ -13,7 +13,7 @@
 
 {{ header.header(name, breadcrumbs) }}
 
-<div class="container tab-interface">
+<div class="u-padding--left u-padding--right tab-interface">
   <header class="main">
     <h1 class="entity__name">{{ name }}</h1>
     <div class="heading--section">
@@ -25,8 +25,9 @@
     </div>
   </header>
 
-  <div class="sidebar-container sidebar-container--left">
-    <nav class="sidebar sidebar--left side-nav-alt">
+  <div class="data-container__wrapper">
+
+    <nav class="sidebar side-nav-alt">
       <ul class="tablist" role="tablist" data-name="tab">
         <li class="side-nav__item" role="presentation">
           <a
@@ -49,20 +50,21 @@
         </li>
       </ul>
     </nav>
+
+    <div class="main__content--right-full">
+
+      <section id="section-0" role="tabpanel" aria-hidden="false">
+        <div class="overlay__container">
+          <div class="overlay overlay--neutral is-loading"></div>
+        </div>
+      </section>
+
+      {% include 'partials/candidate/financial-summary-new.html' %}
+      {% include 'partials/candidate/other-spending-tab-new.html' %}
+
+    </div>
   </div>
 
-  <div class="main__content--right">
-
-    <section id="section-0" role="tabpanel" aria-hidden="false">
-      <div class="container overlay__container">
-        <div class="overlay overlay--neutral is-loading"></div>
-      </div>
-    </section>
-
-    {% include 'partials/candidate/financial-summary-new.html' %}
-    {% include 'partials/candidate/other-spending-tab-new.html' %}
-
-  </div>
 </div>
 
 {% endblock %}
