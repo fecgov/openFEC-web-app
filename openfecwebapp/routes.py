@@ -221,6 +221,17 @@ def communication_costs():
         columns=constants.table_columns['communication-costs']
     )
 
+@app.route('/itemized-loans/')
+def itemized_loans():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        result_type='itemized-loans',
+        slug='itemized-loans',
+        title='itemized-loans',
+        columns=constants.table_columns['itemized-loans']
+    )
+
 @app.route('/reports/<form_type>/')
 def reports(form_type):
     if form_type.lower() not in ['presidential', 'house-senate', 'pac-party', 'ie-only']:

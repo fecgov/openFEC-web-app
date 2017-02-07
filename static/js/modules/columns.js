@@ -506,6 +506,26 @@ var reports = {
   }
 };
 
+var itemizedLoans = [
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--large',
+    render: function (data, type, row) {
+      return row.committee.name;
+    }
+  },
+  {
+    data: 'loan_source_name',
+    orderable: false,
+    className: 'all column--large',
+  },
+  dateColumn({data: 'load_date', orderable: true, className: 'min-tablet hide-panel column--med'}),
+  currencyColumn({data: 'payment_to_date', className: 'min-desktop hide-panel column--number'}),
+  currencyColumn({data: 'original_loan_amount', className: 'min-desktop hide-panel column--number'}),
+  modalTriggerColumn
+];
+
 module.exports = {
   candidateColumn: candidateColumn,
   committeeColumn: committeeColumn,
@@ -524,5 +544,6 @@ module.exports = {
   individualContributions: individualContributions,
   filings: filings,
   receipts: receipts,
-  reports: reports
+  reports: reports,
+  itemizedLoans: itemizedLoans
 };
