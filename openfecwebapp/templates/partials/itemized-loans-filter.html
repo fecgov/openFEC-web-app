@@ -1,0 +1,25 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/states.html' as states %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+{% import 'macros/filters/years.html' as years %}
+
+{% import 'macros/filters/date.html' as date %}
+{% import 'macros/filters/range.html' as range %}
+{% import 'macros/filters/ie-reports.html' as reports %}
+
+
+{% block filters %}
+<div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
+  <button type="button" class="js-accordion-trigger accordion__button">Committee information</button>
+  <div class="accordion__content">
+  {{ typeahead.field('committee_id', 'Committee Name or ID') }}
+</div>
+  {{ text.field('loan_source_name', 'Loaner name') }}
+  {{ date.field('load_date', 'Date', dates, id_suffix='_raw') }}
+  {{ range.amount('payment_to_date', 'Payment to date') }}
+  {{ range.amount('original_loan_amount', 'Original loan amount') }}
+  {{ reports.form()}}
+</div>
+{% endblock %}
