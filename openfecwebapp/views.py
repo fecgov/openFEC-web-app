@@ -148,7 +148,7 @@ report_types = {
     'I': 'ie-only'
 }
 
-def render_candidate(candidate, committees, cycle, election_full=True):
+def render_candidate(candidate, committees, flag, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
@@ -198,7 +198,10 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
-    return render_template('candidates-single.html', **tmpl_vars)
+    if flag == "new":
+        return render_template('candidates-single-new.html', **tmpl_vars)
+    else:
+        return render_template('candidates-single.html', **tmpl_vars)
 
 
 def validate_referer(referer):
