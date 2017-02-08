@@ -227,15 +227,15 @@ def communication_costs():
         columns=constants.table_columns['communication-costs']
     )
 
-@app.route('/itemized-loans/')
-def itemized_loans():
+@app.route('/loans/')
+def loans():
     return render_template(
         'datatable.html',
         parent='data',
-        result_type='itemized-loans',
-        slug='itemized-loans',
-        title='itemized-loans',
-        columns=constants.table_columns['itemized-loans']
+        result_type='loans',
+        slug='loans',
+        title='loans',
+        columns=constants.table_columns['loans']
     )
 
 @app.route('/reports/<form_type>/')

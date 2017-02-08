@@ -506,7 +506,7 @@ var reports = {
   }
 };
 
-var itemizedLoans = [
+var loans = [
   {
     data: 'committee',
     orderable: false,
@@ -545,5 +545,5 @@ module.exports = {
   filings: filings,
   receipts: receipts,
   reports: reports,
-  itemizedLoans: itemizedLoans
+  loans: loans
 };
