@@ -58,7 +58,7 @@
       </div>
       <div class="legal-mur__property">
         <p>
-          <strong>SUBJECT:</strong> {{ '; '.join(mur['subject']['text']) }}
+          <strong>SUBJECT:</strong> {{ '; '.join(mur['subjects']) }}
         </p>
       </div>
       <div class="legal-mur__property">
@@ -80,14 +80,14 @@
         </tr>
       </thead>
       <tbody>
-        {% for disposition in mur.disposition_data %}
+        {% for disposition in mur.collated_dispositions %}
           {% set dispositionloop = loop %}
-          {% for penalty in mur.disposition_data[disposition] %}
-            {% for entry in mur.disposition_data[disposition][penalty] %}
+          {% for penalty in mur.collated_dispositions[disposition] %}
+            {% for entry in mur.collated_dispositions[disposition][penalty] %}
               <tr class="{{ dispositionloop.cycle('row-color-normal', 'row-color-contrast') }}">
                 {% if loop.first %}
-                <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}">{{ disposition }}</td>
-                <td rowspan="{{ mur.disposition_data[disposition][penalty] | length }}"> {{ penalty | currency or '' }} </td>
+                <td rowspan="{{ mur.collated_dispositions[disposition][penalty] | length }}">{{ disposition }}</td>
+                <td rowspan="{{ mur.collated_dispositions[disposition][penalty] | length }}"> {{ penalty | currency or '' }} </td>
                 {% endif %}
                 <td> {{ entry.respondent }}</td>
                 <td>

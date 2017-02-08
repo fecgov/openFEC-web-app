@@ -1,6 +1,8 @@
 from collections import OrderedDict
 
 START_YEAR = 1979
+END_YEAR = 2018
+DEFAULT_TIME_PERIOD = 2016
 
 states = OrderedDict([
     ('AK', 'Alaska'),

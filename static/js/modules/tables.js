@@ -453,7 +453,7 @@ DataTable.prototype.initTable = function() {
 
   this.$body.css('width', '100%');
   this.$body.find('tbody').addClass('js-panel-toggle');
-}
+};
 
 DataTable.prototype.initFilters = function() {
   // Set `this.filterSet` before instantiating the nested `DataTable` so that

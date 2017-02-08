@@ -21,19 +21,17 @@ def test_load_legal_mur(call_api):
                     'citations': []
                 },
             ],
-            'disposition': {
-                'text': '',
-                'data': [
-                    {
-                        'disposition': 'Conciliation-PC',
-                        'penalty': 100.0
-                    },
-                    {
-                        'disposition': 'Conciliation-PC',
-                        'penalty': 0.0
-                    },
-                ]
-            },
+            'commission_votes': [],
+            'dispositions': [
+                {
+                    'disposition': 'Conciliation-PC',
+                    'penalty': 100.0
+                },
+                {
+                    'disposition': 'Conciliation-PC',
+                    'penalty': 0.0
+                },
+            ],
             'documents': []
         }]
     }
@@ -45,7 +43,7 @@ def test_load_legal_mur(call_api):
         ('Respondent', ['Bilbo Baggins']),
         ('Complainant', ['Gollum']),
     ])
-    assert mur['disposition_data'] == OrderedDict([
+    assert mur['collated_dispositions'] == OrderedDict([
         ('Conciliation-PC', OrderedDict([
             (100.0, [{'penalty': 100.0, 'disposition': 'Conciliation-PC'}]),
             (0.0, [{'penalty': 0.0, 'disposition': 'Conciliation-PC'}])
