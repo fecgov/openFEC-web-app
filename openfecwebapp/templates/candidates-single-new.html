@@ -18,7 +18,11 @@
     <h1 class="entity__name">{{ name }}</h1>
     <div class="heading--section">
       <span class="t-data t-bold entity__type">Candidate for {{ office_full }}</span>
-      {% if office == 'S' %}<span class="t-data t-bold entity__type">{{ constants.states[state] }}</span>{% endif %}
+      {% if office == 'S' %}
+      <span class="t-data t-bold entity__type">{{ constants.states[state] }}</span>
+      {% elif office == 'H' %}
+      <span class="t-data t-bold entity__type">{{ constants.states[state] }} - {{ district }}</span>
+      {% endif %}
       <span class="t-data t-bold entity__type">ID: {{ candidate_id }}</span>
       <span class="t-data t-bold">{{ party_full }}</span>
       </h5>
