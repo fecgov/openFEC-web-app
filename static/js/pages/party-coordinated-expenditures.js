@@ -16,7 +16,7 @@ $(document).ready(function() {
     title: 'Party coordinated expenditures',
     path: ['schedules', 'schedule_f'],
     columns: columns.partyCoordinatedExpenditures,
-    rowCallback: tables.modalRenderRow,
+    useExport: true,
     order: [[3, 'desc']],
     useFilters: true,
     rowCallback: tables.modalRenderRow
