@@ -9,7 +9,7 @@ $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
     autoWidth: false,
-    title: 'loans',
+    title: 'Loans',
     path: ['schedules','schedule_c'],
     columns: columns.loans,
     order: [[2, 'desc']],

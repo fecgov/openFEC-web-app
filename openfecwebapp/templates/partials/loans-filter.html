@@ -16,9 +16,8 @@
       {{ typeahead.field('committee_id', 'Committee Name or ID') }}
       {{ text.field('loaner_name', 'Loaner name') }}
       {{ date.field('load_date', 'Date', dates, id_suffix='_raw') }}
-      {{ range.amount('payment_to_date', 'Payment to date') }}
-      {{ range.amount('original_loan_amount', 'Original loan amount') }}
-      {{ reports.form()}}
+      {{ range.amount('amount', 'Payment to date') }}
+      {{ range.amount('amount', 'Original loan amount') }}
    </div>
  </div>
 {% endblock %}
