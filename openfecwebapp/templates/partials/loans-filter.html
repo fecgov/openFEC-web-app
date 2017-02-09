@@ -14,7 +14,7 @@
     <button type="button" class="js-accordion-trigger accordion__button">Committee information</button>
     <div class="accordion__content">
       {{ typeahead.field('committee_id', 'Committee Name or ID') }}
-      {{ text.field('loan_source_name', 'Loaner name') }}
+      {{ text.field('loaner_name', 'Loaner name') }}
       {{ date.field('load_date', 'Date', dates, id_suffix='_raw') }}
       {{ range.amount('payment_to_date', 'Payment to date') }}
       {{ range.amount('original_loan_amount', 'Original loan amount') }}
