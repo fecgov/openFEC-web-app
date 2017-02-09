@@ -221,6 +221,17 @@ def communication_costs():
         columns=constants.table_columns['communication-costs']
     )
 
+@app.route('/party-coordinated-expenditures/')
+def party_coordinated_expenditures():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        slug='party-coordinated-expenditures',
+        title='Party coordinated expenditures',
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['party-coordinated-expenditures']
+    )
+
 @app.route('/reports/<form_type>/')
 def reports(form_type):
     if form_type.lower() not in ['presidential', 'house-senate', 'pac-party', 'ie-only']:
