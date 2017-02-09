@@ -406,7 +406,7 @@ var partyCoordinatedExpenditures = [
     data: 'committee',
     orderable: false,
     className: 'all column--xl',
-    render: function(data, type, row, meta) {
+    render: function(data, type, row) {
       if (data) {
         return columnHelpers.buildEntityLink(
           data.name,
