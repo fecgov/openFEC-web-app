@@ -73,7 +73,7 @@ var receiptDateColumn = {
 var pagesColumn = {
   data: 'beginning_image_number',
   orderable: false,
-  className: 'min-tablet hide-panel column--small',
+  className: 'min-tablet hide-panel column--xs column--number',
   render: function(data, type, row) {
     // Image numbers begin with YYYYMMDD, which makes for a very big number
     // This results in inaccurate subtraction
@@ -81,7 +81,8 @@ var pagesColumn = {
     var shorten = function(number) {
       return Number(number.toString().slice(8));
     };
-    return shorten(row.ending_image_number) - shorten(row.beginning_image_number) + 1;
+    var pages = shorten(row.ending_image_number) - shorten(row.beginning_image_number) + 1;
+    return pages.toLocaleString();
   }
 };
 
