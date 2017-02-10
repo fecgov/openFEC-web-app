@@ -297,6 +297,11 @@ var filings = {
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
 
+      // If it's a Form 3L we should append that to the doc title
+      if (row.form_type == 'F3L') {
+        doc_description = doc_description + ' - Lobbyist Bundling Report';
+      }
+
       return reportType({
         doc_description: doc_description,
         amendment_version: amendment_version,
