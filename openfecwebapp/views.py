@@ -92,7 +92,7 @@ def to_date(committee, cycle):
     return min(datetime.datetime.now().year, cycle)
 
 
-def render_committee(committee, candidates, cycle):
+def render_committee(committee, candidates, flag, cycle):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
@@ -124,7 +124,11 @@ def render_committee(committee, candidates, cycle):
         'timePeriod': str(cycle - 1) + '–' + str(cycle),
         'name': committee['name'],
     }
-    return render_template('committees-single.html', **tmpl_vars)
+
+    if flag == 'new':
+        return render_template('committees-single-new.html', **tmpl_vars)
+    else:
+        return render_template('committees-single.html', **tmpl_vars)
 
 
 def groupby(values, keygetter):
@@ -198,7 +202,7 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
-    if flag == "new":
+    if flag == 'new':
         return render_template('candidates-single-new.html', **tmpl_vars)
     else:
         return render_template('candidates-single.html', **tmpl_vars)

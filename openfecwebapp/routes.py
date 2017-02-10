@@ -97,17 +97,18 @@ def candidate_page(c_id, flag=None, cycle=None, election_full=True):
 
     return views.render_candidate(candidate, committees, flag, cycle, election_full)
 
+@app.route('/committee/<c_id>/<flag>/')
 @app.route('/committee/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
 })
-def committee_page(c_id, cycle=None):
+def committee_page(c_id, flag=None, cycle=None):
     """Fetch and render data for committee detail page.
 
     :param int cycle: Optional cycle for financials.
     """
     committee, candidates, cycle = api_caller.load_with_nested('committee', c_id, 'candidates', cycle)
-    return views.render_committee(committee, candidates, cycle)
+    return views.render_committee(committee, candidates, flag, cycle)
 
 @app.route('/advanced/')
 def advanced():

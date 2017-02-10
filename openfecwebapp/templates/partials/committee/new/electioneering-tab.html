@@ -1,0 +1,25 @@
+<section id="section-6" role="tabpanel" aria-hidden="true" aria-labelledby="section-6-heading">
+  <div class="content__section">
+    <div class="heading--section">
+      <h2 id="section-6-heading">
+        Electioneering communication: {{ cycle|fmt_year_range }}
+      </h2>
+    </div>
+    <p class="usa-width-two-thirds">Any broadcast, cable or satellite communication that (1) refers to a clearly identified candidate for federal office; (2) is publicly distributed within certain time periods before an election and (3) is targeted to the relevant electorate.</p>
+  </div>
+
+  <div class="content__section">
+    <div class="results-info results-info--simple">
+      <h3 class="results-info__title">Electioneering communication</h3>
+    </div>
+    <table class="data-table data-table--heading-borders" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <thead>
+        <th scope="col">Amount</th>
+        <th scope="col">Candidate</th>
+      </thead>
+    </table>
+    <div class="datatable__note">
+      <p class="t-note">To help users work with this data, we divide each itemized disbursement amount by the number of federal candidates named in connection with that disbursement. The resulting amount is listed here.</p>
+    </div>
+  </div>
+</section>
