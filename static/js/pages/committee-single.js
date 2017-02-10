@@ -522,28 +522,32 @@ $(document).ready(function() {
     case 'filings-reports':
       opts = _.extend({
         path: ['committee', committeeId, 'filings'],
-        query: _.extend({form_type: 'F3P'}, query),
+        query: _.extend({
+            form_type: ['F3', 'F3X', 'F3P', 'F3L', 'F4', 'F7', 'F13', 'RFAI'],
+            sort: ['-coverage_end_date', 'report_type_full', '-beginning_image_number']
+          }, query),
+        order: false
       }, filingsOpts);
       tables.DataTable.defer($table, opts);
       break;
     case 'filings-notices':
       opts = _.extend({
         path: ['committee', committeeId, 'filings'],
-        query: _.extend({form_type: 'F24'}, query),
+        query: _.extend({form_type: ['F5', 'F24', 'F6', 'F9', 'F10', 'F11']}, query),
       }, filingsOpts);
       tables.DataTable.defer($table, opts);
       break;
     case 'filings-statements':
       opts = _.extend({
         path: ['committee', committeeId, 'filings'],
-        query: _.extend({form_type: 'F1'}, query),
+        query: _.extend({form_type: ['F1']}, query),
       }, filingsOpts);
       tables.DataTable.defer($table, opts);
       break;
     case 'filings-other':
       opts = _.extend({
         path: ['committee', committeeId, 'filings'],
-        query: _.extend({form_type: 'F99'}, query),
+        query: _.extend({form_type: ['F1M', 'F8', 'F99', 'F12']}, query),
       }, filingsOpts);
       tables.DataTable.defer($table, opts);
       break;
