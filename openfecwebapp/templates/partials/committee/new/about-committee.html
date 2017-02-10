@@ -1,0 +1,69 @@
+{% import 'macros/cycle-select.html' as select %}
+
+<section id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
+  <h2 id="section-2-heading">About this committee</h2>
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+    {{ select.committee_cycle_select(cycles, cycle, 'about')}}
+    <div class="entity__figure row">
+      <h3>Committee information</h3>
+      <table class="t-sans usa-width-three-fourths">
+        <tr>
+          <td class="panel__term">Committee name:</td>
+          <td class="panel__data">{{name}}</td>
+        </tr>
+        <tr>
+          <td class="panel__term">Party:</td>
+          <td class="panel__data">
+            {% if party_full %}
+              {{party_full}}
+            {% else %}
+              None
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="panel__term">Mailing address:</td>
+          <td class="panel__data">
+            <span class="t-block">{{ street_1 }}</span>
+            {% if street_2 %}
+              <span class="t-block">{{ street_1 }}</span>
+            {% endif %}
+            <span class="t-block">{{ city }}, {{ state }} {{ zip }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="panel__term">Committee type:</td>
+          <td class="panel__data">{{ committee_type_full }}</td>
+        </tr>
+        <tr>
+          <td class="panel__term">Committee designation:</td>
+          <td class="panel__data">{{ designation_full }}</td>
+        </tr>
+        <tr>
+          <td class="panel__term">Organization type:</td>
+          <td class="panel__data">
+            {% if organization %}
+              {{ organization }}
+            {% else %}
+              None
+            {% endif %}
+          </td>
+        </tr>
+        {% if candidates %}
+          <tr>
+            <td class="panel__term">Authorizing candidate:</td>
+            <td class="panel__data">
+              {% for c in candidates %}
+                <a href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=c.related_cycle) }}">{{ c.name }}</a>
+              {% endfor %}
+            </td>
+          </tr>
+        {% endif %}
+        <tr>
+          <td class="panel__term">Treasurer</td>
+          <td class="panel__data">{{ treasurer_name }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>

@@ -32,6 +32,7 @@
         {% if committee_type not in ['C', 'E'] %}
           {{ tabs.side_tab('Financial summary', 'summary', 'panel1', '#section-1') }}
         {% endif %}
+        {{ tabs.side_tab('About this committee', 'about', 'panel2', '#section-2') }}
         {% if committee_type in ['C'] %}
           {{ tabs.side_tab('Communication cost', 'communication-cost-committee', 'panel6', '#section-1') }}
         {% endif %}
