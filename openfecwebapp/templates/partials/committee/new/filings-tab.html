@@ -6,17 +6,7 @@
     Committee filings
   </h2>
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
-    <div class="content__section">
-      <label for="filings-cycle" class="cycle-select__label">Election cycle</label>
-      <select id="filings-cycle">
-        {% for each in cycles | sort(reverse=True) %}
-          <option
-              value="{{ each }}"
-              {% if cycle and cycle <= each and cycle > (each - 2) %}selected{% endif %}
-            >{{ each|fmt_year_range }}</option>
-        {% endfor %}
-      </select>
-    </div>
+    {{ select.committee_cycle_select(cycles, cycle, 'filings')}}
     {{ entity.filings_table('Regularly filed reports', 'reports', cycle, committee_id, showTrigger=True) }}
     {{ entity.filings_table('24- and 48-hour reports', 'notices', cycle, committee_id) }}
     {{ entity.filings_table('Statements of organization', 'statements', cycle, committee_id) }}

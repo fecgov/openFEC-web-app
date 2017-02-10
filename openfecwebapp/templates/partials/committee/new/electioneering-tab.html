@@ -1,25 +1,23 @@
-<section id="section-6" role="tabpanel" aria-hidden="true" aria-labelledby="section-6-heading">
-  <div class="content__section">
-    <div class="heading--section">
-      <h2 id="section-6-heading">
-        Electioneering communication: {{ cycle|fmt_year_range }}
-      </h2>
-    </div>
-    <p class="usa-width-two-thirds">Any broadcast, cable or satellite communication that (1) refers to a clearly identified candidate for federal office; (2) is publicly distributed within certain time periods before an election and (3) is targeted to the relevant electorate.</p>
-  </div>
+{% import 'macros/cycle-select.html' as select %}
 
-  <div class="content__section">
-    <div class="results-info results-info--simple">
-      <h3 class="results-info__title">Electioneering communication</h3>
-    </div>
-    <table class="data-table data-table--heading-borders" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
-      <thead>
-        <th scope="col">Amount</th>
-        <th scope="col">Candidate</th>
-      </thead>
-    </table>
-    <div class="datatable__note">
-      <p class="t-note">To help users work with this data, we divide each itemized disbursement amount by the number of federal candidates named in connection with that disbursement. The resulting amount is listed here.</p>
+<section id="section-6" role="tabpanel" aria-hidden="true" aria-labelledby="section-6-heading">
+  <h2 id="section-6-heading">Electioneering communication</h2>
+  <p>Any broadcast, cable or satellite communication that (1) refers to a clearly identified candidate for federal office; (2) is publicly distributed within certain time periods before an election and (3) is targeted to the relevant electorate.</p>
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+    {{ select.committee_cycle_select(cycles, cycle, 'electioneering')}}
+    <div class="entity__figure">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Electioneering communication</h3>
+      </div>
+      <table class="data-table data-table--heading-borders" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+        <thead>
+          <th scope="col">Amount</th>
+          <th scope="col">Candidate</th>
+        </thead>
+      </table>
+      <div class="datatable__note">
+        <p class="t-note">To help users work with this data, we divide each itemized disbursement amount by the number of federal candidates named in connection with that disbursement. The resulting amount is listed here.</p>
+      </div>
     </div>
   </div>
 </section>

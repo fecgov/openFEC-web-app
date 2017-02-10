@@ -19,3 +19,17 @@
   </div>
 {% endif %}
 {% endmacro %}
+
+{% macro committee_cycle_select(cycles, cycle=none, id='') %}
+  <div class="content__section">
+    <label for="{{id}}-cycle" class="cycle-select__label">Election cycle</label>
+    <select id="{{id}}-cycle" class="js-cycle">
+      {% for each in cycles | sort(reverse=True) %}
+        <option
+            value="{{ each }}"
+            {% if cycle and cycle <= each and cycle > (each - 2) %}selected{% endif %}
+          >{{ each|fmt_year_range }}</option>
+      {% endfor %}
+    </select>
+  </div>
+{% endmacro %}
