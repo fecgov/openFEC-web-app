@@ -23,7 +23,7 @@
 {% macro committee_cycle_select(cycles, cycle=none, id='') %}
   <div class="content__section">
     <label for="{{id}}-cycle" class="cycle-select__label">Election cycle</label>
-    <select id="{{id}}-cycle" class="js-cycle">
+    <select id="{{id}}-cycle" class="js-cycle" name="cycle" data-cycle-location="query">
       {% for each in cycles | sort(reverse=True) %}
         <option
             value="{{ each }}"
