@@ -138,8 +138,7 @@ var occupationColumns = [
 ];
 
 var columnKeys =   [
-  'pdf_url', 'version', 'receipt_date', 'coverage_end_date',
-  'total_receipts', 'total_disbursements', 'modal_trigger'
+  'document_type', 'version', 'receipt_date', 'modal_trigger'
 ];
 
 if (context.showIndependentExpenditures) {
@@ -281,6 +280,26 @@ var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
 };
 
+var filingsOpts = {
+  autoWidth: false,
+  columns: filingsColumns,
+  rowCallback: filings.renderRow,
+  dom: '<"panel__main"t><"results-info"frlpi>',
+  pagingType: 'simple',
+  // Order by receipt date descending
+  order: [[2, 'desc']],
+  useFilters: true,
+  hideEmpty: true,
+  hideEmptyOpts: {
+    dataType: 'filings',
+    name: context.name,
+    timePeriod: context.timePeriod
+  },
+  callbacks: {
+    afterRender: filings.renderModal
+  }
+};
+
 $(document).ready(function() {
   // Set up data tables
   $('.data-table').each(function(index, table) {
@@ -288,7 +307,8 @@ $(document).ready(function() {
     var committeeId = $table.attr('data-committee');
     var cycle = $table.attr('data-cycle');
     var query = {cycle: cycle};
-    var path;
+    var path,
+        opts;
     switch ($table.attr('data-type')) {
     case 'committee-contributor':
       path = ['schedules', 'schedule_b', 'by_recipient_id'];
@@ -394,30 +414,6 @@ $(document).ready(function() {
         })
       );
       break;
-    case 'filing':
-      path = ['committee', committeeId, 'filings'];
-      tables.DataTable.defer($table, {
-        autoWidth: false,
-        path: path,
-        query: query,
-        columns: filingsColumns,
-        rowCallback: filings.renderRow,
-        dom: '<"panel__main"t><"results-info"frlpi>',
-        pagingType: 'simple',
-        // Order by receipt date descending
-        order: [[2, 'desc']],
-        useFilters: true,
-        hideEmpty: true,
-        hideEmptyOpts: {
-          dataType: 'filings',
-          name: context.name,
-          timePeriod: context.timePeriod
-        },
-        callbacks: {
-          afterRender: filings.renderModal
-        }
-      });
-      break;
     case 'disbursements-by-purpose':
       path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'];
       tables.DataTable.defer(
@@ -522,6 +518,34 @@ $(document).ready(function() {
           timePeriod: context.timePeriod
         },
       });
+      break;
+    case 'filings-reports':
+      opts = _.extend({
+        path: ['committee', committeeId, 'filings'],
+        query: _.extend({form_type: 'F3P'}, query),
+      }, filingsOpts);
+      tables.DataTable.defer($table, opts);
+      break;
+    case 'filings-notices':
+      opts = _.extend({
+        path: ['committee', committeeId, 'filings'],
+        query: _.extend({form_type: 'F24'}, query),
+      }, filingsOpts);
+      tables.DataTable.defer($table, opts);
+      break;
+    case 'filings-statements':
+      opts = _.extend({
+        path: ['committee', committeeId, 'filings'],
+        query: _.extend({form_type: 'F1'}, query),
+      }, filingsOpts);
+      tables.DataTable.defer($table, opts);
+      break;
+    case 'filings-other':
+      opts = _.extend({
+        path: ['committee', committeeId, 'filings'],
+        query: _.extend({form_type: 'F99'}, query),
+      }, filingsOpts);
+      tables.DataTable.defer($table, opts);
       break;
     }
   });
