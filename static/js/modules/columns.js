@@ -71,7 +71,13 @@ var pagesColumn = {
   orderable: false,
   className: 'min-tablet hide-panel column--small',
   render: function(data, type, row) {
-    return row.ending_image_number - row.beginning_image_number + 1;
+    // Image numbers begin with YYYYMMDD, which makes for a very big number
+    // This results in inaccurate subtraction
+    // so instead we slice it after the first 8 digits
+    var shorten = function(number) {
+      return Number(number.toString().slice(8));
+    };
+    return shorten(row.ending_image_number) - shorten(row.beginning_image_number) + 1;
   }
 };
 

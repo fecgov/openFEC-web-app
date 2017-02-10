@@ -271,12 +271,12 @@ var aggregateCallbacks = {
 
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
-  ['document_type', 'version', 'receipt_date']
+  ['document_type', 'version', 'receipt_date', 'pages']
 );
 
 var filingsReportsColumns = columnHelpers.getColumns(
   columns.filings,
-  ['document_type', 'version', 'receipt_date', 'modal_trigger']
+  ['document_type', 'version', 'receipt_date', 'pages', 'modal_trigger']
 );
 
 $(document).ready(function() {
