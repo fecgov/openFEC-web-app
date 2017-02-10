@@ -33,27 +33,28 @@
           {{ tabs.side_tab('Financial summary', 'summary', 'panel1', '#section-1') }}
         {% endif %}
         {% if committee_type in ['C'] %}
-          {{ tabs.side_tab('Communication cost', 'communication-cost-committee', 'panel6', '#section-6') }}
+          {{ tabs.side_tab('Communication cost', 'communication-cost-committee', 'panel6', '#section-1') }}
         {% endif %}
         {% if committee_type in ['E'] %}
-          {{ tabs.side_tab('Electioneering communication', 'electioneering-committee', 'panel6', '#section-6') }}
+          {{ tabs.side_tab('Electioneering communication', 'electioneering-committee', 'panel6', '#section-1') }}
         {% endif %}
         {% if committee_type not in ['C'] %}
-          {{ tabs.side_tab('Individual contributions', 'receipts', 'panel2', '#section-2') }}
+          {{ tabs.side_tab('Individual contributions', 'receipts', 'panel3', '#section-3') }}
         {% endif %}
-          {{ tabs.side_tab('Disbursements', 'disbursements', 'panel3', '#section-3') }}
+          {{ tabs.side_tab('Disbursements', 'disbursements', 'panel4', '#section-4') }}
         {% if committee_type not in ['C', 'E'] %}
-          {{ tabs.side_tab('Between committees', 'between-committees', 'panel4', '#section-4') }}
+          {{ tabs.side_tab('Between committees', 'between-committees', 'panel5', '#section-5') }}
         {% endif %}
         {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
-          {{ tabs.side_tab('Independent expenditures', 'independent-expenditures-committee', 'panel6', '#section-6') }}
+          {{ tabs.side_tab('Independent expenditures', 'independent-expenditures-committee', 'panel7', '#section-7') }}
         {% endif %}
-        {{ tabs.side_tab('Filings', 'filings', 'panel5', '#section-5') }}
+        {{ tabs.side_tab('Filings', 'filings', 'panel5', '#section-6') }}
       </ul>
     </nav>
 
     {% with committee=context() %}
        {% include 'partials/loading-tab.html' %}
+       {% include 'partials/committee/new/about-committee.html' %}
       {% if committee_type not in ['C', 'E'] %}
         {% include 'partials/committee/new/financial-summary.html' %}
       {% endif %}
