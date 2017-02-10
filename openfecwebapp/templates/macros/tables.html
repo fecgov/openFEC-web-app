@@ -35,3 +35,16 @@
     {% endif %}
   </figure>
 {% endmacro %}
+
+{% macro summary(data) %}
+<figure>
+<table class="simple-table">
+  {% for item in data %}
+    <tr class="simple-table__row level--{{ item[1][1]}}">
+      <td class="simple-table__cell">{{ item[1][0] }}</td>
+      <td class="simple-table__cell">{{ item[0]|currency }}</td>
+    </tr>
+  {% endfor %}
+</table>
+</figure>
+{% endmacro %}

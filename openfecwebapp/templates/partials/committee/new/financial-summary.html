@@ -7,19 +7,7 @@
     {{ select.committee_cycle_select(cycles, cycle, 'summary')}}
     <div class="entity__figure">
       {% if reports and totals %}
-        <div class="content__section">
-          <div class="js-accordion accordion--neutral">
-            {% if committee_type == 'P' %}
-              {% include 'partials/committee/new/summary-presidential.html' %}
-            {% elif committee_type == 'H' or committee_type == 'S' %}
-              {% include 'partials/committee-totals-house-senate.html' %}
-            {% elif committee_type == 'I' %}
-              {% include 'partials/committee-totals-ie-only.html' %}
-            {% else %}
-              {% include 'partials/committee-totals-pac-party.html' %}
-            {% endif %}
-          </div>
-        </div>
+          {% include 'partials/committee/new/summary.html' %}
       {% else %}
         {{ missing.missing_financials(name, cycle) }}
       {% endif %}
