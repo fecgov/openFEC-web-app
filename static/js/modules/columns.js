@@ -32,12 +32,16 @@ var amendmentIndicatorColumn = {
 var versionColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
-  render: function(data) {
-    if (helpers.amendmentVersion(data) === 'Version unknown') {
-      return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Version unknown';
+  render: function(data, type, row) {
+    var version = helpers.amendmentVersion(data);
+    if (version === 'Version unknown') {
+      return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Version unknown<br>' + row.fec_file_id;
     }
     else {
-      return helpers.amendmentVersion(data);
+      if (row.fec_file_id !== null) {
+        version = version + '<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + row.fec_file_id;
+      }
+      return version;
     }
   }
 };
