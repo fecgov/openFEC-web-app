@@ -92,7 +92,7 @@ def to_date(committee, cycle):
     return min(datetime.datetime.now().year, cycle)
 
 
-def render_committee(committee, candidates, flag, cycle):
+def render_committee(committee, candidates, cycle):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
