@@ -518,8 +518,16 @@ var debts = [
     data: 'committee',
     orderable: false,
     className: 'all column--large',
-    render: function (data, type, row) {
-      return row.committee.name;
+    render: function(data, type, row, meta) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
     }
   },
   {
