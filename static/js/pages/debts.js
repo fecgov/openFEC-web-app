@@ -13,6 +13,8 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
 
+var debtsTemplate = require('../../templates/debts.hbs');
+
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
@@ -23,6 +25,9 @@ $(document).ready(function() {
     order: [[3, 'desc']],
     useFilters: true,
     useExport: true,
-    rowCallback: tables.modalRenderRow
+    rowCallback: tables.modalRenderRow,
+    callbacks: {
+      afterRender: tables.modalRenderFactory(debtsTemplate)
+    }
   });
 });
