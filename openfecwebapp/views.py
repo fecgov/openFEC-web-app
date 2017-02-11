@@ -3,7 +3,7 @@ import datetime
 import furl
 
 from flask.views import MethodView
-from flask import request, render_template, jsonify
+from flask import request, render_template, redirect, url_for, jsonify
 from flask.ext.cors import cross_origin
 
 from webargs import fields
@@ -125,10 +125,15 @@ def render_committee(committee, candidates, flag, cycle):
         'name': committee['name'],
     }
 
-    if flag == 'new':
-        return render_template('committees-single-new.html', **tmpl_vars)
-    else:
-        return render_template('committees-single.html', **tmpl_vars)
+    if not financials['reports']:
+        # If there's no reports, find the first year with reports and redirect there
+        for c in committee['cycles']:
+            financials = api_caller.load_cmte_financials(committee['committee_id'], cycle=c)
+            if financials['reports']:
+                return redirect(
+                    url_for('committee_page', c_id=committee['committee_id'], cycle=c)
+                )
+    return render_template('committees-single-new.html', **tmpl_vars)
 
 
 def groupby(values, keygetter):
