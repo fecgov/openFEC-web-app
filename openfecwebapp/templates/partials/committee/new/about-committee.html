@@ -8,12 +8,12 @@
       <h3>Committee information</h3>
       <table class="t-sans usa-width-three-fourths">
         <tr>
-          <td class="panel__term">Committee name:</td>
-          <td class="panel__data">{{name}}</td>
+          <td class="figure__label">Committee name:</td>
+          <td class="figure__value">{{name}}</td>
         </tr>
         <tr>
-          <td class="panel__term">Party:</td>
-          <td class="panel__data">
+          <td class="figure__label">Party:</td>
+          <td class="figure__value">
             {% if party_full %}
               {{party_full}}
             {% else %}
@@ -22,8 +22,8 @@
           </td>
         </tr>
         <tr>
-          <td class="panel__term">Mailing address:</td>
-          <td class="panel__data">
+          <td class="figure__label">Mailing address:</td>
+          <td class="figure__value">
             <span class="t-block">{{ street_1 }}</span>
             {% if street_2 %}
               <span class="t-block">{{ street_2 }}</span>
@@ -32,16 +32,16 @@
           </td>
         </tr>
         <tr>
-          <td class="panel__term">Committee type:</td>
-          <td class="panel__data">{{ committee_type_full }}</td>
+          <td class="figure__label">Committee type:</td>
+          <td class="figure__value">{{ committee_type_full }}</td>
         </tr>
         <tr>
-          <td class="panel__term">Committee designation:</td>
-          <td class="panel__data">{{ designation_full }}</td>
+          <td class="figure__label">Committee designation:</td>
+          <td class="figure__value">{{ designation_full }}</td>
         </tr>
         <tr>
-          <td class="panel__term">Organization type:</td>
-          <td class="panel__data">
+          <td class="figure__label">Organization type:</td>
+          <td class="figure__value">
             {% if organization %}
               {{ organization }}
             {% else %}
@@ -51,8 +51,8 @@
         </tr>
         {% if candidates %}
           <tr>
-            <td class="panel__term">Authorizing candidate:</td>
-            <td class="panel__data">
+            <td class="figure__label">Authorizing candidate:</td>
+            <td class="figure__value">
               {% for c in candidates %}
                 <a href="{{ url_for('candidate_page', c_id=c.candidate_id, cycle=c.related_cycle) }}">{{ c.name }}</a>
               {% endfor %}
@@ -60,8 +60,8 @@
           </tr>
         {% endif %}
         <tr>
-          <td class="panel__term">Treasurer</td>
-          <td class="panel__data">{{ treasurer_name }}</td>
+          <td class="figure__label">Treasurer</td>
+          <td class="figure__value">{{ treasurer_name }}</td>
         </tr>
       </table>
     </div>
