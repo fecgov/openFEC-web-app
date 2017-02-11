@@ -92,7 +92,7 @@ def to_date(committee, cycle):
     return min(datetime.datetime.now().year, cycle)
 
 
-def render_committee(committee, candidates, cycle):
+def render_committee(committee, candidates, cycle, redirect_to_previous):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
@@ -125,7 +125,7 @@ def render_committee(committee, candidates, cycle):
         'name': committee['name'],
     }
 
-    if not financials['reports']:
+    if redirect_to_previous and not financials['reports']:
         # If there's no reports, find the first year with reports and redirect there
         for c in committee['cycles']:
             financials = api_caller.load_cmte_financials(committee['committee_id'], cycle=c)
