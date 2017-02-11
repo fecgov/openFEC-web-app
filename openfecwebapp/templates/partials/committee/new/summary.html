@@ -155,14 +155,40 @@
 {% endif %}
 
 <h3 class="u-no-margin">Raising</h3>
-<div class="tag__category">
-    <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
+<div class="row">
+    <div class="u-float-left tag__category">
+        <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
+    </div>
+    <div class="u-float-right">
+      <a class="heading__right button--alt button--browse"
+          href="{{ url_for(
+            'receipts',
+            committee_id=committee_id,
+            two_year_transaction_period=cycle,
+            min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+          ) }}">Browse receipts
+        </a>
+    </div>
 </div>
 {{ tables.summary(raising_data) }}
 
 <h3 class="u-no-margin">Spending</h3>
-<div class="tag__category">
-    <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
+<div class="row">
+    <div class="u-float-left tag__category">
+        <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
+    </div>
+    <div class="u-float-right">
+      <a class="heading__right button--alt button--browse"
+          href="{{ url_for(
+            'disbursements',
+            committee_id=committee_id,
+            two_year_transaction_period=cycle,
+            min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+          ) }}">Browse disbursements
+        </a>
+    </div>
 </div>
 {{ tables.summary(spending_data) }}
 
