@@ -518,7 +518,7 @@ var debts = [
     data: 'committee',
     orderable: false,
     className: 'all column--large',
-    render: function(data, type, row, meta) {
+    render: function(data) {
       if (data) {
         return columnHelpers.buildEntityLink(
           data.name,
