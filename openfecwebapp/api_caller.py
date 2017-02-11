@@ -243,7 +243,7 @@ def load_cmte_financials(committee_id, **filters):
     totals = _call_api('committee', committee_id, 'totals', **filters)
 
     return {
-        'reports': reports,
+        'reports': reports['results'],
         'totals': totals['results'],
     }
 
