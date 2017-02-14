@@ -1,13 +1,17 @@
 'use strict';
 
+/**
+* Party Coordinated Expenditures datatable page
+* ---------------------
+* Schedule F shows all special expenditures a national or state party committee
+* makes in connection with the general election campaigns of federal candidates.
+*
+*/
+
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
-//var helpers = require('../modules/helpers');
-//var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
-
-//var electioneeringTemplate = require('../../templates/communication-costs.hbs');
 
 $(document).ready(function() {
   var $table = $('#results');
