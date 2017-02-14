@@ -16,7 +16,7 @@ from werkzeug.utils import cached_property
 
 from openfecwebapp import config
 from openfecwebapp import api_caller
-
+from openfecwebapp import utils
 
 def render_search_results(results, query, result_type):
     return render_template(
@@ -124,6 +124,17 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
         'timePeriod': str(cycle - 1) + '–' + str(cycle),
         'name': committee['name'],
     }
+
+    if financials['reports'] and financials['totals']:
+        # Format the current two-year-period's totals using the process utilities
+        if committee['committee_type'] == 'I':
+            # IE-only committees have very little data, so they just get this one
+            tmpl_vars['ie_summary'] = utils.process_ie_data(financials['totals'][0])
+        else:
+            # All other committees have three tables
+            tmpl_vars['raising_summary'] = utils.process_raising_data(financials['totals'][0])
+            tmpl_vars['spending_summary'] = utils.process_spending_data(financials['totals'][0])
+            tmpl_vars['cash_summary'] = utils.process_cash_data(financials['totals'][0])
 
     if redirect_to_previous and not financials['reports']:
         # If there's no reports, find the first year with reports and redirect there
