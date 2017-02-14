@@ -286,8 +286,8 @@ $(document).ready(function() {
     var committeeId = $table.attr('data-committee');
     var cycle = $table.attr('data-cycle');
     var query = {cycle: cycle};
-    var path,
-        opts;
+    var path;
+    var opts;
     var filingsOpts = {
       autoWidth: false,
       rowCallback: filings.renderRow,

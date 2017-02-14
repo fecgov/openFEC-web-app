@@ -112,7 +112,6 @@ def committee_page(c_id, cycle=None):
     # Otherwise, redirect to the last cycle with reports, as determined in render_committee()
     redirect_to_previous = False if cycle else True
     committee, candidates, cycle = api_caller.load_with_nested('committee', c_id, 'candidates', cycle)
-    print(redirect_to_previous)
     return views.render_committee(committee, candidates, cycle, redirect_to_previous)
 
 @app.route('/advanced/')
