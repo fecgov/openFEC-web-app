@@ -32,12 +32,17 @@ var amendmentIndicatorColumn = {
 var versionColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
-  render: function(data) {
-    if (helpers.amendmentVersion(data) === 'Version unknown') {
-      return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Version unknown';
+  render: function(data, type, row) {
+    var version = helpers.amendmentVersion(data);
+    if (version === 'Version unknown') {
+      return '<i class="icon-blank"></i>Version unknown<br>' +
+             '<i class="icon-blank"></i>' + row.fec_file_id;
     }
     else {
-      return helpers.amendmentVersion(data);
+      if (row.fec_file_id !== null) {
+        version = version + '<br><i class="icon-blank"></i>' + row.fec_file_id;
+      }
+      return version;
     }
   }
 };
@@ -69,9 +74,16 @@ var receiptDateColumn = {
 var pagesColumn = {
   data: 'beginning_image_number',
   orderable: false,
-  className: 'min-tablet hide-panel column--small',
+  className: 'min-tablet hide-panel column--xs column--number',
   render: function(data, type, row) {
-    return row.ending_image_number - row.beginning_image_number + 1;
+    // Image numbers begin with YYYYMMDD, which makes for a very big number
+    // This results in inaccurate subtraction
+    // so instead we slice it after the first 8 digits
+    var shorten = function(number) {
+      return Number(number.toString().slice(8));
+    };
+    var pages = shorten(row.ending_image_number) - shorten(row.beginning_image_number) + 1;
+    return pages.toLocaleString();
   }
 };
 
@@ -285,6 +297,11 @@ var filings = {
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
+
+      // If it's a Form 3L we should append that to the doc title
+      if (row.form_type == 'F3L') {
+        doc_description = doc_description + ' - Lobbyist Bundling Report';
+      }
 
       return reportType({
         doc_description: doc_description,

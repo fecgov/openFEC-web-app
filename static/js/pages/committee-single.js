@@ -13,6 +13,7 @@ var filings = require('../modules/filings');
 var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
+var dropdown = require('fec-style/js/dropdowns');
 
 var tableOpts = {
   dom: tables.simpleDOM,
@@ -136,21 +137,6 @@ var occupationColumns = [
     })
   }
 ];
-
-var columnKeys =   [
-  'pdf_url', 'version', 'receipt_date', 'coverage_end_date',
-  'total_receipts', 'total_disbursements', 'modal_trigger'
-];
-
-if (context.showIndependentExpenditures) {
-  columnKeys.splice(6, 0, 'total_independent_expenditures');
-}
-
-var filingsColumns = columnHelpers.getColumns(
-  columns.filings,
-  columnKeys
-);
-
 
 var disbursementPurposeColumns = [
   {data: 'purpose', className: 'all', orderable: false},
@@ -281,6 +267,18 @@ var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
 };
 
+// Settings for filings tables
+
+var filingsColumns = columnHelpers.getColumns(
+  columns.filings,
+  ['document_type', 'version', 'receipt_date', 'pages']
+);
+
+var filingsReportsColumns = columnHelpers.getColumns(
+  columns.filings,
+  ['document_type', 'version', 'receipt_date', 'pages', 'modal_trigger']
+);
+
 $(document).ready(function() {
   // Set up data tables
   $('.data-table').each(function(index, table) {
@@ -289,6 +287,19 @@ $(document).ready(function() {
     var cycle = $table.attr('data-cycle');
     var query = {cycle: cycle};
     var path;
+    var opts;
+    var filingsOpts = {
+      autoWidth: false,
+      rowCallback: filings.renderRow,
+      dom: '<"panel__main"t><"results-info"frlpi>',
+      pagingType: 'simple',
+      lengthMenu: [100, 10],
+      drawCallback: function () {
+        this.dropdowns = $table.find('.dropdown').map(function(idx, elm) {
+          return new dropdown.Dropdown($(elm), {checkboxes: false});
+        });
+      }
+    };
     switch ($table.attr('data-type')) {
     case 'committee-contributor':
       path = ['schedules', 'schedule_b', 'by_recipient_id'];
@@ -394,30 +405,6 @@ $(document).ready(function() {
         })
       );
       break;
-    case 'filing':
-      path = ['committee', committeeId, 'filings'];
-      tables.DataTable.defer($table, {
-        autoWidth: false,
-        path: path,
-        query: query,
-        columns: filingsColumns,
-        rowCallback: filings.renderRow,
-        dom: '<"panel__main"t><"results-info"frlpi>',
-        pagingType: 'simple',
-        // Order by receipt date descending
-        order: [[2, 'desc']],
-        useFilters: true,
-        hideEmpty: true,
-        hideEmptyOpts: {
-          dataType: 'filings',
-          name: context.name,
-          timePeriod: context.timePeriod
-        },
-        callbacks: {
-          afterRender: filings.renderModal
-        }
-      });
-      break;
     case 'disbursements-by-purpose':
       path = ['committee', committeeId, 'schedules', 'schedule_b', 'by_purpose'];
       tables.DataTable.defer(
@@ -522,6 +509,47 @@ $(document).ready(function() {
           timePeriod: context.timePeriod
         },
       });
+      break;
+    case 'filings-reports':
+      opts = _.extend({
+        columns: filingsReportsColumns,
+        path: ['committee', committeeId, 'filings'],
+        query: _.extend({
+            form_type: ['F3', 'F3X', 'F3P', 'F3L', 'F4', 'F7', 'F13', 'RFAI'],
+            sort: ['-coverage_end_date', 'report_type_full', '-beginning_image_number']
+          }, query),
+        callbacks: {
+          afterRender: filings.renderModal
+        }
+      }, filingsOpts);
+      tables.DataTable.defer($table, opts);
+      break;
+    case 'filings-notices':
+      opts = _.extend({
+        columns: filingsColumns,
+        order: [[2, 'desc']],
+        path: ['committee', committeeId, 'filings'],
+        query: _.extend({form_type: ['F5', 'F24', 'F6', 'F9', 'F10', 'F11']}, query),
+      }, filingsOpts);
+      tables.DataTable.defer($table, opts);
+      break;
+    case 'filings-statements':
+      opts = _.extend({
+        columns: filingsColumns,
+        order: [[2, 'desc']],
+        path: ['committee', committeeId, 'filings'],
+        query: _.extend({form_type: ['F1']}, query),
+      }, filingsOpts);
+      tables.DataTable.defer($table, opts);
+      break;
+    case 'filings-other':
+      opts = _.extend({
+        columns: filingsColumns,
+        order: [[2, 'desc']],
+        path: ['committee', committeeId, 'filings'],
+        query: _.extend({form_type: ['F1M', 'F8', 'F99', 'F12']}, query),
+      }, filingsOpts);
+      tables.DataTable.defer($table, opts);
       break;
     }
   });
