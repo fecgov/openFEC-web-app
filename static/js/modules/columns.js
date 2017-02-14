@@ -35,11 +35,12 @@ var versionColumn = {
   render: function(data, type, row) {
     var version = helpers.amendmentVersion(data);
     if (version === 'Version unknown') {
-      return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Version unknown<br>' + row.fec_file_id;
+      return '<i class="icon-blank"></i>Version unknown<br>' +
+             '<i class="icon-blank"></i>' + row.fec_file_id;
     }
     else {
       if (row.fec_file_id !== null) {
-        version = version + '<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + row.fec_file_id;
+        version = version + '<br><i class="icon-blank"></i>' + row.fec_file_id;
       }
       return version;
     }
