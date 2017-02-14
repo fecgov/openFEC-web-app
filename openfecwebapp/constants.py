@@ -268,10 +268,12 @@ table_columns = OrderedDict([
     ('reports-ie-only', ['Filer', 'Report type', 'Receipt date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
 ])
 
-# RAISING_FORMATTER, SPENDING_FORMATTER and CASH_FORMATTER
+# RAISING_FORMATTER, SPENDING_FORMATTER, CASH_FORMATTER, IE_FORMATTER
 # These are used to format the display of financial summary data on committee pages
 # They map key values from a response to a tuple which contains a label and a level of hierarchy
 # Levels: 1 = Top-level total; 2 = sub-total, 3 = sub-sub-total; 4 = sub-sub-sub-total
+# The comments next to each refer to the type of report / committee that they show up on
+# F3 = house and senate; F3P = presidential; F3X = pac and party
 
 RAISING_FORMATTER = OrderedDict([
     ('receipts', ('Total receipts', '1')), #F3, F3P, #F3X
