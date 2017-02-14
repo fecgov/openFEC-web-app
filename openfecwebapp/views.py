@@ -138,7 +138,7 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
 
     if redirect_to_previous and not financials['reports']:
         # If there's no reports, find the first year with reports and redirect there
-        for c in committee['cycles']:
+        for c in sorted(committee['cycles'], reverse=True):
             financials = api_caller.load_cmte_financials(committee['committee_id'], cycle=c)
             if financials['reports']:
                 return redirect(
