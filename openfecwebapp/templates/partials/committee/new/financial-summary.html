@@ -63,9 +63,8 @@
           {{ tables.summary(cash_summary) }}
         </div>
       {% endif %}
-      {% else %}
-        {{ missing.missing_financials(name, cycle) }}
-      {% endif %}
-    </div>
+    {% else %}
+      {{ missing.missing_financials(name, cycle) }}
+    {% endif %}
   </div>
 </section>
