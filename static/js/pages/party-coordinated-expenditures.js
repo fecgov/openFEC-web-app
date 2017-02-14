@@ -13,6 +13,8 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
 
+var partyCoordinatedExpendituresTemplate = require('../../templates/party-coordinated-expenditures.hbs');
+
 $(document).ready(function() {
   var $table = $('#results');
   new tables.DataTable($table, {
@@ -23,6 +25,9 @@ $(document).ready(function() {
     useExport: true,
     order: [[3, 'desc']],
     useFilters: true,
-    rowCallback: tables.modalRenderRow
+    rowCallback: tables.modalRenderRow,
+    callbacks: {
+      afterRender: tables.modalRenderFactory(partyCoordinatedExpendituresTemplate)
+    }
   });
 });
