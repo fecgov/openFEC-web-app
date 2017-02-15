@@ -512,7 +512,15 @@ var loans = [
     orderable: false,
     className: 'all column--large',
     render: function (data, type, row) {
-      return row.committee.name;
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
     }
   },
   {
