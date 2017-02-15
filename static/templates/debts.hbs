@@ -10,17 +10,6 @@ This shows all the fields available on the Schedule D form.
     {{#panelRow "Name"}}
       <a href="{{basePath}}/committee/{{committee_id}}">{{committee.name}}</a>
     {{/panelRow}}
-    {{#panelRow "Designation"}}
-      {{committee.designation_full}}
-    {{/panelRow}}
-    {{#if committee.type}}
-      {{#panelRow "Type"}}
-        {{committee.type_full}}
-      {{/panelRow}}
-    {{/if}}
-    {{#panelRow "Treasurer"}}
-      {{committee.treasurer_name}}
-    {{/panelRow}}
     {{#panelRow "Committee city and state"}}
       {{committee.city}}, {{committee.state}}, {{committee.zip}}
     {{/panelRow}}
