@@ -528,7 +528,7 @@ var loans = [
     orderable: false,
     className: 'all column--large',
   },
-  dateColumn({data: 'load_date', orderable: true, className: 'min-tablet hide-panel column--med'}),
+  dateColumn({data: 'incurred_date', orderable: true, className: 'min-tablet hide-panel column--med'}),
   currencyColumn({data: 'payment_to_date', className: 'min-desktop hide-panel column--number'}),
   currencyColumn({data: 'original_loan_amount', className: 'min-desktop hide-panel column--number'}),
   modalTriggerColumn

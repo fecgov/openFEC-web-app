@@ -15,7 +15,7 @@
     <div class="accordion__content">
       {{ typeahead.field('committee_id', 'Committee Name or ID') }}
       {{ text.field('loaner_name', 'Loaner name') }}
-      {{ date.field('load_date', 'Date', dates, id_suffix='_raw') }}
+      {{ date.field('incurred_date', 'Incurred date', dates, id_suffix='_raw') }}
       {{ range.amount('amount', 'Payment to date') }}
       {{ range.amount('amount', 'Original loan amount') }}
    </div>
