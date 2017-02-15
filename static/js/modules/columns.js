@@ -401,6 +401,29 @@ var individualContributions = [
   modalTriggerColumn
 ];
 
+var partyExpenditures = [
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--large',
+    render: function(data, type, row, meta) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
+    }
+  },
+  columnHelpers.urlColumn('pdf_url', {data: 'expenditure_type_full', className: 'min-desktop hide-panel', orderable: false}),
+  dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel column--med'}),
+  currencyColumn({data: 'expenditure_amount', className: 'min-tablet hide-panel column--number column--med'}),
+  modalTriggerColumn
+];
+
 var receipts = [
   {
     data: 'contributor',
@@ -523,6 +546,7 @@ module.exports = {
   independentExpenditures: independentExpenditures,
   individualContributions: individualContributions,
   filings: filings,
+  partyExpenditures: partyExpenditures,
   receipts: receipts,
   reports: reports
 };
