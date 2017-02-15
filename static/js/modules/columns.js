@@ -418,6 +418,49 @@ var individualContributions = [
   modalTriggerColumn
 ];
 
+var partyCoordinatedExpenditures = [
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--xl',
+    render: function(data, type, row) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
+    }
+  },
+  {
+    data: 'canidate_name',
+    orderable: false,
+    className: 'min-tablet hide-panel-tablet column--large',
+    render: function(data, type, row) {
+      if (row.candidate_id) {
+        return columnHelpers.buildEntityLink(
+          data,
+          helpers.buildAppUrl(['candidate', row.candidate_id]),
+          'candidate'
+        );
+      } else {
+        return row.candidate_name;
+      }
+    }
+  },
+  {
+    data: 'payee_name',
+    orderable: false,
+    className: 'min-desktop hide-panel column--medium'
+  },
+  dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel column--med'}),
+  currencyColumn({data: 'expenditure_amount', className: 'min-tablet hide-panel column--number column--med'}),
+  modalTriggerColumn
+];
+
 var receipts = [
   {
     data: 'contributor',
@@ -539,6 +582,7 @@ module.exports = {
   electioneeringCommunications: electioneeringCommunications,
   independentExpenditures: independentExpenditures,
   individualContributions: individualContributions,
+  partyCoordinatedExpenditures: partyCoordinatedExpenditures,
   filings: filings,
   receipts: receipts,
   reports: reports

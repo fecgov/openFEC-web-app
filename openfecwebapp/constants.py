@@ -261,6 +261,7 @@ table_columns = OrderedDict([
     ('filings', ['Filer name', 'Document', 'Version', 'Receipt date']),
     ('independent-expenditures', ['Spender', 'Support/Oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
+    ('party-coordinated-expenditures', ['Spender', 'Candidate', 'Payee name', 'Expenditure date', 'Amount']),
     ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount']),
     ('reports-presidential', ['Committee', 'Report type', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
     ('reports-house-senate', ['Committee', 'Report type', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
