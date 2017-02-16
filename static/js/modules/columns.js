@@ -436,7 +436,7 @@ var partyCoordinatedExpenditures = [
     }
   },
   {
-    data: 'canidate_name',
+    data: 'candidate_name',
     orderable: false,
     className: 'min-tablet hide-panel-tablet column--large',
     render: function(data, type, row) {
