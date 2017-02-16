@@ -242,6 +242,18 @@ def communication_costs():
         columns=constants.table_columns['communication-costs']
     )
 
+
+@app.route('/loans/')
+def loans():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        result_type='loans',
+        slug='loans',
+        title='loans',
+        columns=constants.table_columns['loans']
+    )
+
 @app.route('/party-coordinated-expenditures/')
 def party_coordinated_expenditures():
     return render_template(
@@ -251,6 +263,7 @@ def party_coordinated_expenditures():
         title='Party coordinated expenditures',
         dates=utils.date_ranges(),
         columns=constants.table_columns['party-coordinated-expenditures']
+
     )
 
 @app.route('/reports/<form_type>/')
