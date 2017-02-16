@@ -92,7 +92,7 @@ def deploy(space=None, branch=None, yes=False):
 
     # Build static assets
     # These must be built prior to deploying.
-    ctx.run('npm run build', echo=True)
+    run('npm run build', echo=True)
 
     # Set api
     api = 'https://api.fr.cloud.gov'
