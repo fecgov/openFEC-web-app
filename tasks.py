@@ -90,8 +90,12 @@ def deploy(space=None, branch=None, yes=False):
     if space is None:
         return
 
+    # Build static assets
+    # These must be built prior to deploying.
+    ctx.run('npm run build', echo=True)
+
     # Set api
-    api = 'https://api.cloud.gov'
+    api = 'https://api.fr.cloud.gov'
     run('cf api {0}'.format(api), echo=True)
 
     # Log in if necessary
@@ -99,7 +103,7 @@ def deploy(space=None, branch=None, yes=False):
         run('cf auth "$FEC_CF_USERNAME" "$FEC_CF_PASSWORD"', echo=True)
 
     # Target space
-    run('cf target -o fec -s {0}'.format(space), echo=True)
+    run('cf target -o fec-beta-fec -s {0}'.format(space), echo=True)
 
     # Set deploy variables
     with open('.cfmeta', 'w') as fp:
