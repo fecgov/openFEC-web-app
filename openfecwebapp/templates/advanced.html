@@ -124,6 +124,7 @@
               </li>
             </ul>
             <ul class="grid__item list--spacious t-sans">
+              <li><a href="{{ url_for('party_coordinated_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Party coordinated expenditures</a></li>
               <li><a href="{{ url_for('independent_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Independent expenditures</a></li>
               <li><a href="{{ url_for('electioneering_communications', max_date=today() | date(fmt='%m-%d-%Y')) }}">Electioneering communications</a></li>
               <li><a href="{{ url_for('communication_costs', max_date=today() | date(fmt='%m-%d-%Y')) }}">Communication costs</a></li>
