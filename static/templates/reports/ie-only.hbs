@@ -15,6 +15,9 @@
     {{#panelRow "Filer"}}
       <a href="{{basePath}}/committee/{{committee_id}}">{{ committee_name }}</a>
     {{/panelRow}}
+    {{#panelRow "FEC file number"}}
+      {{ fec_file_id }}
+    {{/panelRow}}
     {{#panelRow "Report coverage"}}
       {{datetime coverage_start_date format="pretty"}} to {{datetime coverage_end_date format="pretty"}}
     {{/panelRow}}

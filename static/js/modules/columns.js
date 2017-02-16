@@ -32,12 +32,17 @@ var amendmentIndicatorColumn = {
 var versionColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
-  render: function(data) {
-    if (helpers.amendmentVersion(data) === 'Version unknown') {
-      return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Version unknown';
+  render: function(data, type, row) {
+    var version = helpers.amendmentVersion(data);
+    if (version === 'Version unknown') {
+      return '<i class="icon-blank"></i>Version unknown<br>' +
+             '<i class="icon-blank"></i>' + row.fec_file_id;
     }
     else {
-      return helpers.amendmentVersion(data);
+      if (row.fec_file_id !== null) {
+        version = version + '<br><i class="icon-blank"></i>' + row.fec_file_id;
+      }
+      return version;
     }
   }
 };
@@ -69,9 +74,16 @@ var receiptDateColumn = {
 var pagesColumn = {
   data: 'beginning_image_number',
   orderable: false,
-  className: 'min-tablet hide-panel column--small',
+  className: 'min-tablet hide-panel column--xs column--number',
   render: function(data, type, row) {
-    return row.ending_image_number - row.beginning_image_number + 1;
+    // Image numbers begin with YYYYMMDD, which makes for a very big number
+    // This results in inaccurate subtraction
+    // so instead we slice it after the first 8 digits
+    var shorten = function(number) {
+      return Number(number.toString().slice(8));
+    };
+    var pages = shorten(row.ending_image_number) - shorten(row.beginning_image_number) + 1;
+    return pages.toLocaleString();
   }
 };
 
@@ -286,6 +298,11 @@ var filings = {
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
 
+      // If it's a Form 3L we should append that to the doc title
+      if (row.form_type == 'F3L') {
+        doc_description = doc_description + ' - Lobbyist Bundling Report';
+      }
+
       return reportType({
         doc_description: doc_description,
         amendment_version: amendment_version,
@@ -401,6 +418,49 @@ var individualContributions = [
   modalTriggerColumn
 ];
 
+var partyCoordinatedExpenditures = [
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--xl',
+    render: function(data, type, row) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
+    }
+  },
+  {
+    data: 'candidate_name',
+    orderable: false,
+    className: 'min-tablet hide-panel-tablet column--large',
+    render: function(data, type, row) {
+      if (row.candidate_id) {
+        return columnHelpers.buildEntityLink(
+          data,
+          helpers.buildAppUrl(['candidate', row.candidate_id]),
+          'candidate'
+        );
+      } else {
+        return row.candidate_name;
+      }
+    }
+  },
+  {
+    data: 'payee_name',
+    orderable: false,
+    className: 'min-desktop hide-panel column--medium'
+  },
+  dateColumn({data: 'expenditure_date', className: 'min-tablet hide-panel column--med'}),
+  currencyColumn({data: 'expenditure_amount', className: 'min-tablet hide-panel column--number column--med'}),
+  modalTriggerColumn
+];
+
 var receipts = [
   {
     data: 'contributor',
@@ -506,6 +566,34 @@ var reports = {
   }
 };
 
+var loans = [
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--large',
+    render: function (data) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
+    }
+  },
+  {
+    data: 'loan_source_name',
+    orderable: false,
+    className: 'all column--large',
+  },
+  dateColumn({data: 'incurred_date', orderable: true, className: 'min-tablet hide-panel column--med'}),
+  currencyColumn({data: 'payment_to_date', className: 'min-desktop hide-panel column--number'}),
+  currencyColumn({data: 'original_loan_amount', className: 'min-desktop hide-panel column--number'}),
+  modalTriggerColumn
+];
+
 module.exports = {
   candidateColumn: candidateColumn,
   committeeColumn: committeeColumn,
@@ -522,7 +610,9 @@ module.exports = {
   electioneeringCommunications: electioneeringCommunications,
   independentExpenditures: independentExpenditures,
   individualContributions: individualContributions,
+  partyCoordinatedExpenditures: partyCoordinatedExpenditures,
   filings: filings,
   receipts: receipts,
-  reports: reports
+  reports: reports,
+  loans: loans
 };

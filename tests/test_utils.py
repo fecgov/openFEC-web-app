@@ -1,7 +1,9 @@
 import locale
 import datetime
+from collections import OrderedDict
 
 from openfecwebapp import filters
+from openfecwebapp import utils
 from openfecwebapp.app import app, get_election_url
 
 
@@ -65,3 +67,16 @@ def test_election_url():
         assert get_election_url(candidate, 2012) == '/elections/senate/NJ/2012/'
         candidate = {'office_full': 'House', 'state': 'NJ', 'district': '02'}
         assert get_election_url(candidate, 2012) == '/elections/house/NJ/02/2012/'
+
+def test_financial_summary_processor():
+    totals = {
+        'receipts': 200,
+        'disbursements': 100
+    }
+    formatter = OrderedDict([
+        ('receipts', ('Total receipts', '1')),
+        ('disbursements', ('Total disbursements', '1'))
+    ])
+    assert utils.financial_summary_processor(totals, formatter) == [(200, ('Total receipts', '1')), (100, ('Total disbursements', '1'))]
+
+

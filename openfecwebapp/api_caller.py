@@ -8,6 +8,7 @@ from flask import abort
 
 from openfecwebapp import utils
 from openfecwebapp import config
+from openfecwebapp import constants
 
 from collections import OrderedDict
 
@@ -182,19 +183,9 @@ def load_legal_mur(mur_no):
             if 'complainant' in participant['role'].lower():
                 complainants.append(participant['name'])
 
-        mur['disposition_text'] = [d['text'] for d in mur['disposition']['text']]
+        mur['disposition_text'] = [d['action'] for d in mur['commission_votes']]
 
-        disposition_data = OrderedDict()
-        for row in mur['disposition']['data']:
-            if row['disposition'] in disposition_data:
-                if row['penalty'] in disposition_data[row['disposition']]:
-                    disposition_data[row['disposition']][row['penalty']].append(row)
-                else:
-                    disposition_data[row['disposition']][row['penalty']] = [row]
-            else:
-                disposition_data[row['disposition']] = OrderedDict({row['penalty']: [row]})
-
-        mur['disposition_data'] = disposition_data
+        mur['collated_dispositions'] = collate_dispositions(mur['dispositions'])
         mur['complainants'] = complainants
         mur['participants_by_type'] = _get_sorted_participants_by_type(mur)
 
@@ -206,6 +197,19 @@ def load_legal_mur(mur_no):
                 documents_by_type[doc['category']] = [doc]
         mur['documents_by_type'] = documents_by_type
     return mur
+
+def collate_dispositions(dispositions):
+    """ Collate dispositions - group them by disposition, penalty """
+    collated_dispositions = OrderedDict()
+    for row in dispositions:
+        if row['disposition'] in collated_dispositions:
+            if row['penalty'] in collated_dispositions[row['disposition']]:
+                collated_dispositions[row['disposition']][row['penalty']].append(row)
+            else:
+                collated_dispositions[row['disposition']][row['penalty']] = [row]
+        else:
+            collated_dispositions[row['disposition']] = OrderedDict({row['penalty']: [row]})
+    return collated_dispositions
 
 
 def load_single_type(data_type, c_id, *path, **filters):
@@ -259,7 +263,7 @@ def result_or_404(data):
         abort(404)
     return data['results'][0]
 
-def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
+def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'candidates', 'totals',
             sort_hide_null=True,
@@ -274,7 +278,7 @@ def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
             return response
         return {}
 
-def load_top_pacs(sort, cycle=2016, per_page=5):
+def load_top_pacs(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'pac',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
@@ -283,7 +287,7 @@ def load_top_pacs(sort, cycle=2016, per_page=5):
             return response
         return {}
 
-def load_top_parties(sort, cycle=2016, per_page=5):
+def load_top_parties(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'party',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
