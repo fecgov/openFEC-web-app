@@ -98,6 +98,7 @@ def candidate_page(c_id, flag=None, cycle=None, election_full=True):
     return views.render_candidate(candidate, committees, flag, cycle, election_full)
 
 @app.route('/committee/<c_id>/')
+@app.route('/committee/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
 })
@@ -106,8 +107,12 @@ def committee_page(c_id, cycle=None):
 
     :param int cycle: Optional cycle for financials.
     """
+
+    # If the cycle param is explicitly defined, then load that cycle
+    # Otherwise, redirect to the last cycle with reports, as determined in render_committee()
+    redirect_to_previous = False if cycle else True
     committee, candidates, cycle = api_caller.load_with_nested('committee', c_id, 'candidates', cycle)
-    return views.render_committee(committee, candidates, cycle)
+    return views.render_committee(committee, candidates, cycle, redirect_to_previous)
 
 @app.route('/advanced/')
 def advanced():
@@ -235,6 +240,30 @@ def communication_costs():
         title='Communication costs',
         dates=utils.date_ranges(),
         columns=constants.table_columns['communication-costs']
+    )
+
+
+@app.route('/loans/')
+def loans():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        result_type='loans',
+        slug='loans',
+        title='loans',
+        columns=constants.table_columns['loans']
+    )
+
+@app.route('/party-coordinated-expenditures/')
+def party_coordinated_expenditures():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        slug='party-coordinated-expenditures',
+        title='Party coordinated expenditures',
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['party-coordinated-expenditures']
+
     )
 
 @app.route('/reports/<form_type>/')

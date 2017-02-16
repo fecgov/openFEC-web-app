@@ -1,0 +1,22 @@
+{% import 'macros/cycle-select.html' as select %}
+
+<section id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
+  <h2 id="section-1-heading">Communication costs</h2>
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+    {{ select.committee_cycle_select(cycles, cycle, 'communication-costs')}}
+    <div class="entity__figure">
+      <div class="results-info results-info--simple">
+        <h3 class="results-info__title">Communication costs</h3>
+      </div>
+      <table class="data-table data-table--heading-borders" data-type="communication-cost-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+        <thead>
+          <tr>
+            <th scope="col">Amount</th>
+            <th scope="col">Support/Oppose</th>
+            <th scope="col">Candidate</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</section>

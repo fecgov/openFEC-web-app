@@ -129,3 +129,40 @@ def page_info(pagination):
     range_start = per_page * (page - 1) + 1
     range_end = (page - 1) * 10 + per_page
     return '{range_start}-{range_end} of {count}'.format(range_start=range_start, range_end=range_end, count=count)
+
+def financial_summary_processor(totals, formatter):
+    """ Process totals data by getting the label and hierarchy level for each value
+    """
+    processed = []
+    for i in formatter:
+        if i in totals:
+            line = (totals[i], formatter[i])
+            processed.append(line)
+    return processed
+
+def process_raising_data(totals):
+    """
+    Presidential committees show total offsets AND offsets to operating expenditures
+    We want to nest the latter under the former as a third-level item,
+    but because other committees useoffsets_to_operating expenditures at the second level,
+    we store that as a new value and remove the old one
+    """
+    if 'total_offsets_to_operating_expenditures' in totals:
+        totals['subtotal_offsets_to_operating_expenditures'] = totals['offsets_to_operating_expenditures']
+        del totals['offsets_to_operating_expenditures']
+
+    return financial_summary_processor(totals, constants.RAISING_FORMATTER)
+
+def process_spending_data(totals):
+    return financial_summary_processor(totals, constants.SPENDING_FORMATTER)
+
+def process_cash_data(totals):
+    # Temporary workaround because presidential committees don't have these values in the API
+    if not 'net_contributions' in totals:
+        totals['net_contributions'] = totals['contributions'] - totals['contribution_refunds']
+    if not 'net_operating_expenditures' in totals:
+        totals['net_operating_expenditures'] = totals['operating_expenditures'] - totals['subtotal_offsets_to_operating_expenditures']
+    return financial_summary_processor(totals, constants.CASH_FORMATTER)
+
+def process_ie_data(totals):
+    return financial_summary_processor(totals, constants.IE_FORMATTER)
