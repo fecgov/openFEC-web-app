@@ -252,6 +252,7 @@ def loans():
         slug='loans',
         title='loans',
         columns=constants.table_columns['loans']
+    )
 
 @app.route('/party-coordinated-expenditures/')
 def party_coordinated_expenditures():

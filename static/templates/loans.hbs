@@ -33,17 +33,17 @@ This shows all the fields available on the Schedule C form.
 <div class="panel__row">
   <h4 class="panel__title">Loan information</h4>
   <table>
-    {{#panelRow "Original amount of loan"}}
+    {{#panelRow "Original Amount of Loan"}}
       {{{currency original_loan_amount}}}
     {{/panelRow}}
-    {{#panelRow "Payment to date"}}
+    {{#panelRow "Cumulative Payment to Date"}}
       {{{currency payment_to_date}}}
     {{/panelRow}}
-    {{#panelRow "Loan balance"}}
+    {{#panelRow "Balance Outstanding at Close of This Period"}}
       {{{currency loan_balance}}}
     {{/panelRow}}
-    {{#panelRow "Interest rate terms"}}
-      {{interest_rate_terms}}
+    {{#panelRow "Interest Rate"}}
+      {{interest_rate_terms}} %
     {{/panelRow}}
   </table>
 </div>

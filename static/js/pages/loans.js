@@ -1,9 +1,9 @@
 'use strict';
 
 /**
-*Loans datatable page
+* Loans datatable page
 * ---------------------
-* Schedule C shows loans to 
+* Schedule C shows loans to
 * the committee that are required to be disclosed.
 *
 */

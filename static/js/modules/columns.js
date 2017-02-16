@@ -571,7 +571,7 @@ var loans = [
     data: 'committee',
     orderable: false,
     className: 'all column--large',
-    render: function (data, type, row) {
+    render: function (data) {
       if (data) {
         return columnHelpers.buildEntityLink(
           data.name,
