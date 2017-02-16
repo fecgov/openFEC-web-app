@@ -1,0 +1,18 @@
+{% extends 'partials/filters.html' %}
+
+{% import 'macros/filters/text.html' as text %}
+{% import 'macros/filters/typeahead-filter.html' as typeahead %}
+
+{% block filters %}
+<div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
+  <button type="button" class="js-accordion-trigger accordion__button">Committee information</button>
+  <div class="accordion__content">
+    {{ typeahead.field('committee_id', 'Committee name or ID') }}
+  </div>
+  <button type="button" class="js-accordion-trigger accordion__button">Creditor information</button>
+  <div class="accordion__content">
+    {{ typeahead.field('creditor_debtor_name', 'Creditor name', allow_text=True) }}
+    {{ text.field('nature_of_debt', 'Purpose') }}
+  </div>
+</div>
+{% endblock %}

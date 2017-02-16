@@ -159,6 +159,17 @@ def committees():
         columns=constants.table_columns['committees']
     )
 
+@app.route('/debts/')
+def debts():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        result_type='debts',
+        slug='debts',
+        title='Debts',
+        columns=constants.table_columns['debts']
+    )
+
 @app.route('/receipts/')
 def receipts():
     return render_template(

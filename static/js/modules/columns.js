@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+* modules/columns.js
+* -------------------
+* This file contains objects to support column data for datatable pages.
+*
+*/
+
 var _ = require('underscore');
 
 var columnHelpers = require('./column-helpers');
@@ -566,6 +573,39 @@ var reports = {
   }
 };
 
+var debts = [
+  {
+    data: 'committee',
+    orderable: false,
+    className: 'all column--large',
+    render: function(data) {
+      if (data) {
+        return columnHelpers.buildEntityLink(
+          data.name,
+          helpers.buildAppUrl(['committee', data.committee_id]),
+          'committee'
+        );
+      } else {
+        return '';
+      }
+    }
+  },
+  {
+    data: 'creditor_debtor_name',
+    orderable: false,
+    className: 'all column--large',
+  },
+  {
+    data: 'nature_of_debt',
+    orderable: false,
+    className: 'all column--large',
+  },
+  dateColumn({data: 'load_date', orderable: true, className: 'min-tablet hide-panel column--med'}),
+  currencyColumn({data: 'amount_incurred_period', className: 'min-desktop hide-panel column--number'}),
+  currencyColumn({data: 'payment_period', className: 'min-desktop hide-panel column--number'}),
+  modalTriggerColumn
+];
+
 module.exports = {
   candidateColumn: candidateColumn,
   committeeColumn: committeeColumn,
@@ -585,5 +625,6 @@ module.exports = {
   partyCoordinatedExpenditures: partyCoordinatedExpenditures,
   filings: filings,
   receipts: receipts,
-  reports: reports
+  reports: reports,
+  debts: debts
 };
