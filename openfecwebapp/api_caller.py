@@ -107,7 +107,7 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
                 grouped_aos[ao['no']] = [ao]
 
         for ao_no in grouped_aos:
-            grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
+            grouped_aos[ao_no].sort(key=lambda ao: ao['issue_date'], reverse=True)
         results['advisory_opinions'] = grouped_aos
 
     if 'murs' in results:
@@ -120,37 +120,10 @@ def load_legal_advisory_opinion(ao_no):
     url = '/legal/docs/advisory_opinions/'
     results = _call_api(url, parse.quote(ao_no))
 
-    if not (results and 'docs' in results):
-        return None
+    if not (results and 'docs' in results and results['docs']):
+        abort(404)
 
-    # sort by chronological date
-    documents = sorted(results['docs'], key=lambda doc: doc['date'])
-    if not (documents and len(documents)):
-        return None
-
-    for document in documents:
-        canonical_document = document
-        if document['category'] == 'Final Opinion':
-            break
-
-    if not canonical_document:
-        return None
-
-    advisory_opinion = {
-        'no': ao_no,
-        'date': canonical_document['date'],
-        'name': canonical_document['name'],
-        'summary': canonical_document['summary'],
-        'description': canonical_document['description'],
-        'url': canonical_document['url'],
-        'category': canonical_document['category'],
-        'documents': documents,
-        'entities': [],
-        'citations': canonical_document['citations'],
-        'cited_by': canonical_document['cited_by']
-    }
-
-    return advisory_opinion
+    return results['docs'][0]
 
 
 def load_legal_mur(mur_no):
