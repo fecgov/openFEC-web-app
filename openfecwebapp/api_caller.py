@@ -99,16 +99,6 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
 
     if 'advisory_opinions' in results:
         results['advisory_opinions_returned'] = len(results['advisory_opinions'])
-        grouped_aos = OrderedDict({})
-        for ao in results['advisory_opinions']:
-            if ao['no'] in grouped_aos:
-                grouped_aos[ao['no']].append(ao)
-            else:
-                grouped_aos[ao['no']] = [ao]
-
-        for ao_no in grouped_aos:
-            grouped_aos[ao_no].sort(key=lambda ao: ao['issue_date'], reverse=True)
-        results['advisory_opinions'] = grouped_aos
 
     if 'murs' in results:
         results['murs_returned'] = len(results['murs'])
