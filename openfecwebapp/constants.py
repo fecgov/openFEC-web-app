@@ -258,16 +258,16 @@ table_columns = OrderedDict([
     ('communication-costs', ['Committee', 'Support/Oppose', 'Candidate', 'Amount', 'Date']),
     ('disbursements', ['Spender', 'Recipient', 'State', 'Description', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
-    ('filings', ['Filer name', 'Document', 'Version', 'Filing date']),
+    ('filings', ['Filer name', 'Document', 'Version', 'Receipt date']),
     ('independent-expenditures', ['Spender', 'Support/Oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
     ('loans', ['Committee Name', 'Loaner name', 'Incurred date', 'Payment to date', 'Original loan amount']),
     ('party-coordinated-expenditures', ['Spender', 'Candidate', 'Payee name', 'Expenditure date', 'Amount']),
     ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount']),
-    ('reports-presidential', ['Committee', 'Report type', 'Version', 'Filing date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
-    ('reports-house-senate', ['Committee', 'Report type', 'Version', 'Filing date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
-    ('reports-pac-party', ['Committee', 'Report type', 'Version', 'Filing date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
-    ('reports-ie-only', ['Filer', 'Report type', 'Version', 'Filing date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
+    ('reports-presidential', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-house-senate', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-pac-party', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
+    ('reports-ie-only', ['Filer', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
 
 
 ])
