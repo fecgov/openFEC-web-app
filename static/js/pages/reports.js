@@ -18,7 +18,7 @@ var ieOnlyTemplate = require('../../templates/reports/ie-only.hbs');
 var pageTitle,
     pageTemplate,
     pageColumns,
-    columnKeys = ['committee', 'document_type', 'receipt_date', 'coverage_end_date'];
+    columnKeys = ['committee', 'document_type', 'version', 'receipt_date', 'coverage_end_date'];
 
 if (context.form_type === 'presidential') {
   pageTitle = 'Presidential committee reports';
@@ -53,7 +53,7 @@ $(document).ready(function() {
     columns: pageColumns,
     rowCallback: tables.modalRenderRow,
     // Order by coverage date descending
-    order: [[2, 'desc']],
+    order: [[3, 'desc']],
     useFilters: true,
     useExport: true,
     callbacks: {
