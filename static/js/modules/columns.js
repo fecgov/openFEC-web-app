@@ -32,6 +32,7 @@ var amendmentIndicatorColumn = {
 var versionColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
+  orderable: false,
   render: function(data, type, row) {
     var version = helpers.amendmentVersion(data);
     if (version === 'Version unknown') {
