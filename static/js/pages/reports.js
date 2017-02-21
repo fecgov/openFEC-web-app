@@ -6,6 +6,7 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
+var filings = require('../modules/filings');
 var columnHelpers = require('../modules/column-helpers');
 var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var dropdown = require('fec-style/js/dropdowns');
@@ -56,7 +57,7 @@ $(document).ready(function() {
     useFilters: true,
     useExport: true,
     callbacks: {
-      afterRender: tables.modalRenderFactory(pageTemplate)
+      afterRender: tables.modalRenderFactory(pageTemplate, filings.fetchReportDetails)
     },
     drawCallback: function () {
       this.dropdowns = $table.find('.dropdown').map(function(idx, elm) {
