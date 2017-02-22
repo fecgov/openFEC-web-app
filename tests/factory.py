@@ -18,25 +18,6 @@ def ao_no():
 
 
 @factory
-def advisory_opinion():
-    return {
-        'no': ao_no(),
-        'date': faker.date_time(),
-        'name': faker.name(),
-        'summary': faker.sentence(),
-        'description': faker.sentence(4),
-        'url': faker.url(),
-        'category': faker.random_element((
-            'AO Request, Supplemental Material, and Extensions of Time',
-            'Final Opinion',
-            'Draft Documents',
-            'Votes',
-        )),
-        'citations': [{'no': '1993-01', 'name': 'RNC'}, {'no': '1998-01', 'name': 'DNC'}],
-        'cited_by': [{'no': '2000-03', 'name': 'Church'}, {'no': '2010', 'name': 'New City'}]
-    }
-
-@factory
 def statute():
     return {
         "no": "%s" % faker.random_int(max=100),
