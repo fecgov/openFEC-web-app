@@ -72,7 +72,9 @@ def _detect_space(repo, branch=None, yes=False):
 DEPLOY_RULES = (
     ('prod', _detect_prod),
     ('stage', lambda _, branch: branch.startswith('release')),
-    ('dev', lambda _, branch: branch == 'develop'),
+    # just for this branch until it is ready to merge
+    # ('dev', lambda _, branch: branch == 'develop'),
+    ('dev', lambda _, branch: branch == 'feature/gov-cloud-support'),
 )
 
 
