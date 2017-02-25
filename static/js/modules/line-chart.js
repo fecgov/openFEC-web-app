@@ -1,6 +1,6 @@
 'use strict';
 
-/* global module */
+/* global module, DEFAULT_TIME_PERIOD, END_YEAR */
 var $ = require('jquery');
 var _ = require('underscore');
 var d3 = require('d3');
@@ -13,36 +13,80 @@ var parseMDY = d3.time.format('%b %e, %Y');
 
 var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
-function LineChart(selector, snapshot, data, index) {
-  this.element = d3.select(selector);
-  this.data = data;
-  this.index = index;
+var MIN_CYCLE = 2008;
+var MAX_CYCLE = END_YEAR;
 
+function LineChart(selector, snapshot, type, index) {
+  this.element = d3.select(selector);
+  this.type = type;
+  this.index = index;
+  this.cycle = DEFAULT_TIME_PERIOD;
   this.margin = {top: 10, right: 20, bottom: 30, left: 50};
   this.baseWidth = $(selector).width();
   this.baseHeight = this.baseWidth * 0.5;
   this.height = this.baseHeight - this.margin.top - this.margin.bottom;
   this.width = this.baseWidth - this.margin.left - this.margin.right;
 
-  this.chart = this.buildChart();
-
   this.$snapshot = $(snapshot);
   this.$prev = this.$snapshot.find('.js-snapshot-prev');
   this.$next = this.$snapshot.find('.js-snapshot-next');
 
+  // Fetch the data and build the chart
+  this.fetch(this.cycle);
+
   if (helpers.isMediumScreen()) {
     this.$snapshot.height(this.baseHeight - this.margin.bottom);
   }
-
-  this.moveCursor(this.data[this.data.length - 1]);
 
   this.element.on('mousemove', this.handleMouseMove.bind(this));
   this.$prev.on('click', this.goToPreviousMonth.bind(this));
   this.$next.on('click', this.goToNextMonth.bind(this));
 }
 
-LineChart.prototype.buildChart = function() {
-  var data = this.data;
+LineChart.prototype.fetch = function(cycle) {
+  // Set the min date to the first of the cycle
+  var firstYear = cycle - 1;
+  var firstOfCycle = new Date('01/01/' + firstYear);
+  this.$snapshot.find('.js-min-date').html(parseMDY(firstOfCycle));
+
+  var entityTotalsURL = helpers.buildUrl(
+    ['totals', 'by_entity'],
+    { 'cycle': cycle, 'per_page': '100'}
+  );
+
+  var self = this;
+  $.getJSON(entityTotalsURL).done(function(data) {
+    var formattedData = [];
+
+    _.each(data.results, function(object) {
+      var datum;
+      if (self.type === 'raised') {
+        datum = {
+          'date': object.date,
+          'candidate': object.cumulative_candidate_receipts,
+          'pac': object.cumulative_pac_receipts,
+          'party': object.cumulative_party_receipts
+        };
+      } else {
+        datum = {
+          'date': object.date,
+          'candidate': object.cumulative_candidate_disbursements,
+          'pac': object.cumulative_pac_disbursements,
+          'party': object.cumulative_party_disbursements
+        };
+      }
+
+      formattedData.push(datum);
+    });
+    self.chartData = _.sortBy(formattedData, 'date');
+    self.buildChart(self.chartData);
+    self.moveCursor(self.chartData[self.chartData.length - 1]);
+  });
+
+};
+
+LineChart.prototype.buildChart = function(chartData) {
+  var data = chartData;
   var entityTotals = {};
   var max = 0;
 
@@ -185,16 +229,16 @@ LineChart.prototype.handleMouseMove = function() {
   var svg = this.element.select('svg')[0][0];
 
   var x0 = this.x.invert(d3.mouse(svg)[0]),
-    i = bisectDate(this.data, x0, 1),
-    d = this.data[i - 1];
+    i = bisectDate(this.chartData, x0, 1),
+    d = this.chartData[i - 1];
   this.moveCursor(d);
 };
 
 LineChart.prototype.moveCursor = function(datum) {
-  var i = this.data.indexOf(datum);
+  var i = this.chartData.indexOf(datum);
   this.cursor.attr('x1', this.x(datum.date)).attr('x2', this.x(datum.date));
-  this.nextDatum = this.data[i+1];
-  this.prevDatum = this.data[i-1];
+  this.nextDatum = this.chartData[i+1];
+  this.prevDatum = this.chartData[i-1];
   this.populateSnapshot(datum);
   this.element.selectAll('.line__points circle')
     .attr('r', 2)
@@ -219,18 +263,44 @@ LineChart.prototype.populateSnapshot = function(d) {
 
   this.$snapshot.find('[data-total-for="all"]').html(helpers.currency(total));
 
-  this.$snapshot.find('.js-date').html(parseMDY(d.date));
+  this.$snapshot.find('.js-max-date').html(parseMDY(d.date));
   helpers.zeroPad(this.$snapshot, '.snapshot__item-number', '.figure__decimals');
 };
 
 LineChart.prototype.goToNextMonth = function() {
-  var d = this.nextDatum ? this.nextDatum : this.data[1];
-  this.moveCursor(d);
+  // Don't do anything if this is the latest cycle we want to show
+  if (this.cycle === MAX_CYCLE) { return; }
+  if (this.nextDatum) {
+    this.moveCursor(this.nextDatum);
+  } else {
+    this.nextCycle();
+  }
 };
 
 LineChart.prototype.goToPreviousMonth = function() {
-  var d = this.prevDatum ? this.prevDatum : this.data[0];
-  this.moveCursor(d);
+   // Don't do anything if this is the earliest cycle we want to show
+  if (this.cycle === MIN_CYCLE) { return; }
+  if (this.prevDatum) {
+    this.moveCursor(this.prevDatum);
+  } else {
+    this.previousCycle();
+  }
+};
+
+LineChart.prototype.destroyChart = function() {
+  this.element.select('svg').remove();
+};
+
+LineChart.prototype.previousCycle = function() {
+  this.destroyChart();
+  this.cycle = this.cycle - 2;
+  this.fetch(this.cycle);
+};
+
+LineChart.prototype.nextCycle = function() {
+  this.destroyChart();
+  this.cycle = this.cycle + 2;
+  this.fetch(this.cycle);
 };
 
 module.exports = {
