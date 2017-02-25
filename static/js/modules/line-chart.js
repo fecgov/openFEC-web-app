@@ -15,6 +15,7 @@ var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
 var MIN_CYCLE = 2008;
 var MAX_CYCLE = END_YEAR;
+var MAX_RANGE = 4000000000; // Set the max y-axis to 4 billion
 
 function LineChart(selector, snapshot, type, index) {
   this.element = d3.select(selector);
@@ -88,7 +89,7 @@ LineChart.prototype.fetch = function(cycle) {
 LineChart.prototype.buildChart = function(chartData) {
   var data = chartData;
   var entityTotals = {};
-  var max = 0;
+  var max = MAX_RANGE;
 
   data.forEach(function(d) {
     d.date = new Date(d.date);
