@@ -268,21 +268,17 @@ LineChart.prototype.populateSnapshot = function(d) {
 };
 
 LineChart.prototype.goToNextMonth = function() {
-  // Don't do anything if this is the latest cycle we want to show
-  if (this.cycle === MAX_CYCLE) { return; }
   if (this.nextDatum) {
     this.moveCursor(this.nextDatum);
-  } else {
+  } else if (this.cycle <= MAX_CYCLE) {
     this.nextCycle();
   }
 };
 
 LineChart.prototype.goToPreviousMonth = function() {
-   // Don't do anything if this is the earliest cycle we want to show
-  if (this.cycle === MIN_CYCLE) { return; }
   if (this.prevDatum) {
     this.moveCursor(this.prevDatum);
-  } else {
+  } else if (this.cycle >= MIN_CYCLE) {
     this.previousCycle();
   }
 };
