@@ -25,22 +25,24 @@
     </button>
     <div class="filters__content">
       <form id="category-filters" action="{{ url_for(result_type) }}">
-        <div class="filters__inner">
-          <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
-          {% block filters %}
-          {% endblock %}
-        </div>
+        <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}">
+        {% block filters %}
+        {% endblock %}
       </form>
     </div>
   </div>
-  <div id="results-{{ result_type }}" class="content__section data-container__body">
-    <div class="results-info results-info--simple">
-      <div class="results-info__left">
-        <h2 class="results-info__title">Searching {{ document_type_display_name }}{% if query %} for &ldquo;{{ query }}&rdquo;{% endif %}</h2>
+  <div class="data-container">
+    <div class="data-container__widgets js-data-widgets">
+      <div class="data-container__head">
+        <h1 class="results-info__title">{{ document_type_display_name }}</h1>
+      </div>
+      <div class="js-filter-tags data-container__tags">
       </div>
     </div>
     {% if results.total_all %}
-      {% block results %}{% endblock %}
+      <div id="results-{{ result_type }}" class="js-results data-container__body">
+        {% block results %}{% endblock %}
+      </div>
       <div class="results-info">
 	<div class="dataTables_info">{{ results.offset + 1 }}&ndash;{{ results.offset + results[result_type + '_returned'] }} of about {{ results.total_all }}</span></div>
 	<div class="dataTables_paginate">

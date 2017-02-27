@@ -1,0 +1,29 @@
+<h3 class="cal-list__title">
+  <a title="{{ this.description }}"
+    href="">
+    AO {{ this.no }}: </a>
+    <span class="t-normal">{{ this.name }}</span>
+  <p class="u-padding--top">
+    <span class="t-bold">Summary: </span> <span class="t-normal">
+      {{ this.summary }}
+    </span>
+  </p>
+</h3>
+<div class="u-padding-left">
+  <table>
+    <tbody>
+      <tr class="legal-search-result">
+        <td><a href="{{ this.url }}" class="t-upper t-sans">{{ this.category }}
+        </a></td>
+        <td>
+          <div class="t-serif legal-search-result__hit u-padding--top">
+            &hellip;
+            {{#each this.highlights }}
+              {{ this }} &hellip;
+            {{/each}}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

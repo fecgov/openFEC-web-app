@@ -1,4 +1,4 @@
-{% macro field(name, title, attrs={}, id_suffix='') %}
+{% macro field(name, title, attrs={}, id_suffix='', value='') %}
 <div class="filter js-filter" id="{{ name }}-field{{id_suffix}}" data-filter="text">
   <label class="label" for="{{ name }}{{id_suffix}}">{{ title }}</label>
   <div class="combo combo--filter--mini">
@@ -6,6 +6,9 @@
       {% for attr, value in attrs.items() %}
         {{ attr }}="{{ value }}"
       {% endfor %}
+      {% if value %}
+       value={{value}}
+      {% endif %}
     />
     <button class="combo__button button--go button--standard is-disabled" type="button">
       <span class="u-visually-hidden">Search</span>
