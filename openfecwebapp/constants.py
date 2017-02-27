@@ -264,11 +264,11 @@ table_columns = OrderedDict([
     ('loans', ['Committee Name', 'Loaner name', 'Incurred date', 'Payment to date', 'Original loan amount']),
     ('party-coordinated-expenditures', ['Spender', 'Candidate', 'Payee name', 'Expenditure date', 'Amount']),
     ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount']),
-    ('reports-presidential', ['Committee', 'Report type', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
-    ('reports-house-senate', ['Committee', 'Report type', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
-    ('reports-pac-party', ['Committee', 'Report type', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
-    ('reports-ie-only', ['Filer', 'Report type', 'Receipt date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
-    
+    ('reports-presidential', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-house-senate', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-pac-party', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
+    ('reports-ie-only', ['Filer', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
+
 
 ])
 
