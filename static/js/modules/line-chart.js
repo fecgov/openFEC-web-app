@@ -1,6 +1,6 @@
 'use strict';
 
-/* global module, DEFAULT_TIME_PERIOD, END_YEAR */
+/* global module, DEFAULT_TIME_PERIOD */
 var $ = require('jquery');
 var _ = require('underscore');
 var d3 = require('d3');
@@ -13,15 +13,16 @@ var parseMDY = d3.time.format('%b %e, %Y');
 
 var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
+var currentYear = new Date().getFullYear();
 var MIN_CYCLE = 2008;
-var MAX_CYCLE = END_YEAR;
+var MAX_CYCLE = currentYear % 2 === 0 ? currentYear : currentYear + 1;
 var MAX_RANGE = 4000000000; // Set the max y-axis to 4 billion
 
 function LineChart(selector, snapshot, type, index) {
   this.element = d3.select(selector);
   this.type = type;
   this.index = index;
-  this.cycle = DEFAULT_TIME_PERIOD;
+  this.cycle = Number(DEFAULT_TIME_PERIOD);
   this.margin = {top: 10, right: 20, bottom: 30, left: 50};
   this.baseWidth = $(selector).width();
   this.baseHeight = this.baseWidth * 0.5;
