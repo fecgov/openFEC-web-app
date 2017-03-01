@@ -1,27 +1,16 @@
-<section class="main" id="section-5" role="tabpanel" aria-hidden="true" aria-labelledby="section-5-heading">
-  <div class="container">
-    <div class="heading--section heading--with-action">
-      <h2 class="heading__left" id="section-5-heading">
-        Committee filings: {{ cycle|fmt_year_range }}
-      </h2>
-      <a class="heading__right button--alt button--browse" href="{{ url_for('filings', committee_id=committee_id) }}">All filings</a>
-    </div>
-    <div class="content__section">
-      <table class="data-table data-table--heading-borders" data-type="filing" data-cycle="{{ cycle }}" data-committee="{{ committee_id }}">
-        <thead>
-          <th scope="col">Document</th>
-          <th scope="col">Version</th>
-          <th scope="col">Receipt date</th>
-          <th scope="col">Coverage end date</th>
-          <th scope="col">Total receipts</th>
-          <th scope="col">Total disbursement</th>
-          {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
-            <th scope="col">Total independent expenditures</th>
-          {% endif %}
-          <th scope="col"></th>
-        </thead>
-      </table>
-    </div>
+{% import 'macros/cycle-select.html' as select %}
+{% import 'macros/entity-pages.html' as entity %}
+
+<section id="section-6" role="tabpanel" aria-hidden="true" aria-labelledby="section-6-heading">
+  <h2 id="section-6-heading">
+    Committee filings
+  </h2>
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+    {{ select.committee_cycle_select(cycles, cycle, 'filings')}}
+    {{ entity.filings_table('Regularly filed reports', 'reports', cycle, committee_id, showTrigger=True) }}
+    {{ entity.filings_table('24- and 48-hour reports', 'notices', cycle, committee_id) }}
+    {{ entity.filings_table('Statements of organization', 'statements', cycle, committee_id) }}
+    {{ entity.filings_table('Other documents', 'other', cycle, committee_id) }}
   </div>
 </section>
 
