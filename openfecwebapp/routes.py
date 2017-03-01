@@ -123,13 +123,22 @@ def advanced():
     )
 
 @app.route('/candidates/')
-def candidates():
+@use_kwargs({
+  'name': fields.Str(missing=None, load_from="q"),
+  'office': fields.Str(missing=None),
+  'page': fields.Int(missing=1)
+})
+def candidates(**kwargs):
+    candidates = api_caller._call_api('candidates', **kwargs)
+    print(candidates)
     return render_template(
         'datatable.html',
         parent='data',
         result_type='candidates',
         slug='candidates',
         title='Candidates',
+        data=candidates['results'],
+        query=kwargs,
         columns=constants.table_columns['candidates']
     )
 

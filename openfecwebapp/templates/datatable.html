@@ -1,6 +1,6 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/page-header.html' as header %}
-
+{% import 'macros/datatables.html' as datatables %}
 {% set breadcrumbs_title=title %}
 {% set breadcrumbs=[(url_for('advanced'), 'Advanced data')] %}
 
@@ -29,7 +29,20 @@
               <th scope="col"></th>
             </tr>
           </thead>
+          <noscript>
+            {{ datatables.candidates(data) }}
+          </noscript>
         </table>
+        <noscript>
+          <div class="results-info">
+            <div class="dataTables_paginate paging_simple">
+              {% if query['page']|int > 1 %}
+                <a href="?page={{query['page']|int - 1}}" class="button button--previous button--standard"></a>
+              {% endif %}
+                <a href="?page={{query['page']|int + 1}}" class="button button--next button--standard"></a>
+            </div>
+          </div>
+        </noscript>
       </div>
     </div>
 </section>
