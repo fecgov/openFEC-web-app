@@ -258,6 +258,15 @@ function amendmentVersionDescription(row) {
   return description;
 }
 
+
+function utcDate(dateString) {
+  var originalDate = new Date(dateString);
+  var date = originalDate.getUTCDate();
+  var month = originalDate.getUTCMonth();
+  var year = originalDate.getUTCFullYear();
+  return new Date(year, month, date);
+}
+
 module.exports = {
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
@@ -275,5 +284,6 @@ module.exports = {
   SUCCESS_DELAY: helpers.SUCCESS_DELAY,
   zeroPad: zeroPad,
   amendmentVersion: amendmentVersion,
-  amendmentVersionDescription: amendmentVersionDescription
+  amendmentVersionDescription: amendmentVersionDescription,
+  utcDate: utcDate
 };
