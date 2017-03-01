@@ -2,48 +2,127 @@
 {% import 'macros/legal.html' as legal %}
 {% set document_type_display_name = 'advisory opinions' %}
 
-{% block filters %}
-  {{ legal.text_filter('search', 'Keywords', query) }}
-  {{ legal.text_filter('ao_name', 'AO name', ao_name)}}
-  {{ legal.text_filter('ao_no', 'AO number', ao_no)}}
-  {{ legal.date_filter('ao_min_date', 'ao_max_date', 'Issued date', ao_min_date, ao_max_date)}}
-  {{ legal.checkbox_list('ao_category', 'Document Type',
-  [{'value' : 'F', 'text': 'Final Opinion'},
-   {'value' : 'V', 'text': 'Votes'},
-   {'value' : 'D', 'text': 'Draft Documents'},
-   {'value' : 'R', 'text': 'AO Request, Supplemental Material, and Extensions of Time'},
-   {'value' : 'W', 'text': 'Withdrawal of Request'},
-   {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
-   {'value' : 'S', 'text': 'Commissioner Statements'}],
-      ao_category or ['F']) }}
-  {{ legal.checkbox_filter('ao_is_pending', 'Show only pending requests', ao_is_pending)}}
-  {{ legal.text_filter('ao_requestor', 'Requestor Name', ao_requestor) }}
-  {{ legal.dropdown('ao_requestor_type', 'Requestor Type',
-  [ {'value': 0, 'text': 'Any'},
-    {'value': 1, 'text': 'Federal candidate/candidate committee/officeholder'},
-    {'value': 2, 'text': 'Publicly funded candidates/committees'},
-    {'value': 3, 'text': 'Party committee, national'},
-    {'value': 4, 'text': 'Party committee, state or local'},
-    {'value': 5, 'text': 'Nonconnected political committee'},
-    {'value': 6, 'text': 'Separate segregated fund'},
-    {'value': 7, 'text': 'Labor Organization'},
-    {'value': 8, 'text': 'Trade Association'},
-    {'value': 9, 'text': 'Membership Organization, Cooperative, Corporation W/O Capital Stock'},
-    {'value': 10, 'text': 'Corporation (including LLCs electing corporate status)'},
-    {'value': 11, 'text': 'Partnership (including LLCs electing partnership status)'},
-    {'value': 12, 'text': 'Governmental entity'},
-    {'value': 13, 'text': 'Research/Public Interest/Educational Institution'},
-    {'value': 14, 'text': 'Law Firm'},
-    {'value': 15, 'text': 'Individual'},
-    {'value': 16, 'text': 'Other'}],
-  ao_requestor_type) }}
-  <div class="filter">
-    <button class="button button--standard" type="submit" id="search-advisory-opinions">Search</button>
-  </div>
-{% endblock %}
+{% block search %}
+<input id="query" type="hidden" value="{{ query }}" />
+<input id="contact-email" type="hidden" value="{{ contact_email }}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.8/URI.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+<script type="text/babel">
 
-{% block results %}
-{% with advisory_opinions = results.advisory_opinions %}
-{% include 'partials/legal-search-results-advisory-opinion.html' %}
-{% endwith %}
+function SearchResults(props) {
+  function highlights(advisory_opinion) {
+    return {__html: '&hellip;' + advisory_opinion.highlights }
+  }
+
+  return <ul>{ props.advisory_opinions.map((advisory_opinion) => {
+      return <div key={advisory_opinion.no}><h3 className="cal-list__title">
+        <a title={ advisory_opinion.description }
+          href="{ url_for('advisory_opinion_page', ao_no=advisory_opinion.no) }">
+          <span className="font-bolt">AO { advisory_opinion.no }: </span></a>
+          <span className="t-normal">{ advisory_opinion.name }</span>
+      <p className="u-padding--top">
+      <span className="t-bold">Summary: </span> <span className="t-normal">
+        { advisory_opinion.summary }
+      </span>
+      </p>
+      </h3>
+      <div className="u-padding--left">
+      <table>
+        <tbody>
+        <tr className="legal-search-result">
+          <td>
+            <div className="t-serif legal-search-result__hit u-padding--top"
+            dangerouslySetInnerHTML={ highlights(advisory_opinion) }>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+      </div> }) }</ul>
+}
+
+function FecGovButton(props) {
+  if(props.query) {
+    return <li><a className="button button--standard" href="http://search04.fec.gov/vivisimo/cgi-bin/query-meta?v%3Asources=Administrative_Fine%2CAdvisory_Opinion%2CAlternative_Dispute_Resolution%2CAudit_Reports%2CMatters_Under_Review%2CMatters_Under_Review_Archived%2CRulemaster%2CCandidate_Summary%2CCommittee_Summary%2Cfec.gov&query={{ query }}&x=0&y=0&v%3aproject=fec_search_02_prj&v%3aframe=form&form=advanced-fec&">Try FEC.gov</a></li>
+  }
+}
+
+function NoResults(props) {
+  return <div className="message message--no-icon">
+    <h2 className="message__title">No results</h2>
+    <p>Sorry, we didn&rsquo;t find any documents matching { props.query }.</p>
+    <div className="message--alert__bottom">
+      <p>Think this was a mistake?</p>
+      <ul className="list--buttons">
+        <FecGovButton query={ props.query } />
+        <li><a className="button button--standard" href={ "mailto:" + $('#contact-email').val() }>Email our team</a></li>
+        <li><a className="button button--standard" href="https://github.com/18f/fec/issues">File an issue</a></li>
+      </ul>
+    </div>
+  </div>
+}
+
+class Results extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = { advisory_opinions: [] }
+      $.getJSON(URI(API_LOCATION)
+                  .path([API_VERSION, 'legal', 'search'].join('/'))
+                  .addQuery('api_key', API_KEY)
+                  .addQuery('type', 'advisory_opinions')
+                  .addQuery('q', props.query)
+                  .toString(), (results) => {
+                    console.log(results);
+                    this.setState({ advisory_opinions: results.advisory_opinions });
+                  });
+    }
+
+    render() {
+      if(this.state.advisory_opinions) {
+        return <SearchResults advisory_opinions={this.state.advisory_opinions} />
+      } else {
+        return <NoResults query={props.query} />
+      }
+    }
+}
+
+function search(query) {
+  return <section className="main__content--full data-container__wrapper">
+    <div id="filters" className="filters is-open">
+      <button className="filters__header js-filter-toggle" type="button">
+        <span className="filters__title">Search Advisory Opinions</span>
+      </button>
+      <div className="filters__content">
+        <form id="category-filters" action="{{ url_for(result_type) }}">
+          <div className="filters__inner">
+            <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}" />
+            FILTERS!
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="results-{{ result_type }}" className="content__section data-container__body">
+      <div className="results-info results-info--simple">
+        <div className="results-info__left">
+          <h2 className="results-info__title">Searching Advisory Opinions for { query }</h2>
+        </div>
+      </div>
+      <Results query={query} />
+    </div>
+  </section>
+}
+
+ReactDOM.render(
+  search($('#query').val()),
+  document.getElementById('root'));
+</script>
+
+<div id="root"></div>
 {% endblock %}
