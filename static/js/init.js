@@ -33,14 +33,12 @@ require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
 // Include vendor scripts
 require('./vendor/tablist').init();
 
-var charts = require('./modules/charts');
 var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
 var download = require('./modules/download');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
 $(document).ready(function() {
-  charts.init();
 
   $('.js-dropdown').each(function() {
     new dropdown.Dropdown(this);
