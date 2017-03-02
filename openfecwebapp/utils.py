@@ -107,8 +107,9 @@ def date_ranges():
         ),
     }
 
-def get_cycles():
-    return range(current_cycle(), constants.START_YEAR, -2)
+def get_cycles(max_cycle=None):
+    max = max_cycle if max_cycle else current_cycle()
+    return range(max, constants.START_YEAR, -2)
 
 def election_title(cycle, office, state=None, district=None):
     base = ' '.join([str(cycle), 'Election', 'United States', office.capitalize()])

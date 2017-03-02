@@ -302,7 +302,13 @@ def elections(office, cycle, state=None, district=None):
         abort(404)
     if state and state.upper() not in constants.states:
         abort(404)
-    cycles = utils.get_cycles()
+
+    # Get all cycles up until the cycle from the URL if it's beyond the current cycle
+    # this fixes the issue of an election page not showing user-provided cycle
+    # in the cycle select
+    max_cycle = cycle if cycle > utils.current_cycle() else utils.current_cycle()
+    cycles = utils.get_cycles(max_cycle)
+
     if office.lower() == 'president':
         cycles = [each for each in cycles if each % 4 == 0]
     return render_template(
