@@ -313,8 +313,6 @@ def elections(office, cycle, state=None, district=None):
         abort(404)
     if state and state.upper() not in constants.states:
         abort(404)
-    if cycle not in cycles:
-        abort(404)
 
     return render_template(
         'elections.html',
