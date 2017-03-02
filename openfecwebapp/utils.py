@@ -170,13 +170,8 @@ def process_ie_data(totals):
 
 
 def get_senate_cycles(senate_class):
-    if senate_class == 1:
-        max = 2018
-    if senate_class == 2:
-        max = 2022
-    if senate_class == 3:
-        max = 2020
-    return range(max, constants.START_YEAR, -6)
+    next_election = constants.NEXT_SENATE_ELECTIONS[str(senate_class)]
+    return range(next_election, constants.START_YEAR, -6)
 
 def get_state_senate_cycles(state):
     senate_cycles = []
