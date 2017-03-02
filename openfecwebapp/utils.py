@@ -167,3 +167,21 @@ def process_cash_data(totals):
 
 def process_ie_data(totals):
     return financial_summary_processor(totals, constants.IE_FORMATTER)
+
+
+def get_senate_cycles(senate_class):
+    if senate_class == 1:
+        max = 2018
+    if senate_class == 2:
+        max = 2022
+    if senate_class == 3:
+        max = 2020
+    return range(max, constants.START_YEAR, -6)
+
+def get_state_senate_cycles(state):
+    senate_cycles = []
+    for senate_class in [1, 2, 3]:
+        if state.upper() in constants.SENATE_CLASSES[str(senate_class)]:
+            senate_cycles += get_senate_cycles(senate_class)
+    print(senate_cycles)
+    return senate_cycles

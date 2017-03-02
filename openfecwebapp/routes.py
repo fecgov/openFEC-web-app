@@ -306,6 +306,8 @@ def elections(office, cycle, state=None, district=None):
 
     if office.lower() == 'president':
         cycles = [each for each in cycles if each % 4 == 0]
+    elif office.lower() == 'senate':
+        cycles = utils.get_state_senate_cycles(state)
 
     if office.lower() not in ['president', 'senate', 'house']:
         abort(404)
