@@ -175,26 +175,26 @@ other_reports = OrderedDict([
 ])
 
 form_types = OrderedDict([
-    ('F1', "Statements Of Organization"),
-    ('F1M', "Multicandidate status"),
-    ('F2', "Statements Of Candidacy"),
-    ('F3', "Congressional candidate financial reports"),
-    ('F3P', "Presidential financial reports"),
-    ('F3X', "PAC and party financial reports"),
-    ('F3L', "Bundled contributions reports"),
-    ('F4', "Convention financial reports"),
-    ('F5', "Independent expenditure reports and notices (by a person or group)"),
-    ('F24', "Independent expenditure reports and notices (by a registered committee)"),
-    ('F6', "Contributions and loans notices"),
-    ('F7', "Communication cost reports"),
-    ('F8', "Debt settlement plans"),
-    ('F9', "Electioneering communications notices"),
-    ('F13', "Inaugural committee donation reports"),
-    ('F99', "Miscellaneous submission"),
-    ('F10', "Expenditure of personal funds notices"),
-    ('F11', "Opposition personal funds notices"),
-    ('F12', "Suspension of increased limits notices"),
-    ('RFAI', "Request For Additional Information"),
+    ('F1', "Statements Of Organization (F1)"),
+    ('F1M', "Multicandidate status (F1M)"),
+    ('F2', "Statements Of Candidacy (F2)"),
+    ('F3', "Congressional candidate financial reports (F3)"),
+    ('F3P', "Presidential financial reports (F3P)"),
+    ('F3X', "PAC and party financial reports (F3X)"),
+    ('F3L', "Bundled contributions reports (F3L)"),
+    ('F4', "Convention financial reports (F4)"),
+    ('F5', "Independent expenditure reports and notices (by a person or group) (F5)"),
+    ('F24', "Independent expenditure reports and notices (by a registered committee) (F24)"),
+    ('F6', "Contributions and loans notices (F6)"),
+    ('F7', "Communication cost reports (F7)"),
+    ('F8', "Debt settlement plans (F8)"),
+    ('F9', "Electioneering communications notices (F9)"),
+    ('F13', "Inaugural committee donation reports (F13)"),
+    ('F99', "Miscellaneous submission (F99)"),
+    ('F10', "Expenditure of personal funds notices (F10)"),
+    ('F11', "Opposition personal funds notices (F11)"),
+    ('F12', "Suspension of increased limits notices (F12)"),
+    ('RFAI', "Request For Additional Information (RFAI)"),
 ])
 
 amendment_indicators_extended = OrderedDict([
@@ -361,3 +361,15 @@ IE_FORMATTER = OrderedDict([
     ('total_independent_contributions', ('Contributions received', '1')),
     ('total_independent_expenditures', ('Independent expenditures', '1'))
 ])
+
+SENATE_CLASSES = {
+    '1': ['AZ', 'CA', 'CT', 'DE', 'FL', 'HI', 'IN', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NJ', 'NM', 'NY', 'ND', 'OH', 'PA', 'RI', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'],
+    '2': ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'MD', 'MO', 'NV', 'NH', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'SC', 'SD', 'UT', 'VT', 'WA', 'WI'],
+    '3': ['AL', 'AK', 'AR', 'CO', 'DE', 'GA', 'ID', 'IL', 'IA', 'KS', 'KY', 'LA', 'ME', 'MA', 'MI', 'MN', 'MS', 'MT', 'NE', 'NH', 'NJ', 'NM', 'NC', 'OK', 'OR', 'RI', 'SC', 'SD', 'TN', 'TX', 'VA', 'WV', 'WY']
+}
+
+NEXT_SENATE_ELECTIONS = {
+    '1': 2018,
+    '2': 2022,
+    '3': 2020
+}
