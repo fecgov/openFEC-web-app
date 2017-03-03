@@ -88,7 +88,7 @@ var itemizedDisbursementColumns = [
   },
   {
     data: 'recipient_state',
-    className: 'all',
+    className: 'min-tablet hide-panel',
     orderable: false,
     defaultContent: 'NOT REPORTED'
   },
@@ -101,7 +101,7 @@ var itemizedDisbursementColumns = [
   columns.dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
   columns.currencyColumn({
     data: 'disbursement_amount',
-    className: 'min-tablet hide-panel column--number'
+    className: 'column--number'
   }),
 ];
 
