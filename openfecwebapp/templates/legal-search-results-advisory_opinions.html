@@ -15,6 +15,34 @@
   crossorigin="anonymous"></script>
 <script type="text/babel">
 
+class SearchKeyword extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: props.query}
+  }
+
+  handleChange(e) {
+    this.setState({value: e.target.value});
+  }
+
+  render() {
+    return <div className="filter">
+      <label className="label" htmlFor="search-input">Search keywords</label>
+      <div className="combo combo--search--mini">
+        <input id="search-input" type="text" name="search" className="combo__input"
+            value={this.state.value} onChange={this.handleChange} />
+        <button className="combo__button button--search button--standard" type="submit">
+          <span className="u-visually-hidden">Search</span>
+        </button>
+      </div>
+    </div>
+  }
+}
+
+function Filters(props) {
+  return <SearchKeyword query={props.query} />
+}
+
 function SearchResults(props) {
   function highlights(advisory_opinion) {
     return {__html: '&hellip;' + advisory_opinion.highlights }
@@ -103,7 +131,7 @@ function search(query) {
         <form id="category-filters" action="{{ url_for(result_type) }}">
           <div className="filters__inner">
             <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}" />
-            FILTERS!
+            <Filters query={query}/>
           </div>
         </form>
       </div>
