@@ -4,7 +4,7 @@
 
 <section id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
   <div class="heading--section">
-    <h2>Itemized Disbursements: {{ format_election_years(cycle, election_full, duration) }}</h2>
+    <h2>Itemized Disbursements</h2>
   </div>
 
   <div class="content__section">
@@ -21,7 +21,12 @@
   </ul>
   <div class="content__section">
     <div class="results-info results-info--simple">
-      <h3 class="results-info__title">Disbursements by transaction</h3>
+      <h3>Disbursements by transaction</h3>
+      <ul class="u-float-left">
+        <li class="tag__category">
+          <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+        </li>
+      </ul>
       <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
     </div>
     <table
