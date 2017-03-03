@@ -5,6 +5,7 @@
 var $ = require('jquery');
 
 var tables = require('../modules/tables');
+var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 
@@ -60,6 +61,31 @@ var electioneeringColumns = [
     })
   },
   columns.committeeColumn({data: 'committee', className: 'all'})
+];
+
+var individualContributionsColumns = [
+  {
+    data: 'contributor_name',
+    className: 'all',
+    orderable: false,
+  },
+  {
+    data: 'committee',
+    className: 'all',
+    orderable: false,
+    render: function(data, type, row) {
+      return columnHelpers.buildEntityLink(
+        row.committee.name,
+        helpers.buildAppUrl(['committee', row.committee_id]),
+        'committee'
+      );
+    }
+  },
+  columns.dateColumn({data: 'contribution_receipt_date', className: 'min-tablet'}),
+  columns.currencyColumn({
+    data: 'contribution_receipt_amount',
+    className: 'column--number'
+  }),
 ];
 
 function initFilingsTable() {
@@ -126,7 +152,39 @@ function initSpendingTables() {
   });
 }
 
+function initContributionsTables() {
+  var $table = $('table[data-type="individual-contributions"]');
+  var path = ['schedules', 'schedule_a'];
+  var opts = {
+    // possibility of multiple committees, so split into array
+    committee_id: $table.attr('data-committee-id').split(','),
+    title: 'individual contributions',
+    name: $table.data('name'),
+    cycle: $table.data('cycle')
+  };
+
+  tables.DataTable.defer($table, {
+    path: path,
+    query: {
+      committee_id: opts.committee_id,
+      two_year_transaction_period: opts.cycle
+    },
+    columns: individualContributionsColumns,
+    order: [[2, 'desc']],
+    dom: tables.simpleDOM,
+    aggregateExport: true,
+    pagingType: 'simple',
+    hideEmpty: true,
+    hideEmptyOpts: {
+      dataType: opts.title,
+      name: opts.name,
+      timePeriod: opts.cycle
+    }
+  });
+}
+
 $(document).ready(function() {
   initFilingsTable();
   initSpendingTables();
+  initContributionsTables();
 });

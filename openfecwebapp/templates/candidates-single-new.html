@@ -52,6 +52,15 @@
             aria-controls="panel2"
             href="#section-2">Spending by others to support or oppose</a>
         </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="individual-contributions"
+            tabindex-"1"
+            aria-controls="panel4"
+            href="#section-4">Individual contributions</a>
+        </li>
       </ul>
     </nav>
 
@@ -65,6 +74,7 @@
 
       {% include 'partials/candidate/financial-summary-new.html' %}
       {% include 'partials/candidate/other-spending-tab-new.html' %}
+      {% include 'partials/candidate/individual-contributions.html' %}
 
     </div>
   </div>
