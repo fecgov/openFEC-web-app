@@ -15,32 +15,33 @@
   crossorigin="anonymous"></script>
 <script type="text/babel">
 
-class SearchKeyword extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: props.query}
-  }
-
-  handleChange(e) {
-    this.setState({value: e.target.value});
-  }
-
-  render() {
-    return <div className="filter">
-      <label className="label" htmlFor="search-input">Search keywords</label>
+function TextFilter(props) {
+  return <div className="filter">
+      <label className="label" htmlFor={props.name + "-filter"}>{props.label}</label>
       <div className="combo combo--search--mini">
-        <input id="search-input" type="text" name="search" className="combo__input"
-            value={this.state.value} onChange={this.handleChange} />
-        <button className="combo__button button--search button--standard" type="submit">
+        <input id={props.name + "-filter"} type="text" name={props.name} className="combo__input"
+            value={props.value} onChange={props.handleChange} />
+        <button className="combo__button button--search button--standard"
+         onClick={props.getResults}>
           <span className="u-visually-hidden">Search</span>
         </button>
       </div>
     </div>
-  }
 }
 
 function Filters(props) {
-  return <SearchKeyword query={props.query} />
+  function handleChange(e) {
+    props.setQuery({[e.target.name]: e.target.value});
+  }
+
+  return <div>
+            <TextFilter name="q" label="Keywords" value={props.query.q}
+                handleChange={handleChange} getResults={props.getResults} />
+            <TextFilter name="ao_name" label="AO name" value={props.query.ao_name}
+                handleChange={handleChange} getResults={props.getResults} />
+            <TextFilter name="ao_no" label="AO number" value={props.query.ao_no}
+                handleChange={handleChange} getResults={props.getResults} />
+        </div>
 }
 
 function SearchResults(props) {
@@ -97,58 +98,75 @@ function NoResults(props) {
   </div>
 }
 
-class Results extends React.Component {
-  constructor(props) {
-      super(props);
-      this.state = { advisory_opinions: [] }
-      $.getJSON(URI(API_LOCATION)
-                  .path([API_VERSION, 'legal', 'search'].join('/'))
-                  .addQuery('api_key', API_KEY)
-                  .addQuery('type', 'advisory_opinions')
-                  .addQuery('q', props.query)
-                  .toString(), (results) => {
-                    console.log(results);
-                    this.setState({ advisory_opinions: results.advisory_opinions });
-                  });
-    }
-
-    render() {
-      if(this.state.advisory_opinions) {
-        return <SearchResults advisory_opinions={this.state.advisory_opinions} />
+function Results(props) {
+      if(props.advisory_opinions) {
+        return <SearchResults advisory_opinions={props.advisory_opinions} />
       } else {
-        return <NoResults query={props.query} />
+        return <NoResults query={props.q} />
       }
-    }
 }
 
-function search(query) {
-  return <section className="main__content--full data-container__wrapper">
-    <div id="filters" className="filters is-open">
-      <button className="filters__header js-filter-toggle" type="button">
-        <span className="filters__title">Search Advisory Opinions</span>
-      </button>
-      <div className="filters__content">
-        <form id="category-filters" action="{{ url_for(result_type) }}">
+class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { q: $('#query').val() }
+
+    this.getResults = this.getResults.bind(this);
+    this.setQuery = this.setQuery.bind(this);
+    this.getResults();
+  }
+
+  setQuery(queryParam, value) {
+    this.setState(queryParam, value);
+  }
+
+  getResults(e) {
+    if(e) {
+      e.preventDefault();
+    }
+    let queryPath = URI(API_LOCATION)
+                .path([API_VERSION, 'legal', 'search'].join('/'))
+                .addQuery('api_key', API_KEY)
+                .addQuery('type', 'advisory_opinions');
+
+    Object.keys(this.state).forEach((queryParam) => {
+      if(queryParam !== 'advisory_opinions' && this.state[queryParam]) {
+        queryPath = queryPath.addQuery(queryParam, this.state[queryParam]);
+      }
+    })
+
+    $.getJSON(queryPath.toString(), (results) => {
+                  console.log(results);
+                  this.setState({ advisory_opinions: results.advisory_opinions });
+                });
+  }
+
+  render() {
+    return <section className="main__content--full data-container__wrapper">
+      <div id="filters" className="filters is-open">
+        <button className="filters__header js-filter-toggle" type="button">
+          <span className="filters__title">Search Advisory Opinions</span>
+        </button>
+        <div className="filters__content">
           <div className="filters__inner">
-            <input id="search-type" type="hidden" name="search_type" value="{{ result_type }}" />
-            <Filters query={query}/>
+              <Filters query={this.state} setQuery={this.setQuery} getResults={this.getResults}/>
           </div>
-        </form>
-      </div>
-    </div>
-    <div id="results-{{ result_type }}" className="content__section data-container__body">
-      <div className="results-info results-info--simple">
-        <div className="results-info__left">
-          <h2 className="results-info__title">Searching Advisory Opinions for { query }</h2>
         </div>
       </div>
-      <Results query={query} />
-    </div>
-  </section>
+      <div id="results-{{ result_type }}" className="content__section data-container__body">
+        <div className="results-info results-info--simple">
+          <div className="results-info__left">
+            <h2 className="results-info__title">Searching Advisory Opinions</h2>
+          </div>
+        </div>
+        <Results advisory_opinions={this.state.advisory_opinions} q={this.state.q} />
+      </div>
+    </section>
+}
 }
 
 ReactDOM.render(
-  search($('#query').val()),
+  <Search />,
   document.getElementById('root'));
 </script>
 
