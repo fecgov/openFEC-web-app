@@ -158,6 +158,7 @@ function initDisbursementsTable() {
     columns: itemizedDisbursementColumns,
     order: [[4, 'desc']],
     dom: tables.simpleDOM,
+    aggregateExport: true,
     pagingType: 'simple',
     hideEmpty: true,
     hideEmptyOpts: {
