@@ -10,7 +10,11 @@ var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 
 var filingsColumns = [
-  columnHelpers.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
+  columnHelpers.urlColumn('pdf_url', {
+    data: 'document_description',
+    className: 'all',
+    orderable: false
+  }),
   columns.amendmentIndicatorColumn,
   columns.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
 ];
@@ -21,11 +25,10 @@ var expenditureColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row) {
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
-          // is_notice: false,
         };
     })
   },
@@ -39,7 +42,7 @@ var communicationCostColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row) {
         return {
           support_oppose_indicator: row.support_oppose_indicator,
           candidate_id: row.candidate_id,
@@ -56,7 +59,8 @@ var electioneeringColumns = [
     className: 'all',
     orderable: true,
     orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['electioneering-communications'], function(data, type, row, meta) {
+    render: columnHelpers.buildTotalLink(['electioneering-communications'],
+      function(data, type, row) {
         return {candidate_id: row.candidate_id};
     })
   },
@@ -68,7 +72,7 @@ var itemizedDisbursementColumns = [
     data: 'committee_id',
     className: 'all',
     orderable: false,
-    render: function(data, type, row, meta) {
+    render: function(data, type, row) {
       return columnHelpers.buildEntityLink(
         row.committee.name,
         helpers.buildAppUrl(['committee', row.committee_id]),
@@ -76,11 +80,29 @@ var itemizedDisbursementColumns = [
       );
     }
   },
-  { data: 'recipient_name', className: 'all', orderable: false, defaultContent: 'NOT REPORTED' },
-  { data: 'recipient_state', className: 'all', orderable: false, defaultContent: 'NOT REPORTED' },
-  { data: 'disbursement_description', className: 'all', orderable: false, defaultContent: 'NOT REPORTED' },
+  {
+    data: 'recipient_name',
+    className: 'all',
+    orderable: false,
+    defaultContent: 'NOT REPORTED'
+  },
+  {
+    data: 'recipient_state',
+    className: 'all',
+    orderable: false,
+    defaultContent: 'NOT REPORTED'
+  },
+  {
+    data: 'disbursement_description',
+    className: 'all',
+    orderable: false,
+    defaultContent: 'NOT REPORTED'
+  },
   columns.dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
-  columns.currencyColumn({data: 'disbursement_amount', className: 'min-tablet hide-panel column--number'}),
+  columns.currencyColumn({
+    data: 'disbursement_amount',
+    className: 'min-tablet hide-panel column--number'
+  }),
 ];
 
 var tableOpts = {
@@ -120,7 +142,7 @@ function initDisbursementsTable() {
   var $table = $('table[data-type="itemized-disbursements"]');
   var path = ['schedules', 'schedule_b'];
   var opts = {
-    // possibility of mulitple committees, so split into array
+    // possibility of multiple committees, so split into array
     committee_id: $table.attr('data-committee-id').split(','),
     title: 'itemized disbursements',
     name: $table.data('name'),
