@@ -5,10 +5,10 @@ python:
 - '3.4'
 env:
   global:
-  - FEC_CF_USERNAME='true'
-  - FEC_CF_PASSWORD='true'
   - secure: exJmvvWSXE9YfaKDttxFQzTNpDA3FhEjlHuUMoO26MDAzdK7vJ7FGPUhYNSClvm4iWafbAkLCSBg/irzs1PvZ2aUYtP0BGXLb2Zg0AA/FrA9QQ+EwD/ILMCwVv5hi+TFj35DEmPvc6Hs/FWTOfhY+p3lFW/y91Dlsy9fFtuz3fk=
   - secure: cSqeXixfc/XlPnsQIYs6K0wzgQXPE7VjXsXWn8azKURGIM7TRg462+nVmaXswDQLG2WxI+st8ci0lXcl9qLvf3q6FVd5O1+ZUpB0ak5gXeEU/1jBLLnp688Hb2XDStD7H4oaXQnNujyQJnhYXjb6kF26GTUuO+MVrBqpwWNvFOU=
+  - secure: KfdvnCk55FW2w+qLZ3qQGW7a7nEy6JNaHJIOZiyAKvRvcPgX+OPdLu64FGVMKUnpR4lx/c2JxkOL4PEBAK7MqoLyG0uOZsHHpQk/k1xBScVyEBmbqQ2YM2s4QFOow/37aP/3orulYUhLmutYl3LXt1RK5MQtSMxvmwFxbpTZ1hk=
+  - secure: Av9yMGPZUwtiT48+TsXTAw/HG2qDCUwB//wybXaODbiKVKU00w+i4ocVQXEhDnZtk9x6Z+So+Z55mcnZq8hGXBpmCK1GTl4K4QUrqmrrHDWi4Hfyjr5rcf+BqWYcB9P9le/a6OuEEZZHIqk4IzmDwOo9SzdLPCB/XeJjsM/RetE=
 before_script:
 - travis_retry pip install -U pip wheel
 - travis_retry pip install -r requirements.txt
@@ -33,6 +33,8 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: invoke deploy --branch $TRAVIS_BRANCH --yes
+  script: invoke deploy --branch $TRAVIS_BRANCH --login True --yes
   on:
     all_branches: true
+dd:
+  secure: QkdjjW7fk4elNwOfduPMPLAv03WpyR1P65C0TiYhbZpOS0ONL1oRSaN4l+5dSvNG0wlinT3U7pBBsMaW+Pi+MH0+1ONbyc4eAF6ono4D4uaBvPq4zPe+y/y6TWCEiE+PrRvsXynvn6Hph8i2WHC9lbu4RzVhiQrvPaGJy6wY4kA=

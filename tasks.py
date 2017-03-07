@@ -79,7 +79,7 @@ DEPLOY_RULES = (
 
 
 @task
-def deploy(space=None, branch=None, yes=False):
+def deploy(space=None, branch=None, login=None, yes=False):
     """Deploy app to Cloud Foundry. Log in using credentials stored in
     `FEC_CF_USERNAME` and `FEC_CF_PASSWORD`; push to either `space` or the space
     detected from the name and tags of the current branch. Note: Must pass `space`
@@ -101,8 +101,8 @@ def deploy(space=None, branch=None, yes=False):
     run('cf api {0}'.format(api), echo=True)
 
     # Log in if necessary
-    if os.getenv('FEC_CF_USERNAME') and os.getenv('FEC_CF_PASSWORD'):
-        run('cf auth "$FEC_CF_USERNAME_{0}" "$FEC_CF_PASSWORD_{0}".format(space.upper())', echo=True)
+    if login == 'True':
+        run('cf auth "$FEC_CF_USERNAME_{0}" "$FEC_CF_PASSWORD_{0}"'.format(space.upper()), echo=True)
 
     # Target space
     run('cf target -o fec-beta-fec -s {0}'.format(space), echo=True)
