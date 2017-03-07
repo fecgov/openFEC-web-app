@@ -38,6 +38,14 @@ function TextFilter(props) {
     </div>
 }
 
+function CheckboxFilter(props) {
+    return <div className="filter">
+      <input type="checkbox" id={props.name} name={props.name}
+        onChange={props.handleChange} checked={props.checked} />
+      <label htmlFor={props.name}>{props.label}</label>
+    </div>
+}
+
 function Filters(props) {
 
   const requestorOptions = [ {'value': 0, 'text': 'Any'},
@@ -65,6 +73,8 @@ function Filters(props) {
                 handleChange={props.setQuery} getResults={props.getResults} />
             <TextFilter name="ao_no" label="AO number" value={props.query.ao_no}
                 handleChange={props.setQuery} getResults={props.getResults} />
+            <CheckboxFilter name="ao_is_pending" label="Show only pending requests"
+                checked={props.query.ao_is_pending} handleChange={props.instantQuery} />
             <Dropdown name="ao_requestor_type" label="Requestor Type" value={props.query.ao_requestor_type}
               options={requestorOptions} handleChange={props.instantQuery} />
             <TextFilter name="ao_requestor" label="Requestor Name" value={props.query.ao_requestor}
@@ -146,12 +156,13 @@ class Search extends React.Component {
   }
 
   setQuery(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    this.setState({ [e.target.name]: value});
   }
 
   instantQuery(e) {
-    console.log(e.target.value);
-    this.setState({ [e.target.name]: e.target.value }, () => {
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    this.setState({ [e.target.name]: value}, () => {
       this.getResults();
     });
   }
