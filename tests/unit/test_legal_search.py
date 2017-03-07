@@ -1,7 +1,8 @@
 import unittest
+import datetime
+
 from unittest import mock
 from urllib.parse import urlparse, parse_qs
-
 
 from openfecwebapp import api_caller
 from openfecwebapp.app import app
@@ -103,6 +104,16 @@ class TestLegalSearch(unittest.TestCase):
         assert results['advisory_opinions_returned'] == 2
         assert results['statutes_returned'] == 4
         assert results['regulations_returned'] == 5
+
+    @mock.patch.object(api_caller, 'load_legal_search_results')
+    def test_ao_landing_page(self, load_legal_search_results):
+        today = datetime.date.today()
+        ao_min_date = today - datetime.timedelta(weeks=26)
+        response = self.app.get('legal/advisory-opinions/')
+
+        assert response.status_code == 200
+        load_legal_search_results.assert_called_once_with(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
+
 
 if __name__ == '__main__':
     unittest.main()
