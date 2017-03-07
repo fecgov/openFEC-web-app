@@ -15,6 +15,15 @@
   crossorigin="anonymous"></script>
 <script type="text/babel">
 
+function Dropdown(props) {
+  return <div className="filter">
+          <label htmlFor={props.name} className="label">{props.label}</label>
+          <select id={props.name} name={props.name} onChange={props.handleChange}>
+            {props.options.map(option => <option key={option.value} value={option.value}>{option.text}</option>)}
+          </select>
+          </div>
+}
+
 function TextFilter(props) {
   return <div className="filter">
       <label className="label" htmlFor={props.name + "-filter"}>{props.label}</label>
@@ -30,17 +39,36 @@ function TextFilter(props) {
 }
 
 function Filters(props) {
-  function handleChange(e) {
-    props.setQuery({[e.target.name]: e.target.value});
-  }
+
+  const requestorOptions = [ {'value': 0, 'text': 'Any'},
+    {'value': 1, 'text': 'Federal candidate/candidate committee/officeholder'},
+    {'value': 2, 'text': 'Publicly funded candidates/committees'},
+    {'value': 3, 'text': 'Party committee, national'},
+    {'value': 4, 'text': 'Party committee, state or local'},
+    {'value': 5, 'text': 'Nonconnected political committee'},
+    {'value': 6, 'text': 'Separate segregated fund'},
+    {'value': 7, 'text': 'Labor Organization'},
+    {'value': 8, 'text': 'Trade Association'},
+    {'value': 9, 'text': 'Membership Organization, Cooperative, Corporation W/O Capital Stock'},
+    {'value': 10, 'text': 'Corporation (including LLCs electing corporate status)'},
+    {'value': 11, 'text': 'Partnership (including LLCs electing partnership status)'},
+    {'value': 12, 'text': 'Governmental entity'},
+    {'value': 13, 'text': 'Research/Public Interest/Educational Institution'},
+    {'value': 14, 'text': 'Law Firm'},
+    {'value': 15, 'text': 'Individual'},
+    {'value': 16, 'text': 'Other'}]
 
   return <div>
             <TextFilter name="q" label="Keywords" value={props.query.q}
-                handleChange={handleChange} getResults={props.getResults} />
+                handleChange={props.setQuery} getResults={props.getResults} />
             <TextFilter name="ao_name" label="AO name" value={props.query.ao_name}
-                handleChange={handleChange} getResults={props.getResults} />
+                handleChange={props.setQuery} getResults={props.getResults} />
             <TextFilter name="ao_no" label="AO number" value={props.query.ao_no}
-                handleChange={handleChange} getResults={props.getResults} />
+                handleChange={props.setQuery} getResults={props.getResults} />
+            <Dropdown name="ao_requestor_type" label="Requestor Type" value={props.query.ao_requestor_type}
+              options={requestorOptions} handleChange={props.instantQuery} />
+            <TextFilter name="ao_requestor" label="Requestor Name" value={props.query.ao_requestor}
+                handleChange={props.setQuery} getResults={props.getResults} />
         </div>
 }
 
@@ -113,11 +141,19 @@ class Search extends React.Component {
 
     this.getResults = this.getResults.bind(this);
     this.setQuery = this.setQuery.bind(this);
+    this.instantQuery = this.instantQuery.bind(this);
     this.getResults();
   }
 
-  setQuery(queryParam, value) {
-    this.setState(queryParam, value);
+  setQuery(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  instantQuery(e) {
+    console.log(e.target.value);
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      this.getResults();
+    });
   }
 
   getResults(e) {
@@ -130,7 +166,7 @@ class Search extends React.Component {
                 .addQuery('type', 'advisory_opinions');
 
     Object.keys(this.state).forEach((queryParam) => {
-      if(queryParam !== 'advisory_opinions' && this.state[queryParam]) {
+      if(queryParam !== 'advisory_opinions' && this.state[queryParam] && this.state[queryParam] !== '0') {
         queryPath = queryPath.addQuery(queryParam, this.state[queryParam]);
       }
     })
@@ -149,7 +185,8 @@ class Search extends React.Component {
         </button>
         <div className="filters__content">
           <div className="filters__inner">
-              <Filters query={this.state} setQuery={this.setQuery} getResults={this.getResults}/>
+              <Filters query={this.state} setQuery={this.setQuery}
+                getResults={this.getResults} instantQuery={this.instantQuery} />
           </div>
         </div>
       </div>
