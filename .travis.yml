@@ -1,46 +1,35 @@
 language: python
-
 sudo: false
-
 cache: pip
-
 python:
-  - "3.4"
-
+- '3.4'
 env:
   global:
-    - secure: "Waa09XB9IG1H3iB2LPXhq53j7IVElUaZf6VIc1V76ahqdlbfHuz36LoV4XfehPP6R6sT35nPFKXmr1wf5tMDyOP2CNIvu88M1beSTVC4lpSRPB1YQ9/ISTjs4srzlZKSKMmwuiHafE52POqrtf4sbtsRhtx+UdG10JQlliROUuo=" # FEC_CF_USERNAME
-    - secure: "MfxUIgD2ozMtl4qG14qkKs6fFcnEyVgmOAOLNoQNO6xFpinBcZ7RFdDAcnSSy69PxUhHdYV4+dq5GRKb+TLCTMAypyPOG618w1A2482ZxlCL0quHedIMv1eRzDuBojl/O3ur6FrPbdrO42K2cy3OO4zzLQjlHfcPNywYZpKoBlo=" # FEC_CF_PASSWORD
-
+  - FEC_CF_USERNAME='true'
+  - FEC_CF_PASSWORD='true'
+  - secure: exJmvvWSXE9YfaKDttxFQzTNpDA3FhEjlHuUMoO26MDAzdK7vJ7FGPUhYNSClvm4iWafbAkLCSBg/irzs1PvZ2aUYtP0BGXLb2Zg0AA/FrA9QQ+EwD/ILMCwVv5hi+TFj35DEmPvc6Hs/FWTOfhY+p3lFW/y91Dlsy9fFtuz3fk=
+  - secure: cSqeXixfc/XlPnsQIYs6K0wzgQXPE7VjXsXWn8azKURGIM7TRg462+nVmaXswDQLG2WxI+st8ci0lXcl9qLvf3q6FVd5O1+ZUpB0ak5gXeEU/1jBLLnp688Hb2XDStD7H4oaXQnNujyQJnhYXjb6kF26GTUuO+MVrBqpwWNvFOU=
 before_script:
-  - travis_retry pip install -U pip wheel
-  - travis_retry pip install -r requirements.txt
-  - travis_retry pip install -r requirements.test.txt
-
-
-  # Use production version of node.js
-  - . $HOME/.nvm/nvm.sh
-  - nvm install v5.5.0
-  - nvm use v5.5.0
-
-  - travis_retry npm install
-  - npm run build
-
+- travis_retry pip install -U pip wheel
+- travis_retry pip install -r requirements.txt
+- travis_retry pip install -r requirements.test.txt
+- ". $HOME/.nvm/nvm.sh"
+- nvm install v5.5.0
+- nvm use v5.5.0
+- travis_retry npm install
+- npm run build
 script:
-  - py.test
-  - npm run test-single
-
+- py.test
+- npm run test-single
 after_success:
-  - travis_retry pip install codecov
-  - codecov
-
+- travis_retry pip install codecov
+- codecov
 before_deploy:
-  - export PATH=$HOME:$PATH
-  - travis_retry curl -L -o $HOME/cf.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.22.2"
-  - tar xzvf $HOME/cf.tgz -C $HOME
-  - travis_retry cf install-plugin autopilot -f -r CF-Community
-  - npm run build
-
+- export PATH=$HOME:$PATH
+- travis_retry curl -L -o $HOME/cf.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.22.2"
+- tar xzvf $HOME/cf.tgz -C $HOME
+- travis_retry cf install-plugin autopilot -f -r CF-Community
+- npm run build
 deploy:
   provider: script
   skip_cleanup: true
