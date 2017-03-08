@@ -7,76 +7,132 @@
 
 {% block body %}
   {{ header.header(title, '', show_search=False) }}
-  <div class="main">
-  <div class="container">
-    <header class="heading--main">
-      <h1>{{ title }}</h1>
-    </header>
-  </div>
-  <div id="options" class="container">
-    <div class="sidebar-container sidebar-container--left">
-      <nav class="sidebar sidebar--neutral sidebar--left side-nav js-sticky-side js-toc" data-sticky-container="options">
-        <ul class="sidebar__content">
-          <li class="side-nav__item"><a class="side-nav__link" href="#candidates">Candidates</a></li>
-          <li class="side-nav__item"><a class="side-nav__link" href="#committees">Committees</a></li>
-          <li class="side-nav__item"><a class="side-nav__link" href="#receipts">Receipts</a></li>
-          <li class="side-nav__item"><a class="side-nav__link" href="#spending">Spending</a></li>
-          <li class="side-nav__item"><a class="side-nav__link" href="#filings">Reports and filings</a></li>
-        </ul>
-      </nav>
-    </div>
-    <section class="main__content--right">
-      <div id="candidates" class="option">
+<div class="u-padding--left u-padding--right tab-interface">
+<div class="main">
+  <header class="heading--main">
+    <h1>{{ title }}</h1>
+  </header>
+  <div class="data-container__wrapper">
+    <nav class="sidebar side-nav-alt">
+      <ul class="tablist" role="tablist" data-name="tab">
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="raising"
+            tabindex="0"
+            aria-controls="raising"
+            href="#raising"
+            aria-selected="true">Raising</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="spending"
+            tabindex="0"
+            aria-controls="spending"
+            href="#spending"
+            aria-selected="false">Spending</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="candidates"
+            tabindex="0"
+            aria-controls="candidates"
+            href="#candidates"
+            aria-selected="false">Candidates</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="committees"
+            tabindex="0"
+            aria-controls="committees"
+            href="#committees"
+            aria-selected="false">Committees</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="reports"
+            tabindex="0"
+            aria-controls="reports"
+            href="#reports"
+            aria-selected="false">Reports and filings</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="main__content--right-full">
+      <section class="row" id="raising" aria-hidden="false" role="tabpanel" >
+        <h2>Receipts</h2>
+        <div class="option__content">
+          <p><span class="term" data-term="receipt">Receipts</span> are anything of value, like money, services or property. Search candidate and committee receipt data by contributor, amount and date.</p>
+          <p>Search individual contributions to see who is donating to candidates and committees. Search for contributors by name, location, employer and occupation.</p>
+          <div class="post-feed">
+            <a class="post t-block" href="{{ url_for('receipts', is_individual=True) }}"><span class="t-all-data">All receipts</span></a>
+            <a class="post t-block" href="{{ url_for('individual_contributions') }}">Individual contributions</a>
+          </div>
+        </div>
+        <div class="option__aside">
+          <i class="icon-circle--raising"><span class="u-visually-hidden">Icon of a piggy bank</span></i>
+            <a href="/#raising">Raising data overview</a>
+        </div>
+      </section>
+      <section class="row" id="spending" aria-hidden="true" role="tabpanel" >
+        <h2>Spending</h2>
+        <div class="option__content">
+          <p>Spending includes all the types of <span class="term" data-term="disbursement">dibsursements</span> candidates and committees make.</p>
+          <p>Search all disbursements from committees by the recipient, purpose, amount and date.</p>
+          <p>Search <span class="term" data-term="independent expenditure">independent expenditures</span> to find specific spenders, candidates mentioned and transaction information.</p>
+          <p>Search communication costs and <span class="term" data-term="electioneering communication">electioneering communications</span> for communications that support or oppose specific candidates. Search by date and amount spent.</p>
+          <div class="post-feed">
+            <a class="post t-block" href="{{ url_for('disbursements') }}"><span class="t-all-data">All disbursements</span></a>
+            <a class="post t-block" href="{{ url_for('party_coordinated_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Party coordinated expenditures</a>
+            <a class="post t-block" href="{{ url_for('independent_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Independent expenditures</a>
+            <a class="post t-block" href="{{ url_for('electioneering_communications', max_date=today() | date(fmt='%m-%d-%Y')) }}">Electioneering communications</a>
+            <a class="post t-block" href="{{ url_for('communication_costs', max_date=today() | date(fmt='%m-%d-%Y')) }}">Communication costs</a>
+          </div>
+        </div>
+        <div class="option__aside">
+          <i class="icon-circle--spending"><span class="u-visually-hidden">Icon of a spreading dollar sign</span></i>
+            <a href="/#spending">Spending data overview</a>
+        </div>
+      </section>
+      <section id="candidates" class="row" aria-hidden="true" role="tabpanel" >
         <h2>Candidates</h2>
         <div class="option__content">
           <p>Search <span class="term" data-term="candidate">candidate</span> data, including money raised, money spent, cash on hand and debt.</p>
           <p>Statements of Candidacy (Form 2) contain basic information about individuals running
           for federal office, including their names, addresses and authorized campaign committees.</p>
-          <div class="grid--2-wide">
-          <ul class="grid__item list--spacious t-sans">
-            <li><a class="t-all-data" href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">All candidates</a>
-              <ul>
-                <li><a href="{{ url_for('candidates_office', office='president') }}">Presidential candidates</a></li>
-                <li><a href="{{ url_for('candidates_office', office='senate') }}">Senate candidates</a></li>
-                <li><a href="{{ url_for('candidates_office', office='house') }}">House of Representatives candidates</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="grid__item list--spacious t-sans">
-            <li><a href="{{ url_for('filings', form_type='F2') }}">Most recent Statements of Candidacy (Form 2)</a></li>
-          </ul>
+          <div class="post-feed">
+            <a class="post t-block" href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}"><span class="t-all-data">All candidates</span></a>
+            <a class="post t-block" href="{{ url_for('candidates_office', office='president') }}">Presidential candidates</a>
+            <a class="post t-block" href="{{ url_for('candidates_office', office='senate') }}">Senate candidates</a>
+            <a class="post t-block" href="{{ url_for('candidates_office', office='house') }}">House of Representatives candidates</a>
+            <a class="post t-block" href="{{ url_for('filings', form_type='F2') }}">Most recent Statements of Candidacy (Form 2)</a>
           </div>
         </div>
         <div class="option__aside">
           <i class="icon-circle--checklist card--stacked"><span class="u-visually-hidden">Icon of a checklist</span></i>
-            <a href="{{ cms_url }}/registration-and-reporting/essentials-house-and-senate-candidates-and-committees/">Candidate registration and reporting requirements</a>
+          <a href="{{ cms_url }}/registration-and-reporting/essentials-house-and-senate-candidates-and-committees/">Candidate registration and reporting requirements</a>
         </div>
-      </div>
-      <div id="committees" class="option">
+      </section>
+      <section id="committees" class="row" aria-hidden="true" role="tabpanel" >
         <h2>Committees</h2>
         <div class="option__content">
           <p>The term <span class="term" data-term="political committee">committee</span> encompasses several different political groups that receive and spend money in federal elections.
           Search for committees by type, years active, political party, location and treasurer.</p>
           <p>Statements of Organization (Form 1) contain basic information about committees, including type, address and treasurer.</p>
           <p>Requests for Additional Information (RFAIs) are sent to committees when a Campaign Finance Analyst needs additional clarification on a committee’s filing or identifies an error, omission or possible prohibited activity. Search RFAIs by committee or date.</p>
-          <div class="grid--2-wide">
-            <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('committees', election_year=default_cycles) }}">All committees</a>
-                <ul>
-                  <li><a href="#" class="is-disabled">Candidate committees</a></li>
-                  <li><a href="#" class="is-disabled">Political action committees (PACs)</a></li>
-                  <li><a href="#" class="is-disabled">Super PACs</a></li>
-                  <li><a href="#" class="is-disabled">Leadership PACs</a></li>
-                  <li><a href="#" class="is-disabled">Joint fundraising committees</a></li>
-                  <li><a href="#" class="is-disabled">Party committees</a></li>
-                  <li><a href="#" class="is-disabled">Separate segregated funds (SSFs)</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="grid__item list--spacious t-sans">
-              <li><a href="{{ url_for('filings', form_type='F1') }}">Most recent Statements of Organization (Form 1)</a></li>
-              <li><a href="{{ url_for('filings', form_type='RFAI') }}">Requests for Additional Information sent to committees</a></li>
-            </ul>
+          <div class="post-feed">
+            <a class="post t-block" href="{{ url_for('committees', election_year=default_cycles) }}"><span class="t-all-data">All committees</span></a>
+            <a class="post t-block" href="{{ url_for('filings', form_type='F1') }}">Most recent Statements of Organization (Form 1)</a>
+            <a class="post t-block" href="{{ url_for('filings', form_type='RFAI') }}">Requests for Additional Information sent to committees</a>
           </div>
         </div>
         <div class="option__aside">
@@ -85,76 +141,22 @@
             <a href="{{ cms_url }}/registration-and-reporting/essentials-political-party-committees/">Political party committee registration and reporting requirements</a><br><br>
             <a href="{{ cms_url }}/registration-and-reporting/">Registration and reporting requirements for other committees</a>
         </div>
-      </div>
-      <div id="receipts" class="option">
-        <h2>Receipts</h2>
-        <div class="option__content">
-          <p><span class="term" data-term="receipt">Receipts</span> are anything of value, like money, services or property. Search candidate and committee receipt data by contributor, amount and date.</p>
-          <p>Search individual contributions to see who is donating to candidates and committees. Search for contributors by name, location, employer and occupation.</p>
-          <div class="grid--2-wide">
-          <ul class="grid__item list--spacious t-sans">
-            <li><a class="t-all-data" href="{{ url_for('receipts', is_individual=True) }}">All receipts</a>
-              <ul>
-                <li><a href="{{ url_for('individual_contributions') }}">Individual contributions</a></li>
-                <li><a href="#" class="is-disabled">Contributions from other committees</a></li>
-              </ul>
-            </li>
-          </ul>
-          </div>
-        </div>
-        <div class="option__aside">
-          <i class="icon-circle--raising"><span class="u-visually-hidden">Icon of a piggy bank</span></i>
-            <a href="/#raising">Raising data overview</a>
-        </div>
-      </div>
-      <div id="spending" class="option">
-        <h2>Spending</h2>
-        <div class="option__content">
-          <p>Spending includes all the types of <span class="term" data-term="disbursement">dibsursements</span> candidates and committees make.</p>
-          <p>Search all disbursements from committees by the recipient, purpose, amount and date.</p>
-          <p>Search <span class="term" data-term="independent expenditure">independent expenditures</span> to find specific spenders, candidates mentioned and transaction information.</p>
-          <p>Search communication costs and <span class="term" data-term="electioneering communication">electioneering communications</span> for communications that support or oppose specific candidates. Search by date and amount spent.</p>
-          <div class="grid--2-wide">
-            <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('disbursements') }}">All disbursements</a>
-                <ul>
-                  <li><a href="#" class="is-disabled">Operating expenditures</a></li>
-                  <li><a href="#" class="is-disabled">Expenditures to committees</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="grid__item list--spacious t-sans">
-              <li><a href="{{ url_for('party_coordinated_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Party coordinated expenditures</a></li>
-              <li><a href="{{ url_for('independent_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Independent expenditures</a></li>
-              <li><a href="{{ url_for('electioneering_communications', max_date=today() | date(fmt='%m-%d-%Y')) }}">Electioneering communications</a></li>
-              <li><a href="{{ url_for('communication_costs', max_date=today() | date(fmt='%m-%d-%Y')) }}">Communication costs</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="option__aside">
-          <i class="icon-circle--spending"><span class="u-visually-hidden">Icon of a spreading dollar sign</span></i>
-            <a href="/#spending">Spending data overview</a>
-        </div>
-      </div>
-      <div id="filings" class="option">
+      </section>
+      <section class="row" id="reports" aria-hidden="true" role="tabpanel" >
         <h2>Filings</h2>
         <div class="option__content">
           <p>Filings contain all the statements, reports and notices that candidates and committees file. Search by date, type and filing candidate or committee.</p>
-          <div class="grid--2-wide">
-            <ul class="grid__item list--spacious t-sans">
-              <li><a href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a></li>
-              <li><a href="{{ url_for('reports', form_type='house-senate', is_amended='false') }}">House and Senate committee reports</a></li>
-              <li><a href="{{ url_for('reports', form_type='pac-party', is_amended='false') }}">PAC and party committee reports</a></li>
-              <!-- Commenting out while page is in progress -->
-              <!--<li><a href="{{ url_for('reports', form_type='ie-only', is_amended='false') }}">Independent expenditure (Form 5) filer reports</a></li>-->
-            </ul>
-            <ul class="grid__item list--spacious t-sans">
-              <li><a class="t-all-data" href="{{ url_for('filings') }}">All filings</a></li>
-            </ul>
+          <div class="post-feed">
+            <a class="post t-block" href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a>
+            <a class="post t-block" href="{{ url_for('reports', form_type='house-senate', is_amended='false') }}">House and Senate committee reports</a>
+            <a class="post t-block" href="{{ url_for('reports', form_type='pac-party', is_amended='false') }}">PAC and party committee reports</a>
+            <!-- Commenting out while page is in progress -->
+            <!--<li><a href="{{ url_for('reports', form_type='ie-only', is_amended='false') }}">Independent expenditure (Form 5) filer reports</a></li>-->
+            <a class="post t-block" href="{{ url_for('filings') }}"><span class="t-all-data">All filings</span></a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
 </div>
 
@@ -189,7 +191,7 @@
     </div>
   </div>
 </div>
-
+</div>
 {% endblock %}
 
 {% block scripts %}
