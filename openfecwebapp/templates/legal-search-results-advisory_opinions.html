@@ -16,9 +16,14 @@
 <script type="text/babel">
 
 function Dropdown(props) {
+  function handleDropdownChange(e) {
+    const value = e.target.value == '0' ? '' : e.target.value;
+    props.handleChange({ target: { name: props.name, value: value } });
+  }
+
   return <div className="filter">
           <label htmlFor={props.name} className="label">{props.label}</label>
-          <select id={props.name} name={props.name} onChange={props.handleChange}>
+          <select id={props.name} name={props.name} onChange={handleDropdownChange}>
             {props.options.map(option => <option key={option.value} value={option.value}>{option.text}</option>)}
           </select>
           </div>
@@ -46,6 +51,32 @@ function CheckboxFilter(props) {
     </div>
 }
 
+function CheckboxList(props) {
+  function handleCheckboxListChange(e) {
+    const newEvent = { target: { name: props.name, value: props.value } };
+
+    if (props.value.indexOf(e.target.value) >= 0) {
+      newEvent.target.value.splice(props.value.indexOf(e.target.value, 1));
+    } else {
+      newEvent.target.value.push(e.target.value);
+    }
+
+    props.handleChange(newEvent);
+  }
+
+  return <div className="filter">
+    <legend className="label">{props.label}</legend>
+    {props.options.map((option) => {
+      return <div key={option.value}>
+              <input type="checkbox" id={`${props.name}_${option.value}`} name={props.name}
+                checked={props.value.indexOf(option.value) >= 0} value={option.value} onChange={handleCheckboxListChange} />
+              <label htmlFor={`${props.name}_${option.value}`}>{option.text}</label>
+            </div>
+    })}
+  </div>
+
+}
+
 function Filters(props) {
 
   const requestorOptions = [ {'value': 0, 'text': 'Any'},
@@ -66,6 +97,14 @@ function Filters(props) {
     {'value': 15, 'text': 'Individual'},
     {'value': 16, 'text': 'Other'}]
 
+  const documentTypes = [{'value' : 'F', 'text': 'Final Opinion'},
+   {'value' : 'V', 'text': 'Votes'},
+   {'value' : 'D', 'text': 'Draft Documents'},
+   {'value' : 'R', 'text': 'AO Request, Supplemental Material, and Extensions of Time'},
+   {'value' : 'W', 'text': 'Withdrawal of Request'},
+   {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
+   {'value' : 'S', 'text': 'Commissioner Statements'}]
+
   return <div>
             <TextFilter name="q" label="Keywords" value={props.query.q}
                 handleChange={props.setQuery} getResults={props.getResults} />
@@ -73,6 +112,8 @@ function Filters(props) {
                 handleChange={props.setQuery} getResults={props.getResults} />
             <TextFilter name="ao_no" label="AO number" value={props.query.ao_no}
                 handleChange={props.setQuery} getResults={props.getResults} />
+            <CheckboxList name="ao_category" label="Document Type" value={props.query.ao_category || ['F']}
+                handleChange={props.instantQuery} options={documentTypes}/>
             <CheckboxFilter name="ao_is_pending" label="Show only pending requests"
                 checked={props.query.ao_is_pending} handleChange={props.instantQuery} />
             <Dropdown name="ao_requestor_type" label="Requestor Type" value={props.query.ao_requestor_type}
@@ -177,7 +218,7 @@ class Search extends React.Component {
                 .addQuery('type', 'advisory_opinions');
 
     Object.keys(this.state).forEach((queryParam) => {
-      if(queryParam !== 'advisory_opinions' && this.state[queryParam] && this.state[queryParam] !== '0') {
+      if(queryParam !== 'advisory_opinions' && this.state[queryParam]) {
         queryPath = queryPath.addQuery(queryParam, this.state[queryParam]);
       }
     })
