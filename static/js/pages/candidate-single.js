@@ -4,10 +4,40 @@
 
 var $ = require('jquery');
 
+var events = require('fec-style/js/events');
+
+var maps = require('../modules/maps');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
+
+function buildStateUrl($elm) {
+  return helpers.buildUrl(
+    ['committee', $elm.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
+    {cycle: $elm.data('cycle'), per_page: 99}
+  );
+}
+
+function highlightRowAndState($map, $table, state, scroll) {
+  var $scrollBody = $table.closest('.dataTables_scrollBody');
+  var $row = $scrollBody.find('span[data-state="' + state + '"]');
+
+  if ($row.length > 0) {
+    maps.highlightState($('.state-map'), state);
+    $scrollBody.find('.row-active').removeClass('row-active');
+    $row.parents('tr').addClass('row-active');
+    if (scroll) {
+      $scrollBody.animate({
+        scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
+      }, 500);
+    }
+  }
+}
+
+var aggregateCallbacks = {
+  afterRender: tables.barsAfterRender.bind(undefined, undefined),
+};
 
 var filingsColumns = [
   columnHelpers.urlColumn('pdf_url', {data: 'document_description', className: 'all', orderable: false}),
@@ -88,6 +118,30 @@ var individualContributionsColumns = [
   }),
 ];
 
+var sizeColumns = [
+  {
+    data: 'size',
+    width: '50%',
+    className: 'all',
+    orderable: false,
+    render: function(data) {
+      return columnHelpers.sizeInfo[data].label;
+    }
+  },
+  {
+    data: 'total',
+    width: '50%',
+    className: 'all',
+    orderSequence: ['desc', 'asc'],
+    orderable: false,
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
+      function(data, type, row) {
+        return columnHelpers.getSizeParams(row.size);
+      }
+    )
+  }
+];
+
 function initFilingsTable() {
   var $table = $('table[data-type="filing"]');
   var candidateId = $table.attr('data-candidate');
@@ -153,18 +207,19 @@ function initSpendingTables() {
 }
 
 function initContributionsTables() {
-  var $table = $('table[data-type="individual-contributions"]');
-  var path = ['schedules', 'schedule_a'];
+  var $allTransactions = $('table[data-type="individual-contributions"]');
+  var $contributionSize = $('table[data-type="contribution-size"]');
   var opts = {
     // possibility of multiple committees, so split into array
-    committee_id: $table.attr('data-committee-id').split(','),
+    committee_id: $allTransactions.data('committee-id').split(','),
+    candidate_id: $allTransactions.data('candidate-id'),
     title: 'individual contributions',
-    name: $table.data('name'),
-    cycle: $table.data('cycle')
+    name: $allTransactions.data('name'),
+    cycle: $allTransactions.data('cycle')
   };
 
-  tables.DataTable.defer($table, {
-    path: path,
+  tables.DataTable.defer($allTransactions, {
+    path: ['schedules', 'schedule_a'],
     query: {
       committee_id: opts.committee_id,
       two_year_transaction_period: opts.cycle
@@ -183,10 +238,47 @@ function initContributionsTables() {
       timePeriod: opts.cycle
     }
   });
+
+  tables.DataTable.defer($contributionSize, {
+    path: ['schedules', 'schedule_a', 'by_size', 'by_candidate'],
+    query: {
+      candidate_id: opts.candidate_id,
+      cycle: opts.cycle,
+      sort: 'size'
+    },
+    columns: sizeColumns,
+    callbacks: aggregateCallbacks,
+    dom: 't',
+    order: false,
+    pagingType: 'simple',
+    lengthChange: false,
+    pageLength: 10,
+    aggregateExport: true,
+    hideEmpty: true,
+    hideEmptyOpts: {
+      dataType: 'individual contributions',
+      name: context.name,
+      timePeriod: context.timePeriod
+    }
+  });
 }
 
 $(document).ready(function() {
   initFilingsTable();
   initSpendingTables();
   initContributionsTables();
+
+  // Set up state map
+  var $map = $('.state-map');
+  var url = buildStateUrl($map);
+  $.getJSON(url).done(function(data) {
+    maps.stateMap($map, data, 400, 300, null, null, true, true);
+  });
+  events.on('state.table', function(params) {
+    highlightRowAndState($map, $('.data-table'), params.state, false);
+  });
+  $map.on('click', 'path[data-state]', function() {
+    var state = $(this).attr('data-state');
+    events.emit('state.map', {state: state});
+  });
 });
