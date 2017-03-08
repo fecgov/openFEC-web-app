@@ -310,6 +310,20 @@ function initContributionsTables() {
     scrollCollapse: true
   });
 
+  // Set up state map
+  var $map = $('.state-map');
+  var url = buildStateUrl($map);
+  $.getJSON(url).done(function(data) {
+    maps.stateMap($map, data, 400, 300, null, null, true, true);
+  });
+  events.on('state.table', function(params) {
+    highlightRowAndState($map, $('.data-table'), params.state, false);
+  });
+  $map.on('click', 'path[data-state]', function() {
+    var state = $(this).attr('data-state');
+    events.emit('state.map', {state: state});
+  });
+
   events.on('state.map', function(params) {
     var $map = $('.state-map');
     highlightRowAndState($map, $contributorState, params.state, true);
@@ -326,18 +340,4 @@ $(document).ready(function() {
   initFilingsTable();
   initSpendingTables();
   initContributionsTables();
-
-  // Set up state map
-  var $map = $('.state-map');
-  var url = buildStateUrl($map);
-  $.getJSON(url).done(function(data) {
-    maps.stateMap($map, data, 400, 300, null, null, true, true);
-  });
-  events.on('state.table', function(params) {
-    highlightRowAndState($map, $('.data-table'), params.state, false);
-  });
-  $map.on('click', 'path[data-state]', function() {
-    var state = $(this).attr('data-state');
-    events.emit('state.map', {state: state});
-  });
 });
