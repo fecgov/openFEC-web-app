@@ -159,7 +159,9 @@ function initDisbursementsTable() {
     order: [[4, 'desc']],
     dom: tables.simpleDOM,
     aggregateExport: true,
-    pagingType: 'simple',
+    paginator: tables.SeekPaginator,
+    useFilters: true,
+    useExport: true,
     hideEmpty: true,
     hideEmptyOpts: {
       dataType: opts.title,
