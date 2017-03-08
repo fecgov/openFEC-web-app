@@ -88,8 +88,7 @@
       <div class="map-table">
         <table
             class="data-table data-table--heading-borders"
-            data-type="receipts-by-state"
-            data-committee="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }}{% if not loop.last %},{% endif %}{% endfor %}"
+            data-type="contributor-state"
             data-cycle="{{ cycle }}"
           >
           <thead>

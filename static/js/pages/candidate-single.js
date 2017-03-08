@@ -142,6 +142,34 @@ var sizeColumns = [
   }
 ];
 
+var stateColumns = [
+  {
+    data: 'state_full',
+    width: '50%',
+    className: 'all',
+    render: function(data, type, row, meta) {
+      var span = document.createElement('span');
+      span.textContent = data;
+      span.setAttribute('data-state', data);
+      span.setAttribute('data-row', meta.row);
+      return span.outerHTML;
+    }
+  },
+  {
+    data: 'total',
+    width: '50%',
+    className: 'all',
+    orderSequence: ['desc', 'asc'],
+    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
+      function(data, type, row) {
+        return {
+          contributor_state: row.state,
+        };
+      }
+    )
+  },
+];
+
 function initFilingsTable() {
   var $table = $('table[data-type="filing"]');
   var candidateId = $table.attr('data-candidate');
@@ -209,6 +237,8 @@ function initSpendingTables() {
 function initContributionsTables() {
   var $allTransactions = $('table[data-type="individual-contributions"]');
   var $contributionSize = $('table[data-type="contribution-size"]');
+  var $contributorState = $('table[data-type="contributor-state"]');
+
   var opts = {
     // possibility of multiple committees, so split into array
     committee_id: $allTransactions.data('committee-id').split(','),
@@ -260,6 +290,35 @@ function initContributionsTables() {
       name: context.name,
       timePeriod: context.timePeriod
     }
+  });
+
+  tables.DataTable.defer($contributorState, {
+    path: ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
+    query: {
+      candidate_id: opts.candidate_id,
+      cycle: opts.cycle,
+      sort_hide_null: false,
+      per_page: 99
+    },
+    columns: stateColumns,
+    callbacks: aggregateCallbacks,
+    aggregateExport: true,
+    dom: 't',
+    order: [[1, 'desc']],
+    paging: false,
+    scrollY: 400,
+    scrollCollapse: true
+  });
+
+  events.on('state.map', function(params) {
+    var $map = $('.state-map');
+    highlightRowAndState($map, $contributorState, params.state, true);
+  });
+
+  $contributorState.on('click', 'tr', function() {
+    events.emit('state.table', {
+      state: $(this).find('span[data-state]').attr('data-state')
+    });
   });
 }
 
