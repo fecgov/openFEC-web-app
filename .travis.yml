@@ -9,6 +9,8 @@ env:
   - secure: cSqeXixfc/XlPnsQIYs6K0wzgQXPE7VjXsXWn8azKURGIM7TRg462+nVmaXswDQLG2WxI+st8ci0lXcl9qLvf3q6FVd5O1+ZUpB0ak5gXeEU/1jBLLnp688Hb2XDStD7H4oaXQnNujyQJnhYXjb6kF26GTUuO+MVrBqpwWNvFOU=
   - secure: KfdvnCk55FW2w+qLZ3qQGW7a7nEy6JNaHJIOZiyAKvRvcPgX+OPdLu64FGVMKUnpR4lx/c2JxkOL4PEBAK7MqoLyG0uOZsHHpQk/k1xBScVyEBmbqQ2YM2s4QFOow/37aP/3orulYUhLmutYl3LXt1RK5MQtSMxvmwFxbpTZ1hk=
   - secure: Av9yMGPZUwtiT48+TsXTAw/HG2qDCUwB//wybXaODbiKVKU00w+i4ocVQXEhDnZtk9x6Z+So+Z55mcnZq8hGXBpmCK1GTl4K4QUrqmrrHDWi4Hfyjr5rcf+BqWYcB9P9le/a6OuEEZZHIqk4IzmDwOo9SzdLPCB/XeJjsM/RetE=
+  - secure: U8r+y8ScnAP/m0AOjYjqX90Wf9SWw5VGv+UXjnF/P6ypQl1dUAyDMXitw0B7XHjqmRP5xATcLGwL3IzFfowb8YFhVKSsO9h1pgpmkCGOhxxqp2jh978nU6df3SdbPmEvPlZaoBsLDVqRMHUPOyDLbaPN6iQtdbRcQhhE+zRcHT8= # dev user name
+  - secure: X1yp0ohu6eZyaw+ybLWYiyTYFemHBUDHeSb8g+SGPxRZRhqt8l/GwElRxwGzZOviPaJ4qwZ7jUUJHN1CPfbSahV3amTXQ1AhAn3g+hZyoqHc1BifuHYBY8rhfthvI1PjGAOT7vnZoD839Oxw4TMA5R/O9l6JT9GG5hGs8SDqOak= # dev password
 before_script:
 - travis_retry pip install -U pip wheel
 - travis_retry pip install -r requirements.txt
