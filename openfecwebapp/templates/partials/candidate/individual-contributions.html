@@ -21,14 +21,39 @@
   </ul>
   <div class="content__section">
     <div class="results-info results-info--simple">
-      <h3>Individual contributions by transaction</h3>
-      <ul class="u-float-left">
-        <li class="tag__category">
-          <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
-        </li>
-      </ul>
+      <div class="row">
+        <fieldset class="toggles u-float-left">
+          <legend class="label">Group by:</legend>
+          <label for="toggle-all">
+            <input id="toggle-all" type="radio" class="panel-toggle-control" name="individual-contributions" value="all-transactions" checked />
+            <span class="button--alt">All transactions</span>
+          </label>
+          <label for="toggle-size">
+            <input id="toggle-size" type="radio" class="panel-toggle-control" name="individual-contributions" value="contribution-size" />
+            <span class="button--alt">Contribution size</span>
+          </label>
+          <label for="toggle-state">
+            <input id="toggle-state" type="radio" class="panel-toggle-control" name="individual-contributions" value="contributor-state" />
+            <span class="button--alt">Contributor state</span>
+          </label>
+        </fieldset>
+        <a class="u-float-right button--alt button--browse"
+            href="{{ url_for(
+              'disbursements',
+              committee_id=committee_id,
+              two_year_transaction_period=cycle,
+              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y'),
+            ) }}">Filter this data
+        </a>
+      </div>
+
       <button type="button" class="js-export button button--cta button--export" data-export-for="individual-contributions">Export</button>
+
+      <h3>Individual contributions by transaction</h3>
+
     </div>
+
     <table
         class="data-table data-table--heading-borders"
         data-type="individual-contributions"
