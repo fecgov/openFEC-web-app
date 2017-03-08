@@ -84,13 +84,11 @@ var itemizedDisbursementColumns = [
     data: 'recipient_name',
     className: 'all',
     orderable: false,
-    defaultContent: 'NOT REPORTED'
   },
   {
     data: 'recipient_state',
     className: 'min-tablet hide-panel',
     orderable: false,
-    defaultContent: 'NOT REPORTED'
   },
   {
     data: 'disbursement_description',
@@ -160,6 +158,7 @@ function initDisbursementsTable() {
     dom: tables.simpleDOM,
     aggregateExport: true,
     paginator: tables.SeekPaginator,
+    lengthMenu: [10, 50, 100],
     useFilters: true,
     useExport: true,
     hideEmpty: true,
