@@ -12,6 +12,7 @@
   </div>
 
   <span class="t-sans t-bold">Data is included from these committees:</span>
+
   <ul class="list--bulleted">
     {% for committee in committee_groups['P'] | reverse %}
     <li>
@@ -19,16 +20,31 @@
     </li>
     {% endfor %}
   </ul>
+
   <div class="content__section">
     <div class="results-info results-info--simple">
-      <h3>Disbursements by transaction</h3>
-      <ul class="u-float-left">
+      <h3 class="u-no-margin">Disbursements by transaction</h3>
+
+      {% if committee_groups['P']|length == 1 %}
+      <a class="u-float-right button--alt button--browse"
+          href="{{ url_for(
+            'individual_contributions',
+            committee_id=committee_groups['P'][0].committee_id,
+            two_year_transaction_period=cycle,
+            min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+          ) }}">Filter this data</a>
+      {% endif %}
+
+      <ul>
         <li class="tag__category">
           <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
         </li>
       </ul>
+
       <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
     </div>
+
     <table
         class="data-table data-table--heading-borders"
         data-type="itemized-disbursements"
