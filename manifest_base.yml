@@ -2,7 +2,6 @@
 path: .
 memory: 512M
 timeout: 180
-#domain: 18f.gov
 stack: cflinuxfs2
 buildpack: python_buildpack
 env:
