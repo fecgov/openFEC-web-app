@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-  {{ header.header(title, '', show_search=False) }}
+  {{ header.header(title, '') }}
 <div class="tab-interface">
 <div class="main container">
   <header class="heading--main">
@@ -74,6 +74,26 @@
             aria-controls="reports"
             href="#reports"
             aria-selected="false">Reports and filings</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="other"
+            tabindex="0"
+            aria-controls="other"
+            href="#other"
+            aria-selected="false">Bulk data and other sources</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="external"
+            tabindex="0"
+            aria-controls="external"
+            href="#external"
+            aria-selected="false">External sources</a>
         </li>
       </ul>
     </nav>
@@ -166,7 +186,7 @@
           <a href="{{ cms_url }}/registration-and-reporting/essentials-house-and-senate-candidates-and-committees/">Candidate registration and reporting requirements</a>
         </div>
       </section>
-      <section id="committees" class="row" aria-hidden="true" role="tabpanel" >
+      <section id="committees" class="row" aria-hidden="true" role="tabpanel">
         <h2>Committees</h2>
         <p>The term <span class="term" data-term="political committee">committee</span> encompasses several different political groups that receive and spend money in federal elections.</p>
         <div class="post-feed">
@@ -207,6 +227,80 @@
           <!--<li><a href="{{ url_for('reports', form_type='ie-only', is_amended='false') }}">Independent expenditure (Form 5) filer reports</a></li>-->
           <div class="post">
             <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('filings') }}">All filings</span></h3>
+          </div>
+        </div>
+      </section>
+      <section id="other" class="row" aria-hidden="true" role="tabpanel">
+        <h2>Bulk data and other sources</h2>
+        <div class="content__section">
+          <h3><a href="{{ legacy_url }}/press/campaign_finance_statistics.shtml">Historical statistics</a></h3>
+          <p>Data tables that summarize campaign financial activity by filer type, election cycle and reporting period.</p>
+        </div>
+        <div class="content__section">
+          <h3>Bulk data downloads</h3>
+          <p>The FEC prepares some data sets to be downloadable as a complete set.</p>
+          <div class="post-feed">
+            <div class="post">
+              <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ legacy_url }}/finance/disclosure/ftpdet.shtml">Detailed data files</a></h4>
+              <p>Here you will find the Committees, Candidates and Linkages, Itemized Records, Contributions to Candidates, Individual Contributions and Operating Expenditures files.</p>
+              <p>These files contain committee, candidate and campaign finance data for the current election cycle and for election cycles through 1980. The files for the current election cycle plus the two most recent election cycles are regularly updated. The Committees, Candidates and Linkages files are updated daily. The Itemized Records, Contributions to Candidates, Individual Contributions and Operating Expenditures files are udated weekly on Sunday. Please note that complete entry from each reporting period takes about 30 days. It is important to be careful when making conclusions from these data because some information may not have completed the entry process when these files where create. Committees do not have the same filing requirements. You should be careful when comparing financial information about committees with different filing requirements.</p>
+            </div>
+            <div class="post">
+              <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ legacy_url }}/finance/disclosure/ftpsum.shtml">Summary data files</a></h4>
+              <p>Here you will find the current campaign summary file, the all candidates summary file and the current PAC summary file. The most recent 10 years of data, the current two-year election period plus the most recent five (5) two-year election periods, are updated daily.</p>
+            </div>
+            <div class="post">
+              <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ legacy_url }}/finance/disclosure/ftpefile.shtml">Electronically filed reports</a></h4>
+              <p>You will find here a daily compilation of electronically filed reports and statements. These are available from Feburary 2001 to present. Filing formats, valid dates for these formats and header files for version 1 through the most recent version are available.</p>
+            </div>
+            <div class="post">
+              <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ legacy_url }}/finance/disclosure/ftppaper.shtml">Paper filed reports</a></h4>
+              <p>The summary financial information and transactions disclosed in paper reports are data entered into an electronic format, and then stored in a downloadable file similar to electronically filed reports, known as a .fec file. Paper filings are data entered in a batch process; therefore, the Commission does not receive converted paper filings every day from our contractor. On days the Commission does not receive converted paper filings, an empty file (YYYYMMDD.nofiles.zip) will be placed on the FTP server. On days the Commission receives converted paper filings, a file (YYYYMMDD.zip) will contain that day's .fec files.</p>
+              <p>Forms 3, 3L, 3X, 5, 6, 7 and 24-hour and 48-hour independent expenditures reports are converted to .fec files. The Commission began this paper to electronic conversion process in October 2005. The first data file was uploaded to the Commission on December 8, 2005.</p>
+            </div>
+          </div>
+        </div>
+        <div class="content__section">
+          <h3>Other FEC data sources</h3>
+          <div class="post-feed">
+            <div class="post">
+              <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ legacy_url }}/data/DataCatalog.do">Legacy data catalog</a></h4>
+              <p>Each of the files listed here can be downloaded in either csv or xml formats. Each also has a metadata page that describes the information included and the structure of the file itself. There is a pdf version of each file if you need to print the information. You can also subscribe to RSS feeds for each of the files so you're notified whenever new data is available or a change is made.</p>
+              <p><a href="{{ legacy_url }}/disclosurep/pnational.do">Presidential election map</a> | <a href="{{ legacy_url }}/disclosurehs/hsnational.do">House and Senate elections data map</a>
+            </div>
+            <div class="post">
+              <h4>Presidential campaign matching fund submissions</h4>
+              <p>
+                <a href="{{ legacy_url }}/finance/disclosure/2016MatchingFundSubmissions.shtml">2016</a> |
+                <a href="{{ legacy_url }}/finance/2012matching/2012matching.shtml">2012</a> |
+                <a href="{{ legacy_url }}/finance/2008matching/2008matching.shtml">2008</a> |
+                <a href="{{ legacy_url }}/finance/disclosure/2004MatchingFundSubmissions.shtml">2004</a> |
+                <a href="{{ legacy_url }}/finance/disclosure/submiss.shtml">2000</a>
+              </p>
+              <p>You will find here the threshold files for presidential candidates seeking matching funds.</p>
+              <p>In addition to regular quarterly or monthly disclosure reports, presidential candidates who seek matching funds must submit information about "matchable" contributions to the FEC for review. Contributions from individuals where the aggregate amount contributed by the individual is $250 or less are eligible to be matched on a dollar for dollar basis from the Presidential Election Campaign Fund. This Fund includes proceeds from the voluntary check-off of $3 per person from income tax returns of eligible taxpayers.</p>
+            </div>
+            <div class="post">
+              <h4><i class="icon i-magnifying-glass icon--inline--left"></i><a href="http://docquery.fec.gov/senate/">Senate unofficial electronic filings</a></h4>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="external" class="row" aria-hidden="true" role="tabpanel">
+        <h2>External sources</h2>
+        <p>Certain information is reported to the FEC, but more information is reported to other governmental agencies.</p>
+        <div class="post-feed">
+          <div class="post">
+            <h3><i class="icon i-share icon--inline--left"></i><a href="https://www.irs.gov/charities-non-profits/political-organizations/political-organization-filing-and-disclosure">Internal Revenue Service (IRS) filings</h3>
+            <p>Search and download filings and disclosures by political organizations</p>
+          </div>
+          <div class="post">
+            <h3><i class="icon i-share icon--inline--left"></i><a href="http://apps.fcc.gov/ecd/">Federal Communications Commission (FCC) electioneering communications database</a></h3>
+            <p>Search electioneering communications.</p>
+          </div>
+          <div class="post">
+            <h3><i class="icon i-share icon--inline--left"></i><a href="https://www.oge.gov/web/oge.nsf/Presidential%20Candidates?OpenView">Office of Government Ethics (OGE) presidential candidate financial disclosure reports</a></h3>
+            <p>View financial disclosure reports filed by presidential candidates.</p>
           </div>
         </div>
       </section>

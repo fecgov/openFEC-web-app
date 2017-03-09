@@ -4,6 +4,8 @@ START_YEAR = 1979
 END_YEAR = 2018
 DEFAULT_TIME_PERIOD = 2016
 
+LEGACY_URL = 'http://www.fec.gov'
+
 states = OrderedDict([
     ('AK', 'Alaska'),
     ('AL', 'Alabama'),
