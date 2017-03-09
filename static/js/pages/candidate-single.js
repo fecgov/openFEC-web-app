@@ -168,6 +168,8 @@ function initDisbursementsTable() {
       timePeriod: opts.cycle
     }
   });
+
+  $('.js-hide-subcycle .subcycle-select').hide();
 }
 
 function initSpendingTables() {

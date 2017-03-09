@@ -1,4 +1,4 @@
-{% macro cycle_select(cycles, cycle=none, duration=2, location='query', id='cycle-select', class='') %}
+{% macro cycle_select(cycles, cycle=none, duration=2, location='query', id='cycle-select', class='', show_two_year_period=False) %}
 {% if cycles %}
   <div class="cycle-select">
     <label for="{{ id }}" class="cycle-select__label">Election</label>
@@ -13,7 +13,13 @@
       <option
           value="{{ each }}"
           {% if cycle and cycle <= each and cycle > (each - duration) %}selected{% endif %}
-        >{{ each }}</option>
+        >
+        {% if show_two_year_period %}
+          {{ each - 1 }} - {{ each }}
+        {% else %}
+          {{ each }}
+        {% endif %}
+      </option>
     {% endfor %}
     </select>
   </div>
