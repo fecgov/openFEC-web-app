@@ -83,7 +83,7 @@ To watch for changes to .js and .scss:
     npm run watch
 
 ### Developing with fec-style (optional)
-If you're developing with a local instance of [fec-style](https://github.com/18F/fec-style) and want to pull in styles and script changes as you go, use `npm link` to create a symbolic link to your local fec-style repo:
+If you are developing with a local instance of [fec-style](https://github.com/18F/fec-style) and want to pull in styles and script changes as you go, use `npm link` to create a symbolic link to your local fec-style repo:
 
     cd ~/fec-style
     npm link
