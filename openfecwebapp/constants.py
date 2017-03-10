@@ -1,6 +1,8 @@
 from collections import OrderedDict
 
 START_YEAR = 1979
+END_YEAR = 2018
+DEFAULT_TIME_PERIOD = 2016
 
 states = OrderedDict([
     ('AK', 'Alaska'),
@@ -195,10 +197,6 @@ form_types = OrderedDict([
     ('RFAI', "Request For Additional Information"),
 ])
 
-amendment_indicators = OrderedDict([
-    ('N', 'New'),
-    ('A', 'Amendment'),
-])
 amendment_indicators_extended = OrderedDict([
     ('T', 'Terminated'),
     ('C', 'Consolidated'),
@@ -258,14 +256,108 @@ table_columns = OrderedDict([
     ('candidates-office-house', ['Name', 'Party', 'State', 'District', 'Receipts', 'Disbursements']),
     ('committees', ['Name', 'Treasurer', 'Type', 'Designation', 'First file date']),
     ('communication-costs', ['Committee', 'Support/Oppose', 'Candidate', 'Amount', 'Date']),
-    ('disbursements', ['Spender', 'Recipient', 'State', 'Purpose', 'Disbursement date', 'Amount']),
+    ('disbursements', ['Spender', 'Recipient', 'State', 'Description', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
-    ('filings', ['Filer name', 'Document', 'Amendment Indicator', 'Receipt date']),
+    ('filings', ['Filer name', 'Document', 'Version', 'Receipt date']),
     ('independent-expenditures', ['Spender', 'Support/Oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
+    ('loans', ['Committee Name', 'Loaner name', 'Incurred date', 'Payment to date', 'Original loan amount']),
+    ('party-coordinated-expenditures', ['Spender', 'Candidate', 'Payee name', 'Expenditure date', 'Amount']),
     ('receipts', ['Contributor name', 'Recipient', 'Election', 'State', 'Receipt date', 'Amount']),
-    ('reports-presidential', ['Committee', 'Report type', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
-    ('reports-house-senate', ['Committee', 'Report type', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
-    ('reports-pac-party', ['Committee', 'Report type', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
-    ('reports-ie-only', ['Filer', 'Report type', 'Receipt date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
+    ('reports-presidential', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-house-senate', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements']),
+    ('reports-pac-party', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
+    ('reports-ie-only', ['Filer', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
+
+
+])
+
+# RAISING_FORMATTER, SPENDING_FORMATTER, CASH_FORMATTER, IE_FORMATTER
+# These are used to format the display of financial summary data on committee pages
+# They map key values from a response to a tuple which contains a label and a level of hierarchy
+# Levels: 1 = Top-level total; 2 = sub-total, 3 = sub-sub-total; 4 = sub-sub-sub-total
+# The comments next to each refer to the type of report / committee that they show up on
+# F3 = house and senate; F3P = presidential; F3X = pac and party
+
+RAISING_FORMATTER = OrderedDict([
+    ('receipts', ('Total receipts', '1')), #F3, F3P, #F3X
+    ('contributions', ('Total contributions', '2')), #F3, F3P, F3X
+    ('individual_contributions', ('Total individual contributions', '3')), #F3, F3P, F3X
+    ('individual_itemized_contributions', ('Itemized individual contributions', '4')), #F3, F3P, F3X
+    ('individual_unitemized_contributions', ('Unitemized individual contributions', '4')), #F3, F3P, F3X
+    ('political_party_committee_contributions', ('Party committee contributions', '3')), #F3, F3P, F3X
+    ('other_political_committee_contributions', ('Other committee contributions', '3')), #F3, F3P, F3X
+    ('federal_funds', ('Presidential public funds', '3')), #F3, F3P
+    ('candidate_contribution', ('Candidate contributions', '3')), #F3, F3P
+    ('transfers_from_affiliated_party', ('Transfers from affiliated committees', '2')), #F3X
+    ('transfers_from_affiliated_committee', ('Transfer from affiliated committees', '2')), #F3P
+    ('transfers_from_other_authorized_committee', ('Transfer from authorized committees', '2')), #F3
+    ('all_loans_received', ('Loans received', '2')), #F3X
+    ('loan_repayments_received', ('Loan repayments received', '2')), #F3X
+    ('loans', ('Total loans received', '2')), # F3
+    ('loans_received', ('Total loans received', '2')), #F3P
+    ('loans_received_from_candidate', ('Loans made by candidate', '3')), #F3P
+    ('loans_made_by_candidate', ('Loans made by candidate', '3')), #F3
+    ('other_loans_received', ('Other loans', '3')), #F3P
+    ('all_other_loans', ('Other loans', '3')), #F3
+    ('total_offsets_to_operating_expenditures', ('Total offsets', '2')), #F3P
+    ('subtotal_offsets_to_operating_expenditures', ('Offsets to operating expenditures', '3')), #F3P
+    ('offsets_to_operating_expenditures', ('Offsets to operating expenditures', '2')), #F3, F3X
+    ('offsets_to_fundraising_expenditures', ('Fundraising offsets', '3')), #F3P
+    ('offsets_to_legal_accounting', ('Legal and accounting offsets', '3')), #F3P
+    ('other_receipts', ('Other receipts', '2')), #F3, F3P
+    ('fed_candidate_contribution_refunds', ('Candidate refunds', '2')), #F3X
+    ('other_fed_receipts', ('Other Receipts', '2')), #F3X
+    ('transfers_from_nonfed_account', ('Non-federal transfers', '2')), #F3X
+    ('transfers_from_nonfed_levin', ('Levin funds', '2')), #F3X
+    ('fed_receipts', ('Total federal receipts', '2')), #F3X
+])
+
+SPENDING_FORMATTER = OrderedDict([
+    ('disbursements', ('Total disbursements', '1')), #F3, F3P, F3X
+    ('operating_expenditures', ('Operating expenditures', '2')), #F3, F3P, F3X
+    ('shared_fed_operating_expenditures', ('Allocated operating expenditures - federal', '3')), #F3X
+    ('shared_nonfed_operating_expenditures', ('Allocated operating expenditures - non-federal', '3')), #F3X
+    ('other_fed_operating_expenditures', ('Other federal operating expenditures', '3')), #F3X
+    ('transfers_to_other_authorized_committee', ('Transfers to authorized committees', '2')), #F3, F3P
+    ('fundraising_disbursements', ('Fundraising', '2')), #F3P
+    ('exempt_legal_accounting_disbursement', ('Exempt legal and accounting', '2')), #F3P
+    ('transfers_to_affiliated_committee', ('Transfers to affiliated committees', '2')), #F3X
+    ('fed_candidate_committee_contributions', ('Contributions to other committees', '2')), #F3X
+    ('independent_expenditures', ('Independent expenditures', '2')), #F3X
+    ('coordinated_expenditures_by_party_committee', ('Coordinated party expenditures', '2')), #F3X
+    ('loans_made', ('Loans made', '2')), #F3X
+    ('loan_repayments_made', ('Total loan repayments made', '2')), #F3P, #F3X
+    ('repayments_loans_made_by_candidate', ('Candidate loan repayments', '3')), #F3P
+    ('repayments_other_loans', ('Other loan repayments', '3')), #F3P
+    ('contribution_refunds', ('Total contribution refunds', '2')), #F3, F3P, F3X
+    ('refunded_individual_contributions', ('Individual refunds', '3')), #F3, F3P, F3X
+    ('refunded_political_party_committee_contributions', ('Political party refunds', '3')), #F3, F3P, F3X
+    ('refunded_other_political_committee_contributions', ('Other committee refunds', '3')), #F3, F3P, F3X
+    ('loan_repayments', ('Total loan repayments', '2')), #F3
+    ('loan_repayments_candidate_loans', ('Candidate loan repayments', '3')), #F3
+    ('loan_repayments_other_loans', ('Other loan repayments', '3')), #F3
+    ('other_disbursements', ('Other disbursements', '2')), #F3, F3P, F3X
+    ('fed_election_activity', ('Total federal election activity', '2')), #F3X
+    ('shared_fed_activity', ('Allocated federal election activity - federal share', '3')), #F3X
+    ('allocated_federal_election_levin_share', ('Allocated federal election activity - Levin share', '3')), #F3X
+    ('non_allocated_fed_election_activity', ('Federal election activity - federal only', '3')), #F3X
+    ('fed_disbursements', ('Total federal disbursements', '2')), #F3X
+])
+
+CASH_FORMATTER = OrderedDict([
+    ('last_cash_on_hand_end_period', ('Ending cash on hand', '2')), #F3, F3P, #F3X
+    ('net_contributions', ('Net contributions', '2')), #F3, F3X
+    ('contributions', ('Total contributions', '3')), #F3, #F3P, F3X
+    ('contribution_refunds', ('(Total contribution refunds)', '3')), #F3, F3P, F3X
+    ('net_operating_expenditures', ('Net operating expenditures', '2')), #F3, F3X
+    ('operating_expenditures', ('Operating expenditures', '3')), #F3, F3P, F3X
+    ('offsets_to_operating_expenditures', ('(Offsets to operating expenditures)', '3')), #F3, F3P, F3X
+    ('subtotal_offsets_to_operating_expenditures', ('Offsets to operating expenditures', '3')), #F3P
+    ('last_debts_owed_by_committee', ('Debts/loans owed by committee', '2')), #F3, F3P, F3X
+])
+
+IE_FORMATTER = OrderedDict([
+    ('total_independent_contributions', ('Contributions received', '1')),
+    ('total_independent_expenditures', ('Independent expenditures', '1'))
 ])

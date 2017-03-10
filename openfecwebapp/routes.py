@@ -24,16 +24,22 @@ def search():
         results = api_caller.load_search_results(query, result_type)
         return views.render_search_results(results, query, result_type)
     else:
+        top_candidates_raising = api_caller.load_top_candidates('-receipts')
+        top_candidates_spending = api_caller.load_top_candidates('-disbursements')
+        top_pacs_raising = api_caller.load_top_pacs('-receipts')
+        top_pacs_spending = api_caller.load_top_pacs('-disbursements')
+        top_parties_raising = api_caller.load_top_parties('-receipts')
+        top_parties_spending = api_caller.load_top_parties('-disbursements')
         return render_template('landing.html',
             page='home',
             parent='data',
             dates=utils.date_ranges(),
-            top_candidates_raising = api_caller.load_top_candidates('-receipts')['results'],
-            top_candidates_spending = api_caller.load_top_candidates('-disbursements')['results'],
-            top_pacs_raising = api_caller.load_top_pacs('-receipts')['results'],
-            top_pacs_spending = api_caller.load_top_pacs('-disbursements')['results'],
-            top_parties_raising = api_caller.load_top_parties('-receipts')['results'],
-            top_parties_spending = api_caller.load_top_parties('-disbursements')['results'],
+            top_candidates_raising = top_candidates_raising['results'] if top_candidates_raising else None,
+            top_candidates_spending = top_candidates_spending['results'] if top_candidates_spending else None,
+            top_pacs_raising = top_pacs_raising['results'] if top_pacs_raising else None,
+            top_pacs_spending = top_pacs_spending['results'] if top_pacs_spending else None,
+            top_parties_raising = top_parties_raising['results'] if top_parties_raising else None,
+            top_parties_spending = top_parties_spending['results'] if top_parties_spending else None,
             title='Campaign finance data')
 
 @app.route('/api/')
@@ -52,22 +58,26 @@ def developers():
     url.path.add('developers')
     return redirect(url.url, http.client.MOVED_PERMANENTLY)
 
+@app.route('/candidate/<c_id>/<flag>/')
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
     'election_full': fields.Bool(missing=True),
 })
-def candidate_page(c_id, cycle=None, election_full=True):
+def candidate_page(c_id, flag=None, cycle=None, election_full=True):
     """Fetch and render data for candidate detail page.
 
     :param int cycle: Optional cycle for associated committees and financials.
     :param bool election_full: Load full election period
+
+    TEMPORARY: feature flag (flag) to load in a different template.
     """
     candidate, committees, cycle = api_caller.load_with_nested(
         'candidate', c_id, 'committees',
         cycle=cycle, cycle_key='two_year_period',
         election_full=election_full,
     )
+
     if election_full and cycle and cycle not in candidate['election_years']:
         next_cycle = next(
             (
@@ -76,11 +86,18 @@ def candidate_page(c_id, cycle=None, election_full=True):
             ),
             max(candidate['election_years']),
         )
-        return redirect(
-            url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
-        )
-    return views.render_candidate(candidate, committees, cycle, election_full)
+        if flag:
+            return redirect(
+                url_for('candidate_page', c_id=c_id, flag=flag, cycle=next_cycle, election_full='true')
+            )
+        else:
+            return redirect(
+                url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
+            )
 
+    return views.render_candidate(candidate, committees, flag, cycle, election_full)
+
+@app.route('/committee/<c_id>/')
 @app.route('/committee/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
@@ -90,8 +107,12 @@ def committee_page(c_id, cycle=None):
 
     :param int cycle: Optional cycle for financials.
     """
+
+    # If the cycle param is explicitly defined, then load that cycle
+    # Otherwise, redirect to the last cycle with reports, as determined in render_committee()
+    redirect_to_previous = False if cycle else True
     committee, candidates, cycle = api_caller.load_with_nested('committee', c_id, 'candidates', cycle)
-    return views.render_committee(committee, candidates, cycle)
+    return views.render_committee(committee, candidates, cycle, redirect_to_previous)
 
 @app.route('/advanced/')
 def advanced():
@@ -219,6 +240,30 @@ def communication_costs():
         title='Communication costs',
         dates=utils.date_ranges(),
         columns=constants.table_columns['communication-costs']
+    )
+
+
+@app.route('/loans/')
+def loans():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        result_type='loans',
+        slug='loans',
+        title='loans',
+        columns=constants.table_columns['loans']
+    )
+
+@app.route('/party-coordinated-expenditures/')
+def party_coordinated_expenditures():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        slug='party-coordinated-expenditures',
+        title='Party coordinated expenditures',
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['party-coordinated-expenditures']
+
     )
 
 @app.route('/reports/<form_type>/')

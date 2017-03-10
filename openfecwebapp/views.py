@@ -3,7 +3,7 @@ import datetime
 import furl
 
 from flask.views import MethodView
-from flask import request, render_template, jsonify
+from flask import request, render_template, redirect, url_for, jsonify
 from flask.ext.cors import cross_origin
 
 from webargs import fields
@@ -16,7 +16,7 @@ from werkzeug.utils import cached_property
 
 from openfecwebapp import config
 from openfecwebapp import api_caller
-
+from openfecwebapp import utils
 
 def render_search_results(results, query, result_type):
     return render_template(
@@ -77,13 +77,12 @@ def render_legal_mur(mur):
 def render_legal_ao_landing():
     today = datetime.date.today()
     ao_min_date = today - datetime.timedelta(weeks=26)
-    results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
-    recent_aos=OrderedDict(sorted(results['advisory_opinions'].items(), key=lambda item: item, reverse=True))
+    ao_results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
     return render_template('legal-advisory-opinions-landing.html',
         parent='legal',
         result_type='advisory_opinions',
         display_name='advisory opinions',
-        recent_aos=recent_aos)
+        recent_aos=ao_results['advisory_opinions'])
 
 
 def to_date(committee, cycle):
@@ -92,7 +91,7 @@ def to_date(committee, cycle):
     return min(datetime.datetime.now().year, cycle)
 
 
-def render_committee(committee, candidates, cycle):
+def render_committee(committee, candidates, cycle, redirect_to_previous):
     # committee fields will be top-level in the template
     tmpl_vars = committee
 
@@ -124,7 +123,27 @@ def render_committee(committee, candidates, cycle):
         'timePeriod': str(cycle - 1) + '–' + str(cycle),
         'name': committee['name'],
     }
-    return render_template('committees-single.html', **tmpl_vars)
+
+    if financials['reports'] and financials['totals']:
+        # Format the current two-year-period's totals using the process utilities
+        if committee['committee_type'] == 'I':
+            # IE-only committees have very little data, so they just get this one
+            tmpl_vars['ie_summary'] = utils.process_ie_data(financials['totals'][0])
+        else:
+            # All other committees have three tables
+            tmpl_vars['raising_summary'] = utils.process_raising_data(financials['totals'][0])
+            tmpl_vars['spending_summary'] = utils.process_spending_data(financials['totals'][0])
+            tmpl_vars['cash_summary'] = utils.process_cash_data(financials['totals'][0])
+
+    if redirect_to_previous and not financials['reports']:
+        # If there's no reports, find the first year with reports and redirect there
+        for c in sorted(committee['cycles'], reverse=True):
+            financials = api_caller.load_cmte_financials(committee['committee_id'], cycle=c)
+            if financials['reports']:
+                return redirect(
+                    url_for('committee_page', c_id=committee['committee_id'], cycle=c)
+                )
+    return render_template('committees-single-new.html', **tmpl_vars)
 
 
 def groupby(values, keygetter):
@@ -148,7 +167,7 @@ report_types = {
     'I': 'ie-only'
 }
 
-def render_candidate(candidate, committees, cycle, election_full=True):
+def render_candidate(candidate, committees, flag, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
@@ -198,7 +217,10 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
-    return render_template('candidates-single.html', **tmpl_vars)
+    if flag == 'new':
+        return render_template('candidates-single-new.html', **tmpl_vars)
+    else:
+        return render_template('candidates-single.html', **tmpl_vars)
 
 
 def validate_referer(referer):

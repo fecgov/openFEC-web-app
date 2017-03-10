@@ -6,6 +6,7 @@ var $ = require('jquery');
 
 var tables = require('../modules/tables');
 var columns = require('../modules/columns');
+var filings = require('../modules/filings');
 var columnHelpers = require('../modules/column-helpers');
 var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var dropdown = require('fec-style/js/dropdowns');
@@ -17,7 +18,7 @@ var ieOnlyTemplate = require('../../templates/reports/ie-only.hbs');
 var pageTitle,
     pageTemplate,
     pageColumns,
-    columnKeys = ['committee', 'document_type', 'receipt_date', 'coverage_end_date'];
+    columnKeys = ['committee', 'document_type', 'version', 'receipt_date', 'coverage_end_date'];
 
 if (context.form_type === 'presidential') {
   pageTitle = 'Presidential committee reports';
@@ -52,11 +53,11 @@ $(document).ready(function() {
     columns: pageColumns,
     rowCallback: tables.modalRenderRow,
     // Order by coverage date descending
-    order: [[2, 'desc']],
+    order: [[3, 'desc']],
     useFilters: true,
     useExport: true,
     callbacks: {
-      afterRender: tables.modalRenderFactory(pageTemplate)
+      afterRender: tables.modalRenderFactory(pageTemplate, filings.fetchReportDetails)
     },
     drawCallback: function () {
       this.dropdowns = $table.find('.dropdown').map(function(idx, elm) {
@@ -64,6 +65,8 @@ $(document).ready(function() {
       });
     }
   });
+
+  $('.panel__navigation').hide();
 
   new TableSwitcher('.js-table-switcher', {
     efiling: {

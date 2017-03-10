@@ -28,7 +28,7 @@
         {% if mur.mur_type == 'current' %}
         {# Archived MUR subjects are a tree-structure so we don't render them inline #}
           <div>
-            <strong>Subject:</strong> {{ '; '.join(mur['subject']['text']) }}
+            <strong>Subject:</strong> {{ '; '.join(mur['subjects']) }}
           </div>
         {% endif %}
       </div>
