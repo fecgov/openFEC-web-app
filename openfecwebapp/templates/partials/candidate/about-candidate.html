@@ -1,0 +1,99 @@
+{% import 'macros/missing.html' as missing %}
+{% import 'macros/null.html' as null %}
+{% import 'macros/cycle-select.html' as select %}
+
+<section id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
+  <div class="heading--section">
+    <h2 id="section-2-heading">About this candidate</h2>
+  </div>
+
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+
+    <div class="content__section">
+      {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-2") }}
+    </div>
+
+    <div class="entity__figure row">
+
+      <h3>Candidate information</h3>
+
+      <table class="t-sans usa-width-three-fourths">
+        <tr>
+          <td class="figure__label">Seat:</td>
+          <td class="figure__value">{{ office_full }}</td>
+        </tr>
+        <tr>
+          <td class="figure__label">Type of candidacy:</td>
+          <td class="figure__value">{{ incumbent_challenge_full }}</td>
+        </tr>
+        <tr>
+          <td class="figure__label">Political party:</td>
+          <td class="figure__value">{{ party_full }}</td>
+        </tr>
+      </table>
+
+      <div class="usa-width-one-fourth">
+        <div class="card">
+          <a href="{{ election_url(context(), election_year) }}">
+            <div class="card__image__container">
+              <img class="icon--complex" src="/static/img/i-elections--primary.svg" alt="Icon representing elections">
+            </div>
+            <div class="card__content">
+              View all candidates in the {{ constants.states[state] }} {% if office == 'P' %}Presidential{% else %}{{office_full}}{% endif %} {{ election_year }} election
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="entity__figure">
+
+      <h3>Other documents filed</h3>
+
+    </div>
+
+    <div class="entity__figure row">
+
+      <h3>Committees</h3>
+
+      <div class="usa-width-one-third">
+
+        <h4>Authorized campaign committees:</h4>
+
+        {% for committee in committee_groups['P'] | reverse %}
+        <div class="callout callout--primary">
+            <h4 class="callout__title">
+              <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+            </h4>
+            <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
+          </div>
+        </div>
+        {% endfor %}
+
+        <ul class="list--bulleted row">
+        {% for committee in committee_groups['A'] | reverse %}
+          <li>
+            <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+
+
+        {% if committee_groups['J'] %}
+        <h4>Joint fundraising committees:</h4>
+
+        <ul class="list--bulleted">
+        {% for committee in committee_groups['J'] | reverse %}
+          <li>
+            <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+</section>
