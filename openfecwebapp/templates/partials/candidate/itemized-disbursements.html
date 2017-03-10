@@ -19,6 +19,11 @@
       <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
     </li>
     {% endfor %}
+    {% for committee in committee_groups['A'] | reverse %}
+    <li>
+      <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+    </li>
+    {% endfor %}
   </ul>
 
   <div class="content__section">
@@ -48,7 +53,7 @@
     <table
         class="data-table data-table--heading-borders"
         data-type="itemized-disbursements"
-        data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }}{% if not loop.last %},{% endif %}{% endfor %}"
+        data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}"
         data-name="{{ name }}"
         data-cycle="{{ cycle }}"
       >

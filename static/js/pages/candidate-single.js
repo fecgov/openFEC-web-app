@@ -141,11 +141,13 @@ function initDisbursementsTable() {
   var path = ['schedules', 'schedule_b'];
   var opts = {
     // possibility of multiple committees, so split into array
-    committee_id: $table.attr('data-committee-id').split(','),
+    committee_id: $table.data('committee-id').split(','),
     title: 'itemized disbursements',
     name: $table.data('name'),
     cycle: $table.data('cycle')
   };
+
+  console.log(opts.committee_id);
 
   tables.DataTable.defer($table, {
     path: path,
