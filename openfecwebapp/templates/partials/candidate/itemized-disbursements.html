@@ -30,7 +30,7 @@
     <div class="results-info results-info--simple">
       <h3 class="u-no-margin">Disbursements by transaction</h3>
 
-      {% if committee_groups['P']|length == 1 %}
+      {% if committee_groups['P']|length == 1 and committee_groups['A']|length == 0 %}
       <a class="u-float-right button--alt button--browse"
           href="{{ url_for(
             'individual_contributions',
