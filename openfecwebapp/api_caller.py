@@ -179,7 +179,6 @@ def load_single_type(data_type, c_id, *path, **filters):
     data = _call_api(data_type, c_id, *path, **filters)
     return result_or_404(data)
 
-
 def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
     return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
 

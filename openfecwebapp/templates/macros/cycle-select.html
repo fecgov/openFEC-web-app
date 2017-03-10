@@ -1,4 +1,4 @@
-{% macro cycle_select(cycles, cycle=none, duration=2, location='query', id='cycle-select', class='', show_two_year_period=False) %}
+{% macro cycle_select(cycles, cycle=none, duration=2, location='query', id='cycle-select', class='') %}
 {% if cycles %}
   <div class="cycle-select">
     <label for="{{ id }}" class="cycle-select__label">Election</label>
@@ -14,17 +14,28 @@
           value="{{ each }}"
           {% if cycle and cycle <= each and cycle > (each - duration) %}selected{% endif %}
         >
-        {% if show_two_year_period %}
-          {{ each - 1 }} - {{ each }}
-        {% else %}
-          {{ each }}
-        {% endif %}
+        {{ each }}
       </option>
     {% endfor %}
     </select>
   </div>
 {% endif %}
 {% endmacro %}
+
+{% macro candidate_cycle_select(cycles, cycle=none, id='') %}
+  <div class="content__section">
+    <label for="{{id}}-cycle" class="cycle-select__label">Election cycle</label>
+    <select id="{{id}}-cycle" class="js-cycle" name="cycle" data-cycle-location="query" data-election-full="False">
+      {% for each in cycles | sort(reverse=True) %}
+        <option
+            value="{{ each }}"
+            {% if cycle and cycle <= each and cycle > (each - 2) %}selected{% endif %}
+          >{{ each|fmt_year_range }}</option>
+      {% endfor %}
+    </select>
+  </div>
+{% endmacro %}
+
 
 {% macro committee_cycle_select(cycles, cycle=none, id='') %}
   <div class="content__section">

@@ -147,8 +147,6 @@ function initDisbursementsTable() {
     cycle: $table.data('cycle')
   };
 
-  console.log(opts.committee_id);
-
   tables.DataTable.defer($table, {
     path: path,
     query: {
