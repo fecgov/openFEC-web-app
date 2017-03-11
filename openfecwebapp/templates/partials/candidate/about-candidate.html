@@ -34,6 +34,7 @@
 
       <div class="usa-width-one-fourth">
         <div class="card">
+          {% if election_url(context(), election_year) %}
           <a href="{{ election_url(context(), election_year) }}">
             <div class="card__image__container">
               <img class="icon--complex" src="/static/img/i-elections--primary.svg" alt="Icon representing elections">
@@ -42,6 +43,7 @@
               View all candidates in the {{ constants.states[state] }} {% if office == 'P' %}Presidential{% else %}{{office_full}}{% endif %} {{ election_year }} election
             </div>
           </a>
+          {% endif %}
         </div>
       </div>
 

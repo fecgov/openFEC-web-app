@@ -78,13 +78,16 @@ def nullify(value, *nulls):
 
 
 def get_election_url(candidate, cycle, district=None):
-    return url_for(
-        'elections',
-        office=candidate['office_full'].lower(),
-        state=nullify(candidate['state'], 'US'),
-        district=nullify(district or candidate['district'], '00'),
-        cycle=cycle,
-    )
+    if cycle:
+        return url_for(
+            'elections',
+            office=candidate['office_full'].lower(),
+            state=nullify(candidate['state'], 'US'),
+            district=nullify(district or candidate['district'], '00'),
+            cycle=cycle,
+        )
+    else:
+        return None
 
 
 try:
