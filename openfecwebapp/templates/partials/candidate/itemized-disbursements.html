@@ -7,64 +7,69 @@
     <h2 id="section-4-heading">Itemized disbursements</h2>
   </div>
 
-  <div class="content__section">
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+
     {{ select.candidate_cycle_select(cycles, cycle, id="cycle-4") }}
-  </div>
 
-  <span class="t-sans t-bold">Data is included from these committees:</span>
+    <span class="t-sans t-bold">Data is included from these committees:</span>
 
-  <ul class="list--bulleted">
-    {% for committee in committee_groups['P'] | reverse %}
-    <li>
-      <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
-    </li>
-    {% endfor %}
-    {% for committee in committee_groups['A'] | reverse %}
-    <li>
-      <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
-    </li>
-    {% endfor %}
-  </ul>
+    <ul class="list--bulleted">
+      {% for committee in committee_groups['P'] | reverse %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endfor %}
+      {% for committee in committee_groups['A'] | reverse %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
 
-  <div class="content__section">
-    <div class="results-info results-info--simple">
-      <h3 class="u-no-margin">Disbursements by transaction</h3>
+    <div class="entity__figure row">
 
-      <a class="u-float-right button--alt button--browse"
-          href="{{ url_for(
-            'individual_contributions',
-            two_year_transaction_period=cycle,
-            min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
-          ) }}{% for c in committee_groups['P'] | reverse %}&committee_id={{ c.committee_id }}{% endfor %}{% for c in committee_groups['A'] | reverse %}&committee_id={{ c.committee_id }}{% endfor %}">Filter this data</a>
+      <div class="content__section">
+        <div class="results-info results-info--simple">
+          <h3 class="u-no-margin">Disbursements by transaction</h3>
 
-      <ul>
-        <li class="tag__category">
-          <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
-        </li>
-      </ul>
+          <a class="u-float-right button--alt button--browse"
+              href="{{ url_for(
+                'individual_contributions',
+                two_year_transaction_period=cycle,
+                min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+                max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+              ) }}{% for c in committee_groups['P'] | reverse %}&committee_id={{ c.committee_id }}{% endfor %}{% for c in committee_groups['A'] | reverse %}&committee_id={{ c.committee_id }}{% endfor %}">Filter this data</a>
 
-      <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
+          <ul>
+            <li class="tag__category">
+              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+            </li>
+          </ul>
+
+          <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
+        </div>
+
+        <table
+            class="data-table data-table--heading-borders"
+            data-type="itemized-disbursements"
+            data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}"
+            data-name="{{ name }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <tr>
+              <th scope="col">Spender</th>
+              <th scope="col">Recipient</th>
+              <th scope="col">State</th>
+              <th scope="col">Purpose</th>
+              <th scope="col">Disbursement date</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
 
-    <table
-        class="data-table data-table--heading-borders"
-        data-type="itemized-disbursements"
-        data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}"
-        data-name="{{ name }}"
-        data-cycle="{{ cycle }}"
-      >
-      <thead>
-        <tr>
-          <th scope="col">Spender</th>
-          <th scope="col">Recipient</th>
-          <th scope="col">State</th>
-          <th scope="col">Purpose</th>
-          <th scope="col">Disbursement date</th>
-          <th scope="col">Amount</th>
-        </tr>
-      </thead>
-    </table>
   </div>
 
 </section>
