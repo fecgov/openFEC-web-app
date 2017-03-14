@@ -20,7 +20,7 @@
       <table class="t-sans usa-width-three-fourths">
         <tr>
           <td class="figure__label">Seat:</td>
-          <td class="figure__value">{{ office_full }}</td>
+          <td class="figure__value">{{ constants.states[state] }} {{ office_full }}{% if office_full == 'House' %} - {{ district }}{% endif %}</td>
         </tr>
         <tr>
           <td class="figure__label">Type of candidacy:</td>
@@ -40,12 +40,33 @@
               <img class="icon--complex" src="/static/img/i-elections--primary.svg" alt="Icon representing elections">
             </div>
             <div class="card__content">
-              View all candidates in the {{ constants.states[state] }} {% if office == 'P' %}Presidential{% else %}{{office_full}}{% endif %} {{ election_year }} election
+              View all candidates in the {{ constants.states[state] }} {% if office == 'P' %}Presidential{% else %}{{ office_full }}{% endif %}{% if office_full == 'House' %} - {{ district }}{% endif %} {{ election_year }} election
             </div>
           </a>
           {% endif %}
         </div>
       </div>
+
+    </div>
+
+    <div class="entity__figure row">
+      <h3>Other documents filed</h3>
+
+      <table
+          class="data-table data-table--heading-borders"
+          data-type="other-documents"
+          data-candidate="{{ candidate_id }}"
+          data-name="{{ name }}"
+          data-cycle="{{ cycle }}"
+        >
+        <thead>
+          <tr>
+            <th scope="col">Document</th>
+            <th scope="col">Version</th>
+            <th scope="col">Date filed</th>
+          </tr>
+        </thead>
+      </table>
 
     </div>
 
@@ -74,7 +95,6 @@
           </li>
         {% endfor %}
         </ul>
-
 
         {% if committee_groups['J'] %}
         <h4>Joint fundraising committees:</h4>

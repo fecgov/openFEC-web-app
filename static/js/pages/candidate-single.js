@@ -67,6 +67,33 @@ var electioneeringColumns = [
   columns.committeeColumn({data: 'committee', className: 'all'})
 ];
 
+var otherDocumentsColumns = [
+  {
+    data: 'document_description',
+    className: 'all',
+    orderable: false
+  },
+  {
+    data: 'most_recent',
+    className: 'hide-panel hide-efiling min-desktop',
+    orderable: false,
+    render: function(data, type, row) {
+      var version = helpers.amendmentVersion(data);
+      if (version === 'Version unknown') {
+        return '<i class="icon-blank"></i>Version unknown<br>' +
+               '<i class="icon-blank"></i>' + row.fec_file_id;
+      }
+      else {
+        if (row.fec_file_id !== null) {
+          version = version + '<br><i class="icon-blank"></i>' + row.fec_file_id;
+        }
+        return version;
+      }
+    }
+  },
+  columns.dateColumn({data: 'receipt_date', className: 'column--med min-tablet'})
+];
+
 var itemizedDisbursementColumns = [
   {
     data: 'committee_id',
@@ -118,12 +145,12 @@ var tableOpts = {
     path: ['electioneering', 'by_candidate'],
     columns: electioneeringColumns,
     title: 'electioneering communications'
-  },
+  }
 };
 
 function initFilingsTable() {
   var $table = $('table[data-type="filing"]');
-  var candidateId = $table.attr('data-candidate');
+  var candidateId = $table.data('candidate');
   var path = ['candidate', candidateId, 'filings'];
 
   tables.DataTable.defer($table, {
@@ -133,6 +160,36 @@ function initFilingsTable() {
     dom: tables.simpleDOM,
     pagingType: 'simple',
     hideEmpty: true
+  });
+}
+
+function initOtherDocumentsTable() {
+  var $table = $('table[data-type="other-documents"]');
+  var candidateId = $table.data('candidate');
+  var path = ['filings'];
+  var opts = {
+    title: 'other documents filed',
+    name: $table.data('name'),
+    cycle: $table.data('cycle')
+  };
+
+  tables.DataTable.defer($table, {
+    path: path,
+    query: {
+      candidate_id: candidateId,
+      form_type: 'F99'
+    },
+    columns: otherDocumentsColumns,
+    order: [[2, 'desc']],
+    dom: tables.simpleDOM,
+    pagingType: 'simple',
+    lengthMenu: [10, 30, 50],
+    hideEmpty: true,
+    hideEmptyOpts: {
+      dataType: opts.title,
+      name: opts.name,
+      timePeriod: opts.cycle
+    }
   });
 }
 
@@ -204,6 +261,7 @@ function initSpendingTables() {
 
 $(document).ready(function() {
   initFilingsTable();
+  initOtherDocumentsTable();
   initSpendingTables();
   initDisbursementsTable();
 });
