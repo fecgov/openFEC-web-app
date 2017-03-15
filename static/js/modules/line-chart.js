@@ -41,6 +41,7 @@ function LineChart(selector, snapshot, dataType) {
   this.baseHeight = this.baseWidth * 0.5;
   this.height = this.baseHeight - this.margin.top - this.margin.bottom;
   this.width = this.baseWidth - this.margin.left - this.margin.right;
+  this.startCursorAtEnd = true;
 
   // Locate DOM elements
   this.$snapshot = $(snapshot);
@@ -74,7 +75,7 @@ LineChart.prototype.handleResponse = function(response) {
   // Format the response and call all necessary methods to get the presentation right
   this.groupDataByType(response.results);
   this.drawChart();
-  this.moveCursor(this.chartData[this.chartData.length - 1]);
+  this.moveCursor();
   this.setupSnapshot(this.cycle);
 };
 
@@ -270,17 +271,25 @@ LineChart.prototype.handleMouseMove = function() {
 };
 
 LineChart.prototype.moveCursor = function(datum) {
-  var i = this.chartData.indexOf(datum);
-  this.cursor.attr('x1', this.x(datum.date)).attr('x2', this.x(datum.date));
+  var target = datum ? datum : this.getCursorStartPosition();
+  var i = this.chartData.indexOf(target);
+  this.cursor.attr('x1', this.x(target.date)).attr('x2', this.x(target.date));
   this.nextDatum = this.chartData[i+1] || false;
   this.prevDatum = this.chartData[i-1] || false;
-  this.populateSnapshot(datum);
+  this.populateSnapshot(target);
   this.element.selectAll('.line__points circle')
     .attr('r', 2)
     .filter(function(d) {
-      return d.date === datum.date;
+      return d.date === target.date;
     })
     .attr('r', 4);
+};
+
+LineChart.prototype.getCursorStartPosition = function() {
+  // Determines whether to start the cursor at the begining or end of a time period
+  // this.startCursorAtEnd is set to true by default, but when navigating
+  // to next cycle, it is set to false so that the cursor starts at the beginning
+  return this.startCursorAtEnd === true ? this.chartData[this.chartData.length - 1] : this.chartData[0];
 };
 
 LineChart.prototype.setupSnapshot = function(cycle) {
@@ -321,6 +330,7 @@ LineChart.prototype.goToNextMonth = function() {
   if (this.nextDatum) {
     this.moveCursor(this.nextDatum);
   } else if (this.cycle < MAX_CYCLE) {
+    this.startCursorAtEnd = false;
     this.nextCycle();
   }
 };
@@ -329,6 +339,7 @@ LineChart.prototype.goToPreviousMonth = function() {
   if (this.prevDatum) {
     this.moveCursor(this.prevDatum);
   } else if (this.cycle > MIN_CYCLE) {
+    this.startCursorAtEnd = true;
     this.previousCycle();
   }
 };

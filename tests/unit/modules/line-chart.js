@@ -118,7 +118,7 @@ var LineChart = require('../../../static/js/modules/line-chart').LineChart;
       });
 
       it('calls moveCursor()', function() {
-        expect(this.moveCursor).to.have.been.calledWith(this.lastDatum);
+        expect(this.moveCursor).to.have.been.called;
       });
 
       it('calls setupSnapshot()', function() {
