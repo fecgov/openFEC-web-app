@@ -178,5 +178,4 @@ def get_state_senate_cycles(state):
     for senate_class in [1, 2, 3]:
         if state.upper() in constants.SENATE_CLASSES[str(senate_class)]:
             senate_cycles += get_senate_cycles(senate_class)
-    print(senate_cycles)
     return senate_cycles
