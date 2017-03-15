@@ -289,7 +289,11 @@ LineChart.prototype.getCursorStartPosition = function() {
   // Determines whether to start the cursor at the begining or end of a time period
   // this.startCursorAtEnd is set to true by default, but when navigating
   // to next cycle, it is set to false so that the cursor starts at the beginning
-  return this.startCursorAtEnd === true ? this.chartData[this.chartData.length - 1] : this.chartData[0];
+  if (this.startCursorAtEnd) {
+    return this.chartData[this.chartData.length - 1];
+  } else {
+    return this.chartData[0];
+  }
 };
 
 LineChart.prototype.setupSnapshot = function(cycle) {
