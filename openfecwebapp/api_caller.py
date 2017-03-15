@@ -228,7 +228,7 @@ def load_candidate_statement_of_candidacy(candidate_id, cycle):
 
     if response['results']:
         return response['results'][:2]
-    return {}
+    return None
 
 
 def result_or_404(data):
