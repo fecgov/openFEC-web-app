@@ -7,8 +7,8 @@ env:
   global:
   - secure: U8r+y8ScnAP/m0AOjYjqX90Wf9SWw5VGv+UXjnF/P6ypQl1dUAyDMXitw0B7XHjqmRP5xATcLGwL3IzFfowb8YFhVKSsO9h1pgpmkCGOhxxqp2jh978nU6df3SdbPmEvPlZaoBsLDVqRMHUPOyDLbaPN6iQtdbRcQhhE+zRcHT8= # dev user name
   - secure: X1yp0ohu6eZyaw+ybLWYiyTYFemHBUDHeSb8g+SGPxRZRhqt8l/GwElRxwGzZOviPaJ4qwZ7jUUJHN1CPfbSahV3amTXQ1AhAn3g+hZyoqHc1BifuHYBY8rhfthvI1PjGAOT7vnZoD839Oxw4TMA5R/O9l6JT9GG5hGs8SDqOak= # dev password
-  - secure: CezTvng8vSqBSNaepOG2oWW+emm+5iihVaTMYdCz4xe6kuExuZwcLXpKzcOOnfZbjMMu/QffoGy3jKcvG0Ad6YT2WG0VSKHdMaQTPMy0Esj253OmN6Xhs6piTLc81zFL75HA1XFuf48PIeTrQU7hXE9L9k/h4mpftSKFv62+GRo= # stage user name
-  - secire: NL98RpF5r4fYEziI4jKDX1cV8uliHORYuMLXsIVKO871KcwcPBxQdtEPYwBn7+KDyvil0fobwauECJarTzU7tlPSSdGumYZqiAzM33YYcKJZfEC8ybJoHA/q+ub/xW5xvoqQPWlGOc5bynaEDgcoedGo7MadyypEuNOUKVSL3OQ= # stage password
+  - secure: bxZ84spAuwVNcZFcaN5UW55nf+LIdcegGGlgXsOn4t2R+yimJt9f86v2euCZY0bs9drlJqHVGXF9KYiH32Y1eYchHx3J7oqUWWR5EFT3USAGkoOP3ZFmbdDJ6WCYkqTw/WtnVvLKRNDI6jaDQJf9+XgUafQGoHmZZx1Ocz8Ko1g= # stage password
+  - secure: aHAXGNtzlkaNFdPlVGgJwi6HKzl5/7lv85CFxERypt4fvQCHtSYRrwVjEZMQiqwHOdXCrowV2+MMCjubT9w5A+i4iPVlOoz7iwdgmVYqxSzwpwlGqMFJGRH4H+8wDjbaTZRNYX8Ww7gOa32MtLTPjKQMh+kdgDgmi8zTOp2aZXQ= # stage user name
 before_script:
 - travis_retry pip install -U pip wheel
 - travis_retry pip install -r requirements.txt
