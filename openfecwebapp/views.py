@@ -170,7 +170,7 @@ report_types = {
     'I': 'ie-only'
 }
 
-def render_candidate(candidate, committees, flag, cycle, election_full=False):
+def render_candidate(candidate, committees, flag, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
