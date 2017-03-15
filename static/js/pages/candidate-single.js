@@ -68,11 +68,11 @@ var electioneeringColumns = [
 ];
 
 var otherDocumentsColumns = [
-  {
+  columnHelpers.urlColumn('pdf_url', {
     data: 'document_description',
-    className: 'all',
+    className: 'all column--medium',
     orderable: false
-  },
+  }),
   {
     data: 'most_recent',
     className: 'all',
