@@ -33,7 +33,7 @@
                   </a>
               </div>
           </div>
-          {{ tables.summary(raising_summary) }}
+          {{ tables.summary(raising_summary, committee_id) }}
         </div>
         <div class="entity__figure">
           <h3 class="u-no-margin">Spending</h3>
@@ -53,14 +53,14 @@
                   </a>
               </div>
           </div>
-          {{ tables.summary(spending_summary) }}
+          {{ tables.summary(spending_summary, committee_id) }}
         </div>
         <div class="entity__figure">
           <h3 class="u-no-margin">Cash summary</h3>
           <div class="tag__category">
             <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
-          {{ tables.summary(cash_summary) }}
+          {{ tables.summary(cash_summary, committee_id) }}
         </div>
       {% endif %}
     {% else %}
