@@ -220,6 +220,23 @@ def load_candidate_totals(candidate_id, cycle, election_full=True):
     return {}
 
 
+def load_candidate_statement_of_candidacy(candidate_id, cycle, election_full=False):
+    if election_full:
+        response = _call_api(
+            'filings',
+            candidate_id=candidate_id, form_type='F2'
+        )
+    else:
+        response = _call_api(
+            'filings',
+            candidate_id=candidate_id, cycle=cycle, form_type='F2'
+        )
+
+    if response['results']:
+        return response['results'][:2]
+    return {}
+
+
 def result_or_404(data):
     if not data.get('results'):
         abort(404)
