@@ -133,3 +133,13 @@ gulp.task('build-js', function() {
   .bundle()
   .pipe(callback('static/js/common.js'));
 });
+
+gulp.task('build-legal', function() {
+  console.log(browserify({
+        entries: ['static/js/legal/legal.js'],
+        insertGlobals : true,
+        debug : debug,
+        transform: ['babel-preset-latest', 'babel-preset-react'],
+        outfile: 'dist/js/legal.js'
+      }));
+})
