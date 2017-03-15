@@ -49,9 +49,9 @@
                 </div>
                 {% endif %}
                 {% if statement.fec_file_id %}
-                  <div class="t-small u-small-icon-left-margin"> {{ statement.fec_file_id }}</div>
+                  <div class="t-small u-small-icon-padding--left"> {{ statement.fec_file_id }}</div>
                 {% endif %}
-                <div class="u-small-icon-left-margin"> Filed {{ statement.receipt_date }}</div>
+                <div class="u-small-icon-padding--left"> Filed {{ statement.receipt_date }}</div>
               </li>
             {% endfor %}
             </ul>
@@ -68,7 +68,7 @@
               <img class="icon--complex" src="/static/img/i-elections--primary.svg" alt="Icon representing elections">
             </div>
             <div class="card__content">
-              View all candidates in the {{ constants.states[state] }} {% if office == 'P' %}Presidential{% else %}{{ office_full }}{% endif %}{% if office_full == 'House' %} district {{ district }}{% endif %} {{ election_year }} election
+              View all candidates in the {{ constants.states[state] }}{% if office == 'P' %}Presidential{% else %}{{ office_full }}{% endif %}{% if office_full == 'House' %} district {{ district }}{% endif %} {{ election_year }} election
             </div>
           </a>
           {% endif %}
@@ -102,44 +102,44 @@
 
       <h3>Committees</h3>
 
+      {% if committee_groups['P'] or committee_groups['A'] %}
+      <h4>Authorized campaign committees:</h4>
+
       <div class="usa-width-one-third">
-
-        {% if committee_groups['P'] or  committee_groups['A'] %}
-        <h4>Authorized campaign committees:</h4>
-
-        {% for committee in committee_groups['P'] | reverse %}
-        <div class="callout callout--primary">
-            <h4 class="callout__title">
-              <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
-            </h4>
-            <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
-          </div>
+      {% for committee in committee_groups['P'] | reverse %}
+        <div class="callout callout--primary{% if loop.last %} u-no-margin{% endif %}">
+          <h4 class="callout__title">
+            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+          </h4>
+          <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
         </div>
-        {% endfor %}
-
-        <ul class="list--bulleted row">
-        {% for committee in committee_groups['A'] | reverse %}
-          <li>
-            <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
-          </li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-
-        {% if committee_groups['J'] %}
-        <h4>Joint fundraising committees:</h4>
-
-        <ul class="list--bulleted">
-        {% for committee in committee_groups['J'] | reverse %}
-          <li>
-            <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
-          </li>
-        {% endfor %}
-        </ul>
-        {% endif %}
+      {% endfor %}
       </div>
 
+      <ul class="list--bulleted row">
+      {% for committee in committee_groups['A'] | reverse %}
+        <li>
+          <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+        </li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if committee_groups['J'] %}
+      <hr class="hr--light">
+
+      <h4>Joint fundraising committees:</h4>
+
+      <ul class="list--bulleted">
+      {% for committee in committee_groups['J'] | reverse %}
+        <li>
+          <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+        </li>
+      {% endfor %}
+      </ul>
+      {% endif %}
     </div>
+
   </div>
 
 </section>
