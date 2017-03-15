@@ -220,7 +220,7 @@ def load_candidate_totals(candidate_id, cycle, election_full=True):
     return {}
 
 
-def load_candidate_statement_of_candidacy(candidate_id, cycle, election_full=False):
+def load_candidate_statement_of_candidacy(candidate_id, cycle):
     response = _call_api(
         'filings',
         candidate_id=candidate_id, cycle=cycle, form_type='F2'

@@ -204,8 +204,7 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
 
     statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
         candidate['candidate_id'],
-        cycle=cycle,
-        election_full=election_full
+        cycle=cycle
     )
 
     for statement in statement_of_candidacy:
