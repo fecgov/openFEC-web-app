@@ -75,7 +75,7 @@ var otherDocumentsColumns = [
   },
   {
     data: 'most_recent',
-    className: 'hide-panel hide-efiling min-desktop',
+    className: 'all',
     orderable: false,
     render: function(data, type, row) {
       var version = helpers.amendmentVersion(data);
@@ -91,7 +91,7 @@ var otherDocumentsColumns = [
       }
     }
   },
-  columns.dateColumn({data: 'receipt_date', className: 'column--med min-tablet'})
+  columns.dateColumn({data: 'receipt_date', className: 'min-tablet'})
 ];
 
 var itemizedDisbursementColumns = [
