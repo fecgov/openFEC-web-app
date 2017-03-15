@@ -107,8 +107,9 @@ def date_ranges():
         ),
     }
 
-def get_cycles():
-    return range(current_cycle(), constants.START_YEAR, -2)
+def get_cycles(max_cycle=None):
+    max = max_cycle if max_cycle else current_cycle()
+    return range(max, constants.START_YEAR, -2)
 
 def election_title(cycle, office, state=None, district=None):
     base = ' '.join([str(cycle), 'Election', 'United States', office.capitalize()])
@@ -166,3 +167,15 @@ def process_cash_data(totals):
 
 def process_ie_data(totals):
     return financial_summary_processor(totals, constants.IE_FORMATTER)
+
+
+def get_senate_cycles(senate_class):
+    next_election = constants.NEXT_SENATE_ELECTIONS[str(senate_class)]
+    return range(next_election, constants.START_YEAR, -6)
+
+def get_state_senate_cycles(state):
+    senate_cycles = []
+    for senate_class in [1, 2, 3]:
+        if state.upper() in constants.SENATE_CLASSES[str(senate_class)]:
+            senate_cycles += get_senate_cycles(senate_class)
+    return senate_cycles
