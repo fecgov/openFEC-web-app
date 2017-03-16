@@ -11,6 +11,8 @@ from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
 from collections import OrderedDict
 
+import datetime
+
 import github3
 from werkzeug.utils import cached_property
 
@@ -198,6 +200,19 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
         cycle=cycle,
         election_full=election_full,
     )
+
+    statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
+        candidate['candidate_id'],
+        cycle=cycle
+    )
+
+    if statement_of_candidacy:
+        for statement in statement_of_candidacy:
+            # convert string to python datetime and parse for readable output
+            statement['receipt_date'] = datetime.datetime.strptime(statement['receipt_date'], '%Y-%m-%dT%H:%M:%S')
+            statement['receipt_date'] = statement['receipt_date'].strftime('%m/%d/%Y')
+
+    tmpl_vars['statement_of_candidacy'] = statement_of_candidacy
 
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized
