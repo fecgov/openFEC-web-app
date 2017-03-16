@@ -34,7 +34,7 @@
 
           <a class="u-float-right button--alt button--browse"
               href="{{ url_for(
-                'individual_contributions',
+                'disbursements',
                 two_year_transaction_period=cycle,
                 min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
                 max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')

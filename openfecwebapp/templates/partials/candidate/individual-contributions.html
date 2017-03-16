@@ -7,11 +7,12 @@
     <h2 id="section-5-heading">Individual contributions</h2>
   </div>
 
-  <div class="content__section">
-    {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
-  </div>
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+
+    {{ select.candidate_cycle_select(cycles, cycle, id="cycle-5") }}
 
   <span class="t-sans t-bold">Data is included from these committees:</span>
+
   <ul class="list--bulleted">
     {% for committee in committee_groups['P'] | reverse %}
     <li>
@@ -24,10 +25,25 @@
     </li>
     {% endfor %}
   </ul>
-    <div class="results-info results-info--simple">
+
+  <div class="entity__figure row">
+
+    <div class="content__section">
+
+      <h3>Individual contributions by transaction</h3>
+
       <div class="row">
-        <fieldset class="toggles u-float-left">
-          <legend class="label">Group by:</legend>
+        <fieldset class="toggles">
+          <legend class="label">View by:</legend>
+
+          <a class="u-float-right button--alt button--browse"
+              href="{{ url_for(
+                'individual_contributions',
+                two_year_transaction_period=cycle,
+                min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+                max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+              ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
+
           <label for="toggle-state">
             <input id="toggle-state" type="radio" class="panel-toggle-control" name="individual-contributions" value="contributor-state" checked />
             <span class="button--alt">Contributor state</span>
@@ -43,73 +59,94 @@
         </fieldset>
       </div>
 
-    <div id="contributor-state" class="panel-toggle-element">
-      <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Individual contributions by state</h3>
-        <button type="button" class="js-export button button--cta button--export" data-export-for="contributor-state">Export</button>
+      <div id="contributor-state" class="panel-toggle-element">
+
+        <div class="results-info results-info--simple">
+          <ul class="u-float-left">
+            <li class="tag__category">
+              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+            </li>
+          </ul>
+
+          <button type="button" class="js-export button button--cta button--export" data-export-for="contributor-state">Export</button>
+        </div>
+
+        <div class="map-table">
+          <table
+              class="data-table data-table--heading-borders"
+              data-type="contributor-state"
+              data-cycle="{{ cycle }}"
+            >
+            <thead>
+              <th scope="col">State</th>
+              <th scope="col">Total contributed</th>
+            </thead>
+          </table>
+        </div>
+
+        <div class="map-panel">
+          <div class="state-map" data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}" data-cycle="{{ cycle }}">
+            <div class="legend-container">
+              <span class="t-sans t-block">By state: total amount received</span>
+              <svg></svg>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="map-table">
+
+      <div id="contribution-size" class="panel-toggle-element" aria-hidden="true">
+        <div class="results-info results-info--simple">
+          <ul class="u-float-left">
+            <li class="tag__category">
+              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+            </li>
+          </ul>
+
+          <button type="button" class="js-export button button--cta button--export" data-export-for="contributor-state">Export</button>
+        </div>
+
         <table
-            class="data-table data-table--heading-borders"
-            data-type="contributor-state"
-            data-cycle="{{ cycle }}"
-          >
+           class="data-table data-table--heading-borders"
+           data-type="contribution-size"
+           data-cycle="{{ cycle }}">
           <thead>
-            <th scope="col">State</th>
+            <th scope="col">Contribution size</th>
             <th scope="col">Total contributed</th>
           </thead>
         </table>
       </div>
-      <div class="map-panel">
-        <div class="state-map" data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}" data-cycle="{{ cycle }}">
-          <div class="legend-container">
-            <span class="t-sans t-block">By state: total amount received</span>
-            <svg></svg>
-          </div>
+
+      <div id="all-transactions" class="panel-toggle-element" aria-hidden="true">
+        <div class="results-info results-info--simple">
+          <ul class="u-float-left">
+            <li class="tag__category">
+              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+            </li>
+          </ul>
+
+          <button type="button" class="js-export button button--cta button--export" data-export-for="contributor-state">Export</button>
         </div>
+
+        <table
+            class="data-table data-table--heading-borders"
+            data-type="individual-contributions"
+            data-candidate-id="{{ candidate_id }}"
+            data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}"
+            data-name="{{ name }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <tr>
+              <th scope="col">Contributor name</th>
+              <th scope="col">Recipient</th>
+              <th scope="col">Receipt date</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
-
-    <div id="contribution-size" class="panel-toggle-element" aria-hidden="true">
-      <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Receipts by size</h3>
-        <button type="button" class="js-export button button--cta button--export" data-export-for="contribution-size">Export</button>
-      </div>
-      <table
-         class="data-table data-table--heading-borders"
-         data-type="contribution-size"
-         data-cycle="{{ cycle }}">
-        <thead>
-          <th scope="col">Contribution size</th>
-          <th scope="col">Total contributed</th>
-        </thead>
-      </table>
-    </div>
-
-    <div id="all-transactions" class="panel-toggle-element" aria-hidden="true">
-      <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Individual contributions by transaction</h3>
-        <button type="button" class="js-export button button--cta button--export" data-export-for="individual-contributions">Export</button>
-      </div>
-      <table
-          class="data-table data-table--heading-borders"
-          data-type="individual-contributions"
-          data-candidate-id="{{ candidate_id }}"
-          data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}"
-          data-name="{{ name }}"
-          data-cycle="{{ cycle }}"
-        >
-        <thead>
-          <tr>
-            <th scope="col">Contributor name</th>
-            <th scope="col">Recipient</th>
-            <th scope="col">Receipt date</th>
-            <th scope="col">Amount</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-
   </div>
 
 </section>
