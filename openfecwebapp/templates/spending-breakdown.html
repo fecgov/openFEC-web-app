@@ -1,5 +1,6 @@
 {% extends "layouts/sidebar-page.html" %}
 {% import "macros/breakdowns.html" as breakdowns %}
+{% import 'macros/reaction-box.html' as reaction_box %}
 
 {% block page_title %}
   <h1 class="icon-heading--spending-circle">{{ title }}</h1>
@@ -20,8 +21,8 @@
   <a class="sidebar__title" href="{{ url_for('search', _anchor='spending') }}">&lsaquo; Spending overview</a>
   <ul class="sidebar__content js-toc">
     <li class="side-nav__item"><a class="side-nav__link" href="#top-spenders">Who's spending the most</a></li>
-    <li class="side-nav__item"><span class="side-nav__link is-disabled">Where contributions come from</span></li>
-    <li class="side-nav__item"><span class="side-nav__link is-disabled">The size of contributions</span></li>
+    <li class="side-nav__item"><span class="side-nav__link is-disabled">What's spent on day-to-day operating activities</span></li>
+    <li class="side-nav__item"><a class="side-nav__link is-disabled">Where money is spent to support and oppose candidates</a></li>
   </ul>
 </nav>
 {% endblock %}
@@ -32,7 +33,59 @@
     <h2>Who's spending the most</h2>
     {{ breakdowns.top_entities(top_spenders, coverage_start_date, coverage_end_date, cycle, 'spent', top_category, page_info ) }}
   </section>
+
+{#   <section id="by-state" class="content__section--extra content__section--ruled js-breakdown-map" data-cycle="{{ cycle }}">
+    <h2>Where money is spent to support and oppose candidates</h2>
+    <form action="" method="GET">
+      <h3 class="u-no-margin">
+        <label for="top-category" class="breakdown__title label t-inline-block">A state-by-state breakdown of independent expenditures made by: </label>
+        <select id="top-category" name="top_category" class="js-category form-element--inline" aria-controls="top-table">
+          <optgroup label="Candidates">
+            <option value="P" {% if category == 'P' %}selected{% endif %}>Presidential candidates</option>
+            <option value="S" {% if category == 'S' %}selected{% endif %}>Senate candidates</option>
+            <option value="H" {% if category == 'H' %}selected{% endif %}>House candidates</option>
+          </optgroup>
+          <option value="pac" {% if category == 'pac' %}selected{% endif %}>PACs</option>
+          <option value="party" {% if category == 'party' %}selected{% endif %}>Political party committees</option>
+        </select>
+        <noscript>
+          <button type="submit" class="button button--cta">Submit</button>
+        </noscript>
+      </h3>
+    </form>
+    <span class="t-sans js-dates">{{ coverage_start_date|date }}&ndash;{{ coverage_end_date|date }}</span>
+    <div id="by-state" class="panel-toggle-element">
+      <div class="map-table">
+        <table class="data-table data-table--heading-borders js-table">
+          <thead>
+            <th scope="col">State</th>
+            <th scope="col">Total contributed</th>
+          </thead>
+        </table>
+      </div>
+      <div class="map-panel">
+        <div class="state-map js-map">
+          <div class="legend-container">
+            <span class="t-sans t-block">By state: total amount received</span>
+            <svg></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="content__section row">
+    <ul class="list--buttons u-float-right">
+      <li><button class="button button--standard button--share is-disabled">Share</button></li>
+      <li><a class="button button--standard button--table" href="">Data</a></li>
+      <li><button class="button button--alt js-ga-event"  data-a11y-dialog-show="modal" data-ga-event="methodology modal clicked" aria-controls="-modal">Methodology</button></li>
+    </ul>
+  </div>
+
+  {{ reaction_box.reaction_box('top-entities', 'spending-breakdown')}} #}
+
 </section>
+
 {% endblock %}
 
 {% block modals %}

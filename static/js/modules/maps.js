@@ -48,14 +48,14 @@ function compactNumber(value, rule) {
   return d3.round(value / divisor, 1).toString() + rule[0];
 }
 
-function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
+function stateMap($elm, data, opts) {
   var svg = d3.select($elm[0])
     .append('svg')
-      .attr('width', width)
-      .attr('height', height);
+      .attr('width', opts.width)
+      .attr('height', opts.height);
   var projection = d3.geo.albersUsa()
-    .scale(450)
-    .translate([220, 150]);
+    .scale(opts.scale)
+    .translate(opts.translate);
   var path = d3.geo.path().projection(projection);
 
   var results = _.reduce(
@@ -75,8 +75,8 @@ function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
       return !!value;
     })
     .value();
-  min = min || _.min(totals);
-  max = max || _.max(totals);
+  var min = opts.min || _.min(totals);
+  var max = opts.max || _.max(totals);
   var scale = chroma.scale(colorScale).domain([min, max]);
   var quantize = d3.scale.linear().domain([min, max]);
   svg.append('g')
@@ -98,12 +98,12 @@ function stateMap($elm, data, width, height, min, max, addLegend, addTooltips) {
       }
     });
 
-  if (addLegend || typeof addLegend === 'undefined') {
+  if (opts.addLegend || typeof addLegend === 'undefined') {
     var legendSVG = d3.select('.legend-container svg');
     stateLegend(legendSVG, scale, quantize, quantiles);
   }
 
-  if (addTooltips) {
+  if (opts.addTooltips) {
     stateTooltips(svg, path, results);
   }
 }

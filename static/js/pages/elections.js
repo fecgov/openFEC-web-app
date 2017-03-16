@@ -340,9 +340,17 @@ function drawStateMap($container, candidateId, cached) {
     );
     cached[candidateId] = results;
     updateColorScale($container, cached);
-    var min = mapMin(cached);
-    var max = mapMax(cached);
-    maps.stateMap($map, data, 400, 300, min, max, false, true);
+    var opts = {
+        width: 400,
+        height: 300,
+        scale: 450,
+        translate: [220, 150],
+        min: mapMin(cached),
+        max: mapMax(cached),
+        addLegend: false,
+        addTooltips: true,
+      };
+    maps.stateMap($map, data, opts);
   });
 }
 

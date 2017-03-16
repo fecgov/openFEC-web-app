@@ -6,8 +6,10 @@ var $ = require('jquery');
 var analytics = require('fec-style/js/analytics');
 var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var TopEntities = require('../modules/top-entities').TopEntities;
+var BreakdownMap = require('../modules/breakdown-map').BreakdownMap;
 
 new TopEntities('.js-top-entities', context.type);
+new BreakdownMap('.js-breakdown-map', context.type);
 
 $('.js-reaction-box').each(function() {
   new ReactionBox(this);

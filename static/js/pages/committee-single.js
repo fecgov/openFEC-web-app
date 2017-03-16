@@ -558,7 +558,17 @@ $(document).ready(function() {
   var $map = $('.state-map');
   var url = buildStateUrl($map);
   $.getJSON(url).done(function(data) {
-    maps.stateMap($map, data, 400, 300, null, null, true, true);
+  var opts = {
+      width: 400,
+      height: 300,
+      scale: 450,
+      translate: [220, 150],
+      min: null,
+      max: null,
+      addLegend: true,
+      addTooltips: true,
+    };
+    maps.stateMap($map, data, opts);
   });
   events.on('state.table', function(params) {
     highlightRowAndState($map, $('.data-table'), params.state, false);
