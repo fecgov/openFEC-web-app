@@ -1,5 +1,7 @@
 import locale
 import datetime
+import unittest
+from unittest import mock
 from collections import OrderedDict
 
 from openfecwebapp import filters
@@ -79,4 +81,26 @@ def test_financial_summary_processor():
     ])
     assert utils.financial_summary_processor(totals, formatter) == [(200, ('Total receipts', '1')), (100, ('Total disbursements', '1'))]
 
+def current_cycle():
+    return 2016
 
+class TestCycles(unittest.TestCase):
+    @mock.patch('openfecwebapp.utils.current_cycle')
+    def test_get_cycles(self, current_cycle):
+        # Mock out the current_cycle so it doesn't change in the future
+        current_cycle.return_value = 2016
+        # Check that it returns the correct default when no arg supplied
+        assert utils.get_cycles() == range(2016, 1979, -2)
+        # Check that it returns the correct range when an arg is supplied
+        assert utils.get_cycles(2020) == range(2020, 1979, -2)
+
+    def test_get_senate_cycles(self):
+        assert utils.get_senate_cycles(1) == range(2018, 1979, -6)
+
+    def test_state_senate_cycles(self):
+        # Testing with an example state, Wisconsin
+        # There should be an election in 2016 but not 2014
+        # because of the classes the state has
+        wisconsin = utils.get_state_senate_cycles('wi')
+        assert 2016 in wisconsin
+        assert 2014 not in wisconsin

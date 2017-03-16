@@ -36,13 +36,27 @@
   </figure>
 {% endmacro %}
 
-{% macro summary(data) %}
+{% macro summary(data, committee_id) %}
 <figure>
 <table class="simple-table">
   {% for item in data %}
-    <tr class="simple-table__row level--{{ item[1][1]}}">
-      <td class="simple-table__cell">{{ item[1][0] }}</td>
-      <td class="simple-table__cell">{{ item[0]|currency }}</td>
+    <tr class="simple-table__row level--{{ item[1]['level']}}">
+      <td class="simple-table__cell">
+        {% if item[1]['term'] %}
+          <span class="term" data-term="{{ item[1]['term'] }}">{{ item[1]['label'] }}</span>
+        {% else %}
+          {{ item[1]['label'] }}
+        {% endif %}
+      </td>
+      <td class="simple-table__cell">
+        {% if item[1]['link'] %}
+          <a href="{{ url_for(item[1]['link'], committee_id=committee_id) }}">
+            {{ item[0]|currency }}
+          </a>
+        {% else %}
+          {{ item[0]|currency }}
+        {% endif %}
+      </td>
     </tr>
   {% endfor %}
 </table>

@@ -298,13 +298,22 @@ def election_lookup():
 @app.route('/elections/<office>/<state>/<int:cycle>/')
 @app.route('/elections/<office>/<state>/<district>/<int:cycle>/')
 def elections(office, cycle, state=None, district=None):
+    # Get all cycles up until the cycle from the URL if it's beyond the current cycle
+    # this fixes the issue of an election page not showing user-provided cycle
+    # in the cycle select
+    max_cycle = cycle if cycle > utils.current_cycle() else utils.current_cycle()
+    cycles = utils.get_cycles(max_cycle)
+
+    if office.lower() == 'president':
+        cycles = [each for each in cycles if each % 4 == 0]
+    elif office.lower() == 'senate':
+        cycles = utils.get_state_senate_cycles(state)
+
     if office.lower() not in ['president', 'senate', 'house']:
         abort(404)
     if state and state.upper() not in constants.states:
         abort(404)
-    cycles = utils.get_cycles()
-    if office.lower() == 'president':
-        cycles = [each for each in cycles if each % 4 == 0]
+
     return render_template(
         'elections.html',
         office=office,
