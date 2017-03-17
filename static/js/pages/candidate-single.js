@@ -185,63 +185,6 @@ var individualContributionsColumns = [
   }),
 ];
 
-var sizeColumns = [
-  {
-    data: 'size',
-    width: '50%',
-    className: 'all',
-    orderable: false,
-    render: function(data) {
-      return columnHelpers.sizeInfo[data].label;
-    }
-  },
-  {
-    data: 'total',
-    width: '50%',
-    className: 'all',
-    orderSequence: ['desc', 'asc'],
-    orderable: false,
-    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
-      function(data, type, row) {
-        var params = columnHelpers.getSizeParams(row.size);
-        params.candidate_id = row.candidate_id;
-
-        return params;
-      }
-    )
-  }
-];
-
-var stateColumns = [
-  {
-    data: 'state_full',
-    width: '50%',
-    className: 'all',
-    render: function(data, type, row, meta) {
-      var span = document.createElement('span');
-      span.textContent = data;
-      span.setAttribute('data-state', data);
-      span.setAttribute('data-row', meta.row);
-      return span.outerHTML;
-    }
-  },
-  {
-    data: 'total',
-    width: '50%',
-    className: 'all',
-    orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
-      function(data, type, row) {
-        return {
-          contributor_state: row.state,
-          candidate_id: row.candidate_id
-        };
-      }
-    )
-  },
-];
-
-
 // Begin datatable functions in order of tab appearance
 // - Financial summary:
 //   * Candidate filing years
@@ -391,7 +334,8 @@ function initContributionsTables() {
 
   var opts = {
     // possibility of multiple committees, so split into array
-    committee_id: $allTransactions.data('committee-id').split(','),
+    // also, filter array to remove any blank values
+    committee_id: $allTransactions.data('committee-id').split(',').filter(Boolean),
     candidate_id: $allTransactions.data('candidate-id'),
     title: 'individual contributions',
     name: $allTransactions.data('name'),
@@ -419,6 +363,49 @@ function initContributionsTables() {
     }
   });
 
+  tables.DataTable.defer($contributorState, {
+    path: ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
+    query: {
+      candidate_id: opts.candidate_id,
+      cycle: opts.cycle,
+      sort_hide_null: false,
+      per_page: 99
+    },
+    columns: [{
+      data: 'state_full',
+      width: '50%',
+      className: 'all',
+      render: function(data, type, row, meta) {
+        var span = document.createElement('span');
+        span.textContent = data;
+        span.setAttribute('data-state', data);
+        span.setAttribute('data-row', meta.row);
+        return span.outerHTML;
+      }
+    },
+    {
+      data: 'total',
+      width: '50%',
+      className: 'all',
+      orderSequence: ['desc', 'asc'],
+      render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
+        function(data, type, row) {
+          return {
+            contributor_state: row.state,
+            committee_id: opts.committee_id
+          };
+        }
+      )
+    }],
+    callbacks: aggregateCallbacks,
+    aggregateExport: true,
+    dom: 't',
+    order: [[1, 'desc']],
+    paging: false,
+    scrollY: 400,
+    scrollCollapse: true
+  });
+
   tables.DataTable.defer($contributionSize, {
     path: ['schedules', 'schedule_a', 'by_size', 'by_candidate'],
     query: {
@@ -426,7 +413,29 @@ function initContributionsTables() {
       cycle: opts.cycle,
       sort: 'size'
     },
-    columns: sizeColumns,
+    columns: [{
+      data: 'size',
+      width: '50%',
+      className: 'all',
+      orderable: false,
+      render: function(data) {
+        return columnHelpers.sizeInfo[data].label;
+      }
+    },
+    {
+      data: 'total',
+      width: '50%',
+      className: 'all',
+      orderSequence: ['desc', 'asc'],
+      orderable: false,
+      render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
+        function(data, type, row) {
+          var params = columnHelpers.getSizeParams(row.size);
+          params.committee_id = opts.committee_id;
+          return params;
+        }
+      )
+    }],
     callbacks: aggregateCallbacks,
     dom: 't',
     order: false,
@@ -440,24 +449,6 @@ function initContributionsTables() {
       name: context.name,
       timePeriod: context.timePeriod
     }
-  });
-
-  tables.DataTable.defer($contributorState, {
-    path: ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
-    query: {
-      candidate_id: opts.candidate_id,
-      cycle: opts.cycle,
-      sort_hide_null: false,
-      per_page: 99
-    },
-    columns: stateColumns,
-    callbacks: aggregateCallbacks,
-    aggregateExport: true,
-    dom: 't',
-    order: [[1, 'desc']],
-    paging: false,
-    scrollY: 400,
-    scrollCollapse: true
   });
 
   // Set up state map
