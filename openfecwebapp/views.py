@@ -232,6 +232,10 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
+    tmpl_vars['raising_summary'] = utils.process_raising_data(aggregate)
+    tmpl_vars['spending_summary'] = utils.process_spending_data(aggregate)
+    tmpl_vars['cash_summary'] = utils.process_cash_data(aggregate)
+
     if flag == 'new':
         return render_template('candidates-single-new.html', **tmpl_vars)
     else:
