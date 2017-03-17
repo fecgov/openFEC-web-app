@@ -8,12 +8,25 @@
     <div class="content__section">
       {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
     </div>
+    <span class="t-sans t-bold">Data is included from these committees:</span>
+    <ul class="list--bulleted">
+      {% for committee in committee_groups['P'] | reverse %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endfor %}
+      {% for committee in committee_groups['A'] | reverse %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
     {% if raising_summary %}
       <div class="entity__figure">
         <h3 class="u-no-margin">Raising</h3>
         <div class="row">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Coverage dates: [] to []</div>
+              <div class="tag__item">Coverage dates: mm/dd/yyyy to mm/dd/yyyy</div>
             </div>
             <div class="u-float-right">
               <a class="heading__right button--alt button--browse"
@@ -27,7 +40,7 @@
         <h3 class="u-no-margin">Spending</h3>
         <div class="row">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Coverage dates: [] to []</div>
+              <div class="tag__item">Coverage dates: mm/dd/yyyy to mm/dd/yyyy</div>
             </div>
             <div class="u-float-right">
               <a class="heading__right button--alt button--browse"
@@ -41,7 +54,7 @@
         <h3 class="u-no-margin">Cash</h3>
         <div class="row">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Coverage dates: [] to []</div>
+              <div class="tag__item">Coverage dates: mm/dd/yyyy to mm/dd/yyyy</div>
             </div>
             <div class="u-float-right">
               <a class="heading__right button--alt button--browse"
