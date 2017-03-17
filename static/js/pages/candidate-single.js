@@ -203,7 +203,10 @@ var sizeColumns = [
     orderable: false,
     render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
       function(data, type, row) {
-        return columnHelpers.getSizeParams(row.size);
+        var params = columnHelpers.getSizeParams(row.size);
+        params.candidate_id = row.candidate_id;
+
+        return params;
       }
     )
   }
@@ -231,6 +234,7 @@ var stateColumns = [
       function(data, type, row) {
         return {
           contributor_state: row.state,
+          candidate_id: row.candidate_id
         };
       }
     )
