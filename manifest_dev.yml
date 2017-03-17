@@ -5,7 +5,7 @@ services:
   - fec-creds-dev
 env:
   FEC_CMS_URL: https://fec-dev-proxy.app.cloud.gov
-  FEC_WEB_API_URL: https://api-stage.open.fec.gov
+  FEC_WEB_API_URL: https://fec-api-stage.app.cloud.gov
   FEC_WEB_DEBUG: true
   FEC_WEB_ENVIRONMENT: dev
   NEW_RELIC_APP_NAME: govcloud | web | dev
