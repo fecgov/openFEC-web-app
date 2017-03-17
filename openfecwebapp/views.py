@@ -232,6 +232,8 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
+    tmpl_vars['cycles'] = [cycle for cycle in candidate['cycles'] if cycle <= max(candidate['election_years'])]
+
     tmpl_vars['raising_summary'] = utils.process_raising_data(aggregate)
     tmpl_vars['spending_summary'] = utils.process_spending_data(aggregate)
     tmpl_vars['cash_summary'] = utils.process_cash_data(aggregate)
