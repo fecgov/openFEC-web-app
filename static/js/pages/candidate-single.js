@@ -241,6 +241,21 @@ var stateColumns = [
   },
 ];
 
+
+// Begin datatable functions in order of tab appearance
+// - Financial summary:
+//   * Candidate filing years
+// - About this candidate:
+//   * Other documents filed
+// - Spending by others to support/oppose:
+//   * Independent expenditures,
+//   * Communication costs,
+//   * Electioneering communications
+// - Itemized disbursements:
+//   * Disbursements by transaction
+// - Individual contributions:
+//   * Contributor state, size, all transactions
+
 function initFilingsTable() {
   var $table = $('table[data-type="filing"]');
   var candidateId = $table.attr('data-candidate');
@@ -254,24 +269,6 @@ function initFilingsTable() {
     hideEmpty: true
   });
 }
-
-var tableOpts = {
-  'independent-expenditures': {
-    path: ['schedules', 'schedule_e', 'by_candidate'],
-    columns: expenditureColumns,
-    title: 'independent expenditures'
-  },
-  'communication-costs': {
-    path: ['communication_costs', 'by_candidate'],
-    columns: communicationCostColumns,
-    title: 'communication costs'
-  },
-  'electioneering': {
-    path: ['electioneering', 'by_candidate'],
-    columns: electioneeringColumns,
-    title: 'electioneering communications'
-  }
-};
 
 function initOtherDocumentsTable() {
   var $table = $('table[data-type="other-documents"]');
@@ -299,6 +296,56 @@ function initOtherDocumentsTable() {
       dataType: opts.title,
       name: opts.name,
       timePeriod: opts.cycle
+    }
+  });
+}
+
+var tableOpts = {
+  'independent-expenditures': {
+    path: ['schedules', 'schedule_e', 'by_candidate'],
+    columns: expenditureColumns,
+    title: 'independent expenditures'
+  },
+  'communication-costs': {
+    path: ['communication_costs', 'by_candidate'],
+    columns: communicationCostColumns,
+    title: 'communication costs'
+  },
+  'electioneering': {
+    path: ['electioneering', 'by_candidate'],
+    columns: electioneeringColumns,
+    title: 'electioneering communications'
+  }
+};
+
+function initSpendingTables() {
+  $('.data-table').each(function(index, table) {
+    var $table = $(table);
+    var dataType = $table.data('type');
+    var opts = tableOpts[dataType];
+    var query = {
+      candidate_id: $table.data('candidate'),
+      cycle: $table.data('cycle'),
+      election_full: $table.data('election-full')
+    };
+    if (opts) {
+      tables.DataTable.defer($table, {
+        path: opts.path,
+        query: query,
+        columns: opts.columns,
+        order: [[0, 'desc']],
+        dom: tables.simpleDOM,
+        pagingType: 'simple',
+        lengthChange: true,
+        pageLength: 10,
+        lengthMenu: [10, 50, 100],
+        hideEmpty: true,
+        hideEmptyOpts: {
+          dataType: opts.title,
+          name: context.name,
+          timePeriod: context.timePeriod
+        }
+      });
     }
   });
 }
@@ -333,38 +380,6 @@ function initDisbursementsTable() {
       dataType: opts.title,
       name: opts.name,
       timePeriod: opts.cycle
-    }
-  });
-}
-
-function initSpendingTables() {
-  $('.data-table').each(function(index, table) {
-    var $table = $(table);
-    var dataType = $table.data('type');
-    var opts = tableOpts[dataType];
-    var query = {
-      candidate_id: $table.data('candidate'),
-      cycle: $table.data('cycle'),
-      election_full: $table.data('election-full')
-    };
-    if (opts) {
-      tables.DataTable.defer($table, {
-        path: opts.path,
-        query: query,
-        columns: opts.columns,
-        order: [[0, 'desc']],
-        dom: tables.simpleDOM,
-        pagingType: 'simple',
-        lengthChange: true,
-        pageLength: 10,
-        lengthMenu: [10, 50, 100],
-        hideEmpty: true,
-        hideEmptyOpts: {
-          dataType: opts.title,
-          name: context.name,
-          timePeriod: context.timePeriod
-        }
-      });
     }
   });
 }
