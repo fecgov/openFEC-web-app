@@ -77,13 +77,12 @@ def render_legal_mur(mur):
 def render_legal_ao_landing():
     today = datetime.date.today()
     ao_min_date = today - datetime.timedelta(weeks=26)
-    results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
-    recent_aos=OrderedDict(sorted(results['advisory_opinions'].items(), key=lambda item: item, reverse=True))
+    ao_results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
     return render_template('legal-advisory-opinions-landing.html',
         parent='legal',
         result_type='advisory_opinions',
         display_name='advisory opinions',
-        recent_aos=recent_aos)
+        recent_aos=ao_results['advisory_opinions'])
 
 
 def to_date(committee, cycle):
