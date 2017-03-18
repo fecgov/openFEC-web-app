@@ -44,7 +44,6 @@ class LegalSearch extends React.Component {
     })
 
     $.getJSON(queryPath.toString(), (results) => {
-                  console.log(results);
                   this.setState({ advisory_opinions: results.advisory_opinions });
                 });
   }

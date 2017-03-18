@@ -4,6 +4,7 @@ const TextFilter = require('./filters/TextFilter');
 const CheckboxFilter = require('./filters/CheckboxFilter');
 const CheckboxList = require('./filters/CheckboxList');
 const DateFilter = require('./filters/DateFilter');
+const CitationFilter = require('./filters/CitationFilter');
 
 function Filters(props) {
   const requestorOptions = [ {'value': 0, 'text': 'Any'},
@@ -50,6 +51,8 @@ function Filters(props) {
               options={requestorOptions} handleChange={props.instantQuery} />
             <TextFilter name="ao_requestor" label="Requestor Name" value={props.query.ao_requestor}
                 handleChange={props.setQuery} getResults={props.getResults} />
+            <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
+              name="ao_regulatory_citation" label="Regulatory citation" value={props.query.ao_regulatory_citation}/>
         </div>
 }
 
