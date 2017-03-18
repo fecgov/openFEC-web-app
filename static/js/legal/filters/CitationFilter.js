@@ -16,7 +16,7 @@ class CitationFilter extends React.Component {
     interceptChange(e) {
         if(e.target.value) {
           const path = URI(window.API_LOCATION)
-                      .path([window.API_VERSION, 'legal', 'citation', e.target.value].join('/'))
+                      .path([window.API_VERSION, 'legal', 'citation', this.props.citationType, e.target.value].join('/'))
                       .addQuery('api_key', window.API_KEY);
           $.getJSON(path.toString(), (result) => {
             this.setState({citations: result.citations, dropdownVisible: true});
