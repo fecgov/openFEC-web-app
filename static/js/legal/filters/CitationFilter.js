@@ -10,7 +10,6 @@ class CitationFilter extends React.Component {
       this.setSelection = this.setSelection.bind(this);
       this.dropdownDisplay = this.dropdownDisplay.bind(this);
       this.hideDropdown = this.hideDropdown.bind(this);
-      this.interceptGetResults = this.interceptGetResults.bind(this);
     }
 
     interceptChange(e) {
@@ -28,14 +27,9 @@ class CitationFilter extends React.Component {
         this.props.handleChange(e);
     }
 
-    interceptGetResults() {
-      this.setState({citations: [], dropdownVisible: false});
-      this.props.getResults()
-    }
-
     setSelection(citation) {
       const syntheticEvent = { target: {name: this.props.name, value: citation } };
-      this.props.handleChange(syntheticEvent);
+      this.props.instantQuery(syntheticEvent);
       this.setState({dropdownVisible: false});
     }
 
@@ -53,10 +47,6 @@ class CitationFilter extends React.Component {
           <div className="combo combo--search--mini"  style={{position: 'relative', display: 'block'}}>
             <input id={this.props.name + "-filter"} type="text" name={this.props.name} className="combo__input"
                 value={this.props.value || ''} onChange={this.interceptChange}/>
-            <button className="combo__button button--search button--standard"
-             onClick={this.interceptGetResults}>
-              <span className="u-visually-hidden">Search</span>
-            </button>
           <div className="tt-menu" aria-live="polite"
            style={{position: 'absolute', top: '100%', left: '0px', zIndex: 100, display: this.dropdownDisplay()}}>
           <div className="tt-dataset tt-dataset-candidate">
