@@ -5,6 +5,7 @@ const CheckboxFilter = require('./filters/CheckboxFilter');
 const CheckboxList = require('./filters/CheckboxList');
 const DateFilter = require('./filters/DateFilter');
 const CitationFilter = require('./filters/CitationFilter');
+const CitationRequireAllRadio = require('./filters/CitationRequireAllRadio');
 const FilterPanel = require('./FilterPanel');
 
 function Filters(props) {
@@ -50,7 +51,9 @@ function Filters(props) {
                 <CheckboxList key="ao_category" name="ao_category" label="Document Type" value={props.query.ao_category || ['F']}
                     handleChange={props.instantQuery} options={documentTypes}/>]} />
               <FilterPanel id="first-content-1" header="Citations"
-                  content={[<CitationFilter handleChange={props.setQuery} getResults={props.getResults}
+                  content={[<CitationRequireAllRadio key="ao_citation_require_all" name="ao_citation_require_all" handleChange={props.instantQuery}
+                    value={props.query.ao_citation_require_all} />,
+                  <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
                       key="ao_regulatory_citation" name="ao_regulatory_citation" label="Regulatory citation" instantQuery={props.instantQuery}
                       citationType="regulation" value={props.query.ao_regulatory_citation}/>,
                     <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
