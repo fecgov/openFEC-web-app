@@ -85,7 +85,7 @@
         </div>
 
         <div class="map-panel">
-          <div class="state-map" data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}" data-cycle="{{ cycle }}">
+          <div class="state-map" data-candidate-id="{{ candidate_id }}" data-cycle="{{ cycle }}">
             <div class="legend-container">
               <span class="t-sans t-block">By state: total amount received</span>
               <svg></svg>

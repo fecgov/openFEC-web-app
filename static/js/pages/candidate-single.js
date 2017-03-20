@@ -14,8 +14,12 @@ var columns = require('../modules/columns');
 
 function buildStateUrl($elm) {
   return helpers.buildUrl(
-    ['committee', $elm.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
-    {cycle: $elm.data('cycle'), per_page: 99}
+    ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
+    {
+      candidate_id: $elm.data('candidate-id'),
+      cycle: $elm.data('cycle'),
+      per_page: 99
+    }
   );
 }
 
@@ -454,9 +458,11 @@ function initContributionsTables() {
   // Set up state map
   var $map = $('.state-map');
   var url = buildStateUrl($map);
+
   $.getJSON(url).done(function(data) {
     maps.stateMap($map, data, 400, 300, null, null, true, true);
   });
+
   events.on('state.table', function(params) {
     highlightRowAndState($map, $('.data-table'), params.state, false);
   });
@@ -464,7 +470,6 @@ function initContributionsTables() {
     var state = $(this).attr('data-state');
     events.emit('state.map', {state: state});
   });
-
   events.on('state.map', function(params) {
     var $map = $('.state-map');
     highlightRowAndState($map, $contributorState, params.state, true);
