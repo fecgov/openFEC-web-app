@@ -1,11 +1,12 @@
 const React = require('react');
 const URI = require('urijs');
 const $ = require('jquery');
+const CheckboxFilter = require('./CheckboxFilter');
 
 class CitationFilter extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { citations: [], dropdownVisible: false }
+      this.state = { citations: [], dropdownVisible: false, currentValue: '' }
       this.interceptChange = this.interceptChange.bind(this);
       this.setSelection = this.setSelection.bind(this);
       this.dropdownDisplay = this.dropdownDisplay.bind(this);
@@ -24,13 +25,15 @@ class CitationFilter extends React.Component {
           this.setState({citations: [], dropdownVisible: false});
         }
 
-        this.props.handleChange(e);
+        this.setState({currentValue: e.target.value});
     }
 
     setSelection(citation) {
-      const syntheticEvent = { target: {name: this.props.name, value: citation } };
+      const citationTags = this.props.value || [];
+      citationTags.push(citation)
+      const syntheticEvent = { target: {name: this.props.name, value: citationTags } };
       this.props.instantQuery(syntheticEvent);
-      this.setState({dropdownVisible: false});
+      this.setState({dropdownVisible: false, currentValue: ''});
     }
 
     dropdownDisplay() {
@@ -41,12 +44,24 @@ class CitationFilter extends React.Component {
       this.setState({dropdownVisible: false});
     }
 
+    removeCitation(citationText) {
+      const value = this.props.value;
+      value.splice(this.props.value.indexOf(citationText), 1);
+      const syntheticEvent = {target: { name: this.props.name,
+        value } }
+      this.props.instantQuery(syntheticEvent);
+    }
+
     render() {
       return <div className="filter" onBlur={this.hideDropdown}>
           <label className="label" htmlFor={this.props.name + "-filter"}>{this.props.label}</label>
+          {this.props.value && this.props.value.map(citationText => {
+            return <CheckboxFilter key={citationText} name={citationText} label={citationText}
+            checked={true} handleChange={() => this.removeCitation(citationText)} />
+          })}
           <div className="combo combo--search--mini"  style={{position: 'relative', display: 'block'}}>
             <input id={this.props.name + "-filter"} type="text" name={this.props.name} className="combo__input"
-                value={this.props.value || ''} onChange={this.interceptChange}/>
+                value={this.state.currentValue} onChange={this.interceptChange}/>
           <div className="tt-menu" aria-live="polite"
            style={{position: 'absolute', top: '100%', left: '0px', zIndex: 100, display: this.dropdownDisplay()}}>
           <div className="tt-dataset tt-dataset-candidate">

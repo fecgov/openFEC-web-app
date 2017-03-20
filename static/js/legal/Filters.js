@@ -34,39 +34,34 @@ function Filters(props) {
    {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
    {'value' : 'S', 'text': 'Commissioner Statements'}]
 
-  return <ul className="js-accordion accordion--neutral" data-content-prefix="first">
-              <FilterPanel id="first-content-0" header="AO Number" startOpen={true}
-              content={[<TextFilter key="ao_name" name="ao_name" label="AO name" value={props.query.ao_name}
-                    handleChange={props.setQuery} getResults={props.getResults} />,
-                <TextFilter key="ao_no" name="ao_no" label="AO number" value={props.query.ao_no}
-                    handleChange={props.setQuery} getResults={props.getResults} />,
-                <TextFilter key="ao_requestor" name="ao_requestor" label="Requestor Name" value={props.query.ao_requestor}
-                    handleChange={props.setQuery} getResults={props.getResults} />,
-                <Dropdown key="ao_requestor_type" name="ao_requestor_type" label="Requestor Type" value={props.query.ao_requestor_type}
-                  options={requestorOptions} handleChange={props.instantQuery} />]} />
-
-
-              <FilterPanel id="first-content-1" header="Documents"
-                  content={[<TextFilter name="q" label="Keywords" value={props.query.q}
+  return <div>
+            <TextFilter key="ao_no" name="ao_no" label="AO number" value={props.query.ao_no}
+                handleChange={props.setQuery} getResults={props.getResults} />,
+            <TextFilter key="ao_requestor" name="ao_requestor" label="Requestor Name (or AO Name)" value={props.query.ao_requestor}
                   handleChange={props.setQuery} getResults={props.getResults} />,
-                <CheckboxFilter name="ao_is_pending" label="Show only pending requests"
+              <Dropdown key="ao_requestor_type" name="ao_requestor_type" label="Requestor Type" value={props.query.ao_requestor_type}
+                options={requestorOptions} handleChange={props.instantQuery} />
+            <ul className="accordion--neutral" data-content-prefix="first">
+              <FilterPanel id="first-content-0" header="Documents" startOpen={true}
+                  content={[<TextFilter key="q" name="q" label="Keywords" value={props.query.q}
+                  handleChange={props.setQuery} getResults={props.getResults} />,
+                <CheckboxFilter key="ao_is_pending" name="ao_is_pending" label="Show only pending requests"
                     checked={props.query.ao_is_pending} handleChange={props.instantQuery} />,
-                <CheckboxList name="ao_category" label="Document Type" value={props.query.ao_category || ['F']}
+                <CheckboxList key="ao_category" name="ao_category" label="Document Type" value={props.query.ao_category || ['F']}
                     handleChange={props.instantQuery} options={documentTypes}/>]} />
-
-              <FilterPanel id="first-content-2" header="Citations"
+              <FilterPanel id="first-content-1" header="Citations"
                   content={[<CitationFilter handleChange={props.setQuery} getResults={props.getResults}
-                  name="ao_regulatory_citation" label="Regulatory citation" instantQuery={props.instantQuery}
-                  citationType="regulation" value={props.query.ao_regulatory_citation}/>,
-                <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
-                  name="ao_statutory_citation" label="Statutory citation" instantQuery={props.instantQuery}
-                  citationType="statute" value={props.query.ao_statutory_citation}/>]} />
-
-              <FilterPanel id="first-content-1" header="Documents"
-                  content={[<DateFilter label="Issued date" min_name="ao_min_date" max_name="ao_max_date"
+                      key="ao_regulatory_citation" name="ao_regulatory_citation" label="Regulatory citation" instantQuery={props.instantQuery}
+                      citationType="regulation" value={props.query.ao_regulatory_citation}/>,
+                    <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
+                      key="ao_statutory_citation" name="ao_statutory_citation" label="Statutory citation" instantQuery={props.instantQuery}
+                      citationType="statute" value={props.query.ao_statutory_citation}/>]} />
+              <FilterPanel id="first-content-2" header="Documents"
+                  content={[<DateFilter key="issue_date" label="Issued date" min_name="ao_min_date" max_name="ao_max_date"
                     min_value={props.query.ao_min_date} max_value={props.query.ao_max_date}
                     handleChange={props.instantQuery} />]} />
-        </ul>
+              </ul>
+            </div>
 }
 
 module.exports = Filters;
