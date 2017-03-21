@@ -4,11 +4,12 @@ const ReactDOM = require('react-dom');
 const URI = require('urijs');
 const Filters = require('./Filters');
 const SearchResults = require('./SearchResults');
+const Pagination = require('./Pagination');
 
 class LegalSearch extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { q: $('#query').val() }
+    this.state = { q: $('#query').val(), from_hit: 0, advisory_opinions: [] }
 
     this.getResults = this.getResults.bind(this);
     this.setQuery = this.setQuery.bind(this);
@@ -38,13 +39,16 @@ class LegalSearch extends React.Component {
                 .addQuery('type', 'advisory_opinions');
 
     Object.keys(this.state).forEach((queryParam) => {
-      if(queryParam !== 'advisory_opinions' && this.state[queryParam]) {
+      if(['advisory_opinions', 'resultCount', 'lastResultCount'].indexOf(queryParam) === -1
+          && this.state[queryParam]) {
         queryPath = queryPath.addQuery(queryParam, this.state[queryParam]);
       }
     })
-
+    const lastResultCount = this.state.resultCount;
     $.getJSON(queryPath.toString(), (results) => {
-                  this.setState({ advisory_opinions: results.advisory_opinions });
+                  this.setState({ advisory_opinions: results.advisory_opinions,
+                  resultCount: results.total_advisory_opinions,
+                  lastResultCount });
                 });
   }
 
@@ -68,6 +72,8 @@ class LegalSearch extends React.Component {
           </div>
         </div>
         <SearchResults advisory_opinions={this.state.advisory_opinions} q={this.state.q} />
+        <Pagination from_hit={this.state.from_hit} advisory_opinions={this.state.advisory_opinions}
+          resultCount={this.state.resultCount} handleChange={this.instantQuery} />
       </div>
     </section>
 }

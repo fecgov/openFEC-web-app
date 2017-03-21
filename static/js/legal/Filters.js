@@ -62,7 +62,7 @@ function Filters(props) {
               <FilterPanel id="first-content-2" header="Time period"
                   content={[<DateFilter key="issue_date" label="Issued date" min_name="ao_min_date" max_name="ao_max_date"
                     min_value={props.query.ao_min_date} max_value={props.query.ao_max_date}
-                    handleChange={props.instantQuery} />]} />
+                    instantQuery={props.instantQuery} setQuery={props.setQuery} />]} />
               </ul>
             </div>
 }

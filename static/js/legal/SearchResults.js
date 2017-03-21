@@ -5,7 +5,7 @@ function SearchResults(props) {
   function highlights(advisory_opinion) {
     return {__html: '&hellip;' + advisory_opinion.highlights }
   }
-  if(props.advisory_opinions) {
+  if(props.advisory_opinions && props.advisory_opinions.length > 0) {
     return <ul>{ props.advisory_opinions.map((advisory_opinion) => {
         return <div key={advisory_opinion.no}><h3 className="cal-list__title">
           <a title={ advisory_opinion.description }

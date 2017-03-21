@@ -1,5 +1,5 @@
 <div class="results-info">
-<div class="dataTables_info">{{ results.offset + 1 }}&ndash;{{ results.offset + results[result_type + '_returned'] }} of about {{ results.total_all }}</span></div>
+<div class="dataTables_info">{{ results.offset + 1 }}&ndash;{{ results.offset + results[result_type + '_returned'] }} of about {{ results.total_all }}</div>
 <div class="dataTables_paginate">
 {% if results.offset > 0 %}
 <a class="paginate_button previous" href="{{ url_for(result_type, search=query,
