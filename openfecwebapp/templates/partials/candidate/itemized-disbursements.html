@@ -50,7 +50,11 @@
             </li>
           </ul>
 
-          <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
+          <div class="js-tooltip-container u-float-right">
+            <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
+            <div id="export-tooltip" role="tooltip" class="tooltip tooltip--under tooltip--right tooltip__content" aria-hidden="true">
+            </div>
+          </div>
         </div>
 
         <table
