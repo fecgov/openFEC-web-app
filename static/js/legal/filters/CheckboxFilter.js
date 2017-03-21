@@ -1,10 +1,10 @@
 const React = require('react');
+const Checkbox = require('./Checkbox');
 
 function CheckboxFilter(props) {
     return <div className="filter">
-      <input type="checkbox" id={props.name} name={props.name}
-        onChange={props.handleChange} checked={props.checked} />
-      <label htmlFor={props.name}>{props.label}</label>
+      <Checkbox name={props.name} handleChange={props.handleChange}
+        checked={props.checked} label={props.label} />
     </div>
 }
 

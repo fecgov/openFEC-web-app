@@ -37,9 +37,9 @@ function Filters(props) {
 
   return <div>
             <TextFilter key="ao_no" name="ao_no" label="AO number" value={props.query.ao_no}
-                handleChange={props.setQuery} getResults={props.getResults} />,
+                handleChange={props.setQuery} getResults={props.getResults} />
             <TextFilter key="ao_requestor" name="ao_requestor" label="Requestor Name (or AO Name)" value={props.query.ao_requestor}
-                  handleChange={props.setQuery} getResults={props.getResults} />,
+                  handleChange={props.setQuery} getResults={props.getResults} />
               <Dropdown key="ao_requestor_type" name="ao_requestor_type" label="Requestor Type" value={props.query.ao_requestor_type}
                 options={requestorOptions} handleChange={props.instantQuery} />
             <ul className="accordion--neutral" data-content-prefix="first">
@@ -59,7 +59,7 @@ function Filters(props) {
                     <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
                       key="ao_statutory_citation" name="ao_statutory_citation" label="Statutory citation" instantQuery={props.instantQuery}
                       citationType="statute" value={props.query.ao_statutory_citation}/>]} />
-              <FilterPanel id="first-content-2" header="Documents"
+              <FilterPanel id="first-content-2" header="Time period"
                   content={[<DateFilter key="issue_date" label="Issued date" min_name="ao_min_date" max_name="ao_max_date"
                     min_value={props.query.ao_min_date} max_value={props.query.ao_max_date}
                     handleChange={props.instantQuery} />]} />

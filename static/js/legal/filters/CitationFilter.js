@@ -1,7 +1,7 @@
 const React = require('react');
 const URI = require('urijs');
 const $ = require('jquery');
-const CheckboxFilter = require('./CheckboxFilter');
+const Checkbox = require('./Checkbox');
 
 class CitationFilter extends React.Component {
     constructor(props) {
@@ -56,7 +56,7 @@ class CitationFilter extends React.Component {
       return <div className="filter" onBlur={this.hideDropdown}>
           <label className="label" htmlFor={this.props.name + "-filter"}>{this.props.label}</label>
           {this.props.value && this.props.value.map(citationText => {
-            return <CheckboxFilter key={citationText} name={citationText} label={citationText}
+            return <Checkbox key={citationText} name={citationText} label={citationText}
             checked={true} handleChange={() => this.removeCitation(citationText)} />
           })}
           <div className="combo combo--search--mini"  style={{position: 'relative', display: 'block'}}>
