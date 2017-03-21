@@ -50,7 +50,7 @@
       <div class="callout callout--primary">
         <div class="callout__content">
           <h4 class="callout__title">
-            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+            <a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }}</a>
           </h4>
           <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
           <span class="callout__subtitle t-block">{{ committee.cycles | fmt_cycle_min_max }}</span>
@@ -69,7 +69,7 @@
         <div class="callout callout--neutral">
           <div class="callout__content">
             <h4 class="callout__title">
-              <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+              <a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }}</a>
             </h4>
             <span class="callout__subtitle term" data-term="authorized committee">Authorized campaign committee</span>
             <span class="callout__subtitle t-block">{{ committee.cycles | fmt_cycle_min_max }}</span>
