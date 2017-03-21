@@ -9,7 +9,7 @@ const Pagination = require('./Pagination');
 class LegalSearch extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { q: $('#query').val(), from_hit: 0, advisory_opinions: [] }
+    this.state = { q: $('#query').val(), from_hit: 0, advisory_opinions: []}
 
     this.getResults = this.getResults.bind(this);
     this.setQuery = this.setQuery.bind(this);
@@ -19,12 +19,12 @@ class LegalSearch extends React.Component {
 
   setQuery(e) {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    this.setState({ [e.target.name]: value});
+    this.setState({ [e.target.name]: value, lastFilter: e.target.name});
   }
 
   instantQuery(e) {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    this.setState({ [e.target.name]: value}, () => {
+    this.setState({ [e.target.name]: value, lastFilter: e.target.name}, () => {
       this.getResults();
     });
   }
@@ -39,7 +39,7 @@ class LegalSearch extends React.Component {
                 .addQuery('type', 'advisory_opinions');
 
     Object.keys(this.state).forEach((queryParam) => {
-      if(['advisory_opinions', 'resultCount', 'lastResultCount'].indexOf(queryParam) === -1
+      if(['advisory_opinions', 'resultCount', 'lastResultCount', 'lastFilter'].indexOf(queryParam) === -1
           && this.state[queryParam]) {
         queryPath = queryPath.addQuery(queryParam, this.state[queryParam]);
       }

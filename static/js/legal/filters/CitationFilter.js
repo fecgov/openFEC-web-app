@@ -11,6 +11,7 @@ class CitationFilter extends React.Component {
       this.setSelection = this.setSelection.bind(this);
       this.dropdownDisplay = this.dropdownDisplay.bind(this);
       this.hideDropdown = this.hideDropdown.bind(this);
+      this.getFilterAddedText = this.getFilterAddedText.bind(this);
     }
 
     interceptChange(e) {
@@ -33,7 +34,7 @@ class CitationFilter extends React.Component {
       citationTags.push(citation)
       const syntheticEvent = { target: {name: this.props.name, value: citationTags } };
       this.props.instantQuery(syntheticEvent);
-      this.setState({dropdownVisible: false, currentValue: ''});
+      this.setState({dropdownVisible: false, currentValue: '', lastAction: "added"});
     }
 
     dropdownDisplay() {
@@ -50,6 +51,17 @@ class CitationFilter extends React.Component {
       const syntheticEvent = {target: { name: this.props.name,
         value } }
       this.props.instantQuery(syntheticEvent);
+      this.setState({lastAction: "removed"});
+    }
+
+    getFilterAddedText() {
+      if(this.props.resultCountChange < 0) {
+        return (-this.props.resultCountChange).toString() + " fewer results."
+      } else if(this.props.resultCountChange > 0) {
+        return this.props.resultCountChange.toString() + " more results."
+      } else {
+        return "Same number of results."
+      }
     }
 
     render() {
@@ -59,6 +71,8 @@ class CitationFilter extends React.Component {
             return <Checkbox key={citationText} name={citationText} label={citationText}
             checked={true} handleChange={() => this.removeCitation(citationText)} />
           })}
+          {this.props.lastFilter === this.props.name &&
+            <div className="filter__message filter__message--success"><div>Filter {this.state.lastAction} &#x2713;</div><div>{this.getFilterAddedText()}</div></div>}
           <div className="combo combo--search--mini"  style={{position: 'relative', display: 'block'}}>
             <input id={this.props.name + "-filter"} type="text" name={this.props.name} className="combo__input"
                 value={this.state.currentValue} onChange={this.interceptChange}/>

@@ -35,6 +35,8 @@ function Filters(props) {
    {'value' : 'C', 'text': 'Comments and Ex parte Communications'},
    {'value' : 'S', 'text': 'Commissioner Statements'}]
 
+  const resultCountChange = props.query.resultCount - props.query.lastResultCount;
+
   return <div>
             <TextFilter key="ao_no" name="ao_no" label="AO number" value={props.query.ao_no}
                 handleChange={props.setQuery} getResults={props.getResults} />
@@ -55,10 +57,12 @@ function Filters(props) {
                     value={props.query.ao_citation_require_all} />,
                   <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
                       key="ao_regulatory_citation" name="ao_regulatory_citation" label="Regulatory citation" instantQuery={props.instantQuery}
-                      citationType="regulation" value={props.query.ao_regulatory_citation}/>,
-                    <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
+                      citationType="regulation" value={props.query.ao_regulatory_citation}
+                      resultCountChange={resultCountChange} lastFilter={props.query.lastFilter}/>,
+                  <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
                       key="ao_statutory_citation" name="ao_statutory_citation" label="Statutory citation" instantQuery={props.instantQuery}
-                      citationType="statute" value={props.query.ao_statutory_citation}/>]} />
+                      citationType="statute" value={props.query.ao_statutory_citation}
+                      resultCountChange={resultCountChange} lastFilter={props.query.lastFilter}/>]} />
               <FilterPanel id="first-content-2" header="Time period"
                   content={[<DateFilter key="issue_date" label="Issued date" min_name="ao_min_date" max_name="ao_max_date"
                     min_value={props.query.ao_min_date} max_value={props.query.ao_max_date}

@@ -8,8 +8,7 @@ function Pagination(props) {
 
   return props.resultCount > 0 ? <div className="results-info">
           <div className="dataTables_info">
-          {props.from_hit + 1}&ndash;{props.from_hit + props.advisory_opinions.length}&nbsp;
-          of about {props.resultCount}</div>
+          {props.from_hit + 1}&ndash;{props.from_hit + props.advisory_opinions.length} of {props.resultCount}</div>
           <div className="dataTables_paginate">
             {props.from_hit > 0 ? <a className="paginate_button previous"
              onClick={() => interceptHandleChange(-props.advisory_opinions.length)}>Previous</a>
