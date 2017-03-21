@@ -21,13 +21,13 @@ function highlightRowAndState($map, $table, state, scroll) {
   }
 }
 
-function init($map, $contributorState) {
+function init($map, $table) {
   $map.on('click', 'path[data-state]', function() {
     var state = $(this).attr('data-state');
     events.emit('state.map', {state: state});
   });
 
-  $contributorState.on('click', 'tr', function() {
+  $table.on('click', 'tr', function() {
     events.emit('state.table', {
       state: $(this).find('span[data-state]').attr('data-state')
     });
@@ -39,7 +39,7 @@ function init($map, $contributorState) {
 
   events.on('state.map', function(params) {
     var $map = $('.state-map');
-    highlightRowAndState($map, $contributorState, params.state, true);
+    highlightRowAndState($map, $table, params.state, true);
   });
 }
 
