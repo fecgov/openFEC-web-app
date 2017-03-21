@@ -4,40 +4,12 @@
 
 var $ = require('jquery');
 
-var events = require('fec-style/js/events');
-
 var maps = require('../modules/maps');
+var mapsEvent = require('../modules/maps-event');
 var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
-
-function buildStateUrl($elm) {
-  return helpers.buildUrl(
-    ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
-    {
-      candidate_id: $elm.data('candidate-id'),
-      cycle: $elm.data('cycle'),
-      per_page: 99
-    }
-  );
-}
-
-function highlightRowAndState($map, $table, state, scroll) {
-  var $scrollBody = $table.closest('.dataTables_scrollBody');
-  var $row = $scrollBody.find('span[data-state="' + state + '"]');
-
-  if ($row.length > 0) {
-    maps.highlightState($('.state-map'), state);
-    $scrollBody.find('.row-active').removeClass('row-active');
-    $row.parents('tr').addClass('row-active');
-    if (scroll) {
-      $scrollBody.animate({
-        scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
-      }, 500);
-    }
-  }
-}
 
 var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
@@ -457,29 +429,20 @@ function initContributionsTables() {
 
   // Set up state map
   var $map = $('.state-map');
-  var url = buildStateUrl($map);
+  var mapUrl = helpers.buildUrl(
+    ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
+    {
+      candidate_id: $map.data('candidate-id'),
+      cycle: $map.data('cycle'),
+      per_page: 99
+    }
+  );
 
-  $.getJSON(url).done(function(data) {
+  $.getJSON(mapUrl).done(function(data) {
     maps.stateMap($map, data, 400, 300, null, null, true, true);
   });
 
-  events.on('state.table', function(params) {
-    highlightRowAndState($map, $('.data-table'), params.state, false);
-  });
-  $map.on('click', 'path[data-state]', function() {
-    var state = $(this).attr('data-state');
-    events.emit('state.map', {state: state});
-  });
-  events.on('state.map', function(params) {
-    var $map = $('.state-map');
-    highlightRowAndState($map, $contributorState, params.state, true);
-  });
-
-  $contributorState.on('click', 'tr', function() {
-    events.emit('state.table', {
-      state: $(this).find('span[data-state]').attr('data-state')
-    });
-  });
+  mapsEvent.init($map, $contributorState);
 }
 
 $(document).ready(function() {

@@ -5,9 +5,8 @@
 var $ = require('jquery');
 var _ = require('underscore');
 
-var events = require('fec-style/js/events');
-
 var maps = require('../modules/maps');
+var mapsEvent = require('../modules/maps-event');
 var tables = require('../modules/tables');
 var filings = require('../modules/filings');
 var helpers = require('../modules/helpers');
@@ -239,30 +238,6 @@ var communicationCostColumns = [
   columns.candidateColumn({data: 'candidate', className: 'all'})
 ];
 
-function buildStateUrl($elm) {
-  return helpers.buildUrl(
-    ['committee', $elm.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
-    {cycle: $elm.data('cycle'), per_page: 99}
-  );
-}
-
-function highlightRowAndState($map, $table, state, scroll) {
-  var $scrollBody = $table.closest('.dataTables_scrollBody');
-  var $row = $scrollBody.find('span[data-state="' + state + '"]');
-
-  if ($row.length > 0) {
-    maps.highlightState($('.state-map'), state);
-    $scrollBody.find('.row-active').removeClass('row-active');
-    $row.parents('tr').addClass('row-active');
-    if (scroll) {
-      $scrollBody.animate({
-        scrollTop: $row.closest('tr').height() * parseInt($row.attr('data-row'))
-      }, 500);
-    }
-  }
-
-}
-
 var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
 };
@@ -280,6 +255,8 @@ var filingsReportsColumns = columnHelpers.getColumns(
 );
 
 $(document).ready(function() {
+  var $mapTable;
+
   // Set up data tables
   $('.data-table').each(function(index, table) {
     var $table = $(table);
@@ -359,15 +336,9 @@ $(document).ready(function() {
         scrollY: 400,
         scrollCollapse: true
       });
-      events.on('state.map', function(params) {
-        var $map = $('.state-map');
-        highlightRowAndState($map, $table, params.state, true);
-      });
-      $table.on('click', 'tr', function() {
-        events.emit('state.table', {
-          state: $(this).find('span[data-state]').attr('data-state')
-        });
-      });
+
+      $mapTable = $table;
+
       break;
     case 'receipts-by-employer':
       path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_employer'];
@@ -556,15 +527,14 @@ $(document).ready(function() {
 
   // Set up state map
   var $map = $('.state-map');
-  var url = buildStateUrl($map);
-  $.getJSON(url).done(function(data) {
+  var mapUrl = helpers.buildUrl(
+    ['committee', $map.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
+    {cycle: $map.data('cycle'), per_page: 99}
+  );
+
+  $.getJSON(mapUrl).done(function(data) {
     maps.stateMap($map, data, 400, 300, null, null, true, true);
   });
-  events.on('state.table', function(params) {
-    highlightRowAndState($map, $('.data-table'), params.state, false);
-  });
-  $map.on('click', 'path[data-state]', function() {
-    var state = $(this).attr('data-state');
-    events.emit('state.map', {state: state});
-  });
+
+  mapsEvent.init($map, $mapTable);
 });
