@@ -30,7 +30,7 @@ var sizeColumns = [
     width: '50%',
     className: 'all',
     orderable: false,
-    render: function(data, type, row, meta) {
+    render: function(data) {
       return columnHelpers.sizeInfo[data].label;
     }
   },
@@ -529,7 +529,10 @@ $(document).ready(function() {
   var $map = $('.state-map');
   var mapUrl = helpers.buildUrl(
     ['committee', $map.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
-    {cycle: $map.data('cycle'), per_page: 99}
+    {
+      cycle: $map.data('cycle'),
+      per_page: 99
+    }
   );
 
   $.getJSON(mapUrl).done(function(data) {
