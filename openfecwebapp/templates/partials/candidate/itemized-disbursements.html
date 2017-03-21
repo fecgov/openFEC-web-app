@@ -15,14 +15,18 @@
 
     <ul class="list--bulleted">
       {% for committee in committee_groups['P'] | reverse %}
+      {% if committee.cycle == cycle %}
       <li>
         <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
       </li>
+      {% endif %}
       {% endfor %}
       {% for committee in committee_groups['A'] | reverse %}
+      {% if committee.cycle == cycle %}
       <li>
         <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
       </li>
+      {% endif %}
       {% endfor %}
     </ul>
 
