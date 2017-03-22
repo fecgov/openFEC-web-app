@@ -176,4 +176,13 @@ describe('election lookup', function() {
       expect(this.el.draw).not.to.have.been.called;
     });
   });
+
+  it('removes incorrect presidential elections', function() {
+    var raw = [
+      {cycle: 2018, office: 'P'},
+      {cycle: 2018, office: 'S'}
+    ];
+    var results = this.el.removeWrongPresidentialElections(raw, '2018');
+    expect(results).to.deep.equal([{cycle: 2018, office: 'S'}]);
+  });
 });

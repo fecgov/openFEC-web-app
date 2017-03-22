@@ -1,11 +1,16 @@
 {% import 'macros/missing.html' as missing %}
 {% import 'macros/null.html' as null %}
+{% import 'macros/cycle-select.html' as select %}
 
-<section class="main" id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
-  <div class="container">
+<section id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
   <div class="heading--section">
-    <h2>Financial summary: {{ format_election_years(cycle, election_full, duration) }}</h2>
+    <h2 id="section-1-heading">Financial summary: {{ format_election_years(cycle, election_full, duration) }}</h2>
   </div>
+
+  <div class="content__section">
+    {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
+  </div>
+
   {% if aggregate %}
   <div class="content__section">
     <figure class="candidate__totals">
@@ -45,7 +50,7 @@
       <div class="callout callout--primary">
         <div class="callout__content">
           <h4 class="callout__title">
-            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+            <a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }}</a>
           </h4>
           <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
           <span class="callout__subtitle t-block">{{ committee.cycles | fmt_cycle_min_max }}</span>
@@ -64,7 +69,7 @@
         <div class="callout callout--neutral">
           <div class="callout__content">
             <h4 class="callout__title">
-              <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+              <a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }}</a>
             </h4>
             <span class="callout__subtitle term" data-term="authorized committee">Authorized campaign committee</span>
             <span class="callout__subtitle t-block">{{ committee.cycles | fmt_cycle_min_max }}</span>
@@ -102,28 +107,25 @@
 {% endif %}
 
 {% else %}
-
   {{ missing.missing_financials(name, cycle) }}
-
 {% endif %}
 
-<div class="content__section">
-  <div class="heading--section">
-    <h2>All candidate filings: All years</h2>
+  <div class="content__section">
+    <div class="heading--section">
+      <h2>All candidate filings: All years</h2>
+    </div>
+    <div class="row">
+      <p class="usa-width-two-thirds">Candidates are required to file a <strong>Statement of Candidacy</strong> every time they run for office. Financial reports from committees are available on committee pages.</p>
+    </div>
+    <table class="data-table" data-type="filing" data-candidate="{{ candidate_id }}">
+      <thead>
+        <tr>
+          <th scope="col">Document</th>
+          <th scope="col">Amendment indicator</th>
+          <th scope="col">Receipt date</th>
+        </tr>
+      </thead>
+    </table>
   </div>
-  <div class="row">
-    <p class="usa-width-two-thirds">Candidates are required to file a <strong>Statement of Candidacy</strong> every time they run for office. Financial reports from committees are available on committee pages.</p>
-  </div>
-  <table class="data-table" data-type="filing" data-candidate="{{ candidate_id }}">
-    <thead>
-      <tr>
-        <th scope="col">Document</th>
-        <th scope="col">Amendment indicator</th>
-        <th scope="col">Receipt date</th>
-      </tr>
-    </thead>
-  </table>
-</div>
 
-  </div>
 </section>
