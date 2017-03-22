@@ -3,7 +3,7 @@ const InputElement = require('react-input-mask')
 
 function DateFilter(props) {
   function interceptHandleChange(e) {
-    if(new RegExp("[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]").test(e.target.value)) {
+    if(new RegExp("[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]").test(e.target.value) || e.target.value === '') {
       props.instantQuery(e);
     } else {
       props.setQuery(e);
