@@ -26,10 +26,6 @@ var stickyBar = require('fec-style/js/sticky-bar');
 var toc = require('fec-style/js/toc');
 var Search = require('fec-style/js/search');
 
-// @if SENTRY_PUBLIC_DSN
-require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
-// @endif
-
 // Include vendor scripts
 require('./vendor/tablist').init();
 

@@ -6,7 +6,6 @@ import logging
 import datetime
 
 import furl
-from raven.contrib.flask import Sentry
 
 from hmac_authentication import hmacauth
 from flask import Flask, render_template, request, url_for
@@ -192,9 +191,6 @@ def initialize_newrelic():
         newrelic.agent.initialize()
 
 initialize_newrelic()
-
-if config.sentry_dsn:
-    Sentry(app, dsn=config.sentry_dsn)
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)

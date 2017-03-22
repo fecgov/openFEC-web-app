@@ -40,7 +40,6 @@ force_https = bool(os.getenv('FEC_FORCE_HTTPS', ''))
 use_analytics = bool(os.getenv('FEC_WEB_GOOGLE_ANALYTICS'))
 
 github_token = env.get_credential('FEC_GITHUB_TOKEN')
-sentry_dsn = env.get_credential('SENTRY_DSN')
 
 hmac_secret = env.get_credential('HMAC_SECRET')
 hmac_headers = env.get_credential('HMAC_HEADERS', '').split(',')
