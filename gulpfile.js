@@ -122,8 +122,7 @@ gulp.task('build-js', function() {
   })
   .transform(preprocessify({
     DEBUG: debug,
-    ANALYTICS: analytics,
-    SENTRY_PUBLIC_DSN: sentryPublicDsn
+    ANALYTICS: analytics
   }))
   .transform({global: true}, stringify(['.html']))
   .transform({global: true}, hbsfy)
