@@ -70,34 +70,83 @@
     {% block body %}{% endblock %}
   </main>
 
-<nav class="footer-links">
-  <div class="container">
-    <div class="footer-links__column">
-      <ul>
-        <li>
-          <a href="https://github.com/18F/fec">GitHub repository</a>
-        </li>
-        <li>
-          <a href="https://github.com/18F/FEC/blob/master/release_notes/release_notes.md">Release notes</a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a href="{{ cms_url }}/contact-us/">Contact us</a>
-        </li>
-        <li>
-          <a href="{{ cms_url }}/about/">About</a>
-        </li>
-        <li>
-          <a href="{{ cms_url }}/press/">Press</a>
-        </li>
-          <li>
-            <a href="{{ cms_url }}/updates/">Latest updates</a>
-          </li>
-      </ul>
+  <nav class="footer-links">
+    <div class="container">
+
+      <div class="grid grid--6-wide">
+
+        <div class="grid__item"></div>
+
+        <div class="grid__item">
+          <ul>
+            <li>
+              <a href="{{ cms_url }}/about/">About the FEC</a>
+            </li>
+            <li>
+              <a href="{{ cms_url }}/careers/">Careers</a>
+            </li>
+            <li>
+              <a href="{{ cms_url }}/contact-us/">Contact</a>
+            </li>
+            <li>
+              <a href="{{ cms_url }}/press/">Press</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid__item">
+          <ul>
+            <li>
+              <a href="">Privacy policy</a>
+            </li>
+            <li>
+              <a href="http://www.fec.gov/info/plainwriting.shtml">Plain language</a>
+            </li>
+            <li>
+              <a href="http://fec.gov/eeo/NoFear.shtml">No FEAR Act</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid__item">
+          <ul>
+            <li>
+              <a href="https://api.open.fec.gov/">OpenFEC API</a>
+            </li>
+            <li>
+              <a href="https://github.com/18F/fec">GitHub repository</a>
+            </li>
+            <li>
+              <a href="https://github.com/18F/FEC/blob/master/release_notes/release_notes.md">Release notes</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid__item">
+          <ul>
+            <li>
+              <a href="https://www.data.gov/open-gov/">Open government</a>
+            </li>
+            <li>
+              <a href="https://www.foia.gov/">FOIA</a>
+            </li>
+            <li>
+              <a href="https://www.usa.gov/">USA.gov</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid__item">
+          <ul>
+            <li>
+              <a href="{{ cms_url }}/updates/">Latest updates</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 <footer class="footer">
   <div class="container">
@@ -122,7 +171,6 @@
 
       <p>999 E Street, NW<br>
       Washington, DC 20463</p>
-      <p>(800) 424-9530</p>
     </div>
   </div>
 </footer>
