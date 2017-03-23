@@ -10,6 +10,8 @@
 {% with statutes = results.statutes %}
 {% include 'partials/legal-search-results-statute.html' %}
 {% endwith %}
-{% endblock %}
 
+{% with results=results %}
 {% include 'partials/legal-pagination.html' %}
+{% endwith %}
+{% endblock %}
