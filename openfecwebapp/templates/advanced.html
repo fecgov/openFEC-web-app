@@ -39,11 +39,11 @@
           <a
             class="side-nav__link"
             role="tab"
-            data-name="debts-loans"
+            data-name="loans-debts"
             tabindex="0"
-            aria-controls="debts-loans"
-            href="#debts-loans"
-            aria-selected="false">Debts and loans</a>
+            aria-controls="loans-debts"
+            href="#loans-debts"
+            aria-selected="false">Loans and debts</a>
         </li>
         <li class="side-nav__item" role="presentation">
           <a
@@ -100,60 +100,66 @@
     <div class="main__content--right-full">
       <section class="row" id="raising" aria-hidden="false" role="tabpanel" >
         <h2>Raising</h2>
+        <p>Receipts are anything of value (money, goods, services or property) received by a political committee. Authorized committees take in all receipts for a candidate’s campaign. Receipts include both contributions and other forms of support. This data is updated according to a committee's filing schedule and processing time may vary.</p>
         <div class="post-feed">
           <div class="post">
             <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('receipts', is_individual=True) }}">All receipts</a></h3>
-            <p><span class="term" data-term="receipt">Receipts</span> are anything of value, like money, services or property. Search candidate and committee receipt data by contributor, amount and date.</p>
+            <p>All receipts include all data reported by committees on Schedule A, which can come from individuals, organizations and other committees.</p>
           </div>
-          <div class="post u-padding--left">
+          <div class="post post--child">
             <h3><a href="{{ url_for('individual_contributions') }}">Individual contributions</a></h3>
-            <p>Search individual contributions to see who is donating to candidates and committees. Search for contributors by name, location, employer and occupation.</p>
+            <p>Individual contributions are a subset of all receipts and show all receipts reported to have been received from anyone other than another political committee. You can search for contributors by name, location, employer and occupation.</p>
           </div>
         </div>
-        <div class="option__aside">
-          <i class="icon-circle--raising"><span class="u-visually-hidden">Icon of a piggy bank</span></i>
-            <a href="/#raising">Raising data overview</a>
+        <div class="content__section--extra">
+          <div class="icon-heading">
+            <i class="icon-heading__image icon-circle--raising"><span class="u-visually-hidden">Icon of a piggy bank</span></i>
+            <div class="icon-heading__content"><a href="/#raising">Raising data overview</a></div>
+          </div>
         </div>
       </section>
       <section class="row" id="spending" aria-hidden="true" role="tabpanel" >
         <h2>Spending</h2>
-        <p>Spending includes all the types of <span class="term" data-term="disbursement">dibsursements</span> candidates and committees make.</p>
+        <p>Spending includes all the types of <span class="term" data-term="disbursement">disbursements</span> candidates and committees make, including money spent on operating expenditures, money given to other committees, and money spent on election activity, like independent expenditures. This data is updated according to a committee's filing schedule and processing time may vary.</p>
         <div class="post-feed">
           <div class="post">
             <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('disbursements') }}">All disbursements</a></h3>
-        <p>Search all disbursements from committees by the recipient, purpose, amount and date.</p>
+            <p>This includes all data reported by committees on Schedule B. You can search all disbursements from committees by the recipient, purpose, amount and date.</p>
           </div>
           <div class="post">
-            <h3><a href="{{ url_for('independent_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Independent expenditures</a></h3>
+            <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('independent_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Independent expenditures</a></h3>
             <p>Search <span class="term" data-term="independent expenditure">independent expenditures</span> to find specific spenders, candidates mentioned and transaction information.</p>
           </div>
           <div class="post">
-            <h3><a href="{{ url_for('party_coordinated_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Party coordinated expenditures</a></h3>
+            <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('party_coordinated_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Party coordinated expenditures</a></h3>
           </div>
           <div class="post">
-            <h3><a href="{{ url_for('electioneering_communications', max_date=today() | date(fmt='%m-%d-%Y')) }}">Electioneering communications</a></h3>
+            <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('electioneering_communications', max_date=today() | date(fmt='%m-%d-%Y')) }}">Electioneering communications</a></h3>
             <p>Search <span class="term" data-term="electioneering communication">electioneering communications</span> for communications that support or oppose specific candidates. Search by date and amount spent.</p>
           </div>
           <div class="post">
-            <h3><a href="{{ url_for('communication_costs', max_date=today() | date(fmt='%m-%d-%Y')) }}">Communication costs</a></h3>
+            <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('communication_costs', max_date=today() | date(fmt='%m-%d-%Y')) }}">Communication costs</a></h3>
             <p>Search communication costs for communications that support or oppose specific candidates. Search by date and amount spent.</p>
           </div>
         </div>
-        <div class="option__aside">
-          <i class="icon-circle--spending"><span class="u-visually-hidden">Icon of a spreading dollar sign</span></i>
-            <a href="/#spending">Spending data overview</a>
+        <div class="content__section--extra">
+          <div class="icon-heading">
+            <i class="icon-heading__image icon-circle--spending"><span class="u-visually-hidden">Icon of a spreading dollar sign</span></i>
+            <div class="icon-heading__content"><a href="/#raising">Spending data overview</a></div>
+          </div>
         </div>
       </section>
-      <section class="row" id="debts-loans" aria-hidden="true" role="tabpanel">
-        <h2>Debts and loans</h2>
-        <div class="option__content">
-          <div class="post-feed">
-            <div class="post">
-              <h3><a href="">Debts</a></h3>
-            </div>
-            <div class="post">
-              <h3><a href="{{ url_for('loans', is_individual=True) }}">Loans</a></h3>
-            </div>
+      <section class="row" id="loans-debts" aria-hidden="true" role="tabpanel">
+        <h2>Loans and debts</h2>
+        <p>Committees may take out loans and owe debts.</p>
+        <div class="post-feed">
+          <div class="post">
+            <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('loans', is_individual=True) }}">Loans</a></h3>
+            <p>Search schedule C forms filed by committees, which report information about loans received by committees.</p>
+          </div>
+          <div class="post">
+            <h3><i class="icon i-all-files icon--inline--left"></i>Debts (coming soon)</h3>
+            <p>Search schedule D forms filed by committees, which report information about debts owed by committees.</p>
           </div>
         </div>
       </section>
@@ -181,9 +187,13 @@
             <p>Statements of Candidacy (Form 2) contain basic information about individuals running for federal office, including their names, addresses and authorized campaign committees.</p>
           </div>
         </div>
-        <div class="option__aside">
-          <i class="icon-circle--checklist card--stacked"><span class="u-visually-hidden">Icon of a checklist</span></i>
-          <a href="{{ cms_url }}/registration-and-reporting/essentials-house-and-senate-candidates-and-committees/">Candidate registration and reporting requirements</a>
+        <div class="content__section--extra grid grid--3-wide">
+          <div class="icon-heading grid__item">
+            <i class="icon-heading__image icon-circle--checklist"><span class="u-visually-hidden">Icon of a checklist</span></i>
+            <div class="icon-heading__content">
+              <a href="{{ cms_url }}/registration-and-reporting/essentials-house-and-senate-candidates-and-committees/">Help for candidates and their committees</a>
+            </div>
+          </div>
         </div>
       </section>
       <section id="committees" class="row" aria-hidden="true" role="tabpanel">
@@ -203,11 +213,40 @@
             <p>Requests for Additional Information (RFAIs) are sent to committees when a Campaign Finance Analyst needs additional clarification on a committee’s filing or identifies an error, omission or possible prohibited activity. Search RFAIs by committee or date.</p>
           </div>
         </div>
-        <div class="option__aside">
-          <i class="icon-circle--checklist card--stacked"><span class="u-visually-hidden">Icon of a checklist</span></i>
-            <a href="{{ cms_url }}/registration-and-reporting/essentials-nonconnected-committees/">Nonconnected committee registration and reporting requirements</a><br><br>
-            <a href="{{ cms_url }}/registration-and-reporting/essentials-political-party-committees/">Political party committee registration and reporting requirements</a><br><br>
-            <a href="{{ cms_url }}/registration-and-reporting/">Registration and reporting requirements for other committees</a>
+        <div class="content__section--extra" data-content-prefix="pacronym">
+          <h3>PACronyms</h3>
+          <p>PACRONYMS, an alphabetical list of acronyms, abbreviations, initials, and common names of federal political action committees (PACs), was prepared to help researchers readily identify committees when their full names are not disclosed on campaign finance reports.</p>
+          <p>The list includes the PACRONYM, FEC ID number, full committee name, city and state, name of sponsoring, connected, or affiliated organization, committee designation and committee type.  Unless noted otherwise in the full committee name, the acronym “PAC” refers to “Political Action Committee.”  The PACRONYM is listed in ITALICS if the committee's PACRONYM is not specifically provided on the committee's Statement of Organization (FEC Form 1).</p>
+          <ul class="list--buttons">
+            <li>
+              <a class="button button--standard button--document" href="http://www.fec.gov/pubrec/pacronyms/Pacronyms.pdf">Open PDF</a>
+            </li>
+            <li>
+              <a class="button button--standard button--download" href="http://www.fec.gov/pubrec/pacronyms/Pacronyms.xlsx">Download for Excel</a>
+            </li>
+          </ul>
+        </div>
+        <div class="content__section--extra">
+          <div class="icon-heading">
+            <i class="icon-heading__image icon-circle--checklist"><span class="u-visually-hidden">Icon of a checklist</span></i>
+            <div class="icon-heading__content">
+              <h4 class="u-no-margin">More information for:</h4>
+              <div class="grid grid--2-wide">
+                <div class="grid__item">
+                  <a href="{{ cms_url }}/registration-and-reporting/essentials-nonconnected-committees/">Candidates and their committees</a>
+                </div>
+                <div class="grid__item">
+                  <a href="{{ cms_url }}/registration-and-reporting/essentials-nonconnected-committees/">Nonconnected committees</a>
+                </div>
+                <div class="grid__item">
+                  <a href="{{ cms_url }}/registration-and-reporting/essentials-political-party-committees/">Political party committees</a>
+                </div>
+                <div class="grid__item">
+                  <a href="{{ cms_url }}/registration-and-reporting/">Corporations and labor organizations</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <section class="row" id="reports" aria-hidden="true" role="tabpanel">
@@ -215,19 +254,19 @@
         <p>Filings contain all the statements, reports and notices that candidates and committees file. Search by date, type and filing candidate or committee.</p>
         <div class="post-feed">
           <div class="post">
+            <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('filings') }}">All filings</span></h3>
+          </div>
+          <div class="post post--child">
             <h3><a href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a></h3>
           </div>
-          <div class="post">
+          <div class="post post--child">
             <h3><a href="{{ url_for('reports', form_type='house-senate', is_amended='false') }}">House and Senate committee reports</a></h3>
           </div>
-          <div class="post">
+          <div class="post post--child">
             <h3><a href="{{ url_for('reports', form_type='pac-party', is_amended='false') }}">PAC and party committee reports</a></h3>
           </div>
           <!-- Commenting out while page is in progress -->
           <!--<li><a href="{{ url_for('reports', form_type='ie-only', is_amended='false') }}">Independent expenditure (Form 5) filer reports</a></li>-->
-          <div class="post">
-            <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('filings') }}">All filings</span></h3>
-          </div>
         </div>
       </section>
       <section id="other" class="row" aria-hidden="true" role="tabpanel">
