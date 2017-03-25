@@ -8,6 +8,7 @@ from flask import abort
 
 from openfecwebapp import utils
 from openfecwebapp import config
+from openfecwebapp import constants
 
 from collections import OrderedDict
 
@@ -97,16 +98,6 @@ def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
 
     if 'advisory_opinions' in results:
         results['advisory_opinions_returned'] = len(results['advisory_opinions'])
-        grouped_aos = OrderedDict({})
-        for ao in results['advisory_opinions']:
-            if ao['no'] in grouped_aos:
-                grouped_aos[ao['no']].append(ao)
-            else:
-                grouped_aos[ao['no']] = [ao]
-
-        for ao_no in grouped_aos:
-            grouped_aos[ao_no].sort(key=lambda ao: ao['date'], reverse=True)
-        results['advisory_opinions'] = grouped_aos
 
     if 'murs' in results:
         results['murs_returned'] = len(results['murs'])
@@ -118,37 +109,10 @@ def load_legal_advisory_opinion(ao_no):
     url = '/legal/docs/advisory_opinions/'
     results = _call_api(url, parse.quote(ao_no))
 
-    if not (results and 'docs' in results):
-        return None
+    if not (results and 'docs' in results and results['docs']):
+        abort(404)
 
-    # sort by chronological date
-    documents = sorted(results['docs'], key=lambda doc: doc['date'])
-    if not (documents and len(documents)):
-        return None
-
-    for document in documents:
-        canonical_document = document
-        if document['category'] == 'Final Opinion':
-            break
-
-    if not canonical_document:
-        return None
-
-    advisory_opinion = {
-        'no': ao_no,
-        'date': canonical_document['date'],
-        'name': canonical_document['name'],
-        'summary': canonical_document['summary'],
-        'description': canonical_document['description'],
-        'url': canonical_document['url'],
-        'category': canonical_document['category'],
-        'documents': documents,
-        'entities': [],
-        'citations': canonical_document['citations'],
-        'cited_by': canonical_document['cited_by']
-    }
-
-    return advisory_opinion
+    return results['docs'][0]
 
 
 def load_legal_mur(mur_no):
@@ -214,7 +178,6 @@ def load_single_type(data_type, c_id, *path, **filters):
     data = _call_api(data_type, c_id, *path, **filters)
     return result_or_404(data)
 
-
 def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
     return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
 
@@ -256,12 +219,23 @@ def load_candidate_totals(candidate_id, cycle, election_full=True):
     return {}
 
 
+def load_candidate_statement_of_candidacy(candidate_id, cycle):
+    response = _call_api(
+        'filings',
+        candidate_id=candidate_id, cycle=cycle, form_type='F2'
+    )
+
+    if response['results']:
+        return response['results'][:2]
+    return None
+
+
 def result_or_404(data):
     if not data.get('results'):
         abort(404)
     return data['results'][0]
 
-def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
+def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'candidates', 'totals',
             sort_hide_null=True,
@@ -276,7 +250,7 @@ def load_top_candidates(sort, office=None, cycle=2016, per_page=5):
             return response
         return {}
 
-def load_top_pacs(sort, cycle=2016, per_page=5):
+def load_top_pacs(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'pac',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
@@ -285,7 +259,7 @@ def load_top_pacs(sort, cycle=2016, per_page=5):
             return response
         return {}
 
-def load_top_parties(sort, cycle=2016, per_page=5):
+def load_top_parties(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'party',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page

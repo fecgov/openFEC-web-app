@@ -1,25 +1,14 @@
 {% import 'macros/null.html' as null %}
-{% import 'macros/charts.html' as charts %}
 {% import 'macros/disclaimer.html' as disclaimer %}
+{% import 'macros/cycle-select.html' as select %}
 
-<section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
-  <div class="container">
-    <div class="heading--section heading--with-action">
-      <h2 class="heading__left" id="section-2-heading">
-        Money raised by the committee: {{ cycle|fmt_year_range }}
-      </h2>
-      <a class="heading__right button--alt button--browse"
-          href="{{ url_for(
-            'individual_contributions',
-            committee_id=committee_id,
-            two_year_transaction_period=cycle,
-            min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
-          ) }}">All individual contributions data</a>
-    </div>
-    <div class="content__section">
-      <div class="row filters--horizontal">
-        <fieldset class="toggles">
+<section id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
+  <h2 id="section-3-heading">Individual contributions</h2>
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+    {{ select.committee_cycle_select(cycles, cycle, 'receipts')}}
+    <div class="entity__figure">
+      <div class="row">
+        <fieldset class="toggles u-float-left">
           <legend class="label">Group by:</legend>
           <label for="toggle-state">
             <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
@@ -38,6 +27,14 @@
             <span class="button--alt">Contributor occupation</span>
           </label>
         </fieldset>
+        <a class="u-float-right button--alt button--browse"
+            href="{{ url_for(
+              'individual_contributions',
+              committee_id=committee_id,
+              two_year_transaction_period=cycle,
+              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+            ) }}">Filter this data</a>
       </div>
       <div class="row">
         <div id="by-state" class="panel-toggle-element">
