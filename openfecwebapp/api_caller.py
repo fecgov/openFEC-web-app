@@ -43,12 +43,9 @@ def load_search_results(query, query_type=None):
         filters['per_page'] = 5
         candidates = _call_api('/candidates/search', **filters)
         committees = _call_api('/committees', **filters)
-        contributions = _call_api('/schedules/schedule_a/', two_year_transaction_period=2016, contributor_name=query, per_page=10)
-        print(contributions)
         return {
             'candidates': candidates['results'] if len(candidates) else [],
             'committees': committees['results'] if len(committees) else [],
-            'contributions': contributions['results'] if len(contributions) else []
         }
 
 def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,

@@ -1,19 +1,34 @@
-<div class="result">
-  <div class="result__header">
-    <h3 class="result__title">
-      <a title="{{ committee.name }}"
-          href="{{ url_for('committee_page', c_id=committee.committee_id) }}">
-          {{ committee.name }}
-      </a>
-    </h3>
-    <span class="result__years t-data">Years active: {{ committee.cycles[0] }} -
-      {{ committee.cycles[-1] }}
-    </span>
-  </div>
-  <div class="row">
-    {{ committee.committee_type_full}} &bull; {{ committee.designation_full}}
-    {% if committee.organization_type %}
-      &bull; {{ committee.organization_type_full }}
+<div class="post row">
+  <h3>
+    <a title="{{ committee.name }}"
+        href="{{ url_for('committee_page', c_id=committee.committee_id) }}">
+        {{ committee.name }}
+    </a>
+  </h3>
+  <table class="usa-width-one-half t-sans">
+    <tbody>
+      <tr>
+        <td>
+          <strong>Years active:</strong>
+        </td>
+        <td>
+          {{ committee.cycles[0] }}&ndash;{{ committee.cycles[-1] }}
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Type:</strong></td>
+        <td>{{ committee.committee_type_full}}</td>
+      </tr>
+      <tr>
+        <td><strong>Designation:</strong></td>
+        <td>{{ committee.designation_full}}</td>
+      </tr>
+      {% if committee.organization_type %}
+      <tr>
+        <td><strong>Organization type:</strong></td>
+        <td>{{ committee.organization_type_full }}</td>
+      </tr>
     {% endif %}
-  </div>
+    </tbody>
+  </table>
 </div>

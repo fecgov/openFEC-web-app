@@ -3,11 +3,33 @@
 {% import 'macros/page-header.html' as header %}
 
 {% block title %}
-    Search results for &ldquo;{{query}}&rdquo;
+    Search results
 {% endblock %}
 
 {% block body %}
-{{ header.header(title, show_search=True) }}
+{{ header.header(title, show_search=false) }}
+<style>
+  .post {
+    border: none;
+    border: 1px solid #ccc;
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .post:last-of-type {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .post table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+
+ .post td {
+  padding: 2px 20px 2px 0;
+ }
+</style>
 
 <div class="main">
   <div class="container">
@@ -20,19 +42,23 @@
           <li class="side-nav__item">
               <a class="side-nav__link" href="#committees">Committees</a>
           </li>
-          <li class="side-nav__item">
-              <a class="side-nav__link" href="#contributions">Contributions</a>
-          </li>
         </ul>
       </nav>
     </div>
     <section class="main__content--right">
       <header>
-        <h1>Results for "{{ query }}"</h1>
+        <h1 class="heading--main">Candidate and committee profiles</h1>
       </header>
+      <div class="slab slab--inline slab--neutral">
+        <div class="container combo">
+          <label for="search" class="label">Search candidate and committee profiles</label>
+          <input id="search" name="search" value="{{ query }}" class="combo__input">
+          <button name="commit" type="submit" class="button--cta combo__button button--search"><span class="u-visually-hidden">Search</span></button>
+        </div>
+      </div>
         {% if results %}
         <div class="content__section" id="candidates">
-          <h2>Candidates</h2>
+          <h2>Candidate results</h2>
           {% with candidates=results['candidates'] %}
             {% for candidate in candidates %}
                 {% include 'partials/search-results-candidate.html' %}
@@ -40,25 +66,15 @@
           {% endwith %}
         </div>
         <div class="content__section" id="committees">
-          <h2>Committees</h2>
+          <h2>Committee results</h2>
           {% with committees=results['committees'] %}
             {% for committee in committees %}
               {% include 'partials/search-results-committee.html' %}
             {% endfor %}
           {% endwith %}
         </div>
-        <div class="content__section" id="contributions">
-          <h2>Contributions</h2>
-          {% with contributions=results['contributions'] %}
-            <ul class="list--bulleted">
-            {% for contribution in contributions %}
-              <li>{{contribution['contributor_name']}}</li>
-            {% endfor %}
-            </ul>
-          {% endwith %}
-        </div>
-    {% endif %}
-        </section>
+        {% endif %}
+      </section>
     </div>
 </div>
 
