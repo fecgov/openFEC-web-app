@@ -84,7 +84,6 @@
     "moment": "2.10.3",
     "numeral": "1.5.3",
     "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
-    "raven-js": "1.2.0",
     "topojson": "1.6.19",
     "underscore": "1.8.3",
     "underscore.string": "3.2.0",
