@@ -2,7 +2,7 @@ language: python
 sudo: false
 cache: pip
 python:
-  - '3.4'
+  - "3.6.1"
 env:
   global:
     - secure: U8r+y8ScnAP/m0AOjYjqX90Wf9SWw5VGv+UXjnF/P6ypQl1dUAyDMXitw0B7XHjqmRP5xATcLGwL3IzFfowb8YFhVKSsO9h1pgpmkCGOhxxqp2jh978nU6df3SdbPmEvPlZaoBsLDVqRMHUPOyDLbaPN6iQtdbRcQhhE+zRcHT8= # dev user name
