@@ -62,14 +62,16 @@
     <a class="button button--standard button--browse" href="{{url_for('advisory_opinions')}}">Explore all advisory opinions</a>
   </div>
   <div class="post-feed">
-    {% for ao_no in recent_aos %}
-    {% with ao = recent_aos[ao_no] %}
+    {% for ao in recent_aos %}
     <article class="post">
-      <h3><a href="{{ url_for('advisory_opinion_page', ao_no=ao_no) }}">AO {{ ao_no }} {{ ao[0].name }}</a></h3>
-      <p class="t-sans">{{ ao[0].summary }}</p>
-      <p class="t-sans post__doc"><a href="{{ ao[0].url }}">{{ ao[0].category }} | PDF</a></p>
+      <h3><a href="{{ url_for('advisory_opinion_page', ao_no=ao.no) }}">AO {{ ao.no }} {{ ao.name }}</a></h3>
+      <p class="t-sans">{{ ao.summary }}</p>
+      {% for doc in ao.documents %}
+        {% if doc.category == 'Final Opinion' %}
+          <p class="t-sans post__doc"><a href="{{ doc.url }}">{{ doc.category }} | PDF</a></p>
+        {% endif %}
+      {% endfor %}
     </article>
-    {% endwith %}
     {% endfor %}
   </div>
 </section>
