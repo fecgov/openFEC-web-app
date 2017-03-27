@@ -16,8 +16,8 @@ before_script:
   - ". $HOME/.nvm/nvm.sh"
   - nvm install v7.7.4
   - nvm use v7.7.4
-  - travis_retry npm install
   - npm i -g npm
+  - travis_retry npm install
   - npm run build
 script:
   - py.test
