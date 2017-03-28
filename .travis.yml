@@ -24,6 +24,8 @@ script:
 after_success:
 - travis_retry pip install codecov
 - codecov
+- travis_retry pip install bandit
+- bandit -r openfecwebapp *.py
 before_deploy:
 - export PATH=$HOME:$PATH
 - travis_retry curl -L -o $HOME/cf.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.25.0"
