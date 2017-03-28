@@ -100,15 +100,14 @@
     <div class="main__content--right-full">
       <section class="row" id="raising" aria-hidden="false" role="tabpanel" >
         <h2>Raising</h2>
-        <p>Receipts are anything of value (money, goods, services or property) received by a political committee. Authorized committees take in all receipts for a candidate’s campaign. Receipts include both contributions and other forms of support. This data is updated according to a committee's filing schedule and processing time may vary.</p>
         <div class="post-feed">
           <div class="post">
             <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('receipts', is_individual=True) }}">All receipts</a></h3>
-            <p>All receipts include all data reported by committees on Schedule A, which can come from individuals, organizations and other committees.</p>
+            <p>Receipts are anything of value, like money, services or property. Search candidate and committee receipt data by contributor, amount and date.</p>
           </div>
           <div class="post post--child">
             <h3><a href="{{ url_for('individual_contributions') }}">Individual contributions</a></h3>
-            <p>Individual contributions are a subset of all receipts and show all receipts reported to have been received from anyone other than another political committee. You can search for contributors by name, location, employer and occupation.</p>
+            <p>Search individual contributions to see who is donating to candidates and committees. Search for contributors by name, location, employer and occupation.</p>
           </div>
         </div>
         <div class="content__section--extra">
@@ -120,11 +119,11 @@
       </section>
       <section class="row" id="spending" aria-hidden="true" role="tabpanel" >
         <h2>Spending</h2>
-        <p>Spending includes all the types of <span class="term" data-term="disbursement">disbursements</span> candidates and committees make, including money spent on operating expenditures, money given to other committees, and money spent on election activity, like independent expenditures. This data is updated according to a committee's filing schedule and processing time may vary.</p>
+        <p>Spending includes all the types of <span class="term" data-term="disbursement">disbursements</span> candidates and committees make.</p>
         <div class="post-feed">
           <div class="post">
             <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('disbursements') }}">All disbursements</a></h3>
-            <p>This includes all data reported by committees on Schedule B. You can search all disbursements from committees by the recipient, purpose, amount and date.</p>
+            <p>Search all disbursements from committees by the recipient, purpose, amount and date.</p>
           </div>
           <div class="post">
             <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('independent_expenditures', max_date=today() | date(fmt='%m-%d-%Y')) }}">Independent expenditures</a></h3>
@@ -151,15 +150,12 @@
       </section>
       <section class="row" id="loans-debts" aria-hidden="true" role="tabpanel">
         <h2>Loans and debts</h2>
-        <p>Committees may take out loans and owe debts.</p>
         <div class="post-feed">
           <div class="post">
             <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('loans', is_individual=True) }}">Loans</a></h3>
-            <p>Search schedule C forms filed by committees, which report information about loans received by committees.</p>
           </div>
           <div class="post">
-            <h3><i class="icon i-all-files icon--inline--left"></i>Debts (coming soon)</h3>
-            <p>Search schedule D forms filed by committees, which report information about debts owed by committees.</p>
+            <h3 class="is-disabled"><i class="icon i-all-files icon--inline--left"></i>Debts (coming soon)</h3>
           </div>
         </div>
       </section>
@@ -168,19 +164,18 @@
         <div class="post-feed">
           <div class="post">
             <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">All candidates</a></h3>
-            <p>Browse all <span class="term" data-term="candidate">candidate</span> running for federal office</p>
           </div>
           <div class="post post--child">
             <h4><a href="{{ url_for('candidates_office', office='president') }}">Presidential candidates</a></h4>
-            <p>Search presidential candidates and view financial totals including money raised, money spent, cash on hand and debt.</p>
+            <p>Search presidential <span class="term" data-term="candidate">candidate</span> data including money raised, money spent, cash on hand and debt.</p>
           </div>
           <div class="post post--child">
             <h4><a href="{{ url_for('candidates_office', office='senate') }}">Senate candidates</a></h4>
-            <p>Search senate candidates and view financial totals including money raised, money spent, cash on hand and debt.</p>
+            <p>Search Senate candidate data including money raised, money spent, cash on hand and debt.</p>
           </div>
           <div class="post post--child">
             <h4><a href="{{ url_for('candidates_office', office='house') }}">House of Representatives candidates</a></h4>
-            <p>Search candidates for the House of Representatives and view financial totals including money raised, money spent, cash on hand and debt.</p>
+            <p>Search House candidate data including money raised, money spent, cash on hand and debt.</p>
           </div>
           <div class="post">
             <h3><a href="{{ url_for('filings', form_type='F2') }}">Most recent Statements of Candidacy (Form 2)</a></h3>
