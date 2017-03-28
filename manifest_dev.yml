@@ -1,18 +1,5 @@
 ---
-path: .
-memory: 512M
-timeout: 180
-domain: fr.cloud.gov
-buildpack: python_buildpack
-env:
-  FEC_FORCE_HTTPS: true
-  # Build devDependencies on `npm install`
-  NPM_CONFIG_PRODUCTION: false
-  NEW_RELIC_CONFIG_FILE: newrelic.ini
-  NEW_RELIC_LOG: stdout
-applications:
-  - name: web
-CF_TRACE: true
+inherit: manifest_base.yml
 host: fec-dev-web
 services:
   - fec-creds-dev
