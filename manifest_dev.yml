@@ -1,11 +1,24 @@
 ---
-inherit: manifest_base.yml
+path: .
+memory: 512M
+timeout: 180
+domain: fr.cloud.gov
+buildpack: python_buildpack
+env:
+  FEC_FORCE_HTTPS: true
+  # Build devDependencies on `npm install`
+  NPM_CONFIG_PRODUCTION: false
+  NEW_RELIC_CONFIG_FILE: newrelic.ini
+  NEW_RELIC_LOG: stdout
+applications:
+  - name: web
+CF_TRACE: true
 host: fec-dev-web
 services:
   - fec-creds-dev
 env:
   FEC_CMS_URL: https://fec-dev-proxy.app.cloud.gov
-  FEC_WEB_API_URL: https://fec-api-stage.app.cloud.gov
+  FEC_WEB_API_URL: https://fec-api-dev.app.cloud.gov
   FEC_WEB_DEBUG: true
   FEC_WEB_ENVIRONMENT: dev
   NEW_RELIC_APP_NAME: fec | web | dev
