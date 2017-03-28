@@ -1,0 +1,83 @@
+{% import 'macros/missing.html' as missing %}
+{% import 'macros/null.html' as null %}
+{% import 'macros/cycle-select.html' as select %}
+
+<section id="section-4" role="tabpanel" aria-hidden="true" aria-labelledby="section-4-heading">
+  <div class="heading--section">
+    <h2 id="section-4-heading">Itemized disbursements</h2>
+  </div>
+
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+
+    {{ select.candidate_cycle_select(cycles, cycle, id="cycle-4") }}
+
+    <span class="t-sans t-bold">Data is included from these committees:</span>
+
+    <ul class="list--bulleted">
+      {% for committee in committee_groups['P'] | reverse %}
+      {% if committee.cycle == cycle %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+      {% for committee in committee_groups['A'] | reverse %}
+      {% if committee.cycle == cycle %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+
+    <div class="entity__figure row">
+
+      <div class="content__section">
+        <div class="results-info results-info--simple">
+          <h3 class="u-no-margin">Disbursements by transaction</h3>
+
+          <a class="u-float-right button--alt button--browse"
+              href="{{ url_for(
+                'disbursements',
+                two_year_transaction_period=cycle,
+                min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+                max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+              ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
+
+          <ul>
+            <li class="tag__category">
+              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+            </li>
+          </ul>
+
+          <div class="js-tooltip-container u-float-right">
+            <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
+            <div id="export-tooltip" role="tooltip" class="tooltip tooltip--under tooltip--right tooltip__content" aria-hidden="true">
+            </div>
+          </div>
+        </div>
+
+        <table
+            class="data-table data-table--heading-borders"
+            data-type="itemized-disbursements"
+            data-committee-id="{% for id in committee_ids %}{{ id }}{% if not loop.last %},{% endif %}{% endfor %}"
+            data-name="{{ name }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <tr>
+              <th scope="col">Spender</th>
+              <th scope="col">Recipient</th>
+              <th scope="col">State</th>
+              <th scope="col">Purpose</th>
+              <th scope="col">Disbursement date</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</section>

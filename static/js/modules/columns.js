@@ -32,6 +32,7 @@ var amendmentIndicatorColumn = {
 var versionColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
+  orderable: false,
   render: function(data, type, row) {
     var version = helpers.amendmentVersion(data);
     if (version === 'Version unknown') {
@@ -57,7 +58,7 @@ var modalTriggerColumn = {
 
 var receiptDateColumn = {
   data: 'receipt_date',
-  className: 'min-tablet hide-panel column--med',
+  className: 'min-tablet hide-panel column--small',
   orderable: true,
   render: function(data, type, row, meta) {
     var parsed;
@@ -518,27 +519,30 @@ var reports = {
     orderable: false,
     render: function(data, type, row) {
       var doc_description = row.document_description ? row.document_description : row.form_type;
+      var amendment_version = helpers.amendmentVersionDescription(row);
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
 
       return reportType({
         doc_description: doc_description,
+        amendment_version: amendment_version,
         pdf_url: pdf_url,
         fec_url: fec_url,
         csv_url: csv_url
       });
     }
   },
+  version: versionColumn,
   receipt_date: receiptDateColumn,
   coverage_start_date: dateColumn({
     data: 'coverage_start_date',
-    className: 'min-tablet hide-panel column--med',
+    className: 'min-tablet hide-panel column--small',
     orderable: true
   }),
   coverage_end_date: dateColumn({
     data: 'coverage_end_date',
-    className: 'min-tablet hide-panel column--med',
+    className: 'min-tablet hide-panel column--small',
     orderable: true
   }),
   receipts: currencyColumn({
