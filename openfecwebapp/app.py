@@ -149,7 +149,7 @@ app.jinja_env.globals.update({
     'today': datetime.date.today,
     'format_election_years': format_election_years,
     'clean_id': clean_id,
-    'legacy_url': constants.LEGACY_URL
+    'transition_url': constants.TRANSITION_URL
 })
 
 app.add_url_rule('/issue/', view_func=views.GithubView.as_view('issue'))
