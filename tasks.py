@@ -74,7 +74,7 @@ DEPLOY_RULES = (
     # ('stage', lambda _, branch: branch.startswith('release')),
     # just for this branch until it is ready to merge
     # ('dev', lambda _, branch: branch == 'develop'),
-    ('stage', lambda _, branch: branch == 'feature/gov-cloud-support'),
+    ('dev', lambda _, branch: branch == 'feature/gov-cloud-support'),
 )
 
 
