@@ -7,5 +7,5 @@ env:
   FEC_CMS_URL: https://fec-stage-proxy.app.cloud.gov
   FEC_WEB_API_URL: https://api-stage.open.fec.gov/
   FEC_WEB_DEBUG: true
-  FEC_WEB_ENVIRONMENT: prod
+  FEC_WEB_ENVIRONMENT: stage
   NEW_RELIC_APP_NAME: govcloud | web | stage
