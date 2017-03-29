@@ -10,6 +10,12 @@
     "chai": "^3.2.0",
     "concat-stream": "^1.5.0",
     "del": "^1.2.0",
+    "eslint": "^3.16.1",
+    "eslint-config-react-app": "^0.5.2",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.10.0",
     "factor-bundle": "^2.4.1",
     "gulp": "3.8.11",
     "gulp-extend": "^0.2.0",
@@ -42,16 +48,23 @@
   },
   "scripts": {
     "build": "gulp build-js && gulp build-sass",
-    "build-js": "gulp build-js",
+    "build-js": "npm run build-legal && gulp build-js",
     "build-sass": "gulp build-sass",
+    "build-legal": "browserify static/js/legal/LegalSearch.js -o dist/js/legal.js -t [ babelify --presets [ latest react ] ]",
     "test": "karma start",
     "test-single": "karma start --single-run --browsers PhantomJS",
     "watch": "nswatch"
   },
   "watch": {
-    "./static/js/**/*.js": ["build-js"],
-    "./node_modules/fec-style/js/*.js": ["build-js"],
-    "./node_modules/fec-style/scss/**/*.scss": ["build-sass"]
+    "./static/js/**/*.js": [
+      "build-js"
+    ],
+    "./node_modules/fec-style/js/*.js": [
+      "build-js"
+    ],
+    "./node_modules/fec-style/scss/**/*.scss": [
+      "build-sass"
+    ]
   },
   "repository": {
     "type": "git",
@@ -64,6 +77,10 @@
   "dependencies": {
     "a11y-dialog": "2.3.1",
     "aria-accordion": "0.1.1",
+    "babel-eslint": "^7.1.1",
+    "babel-preset-latest": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babelify": "^7.3.0",
     "chroma-js": "1.0.1",
     "colorbrewer": "0.0.2",
     "component-sticky": "1.0.0",
@@ -84,6 +101,10 @@
     "moment": "2.10.3",
     "numeral": "1.5.3",
     "perfbar": "git://github.com/jmcarp/perfBar.git#issue-24",
+    "raven-js": "1.2.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-input-mask": "^0.7.8",
     "topojson": "1.6.19",
     "underscore": "1.8.3",
     "underscore.string": "3.2.0",
