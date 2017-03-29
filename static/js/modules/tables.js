@@ -515,7 +515,7 @@ DataTable.prototype.ensureWidgets = function() {
     this.$widgets.prepend(this.$exportWidget);
     this.$exportButton = $('.js-export');
     this.$exportTooltipContainer = $('.js-tooltip-container');
-    this.$exportTooltip = this.$exportWidget.find('.tooltip');
+    this.$exportTooltip = this.$exportTooltipContainer.find('.tooltip');
 
     if (!helpers.isLargeScreen() && this.filterPanel) {
       this.$exportWidget.after(this.filterPanel.$body);

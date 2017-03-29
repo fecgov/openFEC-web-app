@@ -4,7 +4,7 @@ import furl
 
 from flask.views import MethodView
 from flask import request, render_template, redirect, url_for, jsonify
-from flask.ext.cors import cross_origin
+from flask_cors import cross_origin
 
 from webargs import fields
 from webargs.flaskparser import use_kwargs
@@ -145,7 +145,7 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
                 return redirect(
                     url_for('committee_page', c_id=committee['committee_id'], cycle=c)
                 )
-    return render_template('committees-single-new.html', **tmpl_vars)
+    return render_template('committees-single.html', **tmpl_vars)
 
 
 def groupby(values, keygetter):

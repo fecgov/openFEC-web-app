@@ -1,5 +1,3 @@
-{% import 'macros/missing.html' as missing %}
-{% import 'macros/null.html' as null %}
 {% import 'macros/cycle-select.html' as select %}
 
 <section id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
@@ -109,7 +107,7 @@
       {% for committee in committee_groups['P'] | reverse %}
         <div class="callout callout--primary{% if loop.last %} u-no-margin{% endif %}">
           <h4 class="callout__title">
-            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+            <a href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }}</a>
           </h4>
           <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
         </div>
@@ -119,7 +117,7 @@
       <ul class="list--bulleted row">
       {% for committee in committee_groups['A'] | reverse %}
         <li>
-          <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+          <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }}</a>
         </li>
       {% endfor %}
       </ul>
@@ -133,7 +131,7 @@
       <ul class="list--bulleted">
       {% for committee in committee_groups['J'] | reverse %}
         <li>
-          <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+          <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id) }}">{{ committee.name }}</a>
         </li>
       {% endfor %}
       </ul>
