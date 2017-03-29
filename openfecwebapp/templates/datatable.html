@@ -38,6 +38,7 @@
           </noscript>
         </table>
         <noscript>
+          {% if query %}
           <div class="results-info">
             <div class="dataTables_paginate paging_simple">
               {% if query['page']|int > 1 %}
@@ -46,6 +47,7 @@
                 <a href="?page={{query['page']|int + 1}}" class="button button--next button--standard"></a>
             </div>
           </div>
+          {% endif %}
         </noscript>
       </div>
     </div>
