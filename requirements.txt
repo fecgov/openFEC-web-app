@@ -1,3 +1,5 @@
+setuptools
+wheel
 Flask==0.12
 Flask-BasicAuth==0.2.0
 Flask-Cors==3.0.2
