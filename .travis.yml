@@ -23,6 +23,8 @@ script:
   - py.test
   - npm run test-single
 after_success:
+  - travis_retry pip install bandit
+  - bandit -r openfecwebapp *.py
   - travis_retry pip install codecov
   - codecov
 before_deploy:

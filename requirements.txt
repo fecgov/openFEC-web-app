@@ -15,6 +15,7 @@ CacheControl==0.11.5
 cachetools==1.0.2
 cfenv==0.5.2
 slacker==0.8.6
+bandit==1.4.0
 
 # Development
 invoke==0.15.0

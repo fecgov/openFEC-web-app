@@ -8,4 +8,4 @@ env:
   FEC_WEB_API_URL: https://fec-feature-api.app.cloud.gov
   FEC_WEB_DEBUG: true
   FEC_WEB_ENVIRONMENT: dev
-  NEW_RELIC_APP_NAME: govcloud | web | feature
+  NEW_RELIC_APP_NAME: fec | web | feature
