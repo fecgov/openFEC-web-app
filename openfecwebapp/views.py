@@ -11,6 +11,8 @@ from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
 from collections import OrderedDict
 
+import datetime
+
 import github3
 from werkzeug.utils import cached_property
 
@@ -77,13 +79,12 @@ def render_legal_mur(mur):
 def render_legal_ao_landing():
     today = datetime.date.today()
     ao_min_date = today - datetime.timedelta(weeks=26)
-    results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
-    recent_aos=OrderedDict(sorted(results['advisory_opinions'].items(), key=lambda item: item, reverse=True))
+    ao_results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
     return render_template('legal-advisory-opinions-landing.html',
         parent='legal',
         result_type='advisory_opinions',
         display_name='advisory opinions',
-        recent_aos=recent_aos)
+        recent_aos=ao_results['advisory_opinions'])
 
 
 def to_date(committee, cycle):
@@ -144,7 +145,7 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
                 return redirect(
                     url_for('committee_page', c_id=committee['committee_id'], cycle=c)
                 )
-    return render_template('committees-single-new.html', **tmpl_vars)
+    return render_template('committees-single.html', **tmpl_vars)
 
 
 def groupby(values, keygetter):
@@ -199,6 +200,19 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
         cycle=cycle,
         election_full=election_full,
     )
+
+    statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
+        candidate['candidate_id'],
+        cycle=cycle
+    )
+
+    if statement_of_candidacy:
+        for statement in statement_of_candidacy:
+            # convert string to python datetime and parse for readable output
+            statement['receipt_date'] = datetime.datetime.strptime(statement['receipt_date'], '%Y-%m-%dT%H:%M:%S')
+            statement['receipt_date'] = statement['receipt_date'].strftime('%m/%d/%Y')
+
+    tmpl_vars['statement_of_candidacy'] = statement_of_candidacy
 
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized

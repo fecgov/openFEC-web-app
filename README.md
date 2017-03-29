@@ -65,7 +65,7 @@ To make the site fully functional, you will need to compile the client side JS a
 
 Then start the server:
 
-    FEC_WEB_API_URL='https://fec-dev-api.18f.gov' python manage.py runserver
+    FEC_WEB_API_URL='https://fec-dev-api.app.cloud.gov' python manage.py runserver
 
 To view the site, visit [http://localhost:3000/](http://localhost:3000/).
 
@@ -127,6 +127,23 @@ Compile JS as changes are made:
 Compile Sass as changes are made:
 
     npm run watch-sass
+
+### SSH
+*Likely only useful for 18F FEC team members*
+
+You can SSH directly into the running app container to help troubleshoot or inspect things with the instance(s).  Run the following command:
+
+```bash
+cf ssh <app name>
+```
+
+Where *<app name>* is the name of the application instance you want to connect to.  Once you are logged into the remote secure shell, you'll also want to run this command to setup the shell environment correctly:
+
+```bash
+. /home/vcap/app/bin/cf_env_setup.sh
+```
+
+More information about using SSH with cloud.dov can be found in the [cloud.gov SSH documentation](https://cloud.gov/docs/apps/using-ssh/#cf-ssh).
 
 ### Deployment
 

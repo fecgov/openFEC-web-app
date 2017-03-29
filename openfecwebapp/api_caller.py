@@ -179,7 +179,6 @@ def load_single_type(data_type, c_id, *path, **filters):
     data = _call_api(data_type, c_id, *path, **filters)
     return result_or_404(data)
 
-
 def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
     return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
 
@@ -219,6 +218,17 @@ def load_candidate_totals(candidate_id, cycle, election_full=True):
     if response['results']:
         return response['results'][0]
     return {}
+
+
+def load_candidate_statement_of_candidacy(candidate_id, cycle):
+    response = _call_api(
+        'filings',
+        candidate_id=candidate_id, cycle=cycle, form_type='F2'
+    )
+
+    if response['results']:
+        return response['results'][:2]
+    return None
 
 
 def result_or_404(data):

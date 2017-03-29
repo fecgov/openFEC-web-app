@@ -70,7 +70,7 @@ describe('filter set', function() {
   describe('election query cycle select', function() {
     beforeEach(function() {
       this.$fixture.empty().append(
-        '<select class="cycle-select" data-duration="4" data-cycle-location="query">' +
+        '<select id="cycle-1" class="cycle-select" data-duration="4" data-cycle-location="query">' +
           '<option value="2016"></option>' +
           '<option value="2012"></option>' +
           '<option value="2008"></option>' +
@@ -91,7 +91,7 @@ describe('filter set', function() {
     });
 
     it('changes the query string on change', function() {
-      this.cycleSelect.$cycles.find('[name="cycle-toggle"]').val('2014').change();
+      this.cycleSelect.$cycles.find('[name="cycle-toggle-cycle-1"]').val('2014').change();
       expect(
         CycleSelect.prototype.setUrl
       ).to.have.been.calledWith(

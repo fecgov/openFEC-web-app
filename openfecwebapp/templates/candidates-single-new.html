@@ -47,10 +47,37 @@
           <a
             class="side-nav__link"
             role="tab"
-            data-name="other-spending"
-            tabindex-"1"
+            data-name="about-candidate"
+            tabindex="1"
             aria-controls="panel2"
-            href="#section-2">Spending by others to support or oppose</a>
+            href="#section-2">About this candidate</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="other-spending"
+            tabindex="2"
+            aria-controls="panel3"
+            href="#section-3">Spending by others to support or oppose</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="itemized-disbursements"
+            tabindex="3"
+            aria-controls="panel4"
+            href="#section-4">Itemized disbursements</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="individual-contributions"
+            tabindex-"4"
+            aria-controls="panel5"
+            href="#section-5">Individual contributions</a>
         </li>
       </ul>
     </nav>
@@ -64,8 +91,10 @@
       </section>
 
       {% include 'partials/candidate/financial-summary-new.html' %}
+      {% include 'partials/candidate/about-candidate.html' %}
       {% include 'partials/candidate/other-spending-tab-new.html' %}
-
+      {% include 'partials/candidate/itemized-disbursements.html' %}
+      {% include 'partials/candidate/individual-contributions.html' %}
     </div>
   </div>
 
