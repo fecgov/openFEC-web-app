@@ -4,12 +4,7 @@ class FilterPanel extends React.Component {
 constructor(props) {
   super(props);
   this.state = {expanded: props.startOpen};
-  this.getDisplay = this.getDisplay.bind(this);
   this.toggle = this.toggle.bind(this);
-}
-
-getDisplay() {
-  return this.state.expanded ? 'block' : 'none';
 }
 
 toggle() {
@@ -22,8 +17,8 @@ render() {
       onClick={this.toggle}>
         {this.props.header}
       </button>
-      <div className="accordion__content" id={this.props.id} aria-hidden={!this.state.expanded} style={{display: this.getDisplay()}}>
-        {this.props.content}
+      <div className="accordion__content filters-inner" id={this.props.id} hidden={!this.state.expanded}>
+        {this.props.children}
       </div>
     </li>
 }

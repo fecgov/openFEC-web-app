@@ -59,10 +59,8 @@ class LegalSearch extends React.Component {
           <span className="filters__title">Edit filters</span>
         </button>
         <div className="filters__content">
-          <div className="filters__inner">
-              <Filters query={this.state} setQuery={this.setQuery}
+          <Filters query={this.state} setQuery={this.setQuery}
                 getResults={this.getResults} instantQuery={this.instantQuery} />
-          </div>
         </div>
       </div>
       <div id="results-{{ result_type }}" className="content__section data-container__body">

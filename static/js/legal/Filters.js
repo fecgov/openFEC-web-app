@@ -38,35 +38,40 @@ function Filters(props) {
   const resultCountChange = props.query.resultCount - props.query.lastResultCount;
 
   return <div>
-            <TextFilter key="ao_no" name="ao_no" label="AO number" value={props.query.ao_no}
-                handleChange={props.setQuery} getResults={props.getResults} />
-            <TextFilter key="ao_requestor" name="ao_requestor" label="Requestor Name (or AO Name)" value={props.query.ao_requestor}
+            <div className="filters accordion__content">
+              <TextFilter key="ao_no" name="ao_no" label="AO number" value={props.query.ao_no}
                   handleChange={props.setQuery} getResults={props.getResults} />
+              <TextFilter key="ao_requestor" name="ao_requestor" label="Requestor Name (or AO Name)" value={props.query.ao_requestor}
+                    handleChange={props.setQuery} getResults={props.getResults} />
               <Dropdown key="ao_requestor_type" name="ao_requestor_type" label="Requestor Type" value={props.query.ao_requestor_type}
-                options={requestorOptions} handleChange={props.instantQuery} />
+                  options={requestorOptions} handleChange={props.instantQuery} />
+            </div>
             <ul className="accordion--neutral" data-content-prefix="first">
-              <FilterPanel id="first-content-0" header="Documents" startOpen={true}
-                  content={[<TextFilter key="q" name="q" label="Keywords" value={props.query.q}
-                  handleChange={props.setQuery} getResults={props.getResults} />,
+              <FilterPanel id="first-content-0" header="Documents" startOpen={true}>
+                <TextFilter key="q" name="q" label="Keywords" value={props.query.q}
+                  handleChange={props.setQuery} getResults={props.getResults} />
                 <CheckboxFilter key="ao_is_pending" name="ao_is_pending" label="Show only pending requests"
-                    checked={props.query.ao_is_pending} handleChange={props.instantQuery} />,
+                  checked={props.query.ao_is_pending} handleChange={props.instantQuery} />
                 <CheckboxList key="ao_category" name="ao_category" label="Document Type" value={props.query.ao_category || ['F']}
-                    handleChange={props.instantQuery} options={documentTypes}/>]} />
-              <FilterPanel id="first-content-1" header="Citations"
-                  content={[<CitationRequireAllRadio key="ao_citation_require_all" name="ao_citation_require_all" handleChange={props.instantQuery}
-                    value={props.query.ao_citation_require_all} />,
-                  <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
-                      key="ao_regulatory_citation" name="ao_regulatory_citation" label="Regulatory citation" instantQuery={props.instantQuery}
-                      citationType="regulation" value={props.query.ao_regulatory_citation}
-                      resultCountChange={resultCountChange} lastFilter={props.query.lastFilter}/>,
-                  <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
-                      key="ao_statutory_citation" name="ao_statutory_citation" label="Statutory citation" instantQuery={props.instantQuery}
-                      citationType="statute" value={props.query.ao_statutory_citation}
-                      resultCountChange={resultCountChange} lastFilter={props.query.lastFilter}/>]} />
-              <FilterPanel id="first-content-2" header="Time period"
-                  content={[<DateFilter key="issue_date" label="Issued date" min_name="ao_min_date" max_name="ao_max_date"
+                  handleChange={props.instantQuery} options={documentTypes}/>
+              </FilterPanel>
+              <FilterPanel id="first-content-1" header="Citations">
+                <CitationRequireAllRadio key="ao_citation_require_all" name="ao_citation_require_all" handleChange={props.instantQuery}
+                  value={props.query.ao_citation_require_all} />
+                <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
+                    key="ao_regulatory_citation" name="ao_regulatory_citation" label="Regulatory citation" instantQuery={props.instantQuery}
+                    citationType="regulation" value={props.query.ao_regulatory_citation}
+                    resultCountChange={resultCountChange} lastFilter={props.query.lastFilter}/>
+                <CitationFilter handleChange={props.setQuery} getResults={props.getResults}
+                    key="ao_statutory_citation" name="ao_statutory_citation" label="Statutory citation" instantQuery={props.instantQuery}
+                    citationType="statute" value={props.query.ao_statutory_citation}
+                    resultCountChange={resultCountChange} lastFilter={props.query.lastFilter}/>
+              </FilterPanel>
+              <FilterPanel id="first-content-2" header="Time period">
+                  <DateFilter key="issue_date" label="Issued date" min_name="ao_min_date" max_name="ao_max_date"
                     min_value={props.query.ao_min_date} max_value={props.query.ao_max_date}
-                    instantQuery={props.instantQuery} setQuery={props.setQuery} />]} />
+                    instantQuery={props.instantQuery} setQuery={props.setQuery} />
+              </FilterPanel>
               </ul>
             </div>
 }
