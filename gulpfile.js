@@ -23,9 +23,6 @@ var appEnv = require('cfenv').getAppEnv();
 var debug = !!process.env.FEC_WEB_DEBUG;
 var analytics = !!process.env.FEC_WEB_GOOGLE_ANALYTICS;
 var production = ['stage', 'prod'].indexOf(process.env.FEC_WEB_ENVIRONMENT) !== -1;
-var sentryPublicDsn = process.env.SENTRY_PUBLIC_DSN;
-var sentryPublicDsn = (appEnv.getServiceCreds(/fec-creds/) || {}).SENTRY_PUBLIC_DSN ||
-  process.env.SENTRY_PUBLIC_DSN;
 
 gulp.task('copy-vendor-images', function() {
   return gulp.src('./node_modules/datatables/media/images/**/*')
@@ -125,8 +122,7 @@ gulp.task('build-js', function() {
   })
   .transform(preprocessify({
     DEBUG: debug,
-    ANALYTICS: analytics,
-    SENTRY_PUBLIC_DSN: sentryPublicDsn
+    ANALYTICS: analytics
   }))
   .transform({global: true}, stringify(['.html']))
   .transform({global: true}, hbsfy)
