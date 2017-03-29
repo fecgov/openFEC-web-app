@@ -81,7 +81,7 @@ class CitationFilter extends React.Component {
           <div className="tt-dataset tt-dataset-candidate">
           <span className="tt-suggestion__header">Select a citation:</span>
           {this.state.citations.map((citation) => {
-              return <div key={citation.text} onMouseDown={() => this.setSelection(citation.text)}
+              return <div key={citation.citation_text} onMouseDown={() => this.setSelection(citation.text)}
                 className="selectCitation"><span className="tt-suggestion tt-selectable">
               <span className="tt-suggestion__name">{citation.citation_text}</span>
               {citation.formerly && <span className="tt-suggestion__office">(formerly {citation.formerly})</span>}
