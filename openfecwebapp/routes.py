@@ -124,13 +124,10 @@ def advanced():
 
 @app.route('/candidates/')
 @use_kwargs({
-  'name': fields.Str(missing=None, load_from="q"),
-  'office': fields.Str(missing=None),
   'page': fields.Int(missing=1)
 })
 def candidates(**kwargs):
     candidates = api_caller._call_api('candidates', **kwargs)
-    print(candidates)
     return render_template(
         'datatable.html',
         parent='data',
@@ -157,14 +154,19 @@ def candidates_office(office):
     )
 
 @app.route('/committees/')
-def committees():
+@use_kwargs({
+  'page': fields.Int(missing=1)
+})
+def committees( **kwargs):
+    committees = api_caller._call_api('committees', **kwargs)
     return render_template(
         'datatable.html',
         parent='data',
         result_type='committees',
         slug='committees',
         title='Committees',
-        dates=utils.date_ranges(),
+        data=committees['results'],
+        query=kwargs,
         columns=constants.table_columns['committees']
     )
 

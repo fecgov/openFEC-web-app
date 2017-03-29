@@ -30,7 +30,11 @@
             </tr>
           </thead>
           <noscript>
-            {{ datatables.candidates(data) }}
+            {% if result_type == 'candidates' %}
+              {{ datatables.candidates(data) }}
+            {% elif result_type == 'committees' %}
+              {{ datatables.committees(data) }}
+            {% endif %}
           </noscript>
         </table>
         <noscript>
