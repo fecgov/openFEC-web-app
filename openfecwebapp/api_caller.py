@@ -215,9 +215,7 @@ def load_candidate_totals(candidate_id, cycle, election_full=True):
         'candidates', 'totals',
         candidate_id=candidate_id, cycle=cycle, election_full=election_full,
     )
-    if response['results']:
-        return response['results'][0]
-    return {}
+    return response['results'][0] if 'results' in response else None
 
 
 def load_candidate_statement_of_candidacy(candidate_id, cycle):
@@ -226,10 +224,7 @@ def load_candidate_statement_of_candidacy(candidate_id, cycle):
         candidate_id=candidate_id, cycle=cycle, form_type='F2'
     )
 
-    if response['results']:
-        return response['results'][:2]
-    return None
-
+    return response['results'][:2] if 'results' in response else None
 
 def result_or_404(data):
     if not data.get('results'):
@@ -247,27 +242,22 @@ def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, 
             sort=sort,
             per_page=per_page
         )
-        if response['results']:
-            return response
-        return {}
+
+        return response if 'results' in response else None
 
 def load_top_pacs(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'pac',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
-        if response['results']:
-            return response
-        return {}
+        return response if 'results' in response else None
 
 def load_top_parties(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'party',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
-        if response['results']:
-            return response
-        return {}
+        return response if 'results' in response else None
 
 def _get_sorted_participants_by_type(mur):
     """
