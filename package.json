@@ -50,7 +50,7 @@
     "build": "gulp build-js && npm run build-legal && gulp build-sass",
     "build-js": "npm run build-legal && gulp build-js",
     "build-sass": "gulp build-sass",
-    "build-legal": "browserify static/js/legal/LegalSearch.js -o dist/js/legal.js -t [ babelify --presets [ latest react ] ]",
+    "build-legal": "browserify static/js/legal/LegalSearch.js -o ./dist/js/legal.js -t [ babelify --presets [ latest react ] ]",
     "test": "karma start",
     "test-single": "karma start --single-run --browsers PhantomJS",
     "watch": "nswatch"
