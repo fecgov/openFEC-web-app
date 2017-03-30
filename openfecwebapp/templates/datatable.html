@@ -16,6 +16,9 @@
   {% include 'partials/' + slug + '-filter.html' %}
     <div class="data-container">
       <div class="data-container__widgets js-data-widgets">
+        <noscript>
+          <h1>{{ title }}</h1>
+        </noscript>        
         <div class="js-filter-tags data-container__tags">
         </div>
       </div>
