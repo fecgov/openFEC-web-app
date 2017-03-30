@@ -47,7 +47,7 @@
     "vinyl-paths": "^1.0.0"
   },
   "scripts": {
-    "build": "gulp build-js && gulp build-sass",
+    "build": "npm run build-legal && gulp build-js && gulp build-sass",
     "build-js": "npm run build-legal && gulp build-js",
     "build-sass": "gulp build-sass",
     "build-legal": "browserify static/js/legal/LegalSearch.js -o dist/js/legal.js -t [ babelify --presets [ latest react ] ]",
