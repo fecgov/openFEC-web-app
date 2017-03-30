@@ -29,14 +29,12 @@ var Search = require('fec-style/js/search');
 // Include vendor scripts
 require('./vendor/tablist').init();
 
-var charts = require('./modules/charts');
 var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
 var download = require('./modules/download');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
 
 $(document).ready(function() {
-  charts.init();
 
   $('.js-dropdown').each(function() {
     new dropdown.Dropdown(this);
