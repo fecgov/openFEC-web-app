@@ -80,11 +80,13 @@ def render_legal_ao_landing():
     today = datetime.date.today()
     ao_min_date = today - datetime.timedelta(weeks=26)
     ao_results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
+    pending_aos = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_is_pending=True)
     return render_template('legal-advisory-opinions-landing.html',
         parent='legal',
         result_type='advisory_opinions',
         display_name='advisory opinions',
-        recent_aos=ao_results['advisory_opinions'])
+        recent_aos=ao_results['advisory_opinions'],
+        pending_aos=pending_aos['advisory_opinions'])
 
 
 def to_date(committee, cycle):

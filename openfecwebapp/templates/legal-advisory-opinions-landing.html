@@ -39,7 +39,7 @@
     </div>
   </div>
 </section>
-<!-- <section class="content__section content__section--narrow">
+<section class="content__section content__section--narrow">
   <div class="heading--section">
     <h2>Pending advisory opinion requests</h2>
   </div>
@@ -47,16 +47,22 @@
     <p>Once the Office of the General Counsel has determined that an advisory opinion request meets all of the requirements to move forward for conisderation by the Commission, the request is made public and is available for public comment for ten days.</p>
     <a class="button button--standard button--go" href="{{ cms_url }}/legal/advisory-opinions/process#commenting">Learn how to comment</a>
   </div>
+  {% if pending_aos %}
   <div class="post-feed">
-    {% for post in pending_aos %}
-    <article class="post">
-      <h3 class="pending-ao__title"><a href="{{ url_for('advisory_opinion_page', ao_no=post.number) }}">{{ post.title }}</a></h3>
-      <p class="t-sans">{{ post.summary }}</p>
-      <p>Deadline for comments: {{ post.deadline }}</p>
-    </article>
+    {% for ao in pending_aos %}
+      <article class="post">
+        <h3 class="pending-ao__title"><a href="{{ url_for('advisory_opinion_page', ao_no=ao.no) }}">{{ ao.name }}</a></h3>
+        <p class="t-sans">{{ ao.summary }}</p>
+        <!-- <p>Deadline for comments: {{ ao.deadline }}</p> -->
+      </article>
     {% endfor %}
   </div>
-</section> -->
+  {% else %}
+  <div class="message message--info">
+    <h3>No pending Advisory Opinions</h3>
+  </div>
+  {% endif %}
+</section>
 <section class="content__section content__section--narrow">
   <div class="heading--section">
     <h2>Recent advisory opinions issued</h2>
