@@ -314,7 +314,7 @@ ElectionLookup.prototype.drawZipWarning = function() {
  */
 ElectionLookup.prototype.updateLocations = function() {
   var self = this;
-  var svg = self.$svg || $.get('/static/img/i-map--primary.svg').then(function(document) {
+  var svg = self.$svg || $.get('/static/img/i-map--primary.svg', '', null, 'xml').then(function(document) {
     self.$svg = $(document.querySelector('svg'));
     return self.$svg;
   });
