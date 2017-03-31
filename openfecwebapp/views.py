@@ -169,7 +169,7 @@ report_types = {
     'I': 'ie-only'
 }
 
-def render_candidate(candidate, committees, flag, cycle, election_full=True):
+def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
@@ -238,10 +238,7 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
     tmpl_vars['spending_summary'] = utils.process_spending_data(aggregate)
     tmpl_vars['cash_summary'] = utils.process_cash_data(aggregate)
 
-    if flag == 'new':
-        return render_template('candidates-single-new.html', **tmpl_vars)
-    else:
-        return render_template('candidates-single.html', **tmpl_vars)
+    return render_template('candidates-single.html', **tmpl_vars)
 
 
 def validate_referer(referer):

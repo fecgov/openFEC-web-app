@@ -1,129 +1,72 @@
 {% import 'macros/missing.html' as missing %}
-{% import 'macros/null.html' as null %}
+{% import 'macros/tables.html' as tables %}
+{% import 'macros/cycle-select.html' as select %}
 
-<section class="main" id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
-  <div class="container">
-  <div class="heading--section">
-    <h2>Financial summary: {{ format_election_years(cycle, election_full, duration) }}</h2>
-  </div>
-  {% if aggregate %}
-  <div class="content__section">
-    <figure class="candidate__totals">
-      <h3 class="t-ruled--bottom">Combined financial totals</h3>
-      <div>
-        <h5 class="term t-data-header" data-term="Total Receipts">Total receipts</h5>
-        <span class="t-big-data">{{ null.null( aggregate.receipts | currency ) }}</span>
-      </div>
-      <div >
-        <h5 class="term t-data-header" data-term="Total Disbursements">Total disbursements</h5>
-        <span class="t-big-data">{{ null.null( aggregate.disbursements | currency ) }}</span>
-      </div>
-      <div>
-        <h5 class="term t-data-header" data-term="Ending Cash on Hand">Ending cash on hand</h5>
-        <span class="t-big-data">{{ null.null( aggregate.cash_on_hand_end_period | currency ) }}</span>
-      </div>
-      <div>
-        <h5 class="term t-data-header" data-term="Debt">Debt</h5>
-        <span class="t-big-data">{{ null.null( aggregate.debts_owed_by_committee | currency ) }}</span>
-      </div>
-      <p>
-        {% if aggregate.receipts != 0 or
-          aggregate.disbursements != 0 or
-          aggregate.cash != 0 or
-          aggregate.debt != 0
-         %}
-           <span class="t-sans">Coverage period: {{ aggregate.coverage_start_date|date}}&ndash;{{ aggregate.coverage_end_date|date }}</span>  |
-           <a class="t-sans" href="{{ url_for('reports', form_type=report_type, committee_id=committee_ids, cycle=aggregate_cycles, is_amended='false' ) }}">
-             Open source reports
-           </a>
-         {% endif %}
-      </p>
-    </figure>
-    <div class="candidate__committees">
-      <h3 class="t-ruled--bottom">Campaign committees</h3>
+<section id="section-1" role="tabpanel" aria-hidden="true" aria-labelledby="section-1-heading">
+  <h2 id="section-1-heading">Financial summary</h2>
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+    <div class="content__section">
+      {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
+    </div>
+    <span class="t-sans t-bold">Data is included from these committees:</span>
+    <ul class="list--bulleted">
       {% for committee in committee_groups['P'] | reverse %}
-      <div class="callout callout--primary">
-        <div class="callout__content">
-          <h4 class="callout__title">
-            <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
-          </h4>
-          <span class="callout__subtitle term" data-term="principal campaign committee">Principal campaign committee</span>
-          <span class="callout__subtitle t-block">{{ committee.cycles | fmt_cycle_min_max }}</span>
-        </div>
-        <div class="callout__action">
-          <ul class="callout__sublinks">
-            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='receipts') }}">Money raised</a></li>
-            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='disbursements') }}">Money spent</a></li>
-            <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='fillings') }}">Reports filed</a></li>
-          </ul>
-        </div>
-      </div>
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
+      </li>
       {% endfor %}
-      {% if committee_groups['A'] | length > 0 %}
-        {% for committee in committee_groups['A'] | reverse %}
-        <div class="callout callout--neutral">
-          <div class="callout__content">
-            <h4 class="callout__title">
-              <a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
-            </h4>
-            <span class="callout__subtitle term" data-term="authorized committee">Authorized campaign committee</span>
-            <span class="callout__subtitle t-block">{{ committee.cycles | fmt_cycle_min_max }}</span>
-          </div>
-          <div class="callout__action">
-            <ul class="callout__sublinks">
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='receipts') }}">Money raised</a></li>
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='disbursements') }}">Money spent</a></li>
-              <li><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle, tab='filings') }}">Reports filed</a></li>
-            </ul>
-          </div>
+      {% for committee in committee_groups['A'] | reverse %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% if raising_summary %}
+      <div class="entity__figure">
+        <h3 class="u-no-margin">Raising</h3>
+        <div class="row">
+            <div class="u-float-left tag__category">
+              <div class="tag__item">Coverage dates: mm/dd/yyyy to mm/dd/yyyy</div>
+            </div>
+            <div class="u-float-right">
+              <a class="heading__right button--alt button--browse"
+                  href="">Browse receipts
+              </a>
+            </div>
         </div>
-        {% endfor %}
-      {% endif %}
-      <div class="t-note">Candidates receive and spend money through <span class="term" data-term="Committee">committees</span>. These are the <strong>combined financial totals</strong> for all of this candidate's <span class="term" data-term="Authorized committee">authorized committees</span>. Learn more about each committee's fundraising and spending on its page.</div>
-    </div>
+        {{ tables.summary(raising_summary) }}
+      </div>
+      <div class="entity__figure">
+        <h3 class="u-no-margin">Spending</h3>
+        <div class="row">
+            <div class="u-float-left tag__category">
+              <div class="tag__item">Coverage dates: mm/dd/yyyy to mm/dd/yyyy</div>
+            </div>
+            <div class="u-float-right">
+              <a class="heading__right button--alt button--browse"
+                  href="">Browse disbursements
+              </a>
+            </div>
+        </div>
+        {{ tables.summary(spending_summary) }}
+      </div>
+      <div class="entity__figure">
+        <h3 class="u-no-margin">Cash</h3>
+        <div class="row">
+            <div class="u-float-left tag__category">
+              <div class="tag__item">Coverage dates: mm/dd/yyyy to mm/dd/yyyy</div>
+            </div>
+            <div class="u-float-right">
+              <a class="heading__right button--alt button--browse"
+                  href="">Browse receipts
+              </a>
+            </div>
+        </div>
+        {{ tables.summary(cash_summary) }}
+      </div>
+    {% else %}
+      {{ missing.missing_financials(name, cycle) }}
+    {% endif %}
   </div>
 
-{% if committee_groups['J'] %}
-  <div class="content__section content__section--extra">
-    <div class="row">
-      <h3 class="t-ruled--bottom"><span class="term" data-term="Joint Fundraising Committee">Joint fundraising committees</span></h3>
-    </div>
-    <div class="row">
-      <ul class="list--bulleted usa-width-one-half">
-        {% for committee in committee_groups['J'] %}
-        <li>
-            <h4 class="u-no-margin"><a href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a></h4>
-        </li>
-        {% endfor %}
-      </ul>
-      <p class="usa-width-one-half">In joint fundraising, a political committee raises funds with at least one other political committee or unregistered organization. Committees involved in joint fundraising share the costs of the fundraiser and divide up the money raised according to a ratio agreed to by the participants when the joint fundraising committee is formed.</p>
-    </div>
-  </div>
-{% endif %}
-
-{% else %}
-
-  {{ missing.missing_financials(name, cycle) }}
-
-{% endif %}
-
-<div class="content__section">
-  <div class="heading--section">
-    <h2>All candidate filings: All years</h2>
-  </div>
-  <div class="row">
-    <p class="usa-width-two-thirds">Candidates are required to file a <strong>Statement of Candidacy</strong> every time they run for office. Financial reports from committees are available on committee pages.</p>
-  </div>
-  <table class="data-table" data-type="filing" data-candidate="{{ candidate_id }}">
-    <thead>
-      <tr>
-        <th scope="col">Document</th>
-        <th scope="col">Amendment indicator</th>
-        <th scope="col">Receipt date</th>
-      </tr>
-    </thead>
-  </table>
-</div>
-
-  </div>
 </section>
