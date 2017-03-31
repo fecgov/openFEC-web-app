@@ -69,11 +69,11 @@
               <a
                 class="side-nav__link"
                 role="tab"
-                data-name="reports"
+                data-name="filings"
                 tabindex="0"
-                aria-controls="reports"
-                href="#reports"
-                aria-selected="false">Reports and filings</a>
+                aria-controls="filings"
+                href="#filings"
+                aria-selected="false">Filings and reports</a>
             </li>
             <li class="side-nav__item" role="presentation">
               <a
@@ -106,7 +106,7 @@
                 <p>Receipts are anything of value, like money, services or property. Search candidate and committee receipt data by contributor, amount and date.</p>
               </div>
               <div class="post post--child">
-                <h3><a href="{{ url_for('individual_contributions') }}">Individual contributions</a></h3>
+                <h4><a href="{{ url_for('individual_contributions') }}">Individual contributions</a></h4>
                 <p>Search individual contributions to see who is donating to candidates and committees. Search for contributors by name, location, employer and occupation.</p>
               </div>
             </div>
@@ -210,8 +210,8 @@
             </div>
             <div class="content__section--extra" data-content-prefix="pacronym">
               <h3>PACronyms</h3>
-              <p>PACRONYMS, an alphabetical list of acronyms, abbreviations, initials, and common names of federal political action committees (PACs), was prepared to help researchers readily identify committees when their full names are not disclosed on campaign finance reports.</p>
-              <p>The list includes the PACRONYM, FEC ID number, full committee name, city and state, name of sponsoring, connected, or affiliated organization, committee designation and committee type.  Unless noted otherwise in the full committee name, the acronym “PAC” refers to “Political Action Committee.”  The PACRONYM is listed in ITALICS if the committee's PACRONYM is not specifically provided on the committee's Statement of Organization (FEC Form 1).</p>
+              <p>PACronyms, an alphabetical list of acronyms, abbreviations, initials and common names of federal political action committees (PACs), was prepared to help researchers readily identify committees when their full names are not disclosed on campaign finance reports.</p>
+              <p>The list includes the PACronym, FEC ID number, full committee name, city and state, name of sponsoring, connected, or affiliated organization, committee designation and committee type.  Unless noted otherwise in the full committee name, the acronym “PAC” refers to “political action committee.”  The PACronym is listed in italics if the committee's PACronym is not specifically provided on the committee's Statement of Organization (FEC Form 1).</p>
               <ul class="list--buttons">
                 <li>
                   <a class="button button--standard button--document" href="http://www.fec.gov/pubrec/pacronyms/Pacronyms.pdf">Open PDF</a>
@@ -225,7 +225,7 @@
               <div class="icon-heading">
                 <i class="icon-heading__image icon-circle--checklist"><span class="u-visually-hidden">Icon of a checklist</span></i>
                 <div class="icon-heading__content">
-                  <h4 class="u-no-margin">More information for:</h4>
+                  <h4>More information about:</h4>
                   <div class="grid grid--2-wide">
                     <div class="grid__item">
                       <a href="{{ cms_url }}/registration-and-reporting/essentials-nonconnected-committees/">Candidates and their committees</a>
@@ -244,8 +244,8 @@
               </div>
             </div>
           </section>
-          <section class="row" id="reports" aria-hidden="true" role="tabpanel">
-            <h2>Filings</h2>
+          <section class="row" id="filings" aria-hidden="true" role="tabpanel">
+            <h2>Filings and reports</h2>
             <p>Filings contain all the statements, reports and notices that candidates and committees file. Search by date, type and filing candidate or committee.</p>
             <div class="post-feed">
               <div class="post">
@@ -276,12 +276,12 @@
               <div class="post-feed">
                 <div class="post">
                   <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ transition_url }}/finance/disclosure/ftpdet.shtml">Detailed data files</a></h4>
-                  <p>Here you will find the Committees, Candidates and Linkages, Itemized Records, Contributions to Candidates, Individual Contributions and Operating Expenditures files.</p>
-                  <p>These files contain committee, candidate and campaign finance data for the current election cycle and for election cycles through 1980. The files for the current election cycle plus the two most recent election cycles are regularly updated. The Committees, Candidates and Linkages files are updated daily. The Itemized Records, Contributions to Candidates, Individual Contributions and Operating Expenditures files are udated weekly on Sunday. Please note that complete entry from each reporting period takes about 30 days. It is important to be careful when making conclusions from these data because some information may not have completed the entry process when these files where create. Committees do not have the same filing requirements. You should be careful when comparing financial information about committees with different filing requirements.</p>
+                  <p>Here you will find the committees, candidates and linkages, itemized records, contributions to candidates, individual contributions and cperating expenditures files.</p>
+                  <p>These files contain committee, candidate and campaign finance data for the current election cycle and for election cycles through 1980. The files for the current election cycle plus the two most recent election cycles are regularly updated. The committees, candidates and linkages files are updated daily. The itemized records, contributions to candidates, individual contributions and operating expenditures files are udated weekly on Sunday. Please note that complete entry from each reporting period takes about 30 days. It is important to be careful when making conclusions from these data because some information may not have completed the entry process when these files where create. Committees do not have the same filing requirements. You should be careful when comparing financial information about committees with different filing requirements.</p>
                 </div>
                 <div class="post">
                   <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ transition_url }}/finance/disclosure/ftpsum.shtml">Summary data files</a></h4>
-                  <p>Here you will find the current campaign summary file, the all candidates summary file and the current PAC summary file. The most recent 10 years of data, the current two-year election period plus the most recent five (5) two-year election periods, are updated daily.</p>
+                  <p>Here you will find the current campaign summary file, the all candidates summary file and the current PAC summary file. The most recent 10 years of data, the current two-year election period plus the five most recent two-year election periods, are updated daily.</p>
                 </div>
                 <div class="post">
                   <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ transition_url }}/finance/disclosure/ftpefile.shtml">Electronically filed reports</a></h4>
@@ -299,7 +299,7 @@
               <div class="post-feed">
                 <div class="post">
                   <h4><i class="icon i-all-files icon--inline--left"></i><a href="{{ transition_url }}/data/DataCatalog.do">Legacy data catalog</a></h4>
-                  <p>Each of the files listed here can be downloaded in either csv or xml formats. Each also has a metadata page that describes the information included and the structure of the file itself. There is a pdf version of each file if you need to print the information. You can also subscribe to RSS feeds for each of the files so you're notified whenever new data is available or a change is made.</p>
+                  <p>Each of the files listed here can be downloaded in either CSV or XML formats. Each also has a metadata page that describes the information included and the structure of the file itself. There is a PDF version of each file if you need to print the information. You can also subscribe to RSS feeds for each of the files so you're notified whenever new data is available or a change is made.</p>
                   <p><a href="{{ transition_url }}/disclosurep/pnational.do">Presidential election map</a> | <a href="{{ transition_url }}/disclosurehs/hsnational.do">House and Senate elections data map</a>
                 </div>
                 <div class="post">
@@ -311,7 +311,7 @@
                     <a href="{{ transition_url }}/finance/disclosure/2004MatchingFundSubmissions.shtml">2004</a> |
                     <a href="{{ transition_url }}/finance/disclosure/submiss.shtml">2000</a>
                   </p>
-                  <p>You will find here the threshold files for presidential candidates seeking matching funds.</p>
+                  <p>You will find here the threshold files for Presidential candidates seeking matching funds.</p>
                   <p>In addition to regular quarterly or monthly disclosure reports, presidential candidates who seek matching funds must submit information about "matchable" contributions to the FEC for review. Contributions from individuals where the aggregate amount contributed by the individual is $250 or less are eligible to be matched on a dollar for dollar basis from the Presidential Election Campaign Fund. This Fund includes proceeds from the voluntary check-off of $3 per person from income tax returns of eligible taxpayers.</p>
                 </div>
                 <div class="post">
@@ -325,8 +325,8 @@
             <p>Certain information is reported to the FEC, but more information is reported to other governmental agencies.</p>
             <div class="post-feed">
               <div class="post">
-                <h3><i class="icon i-share icon--inline--left"></i><a href="https://www.irs.gov/charities-non-profits/political-organizations/political-organization-filing-and-disclosure">Internal Revenue Service (IRS) filings</h3>
-                <p>Search and download filings and disclosures by political organizations</p>
+                <h3><i class="icon i-share icon--inline--left"></i><a href="https://www.irs.gov/charities-non-profits/political-organizations/political-organization-filing-and-disclosure">Internal Revenue Service (IRS) filings</a></h3>
+                <p>Search and download filings and disclosures by political organizations.</p>
               </div>
               <div class="post">
                 <h3><i class="icon i-share icon--inline--left"></i><a href="http://apps.fcc.gov/ecd/">Federal Communications Commission (FCC) electioneering communications database</a></h3>
@@ -389,10 +389,8 @@
   <div class="slab slab--neutral footer-disclaimer">
     <div class="container">
       <div class="usa-width-one-half">
-        <p class="t-sans u-no-margin">Reports and statements filed by political committees may be inspected and copied by anyone. The names and addresses of individual contributors, however, may not be sold or used for any commercial purpose or to solicit any time of contribution or donation.</p>
-      </div>
-      <div class="usa-width-one-half">
-        <p class="t-sans u-no-margin"><a href="{{ transition_url }}/pages/brochures/saleuse.shtml">Read more about the sale and use of this data</a>.</p>
+        <p class="t-sans">Anyone can inspect and copy reports and statements filed by political committees. But the names and addresses of individual contributors may not be sold or used for commercial purposes or to solicit contributions or donations.</p>
+        <p class="t-sans u-no-margin"><a href="{{ transition_url }}/pages/brochures/saleuse.shtml">Read more about the sale and use of FEC data</a>.</p>
       </div>
     </div>
   </div>
