@@ -212,12 +212,10 @@ def load_cmte_financials(committee_id, **filters):
 
 def load_candidate_totals(candidate_id, cycle, election_full=True):
     response = _call_api(
-        'candidates', 'totals',
-        candidate_id=candidate_id, cycle=cycle, election_full=election_full,
+        'candidates', candidate_id, 'totals',
+        cycle=cycle, election_full=election_full,
     )
-    if response['results']:
-        return response['results'][0]
-    return {}
+    return response['results'] if 'results' in response else {}
 
 
 def load_candidate_statement_of_candidacy(candidate_id, cycle):
