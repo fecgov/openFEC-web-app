@@ -45,7 +45,8 @@ $(document).ready(function() {
   $('.js-site-nav').each(function() {
     new siteNav.SiteNav(this, {
       cmsUrl: CMS_URL,
-      webAppUrl: BASE_PATH
+      webAppUrl: BASE_PATH,
+      transitionUrl: TRANSITION_URL
     });
   });
 
@@ -82,7 +83,7 @@ $(document).ready(function() {
   new feedback.Feedback(helpers.buildAppUrl(['issue']));
 
   // Initialize new accordions
-  $('.js-accordion').each(function(){
+  $('.js-accordion').each(function() {
     var contentPrefix = $(this).data('content-prefix') || 'accordion';
     var openFirst = $(this).data('open-first');
     var selectors = {
