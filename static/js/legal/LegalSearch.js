@@ -9,7 +9,12 @@ const Pagination = require('./Pagination');
 class LegalSearch extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { q: $('#query').val(), from_hit: 0, advisory_opinions: []}
+    const initState = URI.parseQuery(window.location.search);
+    initState.q = initState.search;
+    initState.type = initState.search_type;
+    initState.advisory_opinions = [];
+    initState.from_hit = initState.from_hit ? parseInt(initState.from_hit, 10) : 0;
+    this.state = initState;
 
     this.getResults = this.getResults.bind(this);
     this.setQuery = this.setQuery.bind(this);
@@ -17,16 +22,23 @@ class LegalSearch extends React.Component {
     this.getResults();
   }
 
-  setQuery(e) {
+  setQuery(e, callback) {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    this.setState({ [e.target.name]: value, lastFilter: e.target.name});
+    const newState = {[e.target.name]: value, lastFilter: e.target.name};
+
+    if(e.target.name !== 'from_hit') {
+      newState.from_hit = 0;
+    }
+
+    this.setState(newState, () => {
+      if(callback) {
+        callback();
+      }
+    });
   }
 
   instantQuery(e) {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    this.setState({ [e.target.name]: value, lastFilter: e.target.name}, () => {
-      this.getResults();
-    });
+    this.setQuery(e, this.getResults);
   }
 
   getResults(e) {
@@ -38,17 +50,22 @@ class LegalSearch extends React.Component {
                 .addQuery('api_key', window.API_KEY)
                 .addQuery('type', 'advisory_opinions');
 
-    Object.keys(this.state).forEach((queryParam) => {
+    const queryState = Object.assign({}, this.state);
+    queryState.search = queryState.q;
+    Object.keys(queryState).forEach((queryParam) => {
       if(['advisory_opinions', 'resultCount', 'lastResultCount', 'lastFilter'].indexOf(queryParam) === -1
-          && this.state[queryParam]) {
-        queryPath = queryPath.addQuery(queryParam, this.state[queryParam]);
+          && queryState[queryParam]) {
+        queryPath = queryPath.addQuery(queryParam, queryState[queryParam]);
       }
     })
     const lastResultCount = this.state.resultCount;
     $.getJSON(queryPath.toString(), (results) => {
                   this.setState({ advisory_opinions: results.advisory_opinions,
                   resultCount: results.total_advisory_opinions,
-                  lastResultCount });
+                  lastResultCount }, () => {
+                    window.history.pushState(URI.parseQuery(queryPath.query()),
+                      null, queryPath.search().toString());
+                  });
                 });
   }
 
