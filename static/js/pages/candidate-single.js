@@ -322,6 +322,7 @@ function initContributionsTables() {
     path: ['schedules', 'schedule_a'],
     query: {
       committee_id: opts.committee_id,
+      is_individual: true,
       two_year_transaction_period: opts.cycle
     },
     columns: individualContributionsColumns,
