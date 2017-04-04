@@ -9,13 +9,13 @@
       <div class="row">
         <fieldset class="toggles u-float-left">
           <legend class="label">Group by:</legend>
-          <label for="toggle-purpose">
-            <input id="toggle-purpose" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-purpose" checked />
-            <span class="button--alt">Purpose</span>
-          </label>
           <label for="toggle-recipient">
-            <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursement-aggregate" value="by-recipient" />
+            <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursements" value="by-recipient" checked>
             <span class="button--alt">Recipient</span>
+          </label>
+          <label for="toggle-all-disbursements">
+            <input id="toggle-all-disbursements" type="radio" class="panel-toggle-control" name="disbursements" value="itemized-disbursements">
+            <span class="button--alt">All transactions</span>
           </label>
         </fieldset>
         <a class="u-float-right button--alt button--browse"
@@ -29,26 +29,7 @@
         </a>
       </div>
 
-      <div id="by-purpose" class="panel-toggle-element" aria-hidden="false">
-        <div class="results-info results-info--simple">
-          <h3 class="results-info__title">Disbursements by purpose</h3>
-          <button type="button" class="js-export button button--cta button--export" data-export-for="disbursements-by-purpose">Export</button>
-        </div>
-        <table
-            class="data-table data-table--heading-borders"
-            data-type="disbursements-by-purpose"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
-          >
-          <thead>
-            <th scope="col">Purpose</th>
-            <th scope="col">Total</th>
-          </thead>
-        </table>
-        {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
-      </div>
-
-      <div id="by-recipient" class="panel-toggle-element" aria-hidden="true">
+      <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
         <div class="results-info results-info--simple">
           <h3 class="results-info__title">Disbursements by recipient</h3>
           <button type="button" class="js-export button button--cta button--export" data-export-for="disbursements-by-recipient">Export</button>
@@ -65,6 +46,41 @@
           </thead>
         </table>
         {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
+      </div>
+
+      <div id="itemized-disbursements" class="panel-toggle-element" aria-hidden="true">
+        <div class="results-info results-info--simple">
+          <ul class="u-float-left">
+            <li class="tag__category">
+              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+            </li>
+          </ul>
+
+          <div class="js-tooltip-container u-float-right">
+            <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
+            <div id="export-tooltip" role="tooltip" class="tooltip tooltip--under tooltip--right tooltip__content" aria-hidden="true">
+            </div>
+          </div>
+
+        </div>
+
+        <table
+            class="data-table data-table--heading-borders"
+            data-type="itemized-disbursements"
+            data-committee-id="{{ committee.committee_id }}"
+            data-name="{{ name }}"
+            data-cycle="{{ cycle }}"
+          >
+          <thead>
+            <tr>
+              <th scope="col">Recipient</th>
+              <th scope="col">Recipient state</th>
+              <th scope="col">Description</th>
+              <th scope="col">Date</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
   </div>
