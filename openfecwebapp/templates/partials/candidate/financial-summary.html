@@ -25,7 +25,7 @@
       <div class="entity__figure">
         <h3 class="u-no-margin">Raising</h3>
         <div class="row">
-            <div class="u-float-left tag__category">
+            <div class="u-float-left tag__category u-no-margin">
               <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
             </div>
             <div class="u-float-right">
@@ -39,7 +39,7 @@
       <div class="entity__figure">
         <h3 class="u-no-margin">Spending</h3>
         <div class="row">
-            <div class="u-float-left tag__category">
+            <div class="u-float-left tag__category u-no-margin">
               <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
             </div>
             <div class="u-float-right">
@@ -53,14 +53,9 @@
       <div class="entity__figure">
         <h3 class="u-no-margin">Cash</h3>
         <div class="row">
-            <div class="u-float-left tag__category">
-              <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
-            </div>
-            <div class="u-float-right">
-              <a class="heading__right button--alt button--browse"
-                  href="">Browse receipts
-              </a>
-            </div>
+          <div class="u-float-left tag__category u-no-margin">
+            <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
+          </div>
         </div>
         {{ tables.summary(cash_summary) }}
       </div>
