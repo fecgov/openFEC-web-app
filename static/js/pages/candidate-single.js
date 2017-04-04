@@ -22,7 +22,10 @@ var filingsColumns = [
     orderable: false
   }),
   columns.amendmentIndicatorColumn,
-  columns.dateColumn({data: 'receipt_date', className: 'min-tablet'}),
+  columns.dateColumn({
+    data: 'receipt_date',
+    className: 'min-tablet'
+  }),
 ];
 
 var expenditureColumns = [
@@ -32,13 +35,16 @@ var expenditureColumns = [
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['independent-expenditures'], function(data, type, row) {
-        return {
-          support_oppose_indicator: row.support_oppose_indicator,
-          candidate_id: row.candidate_id,
-        };
+      return {
+        support_oppose_indicator: row.support_oppose_indicator,
+        candidate_id: row.candidate_id,
+      };
     })
   },
-  columns.committeeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({
+    data: 'committee',
+    className: 'all'
+  }),
   columns.supportOpposeColumn
 ];
 
@@ -49,13 +55,16 @@ var communicationCostColumns = [
     orderable: true,
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['communication-costs'], function(data, type, row) {
-        return {
-          support_oppose_indicator: row.support_oppose_indicator,
-          candidate_id: row.candidate_id,
-        };
+      return {
+        support_oppose_indicator: row.support_oppose_indicator,
+        candidate_id: row.candidate_id,
+      };
     })
   },
-  columns.committeeColumn({data: 'committee', className: 'all'}),
+  columns.committeeColumn({
+    data: 'committee',
+    className: 'all'
+  }),
   columns.supportOpposeColumn
 ];
 
@@ -67,10 +76,15 @@ var electioneeringColumns = [
     orderSequence: ['desc', 'asc'],
     render: columnHelpers.buildTotalLink(['electioneering-communications'],
       function(data, type, row) {
-        return {candidate_id: row.candidate_id};
-    })
+        return {
+          candidate_id: row.candidate_id
+        };
+      })
   },
-  columns.committeeColumn({data: 'committee', className: 'all'})
+  columns.committeeColumn({
+    data: 'committee',
+    className: 'all'
+  })
 ];
 
 var otherDocumentsColumns = [
@@ -87,9 +101,8 @@ var otherDocumentsColumns = [
       var version = helpers.amendmentVersion(data);
       if (version === 'Version unknown') {
         return '<i class="icon-blank"></i>Version unknown<br>' +
-               '<i class="icon-blank"></i>' + row.fec_file_id;
-      }
-      else {
+          '<i class="icon-blank"></i>' + row.fec_file_id;
+      } else {
         if (row.fec_file_id !== null) {
           version = version + '<br><i class="icon-blank"></i>' + row.fec_file_id;
         }
@@ -97,7 +110,10 @@ var otherDocumentsColumns = [
       }
     }
   },
-  columns.dateColumn({data: 'receipt_date', className: 'min-tablet'})
+  columns.dateColumn({
+    data: 'receipt_date',
+    className: 'min-tablet'
+  })
 ];
 
 var itemizedDisbursementColumns = [
@@ -129,7 +145,10 @@ var itemizedDisbursementColumns = [
     orderable: false,
     defaultContent: 'NOT REPORTED'
   },
-  columns.dateColumn({data: 'disbursement_date', className: 'min-tablet'}),
+  columns.dateColumn({
+    data: 'disbursement_date',
+    className: 'min-tablet'
+  }),
   columns.currencyColumn({
     data: 'disbursement_amount',
     className: 'column--number'
@@ -154,7 +173,10 @@ var individualContributionsColumns = [
       );
     }
   },
-  columns.dateColumn({data: 'contribution_receipt_date', className: 'min-tablet'}),
+  columns.dateColumn({
+    data: 'contribution_receipt_date',
+    className: 'min-tablet'
+  }),
   columns.currencyColumn({
     data: 'contribution_receipt_amount',
     className: 'column--number'
@@ -360,20 +382,20 @@ function initContributionsTables() {
         return span.outerHTML;
       }
     },
-    {
-      data: 'total',
-      width: '50%',
-      className: 'all',
-      orderSequence: ['desc', 'asc'],
-      render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
-        function(data, type, row) {
-          return {
-            contributor_state: row.state,
-            committee_id: opts.committee_id
-          };
-        }
-      )
-    }],
+      {
+        data: 'total',
+        width: '50%',
+        className: 'all',
+        orderSequence: ['desc', 'asc'],
+        render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
+          function(data, type, row) {
+            return {
+              contributor_state: row.state,
+              committee_id: opts.committee_id
+            };
+          }
+        )
+      }],
     callbacks: aggregateCallbacks,
     aggregateExport: true,
     dom: 't',
@@ -399,20 +421,20 @@ function initContributionsTables() {
         return columnHelpers.sizeInfo[data].label;
       }
     },
-    {
-      data: 'total',
-      width: '50%',
-      className: 'all',
-      orderSequence: ['desc', 'asc'],
-      orderable: false,
-      render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
-        function(data, type, row) {
-          var params = columnHelpers.getSizeParams(row.size);
-          params.committee_id = opts.committee_id;
-          return params;
-        }
-      )
-    }],
+      {
+        data: 'total',
+        width: '50%',
+        className: 'all',
+        orderSequence: ['desc', 'asc'],
+        orderable: false,
+        render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'],
+          function(data, type, row) {
+            var params = columnHelpers.getSizeParams(row.size);
+            params.committee_id = opts.committee_id;
+            return params;
+          }
+        )
+      }],
     callbacks: aggregateCallbacks,
     dom: 't',
     order: false,
