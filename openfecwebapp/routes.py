@@ -42,12 +42,14 @@ def search():
             top_parties_spending = top_parties_spending['results'] if top_parties_spending else None,
             title='Campaign finance data')
 
+
 @app.route('/api/')
 def api():
     """Redirect to API as described at
     https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
     """
     return redirect(config.api_location, http.client.MOVED_PERMANENTLY)
+
 
 @app.route('/developers/')
 def developers():
@@ -58,7 +60,7 @@ def developers():
     url.path.add('developers')
     return redirect(url.url, http.client.MOVED_PERMANENTLY)
 
-@app.route('/candidate/<c_id>/')
+
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
@@ -91,6 +93,7 @@ def candidate_page(c_id, cycle=None, election_full=True):
 
     return views.render_candidate(candidate, committees, cycle, election_full)
 
+
 @app.route('/committee/<c_id>/')
 @app.route('/committee/<c_id>/')
 @use_kwargs({
@@ -108,6 +111,7 @@ def committee_page(c_id, cycle=None):
     committee, candidates, cycle = api_caller.load_with_nested('committee', c_id, 'candidates', cycle)
     return views.render_committee(committee, candidates, cycle, redirect_to_previous)
 
+
 @app.route('/advanced/')
 def advanced():
     return render_template(
@@ -115,6 +119,7 @@ def advanced():
         parent='data',
         title='Advanced data'
     )
+
 
 @app.route('/candidates/')
 def candidates():
@@ -126,6 +131,7 @@ def candidates():
         title='Candidates',
         columns=constants.table_columns['candidates']
     )
+
 
 @app.route('/candidates/<office>/')
 def candidates_office(office):
@@ -141,6 +147,7 @@ def candidates_office(office):
         columns=constants.table_columns['candidates-office-' + office.lower()]
     )
 
+
 @app.route('/committees/')
 def committees():
     return render_template(
@@ -152,6 +159,7 @@ def committees():
         dates=utils.date_ranges(),
         columns=constants.table_columns['committees']
     )
+
 
 @app.route('/receipts/')
 def receipts():
@@ -165,6 +173,7 @@ def receipts():
         has_data_type_toggle=True
     )
 
+
 @app.route('/receipts/individual-contributions/')
 def individual_contributions():
     return render_template(
@@ -177,6 +186,7 @@ def individual_contributions():
         columns=constants.table_columns['individual-contributions']
     )
 
+
 @app.route('/disbursements/')
 def disbursements():
     return render_template(
@@ -188,6 +198,7 @@ def disbursements():
         columns=constants.table_columns['disbursements'],
         has_data_type_toggle=True
     )
+
 
 @app.route('/filings/')
 def filings():
@@ -202,6 +213,7 @@ def filings():
         columns=constants.table_columns['filings']
     )
 
+
 @app.route('/independent-expenditures/')
 def independent_expenditures():
     return render_template(
@@ -214,6 +226,7 @@ def independent_expenditures():
         has_data_type_toggle=True
     )
 
+
 @app.route('/electioneering-communications/')
 def electioneering_communications():
     return render_template(
@@ -224,6 +237,7 @@ def electioneering_communications():
         dates=utils.date_ranges(),
         columns=constants.table_columns['electioneering-communications']
     )
+
 
 @app.route('/communication-costs/')
 def communication_costs():
@@ -248,6 +262,7 @@ def loans():
         columns=constants.table_columns['loans']
     )
 
+
 @app.route('/party-coordinated-expenditures/')
 def party_coordinated_expenditures():
     return render_template(
@@ -257,8 +272,8 @@ def party_coordinated_expenditures():
         title='Party coordinated expenditures',
         dates=utils.date_ranges(),
         columns=constants.table_columns['party-coordinated-expenditures']
-
     )
+
 
 @app.route('/reports/<form_type>/')
 def reports(form_type):
@@ -284,9 +299,11 @@ def reports(form_type):
         columns=constants.table_columns['reports-' + form_type.lower()]
     )
 
+
 @app.route('/elections/')
 def election_lookup():
     return render_template('election-lookup.html', parent='data')
+
 
 @app.route('/elections/<office>/<int:cycle>/')
 @app.route('/elections/<office>/<state>/<int:cycle>/')
@@ -321,6 +338,7 @@ def elections(office, cycle, state=None, district=None):
         title=utils.election_title(cycle, office, state, district),
     )
 
+
 @app.route('/raising/')
 @use_kwargs({
     'top_category': fields.Str(load_from='top_category', missing='P'),
@@ -352,6 +370,7 @@ def raising_breakdown(top_category, cycle):
         page_info=utils.page_info(top_raisers['pagination'])
     )
 
+
 @app.route('/spending/')
 @use_kwargs({
     'top_category': fields.Str(load_from='top_category', missing='P'),
@@ -382,6 +401,7 @@ def spending_breakdown(top_category, cycle):
         page_info=utils.page_info(top_spenders['pagination'])
     )
 
+
 @app.route('/legal/search/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
@@ -400,9 +420,10 @@ def legal_search(query, result_type):
 
     return views.render_legal_search_results(results, query, result_type)
 
+
 def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=None,
-                        ao_max_date=None, ao_is_pending=None, ao_requestor=None,
-                        ao_requestor_type=None, ao_category=None, **kwargs):
+                     ao_max_date=None, ao_is_pending=None, ao_requestor=None,
+                     ao_requestor_type=None, ao_category=None, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
@@ -438,9 +459,11 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
                         ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
                         ao_requestor, ao_requestor_type, ao_category)
 
+
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
     return views.render_legal_ao_landing()
+
 
 @app.route('/legal/enforcement/')
 def enforcement_landing():
@@ -449,12 +472,14 @@ def enforcement_landing():
         result_type='murs',
         display_name='enforcement matters')
 
+
 @app.route('/legal/statutes/')
 def statutes_landing():
     return render_template('legal-statutes-landing.html',
         parent='legal',
         result_type='statutes',
         display_name='statutes')
+
 
 @app.route('/legal/search/advisory-opinions/')
 @use_kwargs({
@@ -480,6 +505,7 @@ def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None,
                             ao_requestor_type=ao_requestor_type,
                             ao_category=ao_category)
 
+
 @app.route('/legal/search/statutes/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
@@ -487,6 +513,7 @@ def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None,
 })
 def statutes(query, offset):
     return legal_doc_search(query, 'statutes', offset=offset)
+
 
 @app.route('/legal/search/enforcement/')
 @use_kwargs({
@@ -496,10 +523,13 @@ def statutes(query, offset):
 def murs(query, offset):
     return legal_doc_search(query, 'murs', offset=offset)
 
-# TODO migrating from /legal/regulations -> /legal/search/regulations, eventually there will be a regulations landing page
+
+# TODO migrating from /legal/regulations -> /legal/search/regulations,
+# eventually there will be a regulations landing page
 @app.route('/legal/regulations/')
 def regulations_landing(*args, **kwargs):
     return redirect(url_for('regulations', *args, **kwargs))
+
 
 @app.route('/legal/search/regulations/')
 @use_kwargs({
@@ -509,6 +539,7 @@ def regulations_landing(*args, **kwargs):
 def regulations(query, offset):
     return legal_doc_search(query, 'regulations', offset=offset)
 
+
 @app.route('/legal/advisory-opinions/<ao_no>/')
 def advisory_opinion_page(ao_no):
     advisory_opinion = api_caller.load_legal_advisory_opinion(ao_no)
@@ -517,6 +548,7 @@ def advisory_opinion_page(ao_no):
         abort(404)
 
     return views.render_legal_advisory_opinion(advisory_opinion)
+
 
 @app.route('/legal/matter-under-review/<mur_no>/')
 def mur_page(mur_no):

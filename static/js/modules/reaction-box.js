@@ -69,7 +69,8 @@ ReactionBox.prototype.handleSubmit = function(e) {
     method: 'POST',
     url: this.url,
     data: JSON.stringify(data),
-    contentType: 'application/json'
+    contentType: 'application/json',
+    dataType: 'json'
   });
 
   promise.done(this.handleSuccess.bind(this));
