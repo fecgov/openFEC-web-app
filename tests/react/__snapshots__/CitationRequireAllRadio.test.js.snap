@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders checkbox list 1`] = `
+exports[`renders citation radio 1`] = `
 <div>
   <label>
     If more than one citation is entered:

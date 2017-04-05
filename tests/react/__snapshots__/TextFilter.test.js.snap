@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders dropdown 1`] = `
+exports[`renders text filter 1`] = `
 <div
   className="filter"
 >

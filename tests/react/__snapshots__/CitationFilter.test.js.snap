@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders checkbox list 1`] = `
+exports[`renders citation filter 1`] = `
 <div
   className="filter"
   onBlur={[Function]}

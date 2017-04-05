@@ -3,7 +3,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const CitationFilter = require('../../static/js/legal/filters/CitationFilter');
 
-it('renders checkbox list', () => {
+it('renders citation filter', () => {
   const component = rendered.create(
     <CitationFilter handleChange={() => {}} getResults={() => {}}
         key="ao_regulatory_citation" name="ao_regulatory_citation" label="Regulatory citation"
