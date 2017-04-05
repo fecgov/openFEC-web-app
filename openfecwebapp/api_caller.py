@@ -236,8 +236,8 @@ def load_candidate_totals(candidate_id, cycle, election_full=True):
         'candidate', candidate_id, 'totals',
         cycle=cycle, election_full=election_full,
     )
-    
-    return response['results'][0] if 'results' in response else None
+
+    return response['results'][0] if response['results'] else None
 
 
 def load_candidate_statement_of_candidacy(candidate_id, cycle):
