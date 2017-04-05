@@ -42,6 +42,29 @@
 {% import 'macros/search.html' as search %}
 {% include 'partials/warnings.html' %}
 
+{% if pre_flip_banner %}
+<div class="js-new-site-orientation banner">
+  <div class="countdown t-bold">
+    {% if pre_flip_countdown %}
+    <div class="highlight"><span class="days t-underline" data-date="{{ pre_flip_countdown }}"></span> DAYS</div> until this site becomes the new FEC.gov
+    {% endif %}
+  </div>
+  <div class="toggle">
+    <div class="note">
+      On April 31, 2017 the old <a href="http://www.fec.gov">FEC.gov</a> will be accessible from an archive link.<br/>
+      Questions or comments? Use the <a class="js-feedback">anonymous feedback tool</a> or email us at <a href="mailto:betafeedback@fec.gov">betafeedback@fec.gov</a>
+    </div>
+    <h2><a>Start a tour</a> of the new features</h2>
+  </div>
+  {% if pre_flip_countdown %}
+  <div class="toggle-text">
+    <div class="less">Show less <i class="icon-small--arrow-up-border"></i></div>
+    <div class="more">Show more <i class="icon-small--arrow-down-border"></i></div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
 <a href="#main" class="skip-nav" tabindex="0">skip navigation</a>
 
   <header class="site-header">
