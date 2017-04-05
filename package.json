@@ -88,7 +88,7 @@
     "datatables.net": "1.10.10",
     "datatables.net-responsive": "2.0.1",
     "es6-weak-map": "2.0.1",
-    "fec-style": "7.7.3",
+    "fec-style": "8.0.0",
     "glossary-panel": "0.2.1",
     "handlebars": "^4.0.5",
     "hbsfy": "2.2.1",

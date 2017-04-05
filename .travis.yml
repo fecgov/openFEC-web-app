@@ -9,6 +9,8 @@ env:
     - secure: X1yp0ohu6eZyaw+ybLWYiyTYFemHBUDHeSb8g+SGPxRZRhqt8l/GwElRxwGzZOviPaJ4qwZ7jUUJHN1CPfbSahV3amTXQ1AhAn3g+hZyoqHc1BifuHYBY8rhfthvI1PjGAOT7vnZoD839Oxw4TMA5R/O9l6JT9GG5hGs8SDqOak= # dev password
     - secure: bxZ84spAuwVNcZFcaN5UW55nf+LIdcegGGlgXsOn4t2R+yimJt9f86v2euCZY0bs9drlJqHVGXF9KYiH32Y1eYchHx3J7oqUWWR5EFT3USAGkoOP3ZFmbdDJ6WCYkqTw/WtnVvLKRNDI6jaDQJf9+XgUafQGoHmZZx1Ocz8Ko1g= # stage password
     - secure: aHAXGNtzlkaNFdPlVGgJwi6HKzl5/7lv85CFxERypt4fvQCHtSYRrwVjEZMQiqwHOdXCrowV2+MMCjubT9w5A+i4iPVlOoz7iwdgmVYqxSzwpwlGqMFJGRH4H+8wDjbaTZRNYX8Ww7gOa32MtLTPjKQMh+kdgDgmi8zTOp2aZXQ= # stage user name
+    - secure: Nsrtc48rxl4KORPc8pmodfyC0eKAGOuXuXLHhQ4m2yjOhq34Y3VkmfF5ScckZjq0o1nNilh+EJt4eCCdeVMppnp8ATlHGn6yW8AsgVJZeQforx+ywFLRvREvLY4UAbj8wTY0v7GyOiv2VKPbN9GvOLnelb69+qHWuv3Zc3AFNLo= # prod user name
+    - secure: h+4hYf5Om0nqMChobBcpl0xHgBgWVylx+K+3igtEzmp2bpWXPYjY4iAbbc0JbuyVd41uqZz4G8PXfbpA0fyzy7cig0yy3I7GcDuyYbujtv4W2dFOtD3SrzgPTvfaPSLkp5PhOrFU0wR18ssTROHOOoK0bDkok5ZzKhPEUGlEN4Q= # prod password
 before_script:
   - travis_retry pip install -U pip setuptools wheel
   - travis_retry pip install -r requirements.txt

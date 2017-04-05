@@ -1,14 +1,18 @@
 <nav class="site-nav js-site-nav">
   <div id="site-menu" class="site-nav__container">
     <ul class="site-nav__panel site-nav__panel--main">
-      <li><h3 class="site-nav__title u-under-lg-only">Menu</h3></li>
-      <li class="site-nav__item site-nav__item--with-dropdown" data-submenu="data">
-        <a href="{{ url_for('search') }}" class="site-nav__link {% if parent == 'data' %}is-parent{% endif %} u-lg-only">
+      <li><h2 class="site-nav__title u-under-lg-only">Menu</h2></li>
+      <li class="site-nav__item u-under-lg-only">
+        <a class="site-nav__link" href="{{ cms_url }}" rel="home">
+          <span class="site-nav__link__title">Home</span>
+        </a>
+      </li>
+      <li class="site-nav__item" data-submenu="data">
+        <a href="{{ url_for('search') }}" class="site-nav__link {% if parent == 'data' %}is-parent{% endif %}">
           <span class="site-nav__link__title">Campaign finance data</span>
         </a>
-        <button class="site-nav__link button--nav-panel js-panel-trigger u-under-lg-only" aria-controls="nav-data">Campaign finance data</button>
       </li>
-      <li class="site-nav__item site-nav__item--secondary" data-submenu="services">
+      <li class="site-nav__item site-nav__item--secondary" data-submenu="help">
         <a href="{{ cms_url }}/help-candidates-committees/" class="site-nav__link">
           <span class="site-nav__link__title">Help for candidates and committees</span>
         </a>
@@ -18,14 +22,11 @@
           <span class="site-nav__link__title">Legal resources</span>
         </a>
       </li>
-      <li class="site-nav__item utility-nav__item">
-        <a href="{{ cms_url }}/contact-us/" class="site-nav__link">Contact</a>
-      </li>
-      <li class="site-nav__item utility-nav__item">
-        <a href="{{ cms_url }}/calendar/" class="site-nav__link">Calendar</a>
+      <li class="site-nav__item utility-nav__item u-under-lg-only">
+        <a class="site-nav__link" href="{{ cms_url }}/calendar">Calendar</a>
       </li>
     </ul>
   </div>
-  <button for="nav-toggle" class="js-nav-toggle site-nav__button" aria-controls="site-menu">Menu</button>
-  <a title="Home" href="{{ cms_url }}/" class="site-title"><span class="u-visually-hidden">Federal Election Commission | United States of America</span></a>
+  <button for="nav-toggle" class="js-nav-toggle site-nav__button" aria-controls="nav-main">Menu</button>
+  <a title="Home" href="{{ cms_url }}" class="site-title"><span class="u-visually-hidden">Federal Election Commission | United States of America</span></a>
 </nav>
