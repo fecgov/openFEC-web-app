@@ -22,6 +22,7 @@ before_script:
 script:
   - py.test
   - npm run test-single
+  - npm run test-legal
 after_success:
   - travis_retry pip install bandit
   - bandit -r openfecwebapp *.py
