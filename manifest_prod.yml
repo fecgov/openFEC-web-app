@@ -5,7 +5,7 @@ instances: 2
 services:
   - fec-creds-prod
 env:
-  FEC_CMS_URL: https://fec-prod-proxy.app.cloud.gov
+  FEC_CMS_URL: https://beta.fec.gov
   FEC_WEB_API_URL: https://api.open.fec.gov/
   FEC_WEB_CACHE: true
   FEC_WEB_ENVIRONMENT: prod
