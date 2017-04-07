@@ -15,7 +15,7 @@ cache_size = int(os.getenv('FEC_WEB_CACHE_SIZE', 1000))
 
 cms_url = os.getenv('FEC_CMS_URL', '')
 
-pre_flip_banner = bool(os.getenv('FEC_PRE_FLIP_BANNER'))
+site_orientation_banner = bool(os.getenv('FEC_SITE_ORIENTATION_BANNER'))
 pre_flip_countdown = os.getenv('FEC_PRE_FLIP_COUNTDOWN')
 
 # you can only give a var a string using set-env with Cloud Foundry
