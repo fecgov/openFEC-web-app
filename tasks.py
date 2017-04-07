@@ -90,7 +90,7 @@ def deploy(ctx, space=None, branch=None, login=None, yes=False):
     if space is None:
         return
 
-    # Build static assets
+    # Build static assets.
     # These must be built prior to deploying.
     ctx.run('npm run build', echo=True)
 
