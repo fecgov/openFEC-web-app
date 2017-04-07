@@ -15,14 +15,14 @@
     {% for committee in committee_groups['P'] | reverse %}
     {% if committee.cycle == cycle %}
     <li>
-      <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+      <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
     </li>
     {% endif %}
     {% endfor %}
     {% for committee in committee_groups['A'] | reverse %}
     {% if committee.cycle == cycle %}
     <li>
-      <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=cycle) }}">{{ committee.name }}</a>
+      <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
     </li>
     {% endif %}
     {% endfor %}
@@ -48,11 +48,11 @@
 
           <label for="toggle-state">
             <input id="toggle-state" type="radio" class="panel-toggle-control" name="individual-contributions" value="contributor-state" checked />
-            <span class="button--alt">Contributor state</span>
+            <span class="button--alt">State</span>
           </label>
           <label for="toggle-size">
             <input id="toggle-size" type="radio" class="panel-toggle-control" name="individual-contributions" value="contribution-size" />
-            <span class="button--alt">Contribution size</span>
+            <span class="button--alt">Size</span>
           </label>
           <label for="toggle-all">
             <input id="toggle-all" type="radio" class="panel-toggle-control" name="individual-contributions" value="all-transactions" />
