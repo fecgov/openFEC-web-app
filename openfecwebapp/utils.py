@@ -107,8 +107,9 @@ def date_ranges():
         ),
     }
 
-def get_cycles():
-    return range(current_cycle(), constants.START_YEAR, -2)
+def get_cycles(max_cycle=None):
+    max = max_cycle if max_cycle else current_cycle()
+    return range(max, constants.START_YEAR, -2)
 
 def election_title(cycle, office, state=None, district=None):
     base = ' '.join([str(cycle), 'Election', 'United States', office.capitalize()])
@@ -157,12 +158,19 @@ def process_spending_data(totals):
     return financial_summary_processor(totals, constants.SPENDING_FORMATTER)
 
 def process_cash_data(totals):
-    # Temporary workaround because presidential committees don't have these values in the API
-    if not 'net_contributions' in totals:
-        totals['net_contributions'] = totals['contributions'] - totals['contribution_refunds']
-    if not 'net_operating_expenditures' in totals:
-        totals['net_operating_expenditures'] = totals['operating_expenditures'] - totals['subtotal_offsets_to_operating_expenditures']
     return financial_summary_processor(totals, constants.CASH_FORMATTER)
 
 def process_ie_data(totals):
     return financial_summary_processor(totals, constants.IE_FORMATTER)
+
+
+def get_senate_cycles(senate_class):
+    next_election = constants.NEXT_SENATE_ELECTIONS[str(senate_class)]
+    return range(next_election, constants.START_YEAR, -6)
+
+def get_state_senate_cycles(state):
+    senate_cycles = []
+    for senate_class in [1, 2, 3]:
+        if state.upper() in constants.SENATE_CLASSES[str(senate_class)]:
+            senate_cycles += get_senate_cycles(senate_class)
+    return senate_cycles

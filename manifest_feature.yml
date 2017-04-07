@@ -4,8 +4,8 @@ host: fec-feature-web
 services:
   - fec-creds-feature
 env:
-  FEC_CMS_URL: https://fec-feature-proxy.18f.gov
-  FEC_WEB_API_URL: https://fec-feature-api.18f.gov
+  FEC_CMS_URL: https://fec-feature-proxy.app.cloud.gov
+  FEC_WEB_API_URL: https://fec-feature-api.app.cloud.gov
   FEC_WEB_DEBUG: true
   FEC_WEB_ENVIRONMENT: dev
-  NEW_RELIC_APP_NAME: OpenFEC Web (feature)
+  NEW_RELIC_APP_NAME: fec | web | feature

@@ -4,12 +4,14 @@ import furl
 
 from flask.views import MethodView
 from flask import request, render_template, redirect, url_for, jsonify
-from flask.ext.cors import cross_origin
+from flask_cors import cross_origin
 
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
 from collections import OrderedDict
+
+import datetime
 
 import github3
 from werkzeug.utils import cached_property
@@ -143,7 +145,7 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
                 return redirect(
                     url_for('committee_page', c_id=committee['committee_id'], cycle=c)
                 )
-    return render_template('committees-single-new.html', **tmpl_vars)
+    return render_template('committees-single.html', **tmpl_vars)
 
 
 def groupby(values, keygetter):
@@ -167,7 +169,7 @@ report_types = {
     'I': 'ie-only'
 }
 
-def render_candidate(candidate, committees, flag, cycle, election_full=True):
+def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
@@ -199,6 +201,19 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
         election_full=election_full,
     )
 
+    statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
+        candidate['candidate_id'],
+        cycle=cycle
+    )
+
+    if statement_of_candidacy:
+        for statement in statement_of_candidacy:
+            # convert string to python datetime and parse for readable output
+            statement['receipt_date'] = datetime.datetime.strptime(statement['receipt_date'], '%Y-%m-%dT%H:%M:%S')
+            statement['receipt_date'] = statement['receipt_date'].strftime('%m/%d/%Y')
+
+    tmpl_vars['statement_of_candidacy'] = statement_of_candidacy
+
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized
     tmpl_vars['committee_ids'] = [committee['committee_id'] for committee in committees_authorized]
@@ -217,10 +232,14 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
-    if flag == 'new':
-        return render_template('candidates-single-new.html', **tmpl_vars)
-    else:
-        return render_template('candidates-single.html', **tmpl_vars)
+    tmpl_vars['cycles'] = [cycle for cycle in candidate['cycles'] if cycle <= max(candidate['election_years'])]
+
+    if aggregate:
+        tmpl_vars['raising_summary'] = utils.process_raising_data(aggregate)
+        tmpl_vars['spending_summary'] = utils.process_spending_data(aggregate)
+        tmpl_vars['cash_summary'] = utils.process_cash_data(aggregate)
+
+    return render_template('candidates-single.html', **tmpl_vars)
 
 
 def validate_referer(referer):
