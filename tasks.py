@@ -115,7 +115,7 @@ def deploy(ctx, space=None, branch=None, login=None, yes=False):
     ctx.run('cf {0} web -f manifest_{1}.yml'.format(cmd, space), echo=True)
 
 
-# not calling this function for now
+# Not calling this function for now
 @task
 def notify(ctx):
     try:
