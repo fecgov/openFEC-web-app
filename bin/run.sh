@@ -1,3 +1,3 @@
 # turning off slack for now!
 # invoke notify
-gunicorn openfecwebapp.app:app
+gunicorn -w 2 openfecwebapp.app:app
