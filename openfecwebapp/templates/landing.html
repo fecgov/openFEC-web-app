@@ -25,7 +25,7 @@
 
 <div class="main container js-accordion accordion--neutral" data-content-prefix="about">
   <section class="content__section">
-    <div class="tour-dot tour-dot--left" data-intro="<h5>Better data browsing</h5>Look up individual contributions, campaign spending and original filings. Refine results as you go, using more precise controls—no need to enter all search criteria upfront. When you’re ready, export results and save links to custom searches."></div>
+    <div class="tour__point tour__point--left" data-intro="<h5>Better data browsing</h5>Look up individual contributions, campaign spending and original filings. Refine results as you go, using more precise controls—no need to enter all search criteria upfront. When you’re ready, export results and save links to custom searches."></div>
     <div class="grid grid--2-wide">
       <div class="grid__item grid__item--no-margin card card--wide">
         <div class="card__image__container">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="grid__item grid__item--no-margin card card--wide">
-        <div class="tour-dot tour-dot--left" data-intro="<h5>Find election data that matters to you</h5>New election pages show all candidates running for a particular office. Compare what they’re raising and spending. Search by state and district or by ZIP code."></div>
+        <div class="tour__point tour__point--left" data-intro="<h5>Find election data that matters to you</h5>New election pages show all candidates running for a particular office. Compare what they’re raising and spending. Search by state and district or by ZIP code."></div>
         <div class="card__image__container">
           <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-elections--neutral.svg') }}"  alt="Icon representing elections">
           <h2 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h2>
@@ -54,7 +54,7 @@
     <h2 class="t-ruled--bottom">Get started with campaign finance data</h2>
     <section class="content__section" id="raising">
       <h3 class="u-no-margin">Raising
-        <div class="tour-dot tour-dot--left" data-intro="<h5>Spot trends with data visualizations</h5>Compare raising and spending trends over time. Dig deeper for a detailed analysis. Check back regularly: more visualizations are coming soon!"></div>
+        <div class="tour__point tour__point--left" data-intro="<h5>Spot trends with data visualizations</h5>Compare raising and spending trends over time. Dig deeper for a detailed analysis. Check back regularly: more visualizations are coming soon!"></div>
       </h3>
       <p>This graph shows how much <span class="term" data-term="candidate">candidates</span>, <span class="term" data-term="party committee">party committees</span> and <span class="term" data-term="political action committee (PAC)">political action committees</span> (PACs) have reported raising, up to specific points in time. Although the graph displays these numbers month-by-month, different committee types have different reporting schedules.</p>
       <div class="content__section">
@@ -92,7 +92,7 @@
       </div>
     </section>
     <section class="content__section--extra">
-      <div class="tour-dot tour-dot--left tour-dot--top-padding-lg" data-intro="<h5>Quick views</h5>Find the highest raising and spending candidates, PACs and committees for the 2017–2018 election cycle."></div>
+      <div class="tour__point tour__point--left tour__point--top-padding-lg" data-intro="<h5>Quick views</h5>Find the highest raising and spending candidates, PACs and committees for the 2017–2018 election cycle."></div>
       {{ overviews.top('candidates', 'Candidates', 'candidates', top_candidates_raising, top_candidates_spending)}}
       {{ overviews.top('pacs', 'PACs', 'PACs', top_pacs_raising, top_pacs_spending)}}
       {{ overviews.top('parties', 'Party committees', 'party committees', top_parties_raising, top_parties_spending)}}
