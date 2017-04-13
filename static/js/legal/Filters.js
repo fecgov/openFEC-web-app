@@ -68,8 +68,11 @@ function Filters(props) {
                     resultCountChange={resultCountChange} lastFilter={props.query.lastFilter}/>
               </FilterPanel>
               <FilterPanel id="first-content-2" header="Time period">
-                  <DateFilter key="issue_date" label="Issued date" min_name="ao_min_date" max_name="ao_max_date"
-                    min_value={props.query.ao_min_date} max_value={props.query.ao_max_date}
+                  <DateFilter key="issue_date" label="Issued date" min_name="ao_min_issue_date" max_name="ao_max_issue_date"
+                    min_value={props.query.ao_min_issue_date} max_value={props.query.ao_max_issue_date}
+                    instantQuery={props.instantQuery} setQuery={props.setQuery} />
+                  <DateFilter key="request_date" label="Request date" min_name="ao_min_request_date" max_name="ao_max_request_date"
+                    min_value={props.query.ao_min_request_date} max_value={props.query.ao_max_request_date}
                     instantQuery={props.instantQuery} setQuery={props.setQuery} />
               </FilterPanel>
               </ul>
