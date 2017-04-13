@@ -1,3 +1,10 @@
+<div className="message message--info">
+  <h3>This feature is still in progress.</h3>
+  <p>We are actively building the <span className="font-bold">advisory opinion search</span>, and it doesn&#39;t yet include some
+  advanced search functions. If you can&#39;t find what you&#39;re looking for, you can still <a href="http://saos.fec.gov/saos/searchao">search
+  opinions on the the old fec.gov</a>.</p>
+</div>
+
 {% for advisory_opinion in advisory_opinions %}
   <h3 class="cal-list__title">
     <a title="{{ advisory_opinion.description }}"

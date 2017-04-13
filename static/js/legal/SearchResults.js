@@ -6,7 +6,14 @@ function SearchResults(props) {
     return {__html: '&hellip;' + advisory_opinion.highlights }
   }
   if(props.advisory_opinions && props.advisory_opinions.length > 0) {
-    return <ul>{ props.advisory_opinions.map((advisory_opinion) => {
+    return <ul>
+      <div className="message message--info">
+        <h3>This feature is still in progress</h3>
+        <p>We are actively building the <span className="font-bold">advisory opinion search</span>, and it doesn&#39;t yet include some
+        advanced search functions. If you can&#39;t find what you&#39;re looking for, you can still <a href="http://saos.fec.gov/saos/searchao">search
+        opinions on the the old fec.gov</a>.</p>
+      </div>
+      { props.advisory_opinions.map((advisory_opinion) => {
         return <div key={advisory_opinion.no}><h3 className="cal-list__title">
           <a title={ advisory_opinion.description }
             href="{ url_for('advisory_opinion_page', ao_no=advisory_opinion.no) }">

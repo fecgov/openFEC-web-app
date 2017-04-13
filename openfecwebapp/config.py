@@ -28,7 +28,6 @@ environment = (
 )
 
 features = {
-    'legal_murs': bool(env.get_credential('FEC_FEATURE_LEGAL_MURS', '')),
     'press': bool(env.get_credential('FEC_FEATURE_PRESS', '')),
     'latest_updates': bool(env.get_credential('FEC_FEATURE_UPDATES', ''))
 }
