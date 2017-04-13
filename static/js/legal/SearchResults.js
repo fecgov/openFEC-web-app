@@ -9,7 +9,7 @@ function SearchResults(props) {
     return <ul>
       <div className="message message--info">
         <h3>This feature is still in progress</h3>
-        <p>We are actively building the <strong className="font-bold">advisory opinion search</strong>, and it doesn&#39;t yet include some
+        <p>We are actively building the <strong>advisory opinion search</strong>, and it doesn&#39;t yet include some
         advanced search functions. If you can&#39;t find what you&#39;re looking for, you can still <a href="http://saos.fec.gov/saos/searchao">search
         opinions on the the old fec.gov</a>.</p>
       </div>
