@@ -10,7 +10,7 @@
 
 {% block body %}
 
-{{ header.header(breadcrumbs_title | title, breadcrumbs, show_search=False) }}
+{{ header.header(breadcrumbs_title | title, breadcrumbs) }}
 
 <section class="main__content--full data-container__wrapper">
   {% include 'partials/' + slug + '-filter.html' %}

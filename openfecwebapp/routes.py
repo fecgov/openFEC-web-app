@@ -20,13 +20,8 @@ from openfecwebapp.app import app
 def search():
     query = request.args.get('search')
     if query:
-        result_type = request.args.get('search_type')
-        if result_type == 'all':
-            results = api_caller.load_search_results(query, result_type)
-            return views.render_search_results(results, query, result_type)
-        else:
-            print(result_type)
-            return redirect(url_for(result_type, q=query))
+        results = api_caller.load_search_results(query)
+        return views.render_search_results(results, query)
 
     else:
         top_candidates_raising = api_caller.load_top_candidates('-receipts')

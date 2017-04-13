@@ -1,22 +1,9 @@
-{% macro search(location, result_type, query, button_color="button--standard", select_class="select--alt-primary") %}
+{% macro search(location, result_type, query, button_color="button--standard") %}
 {% if location == 'hero' %}
   {% set size = 'combo--search--large' %}
-  {% set candidate_option = 'Candidate profiles' %}
-  {% set committee_option = 'Committee profiles' %}
-{% else %}
-  {% set candidate_option = 'Candidates' %}
-  {% set committee_option = 'Committees' %}
 {% endif %}
-<form id="{{ location }}-search" action="{{ url_for('search') }}" autocomplete="off" class="search__container js-search">
+<form id="{{ location }}-search" action="{{ url_for('search') }}" autocomplete="off" class="search__container">
   <div class="combo combo--search {{ size }}">
-    <select class="search__select js-search-type {{select_class}}" name="search_type" aria-label="Select a search type">
-      <option value="all"
-        {% if result_type == 'all' %}
-          selected
-        {% endif %}>All</option>
-      <option value="candidates">{{ candidate_option}}</option>
-      <option value="committees">{{committee_option}}</option>
-    </select>
     <input class="js-search-input combo__input" type="text" name="search"
     aria-label="Search for {{ result_type }}"
     autocorrect="off" autocapitalize="off" spellcheck="false"
