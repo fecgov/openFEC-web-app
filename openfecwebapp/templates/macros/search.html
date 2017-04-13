@@ -9,6 +9,9 @@
 {% endif %}
 <form id="{{ location }}-search" action="{{ url_for('search') }}" autocomplete="off" class="search__container js-search">
   <div class="combo combo--search {{ size }}">
+    {% if location == 'hero' %}
+      <div class="tour__point tour__point--left" data-intro="<h5>Find candidates and committees</h5>Track raising, spending, debts and loans, filings and summary information for candidates and committees on redesigned profile pages."></div>
+    {% endif %}
     <select class="search__select js-search-type {{select_class}}" name="search_type" aria-label="Select a search type">
       <option value="candidates"
         {% if result_type != 'committees' %}

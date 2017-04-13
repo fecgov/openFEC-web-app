@@ -34,9 +34,13 @@ var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
 var download = require('./modules/download');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
+var SiteOrientation = require('fec-style/js/site-orientation');
 
 $(document).ready(function() {
   charts.init();
+
+  // new site orientation
+  new SiteOrientation.SiteOrientation('.js-new-site-orientation');
 
   $('.js-dropdown').each(function() {
     new dropdown.Dropdown(this);
