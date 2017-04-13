@@ -33,14 +33,14 @@ We’re thrilled you want to get involved!
 - Read our [contributing guidelines](https://github.com/18F/openfec/blob/master/CONTRIBUTING.md). Then, [file an issue](https://github.com/18F/fec/issues) or submit a pull request.
 - [Send us an email](mailto:betafeedback@fec.gov).
 - If you’re a developer, follow the installation instructions in the README.md page of each repository to run the apps on your computer.
-- Check out our StoriesonBoard [FEC story map](https://18f.storiesonboard.com/m/fec) to get a sense of the user needs we'll be addressing in the future.
+- Check out our StoriesonBoard [FEC story map](https://18f.storiesonboard.com/m/fec) to get a sense of the user needs we will be addressing in the future.
 
 ## Set up
 
 ### Installation
 This application is in [Flask](http://flask.pocoo.org/). Client side features are managed using [Browserify](http://browserify.org/) and [npm](https://www.npmjs.org/).
 
-It uses Python version 3.4. It's recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies. Don't put your virtualenv in this directory.
+It uses Python version 3.5.3. It's recommended that you create a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing Python dependencies. Don't put your virtualenv in this directory.
 
 Install Python dependencies:
 
@@ -65,7 +65,7 @@ To make the site fully functional, you will need to compile the client side JS a
 
 Then start the server:
 
-    FEC_WEB_API_URL='https://fec-dev-api.18f.gov' python manage.py runserver
+    FEC_WEB_API_URL='https://fec-dev-api.app.cloud.gov' python manage.py runserver
 
 To view the site, visit [http://localhost:3000/](http://localhost:3000/).
 
@@ -83,7 +83,7 @@ To watch for changes to .js and .scss:
     npm run watch
 
 ### Developing with fec-style (optional)
-If you're developing with a local instance of [fec-style](https://github.com/18F/fec-style) and want to pull in styles and script changes as you go, use `npm link` to create a symbolic link to your local fec-style repo:
+If you are developing with a local instance of [fec-style](https://github.com/18F/fec-style) and want to pull in styles and script changes as you go, use `npm link` to create a symbolic link to your local fec-style repo:
 
     cd ~/fec-style
     npm link
@@ -128,6 +128,23 @@ Compile Sass as changes are made:
 
     npm run watch-sass
 
+### SSH
+*Likely only useful for 18F FEC team members*
+
+You can SSH directly into the running app container to help troubleshoot or inspect things with the instance(s).  Run the following command:
+
+```bash
+cf ssh <app name>
+```
+
+Where *<app name>* is the name of the application instance you want to connect to.  Once you are logged into the remote secure shell, you'll also want to run this command to setup the shell environment correctly:
+
+```bash
+. /home/vcap/app/bin/cf_env_setup.sh
+```
+
+More information about using SSH with cloud.dov can be found in the [cloud.gov SSH documentation](https://cloud.gov/docs/apps/using-ssh/#cf-ssh).
+
 ### Deployment
 
 *Likely only useful for 18F team members*
@@ -164,8 +181,6 @@ the following keys are set:
 * FEC_WEB_API_KEY
 * FEC_WEB_API_KEY_PUBLIC
 * FEC_GITHUB_TOKEN
-* SENTRY_DSN
-* SENTRY_PUBLIC_DSN
 * NEW_RELIC_LICENSE_KEY
 
 Deploys of a single app can be performed manually by targeting the env/space, and specifying the corresponding manifest, as well as the app you want, like so:

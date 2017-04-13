@@ -57,6 +57,7 @@ Filter receipts
   <div class="accordion__content">
     {{ range.amount('amount', 'Contribution amount') }}
     {{ date.partition_field('date', 'Receipt date', dates ) }}
+    {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Receipts updated according to the filer's schedule. Processing time can vary.</span>
     </div>
