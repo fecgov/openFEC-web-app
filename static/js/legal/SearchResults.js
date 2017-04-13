@@ -11,7 +11,7 @@ function SearchResults(props) {
         <h3>This feature is still in progress</h3>
         <p>We are actively building the <strong>advisory opinion search</strong>, and it doesn&#39;t yet include some
         advanced search functions. If you can&#39;t find what you&#39;re looking for, you can still <a href="http://saos.fec.gov/saos/searchao">search
-        opinions on the the old fec.gov</a>.</p>
+        opinions on the old fec.gov</a>.</p>
       </div>
       { props.advisory_opinions.map((advisory_opinion) => {
         return <div key={advisory_opinion.no}><h3 className="cal-list__title">
