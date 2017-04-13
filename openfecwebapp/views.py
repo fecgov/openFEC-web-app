@@ -37,7 +37,7 @@ def render_legal_search_results(results, query, result_type):
         query=query,
         results=results,
         result_type=result_type,
-        category_order=get_legal_category_order(results, config.features['legal_murs']),
+        category_order=get_legal_category_order(results),
     )
 
 
@@ -283,17 +283,11 @@ class GithubView(MethodView):
         issue = self.repo.create_issue(title, body=body)
         return jsonify(issue.to_json()), 201
 
-def get_legal_category_order(results, murs_enabled=True):
+def get_legal_category_order(results):
     """ Return categories in pre-defined order, moving categories with empty results
         to the end. MURs must be at the end if not enabled.
     """
-    if murs_enabled:
-        categories = ["statutes", "regulations", "advisory_opinions", "murs"]
-        category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
-                        [x for x in categories if results.get("total_" + x, 0) == 0]
-    else:
-        categories = ["statutes", "regulations", "advisory_opinions"]
-        category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
-                        [x for x in categories if results.get("total_" + x, 0) == 0] +\
-                        ["murs"]
+    categories = ["statutes", "regulations", "advisory_opinions", "murs"]
+    category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
+                    [x for x in categories if results.get("total_" + x, 0) == 0]
     return category_order
