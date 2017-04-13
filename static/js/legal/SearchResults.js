@@ -9,7 +9,7 @@ function SearchResults(props) {
     return <ul>{ props.advisory_opinions.map((advisory_opinion) => {
         return <div key={advisory_opinion.no}><h3 className="cal-list__title">
           <a title={ advisory_opinion.description }
-            href="{ url_for('advisory_opinion_page', ao_no=advisory_opinion.no) }">
+            href={ $('#advisory_opinion_page').val().replace('ao_no', advisory_opinion.no) }>
             <span className="font-bolt">AO { advisory_opinion.no }: </span></a>
             <span className="t-normal">{ advisory_opinion.name }</span>
         <p className="u-padding--top">
