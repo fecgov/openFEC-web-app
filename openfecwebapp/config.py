@@ -15,6 +15,7 @@ cache_size = int(os.getenv('FEC_WEB_CACHE_SIZE', 1000))
 transition_url = env.get_credential('FEC_TRANSITION_URL', 'https://transition.fec.gov')
 classic_url = env.get_credential('FEC_CLASSIC_URL', 'http://www.fec.gov')
 cms_url = os.getenv('FEC_CMS_URL', '')
+canonical_base = 'https://beta.fec.gov'
 
 # you can only give a var a string using set-env with Cloud Foundry
 # set FEC_WEB_DEBUG to any string but an empty one if you want debug on

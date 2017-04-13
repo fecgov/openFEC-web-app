@@ -38,6 +38,11 @@ def get_absolute_url():
     return url.url
 
 
+def get_canonical_url():
+    path = furl.furl(request.url).path
+    return '{}/data{}'.format(config.canonical_base, path)
+
+
 def _get_default_cycles():
     cycle = utils.current_cycle()
     return list(range(cycle - 4, cycle + 2, 2))
@@ -134,6 +139,7 @@ app.jinja_env.globals.update({
     'max': max,
     'context': filters.get_context,
     'absolute_url': get_absolute_url,
+    'canonical_url': get_canonical_url,
     'contact_email': 'betafeedback@fec.gov',
     'default_cycles': _get_default_cycles(),
     'series_has_data': series_has_data,
@@ -152,7 +158,6 @@ app.jinja_env.globals.update({
     'format_election_years': format_election_years,
     'clean_id': clean_id,
     'classic_url': config.classic_url,
-    'transition_url': config.transition_url
 })
 
 app.add_url_rule('/issue/', view_func=views.GithubView.as_view('issue'))
