@@ -10,111 +10,101 @@
 {% set breadcrumbs=[('', 'Candidate profiles')] %}
 
 {% block body %}
-<div class="tab-interface">
-  {{ header.header(name, breadcrumbs) }}
-  <header class="entity__header entity__header--neutral">
-    <div class="container">
-      <div class="entity__header__top row">
-        <div class="usa-width-three-fourths">
-          <h1 class="entity__name">{{ name }}</h1>
-          <span class="t-data entity__type">Candidate for {{ office_full }}</span><span class="t-data">ID: {{ candidate_id }}</span>
-        </div>
-      </div>
-      <ul class="entity__info">
-        <li class="entity__term">
-          <span class="entity__term__label"><a class="term" data-term="Political party">Party</a></span>
-          <span class="entity__term__data">{{ party_full }}</span>
-        </li>
-        <li class="entity__term">
-          <span class="entity__term__label"><a class="term" data-term="Status">Status</a></span>
-          <span class="entity__term__data">{% if incumbent_challenge_full %}{{ incumbent_challenge_full|title }}{% endif %}</span>
-        </li>
-        {% if office == 'H' %}
-        <li class="entity__term">
-          <span class="entity__term__label"><span class="term" data-term="District">District</span></span>
-          <span class="entity__term__data">
-            <a href="{{ election_url(context(), cycle) }}">{{ constants.states[state] }} - {{ district }}</a>
-          </span>
-        </li>
-        {% elif office == 'S' %}
-        <li class="entity__term">
-          <span class="entity__term__label">State</span>
-          <span class="entity__term__data">
-            <a href="{{ election_url(context(), cycle) }}">{{ state }}</a>
-          </span>
-        </li>
-        {% endif %}
-        <li class="entity__term">
-          <span class="entity__term__label">
-            <a class="term" data-term="Principal Campaign Committee">Principal committee</a>
-          </span>
-          {% for c in committee_groups['P'] | reverse %}
-          <span class="entity__term__data">
-            <a href="{{ url_for('committee_page', c_id=c.committee_id) }}">{{ c.name }}</a>
-          </span>
-          {% endfor %}
-        </li>
-        <li class="entity__term">
-          <span class="entity__term__label">Elections</span>
-          <p class="entity__term__data">
-          {% for year, district in elections %}
-            {{ year }}{% if loop.last == false %},{% endif %}
-          {% endfor %}
-          </p>
-        </li>
-      </ul>
-      <div class="entity__header__bottom">
-        <div class="entity__cycle">
-          <span class="label">Show data for</span>
-          {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
-        </div>
-        <div class="entity__election">
-          <span class="entity__term__label">More information on this election</span>
-          <a
-            class="button card card--horizontal card--full-bleed card--neutral"
-            href="{{ election_url(context(), election_year) }}"
-            >
-            <div class="card__image__container">
-              <img class="card__image icon--complex" src="/static/img/i-elections--primary.svg" alt="Icon representing elections">
-            </div>
-            <div class="card__content">
-              <h5 class="u-no-margin t-upper t-sans">{{ election_year }} {% if office == 'P' %} Presidential election {% else %} {{office_full}} {% endif %}</h5>
-              <span class="t-block">{% if district != '00' %}{{ constants.states[state] }} - {{ district }}{% else %}{{ constants.states[state] }}{% endif %}</span>
-            </div>
-          </a>
-        </div>
-      </div>
+
+{{ header.header(name, breadcrumbs) }}
+
+<div class="u-padding--left u-padding--right tab-interface">
+  <header class="main">
+    <h1 class="entity__name">{{ name }}</h1>
+    <div class="heading--section">
+      <span class="t-data t-bold entity__type">Candidate for {{ office_full }}</span>
+      {% if office == 'S' %}
+      <span class="t-data t-bold entity__type">{{ constants.states[state] }}</span>
+      {% elif office == 'H' %}
+      <span class="t-data t-bold entity__type">{{ constants.states[state] }} - {{ district }}</span>
+      {% endif %}
+      <span class="t-data t-bold entity__type">ID: {{ candidate_id }}</span>
+      <span class="t-data t-bold">{{ party_full }}</span>
+      </h5>
     </div>
   </header>
-  <div class="page-controls page-controls--neutral sticky-bar with-transition js-sticky-bar" data-trigger-offset="100">
-    <div class="page-controls__top">
-      <div class="container">
-        <span class="page-controls__title">{{ name }}</span>
-      </div>
-    </div>
-    <div class="page-controls__bottom">
-      <div class="container">
-        <nav class="page-tabs">
-          <ul class="page-tabs__list" role="tablist" data-name="tab">
-            <li class="page-tabs__item page-tabs__years"><h2 class="u-no-margin">{{ format_election_years(cycle, election_full, duration) }}: </h2></li>
-            {{ tabs.tab('Financial summary', 'summary', 'panel1', '#section-1') }}
-            {{ tabs.tab('Spending by others to support/oppose', 'other-spending', 'panel2', '#section-2') }}
-          </ul>
-        </nav>
-      </div>
+
+  <div class="data-container__wrapper">
+
+    <nav class="sidebar side-nav-alt">
+      <ul class="tablist" role="tablist" data-name="tab">
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="summary"
+            tabindex="0"
+            aria-controls="panel1"
+            href="#section-1"
+            aria-selected="true">Financial Summary</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="about-candidate"
+            tabindex="1"
+            aria-controls="panel2"
+            href="#section-2">About this candidate</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="other-spending"
+            tabindex="2"
+            aria-controls="panel3"
+            href="#section-3">Spending by others to support or oppose</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="itemized-disbursements"
+            tabindex="3"
+            aria-controls="panel4"
+            href="#section-4">Itemized disbursements</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="individual-contributions"
+            tabindex-"4"
+            aria-controls="panel5"
+            href="#section-5">Individual contributions</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="main__content--right-full">
+
+      <section id="section-0" role="tabpanel" aria-hidden="false">
+        <div class="overlay__container">
+          <div class="overlay overlay--neutral is-loading"></div>
+        </div>
+      </section>
+
+      {% include 'partials/candidate/financial-summary.html' %}
+      {% include 'partials/candidate/about-candidate.html' %}
+      {% include 'partials/candidate/other-spending-tab.html' %}
+      {% include 'partials/candidate/itemized-disbursements.html' %}
+      {% include 'partials/candidate/individual-contributions.html' %}
     </div>
   </div>
 
-  {% include 'partials/loading-tab.html' %}
-  {% include 'partials/candidate/financial-summary.html' %}
-  {% include 'partials/candidate/other-spending-tab.html' %}
 </div>
 
 {% endblock %}
 
 {% block scripts %}
 <script>
-var context = {{ context_vars | json | safe }};
+  var context = {{ context_vars | json | safe }};
 </script>
 <script src="{{ asset_for('dist/js/pages/candidate-single.js') }}"></script>
 {% endblock %}

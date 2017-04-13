@@ -37,7 +37,7 @@ def render_legal_search_results(results, query, result_type):
         query=query,
         results=results,
         result_type=result_type,
-        category_order=get_legal_category_order(results, config.features['legal_murs']),
+        category_order=get_legal_category_order(results),
     )
 
 
@@ -169,7 +169,7 @@ report_types = {
     'I': 'ie-only'
 }
 
-def render_candidate(candidate, committees, flag, cycle, election_full=True):
+def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
 
@@ -232,10 +232,14 @@ def render_candidate(candidate, committees, flag, cycle, election_full=True):
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
     tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
 
-    if flag == 'new':
-        return render_template('candidates-single-new.html', **tmpl_vars)
-    else:
-        return render_template('candidates-single.html', **tmpl_vars)
+    tmpl_vars['cycles'] = [cycle for cycle in candidate['cycles'] if cycle <= max(candidate['election_years'])]
+
+    if aggregate:
+        tmpl_vars['raising_summary'] = utils.process_raising_data(aggregate)
+        tmpl_vars['spending_summary'] = utils.process_spending_data(aggregate)
+        tmpl_vars['cash_summary'] = utils.process_cash_data(aggregate)
+
+    return render_template('candidates-single.html', **tmpl_vars)
 
 
 def validate_referer(referer):
@@ -279,17 +283,11 @@ class GithubView(MethodView):
         issue = self.repo.create_issue(title, body=body)
         return jsonify(issue.to_json()), 201
 
-def get_legal_category_order(results, murs_enabled=True):
+def get_legal_category_order(results):
     """ Return categories in pre-defined order, moving categories with empty results
         to the end. MURs must be at the end if not enabled.
     """
-    if murs_enabled:
-        categories = ["statutes", "regulations", "advisory_opinions", "murs"]
-        category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
-                        [x for x in categories if results.get("total_" + x, 0) == 0]
-    else:
-        categories = ["statutes", "regulations", "advisory_opinions"]
-        category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
-                        [x for x in categories if results.get("total_" + x, 0) == 0] +\
-                        ["murs"]
+    categories = ["statutes", "regulations", "advisory_opinions", "murs"]
+    category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
+                    [x for x in categories if results.get("total_" + x, 0) == 0]
     return category_order

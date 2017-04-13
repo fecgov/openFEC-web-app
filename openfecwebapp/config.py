@@ -12,7 +12,8 @@ api_key = env.get_credential('FEC_WEB_API_KEY', '')
 api_key_public = env.get_credential('FEC_WEB_API_KEY_PUBLIC', '')
 cache = os.getenv('FEC_WEB_CACHE')
 cache_size = int(os.getenv('FEC_WEB_CACHE_SIZE', 1000))
-
+transition_url = env.get_credential('FEC_TRANSITION_URL', 'https://transition.fec.gov')
+classic_url = env.get_credential('FEC_CLASSIC_URL', 'http://www.fec.gov')
 cms_url = os.getenv('FEC_CMS_URL', '')
 
 # you can only give a var a string using set-env with Cloud Foundry
@@ -27,7 +28,6 @@ environment = (
 )
 
 features = {
-    'legal_murs': bool(env.get_credential('FEC_FEATURE_LEGAL_MURS', '')),
     'press': bool(env.get_credential('FEC_FEATURE_PRESS', '')),
     'latest_updates': bool(env.get_credential('FEC_FEATURE_UPDATES', ''))
 }

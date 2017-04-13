@@ -12,19 +12,23 @@
           <legend class="label">Group by:</legend>
           <label for="toggle-state">
             <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
-            <span class="button--alt">Contributor state</span>
+            <span class="button--alt">State</span>
           </label>
           <label for="toggle-contribution-size">
             <input id="toggle-contribution-size" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
-            <span class="button--alt">Contribution size</span>
+            <span class="button--alt">Size</span>
           </label>
           <label for="toggle-employer">
             <input id="toggle-employer" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-employer">
-            <span class="button--alt">Contributor employer</span>
+            <span class="button--alt">Employer</span>
           </label>
           <label for="toggle-occupation">
             <input id="toggle-occupation" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-occupation">
-            <span class="button--alt">Contributor occupation</span>
+            <span class="button--alt">Occupation</span>
+          </label>
+          <label for="toggle-itemized">
+            <input id="toggle-itemized" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="itemized-contributions">
+            <span class="button--alt">All transactions</span>
           </label>
         </fieldset>
         <a class="u-float-right button--alt button--browse"
@@ -117,6 +121,26 @@
             </thead>
           </table>
           {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}
+        </div>
+
+        <div id="itemized-contributions" class="panel-toggle-element" aria-hidden="true">
+          <div class="results-info results-info--simple">
+            <h3 class="results-info__title">All transactions</h3>
+            <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-receipts">Export</button>
+          </div>
+          <table
+              class="data-table data-table--heading-borders"
+              data-type="itemized-receipts"
+              data-committee="{{ committee.committee_id }}"
+              data-cycle="{{ cycle }}"
+            >
+            <thead>
+              <th scope="col">Contributor name</th>
+              <th scope="col">Contributor state</th>
+              <th scope="col">Receipt date</th>
+              <th scope="col">Amount</th>
+            </thead>
+          </table>
         </div>
       </div>
     </div>

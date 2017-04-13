@@ -135,7 +135,7 @@ describe('DownloadItem', function() {
         url: this.item.apiUrl,
         data: JSON.stringify({filename: this.item.filename}),
         contentType: 'application/json',
-        dataType: 'html'
+        dataType: 'json'
       });
     });
 
