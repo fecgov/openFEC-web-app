@@ -27,7 +27,8 @@ def _call_api(*path_parts, **filters):
     if config.api_key:
         filters['api_key'] = config.api_key
 
-    path = os.path.join(config.api_version, *[x.strip('/') for x in path_parts])
+    path = os.path.join(config.api_version,
+                        *[x.strip('/') for x in path_parts])
     url = parse.urljoin(config.api_location, path)
 
     results = session.get(url, params=filters)
@@ -50,10 +51,11 @@ def load_search_results(query, query_type='candidates'):
     return results['results'] if len(results) else []
 
 
-def load_legal_search_results(query, query_type='all', ao_no=None, ao_name=None,
-                                ao_min_date=None, ao_max_date=None, ao_is_pending=None,
-                                ao_requestor=None, ao_requestor_type=0,
-                                ao_category=None, offset=0, limit=20):
+def load_legal_search_results(query, query_type='all', ao_no=None,
+                              ao_name=None, ao_min_date=None,
+                              ao_max_date=None, ao_is_pending=None,
+                              ao_requestor=None, ao_requestor_type=0,
+                              ao_category=None, offset=0, limit=20):
     filters = {}
     if query or query_type == 'advisory_opinions':
         filters['hits_returned'] = limit
@@ -161,6 +163,7 @@ def load_legal_mur(mur_no):
         mur['documents_by_type'] = documents_by_type
     return mur
 
+
 def collate_dispositions(dispositions):
     """ Collate dispositions - group them by disposition, penalty """
     collated_dispositions = OrderedDict()
@@ -176,19 +179,37 @@ def collate_dispositions(dispositions):
 
 
 def load_single_type(data_type, c_id, *path, **filters):
+    # Call API with single type in load_with_nested
     data = _call_api(data_type, c_id, *path, **filters)
+    # Throw 404 if no data for candidate or committee in cycle
     return result_or_404(data)
 
+
 def load_nested_type(parent_type, c_id, nested_type, *path, **filters):
+    # Call API with nested types in load_with_nested
     return _call_api(parent_type, c_id, nested_type, *path, per_page=100, **filters)
 
 
 def load_with_nested(primary_type, primary_id, secondary_type, cycle=None,
                      cycle_key='cycle', **query):
+    """ Handle Candidate or Committee endpoint
+        Example: /candidate/P80003338/committees
+        primary_type: "candidate"
+        primary_id: "P80003338"
+        secondary_type: "committees"
+    """
     path = ('history', str(cycle)) if cycle else ('history', )
+    """ Get data for just primary_type
+        Example: candidate data for /candidate/* or committee data for /committee/*
+    """
     data = load_single_type(primary_type, primary_id, *path, per_page=1, **query)
+
     cycle = cycle or max(data['cycles'])
+
     path = ('history', str(data[cycle_key]))
+    """ Get data for secondary_type
+        Example: committee data for /candidate/P80003338/committees
+    """
     nested_data = load_nested_type(primary_type, primary_id, secondary_type, *path, **query)
     return data, nested_data['results'], cycle
 
@@ -212,10 +233,11 @@ def load_cmte_financials(committee_id, **filters):
 
 def load_candidate_totals(candidate_id, cycle, election_full=True):
     response = _call_api(
-        'candidates', 'totals',
-        candidate_id=candidate_id, cycle=cycle, election_full=election_full,
+        'candidate', candidate_id, 'totals',
+        cycle=cycle, election_full=election_full,
     )
-    return response['results'][0] if 'results' in response else None
+
+    return response['results'][0] if response['results'] else None
 
 
 def load_candidate_statement_of_candidacy(candidate_id, cycle):
@@ -226,10 +248,12 @@ def load_candidate_statement_of_candidacy(candidate_id, cycle):
 
     return response['results'][:2] if 'results' in response else None
 
+
 def result_or_404(data):
     if not data.get('results'):
         abort(404)
     return data['results'][0]
+
 
 def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
@@ -245,12 +269,14 @@ def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, 
 
         return response if 'results' in response else None
 
+
 def load_top_pacs(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
             'totals', 'pac',
             sort_hide_null=True, cycle=cycle, sort=sort, per_page=per_page
         )
         return response if 'results' in response else None
+
 
 def load_top_parties(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         response = _call_api(
@@ -259,9 +285,11 @@ def load_top_parties(sort, cycle=constants.DEFAULT_TIME_PERIOD, per_page=5):
         )
         return response if 'results' in response else None
 
+
 def _get_sorted_participants_by_type(mur):
     """
-    Returns the participants in a MUR sorted in the order of most important to least important
+    Returns the participants in a MUR sorted in the order
+    of most important to least important
     """
     SORTED_PARTICIPANT_ROLES = [
         "Primary Respondent",

@@ -134,7 +134,8 @@ DownloadItem.prototype.refresh = function() {
     method: 'POST',
     url: this.apiUrl,
     data: JSON.stringify({filename: this.filename}),
-    contentType: 'application/json'
+    contentType: 'application/json',
+    dataType: 'json'
   });
   this.promise.then(this.handleSuccess.bind(this));
   this.promise.fail(this.handleError.bind(this));

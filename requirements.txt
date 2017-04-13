@@ -8,8 +8,9 @@ github3.py==0.9.6
 hmac-authentication==1.0.0
 python-dateutil==2.4.2
 requests==2.13.0
-newrelic==2.78.0.57
+newrelic==2.82.0.62
 gunicorn==19.7.1
+gevent==1.2.1
 webargs==0.18.0
 CacheControl==0.11.5
 cachetools==1.0.2
