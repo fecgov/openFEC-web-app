@@ -212,6 +212,18 @@ ElectionLookup.prototype.serialize = function() {
   return _.extend(helpers.filterNull(params));
 };
 
+ElectionLookup.prototype.removeWrongPresidentialElections = function(results, cycle) {
+  // Hack to remove the presidential result in non-presidential years
+  // Eventually this will be handled by the API
+  if (Number(cycle) % 4 > 0) {
+    return _.filter(results, function(result) {
+      return result.office !== 'P';
+    });
+  } else {
+    return results;
+  }
+};
+
 ElectionLookup.prototype.search = function(e, opts) {
   e && e.preventDefault();
   opts = _.extend({pushState: true}, opts || {});
@@ -222,10 +234,10 @@ ElectionLookup.prototype.search = function(e, opts) {
       // Requested search options differ from saved options; request new data.
       self.xhr && self.xhr.abort();
       self.xhr = $.getJSON(self.getUrl(serialized)).done(function(response) {
+        self.results = self.removeWrongPresidentialElections(response.results, serialized.cycle);
         // Note: Update district color map before rendering results
-        self.results = response.results;
         self.drawDistricts(self.results);
-        self.draw(response.results);
+        self.draw(self.results);
       });
       self.serialized = serialized;
       if (opts.pushState) {
@@ -302,7 +314,7 @@ ElectionLookup.prototype.drawZipWarning = function() {
  */
 ElectionLookup.prototype.updateLocations = function() {
   var self = this;
-  var svg = self.$svg || $.get('/static/img/i-map--primary.svg').then(function(document) {
+  var svg = self.$svg || $.get('/static/img/i-map--primary.svg', '', null, 'xml').then(function(document) {
     self.$svg = $(document.querySelector('svg'));
     return self.$svg;
   });

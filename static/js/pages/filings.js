@@ -14,7 +14,7 @@ var dropdown = require('fec-style/js/dropdowns');
 var columns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'document_type', 'amendment_indicator', 'receipt_date', 'modal_trigger'
+    'filer_name', 'document_type', 'version', 'receipt_date', 'modal_trigger'
   ]
 );
 
@@ -40,6 +40,8 @@ $(document).ready(function() {
       });
     }
   });
+
+  $('.panel__navigation').hide();
 
   new TableSwitcher('.js-table-switcher', {
     efiling: {

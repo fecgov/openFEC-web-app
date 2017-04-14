@@ -2,14 +2,13 @@
 path: .
 memory: 512M
 timeout: 180
-domain: 18f.gov
 stack: cflinuxfs2
 buildpack: python_buildpack
 env:
   FEC_FORCE_HTTPS: true
   # Build devDependencies on `npm install`
   NPM_CONFIG_PRODUCTION: false
-  NEW_RELIC_CONFIG_FILE: newrelic.ini
+  NEW_RELIC_CONFIG_FILE: /home/vcap/app/newrelic.ini
   NEW_RELIC_LOG: stdout
 applications:
 - name: web

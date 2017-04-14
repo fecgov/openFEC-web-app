@@ -24,17 +24,24 @@ def search():
         results = api_caller.load_search_results(query, result_type)
         return views.render_search_results(results, query, result_type)
     else:
+        top_candidates_raising = api_caller.load_top_candidates('-receipts')
+        top_candidates_spending = api_caller.load_top_candidates('-disbursements')
+        top_pacs_raising = api_caller.load_top_pacs('-receipts')
+        top_pacs_spending = api_caller.load_top_pacs('-disbursements')
+        top_parties_raising = api_caller.load_top_parties('-receipts')
+        top_parties_spending = api_caller.load_top_parties('-disbursements')
         return render_template('landing.html',
             page='home',
             parent='data',
             dates=utils.date_ranges(),
-            top_candidates_raising = api_caller.load_top_candidates('-receipts')['results'],
-            top_candidates_spending = api_caller.load_top_candidates('-disbursements')['results'],
-            top_pacs_raising = api_caller.load_top_pacs('-receipts')['results'],
-            top_pacs_spending = api_caller.load_top_pacs('-disbursements')['results'],
-            top_parties_raising = api_caller.load_top_parties('-receipts')['results'],
-            top_parties_spending = api_caller.load_top_parties('-disbursements')['results'],
+            top_candidates_raising = top_candidates_raising['results'] if top_candidates_raising else None,
+            top_candidates_spending = top_candidates_spending['results'] if top_candidates_spending else None,
+            top_pacs_raising = top_pacs_raising['results'] if top_pacs_raising else None,
+            top_pacs_spending = top_pacs_spending['results'] if top_pacs_spending else None,
+            top_parties_raising = top_parties_raising['results'] if top_parties_raising else None,
+            top_parties_spending = top_parties_spending['results'] if top_parties_spending else None,
             title='Campaign finance data')
+
 
 @app.route('/api/')
 def api():
@@ -42,6 +49,7 @@ def api():
     https://18f.github.io/API-All-the-X/pages/developer_hub_kit.
     """
     return redirect(config.api_location, http.client.MOVED_PERMANENTLY)
+
 
 @app.route('/developers/')
 def developers():
@@ -51,6 +59,7 @@ def developers():
     url = furl.furl(config.api_location)
     url.path.add('developers')
     return redirect(url.url, http.client.MOVED_PERMANENTLY)
+
 
 @app.route('/candidate/<c_id>/')
 @use_kwargs({
@@ -62,12 +71,14 @@ def candidate_page(c_id, cycle=None, election_full=True):
 
     :param int cycle: Optional cycle for associated committees and financials.
     :param bool election_full: Load full election period
+
     """
     candidate, committees, cycle = api_caller.load_with_nested(
         'candidate', c_id, 'committees',
         cycle=cycle, cycle_key='two_year_period',
         election_full=election_full,
     )
+
     if election_full and cycle and cycle not in candidate['election_years']:
         next_cycle = next(
             (
@@ -79,8 +90,11 @@ def candidate_page(c_id, cycle=None, election_full=True):
         return redirect(
             url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
         )
+
     return views.render_candidate(candidate, committees, cycle, election_full)
 
+
+@app.route('/committee/<c_id>/')
 @app.route('/committee/<c_id>/')
 @use_kwargs({
     'cycle': fields.Int(),
@@ -90,8 +104,13 @@ def committee_page(c_id, cycle=None):
 
     :param int cycle: Optional cycle for financials.
     """
+
+    # If the cycle param is explicitly defined, then load that cycle
+    # Otherwise, redirect to the last cycle with reports, as determined in render_committee()
+    redirect_to_previous = False if cycle else True
     committee, candidates, cycle = api_caller.load_with_nested('committee', c_id, 'candidates', cycle)
-    return views.render_committee(committee, candidates, cycle)
+    return views.render_committee(committee, candidates, cycle, redirect_to_previous)
+
 
 @app.route('/advanced/')
 def advanced():
@@ -100,6 +119,7 @@ def advanced():
         parent='data',
         title='Advanced data'
     )
+
 
 @app.route('/candidates/')
 def candidates():
@@ -111,6 +131,7 @@ def candidates():
         title='Candidates',
         columns=constants.table_columns['candidates']
     )
+
 
 @app.route('/candidates/<office>/')
 def candidates_office(office):
@@ -126,6 +147,7 @@ def candidates_office(office):
         columns=constants.table_columns['candidates-office-' + office.lower()]
     )
 
+
 @app.route('/committees/')
 def committees():
     return render_template(
@@ -137,6 +159,7 @@ def committees():
         dates=utils.date_ranges(),
         columns=constants.table_columns['committees']
     )
+
 
 @app.route('/receipts/')
 def receipts():
@@ -150,6 +173,7 @@ def receipts():
         has_data_type_toggle=True
     )
 
+
 @app.route('/receipts/individual-contributions/')
 def individual_contributions():
     return render_template(
@@ -162,6 +186,7 @@ def individual_contributions():
         columns=constants.table_columns['individual-contributions']
     )
 
+
 @app.route('/disbursements/')
 def disbursements():
     return render_template(
@@ -173,6 +198,7 @@ def disbursements():
         columns=constants.table_columns['disbursements'],
         has_data_type_toggle=True
     )
+
 
 @app.route('/filings/')
 def filings():
@@ -187,6 +213,7 @@ def filings():
         columns=constants.table_columns['filings']
     )
 
+
 @app.route('/independent-expenditures/')
 def independent_expenditures():
     return render_template(
@@ -199,6 +226,7 @@ def independent_expenditures():
         has_data_type_toggle=True
     )
 
+
 @app.route('/electioneering-communications/')
 def electioneering_communications():
     return render_template(
@@ -210,6 +238,7 @@ def electioneering_communications():
         columns=constants.table_columns['electioneering-communications']
     )
 
+
 @app.route('/communication-costs/')
 def communication_costs():
     return render_template(
@@ -220,6 +249,31 @@ def communication_costs():
         dates=utils.date_ranges(),
         columns=constants.table_columns['communication-costs']
     )
+
+
+@app.route('/loans/')
+def loans():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        result_type='loans',
+        slug='loans',
+        title='loans',
+        columns=constants.table_columns['loans']
+    )
+
+
+@app.route('/party-coordinated-expenditures/')
+def party_coordinated_expenditures():
+    return render_template(
+        'datatable.html',
+        parent='data',
+        slug='party-coordinated-expenditures',
+        title='Party coordinated expenditures',
+        dates=utils.date_ranges(),
+        columns=constants.table_columns['party-coordinated-expenditures']
+    )
+
 
 @app.route('/reports/<form_type>/')
 def reports(form_type):
@@ -245,21 +299,32 @@ def reports(form_type):
         columns=constants.table_columns['reports-' + form_type.lower()]
     )
 
+
 @app.route('/elections/')
 def election_lookup():
     return render_template('election-lookup.html', parent='data')
+
 
 @app.route('/elections/<office>/<int:cycle>/')
 @app.route('/elections/<office>/<state>/<int:cycle>/')
 @app.route('/elections/<office>/<state>/<district>/<int:cycle>/')
 def elections(office, cycle, state=None, district=None):
+    # Get all cycles up until the cycle from the URL if it's beyond the current cycle
+    # this fixes the issue of an election page not showing user-provided cycle
+    # in the cycle select
+    max_cycle = cycle if cycle > utils.current_cycle() else utils.current_cycle()
+    cycles = utils.get_cycles(max_cycle)
+
+    if office.lower() == 'president':
+        cycles = [each for each in cycles if each % 4 == 0]
+    elif office.lower() == 'senate':
+        cycles = utils.get_state_senate_cycles(state)
+
     if office.lower() not in ['president', 'senate', 'house']:
         abort(404)
     if state and state.upper() not in constants.states:
         abort(404)
-    cycles = utils.get_cycles()
-    if office.lower() == 'president':
-        cycles = [each for each in cycles if each % 4 == 0]
+
     return render_template(
         'elections.html',
         office=office,
@@ -272,6 +337,7 @@ def elections(office, cycle, state=None, district=None):
         district=district,
         title=utils.election_title(cycle, office, state, district),
     )
+
 
 @app.route('/raising/')
 @use_kwargs({
@@ -304,6 +370,7 @@ def raising_breakdown(top_category, cycle):
         page_info=utils.page_info(top_raisers['pagination'])
     )
 
+
 @app.route('/spending/')
 @use_kwargs({
     'top_category': fields.Str(load_from='top_category', missing='P'),
@@ -334,6 +401,7 @@ def spending_breakdown(top_category, cycle):
         page_info=utils.page_info(top_spenders['pagination'])
     )
 
+
 @app.route('/legal/search/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
@@ -352,9 +420,10 @@ def legal_search(query, result_type):
 
     return views.render_legal_search_results(results, query, result_type)
 
+
 def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=None,
-                        ao_max_date=None, ao_is_pending=None, ao_requestor=None,
-                        ao_requestor_type=None, ao_category=None, **kwargs):
+                     ao_max_date=None, ao_is_pending=None, ao_requestor=None,
+                     ao_requestor_type=None, ao_category=None, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
@@ -390,9 +459,11 @@ def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=N
                         ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
                         ao_requestor, ao_requestor_type, ao_category)
 
+
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
     return views.render_legal_ao_landing()
+
 
 @app.route('/legal/enforcement/')
 def enforcement_landing():
@@ -401,12 +472,14 @@ def enforcement_landing():
         result_type='murs',
         display_name='enforcement matters')
 
+
 @app.route('/legal/statutes/')
 def statutes_landing():
     return render_template('legal-statutes-landing.html',
         parent='legal',
         result_type='statutes',
         display_name='statutes')
+
 
 @app.route('/legal/search/advisory-opinions/')
 @use_kwargs({
@@ -432,6 +505,7 @@ def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None,
                             ao_requestor_type=ao_requestor_type,
                             ao_category=ao_category)
 
+
 @app.route('/legal/search/statutes/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
@@ -439,6 +513,7 @@ def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None,
 })
 def statutes(query, offset):
     return legal_doc_search(query, 'statutes', offset=offset)
+
 
 @app.route('/legal/search/enforcement/')
 @use_kwargs({
@@ -448,10 +523,13 @@ def statutes(query, offset):
 def murs(query, offset):
     return legal_doc_search(query, 'murs', offset=offset)
 
-# TODO migrating from /legal/regulations -> /legal/search/regulations, eventually there will be a regulations landing page
+
+# TODO migrating from /legal/regulations -> /legal/search/regulations,
+# eventually there will be a regulations landing page
 @app.route('/legal/regulations/')
 def regulations_landing(*args, **kwargs):
     return redirect(url_for('regulations', *args, **kwargs))
+
 
 @app.route('/legal/search/regulations/')
 @use_kwargs({
@@ -461,6 +539,7 @@ def regulations_landing(*args, **kwargs):
 def regulations(query, offset):
     return legal_doc_search(query, 'regulations', offset=offset)
 
+
 @app.route('/legal/advisory-opinions/<ao_no>/')
 def advisory_opinion_page(ao_no):
     advisory_opinion = api_caller.load_legal_advisory_opinion(ao_no)
@@ -469,6 +548,7 @@ def advisory_opinion_page(ao_no):
         abort(404)
 
     return views.render_legal_advisory_opinion(advisory_opinion)
+
 
 @app.route('/legal/matter-under-review/<mur_no>/')
 def mur_page(mur_no):

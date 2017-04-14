@@ -29,6 +29,7 @@ Filter individual contributions
   <div class="accordion__content">
     {{ range.amount('amount', 'Contribution amount') }}
     {{ date.partition_field('date', 'Receipt date', dates ) }}
+    {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Receipts are reported periodically, according to the filer's reporting schedule. Receipts are updated as they’re processed— that time can vary.</span>
     </div>

@@ -1,43 +1,44 @@
 {% import 'macros/null.html' as null %}
-{% import 'macros/charts.html' as charts %}
 {% import 'macros/disclaimer.html' as disclaimer %}
+{% import 'macros/cycle-select.html' as select %}
 
-<section class="main" id="section-2" role="tabpanel" aria-hidden="true" aria-labelledby="section-2-heading">
-  <div class="container">
-    <div class="heading--section heading--with-action">
-      <h2 class="heading__left" id="section-2-heading">
-        Money raised by the committee: {{ cycle|fmt_year_range }}
-      </h2>
-      <a class="heading__right button--alt button--browse"
-          href="{{ url_for(
-            'individual_contributions',
-            committee_id=committee_id,
-            two_year_transaction_period=cycle,
-            min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-            max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
-          ) }}">All individual contributions data</a>
-    </div>
-    <div class="content__section">
-      <div class="row filters--horizontal">
-        <fieldset class="toggles">
+<section id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
+  <h2 id="section-3-heading">Individual contributions</h2>
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+    {{ select.committee_cycle_select(cycles, cycle, 'receipts')}}
+    <div class="entity__figure">
+      <div class="row">
+        <fieldset class="toggles u-float-left">
           <legend class="label">Group by:</legend>
           <label for="toggle-state">
             <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
-            <span class="button--alt">Contributor state</span>
+            <span class="button--alt">State</span>
           </label>
           <label for="toggle-contribution-size">
             <input id="toggle-contribution-size" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
-            <span class="button--alt">Contribution size</span>
+            <span class="button--alt">Size</span>
           </label>
           <label for="toggle-employer">
             <input id="toggle-employer" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-employer">
-            <span class="button--alt">Contributor employer</span>
+            <span class="button--alt">Employer</span>
           </label>
           <label for="toggle-occupation">
             <input id="toggle-occupation" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-occupation">
-            <span class="button--alt">Contributor occupation</span>
+            <span class="button--alt">Occupation</span>
+          </label>
+          <label for="toggle-itemized">
+            <input id="toggle-itemized" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="itemized-contributions">
+            <span class="button--alt">All transactions</span>
           </label>
         </fieldset>
+        <a class="u-float-right button--alt button--browse"
+            href="{{ url_for(
+              'individual_contributions',
+              committee_id=committee_id,
+              two_year_transaction_period=cycle,
+              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+            ) }}">Filter this data</a>
       </div>
       <div class="row">
         <div id="by-state" class="panel-toggle-element">
@@ -120,6 +121,26 @@
             </thead>
           </table>
           {{ disclaimer.disclaimer('receipts', committee.committee_id, cycle) }}
+        </div>
+
+        <div id="itemized-contributions" class="panel-toggle-element" aria-hidden="true">
+          <div class="results-info results-info--simple">
+            <h3 class="results-info__title">All transactions</h3>
+            <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-receipts">Export</button>
+          </div>
+          <table
+              class="data-table data-table--heading-borders"
+              data-type="itemized-receipts"
+              data-committee="{{ committee.committee_id }}"
+              data-cycle="{{ cycle }}"
+            >
+            <thead>
+              <th scope="col">Contributor name</th>
+              <th scope="col">Contributor state</th>
+              <th scope="col">Receipt date</th>
+              <th scope="col">Amount</th>
+            </thead>
+          </table>
         </div>
       </div>
     </div>

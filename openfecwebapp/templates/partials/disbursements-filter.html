@@ -40,6 +40,7 @@ Filter disbursements
     {% include 'partials/filters/disbursement-purpose.html' %}
     {{ range.amount('amount', 'Disbursement amount') }}
     {{ date.partition_field('date', 'Disbursement date', dates ) }}
+    {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</span>
     </div>

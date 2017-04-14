@@ -7,3 +7,15 @@
         href="{{ href }}">{{ text }}</a>
   </li>
 {% endmacro %}
+
+{% macro side_tab(text, dataname, controls, href) %}
+  <li role="presentation" class="side-nav__item">
+    <a
+        class="side-nav__link"
+        role="tab"
+        data-name="{{ dataname }}"
+        tabindex="0"
+        aria-controls="{{ controls }}"
+        href="{{ href }}">{{ text }}</a>
+  </li>
+{% endmacro %}

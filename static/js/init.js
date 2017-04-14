@@ -26,10 +26,6 @@ var stickyBar = require('fec-style/js/sticky-bar');
 var toc = require('fec-style/js/toc');
 var Search = require('fec-style/js/search');
 
-// @if SENTRY_PUBLIC_DSN
-require('raven-js').config('/* @echo SENTRY_PUBLIC_DSN */').install();
-// @endif
-
 // Include vendor scripts
 require('./vendor/tablist').init();
 
@@ -38,9 +34,13 @@ var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
 var download = require('./modules/download');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
+var SiteOrientation = require('fec-style/js/site-orientation');
 
 $(document).ready(function() {
   charts.init();
+
+  // new site orientation
+  new SiteOrientation.SiteOrientation('.js-new-site-orientation');
 
   $('.js-dropdown').each(function() {
     new dropdown.Dropdown(this);
@@ -49,7 +49,8 @@ $(document).ready(function() {
   $('.js-site-nav').each(function() {
     new siteNav.SiteNav(this, {
       cmsUrl: CMS_URL,
-      webAppUrl: BASE_PATH
+      webAppUrl: BASE_PATH,
+      transitionUrl: TRANSITION_URL
     });
   });
 
@@ -86,7 +87,7 @@ $(document).ready(function() {
   new feedback.Feedback(helpers.buildAppUrl(['issue']));
 
   // Initialize new accordions
-  $('.js-accordion').each(function(){
+  $('.js-accordion').each(function() {
     var contentPrefix = $(this).data('content-prefix') || 'accordion';
     var openFirst = $(this).data('open-first');
     var selectors = {

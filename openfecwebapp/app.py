@@ -6,7 +6,6 @@ import logging
 import datetime
 
 import furl
-from raven.contrib.flask import Sentry
 
 from hmac_authentication import hmacauth
 from flask import Flask, render_template, request, url_for
@@ -78,13 +77,16 @@ def nullify(value, *nulls):
 
 
 def get_election_url(candidate, cycle, district=None):
-    return url_for(
-        'elections',
-        office=candidate['office_full'].lower(),
-        state=nullify(candidate['state'], 'US'),
-        district=nullify(district or candidate['district'], '00'),
-        cycle=cycle,
-    )
+    if cycle:
+        return url_for(
+            'elections',
+            office=candidate['office_full'].lower(),
+            state=nullify(candidate['state'], 'US'),
+            district=nullify(district or candidate['district'], '00'),
+            cycle=cycle,
+        )
+    else:
+        return None
 
 
 try:
@@ -149,6 +151,8 @@ app.jinja_env.globals.update({
     'today': datetime.date.today,
     'format_election_years': format_election_years,
     'clean_id': clean_id,
+    'classic_url': config.classic_url,
+    'transition_url': config.transition_url
 })
 
 app.add_url_rule('/issue/', view_func=views.GithubView.as_view('issue'))
@@ -192,9 +196,6 @@ def initialize_newrelic():
         newrelic.agent.initialize()
 
 initialize_newrelic()
-
-if config.sentry_dsn:
-    Sentry(app, dsn=config.sentry_dsn)
 
 app.wsgi_app = utils.ReverseProxied(app.wsgi_app)
 app.wsgi_app = ProxyFix(app.wsgi_app)

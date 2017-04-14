@@ -7,8 +7,5 @@ def test_legal_category_order():
         "total_murs": 10,
     }
 
-    assert get_legal_category_order(results, murs_enabled=True) == [
+    assert get_legal_category_order(results) == [
         "advisory_opinions", "murs", "statutes", "regulations"]
-
-    assert get_legal_category_order(results, murs_enabled=False) == [
-        "advisory_opinions", "statutes", "regulations", "murs"]

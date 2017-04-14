@@ -1,10 +1,8 @@
 import unittest
+import datetime
+
 from unittest import mock
 from urllib.parse import urlparse, parse_qs
-import codecs
-import json
-from collections import OrderedDict
-
 
 from openfecwebapp import api_caller
 from openfecwebapp.app import app
@@ -95,28 +93,34 @@ class TestLegalSearch(unittest.TestCase):
             None, None, None, None, None, None, None, None, offset=0)
 
     @mock.patch.object(api_caller, '_call_api')
-    def test_advisory_opinion_grouping(self, _call_api_mock):
-        _call_api_mock.return_value = {'advisory_opinions':
-                [{'no': 1, 'date': '2016'}, {'no': 1, 'date': '2015'},
-                 {'no': 2, 'date': '1999'}]}
-        results = api_caller.load_legal_search_results(query='president')
-        assert results == {'advisory_opinions': OrderedDict([(1,
-            [{'no': 1, 'date': '2016'}, {'no': 1, 'date': '2015'}]),
-            (2, [{'no': 2, 'date': '1999'}])]),
-            'limit': 20, 'offset': 0, 'advisory_opinions_returned': 3}
-
-    @mock.patch.object(api_caller, '_call_api')
     def test_result_counts(self, _call_api_mock):
-        _call_api_mock.return_value = {'advisory_opinions':
-            [{'no': 1, 'date': '2016'}, {'no': 1, 'date': '2015'},
-            {'no': 2, 'date': '1999'}], 'statutes': [{}] * 4,
+        _call_api_mock.return_value = {
+            'advisory_opinions': [{'no': 1, 'date': '2016'}, {'no': 2, 'date': '1999'}],
+            'statutes': [{}] * 4,
             'regulations': [{}] * 5}
         results = api_caller.load_legal_search_results(query='president')
 
         assert len(results['advisory_opinions']) == 2
-        assert results['advisory_opinions_returned'] == 3
+        assert results['advisory_opinions_returned'] == 2
         assert results['statutes_returned'] == 4
         assert results['regulations_returned'] == 5
+
+    @mock.patch.object(api_caller, 'load_legal_search_results')
+    def test_ao_landing_page(self, load_legal_search_results):
+        today = datetime.date.today()
+        ao_min_date = today - datetime.timedelta(weeks=26)
+        response = self.app.get('legal/advisory-opinions/')
+
+        assert response.status_code == 200
+
+        # load_legal_search_results gets called twice in this view,
+        # so this mocks the two different calls and then we assert they happend
+        # http://stackoverflow.com/questions/7242433/asserting-successive-calls-to-a-mock-method
+        calls = [
+            mock.call(query='', query_type='advisory_opinions', ao_min_date=ao_min_date),
+            mock.call(query='', query_type='advisory_opinions', ao_is_pending=True, ao_category='R')
+        ]
+        load_legal_search_results.assert_has_calls(calls, any_order=True)
 
 if __name__ == '__main__':
     unittest.main()
