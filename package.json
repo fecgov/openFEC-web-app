@@ -21,7 +21,6 @@
     "gulp-extend": "^0.2.0",
     "gulp-file": "^0.2.0",
     "gulp-if": "1.2",
-    // TODO: replace with gulp-clean-css
     "gulp-minify-css": "1.1.5",
     "gulp-rename": "1.2.2",
     "gulp-rev": "3.0.1",
