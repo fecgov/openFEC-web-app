@@ -32,17 +32,14 @@
       </div>
       <div class="main__content--right">
         <section id="summary" class="content__section">
-          <div id="advisory-opinion-summary" class="main__content">
-            <p>
-              {{ advisory_opinion.summary }}
-            </p>
-          </div>
+          <h2>Summary</h2>
+          <p>{{ advisory_opinion.summary }}</p>
         </section>
         <section id="documents" class="content__section">
           <h2>Documents</h2>
           {% if final_opinion %}
             <div class="content__section">
-              <a class="button button--cta button--document button--lg" href="{{ final_opinion.url }}">Final Opinion</a> <span class="t-sans">{{ final_opinion.date | date(fmt='%B %d, %Y') }}</span>
+              <a class="button button--cta button--document button--lg" href="{{ final_opinion.url }}">Final opinion</a> <span class="t-sans u-padding--left">{{ final_opinion.date | date(fmt='%B %d, %Y') }}</span>
             </div>
           {% endif %}
           <table class="data-table simple-table" style="table-layout: auto;">
