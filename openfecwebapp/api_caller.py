@@ -46,8 +46,8 @@ def load_search_results(query, query_type=None):
         candidates = _call_api('/candidates/search', **filters)
         committees = _call_api('/committees', **filters)
         return {
-            'candidates': candidates['results'] if len(candidates) else [],
-            'committees': committees['results'] if len(committees) else [],
+            'candidates': candidates if len(candidates) else [],
+            'committees': committees if len(committees) else [],
         }
 
 def load_legal_search_results(query, query_type='all', ao_no=None,

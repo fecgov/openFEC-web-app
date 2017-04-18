@@ -75,7 +75,7 @@ $(document).ready(function() {
   // Initialize typeaheads
   new typeahead.Typeahead(
     '.js-search-input',
-    null,
+    'allData',
     BASE_PATH
   );
 
