@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders checkbox 1`] = `
+<div
+  className="filter"
+>
+  <div>
+    <input
+      checked={[Function]}
+      id="ao_is_pending"
+      name="ao_is_pending"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="ao_is_pending"
+    >
+      Show only pending requests
+    </label>
+  </div>
+</div>
+`;
