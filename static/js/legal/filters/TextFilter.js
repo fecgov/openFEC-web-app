@@ -11,6 +11,8 @@ function TextFilter(props) {
           <span className="u-visually-hidden">Search</span>
         </button>
       </div>
+      {props.helpText && <span className="t-note t-sans search__example">
+        {props.helpText}</span>}
     </div>
 }
 
