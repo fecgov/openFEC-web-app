@@ -72,12 +72,12 @@ $(document).ready(function() {
     definitionClass: 'glossary__definition accordion__content'
   });
 
-  // Initialize typeaheads
-  new typeahead.Typeahead(
-    '.js-search-input',
-    'allData',
-    BASE_PATH
-  );
+  // Initialize main search typeahead
+  new typeahead.Typeahead('.js-search-input', 'allData', BASE_PATH);
+
+  // Initialize header typeahead
+  new typeahead.Typeahead($('.js-header-search'), 'all', BASE_PATH);
+
 
   // Initialize feedback
   new feedback.Feedback(helpers.buildAppUrl(['issue']));
