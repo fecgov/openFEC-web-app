@@ -135,6 +135,11 @@ Handlebars.registerHelper('convertBoolean', function(bool) {
   }
 });
 
+Handlebars.registerHelper('format_range', function(year) {
+    var firstYear = Number(year) - 1;
+    return new Handlebars.SafeString(firstYear.toString() + '–' + year.toString());
+});
+
 function cycleDates(year) {
   return {
     min: '01-01-' + (year - 1),

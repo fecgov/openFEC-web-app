@@ -207,7 +207,6 @@ function initFilingsTable() {
     order: [[2, 'desc']],
     dom: tables.simpleDOM,
     pagingType: 'simple',
-    hideEmpty: true
   });
 }
 
@@ -218,7 +217,7 @@ function initOtherDocumentsTable() {
   var opts = {
     title: 'other documents filed',
     name: $table.data('name'),
-    cycle: $table.data('cycle')
+    cycle: $table.data('cycle'),
   };
 
   tables.DataTable.defer($table, {
@@ -232,12 +231,7 @@ function initOtherDocumentsTable() {
     dom: tables.simpleDOM,
     pagingType: 'simple',
     lengthMenu: [10, 30, 50],
-    hideEmpty: true,
-    hideEmptyOpts: {
-      dataType: opts.title,
-      name: opts.name,
-      timePeriod: opts.cycle
-    }
+    hideEmpty: false
   });
 }
 
@@ -282,9 +276,8 @@ function initSpendingTables() {
         lengthMenu: [10, 50, 100],
         hideEmpty: true,
         hideEmptyOpts: {
-          dataType: opts.title,
           name: context.name,
-          timePeriod: context.timePeriod
+          timePeriod: $table.data('cycle')
         }
       });
     }
