@@ -111,7 +111,7 @@
                   ID: {{ result.committee_id }}
                 </div>
                 <div class="post__preview t-sans">
-                  <strong>Most recent cycle:</strong> {{ result.cycles | get_max }}
+                  <strong>Active:</strong> {{ result.cycles | get_min}}&ndash;{{ result.cycles | get_max }}
                 </div>
               </li>
               {% endfor %}

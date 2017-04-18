@@ -86,3 +86,7 @@ def fmt_cycle_min_max(cycles):
 @app.template_filter()
 def get_max(list):
     return max(list)
+
+@app.template_filter()
+def get_min(list):
+    return min(list)
