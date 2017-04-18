@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders citation filter 1`] = `
+<div
+  className="filter"
+  onBlur={[Function]}
+>
+  <label
+    className="label"
+    htmlFor="ao_regulatory_citation-filter"
+  >
+    Regulatory citation
+  </label>
+  
+  <div
+    className="combo combo--search--mini"
+    style={
+      Object {
+        "display": "block",
+        "position": "relative",
+      }
+    }
+  >
+    <input
+      className="combo__input"
+      id="ao_regulatory_citation-filter"
+      name="ao_regulatory_citation"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+    <div
+      aria-live="polite"
+      className="tt-menu"
+      style={
+        Object {
+          "display": "none",
+          "left": "0px",
+          "position": "absolute",
+          "top": "100%",
+          "zIndex": 100,
+        }
+      }
+    >
+      <div
+        className="tt-dataset tt-dataset-candidate"
+      >
+        <span
+          className="tt-suggestion__header"
+        >
+          Select a citation:
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

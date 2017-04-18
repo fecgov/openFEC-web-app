@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders text filter 1`] = `
+<div
+  className="filter"
+>
+  <label
+    className="label"
+    htmlFor="ao_no-filter"
+  >
+    AO number
+  </label>
+  <div
+    className="combo combo--search--mini"
+  >
+    <input
+      className="combo__input"
+      id="ao_no-filter"
+      name="ao_no"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+    <button
+      className="combo__button button--search button--standard"
+      onClick={[Function]}
+    >
+      <span
+        className="u-visually-hidden"
+      >
+        Search
+      </span>
+    </button>
+  </div>
+</div>
+`;

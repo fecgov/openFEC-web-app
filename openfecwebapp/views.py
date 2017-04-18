@@ -36,7 +36,7 @@ def render_legal_search_results(results, query, result_type):
         query=query,
         results=results,
         result_type=result_type,
-        category_order=get_legal_category_order(results, config.features['legal_murs']),
+        category_order=get_legal_category_order(results),
     )
 
 
@@ -78,12 +78,23 @@ def render_legal_mur(mur):
 def render_legal_ao_landing():
     today = datetime.date.today()
     ao_min_date = today - datetime.timedelta(weeks=26)
-    ao_results = api_caller.load_legal_search_results(query='', query_type='advisory_opinions', ao_min_date=ao_min_date)
+    recent_aos = api_caller.load_legal_search_results(
+        query='',
+        query_type='advisory_opinions',
+        ao_min_date=ao_min_date
+    )
+    pending_aos = api_caller.load_legal_search_results(
+        query='',
+        query_type='advisory_opinions',
+        ao_category='R',
+        ao_is_pending=True
+    )
     return render_template('legal-advisory-opinions-landing.html',
         parent='legal',
         result_type='advisory_opinions',
         display_name='advisory opinions',
-        recent_aos=ao_results['advisory_opinions'])
+        recent_aos=recent_aos['advisory_opinions'],
+        pending_aos=pending_aos['advisory_opinions'])
 
 
 def to_date(committee, cycle):
@@ -282,17 +293,11 @@ class GithubView(MethodView):
         issue = self.repo.create_issue(title, body=body)
         return jsonify(issue.to_json()), 201
 
-def get_legal_category_order(results, murs_enabled=True):
+def get_legal_category_order(results):
     """ Return categories in pre-defined order, moving categories with empty results
         to the end. MURs must be at the end if not enabled.
     """
-    if murs_enabled:
-        categories = ["statutes", "regulations", "advisory_opinions", "murs"]
-        category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
-                        [x for x in categories if results.get("total_" + x, 0) == 0]
-    else:
-        categories = ["statutes", "regulations", "advisory_opinions"]
-        category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
-                        [x for x in categories if results.get("total_" + x, 0) == 0] +\
-                        ["murs"]
+    categories = ["statutes", "regulations", "advisory_opinions", "murs"]
+    category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
+                    [x for x in categories if results.get("total_" + x, 0) == 0]
     return category_order

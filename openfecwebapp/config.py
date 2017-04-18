@@ -16,6 +16,8 @@ transition_url = env.get_credential('FEC_TRANSITION_URL', 'https://transition.fe
 classic_url = env.get_credential('FEC_CLASSIC_URL', 'http://www.fec.gov')
 cms_url = os.getenv('FEC_CMS_URL', '')
 
+site_orientation_banner = bool(env.get_credential('FEC_SITE_ORIENTATION_BANNER'))
+
 # you can only give a var a string using set-env with Cloud Foundry
 # set FEC_WEB_DEBUG to any string but an empty one if you want debug on
 debug = bool(os.getenv('FEC_WEB_DEBUG'))
@@ -28,7 +30,6 @@ environment = (
 )
 
 features = {
-    'legal_murs': bool(env.get_credential('FEC_FEATURE_LEGAL_MURS', '')),
     'press': bool(env.get_credential('FEC_FEATURE_PRESS', '')),
     'latest_updates': bool(env.get_credential('FEC_FEATURE_UPDATES', ''))
 }
