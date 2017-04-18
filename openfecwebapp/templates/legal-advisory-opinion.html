@@ -25,18 +25,18 @@
       </div>
     </section>
     <section class="content__section">
-      <h2 class="t-ruled--bold t-ruled--bottom">Documents</h2>
-      <div class="content__section">
-      {% if advisory_opinion.category == "Final Opinion" %}
-        <a class="button button--cta button--document button--lg" href="{{ advisory_opinion.url }}">{{ advisory_opinion.category | lower | capitalize }}</a>
+      <h2>Documents</h2>
+      {% if final_opinion %}
+        <div class="content__section">
+          <a class="button button--cta button--document button--lg" href="{{ final_opinion.url }}">Final Opinion</a> <span class="t-sans">{{ final_opinion.date | date(fmt='%B %d, %Y') }}</span>
+        </div>
       {% endif %}
-      </div>
-      <table class="data-table data-table--text">
+      <table class="data-table simple-table">
         <thead>
           <tr>
-            <th class="cell--20">Date</th>
-            <th>Name</th>
-            <th>Document type</th>
+            <th scope="col" class="cell--20">Date</th>
+            <th scope="col">Name</th>
+            <th scope="col">Document type</th>
           </tr>
         </thead>
         <tbody>
@@ -50,9 +50,36 @@
         </tbody>
       </table>
     </section>
-    <section class="content__section is-disabled">
-      <h2 class="t-ruled--bold t-ruled--bottom">Entities</h2>
-      Coming soon.
+    <section class="content__section">
+      <h2>Entities</h2>
+      <table class="data-table simple-table">
+        <thead>
+          <tr>
+            <th scope="col" class="cell--20">Role</th>
+            <th scope="col">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entity in advisory_opinion.requestor_names %}
+            <tr>
+              <td>Requestor</td>
+              <td>{{ entity }}</td>
+            </tr>
+          {% endfor %}
+          {% for entity in advisory_opinion.representative_names %}
+            <tr>
+              <td>Counsel/representative</td>
+              <td>{{ entity }}</td>
+            </tr>
+          {% endfor %}
+          {% for entity in advisory_opinion.commenter_names %}
+            <tr>
+              <td>Commenter</td>
+              <td>{{ entity }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </section>
     <section class="content__section">
       <aside id="legal-citations" class="sidebar sidebar--primary">
