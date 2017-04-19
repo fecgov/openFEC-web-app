@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders dropdown 1`] = `
+<div
+  className="filter"
+>
+  <label
+    className="label"
+    htmlFor="ao_requestor_type"
+  >
+    Requestor Type
+  </label>
+  <select
+    id="ao_requestor_type"
+    name="ao_requestor_type"
+    onChange={[Function]}
+  >
+    <option
+      value="opt1"
+    >
+      Option 1
+    </option>
+    <option
+      value="opt2"
+    >
+      Option 2
+    </option>
+  </select>
+</div>
+`;

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders checkbox list 1`] = `
+<div
+  className="filter"
+>
+  <legend
+    className="label"
+  >
+    Document Type
+  </legend>
+  <div>
+    <input
+      checked={true}
+      id="ao_category_F"
+      name="ao_category"
+      onChange={[Function]}
+      type="checkbox"
+      value="F"
+    />
+    <label
+      htmlFor="ao_category_F"
+    >
+      Final Opinion
+    </label>
+  </div>
+  <div>
+    <input
+      checked={false}
+      id="ao_category_R"
+      name="ao_category"
+      onChange={[Function]}
+      type="checkbox"
+      value="R"
+    />
+    <label
+      htmlFor="ao_category_R"
+    >
+      Request
+    </label>
+  </div>
+</div>
+`;

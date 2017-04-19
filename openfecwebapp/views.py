@@ -20,12 +20,11 @@ from openfecwebapp import config
 from openfecwebapp import api_caller
 from openfecwebapp import utils
 
-def render_search_results(results, query, result_type):
+def render_search_results(results, query):
     return render_template(
         'search-results.html',
         parent='data',
         results=results,
-        result_type=result_type,
         query=query,
     )
 
@@ -62,9 +61,11 @@ def render_legal_doc_search_results(results, query, result_type, ao_no, ao_name,
 
 
 def render_legal_advisory_opinion(advisory_opinion):
+    final_opinion = [doc for doc in advisory_opinion['documents'] if doc['category'] == 'Final Opinion']
     return render_template(
         'legal-advisory-opinion.html',
         advisory_opinion=advisory_opinion,
+        final_opinion=final_opinion[0],
         parent='legal'
     )
 
