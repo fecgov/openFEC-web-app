@@ -1,7 +1,6 @@
 {% extends "layouts/main.html" %}
 {% import 'macros/cycle-select.html' as select %}
 {% import 'macros/overviews.html' as overviews %}
-{% set hide_header_search = true %}
 
 {% block title %}
   {{ title }}
@@ -18,8 +17,8 @@
 
 <section class="slab slab--neutral slab--spacious">
   <div class="container">
-    {{ search.search('hero', button_color="button--standard", select_class="select--alt") }}
-    <span class="t-note t-sans search__example search__example--with-select">Examples: Obama for America, C00431445; Bush, George W., P00003335</span>
+    {{ search.search('hero', button_color="button--standard") }}
+    <span class="t-note t-sans search__example">Examples: Obama for America, C00431445; Bush, George W., P00003335</span>
   </div>
 </section>
 
