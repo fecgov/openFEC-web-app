@@ -80,7 +80,7 @@ $(document).ready(function() {
   new typeahead.Typeahead('.js-search-input', 'allData', BASE_PATH);
 
   // Initialize header typeahead
-  new typeahead.Typeahead($('.js-header-search'), 'all', BASE_PATH);
+  new typeahead.Typeahead($('.js-site-search'), 'all', BASE_PATH);
 
 
   // Initialize feedback

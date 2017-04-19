@@ -1,5 +1,4 @@
 {% extends "layouts/main.html" %}
-{% import 'macros/search.html' as search %}
 {% import 'macros/page-header.html' as header %}
 
 {% block title %}
@@ -15,7 +14,7 @@
       <h1 class="heading--main">Candidate and committee profiles</h1>
     </header>
     <form action="/" method="GET" class="slab slab--inline slab--neutral">
-      <div class="container combo">
+      <div class="container combo combo--search">
         <label for="search" class="label">Search candidate and committee profiles</label>
         <input id="search"
               name="search"
@@ -24,7 +23,7 @@
               autocorrect="off"
               autocapitalize="off"
               spellcheck="false">
-        <button name="commit" type="submit" class="button--cta combo__button button--search"><span class="u-visually-hidden">Search</span></button>
+        <button type="submit" class="button--cta combo__button button--search"><span class="u-visually-hidden">Search</span></button>
       </div>
     </form>
     <div class="row">
