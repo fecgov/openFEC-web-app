@@ -278,10 +278,10 @@ table_columns = OrderedDict([
 # F3 = house and senate; F3P = presidential; F3X = pac and party
 
 RAISING_FORMATTER = OrderedDict([
-    ('receipts', {'label': 'Total receipts', 'level': '1', 'term': 'total receipts', 'link': 'receipts'}), #F3, F3P, #F3X
+    ('receipts', {'label': 'Total receipts', 'level': '1', 'term': 'total receipts'}), #F3, F3P, #F3X
     ('contributions', {'label': 'Total contributions', 'level': '2'}), #F3, F3P, F3X
-    ('individual_contributions', {'label': 'Total individual contributions', 'level': '3', 'link': 'individual_contributions'}), #F3, F3P, F3X
-    ('individual_itemized_contributions', {'label': 'Itemized individual contributions', 'level': '4'}), #F3, F3P, F3X
+    ('individual_contributions', {'label': 'Total individual contributions', 'level': '3'}), #F3, F3P, F3X
+    ('individual_itemized_contributions', {'label': 'Itemized individual contributions', 'level': '4', 'link': 'individual_contributions'}), #F3, F3P, F3X
     ('individual_unitemized_contributions', {'label': 'Unitemized individual contributions', 'level': '4'}), #F3, F3P, F3X
     ('political_party_committee_contributions', {'label': 'Party committee contributions', 'level': '3'}), #F3, F3P, F3X
     ('other_political_committee_contributions', {'label': 'Other committee contributions', 'level': '3'}), #F3, F3P, F3X
