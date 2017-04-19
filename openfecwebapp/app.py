@@ -152,7 +152,8 @@ app.jinja_env.globals.update({
     'format_election_years': format_election_years,
     'clean_id': clean_id,
     'classic_url': config.classic_url,
-    'transition_url': config.transition_url
+    'transition_url': config.transition_url,
+    'webmanager_email': 'webmanager@fec.gov'
 })
 
 app.add_url_rule('/issue/', view_func=views.GithubView.as_view('issue'))
