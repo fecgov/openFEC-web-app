@@ -12,6 +12,7 @@
     "chai": "^3.2.0",
     "concat-stream": "^1.5.0",
     "del": "^1.2.0",
+    "enzyme": "^2.8.2",
     "eslint": "^3.16.1",
     "eslint-config-react-app": "^0.5.2",
     "eslint-plugin-flowtype": "^2.30.0",
@@ -45,6 +46,9 @@
     "phantomjs-prebuilt": "^2.1.4",
     "preprocessify": "0.0.3",
     "react-test-renderer": "^15.4.2",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.4.2",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
     "stringify": "^3.1.0",
@@ -54,7 +58,7 @@
     "build": "gulp build-js && npm run build-legal && gulp build-sass",
     "build-js": "npm run build-legal && gulp build-js",
     "build-sass": "gulp build-sass",
-    "build-legal": "browserify static/js/legal/LegalSearch.js -o ./dist/js/legalSearch.js -t [ babelify --presets [ latest react ] ]",
+    "build-legal": "browserify static/js/legal/LegalApp.js -o ./dist/js/legalApp.js -t [ babelify --presets [ latest react ] ]",
     "test": "karma start && npm run test-legal",
     "test-legal": "jest",
     "test-single": "karma start --single-run --browsers PhantomJS",
@@ -70,6 +74,14 @@
     "./node_modules/fec-style/scss/**/*.scss": [
       "build-sass"
     ]
+  },
+  "jest": {
+    "globals": {
+      "API_VERSION": "v1",
+      "API_LOCATION": "https://fake.fec.api",
+      "API_KEY": "123"
+    },
+    "mocksPattern": "tests/react/__mocks__/*.js"
   },
   "repository": {
     "type": "git",

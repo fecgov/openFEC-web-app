@@ -58,6 +58,7 @@ class LegalSearch extends React.Component {
         queryPath = queryPath.addQuery(queryParam, queryState[queryParam]);
       }
     })
+
     const lastResultCount = this.state.resultCount;
     $.getJSON(queryPath.toString(), (results) => {
                   this.setState({ advisory_opinions: results.advisory_opinions,
@@ -94,6 +95,4 @@ class LegalSearch extends React.Component {
 }
 }
 
-ReactDOM.render(
-  <LegalSearch />,
-  document.getElementById('root'));
+module.exports = LegalSearch;

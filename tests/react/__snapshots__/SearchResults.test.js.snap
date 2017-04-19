@@ -25,7 +25,7 @@ exports[`renders search results 1`] = `
       <li>
         <a
           className="button button--standard"
-          href="mailto:undefined"
+          href="mailto:#contact-email"
         >
           Email our team
         </a>
