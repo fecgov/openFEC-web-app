@@ -5,7 +5,7 @@ function TextFilter(props) {
       <label className="label" htmlFor={props.name + "-filter"}>{props.label}</label>
       <div className="combo combo--search--mini">
         <input id={props.name + "-filter"} type="text" name={props.name} className="combo__input"
-            value={props.value || ''} onChange={props.handleChange} />
+            value={props.value || ''} onChange={props.handleChange} onKeyDown={props.handleKeydown}/>
         <button className="combo__button button--search button--standard"
          onClick={props.getResults}>
           <span className="u-visually-hidden">Search</span>
