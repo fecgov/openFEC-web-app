@@ -34,6 +34,7 @@ function SearchResults(props) {
               <td className="simple-table__cell"><div><i className="icon i-folder icon--inline--left"></i><strong>
               <a href={advisoryOpinionLink(advisory_opinion.no)}>AO {advisory_opinion.no}</a></strong></div>
                   <div><a href={advisoryOpinionLink(advisory_opinion.no)}>{advisory_opinion.name}</a></div>
+                  { advisory_opinion.is_pending && <div><i className="icon pending-ao__icon icon--inline--left"></i>Pending request</div> }
               </td>
               <td className="simple-table__cell">{moment(advisory_opinion.issue_date).format('MM/DD/YYYY')}</td>
               <td className="simple-table__cell">{advisory_opinion.summary}</td>
@@ -43,7 +44,7 @@ function SearchResults(props) {
                 }) : "This advisory opinion is not cited by other advisory opinions"}
               </td>
             </tr>
-            {advisory_opinion.highlights.length > 0 && <tr><td className="simple-table__cell">Document Hits</td>
+            {advisory_opinion.highlights.length > 0 && <tr><td className="simple-table__cell">Keyword matches in documents</td>
               <td colSpan="3" className="t-serif legal-search-result__hit u-padding--top simple-table__cell"
               dangerouslySetInnerHTML={ highlights(advisory_opinion) }></td></tr>}
             </tbody>
