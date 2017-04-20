@@ -19,6 +19,7 @@ class LegalSearch extends React.Component {
     this.getResults = this.getResults.bind(this);
     this.setQuery = this.setQuery.bind(this);
     this.instantQuery = this.instantQuery.bind(this);
+    this.handleKeydown = this.handleKeydown.bind(this);
     this.getResults();
   }
 
@@ -70,6 +71,12 @@ class LegalSearch extends React.Component {
                 });
   }
 
+  handleKeydown(e) {
+    if (e.keyCode === 13) {
+      this.getResults(e)
+    }
+  }
+
   render() {
     return <section className="main__content--full data-container__wrapper">
       <div id="filters" className="filters is-open">
@@ -78,7 +85,7 @@ class LegalSearch extends React.Component {
         </button>
         <div className="filters__content">
           <Filters query={this.state} setQuery={this.setQuery}
-                getResults={this.getResults} instantQuery={this.instantQuery} />
+                getResults={this.getResults} instantQuery={this.instantQuery} handleKeydown={this.handleKeydown}/>
         </div>
       </div>
       <div id="results-{{ result_type }}" className="content__section data-container__body">

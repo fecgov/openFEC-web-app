@@ -40,16 +40,16 @@ function Filters(props) {
   return <div>
             <div className="filters accordion__content">
               <TextFilter key="ao_no" name="ao_no" label="AO number" value={props.query.ao_no}
-                  handleChange={props.setQuery} getResults={props.getResults} />
+                  handleChange={props.setQuery} getResults={props.getResults} handleKeydown={props.handleKeydown} />
               <TextFilter key="ao_requestor" name="ao_requestor" label="Requestor Name (or AO Name)" value={props.query.ao_requestor}
-                    handleChange={props.setQuery} getResults={props.getResults} />
+                    handleChange={props.setQuery} getResults={props.getResults} handleKeydown={props.handleKeydown} />
               <Dropdown key="ao_requestor_type" name="ao_requestor_type" label="Requestor Type" value={props.query.ao_requestor_type}
                   options={requestorOptions} handleChange={props.instantQuery} />
             </div>
             <ul className="accordion--neutral" data-content-prefix="first">
               <FilterPanel id="first-content-0" header="Documents" startOpen={true}>
                 <TextFilter key="q" name="q" label="Keywords" value={props.query.q}
-                  handleChange={props.setQuery} getResults={props.getResults} />
+                  handleChange={props.setQuery} getResults={props.getResults} handleKeydown={props.handleKeydown} />
                 <CheckboxFilter key="ao_is_pending" name="ao_is_pending" label="Show only pending requests"
                   checked={props.query.ao_is_pending} handleChange={props.instantQuery} />
                 <CheckboxList key="ao_category" name="ao_category" label="Document Type" value={props.query.ao_category || ['F']}
@@ -77,7 +77,7 @@ function Filters(props) {
               </FilterPanel>
               <FilterPanel id="first-content-3" header="Other entities">
                 <TextFilter key="ao_entity_name" name="ao_entity_name" label="Entity name" value={props.query.ao_entity_name}
-                  handleChange={props.setQuery} getResults={props.getResults}
+                  handleChange={props.setQuery} getResults={props.getResults} handleKeydown={props.handleKeydown}
                   helpText="Search any individuals or groups involved in the opinion."/>
               </FilterPanel>
               </ul>
