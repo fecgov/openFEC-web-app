@@ -18,6 +18,7 @@ exports[`renders text filter 1`] = `
       id="ao_no-filter"
       name="ao_no"
       onChange={[Function]}
+      onKeyDown={[Function]}
       type="text"
       value=""
     />
