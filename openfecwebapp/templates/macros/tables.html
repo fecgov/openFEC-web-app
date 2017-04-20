@@ -1,7 +1,7 @@
 {% import 'macros/null.html' as null %}
 {% import 'macros/charts.html' as charts %}
 
-{% macro totals(header_name, header_value, data, report_year, header_description='') %}
+{% macro totals(header_name, header_value, data, report_year, transaction_type, id, year) %}
   <figure class="totals-table totals-table--charts js-chart-series chart-series--horizontal">
       {% if data|length %}
       <button tabindex="0" class="accordion__button accordion__button--spacious js-accordion-trigger">
@@ -9,6 +9,9 @@
         <span class="t-normal">{{ null.null(header_value | currency) }}</span>
       </button>
       <div class="accordion__content">
+        <div class="row">
+          <a class="button button--alt button--table u-float-right" href="{{ url_for(transaction_type, committee_id=id, two_year_transaction_period=year) }}">All {{ transaction_type }}</a>
+        </div>
         {% for item in data %}
           <div class="totals-table__row totals-table__row--nested">
             <div class="row">
