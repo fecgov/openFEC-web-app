@@ -97,19 +97,25 @@ describe('election lookup', function() {
     expect(this.el.serialize()).to.deep.equal({cycle: '2016', state: 'VA', district: '01'});
   });
 
-  it('should draw search results', function() {
-    var results = [
-      {cycle: 2016, office: 'P', state: 'US'},
-      {cycle: 2016, office: 'S', state: 'NJ'},
-      {cycle: 2016, office: 'H', state: 'NJ', district: '09'}
-    ];
-    this.el.serialized = {cycle: '2016', state: 'NJ', district: '09'};
-    this.el.draw(results);
-    var $rendered = this.el.$resultsItems.find('.result');
-    var titles = $rendered.map(function(idx, elm) {
-      return $(elm).find('h3').text().trim();
-    }).get();
-    expect(titles).to.deep.equal(['US President', 'NJ Senate', 'NJ House District 09']);
+  describe('drawing search results', function() {
+    beforeEach(function() {
+      this.drawItem = sinon.spy(lookup.ElectionLookup.prototype, 'drawItem');
+      this.results = [
+        {cycle: 2016, office: 'P', state: 'US'},
+        {cycle: 2016, office: 'S', state: 'NJ'},
+        {cycle: 2016, office: 'H', state: 'NJ', district: '09'}
+      ];
+      this.el.serialized = {cycle: '2016', state: 'NJ', district: '09'};
+    });
+
+    afterEach(function() {
+      this.drawItem.restore();
+    });
+
+    it('should call drawItem', function() {
+      this.el.draw(this.results);
+      expect(this.drawItem).to.have.been.called;
+    });
   });
 
   it('should show no results warning on no results by zip', function() {
