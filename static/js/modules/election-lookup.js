@@ -60,20 +60,6 @@ function formatName(result) {
   return parts.join(' ');
 }
 
-function formatElectionDateUrl(result) {
-  var now = new Date();
-  var month = now.getMonth() + 1;
-  var today = now.getFullYear() + '-' + month + '-' + now.getDate();
-  var query = {
-    'election_state': result.state,
-    'election_district': result.district,
-    'office_sought': result.office,
-    'sort': 'election_date',
-    'min_election_date': today
-  };
-  return helpers.buildUrl(['election-dates'], query);
-}
-
 function formatGenericElectionDate(result) {
   var date = moment()
     .year(result.cycle)
