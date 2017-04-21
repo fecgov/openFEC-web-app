@@ -99,7 +99,7 @@ describe('election lookup', function() {
 
   describe('drawing search results', function() {
     beforeEach(function() {
-      this.drawItem = sinon.spy(lookup.ElectionLookup.prototype, 'drawItem');
+      this.drawItem = sinon.spy(lookup.ElectionLookup.prototype, 'drawResult');
       this.results = [
         {cycle: 2016, office: 'P', state: 'US'},
         {cycle: 2016, office: 'S', state: 'NJ'},
@@ -112,7 +112,7 @@ describe('election lookup', function() {
       this.drawItem.restore();
     });
 
-    it('should call drawItem', function() {
+    it('should call drawResult', function() {
       this.el.draw(this.results);
       expect(this.drawItem).to.have.been.called;
     });
