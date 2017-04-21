@@ -84,7 +84,7 @@ class LegalSearch extends React.Component {
       <div id="results-{{ result_type }}" className="content__section data-container__body">
         <div className="results-info results-info--simple">
           <div className="results-info__left">
-            <h2 className="results-info__title">Searching Advisory Opinions</h2>
+            <h2 className="results-info__title">Searching advisory opinions</h2>
           </div>
         </div>
         <SearchResults advisory_opinions={this.state.advisory_opinions} q={this.state.q} />
