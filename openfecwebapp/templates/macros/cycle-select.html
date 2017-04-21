@@ -14,7 +14,7 @@
           value="{{ each }}"
           {% if cycle and cycle <= each and cycle > (each - duration) %}selected{% endif %}
         >
-        {{ each }}
+        {{ each|fmt_year_range }}
       </option>
     {% endfor %}
     </select>

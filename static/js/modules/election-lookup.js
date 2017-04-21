@@ -371,7 +371,8 @@ ElectionLookup.prototype.drawLocations = function($svg) {
 
 ElectionLookup.prototype.getTitle = function() {
   var params = this.serialized;
-  var title = params.cycle + ' candidates';
+  var minYear = Number(params.cycle) - 1;
+  var title = minYear + '–' + params.cycle + ' candidates';
   if (params.zip) {
     title += ' in ZIP code ' + params.zip;
   } else {
