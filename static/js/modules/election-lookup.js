@@ -46,7 +46,6 @@ function formatResult(result, lookup) {
   return _.extend({}, result, {
     officeName: officeMap[result.office],
     electionName: formatName(result),
-    electionDate: formatElectionDate(result),
     incumbent: formatIncumbent(result),
     color: formatColor(result, lookup),
     url: formatUrl(result),
@@ -61,7 +60,21 @@ function formatName(result) {
   return parts.join(' ');
 }
 
-function formatElectionDate(result) {
+function formatElectionDateUrl(result) {
+  var now = new Date();
+  var month = now.getMonth() + 1;
+  var today = now.getFullYear() + '-' + month + '-' + now.getDate();
+  var query = {
+    'election_state': result.state,
+    'election_district': result.district,
+    'office_sought': result.office,
+    'sort': 'election_date',
+    'min_election_date': today
+  };
+  return helpers.buildUrl(['election-dates'], query);
+}
+
+function formatGenericElectionDate(result) {
   var date = moment()
     .year(result.cycle)
     .month('November')
@@ -289,8 +302,12 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 };
 
 ElectionLookup.prototype.draw = function(results) {
+  var self = this;
   if (results.length) {
-    this.$resultsItems.html(resultTemplate(_.map(results, _.partial(formatResult, _, this))));
+    this.$resultsItems.empty();
+    results.forEach(function(result) {
+      self.drawItem(result);
+    });
     if (this.serialized.zip) {
       this.drawZipWarning();
     }
@@ -300,6 +317,24 @@ ElectionLookup.prototype.draw = function(results) {
     this.$resultsTitle.text('');
     this.$resultsItems.html(noResultsTemplate(this.serialized));
   }
+};
+
+ElectionLookup.prototype.drawItem = function(result) {
+  var url = formatElectionDateUrl(result);
+  var election = formatResult(result, this);
+  var self = this;
+  $.getJSON(url).done(function(response) {
+    if (response.results.length === 0) {
+      election.electionDate = formatGenericElectionDate(result);
+      election.electionType = 'General election';
+      self.$resultsItems.append(resultTemplate(election));
+    } else {
+      var parsed = moment(response.results[0].election_date, 'YYYY-MM-DD');
+      election.electionDate = parsed.isValid() ? parsed.format('MMMM Do, YYYY') : '';
+      election.electionType = response.results[0].election_type_full;
+      self.$resultsItems.append(resultTemplate(election));
+    }
+  });
 };
 
 ElectionLookup.prototype.drawZipWarning = function() {
