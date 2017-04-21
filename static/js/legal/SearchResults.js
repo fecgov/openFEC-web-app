@@ -5,7 +5,6 @@ const moment = require('moment');
 
 function SearchResults(props) {
   function highlights(advisory_opinion) {
-    console.log(advisory_opinion.highlights);
     return {__html: '&hellip;' + advisory_opinion.highlights }
   }
 
@@ -23,15 +22,15 @@ function SearchResults(props) {
       <table className="simple-table simple-table--display">
         <thead className="simple-table__header">
           <tr>
-            <th className="simple-table__header-cell">Case</th>
-            <th className="simple-table__header-cell">Date issued</th>
-            <th className="simple-table__header-cell">Summary</th>
-            <th className="simple-table__header-cell">This opinion is cited by these later opinions</th>
+            <th scope="col" className="simple-table__header-cell">Case</th>
+            <th scope="col" className="simple-table__header-cell">Date issued</th>
+            <th scope="col" className="simple-table__header-cell">Summary</th>
+            <th scope="col" className="simple-table__header-cell">This opinion is cited by these later opinions</th>
           </tr>
         </thead>
           { props.advisory_opinions.map((advisory_opinion) => {
             return <tbody key={"CASE " + advisory_opinion.no} className="simple-table__row"><tr>
-              <td className="simple-table__cell"><div><i className="icon i-folder icon--inline--left"></i><strong>
+              <td scope="row" className="simple-table__cell"><div><i className="icon i-folder icon--inline--left"></i><strong>
               <a href={advisoryOpinionLink(advisory_opinion.no)}>AO {advisory_opinion.no}</a></strong></div>
                   <div><a href={advisoryOpinionLink(advisory_opinion.no)}>{advisory_opinion.name}</a></div>
                   { advisory_opinion.is_pending && <div><i className="icon pending-ao__icon icon--inline--left"></i>Pending request</div> }
@@ -44,7 +43,7 @@ function SearchResults(props) {
                 }) : "This advisory opinion is not cited by other advisory opinions"}
               </td>
             </tr>
-            {advisory_opinion.highlights.length > 0 && <tr><td className="simple-table__cell">Keyword matches in documents</td>
+            {advisory_opinion.highlights.length > 0 && <tr><td scope="row" className="simple-table__cell">Keyword matches in documents</td>
               <td colSpan="3" className="t-serif legal-search-result__hit u-padding--top simple-table__cell"
               dangerouslySetInnerHTML={ highlights(advisory_opinion) }></td></tr>}
             </tbody>
