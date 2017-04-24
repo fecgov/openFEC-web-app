@@ -20,12 +20,11 @@ from openfecwebapp import config
 from openfecwebapp import api_caller
 from openfecwebapp import utils
 
-def render_search_results(results, query, result_type):
+def render_search_results(results, query):
     return render_template(
         'search-results.html',
         parent='data',
         results=results,
-        result_type=result_type,
         query=query,
     )
 
