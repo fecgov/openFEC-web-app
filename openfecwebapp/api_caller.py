@@ -242,10 +242,17 @@ def load_candidate_totals(candidate_id, cycle, election_full=True):
 def load_candidate_statement_of_candidacy(candidate_id, cycle):
     response = _call_api(
         'filings',
-        candidate_id=candidate_id, cycle=cycle, form_type='F2'
+        candidate_id=candidate_id, form_type='F2'
     )
 
-    return response['results'][:2] if 'results' in response else None
+    # Cycle is always the even year; so to include odd year statements,
+    # check for greater than or equal to the odd year
+    year = cycle - 1
+
+    if 'results' in response:
+        return [statement for statement in response['results'] if statement['election_year'] >= year]
+    else:
+        return []
 
 
 def result_or_404(data):
