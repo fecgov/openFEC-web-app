@@ -93,7 +93,7 @@
   },
   "dependencies": {
     "a11y-dialog": "2.3.1",
-    "aria-accordion": "0.1.1",
+    "aria-accordion": "1.0.0",
     "babel-eslint": "^7.1.1",
     "babel-preset-latest": "^6.24.0",
     "babelify": "^7.3.0",
@@ -105,7 +105,7 @@
     "datatables.net-responsive": "2.0.1",
     "es6-weak-map": "2.0.1",
     "fec-style": "10.0.0",
-    "glossary-panel": "0.2.1",
+    "glossary-panel": "1.0.0",
     "handlebars": "^4.0.5",
     "hbsfy": "2.2.1",
     "intl": "1.0.0-rc-4",
