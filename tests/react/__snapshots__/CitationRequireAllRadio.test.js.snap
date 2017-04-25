@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders citation radio 1`] = `
+<div>
+  <label>
+    If more than one citation is entered:
+  </label>
+  <input
+    checked={true}
+    id="citation_require_all_false"
+    name="ao_citation_require_all"
+    onChange={[Function]}
+    type="radio"
+    value={false}
+  />
+  <label
+    htmlFor="citation_require_all_false"
+  >
+    Show cases citing any of them
+  </label>
+  <input
+    checked={false}
+    id="citation_require_all_true"
+    name="ao_citation_require_all"
+    onChange={[Function]}
+    type="radio"
+    value={true}
+  />
+  <label
+    htmlFor="citation_require_all_true"
+  >
+    Show cases citing all of them
+  </label>
+</div>
+`;

@@ -20,9 +20,9 @@ from openfecwebapp.app import app
 def search():
     query = request.args.get('search')
     if query:
-        result_type = request.args.get('search_type') or 'candidates'
-        results = api_caller.load_search_results(query, result_type)
-        return views.render_search_results(results, query, result_type)
+        results = api_caller.load_search_results(query)
+        return views.render_search_results(results, query)
+
     else:
         top_candidates_raising = api_caller.load_top_candidates('-receipts')
         top_candidates_spending = api_caller.load_top_candidates('-disbursements')
@@ -87,8 +87,16 @@ def candidate_page(c_id, cycle=None, election_full=True):
             ),
             max(candidate['election_years']),
         )
+
+        # If the next_cycle is odd set it to whatever the cycle value was
+        # and then set election_full to false
+        # This solves an issue with special elections 
+        if next_cycle % 2 > 0:
+            next_cycle = cycle
+            election_full = False
+
         return redirect(
-            url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full='true')
+            url_for('candidate_page', c_id=c_id, cycle=next_cycle, election_full=election_full)
         )
 
     return views.render_candidate(candidate, committees, cycle, election_full)

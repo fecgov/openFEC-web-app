@@ -1,43 +1,55 @@
 const React = require('react');
 const $ = require('jquery');
+const moment = require('moment');
+
 
 function SearchResults(props) {
   function highlights(advisory_opinion) {
     return {__html: '&hellip;' + advisory_opinion.highlights }
   }
+
+  function advisoryOpinionLink(no) {
+    return $('#advisory_opinion_page').val().replace('ao_no', no)
+  }
   if(props.advisory_opinions && props.advisory_opinions.length > 0) {
-    return <ul>
+    return <div>
       <div className="message message--info">
         <h3>This feature is still in progress</h3>
         <p>We&#39;re actively building the <strong>advisory opinion search</strong>, and it doesn&#39;t yet include some
         advanced search functions. If you can&#39;t find what you&#39;re looking for, you can still <a href="http://saos.fec.gov/saos/searchao">search
         opinions on the old fec.gov</a>.</p>
       </div>
-      { props.advisory_opinions.map((advisory_opinion) => {
-        return <div key={advisory_opinion.no}><h3 className="cal-list__title">
-          <a title={ advisory_opinion.description }
-            href={ $('#advisory_opinion_page').val().replace('ao_no', advisory_opinion.no) }>
-            <span className="font-bolt">AO { advisory_opinion.no }: </span></a>
-            <span className="t-normal">{ advisory_opinion.name }</span>
-        <p className="u-padding--top">
-        <span className="t-bold">Summary: </span> <span className="t-normal">
-          { advisory_opinion.summary }
-        </span>
-        </p>
-        </h3>
-        <div className="u-padding--left">
-        <table>
-          <tbody>
-          <tr className="legal-search-result">
-            <td>
-              <div className="t-serif legal-search-result__hit u-padding--top"
-              dangerouslySetInnerHTML={ highlights(advisory_opinion) }></div>
-            </td>
+      <table className="simple-table simple-table--display">
+        <thead className="simple-table__header">
+          <tr>
+            <th scope="col" className="simple-table__header-cell">Case</th>
+            <th scope="col" className="simple-table__header-cell">Date issued</th>
+            <th scope="col" className="simple-table__header-cell">Summary</th>
+            <th scope="col" className="simple-table__header-cell">This opinion is cited by these later opinions</th>
           </tr>
-          </tbody>
-        </table>
-        </div>
-        </div> }) }</ul>
+        </thead>
+          { props.advisory_opinions.map((advisory_opinion) => {
+            return <tbody key={"CASE " + advisory_opinion.no} className="simple-table__row"><tr>
+              <td scope="row" className="simple-table__cell"><div><i className="icon i-folder icon--inline--left"></i><strong>
+              <a href={advisoryOpinionLink(advisory_opinion.no)}>AO {advisory_opinion.no}</a></strong></div>
+                  <div><a href={advisoryOpinionLink(advisory_opinion.no)}>{advisory_opinion.name}</a></div>
+                  { advisory_opinion.is_pending && <div><i className="icon pending-ao__icon icon--inline--left"></i>Pending request</div> }
+              </td>
+              <td className="simple-table__cell">{moment(advisory_opinion.issue_date).format('MM/DD/YYYY')}</td>
+              <td className="simple-table__cell">{advisory_opinion.summary}</td>
+              <td className="simple-table__cell">
+                {advisory_opinion.aos_cited_by.length > 0 ? advisory_opinion.aos_cited_by.map((citation) => {
+                  return <div key={"CITATION" + citation.no}><a href={advisoryOpinionLink(citation.no)}>{citation.no}</a></div>
+                }) : "This advisory opinion is not cited by other advisory opinions"}
+              </td>
+            </tr>
+            {advisory_opinion.highlights.length > 0 && <tr><td scope="row" className="simple-table__cell">Keyword matches in documents</td>
+              <td colSpan="3" className="t-serif legal-search-result__hit u-padding--top simple-table__cell"
+              dangerouslySetInnerHTML={ highlights(advisory_opinion) }></td></tr>}
+            </tbody>
+          }) }
+      </table>
+      </div>
   } else {
     return <div className="message message--no-icon">
       <h2 className="message__title">No results</h2>

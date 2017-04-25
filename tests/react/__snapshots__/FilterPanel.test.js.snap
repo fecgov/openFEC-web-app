@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders filter panel 1`] = `
+<li>
+  <button
+    aria-controls="first-content-0"
+    aria-expanded={true}
+    className="accordion__button"
+    onClick={[Function]}
+  >
+    Documents
+  </button>
+  <div
+    className="accordion__content filters-inner"
+    hidden={false}
+    id="first-content-0"
+  >
+    tests
+  </div>
+</li>
+`;

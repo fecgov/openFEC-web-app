@@ -82,3 +82,11 @@ def fmt_cycle_min_max(cycles):
     if len(cycles) > 1:
         return '{}–{}'.format(min(cycles), max(cycles))
     return cycles[0]
+
+@app.template_filter()
+def get_max(list):
+    return max(list)
+
+@app.template_filter()
+def get_min(list):
+    return min(list)

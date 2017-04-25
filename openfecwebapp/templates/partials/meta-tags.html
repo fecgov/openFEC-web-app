@@ -22,7 +22,7 @@
 <!-- Facebook
 ================================================== -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="{{ absolute_url() }}" />
+<meta property="og:url" content="{{ canonical_url() }}" />
 <meta property="og:title" content="{{ title | trim }} - betaFEC" />
 <meta property="og:site_name" content="betaFEC" />
 <meta property="og:description" content="{{ description }}" />
@@ -30,7 +30,7 @@
 
 <!-- Google
 ================================================== -->
-<link rel="canonical" href="https://beta.fec.gov/data">
+<link rel="canonical" href="{{ canonical_url() }}">
 
 <!-- Favicons
 ================================================== -->

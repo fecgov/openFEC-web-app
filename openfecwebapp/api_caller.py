@@ -36,20 +36,19 @@ def _call_api(*path_parts, **filters):
     return results.json() if results.ok else {}
 
 
-def load_search_results(query, query_type='candidates'):
+def load_search_results(query, query_type=None):
     filters = {}
 
     if query:
         filters['q'] = query
         filters['sort'] = ['-receipts']
-
-    url = '/' + query_type
-    if query_type == 'candidates':
-        url += '/search'
-    results = _call_api(url, **filters)
-
-    return results['results'] if len(results) else []
-
+        filters['per_page'] = 5
+        candidates = _call_api('/candidates/search', **filters)
+        committees = _call_api('/committees', **filters)
+        return {
+            'candidates': candidates if len(candidates) else [],
+            'committees': committees if len(committees) else [],
+        }
 
 def load_legal_search_results(query, query_type='all', ao_no=None,
                               ao_name=None, ao_min_date=None,
@@ -243,10 +242,17 @@ def load_candidate_totals(candidate_id, cycle, election_full=True):
 def load_candidate_statement_of_candidacy(candidate_id, cycle):
     response = _call_api(
         'filings',
-        candidate_id=candidate_id, cycle=cycle, form_type='F2'
+        candidate_id=candidate_id, form_type='F2'
     )
 
-    return response['results'][:2] if 'results' in response else None
+    # Cycle is always the even year; so to include odd year statements,
+    # check for greater than or equal to the odd year
+    year = cycle - 1
+
+    if 'results' in response:
+        return [statement for statement in response['results'] if statement['election_year'] >= year]
+    else:
+        return []
 
 
 def result_or_404(data):
