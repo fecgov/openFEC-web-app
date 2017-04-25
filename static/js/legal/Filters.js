@@ -75,6 +75,11 @@ function Filters(props) {
                     min_value={props.query.ao_min_request_date} max_value={props.query.ao_max_request_date}
                     instantQuery={props.instantQuery} setQuery={props.setQuery} />
               </FilterPanel>
+              <FilterPanel id="first-content-3" header="Other entities">
+                <TextFilter key="ao_entity_name" name="ao_entity_name" label="Entity name" value={props.query.ao_entity_name}
+                  handleChange={props.setQuery} getResults={props.getResults}
+                  helpText="Search any individuals or groups involved in the opinion."/>
+              </FilterPanel>
               </ul>
             </div>
 }

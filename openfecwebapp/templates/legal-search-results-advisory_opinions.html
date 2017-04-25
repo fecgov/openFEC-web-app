@@ -5,6 +5,7 @@
 {% block search %}
 <input id="query" type="hidden" value="{{ query }}" />
 <input id="contact-email" type="hidden" value="{{ contact_email }}" />
+<input id="advisory_opinion_page" type="hidden" value="{{ url_for('advisory_opinion_page', ao_no='ao_no') }}" />
 <div id="root"></div>
-<script src="{{ url_for('static', filename='js/legalSearch.js') }}"></script>
+<script src="{{ url_for('static', filename='js/legalApp.js') }}"></script>
 {% endblock %}

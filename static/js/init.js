@@ -34,9 +34,13 @@ var toggle = require('./modules/toggle');
 var helpers = require('./modules/helpers');
 var download = require('./modules/download');
 var CycleSelect = require('./modules/cycle-select').CycleSelect;
+var SiteOrientation = require('fec-style/js/site-orientation');
 
 $(document).ready(function() {
   charts.init();
+
+  // new site orientation
+  new SiteOrientation.SiteOrientation('.js-new-site-orientation');
 
   $('.js-dropdown').each(function() {
     new dropdown.Dropdown(this);
@@ -72,12 +76,12 @@ $(document).ready(function() {
     definitionClass: 'glossary__definition accordion__content'
   });
 
-  // Initialize typeaheads
-  new typeahead.Typeahead(
-    '.js-search-input',
-    $('.js-search-type').val(),
-    BASE_PATH
-  );
+  // Initialize main search typeahead
+  new typeahead.Typeahead('.js-search-input', 'allData', BASE_PATH);
+
+  // Initialize header typeahead
+  new typeahead.Typeahead($('.js-site-search'), 'all', BASE_PATH);
+
 
   // Initialize feedback
   new feedback.Feedback(helpers.buildAppUrl(['issue']));
@@ -87,14 +91,13 @@ $(document).ready(function() {
     var contentPrefix = $(this).data('content-prefix') || 'accordion';
     var openFirst = $(this).data('open-first');
     var selectors = {
-      body: '.js-accordion',
       trigger: '.js-accordion-trigger'
     };
     var opts = {
       contentPrefix: contentPrefix,
       openFirst: openFirst
     };
-    new Accordion(selectors, opts);
+    new Accordion(this, selectors, opts);
   });
 
   // Initialize search

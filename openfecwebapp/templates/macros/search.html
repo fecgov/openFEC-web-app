@@ -1,28 +1,15 @@
-{% macro search(location, result_type, query, button_color="button--standard", select_class="select--alt-primary") %}
+{% macro search(location, result_type, query, button_color="button--standard") %}
 {% if location == 'hero' %}
   {% set size = 'combo--search--large' %}
-  {% set candidate_option = 'Candidate profiles' %}
-  {% set committee_option = 'Committee profiles' %}
-{% else %}
-  {% set candidate_option = 'Candidates' %}
-  {% set committee_option = 'Committees' %}
 {% endif %}
-<form id="{{ location }}-search" action="{{ url_for('search') }}" autocomplete="off" class="search__container js-search">
+<form id="{{ location }}-search" action="{{ url_for('search') }}" autocomplete="off" class="search__container">
   <div class="combo combo--search {{ size }}">
-    <select class="search__select js-search-type {{select_class}}" name="search_type" aria-label="Select a search type">
-      <option value="candidates"
-        {% if result_type != 'committees' %}
-          selected
-        {% endif %}
-      >{{ candidate_option}}</option>
-      <option value="committees"
-        {% if result_type == 'committees' %}
-          selected
-        {% endif %}
-      >{{committee_option}}</option>
-    </select>
-    <input class="js-search-input combo__input" type="text" name="search"
-    aria-label="Search for {{ result_type }}"
+    <label for="search" class="label">
+      {% if location == 'hero' %}
+        <div class="tour__point tour__point--left" data-intro="<h5>Find candidates and committees</h5>Track raising, spending, debts and loans, filings and summary information for candidates and committees on redesigned profile pages."></div>
+      {% endif %}
+      Search candidate and committee profiles</label>
+    <input id="search" class="js-search-input combo__input" type="text" name="search"
     autocorrect="off" autocapitalize="off" spellcheck="false"
     value="{{ query or '' }}">
     <button type="submit" class="combo__button button--search {{ button_color }}">

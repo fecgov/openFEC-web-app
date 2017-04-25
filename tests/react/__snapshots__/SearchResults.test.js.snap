@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders search results 1`] = `
+<div
+  className="message message--no-icon"
+>
+  <h2
+    className="message__title"
+  >
+    No results
+  </h2>
+  <p>
+    Sorry, we didn’t find any documents matching 
+    .
+  </p>
+  <div
+    className="message--alert__bottom"
+  >
+    <p>
+      Think this was a mistake?
+    </p>
+    <ul
+      className="list--buttons"
+    >
+      <li>
+        <a
+          className="button button--standard"
+          href="mailto:#contact-email"
+        >
+          Email our team
+        </a>
+      </li>
+      <li>
+        <a
+          className="button button--standard"
+          href="https://github.com/18f/fec/issues"
+        >
+          File an issue
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

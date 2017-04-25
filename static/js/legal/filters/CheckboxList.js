@@ -6,7 +6,7 @@ function CheckboxList(props) {
     const newEvent = { target: { name: props.name, value: props.value } };
 
     if (props.value.indexOf(e.target.value) >= 0) {
-      newEvent.target.value.splice(props.value.indexOf(e.target.value, 1));
+      newEvent.target.value.splice(props.value.indexOf(e.target.value), 1);
     } else {
       newEvent.target.value.push(e.target.value);
     }
