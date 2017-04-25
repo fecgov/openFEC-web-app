@@ -263,6 +263,8 @@ function initSpendingTables() {
       cycle: $table.data('cycle'),
       election_full: $table.data('election-full')
     };
+    var displayCycle = helpers.formatCycleRange($table.data('cycle'), $table.data('duration'));
+
     if (opts) {
       tables.DataTable.defer($table, {
         path: opts.path,
@@ -277,7 +279,9 @@ function initSpendingTables() {
         hideEmpty: true,
         hideEmptyOpts: {
           name: context.name,
-          timePeriod: $table.data('cycle')
+          dataType: opts.title,
+          timePeriod: displayCycle,
+          reason: helpers.missingDataReason(dataType)          
         }
       });
     }
@@ -294,6 +298,7 @@ function initDisbursementsTable() {
     name: $table.data('name'),
     cycle: $table.data('cycle')
   };
+  var displayCycle = helpers.formatCycleRange($table.data('cycle'), $table.data('duration'));
 
   tables.DataTable.defer($table, {
     path: path,
@@ -313,7 +318,8 @@ function initDisbursementsTable() {
     hideEmptyOpts: {
       dataType: opts.title,
       name: opts.name,
-      timePeriod: opts.cycle
+      timePeriod: displayCycle,
+      reason: helpers.missingDataReason('disbursements')
     }
   });
 }
@@ -322,16 +328,19 @@ function initContributionsTables() {
   var $allTransactions = $('table[data-type="individual-contributions"]');
   var $contributionSize = $('table[data-type="contribution-size"]');
   var $contributorState = $('table[data-type="contributor-state"]');
-
+  var displayCycle = helpers.formatCycleRange($allTransactions.data('cycle'), 2);
+  var candidateName = $allTransactions.data('name');
   var opts = {
     // possibility of multiple committees, so split into array
     // also, filter array to remove any blank values
     committee_id: $allTransactions.data('committee-id').split(',').filter(Boolean),
     candidate_id: $allTransactions.data('candidate-id'),
     title: 'individual contributions',
-    name: $allTransactions.data('name'),
-    cycle: $allTransactions.data('cycle')
+    name: candidateName,
+    cycle: $allTransactions.data('cycle'),
   };
+
+  var reason = helpers.missingDataReason('contributions');
 
   tables.DataTable.defer($allTransactions, {
     path: ['schedules', 'schedule_a'],
@@ -349,9 +358,10 @@ function initContributionsTables() {
     useExport: true,
     hideEmpty: true,
     hideEmptyOpts: {
-      dataType: opts.title,
-      name: opts.name,
-      timePeriod: opts.cycle
+      dataType: 'individual contributions',
+      name: candidateName,
+      timePeriod: displayCycle,
+      reason: reason
     }
   });
 
@@ -438,8 +448,9 @@ function initContributionsTables() {
     hideEmpty: true,
     hideEmptyOpts: {
       dataType: 'individual contributions',
-      name: context.name,
-      timePeriod: context.timePeriod
+      name: candidateName,
+      timePeriod: displayCycle,
+      reason: reason,
     }
   });
 
