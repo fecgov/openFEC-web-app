@@ -97,26 +97,53 @@
             <h4 class="sidebar__title">Legal citations</h4>
             <div class="sidebar__content">
               <div class="grid grid--2-wide">
+                <div class="grid__item">
+                  <div class="t-bold">Statutes</div>
+                  <div class="rich-text">
+                    {% if advisory_opinion.statutory_citations %}
+                    {% for citation in advisory_opinion.statutory_citations %}
+                      <div>
+                        <a href="{{ 'http://api.fdsys.gov/link?collection=uscode&title=%s&year=mostrecent&section=%s' % (citation.title, citation.section) }}">{{ citation.title }} U.S.C. &sect;{{ citation.section }}</a></div><br>
+                    {% endfor %}
+                    {% else %}
+                      <div><em>Doesn't cite statutes</em></div>
+                    {% endif %}
+                  </div>
+                </div>
                   <div class="grid__item">
-                    <p class="t-bold">This opinion cites these earlier opinions</p>
+                    <div class="t-bold">Regulations</div>
+                    {% if advisory_opinion.regulatory_citations %}
+                    <ul>
+                    {% for citation in advisory_opinion.regulatory_citations %}
+                      <div><a href="{{ '/regulations/{0}-{1}/CURRENT#{0}-{1}'.format(citation.part, citation.section) }}">{{ citation.title }} CFR &sect;{{ citation.part }}.{{ citation.section }}</a></div><br>
+                    {% endfor %}
+                    {% else %}
+                      <div><em>Doesn't cite regulations</em></div>
+                    {% endif %}
+                  </ul>
+                  </div>
+                  <div class="grid__item">
+                    <div class="t-bold">This opinion cites these earlier opinions</div>
                     <div class="rich-text">
                       {% if advisory_opinion.ao_citations %}
                       {% for citation in advisory_opinion.ao_citations %}
-                        <p><a href="{{ url_for('advisory_opinion_page', ao_no=citation.no) }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
+                        <div><a href="{{ url_for('advisory_opinion_page', ao_no=citation.no) }}">AO {{ citation.no }}</a></div>
+                        <div><i>{{ citation.name }}</i></div><br>
                       {% endfor %}
                       {% else %}
-                        <p><em>Doesn't cite earlier opinions</em></p>
+                        <div><em>Doesn't cite earlier opinions</em></div>
                       {% endif %}
                     </div>
                   </div>
                   <div class="grid__item">
-                    <p class="t-bold">This opinion is cited by these later opinions</p>
+                    <div class="t-bold">This opinion is cited by these later opinions</div>
                     {% if advisory_opinion.aos_cited_by %}
                     {% for citation in advisory_opinion.aos_cited_by %}
-                      <p><a href="{{ url_for('advisory_opinion_page', ao_no=citation.no) }}">AO {{ citation.no }}</a><br><i>{{ citation.name }}</i></p>
+                      <div><a href="{{ url_for('advisory_opinion_page', ao_no=citation.no) }}">AO {{ citation.no }}</a></div>
+                      <div><i>{{ citation.name }}</i></div><br>
                     {% endfor %}
                     {% else %}
-                      <p><em>Isn't cited by later opinions</em></p>
+                      <div><em>Isn't cited by later opinions</em></div>
                     {% endif %}
                   </div>
               </div>
