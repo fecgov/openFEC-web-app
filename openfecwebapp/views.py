@@ -213,20 +213,18 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         election_full=election_full,
     )
 
-    # Temporarily hiding this in favor of displaying all F2s in the tables
-    # 
-    # statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
-    #     candidate['candidate_id'],
-    #     cycle=cycles
-    # )
-    #
-    # if statement_of_candidacy:
-    #     for statement in statement_of_candidacy:
-    #         # convert string to python datetime and parse for readable output
-    #         statement['receipt_date'] = datetime.datetime.strptime(statement['receipt_date'], '%Y-%m-%dT%H:%M:%S')
-    #         statement['receipt_date'] = statement['receipt_date'].strftime('%m/%d/%Y')
-    #
-    # tmpl_vars['statement_of_candidacy'] = statement_of_candidacy
+    statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
+        candidate['candidate_id'],
+        cycle=cycle
+    )
+
+    if statement_of_candidacy:
+        for statement in statement_of_candidacy:
+            # convert string to python datetime and parse for readable output
+            statement['receipt_date'] = datetime.datetime.strptime(statement['receipt_date'], '%Y-%m-%dT%H:%M:%S')
+            statement['receipt_date'] = statement['receipt_date'].strftime('%m/%d/%Y')
+
+    tmpl_vars['statement_of_candidacy'] = statement_of_candidacy
 
     tmpl_vars['committee_groups'] = committee_groups
     tmpl_vars['committees_authorized'] = committees_authorized

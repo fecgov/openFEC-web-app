@@ -197,6 +197,20 @@ var individualContributionsColumns = [
 // - Individual contributions:
 //   * Contributor state, size, all transactions
 
+function initFilingsTable() {
+  var $table = $('table[data-type="filing"]');
+  var candidateId = $table.attr('data-candidate');
+  var path = ['candidate', candidateId, 'filings'];
+  tables.DataTable.defer($table, {
+    path: path,
+    columns: filingsColumns,
+    order: [[2, 'desc']],
+    dom: tables.simpleDOM,
+    pagingType: 'simple',
+    hideEmpty: true
+  });
+}
+
 function initOtherDocumentsTable() {
   var $table = $('table[data-type="other-documents"]');
   var candidateId = $table.data('candidate');
@@ -211,7 +225,7 @@ function initOtherDocumentsTable() {
     path: path,
     query: {
       candidate_id: candidateId,
-      form_type: ['F2', 'F99']
+      form_type: 'F99'
     },
     columns: otherDocumentsColumns,
     order: [[2, 'desc']],
@@ -455,6 +469,7 @@ function initContributionsTables() {
 }
 
 $(document).ready(function() {
+  initFilingsTable();
   initOtherDocumentsTable();
   initSpendingTables();
   initDisbursementsTable();
