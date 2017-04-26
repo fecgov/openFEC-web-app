@@ -306,9 +306,9 @@ RAISING_FORMATTER = OrderedDict([
     ('other_receipts', {'label': 'Other receipts', 'level': '2'}), #F3, F3P
     ('fed_candidate_contribution_refunds', {'label': 'Candidate refunds', 'level': '2'}), #F3X
     ('other_fed_receipts', {'label': 'Other Receipts', 'level': '2'}), #F3X
-    ('total_transfers', {'label': 'Levin funds', 'level': '2'}), #F3X
-    ('transfers_from_nonfed_account', {'label': 'Non-federal transfers', 'level': '2'}), #F3X
-    ('transfers_from_nonfed_levin', {'label': 'Levin funds', 'level': '2'}), #F3X
+    ('total_transfers', {'label': 'Total transfers', 'level': '2'}), #F3X
+    ('transfers_from_nonfed_account', {'label': 'Non-federal transfers', 'level': '3'}), #F3X
+    ('transfers_from_nonfed_levin', {'label': 'Levin funds', 'level': '3'}), #F3X
     ('fed_receipts', {'label': 'Total federal receipts', 'level': '2'}), #F3X
 ])
 
