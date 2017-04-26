@@ -113,7 +113,7 @@
             <div class="content__section--extra">
               <div class="icon-heading">
                 <i class="icon-heading__image icon-circle--raising"><span class="u-visually-hidden">Icon of a piggy bank</span></i>
-                <div class="icon-heading__content"><a href="/#raising">Raising data overview</a></div>
+                <div class="icon-heading__content"><a href="{{ url_for('search') }}#raising">Raising data overview</a></div>
               </div>
             </div>
           </section>
@@ -144,7 +144,7 @@
             <div class="content__section--extra">
               <div class="icon-heading">
                 <i class="icon-heading__image icon-circle--spending"><span class="u-visually-hidden">Icon of a spreading dollar sign</span></i>
-                <div class="icon-heading__content"><a href="/#raising">Spending data overview</a></div>
+                <div class="icon-heading__content"><a href="{{ url_for('search') }}#spending">Spending data overview</a></div>
               </div>
             </div>
           </section>
@@ -164,6 +164,7 @@
             <div class="post-feed">
               <div class="post">
                 <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">All candidates</a></h3>
+                <p>Search candidates for president, Senate and House for all years by location, party and more.</p>
               </div>
               <div class="post post--child">
                 <h4><a href="{{ url_for('candidates_office', office='president') }}">Presidential candidates</a></h4>
@@ -252,13 +253,13 @@
                 <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('filings') }}">All filings</span></h3>
               </div>
               <div class="post post--child">
-                <h3><a href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a></h3>
+                <h4><a href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a></h4>
               </div>
               <div class="post post--child">
-                <h3><a href="{{ url_for('reports', form_type='house-senate', is_amended='false') }}">House and Senate committee reports</a></h3>
+                <h4><a href="{{ url_for('reports', form_type='house-senate', is_amended='false') }}">House and Senate committee reports</a></h4>
               </div>
               <div class="post post--child">
-                <h3><a href="{{ url_for('reports', form_type='pac-party', is_amended='false') }}">PAC and party committee reports</a></h3>
+                <h4><a href="{{ url_for('reports', form_type='pac-party', is_amended='false') }}">PAC and party committee reports</a></h4>
               </div>
               <!-- Commenting out while page is in progress -->
               <!--<li><a href="{{ url_for('reports', form_type='ie-only', is_amended='false') }}">Independent expenditure (Form 5) filer reports</a></li>-->

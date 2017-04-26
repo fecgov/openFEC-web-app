@@ -30,7 +30,7 @@
         <option
             value="{{ each }}"
             {% if cycle and cycle <= each and cycle > (each - 2) %}selected{% endif %}
-          >{{ each|fmt_year_range }}</option>
+          >{{ each }}</option>
       {% endfor %}
     </select>
   </div>
