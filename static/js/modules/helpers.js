@@ -311,5 +311,5 @@ module.exports = {
   amendmentVersion: amendmentVersion,
   amendmentVersionDescription: amendmentVersionDescription,
   utcDate: utcDate,
-  missingDataReason
+  missingDataReason: missingDataReason
 };
