@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, document, context */
+/* global require, document, context, WEBMANAGER_EMAIL */
 
 var $ = require('jquery');
 
@@ -278,10 +278,11 @@ function initSpendingTables() {
         lengthMenu: [10, 50, 100],
         hideEmpty: true,
         hideEmptyOpts: {
-          name: context.name,
           dataType: opts.title,
+          email: WEBMANAGER_EMAIL,
+          name: context.name,
           timePeriod: displayCycle,
-          reason: helpers.missingDataReason(dataType)          
+          reason: helpers.missingDataReason(dataType)
         }
       });
     }
@@ -316,6 +317,7 @@ function initDisbursementsTable() {
     useExport: true,
     hideEmpty: true,
     hideEmptyOpts: {
+      email: WEBMANAGER_EMAIL,
       dataType: opts.title,
       name: opts.name,
       timePeriod: displayCycle,
@@ -359,6 +361,7 @@ function initContributionsTables() {
     hideEmpty: true,
     hideEmptyOpts: {
       dataType: 'individual contributions',
+      email: WEBMANAGER_EMAIL,
       name: candidateName,
       timePeriod: displayCycle,
       reason: reason
@@ -448,6 +451,7 @@ function initContributionsTables() {
     hideEmpty: true,
     hideEmptyOpts: {
       dataType: 'individual contributions',
+      email: WEBMANAGER_EMAIL,
       name: candidateName,
       timePeriod: displayCycle,
       reason: reason,
