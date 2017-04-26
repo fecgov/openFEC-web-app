@@ -286,6 +286,7 @@ function missingDataReason(dataType) {
     'independent-expenditures': 'No independent expenditures have been made in opposition or support of this candidate',
     'communication-costs': 'No communication costs have been made in opposition or support of this candidate',
     'electioneering': 'No electioneering communications have been made that mention this candidate',
+    'ie-made': 'The committee has not made any independent expenditures'
   };
 
   return reasons[dataType] || false;
