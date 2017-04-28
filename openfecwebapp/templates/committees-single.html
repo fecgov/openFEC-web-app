@@ -12,7 +12,7 @@
 
 {% block body %}
 
-{{ header.header(name, breadcrumbs, search_type='committees') }}
+{{ header.header(name, breadcrumbs) }}
 <div class="u-padding--left u-padding--right tab-interface">
   <header class="main">
     <h1 class="entity__name content__section--narrow">{{ name }}</h1>
@@ -43,13 +43,10 @@
           {{ tabs.side_tab('Individual contributions', 'receipts', 'panel3', '#section-3') }}
         {% endif %}
           {{ tabs.side_tab('Disbursements', 'disbursements', 'panel4', '#section-4') }}
-        {% if committee_type not in ['C', 'E'] %}
-          {{ tabs.side_tab('Between committees', 'between-committees', 'panel5', '#section-5') }}
-        {% endif %}
         {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
-          {{ tabs.side_tab('Independent expenditures', 'independent-expenditures-committee', 'panel7', '#section-7') }}
+          {{ tabs.side_tab('Independent expenditures', 'independent-expenditures-committee', 'panel7', '#section-6') }}
         {% endif %}
-        {{ tabs.side_tab('Filings', 'filings', 'panel5', '#section-6') }}
+        {{ tabs.side_tab('Filings', 'filings', 'panel5', '#section-5') }}
       </ul>
     </nav>
 
@@ -63,9 +60,6 @@
         {% include 'partials/committee/receipts.html' %}
       {% endif %}
       {% include 'partials/committee/disbursements.html' %}
-      {% if committee_type not in ['C', 'E'] %}
-        {% include 'partials/committee/between-committees.html' %}
-      {% endif %}
       {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
         {% include 'partials/committee/independent-expenditures.html' %}
       {% endif %}

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-  {{ header.header(title, show_search=False) }}
+  {{ header.header(title) }}
 <section class="main" id="election-lookup" >
   <div class="container">
     <header class="heading--main">
@@ -16,7 +16,7 @@
     <div class="search-controls">
       <form>
         <div class="search-controls__row">
-          {{ select.cycle_select(cycles, location='form') }}
+          {{ select.cycle_select(cycles, location='form', range=True) }}
         </div>
         <div class="search-controls__row">
           <div class="search-controls__either">

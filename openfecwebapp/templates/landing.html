@@ -1,7 +1,6 @@
 {% extends "layouts/main.html" %}
 {% import 'macros/cycle-select.html' as select %}
 {% import 'macros/overviews.html' as overviews %}
-{% set hide_header_search = true %}
 
 {% block title %}
   {{ title }}
@@ -18,8 +17,8 @@
 
 <section class="slab slab--neutral slab--spacious">
   <div class="container">
-    {{ search.search('hero', button_color="button--standard", select_class="select--alt") }}
-    <span class="t-note t-sans search__example search__example--with-select">Examples: Obama for America, C00431445; Bush, George W., P00003335</span>
+    {{ search.search('hero', button_color="button--standard") }}
+    <span class="t-note t-sans search__example">Examples: Obama for America, C00431445; Bush, George W., P00003335</span>
   </div>
 </section>
 
@@ -104,7 +103,7 @@
 {% block modals %}
 <div class="js-modal modal" id="raised-modal" aria-hidden="true">
   <div tabindex="-1" class="modal__overlay" data-a11y-dialog-hide></div>
-  <div role="dialog" class="modal__content" aria-lablledby="raised-modal-title">
+  <div role="dialog" class="modal__content" aria-labelledby="raised-modal-title">
     <div role="document">
       <button type="button" class="modal__close button--close--primary" data-a11y-dialog-hide title="Close this dialog window"></button>
       <h2 id="raised-modal-title" tabindex="0">Methodology</h2>
@@ -133,7 +132,7 @@
 </div>
 <div class="js-modal modal" id="spending-modal" aria-hidden="true">
   <div tabindex="-1" class="modal__overlay" data-a11y-dialog-hide></div>
-  <div role="dialog" class="modal__content" aria-lablledby="spending-modal-title">
+  <div role="dialog" class="modal__content" aria-labelledby="spending-modal-title">
     <div role="document">
       <button type="button" class="modal__close button--close--primary" data-a11y-dialog-hide title="Close this dialog window"></button>
       <h2 id="spending-modal-title">Methodology</h2>

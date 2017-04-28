@@ -1,4 +1,4 @@
-{% macro years(name, label, max_year=2016, min_year=1978) %}
+{% macro years(name, label) %}
 <fieldset class="js-filter js-dropdown filter" data-filter="checkbox">
   <legend class="label">{{ label }}</legend>
   <ul class="dropdown__selected"></ul>
@@ -6,7 +6,7 @@
     <button type="button" class="dropdown__button button--alt" data-name="{{ name }}">More</button>
     <div id="{{ name }}-dropdown" class="dropdown__panel" aria-hidden="true">
       <ul class="dropdown__list">
-      {% for year in range(max_year, min_year, -2) %}
+      {% for year in range(constants.END_YEAR, constants.START_YEAR, -2) %}
         <li class="dropdown__item">
           <input id="{{ name }}-checkbox-{{ year }}" name="{{ name }}" type="checkbox" value="{{ year }}" />
           <label class="dropdown__value" for="{{name}}-checkbox-{{ year }}">{{ year | fmt_year_range }}</label>

@@ -85,6 +85,11 @@ Handlebars.registerHelper('decodeMeans', function(value) {
   return decoders.means[value] || value;
 });
 
+Handlebars.registerHelper('formNumber', function(value) {
+  // Strips the F from F3X etc.
+  return value.split('F')[1];
+});
+
 Handlebars.registerHelper('basePath', BASE_PATH);
 
 Handlebars.registerHelper('panelRow', function(label, options) {

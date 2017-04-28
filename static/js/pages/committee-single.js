@@ -46,33 +46,6 @@ var sizeColumns = [
   }
 ];
 
-var committeeColumns = [
-  {
-    data: 'committee_name',
-    className: 'all',
-    orderable: false,
-    render: function(data, type, row, meta) {
-      return columnHelpers.buildEntityLink(
-        data,
-        helpers.buildAppUrl(['committee', row.committee_id]),
-        'committee'
-      );
-    }
-  },
-  {
-    data: 'total',
-    className: 'all',
-    orderable: false,
-    orderSequence: ['desc', 'asc'],
-    render: columnHelpers.buildTotalLink(['disbursements'], function(data, type, row, meta) {
-      return {
-        committee_id: row.committee_id,
-        recipient_name: row.recipient_id
-      };
-    })
-  }
-];
-
 var stateColumns = [
   {
     data: 'state_full',
@@ -345,30 +318,6 @@ $(document).ready(function() {
       }
     };
     switch ($table.attr('data-type')) {
-      case 'committee-contributor':
-        path = ['schedules', 'schedule_b', 'by_recipient_id'];
-        tables.DataTable.defer($table, {
-          path: path,
-          query: _.extend({
-            recipient_id: committeeId
-          }, query),
-          columns: committeeColumns,
-          callbacks: aggregateCallbacks,
-          dom: tables.simpleDOM,
-          order: [[1, 'desc']],
-          pagingType: 'simple',
-          lengthChange: true,
-          pageLength: 10,
-          lengthMenu: [10, 50, 100],
-          aggregateExport: true,
-          hideEmpty: true,
-          hideEmptyOpts: {
-            dataType: 'disbursements received from other committees',
-            name: context.name,
-            timePeriod: context.timePeriod
-          }
-        });
-        break;
       case 'contribution-size':
         path = ['committee', committeeId, 'schedules', 'schedule_a', 'by_size'];
         tables.DataTable.defer($table, {

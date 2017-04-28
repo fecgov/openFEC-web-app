@@ -147,7 +147,16 @@ More information about using SSH with cloud.dov can be found in the [cloud.gov S
 
 ### Deployment
 
-*Likely only useful for 18F team members*
+*Likely only useful for 18F FEC team members*
+
+We use Travis for automated deploys after tests pass. If you want to deploy something it is much better to push an empty commit with a tag than doing a manual deploy.
+
+    git checkout master
+    git commit --allow-empty -m 'Message indicating what the commit is for'
+    git tag -a -m 'Message about the tag' <tagname> <commit id generated above with commit above>
+    git push --follow-tags origin master
+
+If there is a problem with Travis and something needs to be deployed, you can do so with the following commands. Though, you will need to pull the environment variables from the space you are deploying to and remake your static assets. That will ensure things like the links are correct. You will also want to clear your dist/ directory. That way, you will not exceed the alloted space. 
 
 Before deploying, install the [Cloud Foundry CLI](https://docs.cloudfoundry.org/devguide/cf-cli/install-go-cli.html) and the [autopilot plugin](https://github.com/concourse/autopilot):
 

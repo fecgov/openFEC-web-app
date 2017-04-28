@@ -46,7 +46,6 @@ function formatResult(result, lookup) {
   return _.extend({}, result, {
     officeName: officeMap[result.office],
     electionName: formatName(result),
-    electionDate: formatElectionDate(result),
     incumbent: formatIncumbent(result),
     color: formatColor(result, lookup),
     url: formatUrl(result),
@@ -61,7 +60,7 @@ function formatName(result) {
   return parts.join(' ');
 }
 
-function formatElectionDate(result) {
+function formatGenericElectionDate(result) {
   var date = moment()
     .year(result.cycle)
     .month('November')
@@ -168,6 +167,7 @@ ElectionLookup.prototype.init = function() {
   this.serialized = {};
   this.results = [];
   this.xhr = null;
+  this.upcomingElections = [];
 
   this.$form = this.$elm.find('form');
   this.$zip = this.$form.find('[name="zip"]');
@@ -183,6 +183,7 @@ ElectionLookup.prototype.init = function() {
   this.$form.on('submit', this.search.bind(this));
   $(window).on('popstate', this.handlePopState.bind(this));
 
+  this.getUpcomingElections();
   this.handleStateChange();
   this.handlePopState();
 
@@ -191,6 +192,24 @@ ElectionLookup.prototype.init = function() {
     drawStates: _.isEmpty(this.serialized),
     handleSelect: this.handleSelectMap.bind(this)
   });
+};
+
+ElectionLookup.prototype.getUpcomingElections = function() {
+  // Call the API to get a list of upcoming election dates
+  var now = new Date();
+  var month = now.getMonth() + 1;
+  var today = now.getFullYear() + '-' + month + '-' + now.getDate();
+  var query = {
+    'sort': 'election_date',
+    'min_election_date': today
+  };
+  var url = helpers.buildUrl(['election-dates'], query);
+  var self = this;
+  if (Number(this.$cycle.val()) >= now.getFullYear()) {
+    $.getJSON(url).done(function(response) {
+        self.upcomingElections = response.results;
+    });
+  }
 };
 
 ElectionLookup.prototype.handleSelectMap = function(state, district) {
@@ -289,8 +308,12 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 };
 
 ElectionLookup.prototype.draw = function(results) {
+  var self = this;
   if (results.length) {
-    this.$resultsItems.html(resultTemplate(_.map(results, _.partial(formatResult, _, this))));
+    this.$resultsItems.empty();
+    results.forEach(function(result) {
+      self.drawResult(result);
+    });
     if (this.serialized.zip) {
       this.drawZipWarning();
     }
@@ -299,6 +322,30 @@ ElectionLookup.prototype.draw = function(results) {
   } else {
     this.$resultsTitle.text('');
     this.$resultsItems.html(noResultsTemplate(this.serialized));
+  }
+};
+
+ElectionLookup.prototype.drawResult = function(result) {
+  var election = formatResult(result, this);
+  var upcomingElections = _.filter(this.upcomingElections, function(upcoming) {
+    if (election.office === 'H') {
+      return upcoming.election_state === election.state &&
+              upcoming.election_district === Number(election.district);
+    } else if (election.office === 'S') {
+      return upcoming.election_state === election.state &&
+              upcoming.office_sought === election.office;
+    }
+  });
+
+  if (upcomingElections.length > 0) {
+    var parsed = moment(upcomingElections[0].election_date, 'YYYY-MM-DD');
+    election.electionDate = parsed.isValid() ? parsed.format('MMMM Do, YYYY') : '';
+    election.electionType = upcomingElections[0].election_type_full;
+    this.$resultsItems.append(resultTemplate(election));
+  } else {
+    election.electionDate = formatGenericElectionDate(election);
+    election.electionType = 'General election';
+    this.$resultsItems.append(resultTemplate(election));
   }
 };
 
@@ -336,7 +383,8 @@ ElectionLookup.prototype.drawLocations = function($svg) {
 
 ElectionLookup.prototype.getTitle = function() {
   var params = this.serialized;
-  var title = params.cycle + ' candidates';
+  var minYear = Number(params.cycle) - 1;
+  var title = minYear + '–' + params.cycle + ' candidates';
   if (params.zip) {
     title += ' in ZIP code ' + params.zip;
   } else {
