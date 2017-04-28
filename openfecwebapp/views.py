@@ -62,10 +62,11 @@ def render_legal_doc_search_results(results, query, result_type, ao_no, ao_name,
 
 def render_legal_advisory_opinion(advisory_opinion):
     final_opinion = [doc for doc in advisory_opinion['documents'] if doc['category'] == 'Final Opinion']
+    final_opinion = final_opinion[0] if len(final_opinion) > 0 else None
     return render_template(
         'legal-advisory-opinion.html',
         advisory_opinion=advisory_opinion,
-        final_opinion=final_opinion[0],
+        final_opinion=final_opinion,
         parent='legal'
     )
 
