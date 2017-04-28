@@ -35,7 +35,9 @@ function SearchResults(props) {
                   <div><a href={advisoryOpinionLink(advisory_opinion.no)}>{advisory_opinion.name}</a></div>
                   { advisory_opinion.is_pending && <div><i className="icon pending-ao__icon icon--inline--left"></i>Pending request</div> }
               </td>
-              <td className="simple-table__cell">{moment(advisory_opinion.issue_date).format('MM/DD/YYYY')}</td>
+              <td className="simple-table__cell">{advisory_opinion.issue_date !== "1900-01-01" ?
+                                                    moment(advisory_opinion.issue_date).format('MM/DD/YYYY')
+                                                    : "Date pending"}</td>
               <td className="simple-table__cell">{advisory_opinion.summary}</td>
               <td className="simple-table__cell">
                 {advisory_opinion.aos_cited_by.length > 0 ? advisory_opinion.aos_cited_by.map((citation) => {
