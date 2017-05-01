@@ -50,6 +50,7 @@ var messageTimer;
 
 // Only show table after draw
 $(document.body).on('draw.dt', function() {
+  $('.dataTable tbody').attr('role', 'rowgroup');
   $('.dataTable tbody td:first-child').attr('scope','row');
 });
 
