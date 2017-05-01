@@ -71,6 +71,7 @@ class LegalSearch extends React.Component {
                   this.setState({ advisory_opinions: results.advisory_opinions,
                   resultCount: results.total_advisory_opinions,
                   lastResultCount }, () => {
+                    queryPath = queryPath.removeSearch('api_key');
                     window.history.pushState(URI.parseQuery(queryPath.query()),
                       null, queryPath.search().toString());
                   });
