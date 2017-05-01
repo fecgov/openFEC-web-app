@@ -454,6 +454,11 @@ DataTable.prototype.initTable = function() {
 
   this.$body.css('width', '100%');
   this.$body.find('tbody').addClass('js-panel-toggle');
+  // If there's a length select, add the id to the label
+  if ($('#results_length').length) {
+    $('#results_length label').attr('for', 'results-length');
+    $('#results_length select').attr('id', 'results-length');
+  }
 };
 
 DataTable.prototype.initFilters = function() {
