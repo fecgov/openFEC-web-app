@@ -50,9 +50,11 @@
     {{#panelRow "Memo"}}
       {{memo_text}}
     {{/panelRow}}
-    {{#panelRow "Reported on"}}
-      Form {{formNumber filing_form }} on line {{line_number}}
-    {{/panelRow}}
+    {{#if filing_form}}
+      {{#panelRow "Reported on"}}
+        Form {{formNumber filing_form }} on line {{line_number}}
+      {{/panelRow}}
+    {{/if}}
     {{#panelRow "Election type"}}
       {{fec_election_type_desc}}
     {{/panelRow}}
