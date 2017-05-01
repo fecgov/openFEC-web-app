@@ -90,7 +90,7 @@ def candidate_page(c_id, cycle=None, election_full=True):
 
         # If the next_cycle is odd set it to whatever the cycle value was
         # and then set election_full to false
-        # This solves an issue with special elections 
+        # This solves an issue with special elections
         if next_cycle % 2 > 0:
             next_cycle = cycle
             election_full = False
@@ -151,6 +151,7 @@ def candidates_office(office):
         result_type='candidates',
         title='candidates for ' + office,
         slug='candidates-office',
+        office=office.lower(),
         table_context=OrderedDict([('office', office)]),
         columns=constants.table_columns['candidates-office-' + office.lower()]
     )
