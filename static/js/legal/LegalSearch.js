@@ -13,6 +13,12 @@ class LegalSearch extends React.Component {
     initState.q = initState.search;
     initState.type = initState.search_type;
     initState.advisory_opinions = [];
+    if(initState.ao_statutory_citation && !Array.isArray(initState.ao_statutory_citation)){
+      initState.ao_statutory_citation = [initState.ao_statutory_citation];
+    }
+    if(initState.ao_regulatory_citation && !Array.isArray(initState.ao_regulatory_citation)){
+      initState.ao_regulatory_citation = [initState.ao_regulatory_citation];
+    }
     initState.from_hit = initState.from_hit ? parseInt(initState.from_hit, 10) : 0;
     this.state = initState;
 
