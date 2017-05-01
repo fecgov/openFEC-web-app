@@ -16,10 +16,10 @@
   <button type="button" class="js-accordion-trigger accordion__button">Candidate information</button>
   <div class="accordion__content">
     {% include 'partials/filters/parties.html' %}
-    {% if office in ['senate', 'house'] %}
+    {% if table_context['office'] in ['senate', 'house'] %}
       {{ states.field('state') }}
     {% endif %}
-    {% if office == 'house' %}
+    {% if table_context['office'] == 'house' %}
       {% include 'partials/filters/districts.html' %}
     {% endif %}
   </div>
@@ -29,7 +29,7 @@
     {{ range_filter.amount('disbursements', 'Total disbursements') }}
     {{ range_filter.amount('cash_on_hand_end_period', 'Cash on hand') }}
     {{ range_filter.amount('debts_owed_by_committee', 'Debts owed by committee') }}
-    {% if office == 'president' %}
+    {% if table_context['office'] == 'president' %}
       <div class="js-filter">
         <input id="federal-funds-flag" name="federal_funds_flag" type="checkbox" value="true">
         <label class="dropdown__value" for="federal-funds-flag">Has accepted presidential public funds</label>

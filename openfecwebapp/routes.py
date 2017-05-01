@@ -151,7 +151,6 @@ def candidates_office(office):
         result_type='candidates',
         title='candidates for ' + office,
         slug='candidates-office',
-        office=office.lower(),
         table_context=OrderedDict([('office', office)]),
         columns=constants.table_columns['candidates-office-' + office.lower()]
     )
