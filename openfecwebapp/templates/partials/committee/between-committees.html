@@ -6,14 +6,14 @@
     {{ select.committee_cycle_select(cycles, cycle, 'between-committees')}}
     <div class="entity__figure">
       <div class="row">
-        <fieldset class="toggles u-float-left">
+        <fieldset class="toggles js-toggles u-float-left">
           <legend class="label" for="transfers">Group by:</legend>
           <label for="toggle-from">
-            <input id="toggle-from" type="radio" class="panel-toggle-control" name="transfers" value="from-committees" checked>
+            <input id="toggle-from" type="radio" class="js-panel-toggle-control" name="transfers" value="from-committees" checked>
             <span class="button--alt">Disbursements received from committees</span>
           </label>
           <label for="toggle-to">
-            <input id="toggle-to" type="radio" class="panel-toggle-control" name="transfers" value="to-committees">
+            <input id="toggle-to" type="radio" class="js-panel-toggle-control" name="transfers" value="to-committees">
             <span class="button--alt">Disbursements to committees</span>
           </label>
         </fieldset>

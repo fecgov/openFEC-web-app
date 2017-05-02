@@ -80,7 +80,6 @@ function buildEntityLink(data, url, category, opts) {
   anchor.setAttribute('href', url);
   anchor.setAttribute('title', data);
   anchor.setAttribute('data-category', category);
-  anchor.classList.add('single-link');
 
   if (opts.isIncumbent) {
     anchor.classList.add('is-incumbent');

@@ -20,11 +20,11 @@
         </div>
       </div>
       <div id="{{slug}}" class="data-container__datatable">
-        <table id="results" class="data-table data-table--heading-borders" aria-live="polite">
-          <thead>
-            <tr>
+        <table id="results" class="data-table data-table--heading-borders" aria-live="polite" role="grid">
+          <thead role="rowgroup">
+            <tr role="row">
               {% for column in columns %}
-                <th scope="col">{{ column }}</th>
+                <th scope="col" role="columnheader">{{ column }}</th>
               {% endfor %}
               <th scope="col"></th>
             </tr>
