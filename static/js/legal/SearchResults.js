@@ -11,6 +11,19 @@ function SearchResults(props) {
   function advisoryOpinionLink(no) {
     return $('#advisory_opinion_page').val().replace('ao_no', no)
   }
+
+  function getIssueDate(advisory_opinion) {
+    if(advisory_opinion.issue_date === "1900-01-01") {
+      if(advisory_opinion.is_pending) {
+        return "Pending";
+      } else {
+        return "Withdrawn";
+      }
+    } else {
+        return moment(advisory_opinion.issue_date).format('MM/DD/YYYY');
+      }
+  }
+
   if(props.advisory_opinions && props.advisory_opinions.length > 0) {
     return <div>
       <div className="message message--info">
@@ -35,7 +48,7 @@ function SearchResults(props) {
                   <div><a href={advisoryOpinionLink(advisory_opinion.no)}>{advisory_opinion.name}</a></div>
                   { advisory_opinion.is_pending && <div><i className="icon pending-ao__icon icon--inline--left"></i>Pending request</div> }
               </td>
-              <td className="simple-table__cell">{moment(advisory_opinion.issue_date).format('MM/DD/YYYY')}</td>
+              <td className="simple-table__cell">{getIssueDate(advisory_opinion)}</td>
               <td className="simple-table__cell">{advisory_opinion.summary}</td>
               <td className="simple-table__cell">
                 {advisory_opinion.aos_cited_by.length > 0 ? advisory_opinion.aos_cited_by.map((citation) => {

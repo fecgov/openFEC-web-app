@@ -1,4 +1,5 @@
 const $ = require('jquery');
+const _ = require('underscore');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const URI = require('urijs');
@@ -13,6 +14,12 @@ class LegalSearch extends React.Component {
     initState.q = initState.search;
     initState.type = initState.search_type;
     initState.advisory_opinions = [];
+    if(initState.ao_statutory_citation && !Array.isArray(initState.ao_statutory_citation)){
+      initState.ao_statutory_citation = [initState.ao_statutory_citation];
+    }
+    if(initState.ao_regulatory_citation && !Array.isArray(initState.ao_regulatory_citation)){
+      initState.ao_regulatory_citation = [initState.ao_regulatory_citation];
+    }
     initState.from_hit = initState.from_hit ? parseInt(initState.from_hit, 10) : 0;
     this.state = initState;
 
@@ -50,7 +57,7 @@ class LegalSearch extends React.Component {
                 .addQuery('api_key', window.API_KEY)
                 .addQuery('type', 'advisory_opinions');
 
-    const queryState = Object.assign({}, this.state);
+    const queryState = _.extend({}, this.state);
     queryState.search = queryState.q;
     Object.keys(queryState).forEach((queryParam) => {
       if(['advisory_opinions', 'resultCount', 'lastResultCount', 'lastFilter'].indexOf(queryParam) === -1
@@ -64,6 +71,7 @@ class LegalSearch extends React.Component {
                   this.setState({ advisory_opinions: results.advisory_opinions,
                   resultCount: results.total_advisory_opinions,
                   lastResultCount }, () => {
+                    queryPath = queryPath.removeSearch('api_key');
                     window.history.pushState(URI.parseQuery(queryPath.query()),
                       null, queryPath.search().toString());
                   });

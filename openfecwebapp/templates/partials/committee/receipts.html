@@ -8,26 +8,26 @@
     {{ select.committee_cycle_select(cycles, cycle, 'receipts')}}
     <div class="entity__figure">
       <div class="row">
-        <fieldset class="toggles u-float-left">
+        <fieldset class="toggles js-toggles u-float-left">
           <legend class="label">Group by:</legend>
           <label for="toggle-state">
-            <input id="toggle-state" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
+            <input id="toggle-state" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
             <span class="button--alt">State</span>
           </label>
           <label for="toggle-contribution-size">
-            <input id="toggle-contribution-size" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
+            <input id="toggle-contribution-size" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
             <span class="button--alt">Size</span>
           </label>
           <label for="toggle-employer">
-            <input id="toggle-employer" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-employer">
+            <input id="toggle-employer" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-employer">
             <span class="button--alt">Employer</span>
           </label>
           <label for="toggle-occupation">
-            <input id="toggle-occupation" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="by-occupation">
+            <input id="toggle-occupation" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-occupation">
             <span class="button--alt">Occupation</span>
           </label>
           <label for="toggle-itemized">
-            <input id="toggle-itemized" type="radio" class="panel-toggle-control" name="receipt-aggregate" value="itemized-contributions">
+            <input id="toggle-itemized" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="itemized-contributions">
             <span class="button--alt">All transactions</span>
           </label>
         </fieldset>

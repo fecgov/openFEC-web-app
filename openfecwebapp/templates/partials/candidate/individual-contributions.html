@@ -35,7 +35,7 @@
       <h3>Individual contributions by transaction</h3>
 
       <div class="row">
-        <fieldset class="toggles">
+        <fieldset class="toggles js-toggles">
           <legend class="label">View by:</legend>
 
           <a class="u-float-right button--alt button--browse"
@@ -47,15 +47,15 @@
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
 
           <label for="toggle-state">
-            <input id="toggle-state" type="radio" class="panel-toggle-control" name="individual-contributions" value="contributor-state" checked />
+            <input id="toggle-state" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="contributor-state" checked />
             <span class="button--alt">State</span>
           </label>
           <label for="toggle-size">
-            <input id="toggle-size" type="radio" class="panel-toggle-control" name="individual-contributions" value="contribution-size" />
+            <input id="toggle-size" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="contribution-size" />
             <span class="button--alt">Size</span>
           </label>
           <label for="toggle-all">
-            <input id="toggle-all" type="radio" class="panel-toggle-control" name="individual-contributions" value="all-transactions" />
+            <input id="toggle-all" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="all-transactions" />
             <span class="button--alt">All transactions</span>
           </label>
         </fieldset>
