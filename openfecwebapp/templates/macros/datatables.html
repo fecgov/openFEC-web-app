@@ -3,7 +3,7 @@
   <tr>
     <td><a href="{{ url_for('candidate_page', c_id=datum.candidate_id) }}">{{ datum.name}}</a></td>
     <td>{{ datum.office }}</td>
-    <td>{{ datum.election_years }}</td>
+    <td>{{ datum.election_years|join(', ') }}</td>
     <td>{{ datum.party_full }}</td>
     <td>{{ datum.state }}</td>
     <td>{{ datum.district }}</td>
