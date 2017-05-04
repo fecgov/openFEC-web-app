@@ -74,28 +74,31 @@ class CitationFilter extends React.Component {
 
     handleKeydown(e) {
       let highlightCitation = this.state.highlightCitation;
-      // down arrow or tab
-      if(e.keyCode === 40 || e.keyCode === 9) {
-        e.preventDefault();
-        if(highlightCitation < this.state.citations.length - 1) {
-          this.setState({ highlightCitation: highlightCitation + 1 });
-        } else {
-          this.setState({ highlightCitation: 0 });
-        }
-      }
 
-      // up arrow
-      if(e.keyCode === 38) {
-        if(highlightCitation > 0) {
-          this.setState({ highlightCitation: highlightCitation - 1 });
-        } else {
-          this.setState({ highlightCitation: this.state.citations.length - 1 });
+      if(this.state.dropdownVisible) {
+        // down arrow or tab
+        if(e.keyCode === 40 || e.keyCode === 9) {
+          e.preventDefault();
+          if(highlightCitation < this.state.citations.length - 1) {
+            this.setState({ highlightCitation: highlightCitation + 1 });
+          } else {
+            this.setState({ highlightCitation: 0 });
+          }
         }
-      }
 
-      // enter
-      if(e.keyCode === 13) {
-        this.setSelection(this.state.citations[this.state.highlightCitation].citation_text);
+        // up arrow
+        if(e.keyCode === 38) {
+          if(highlightCitation > 0) {
+            this.setState({ highlightCitation: highlightCitation - 1 });
+          } else {
+            this.setState({ highlightCitation: this.state.citations.length - 1 });
+          }
+        }
+
+        // enter
+        if(e.keyCode === 13) {
+          this.setSelection(this.state.citations[this.state.highlightCitation].citation_text);
+        }
       }
     }
 
