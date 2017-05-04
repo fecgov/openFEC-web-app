@@ -8,8 +8,6 @@
   page_info
 ) %}
 
-{% import 'macros/reaction-box.html' as reaction_box %}
-
 {% if category in ['P', 'S', 'H'] %}
   {% set name_field='name' %}
   {% set id_field='candidate_id' %}
@@ -82,5 +80,4 @@
     <li><button class="button button--alt js-ga-event"  data-a11y-dialog-show="{{ action }}-modal" data-ga-event="{{ action }} methodology modal clicked" aria-controls="{{ action }}-modal">Methodology</button></li>
   </ul>
 </div>
-{{ reaction_box.reaction_box('top-entities', action + '-breakdown')}}
 {% endmacro %}
