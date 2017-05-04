@@ -53,7 +53,7 @@
             <tbody>
               {% for document in advisory_opinion.documents %}
                 <tr>
-                  <td>{{ document.date | date }}</td>
+                  <td>{{ document.date | ao_document_date }}</td>
                   <td><a href="{{ document.url }}">{{ document.description }}</a></td>
                   <td>{{ document.category }}</td>
                 </tr>
