@@ -33,7 +33,7 @@ def date_filter(value, fmt='%m/%d/%Y'):
 @app.template_filter('ao_document_date')
 def ao_document_date(value):
     date = date_filter(value)
-    return 'Unknown' if date == '01/01/1900' else date
+    return 'Not dated' if date == '01/01/1900' else date
 
 @app.template_filter('json')
 def json_filter(value):
