@@ -7,20 +7,20 @@
 
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
 
-    {{ select.candidate_cycle_select(cycles, cycle, id="cycle-5") }}
+    {{ select.candidate_cycle_select(cycles, max_cycle, id="cycle-5") }}
 
   <span class="t-sans t-bold">Data is included from these committees:</span>
 
   <ul class="list--bulleted">
     {% for committee in committee_groups['P'] | reverse %}
-    {% if committee.cycle == cycle %}
+    {% if committee.cycle == max_cycle %}
     <li>
       <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
     </li>
     {% endif %}
     {% endfor %}
     {% for committee in committee_groups['A'] | reverse %}
-    {% if committee.cycle == cycle %}
+    {% if committee.cycle == max_cycle %}
     <li>
       <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
     </li>
@@ -41,9 +41,9 @@
           <a class="u-float-right button--alt button--browse"
               href="{{ url_for(
                 'individual_contributions',
-                two_year_transaction_period=cycle,
-                min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-                max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+                two_year_transaction_period=max_cycle,
+                min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
+                max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
 
           <label for="toggle-state">
@@ -66,7 +66,7 @@
         <div class="results-info results-info--simple">
           <ul class="u-float-left">
             <li class="tag__category">
-              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+              <div class="tag__item">Report year: {{max_cycle - 1}} to {{max_cycle}}</div>
             </li>
           </ul>
 
@@ -77,7 +77,7 @@
           <table
               class="data-table data-table--heading-borders"
               data-type="contributor-state"
-              data-cycle="{{ cycle }}"
+              data-cycle="{{ max_cycle }}"
             >
             <thead>
               <th scope="col">State</th>
@@ -87,7 +87,7 @@
         </div>
 
         <div class="map-panel">
-          <div class="state-map" data-candidate-id="{{ candidate_id }}" data-cycle="{{ cycle }}">
+          <div class="state-map" data-candidate-id="{{ candidate_id }}" data-cycle="{{ max_cycle }}">
             <div class="legend-container">
               <span class="t-sans t-block">By state: total amount received</span>
               <svg></svg>
@@ -101,7 +101,7 @@
         <div class="results-info results-info--simple">
           <ul class="u-float-left">
             <li class="tag__category">
-              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+              <div class="tag__item">Report year: {{max_cycle - 1}} to {{max_cycle}}</div>
             </li>
           </ul>
 
@@ -111,7 +111,7 @@
         <table
            class="data-table data-table--heading-borders"
            data-type="contribution-size"
-           data-cycle="{{ cycle }}">
+           data-cycle="{{ max_cycle }}">
           <thead>
             <th scope="col">Contribution size</th>
             <th scope="col">Total contributed</th>
@@ -123,7 +123,7 @@
         <div class="results-info results-info--simple">
           <ul class="u-float-left">
             <li class="tag__category">
-              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+              <div class="tag__item">Report year: {{max_cycle - 1}} to {{max_cycle}}</div>
             </li>
           </ul>
 
@@ -141,7 +141,7 @@
             data-candidate-id="{{ candidate_id }}"
             data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}"
             data-name="{{ name }}"
-            data-cycle="{{ cycle }}"
+            data-cycle="{{ max_cycle }}"
           >
           <thead>
             <tr>
