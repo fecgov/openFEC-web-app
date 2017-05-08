@@ -30,6 +30,11 @@ def date_filter(value, fmt='%m/%d/%Y'):
         return None
     return ensure_date(value).strftime(fmt)
 
+@app.template_filter('ao_document_date')
+def ao_document_date(value):
+    date = date_filter(value)
+    return 'Not dated' if date == '01/01/1900' else date
+
 @app.template_filter('json')
 def json_filter(value):
     return json.dumps(value)
