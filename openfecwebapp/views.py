@@ -187,6 +187,10 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     tmpl_vars = candidate
     tmpl_vars['parent'] = 'data'
     tmpl_vars['cycle'] = cycle
+    tmpl_vars['election_year'] = next(
+        (year for year in sorted(candidate['election_years']) if year >= cycle),
+        None,
+    )
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
     tmpl_vars['election_full'] = election_full
@@ -258,10 +262,6 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         zip(candidate['election_years'], candidate['election_districts']),
         key=lambda pair: pair[0],
         reverse=True,
-    )
-    tmpl_vars['election_year'] = next(
-        (year for year in sorted(candidate['election_years']) if year >= cycle),
-        None,
     )
 
     return render_template('candidates-single.html', **tmpl_vars)
