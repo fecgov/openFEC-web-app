@@ -12,7 +12,6 @@
     <div class="content__section">
       {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-3") }}
     </div>
-
     <div class="entity__figure row">
       <div class="results-info results-info--simple">
         <h3 class="results-info__title">Independent expenditures</h3>
@@ -23,6 +22,7 @@
           data-candidate="{{ candidate_id }}"
           data-cycle="{{ max_cycle }}"
           data-election-full="{{ show_full_election }}"
+          data-duration="{% if election_full %}{{ duration }}{% else %}2{% endif %}"
         >
         <thead>
           <tr>
@@ -47,6 +47,7 @@
           data-candidate="{{ candidate_id }}"
           data-cycle="{{ max_cycle }}"
           data-election-full="{{ show_full_election }}"
+          data-duration="{% if election_full %}{{ duration }}{% else %}2{% endif %}"
         >
         <thead>
           <tr>
@@ -68,6 +69,7 @@
           data-candidate="{{ candidate_id }}"
           data-cycle="{{ max_cycle }}"
           data-election-full="{{ show_full_election }}"
+          data-duration="{% if election_full %}{{ duration }}{% else %}2{% endif %}"
         >
         <thead>
           <tr>

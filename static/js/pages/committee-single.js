@@ -335,6 +335,7 @@ $(document).ready(function() {
           hideEmptyOpts: {
             dataType: 'individual contributions',
             name: context.name,
+            reason: helpers.missingDataReason('contributions'),
             timePeriod: context.timePeriod
           }
         });
@@ -373,7 +374,8 @@ $(document).ready(function() {
             hideEmptyOpts: {
               dataType: 'individual contributions',
               name: context.name,
-              timePeriod: context.timePeriod
+              timePeriod: context.timePeriod,
+              reason: helpers.missingDataReason('contributions'),
             },
           })
         );
@@ -391,7 +393,8 @@ $(document).ready(function() {
             hideEmptyOpts: {
               dataType: 'individual contributions',
               name: context.name,
-              timePeriod: context.timePeriod
+              timePeriod: context.timePeriod,
+              reason: helpers.missingDataReason('contributions'),
             },
           })
         );
@@ -411,9 +414,10 @@ $(document).ready(function() {
             callbacks: aggregateCallbacks,
             order: [[2, 'desc']],
             hideEmptyOpts: {
-              dataType: 'disbursements to committees',
+              dataType: 'individual contributions',
               name: context.name,
-              timePeriod: context.timePeriod
+              timePeriod: context.timePeriod,
+              reason: helpers.missingDataReason('contributions'),
             },
           })
         );
@@ -431,6 +435,7 @@ $(document).ready(function() {
             hideEmptyOpts: {
               dataType: 'disbursements',
               name: context.name,
+              reason: helpers.missingDataReason('disbursements'),
               timePeriod: context.timePeriod
             },
           })
@@ -452,6 +457,7 @@ $(document).ready(function() {
             hideEmptyOpts: {
               dataType: 'disbursements to committees',
               name: context.name,
+              reason: helpers.missingDataReason('disbursements'),
               timePeriod: context.timePeriod
             },
           })
@@ -470,6 +476,7 @@ $(document).ready(function() {
             hideEmptyOpts: {
               dataType: 'disbursements to committees',
               name: context.name,
+              reason: helpers.missingDataReason('disbursements'),
               timePeriod: context.timePeriod
             },
           })
@@ -488,6 +495,7 @@ $(document).ready(function() {
           hideEmptyOpts: {
             dataType: 'independent expenditures',
             name: context.name,
+            reason: helpers.missingDataReason('ie-made'),
             timePeriod: context.timePeriod
           },
         });

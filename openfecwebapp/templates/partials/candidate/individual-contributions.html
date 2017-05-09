@@ -1,8 +1,8 @@
 {% import 'macros/cycle-select.html' as select %}
 
-<section id="section-5" role="tabpanel" aria-hidden="true" aria-labelledby="section-5-heading">
+<section id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
   <div class="heading--section">
-    <h2 id="section-5-heading">Individual contributions</h2>
+    <h2 id="section-3-heading">Individual contributions</h2>
   </div>
 
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
@@ -142,6 +142,7 @@
             data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}"
             data-name="{{ name }}"
             data-cycle="{{ max_cycle }}"
+            data-duration="2"
           >
           <thead>
             <tr>

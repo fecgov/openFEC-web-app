@@ -1,6 +1,6 @@
 'use strict';
 
-/* global require, document, context */
+/* global require, document, context, WEBMANAGER_EMAIL */
 
 var $ = require('jquery');
 
@@ -207,7 +207,6 @@ function initFilingsTable() {
     order: [[2, 'desc']],
     dom: tables.simpleDOM,
     pagingType: 'simple',
-    hideEmpty: true
   });
 }
 
@@ -218,7 +217,7 @@ function initOtherDocumentsTable() {
   var opts = {
     title: 'other documents filed',
     name: $table.data('name'),
-    cycle: $table.data('cycle')
+    cycle: $table.data('cycle'),
   };
 
   tables.DataTable.defer($table, {
@@ -232,12 +231,7 @@ function initOtherDocumentsTable() {
     dom: tables.simpleDOM,
     pagingType: 'simple',
     lengthMenu: [10, 30, 50],
-    hideEmpty: true,
-    hideEmptyOpts: {
-      dataType: opts.title,
-      name: opts.name,
-      timePeriod: opts.cycle
-    }
+    hideEmpty: false
   });
 }
 
@@ -269,6 +263,8 @@ function initSpendingTables() {
       cycle: $table.data('cycle'),
       election_full: $table.data('election-full')
     };
+    var displayCycle = helpers.formatCycleRange($table.data('cycle'), $table.data('duration'));
+
     if (opts) {
       tables.DataTable.defer($table, {
         path: opts.path,
@@ -283,8 +279,10 @@ function initSpendingTables() {
         hideEmpty: true,
         hideEmptyOpts: {
           dataType: opts.title,
+          email: WEBMANAGER_EMAIL,
           name: context.name,
-          timePeriod: context.timePeriod
+          timePeriod: displayCycle,
+          reason: helpers.missingDataReason(dataType)
         }
       });
     }
@@ -301,6 +299,7 @@ function initDisbursementsTable() {
     name: $table.data('name'),
     cycle: $table.data('cycle')
   };
+  var displayCycle = helpers.formatCycleRange($table.data('cycle'), $table.data('duration'));
 
   tables.DataTable.defer($table, {
     path: path,
@@ -318,9 +317,11 @@ function initDisbursementsTable() {
     useExport: true,
     hideEmpty: true,
     hideEmptyOpts: {
+      email: WEBMANAGER_EMAIL,
       dataType: opts.title,
       name: opts.name,
-      timePeriod: opts.cycle
+      timePeriod: displayCycle,
+      reason: helpers.missingDataReason('disbursements')
     }
   });
 }
@@ -329,16 +330,19 @@ function initContributionsTables() {
   var $allTransactions = $('table[data-type="individual-contributions"]');
   var $contributionSize = $('table[data-type="contribution-size"]');
   var $contributorState = $('table[data-type="contributor-state"]');
-
+  var displayCycle = helpers.formatCycleRange($allTransactions.data('cycle'), 2);
+  var candidateName = $allTransactions.data('name');
   var opts = {
     // possibility of multiple committees, so split into array
     // also, filter array to remove any blank values
     committee_id: $allTransactions.data('committee-id').split(',').filter(Boolean),
     candidate_id: $allTransactions.data('candidate-id'),
     title: 'individual contributions',
-    name: $allTransactions.data('name'),
-    cycle: $allTransactions.data('cycle')
+    name: candidateName,
+    cycle: $allTransactions.data('cycle'),
   };
+
+  var reason = helpers.missingDataReason('contributions');
 
   tables.DataTable.defer($allTransactions, {
     path: ['schedules', 'schedule_a'],
@@ -356,9 +360,11 @@ function initContributionsTables() {
     useExport: true,
     hideEmpty: true,
     hideEmptyOpts: {
-      dataType: opts.title,
-      name: opts.name,
-      timePeriod: opts.cycle
+      dataType: 'individual contributions',
+      email: WEBMANAGER_EMAIL,
+      name: candidateName,
+      timePeriod: displayCycle,
+      reason: reason
     }
   });
 
@@ -445,8 +451,10 @@ function initContributionsTables() {
     hideEmpty: true,
     hideEmptyOpts: {
       dataType: 'individual contributions',
-      name: context.name,
-      timePeriod: context.timePeriod
+      email: WEBMANAGER_EMAIL,
+      name: candidateName,
+      timePeriod: displayCycle,
+      reason: reason,
     }
   });
 
