@@ -21,11 +21,15 @@ class LegalSearch extends React.Component {
       initState.ao_regulatory_citation = [initState.ao_regulatory_citation];
     }
     initState.from_hit = initState.from_hit ? parseInt(initState.from_hit, 10) : 0;
+    initState.loading = true;
     this.state = initState;
 
     this.getResults = this.getResults.bind(this);
     this.setQuery = this.setQuery.bind(this);
     this.instantQuery = this.instantQuery.bind(this);
+  }
+
+  componentDidMount() {
     this.getResults();
   }
 
@@ -49,6 +53,7 @@ class LegalSearch extends React.Component {
   }
 
   getResults(e) {
+    this.setState({'loading': true});
     if(e) {
       e.preventDefault();
     }
@@ -60,7 +65,11 @@ class LegalSearch extends React.Component {
     const queryState = _.extend({}, this.state);
     queryState.search = queryState.q;
     Object.keys(queryState).forEach((queryParam) => {
-      if(['advisory_opinions', 'resultCount', 'lastResultCount', 'lastFilter'].indexOf(queryParam) === -1
+      if(['advisory_opinions',
+          'resultCount',
+          'lastResultCount',
+          'lastFilter',
+          'loading'].indexOf(queryParam) === -1
           && queryState[queryParam]) {
         queryPath = queryPath.addQuery(queryParam, queryState[queryParam]);
       }
@@ -70,7 +79,8 @@ class LegalSearch extends React.Component {
     $.getJSON(queryPath.toString(), (results) => {
                   this.setState({ advisory_opinions: results.advisory_opinions,
                   resultCount: results.total_advisory_opinions,
-                  lastResultCount }, () => {
+                  lastResultCount,
+                  loading: false}, () => {
                     queryPath = queryPath.removeSearch('api_key');
                     window.history.pushState(URI.parseQuery(queryPath.query()),
                       null, queryPath.search().toString());
@@ -95,7 +105,7 @@ class LegalSearch extends React.Component {
             <h2 className="results-info__title">Searching advisory opinions</h2>
           </div>
         </div>
-        <SearchResults advisory_opinions={this.state.advisory_opinions} q={this.state.q} />
+        <SearchResults advisory_opinions={this.state.advisory_opinions} q={this.state.q} loading={this.state.loading} />
         <Pagination from_hit={this.state.from_hit} advisory_opinions={this.state.advisory_opinions}
           resultCount={this.state.resultCount} handleChange={this.instantQuery} />
       </div>
