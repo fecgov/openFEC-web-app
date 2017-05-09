@@ -30,7 +30,7 @@
             </div>
             <div class="u-float-right">
               <a class="heading__right button--alt button--browse"
-                  href="{{ url_for('receipts', committee_id=committee_ids, cycle=cycle) }}">Browse receipts
+                  href="{{ url_for('receipts', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse receipts
               </a>
             </div>
         </div>
@@ -44,7 +44,7 @@
             </div>
             <div class="u-float-right">
               <a class="heading__right button--alt button--browse"
-                  href="{{ url_for('disbursements', committee_id=committee_ids, cycle=cycle) }}">Browse disbursements
+                  href="{{ url_for('disbursements', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse disbursements
               </a>
             </div>
         </div>
