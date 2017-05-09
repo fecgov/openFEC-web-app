@@ -6,7 +6,6 @@ var $ = require('jquery');
 
 var LineChart = require('../modules/line-chart').LineChart;
 var TopList = require('../modules/top-list').TopList;
-var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var helpers = require('../modules/helpers');
 var analytics = require('fec-style/js/analytics');
 
@@ -17,7 +16,6 @@ function Overview(selector, type, index) {
   this.index = index;
 
   this.totals = this.$element.find('.js-total');
-  this.reactionBox = this.$element.find('.js-reaction-box');
 
   this.zeroPadTotals();
 
@@ -32,11 +30,6 @@ Overview.prototype.zeroPadTotals = function() {
 
 new Overview('.js-raised-overview', 'raised', 1);
 new Overview('.js-spent-overview', 'spent', 2);
-
-
-$('.js-reaction-box').each(function() {
-  new ReactionBox(this);
-});
 
 var maxHeight = 0;
 var $topLists = $('.js-top-list');

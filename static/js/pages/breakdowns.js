@@ -4,14 +4,9 @@
 
 var $ = require('jquery');
 var analytics = require('fec-style/js/analytics');
-var ReactionBox = require('../modules/reaction-box').ReactionBox;
 var TopEntities = require('../modules/top-entities').TopEntities;
 
 new TopEntities('.js-top-entities', context.type);
-
-$('.js-reaction-box').each(function() {
-  new ReactionBox(this);
-});
 
 $('.js-ga-event').each(function() {
   var eventName = $(this).data('ga-event');

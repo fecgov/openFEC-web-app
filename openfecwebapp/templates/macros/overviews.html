@@ -1,5 +1,3 @@
-{% import 'macros/reaction-box.html' as reaction_box %}
-
 {% macro overview(verb, location) %}
   <div class="overview js-{{verb}}-overview">
     <div class="overview__chart js-chart">
@@ -49,9 +47,6 @@
         </span>
       </div>
     </div>
-  </div>
-  <div class="overview__feedback">
-    {{ reaction_box.reaction_box(verb, location)}}
   </div>
 {% endmacro %}
 
