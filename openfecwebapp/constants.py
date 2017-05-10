@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 START_YEAR = 1979
 END_YEAR = 2018
-DEFAULT_TIME_PERIOD = 2016
+DEFAULT_TIME_PERIOD = 2018
 
 states = OrderedDict([
     ('AK', 'Alaska'),
@@ -278,10 +278,10 @@ table_columns = OrderedDict([
 # F3 = house and senate; F3P = presidential; F3X = pac and party
 
 RAISING_FORMATTER = OrderedDict([
-    ('receipts', {'label': 'Total receipts', 'level': '1', 'term': 'total receipts', 'link': 'receipts'}), #F3, F3P, #F3X
+    ('receipts', {'label': 'Total receipts', 'level': '1', 'term': 'total receipts'}), #F3, F3P, #F3X
     ('contributions', {'label': 'Total contributions', 'level': '2'}), #F3, F3P, F3X
-    ('individual_contributions', {'label': 'Total individual contributions', 'level': '3', 'link': 'individual_contributions'}), #F3, F3P, F3X
-    ('individual_itemized_contributions', {'label': 'Itemized individual contributions', 'level': '4'}), #F3, F3P, F3X
+    ('individual_contributions', {'label': 'Total individual contributions', 'level': '3'}), #F3, F3P, F3X
+    ('individual_itemized_contributions', {'label': 'Itemized individual contributions', 'level': '4', 'link': 'individual_contributions'}), #F3, F3P, F3X
     ('individual_unitemized_contributions', {'label': 'Unitemized individual contributions', 'level': '4'}), #F3, F3P, F3X
     ('political_party_committee_contributions', {'label': 'Party committee contributions', 'level': '3'}), #F3, F3P, F3X
     ('other_political_committee_contributions', {'label': 'Other committee contributions', 'level': '3'}), #F3, F3P, F3X
@@ -306,14 +306,14 @@ RAISING_FORMATTER = OrderedDict([
     ('other_receipts', {'label': 'Other receipts', 'level': '2'}), #F3, F3P
     ('fed_candidate_contribution_refunds', {'label': 'Candidate refunds', 'level': '2'}), #F3X
     ('other_fed_receipts', {'label': 'Other Receipts', 'level': '2'}), #F3X
-    ('total_transfers', {'label': 'Levin funds', 'level': '2'}), #F3X
-    ('transfers_from_nonfed_account', {'label': 'Non-federal transfers', 'level': '2'}), #F3X
-    ('transfers_from_nonfed_levin', {'label': 'Levin funds', 'level': '2'}), #F3X
+    ('total_transfers', {'label': 'Total transfers', 'level': '2'}), #F3X
+    ('transfers_from_nonfed_account', {'label': 'Non-federal transfers', 'level': '3'}), #F3X
+    ('transfers_from_nonfed_levin', {'label': 'Levin funds', 'level': '3'}), #F3X
     ('fed_receipts', {'label': 'Total federal receipts', 'level': '2'}), #F3X
 ])
 
 SPENDING_FORMATTER = OrderedDict([
-    ('disbursements', {'label': 'Total disbursements', 'level': '1', 'term': 'total disbursements', 'link': 'disbursements'}), #F3, F3P, F3X
+    ('disbursements', {'label': 'Total disbursements', 'level': '1', 'term': 'total disbursements'}), #F3, F3P, F3X
     ('operating_expenditures', {'label': 'Operating expenditures', 'term': 'operating expenditures', 'level': '2'}), #F3, F3P, F3X
     ('shared_fed_operating_expenditures', {'label': 'Allocated operating expenditures - federal', 'level': '3'}), #F3X
     ('shared_nonfed_operating_expenditures', {'label': 'Allocated operating expenditures - non-federal', 'level': '3'}), #F3X

@@ -47,7 +47,7 @@ Filter reports
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Date</button>
   <div class="accordion__content">
-    {{ years.years('cycle', 'Years')  }}
+    {{ years.cycles('cycle', 'Years')  }}
     {% if table_context['form_type'] == 'pac-party' %}
       {{ date.partition_field('receipt_date', 'Receipt date', dates, show_tooltip=False) }}
     {% else %}
@@ -57,6 +57,7 @@ Filter reports
   <button type="button" class="js-accordion-trigger accordion__button">Report type</button>
   <div class="accordion__content">
     <fieldset class="js-filter" data-filter="checkbox">
+      <legend class="u-visually-hidden">Report type</legend>
       {{ report_types.year_end() }}
       {% if table_context['form_type'] == 'presidential' %}
         {{ report_types.monthly() }}

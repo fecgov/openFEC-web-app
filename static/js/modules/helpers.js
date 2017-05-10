@@ -85,6 +85,11 @@ Handlebars.registerHelper('decodeMeans', function(value) {
   return decoders.means[value] || value;
 });
 
+Handlebars.registerHelper('formNumber', function(value) {
+  // Strips the F from F3X etc.
+  return value.split('F')[1];
+});
+
 Handlebars.registerHelper('basePath', BASE_PATH);
 
 Handlebars.registerHelper('panelRow', function(label, options) {
@@ -134,6 +139,16 @@ Handlebars.registerHelper('convertBoolean', function(bool) {
     return new Handlebars.SafeString('No');
   }
 });
+
+Handlebars.registerHelper('format_range', function(year) {
+    var firstYear = Number(year) - 1;
+    return new Handlebars.SafeString(firstYear.toString() + '–' + year.toString());
+});
+
+function formatCycleRange(year, duration) {
+  var firstYear = Number(year) - duration + 1;
+  return firstYear.toString() + '–' + year.toString();
+}
 
 function cycleDates(year) {
   return {
@@ -267,6 +282,20 @@ function utcDate(dateString) {
   return new Date(year, month, date);
 }
 
+function missingDataReason(dataType) {
+  // Returns a string explaining why data may not be showing
+  // which is then used by the noData.hbs message
+  var reasons = {
+    'contributions': 'The committee has not received any contributions over $200',
+    'disbursements': 'The committee has not made any disbursements',
+    'independent-expenditures': 'No independent expenditures have been made in support or opposition of this candidate',
+    'communication-costs': 'No communication costs have been made in support or opposition of this candidate',
+    'electioneering': 'No electioneering communications have been made that mention this candidate',
+    'ie-made': 'The committee has not made any independent expenditures'
+  };
+
+  return reasons[dataType] || false;
+}
 module.exports = {
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
@@ -276,6 +305,7 @@ module.exports = {
   ensureArray: ensureArray,
   filterNull: filterNull,
   formatNumber: numberFormatter.format,
+  formatCycleRange: formatCycleRange,
   getTimePeriod: getTimePeriod,
   globals: globals,
   isLargeScreen: isLargeScreen,
@@ -285,5 +315,6 @@ module.exports = {
   zeroPad: zeroPad,
   amendmentVersion: amendmentVersion,
   amendmentVersionDescription: amendmentVersionDescription,
-  utcDate: utcDate
+  utcDate: utcDate,
+  missingDataReason: missingDataReason
 };

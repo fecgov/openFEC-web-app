@@ -11,7 +11,7 @@
       {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-2") }}
     </div>
 
-    <div class="entity__figure row">
+    <div class="entity__figure entity__figure--narrow row">
 
       <h3>Candidate information</h3>
 
@@ -60,13 +60,13 @@
 
       <div class="usa-width-one-fourth">
         <div class="card">
-          {% if election_url(context(), election_year) %}
-          <a href="{{ election_url(context(), election_year) }}">
+          {% if election_url(context(), cycle) %}
+          <a href="{{ election_url(context(), cycle) }}">
             <div class="card__image__container">
               <img class="icon--complex" src="/static/img/i-elections--primary.svg" alt="Icon representing elections">
             </div>
             <div class="card__content">
-              View all candidates in the {{ constants.states[state] }}{% if office == 'P' %}Presidential{% else %}{{ office_full }}{% endif %}{% if office_full == 'House' %} district {{ district }}{% endif %} {{ election_year }} election
+              View all candidates in the {{ cycle }} {{ constants.states[state] }} {% if office == 'P' %}Presidential{% else %}{{ office_full }}{% endif %}{% if office_full == 'House' %} district {{ district }}{% endif %} election
             </div>
           </a>
           {% endif %}
@@ -75,7 +75,7 @@
 
     </div>
 
-    <div class="entity__figure row">
+    <div class="entity__figure entity__figure--narrow row">
       <h3>Other documents filed</h3>
 
       <table
@@ -96,7 +96,7 @@
 
     </div>
 
-    <div class="entity__figure row">
+    <div class="entity__figure entity__figure--narrow row">
 
       <h3>Committees</h3>
 

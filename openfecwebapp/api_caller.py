@@ -233,7 +233,7 @@ def load_cmte_financials(committee_id, **filters):
 def load_candidate_totals(candidate_id, cycle, election_full=True):
     response = _call_api(
         'candidate', candidate_id, 'totals',
-        cycle=cycle, election_full=election_full,
+        cycle=cycle, full_election=election_full,
     )
 
     return response['results'][0] if response['results'] else None
