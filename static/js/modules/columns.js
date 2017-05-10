@@ -170,7 +170,6 @@ var committees = [
   {data: 'treasurer_name', className: 'min-desktop hide-panel'},
   {data: 'committee_type_full', className: 'min-tablet hide-panel'},
   {data: 'designation_full', className: 'min-tablet hide-panel'},
-  dateColumn({data: 'first_file_date', className: 'min-tablet hide-panel column--med' }),
   modalTriggerColumn
 ];
 

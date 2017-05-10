@@ -19,7 +19,7 @@ $(document).ready(function() {
     columns: columns.committees,
     useFilters: true,
     useExport: true,
-    order: [[4, 'desc']],
+    order: [[0, 'asc']],
     rowCallback: tables.modalRenderRow,
     callbacks: {
       afterRender: tables.modalRenderFactory(committeesTemplate)
