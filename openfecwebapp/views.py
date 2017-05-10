@@ -185,19 +185,35 @@ report_types = {
 def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
-
     tmpl_vars['parent'] = 'data'
     tmpl_vars['cycle'] = cycle
+    tmpl_vars['election_year'] = next(
+        (year for year in sorted(candidate['election_years']) if year >= cycle),
+        None,
+    )
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
     tmpl_vars['election_full'] = election_full
+    tmpl_vars['report_type'] = report_types.get(candidate['office'])
+    tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
+
+    # In the case of when a presidential or senate candidate has filed
+    # for a future year that's beyond the current cycle,
+    # set a max_cycle var to the current cycle we're in
+    # and when calling the API for totals, set election_full to False.
+    # The max_cycle value is also referenced in the templates for setting
+    # the cycle for itemized tables. Because these are only in 2-year chunks,
+    # the cycle should never be beyond the one we're in.
+    tmpl_vars['cycles'] = [cycle for cycle in candidate['cycles'] if cycle <= utils.current_cycle()]
+    tmpl_vars['max_cycle'] = cycle if cycle <= utils.current_cycle() else utils.current_cycle()
+    tmpl_vars['show_full_election'] = election_full if cycle <= utils.current_cycle() else False
+
+    # Annotate committees with most recent available cycle
     tmpl_vars['aggregate_cycles'] = (
         list(range(cycle, cycle - tmpl_vars['duration'], -2))
         if election_full
         else [cycle]
     )
-
-    # Annotate committees with most recent available cycle
     for committee in committees:
         committee['related_cycle'] = (
             max(cycle for cycle in tmpl_vars['aggregate_cycles'] if cycle in committee['cycles'])
@@ -205,15 +221,29 @@ def render_candidate(candidate, committees, cycle, election_full=True):
             else candidate['two_year_period']
         )
 
+    # Group the committees by designation
     committee_groups = groupby(committees, lambda each: each['designation'])
     committees_authorized = committee_groups.get('P', []) + committee_groups.get('A', [])
 
+    tmpl_vars['committee_groups'] = committee_groups
+    tmpl_vars['committees_authorized'] = committees_authorized
+    tmpl_vars['committee_ids'] = [committee['committee_id'] for committee in committees_authorized]
+
+    # Get aggregate totals for the financial summary
+    # And pass through the data processing utils
     aggregate = api_caller.load_candidate_totals(
         candidate['candidate_id'],
-        cycle=cycle,
-        election_full=election_full,
+        cycle=tmpl_vars['max_cycle'],
+        election_full=tmpl_vars['show_full_election'],
     )
+    if aggregate:
+        tmpl_vars['raising_summary'] = utils.process_raising_data(aggregate)
+        tmpl_vars['spending_summary'] = utils.process_spending_data(aggregate)
+        tmpl_vars['cash_summary'] = utils.process_cash_data(aggregate)
 
+    tmpl_vars['aggregate'] = aggregate
+
+    # Get the statements of candidacy
     statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
         candidate['candidate_id'],
         cycle=cycle
@@ -227,30 +257,12 @@ def render_candidate(candidate, committees, cycle, election_full=True):
 
     tmpl_vars['statement_of_candidacy'] = statement_of_candidacy
 
-    tmpl_vars['committee_groups'] = committee_groups
-    tmpl_vars['committees_authorized'] = committees_authorized
-    tmpl_vars['committee_ids'] = [committee['committee_id'] for committee in committees_authorized]
-    tmpl_vars['aggregate'] = aggregate
-
+    # Get all the elections
     tmpl_vars['elections'] = sorted(
         zip(candidate['election_years'], candidate['election_districts']),
         key=lambda pair: pair[0],
         reverse=True,
     )
-    tmpl_vars['election_year'] = next(
-        (year for year in sorted(candidate['election_years']) if year >= cycle),
-        None,
-    )
-
-    tmpl_vars['report_type'] = report_types.get(candidate['office'])
-    tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
-
-    tmpl_vars['cycles'] = [cycle for cycle in candidate['cycles'] if cycle <= max(candidate['election_years'])]
-
-    if aggregate:
-        tmpl_vars['raising_summary'] = utils.process_raising_data(aggregate)
-        tmpl_vars['spending_summary'] = utils.process_spending_data(aggregate)
-        tmpl_vars['cash_summary'] = utils.process_cash_data(aggregate)
 
     return render_template('candidates-single.html', **tmpl_vars)
 

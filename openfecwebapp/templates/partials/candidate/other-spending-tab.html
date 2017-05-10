@@ -1,8 +1,13 @@
 {% import 'macros/cycle-select.html' as select %}
 
 <section id="section-5" role="tabpanel" aria-hidden="true" aria-labelledby="section-5-heading">
-  <h2 id="section-5-heading">Spending by others to oppose/support</h2>
-  <p>This tab shows spending that opposes or supports this candidate. None of the funds are directly given to or spent by the candidate.</p>
+  <div class="heading--section">
+    <h2 id="section-5-heading">Spending by others to oppose/support</h2>
+  </div>
+  <div class="content__section">
+    <p class="usa-width-two-thirds">This tab shows spending that opposes or supports this candidate. None of the funds are directly given to or spent by the candidate.</p>
+  </div>
+
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
     <div class="content__section">
       {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-3") }}
@@ -15,8 +20,8 @@
           class="data-table data-table--heading-borders"
           data-type="independent-expenditures"
           data-candidate="{{ candidate_id }}"
-          data-cycle="{{ cycle }}"
-          data-election-full="{{ election_full }}"
+          data-cycle="{{ max_cycle }}"
+          data-election-full="{{ show_full_election }}"
           data-duration="{% if election_full %}{{ duration }}{% else %}2{% endif %}"
         >
         <thead>
@@ -40,8 +45,8 @@
           class="data-table data-table--heading-borders"
           data-type="communication-costs"
           data-candidate="{{ candidate_id }}"
-          data-cycle="{{ cycle }}"
-          data-election-full="{{ election_full }}"
+          data-cycle="{{ max_cycle }}"
+          data-election-full="{{ show_full_election }}"
           data-duration="{% if election_full %}{{ duration }}{% else %}2{% endif %}"
         >
         <thead>
@@ -62,8 +67,8 @@
           class="data-table data-table--heading-borders"
           data-type="electioneering"
           data-candidate="{{ candidate_id }}"
-          data-cycle="{{ cycle }}"
-          data-election-full="{{ election_full }}"
+          data-cycle="{{ max_cycle }}"
+          data-election-full="{{ show_full_election }}"
           data-duration="{% if election_full %}{{ duration }}{% else %}2{% endif %}"
         >
         <thead>
