@@ -90,7 +90,7 @@ def candidate_page(c_id, cycle=None, election_full=True):
 
         # If the next_cycle is odd set it to whatever the cycle value was
         # and then set election_full to false
-        # This solves an issue with special elections 
+        # This solves an issue with special elections
         if next_cycle % 2 > 0:
             next_cycle = cycle
             election_full = False
@@ -130,13 +130,19 @@ def advanced():
 
 
 @app.route('/candidates/')
-def candidates():
+@use_kwargs({
+  'page': fields.Int(missing=1)
+})
+def candidates(**kwargs):
+    candidates = api_caller._call_api('candidates', **kwargs)
     return render_template(
         'datatable.html',
         parent='data',
         result_type='candidates',
         slug='candidates',
         title='Candidates',
+        data=candidates['results'],
+        query=kwargs,
         columns=constants.table_columns['candidates']
     )
 
@@ -157,14 +163,19 @@ def candidates_office(office):
 
 
 @app.route('/committees/')
-def committees():
+@use_kwargs({
+  'page': fields.Int(missing=1)
+})
+def committees( **kwargs):
+    committees = api_caller._call_api('committees', **kwargs)
     return render_template(
         'datatable.html',
         parent='data',
         result_type='committees',
         slug='committees',
         title='Committees',
-        dates=utils.date_ranges(),
+        data=committees['results'],
+        query=kwargs,
         columns=constants.table_columns['committees']
     )
 

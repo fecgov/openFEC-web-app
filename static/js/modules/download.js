@@ -137,7 +137,7 @@ DownloadItem.prototype.refresh = function() {
     contentType: 'application/json',
     dataType: 'json'
   });
-  this.promise.then(this.handleSuccess.bind(this));
+  this.promise.done(this.handleSuccess.bind(this));
   this.promise.fail(this.handleError.bind(this));
 };
 

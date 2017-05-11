@@ -9,20 +9,20 @@
 
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
 
-    {{ select.candidate_cycle_select(cycles, cycle, id="cycle-4") }}
+    {{ select.candidate_cycle_select(cycles, max_cycle, id="cycle-4") }}
 
     <span class="t-sans t-bold">Data is included from these committees:</span>
 
     <ul class="list--bulleted">
       {% for committee in committee_groups['P'] | reverse %}
-      {% if committee.cycle == cycle %}
+      {% if committee.cycle == max_cycle %}
       <li>
         <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
       </li>
       {% endif %}
       {% endfor %}
       {% for committee in committee_groups['A'] | reverse %}
-      {% if committee.cycle == cycle %}
+      {% if committee.cycle == max_cycle %}
       <li>
         <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
       </li>
@@ -39,14 +39,14 @@
           <a class="u-float-right button--alt button--browse"
               href="{{ url_for(
                 'disbursements',
-                two_year_transaction_period=cycle,
-                min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-                max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+                two_year_transaction_period=max_cycle,
+                min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
+                max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
 
           <ul>
             <li class="tag__category">
-              <div class="tag__item">Report year: {{cycle - 1}} to {{cycle}}</div>
+              <div class="tag__item">Report year: {{max_cycle - 1}} to {{max_cycle}}</div>
             </li>
           </ul>
 
@@ -62,7 +62,8 @@
             data-type="itemized-disbursements"
             data-committee-id="{% for id in committee_ids %}{{ id }}{% if not loop.last %},{% endif %}{% endfor %}"
             data-name="{{ name }}"
-            data-cycle="{{ cycle }}"
+            data-cycle="{{ max_cycle }}"
+            data-duration="2"
           >
           <thead>
             <tr>

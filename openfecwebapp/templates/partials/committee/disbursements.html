@@ -7,18 +7,18 @@
     {{ select.committee_cycle_select(cycles, cycle, 'disbursements')}}
     <div class="entity__figure">
       <div class="row">
-        <fieldset class="toggles u-float-left">
+        <fieldset class="toggles js-toggles u-float-left">
           <legend class="label">Group by:</legend>
           <label for="toggle-recipient">
-            <input id="toggle-recipient" type="radio" class="panel-toggle-control" name="disbursements" value="by-recipient" checked>
+            <input id="toggle-recipient" type="radio" class="js-panel-toggle-control" name="disbursements" value="by-recipient" checked>
             <span class="button--alt">Recipient name</span>
           </label>
           <label for="toggle-to">
-            <input id="toggle-to" type="radio" class="panel-toggle-control" name="disbursements" value="to-committees">
+            <input id="toggle-to" type="radio" class="js-panel-toggle-control" name="disbursements" value="to-committees">
             <span class="button--alt">Recipient committee ID</span>
           </label>
           <label for="toggle-all-disbursements">
-            <input id="toggle-all-disbursements" type="radio" class="panel-toggle-control" name="disbursements" value="itemized-disbursements">
+            <input id="toggle-all-disbursements" type="radio" class="js-panel-toggle-control" name="disbursements" value="itemized-disbursements">
             <span class="button--alt">All transactions</span>
           </label>
         </fieldset>

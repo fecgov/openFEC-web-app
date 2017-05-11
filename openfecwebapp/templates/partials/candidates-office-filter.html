@@ -5,21 +5,26 @@
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/election-filter.html' as election_filter %}
 {% import 'macros/filters/range.html' as range_filter %}
+{% import 'macros/filters/years.html' as years %}
 
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <div class="filters__inner">
     {{ typeahead.field('q', 'Candidate name or ID', '', dataset='candidates', allow_text=True) }}
-    {{ election_filter.field('election_year', 'Election cycle', 'cycle', 'election_full', table_context['office']) }}
-    <input id="election_full" name="election_full" type="checkbox" value="true">
+    {% if table_context['office'] == 'house' %}
+      {{ election_filter.single_cycle('cycle', 'Election cycle') }}
+    {% else %}
+      {{ election_filter.full_cycle('election_year', 'Election year', 'cycle', 'election_full', table_context['office']) }}
+      <input id="election_full" name="election_full" type="checkbox" value="true">
+    {% endif %}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Candidate information</button>
   <div class="accordion__content">
     {% include 'partials/filters/parties.html' %}
-    {% if office in ['senate', 'house'] %}
+    {% if table_context['office'] in ['senate', 'house'] %}
       {{ states.field('state') }}
     {% endif %}
-    {% if office == 'house' %}
+    {% if table_context['office'] == 'house' %}
       {% include 'partials/filters/districts.html' %}
     {% endif %}
   </div>
@@ -29,8 +34,8 @@
     {{ range_filter.amount('disbursements', 'Total disbursements') }}
     {{ range_filter.amount('cash_on_hand_end_period', 'Cash on hand') }}
     {{ range_filter.amount('debts_owed_by_committee', 'Debts owed by committee') }}
-    {% if office == 'president' %}
-      <div class="js-filter">
+    {% if table_context['office'] == 'president' %}
+      <div class="js-filter" data-filter="checkbox">
         <input id="federal-funds-flag" name="federal_funds_flag" type="checkbox" value="true">
         <label class="dropdown__value" for="federal-funds-flag">Has accepted presidential public funds</label>
       </div>

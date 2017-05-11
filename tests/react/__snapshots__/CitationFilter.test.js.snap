@@ -4,6 +4,7 @@ exports[`renders citation filter 1`] = `
 <div
   className="filter"
   onBlur={[Function]}
+  onKeyDown={[Function]}
 >
   <label
     className="label"
