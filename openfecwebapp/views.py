@@ -310,9 +310,9 @@ class GithubView(MethodView):
 
 def get_legal_category_order(results):
     """ Return categories in pre-defined order, moving categories with empty results
-        to the end. MURs must be at the end if not enabled.
+        to the end.
     """
-    categories = ["statutes", "regulations", "advisory_opinions", "murs"]
+    categories = ["advisory_opinions", "murs", "regulations", "statutes"]
     category_order = [x for x in categories if results.get("total_" + x, 0) > 0] +\
                     [x for x in categories if results.get("total_" + x, 0) == 0]
     return category_order

@@ -12,9 +12,9 @@
   <div class="filters__inner">
     {{ typeahead.field('q', 'Candidate name or ID', '', dataset='candidates', allow_text=True) }}
     {% if table_context['office'] == 'house' %}
-      {{ years.cycles('cycle', 'Election cycle') }}
+      {{ election_filter.single_cycle('cycle', 'Election cycle') }}
     {% else %}
-      {{ election_filter.field('election_year', 'Election year', 'cycle', 'election_full', table_context['office']) }}
+      {{ election_filter.full_cycle('election_year', 'Election year', 'cycle', 'election_full', table_context['office']) }}
       <input id="election_full" name="election_full" type="checkbox" value="true">
     {% endif %}
   </div>
@@ -35,7 +35,7 @@
     {{ range_filter.amount('cash_on_hand_end_period', 'Cash on hand') }}
     {{ range_filter.amount('debts_owed_by_committee', 'Debts owed by committee') }}
     {% if table_context['office'] == 'president' %}
-      <div class="js-filter">
+      <div class="js-filter" data-filter="checkbox">
         <input id="federal-funds-flag" name="federal_funds_flag" type="checkbox" value="true">
         <label class="dropdown__value" for="federal-funds-flag">Has accepted presidential public funds</label>
       </div>
