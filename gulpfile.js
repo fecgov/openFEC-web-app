@@ -7,7 +7,7 @@ var browserify = require('browserify');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 var rename = require('gulp-rename');
 var rev = require('gulp-rev');
 var preprocessify = require('preprocessify');
@@ -53,7 +53,7 @@ gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-maps'], func
     }).on('error', sass.logError))
     .pipe(rev())
     .pipe(gulpif(!production, sourcemaps.write()))
-    .pipe(gulpif(production, minifyCss()))
+    .pipe(cleanCSS())
     .pipe(gulp.dest('.'))
     .pipe(rev.manifest({merge: true}))
     .pipe(gulp.dest('.'));
@@ -86,7 +86,7 @@ function write(streams, name) {
   return concat(function(body) {
     return file(dest, body, {src: true})
       .pipe(rev())
-      .pipe(gulpif(production, uglify()))
+      .pipe(uglify())
       .pipe(gulp.dest('.'))
       .pipe(rev.manifest({
         path: dest
