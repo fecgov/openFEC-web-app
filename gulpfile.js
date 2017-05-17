@@ -86,7 +86,7 @@ function write(streams, name) {
   return concat(function(body) {
     return file(dest, body, {src: true})
       .pipe(rev())
-      .pipe(uglify())
+      .pipe(gulpif(production, uglify()))
       .pipe(gulp.dest('.'))
       .pipe(rev.manifest({
         path: dest
