@@ -47,6 +47,7 @@ Filter receipts
         </ul>
       </fieldset>
     </div>
+    {% include 'partials/filters/unique-receipts.html' %}    
     {{ typeahead.field('contributor_name', 'Contributor name or ID', dataset='committees', allow_text=True) }}
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
@@ -61,9 +62,6 @@ Filter receipts
     <div class="message message--info message--small">
       <span class="t-block">Receipts updated according to the filer's schedule. Processing time can vary.</span>
     </div>
-  </div>
-  <div class="filters__inner">
-    {% include 'partials/filters/unique-receipts.html' %}
   </div>
 </div>
 {% endblock %}
