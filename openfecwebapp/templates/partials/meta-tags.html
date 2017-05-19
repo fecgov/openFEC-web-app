@@ -2,6 +2,7 @@
   "Explore federal campaign finance data with betaFEC, a new site where users can see how much money is raised and spent in federal elections. An official U.S. Government site, betaFEC is a Federal Election Commission project, designed in partnership with 18F."
 %}
 
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="{{ description }}">
@@ -17,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ title | trim }} - betaFEC">
 <meta name="twitter:description" content="{{ description }}">
-<meta name="twitter:image" content="{{ url_for('static', filename='img/beta-fec-tw.png', _external=True) }}">
+<meta name="twitter:image" content="{{ url_for('static', filename=['img/social/', parent, '.png']|join, _external=True) }}">
 
 <!-- Facebook
 ================================================== -->
@@ -26,7 +27,7 @@
 <meta property="og:title" content="{{ title | trim }} - betaFEC" />
 <meta property="og:site_name" content="betaFEC" />
 <meta property="og:description" content="{{ description }}" />
-<meta property="og:image" content="{{ url_for('static', filename='img/beta-fec-fb.png', _external=True) }}" />
+<meta property="og:image" content="{{ url_for('static', filename=['img/social/', parent, '.png']|join, _external=True) }}" />
 
 <!-- Google
 ================================================== -->
@@ -34,23 +35,11 @@
 
 <!-- Favicons
 ================================================== -->
-<link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-57x57.png') }}" />
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-114x114') }}" />
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-72x72.png') }}" />
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-144x144.png') }}" />
-<link rel="apple-touch-icon-precomposed" sizes="60x60" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-60x60.png') }}" />
-<link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-120x120.png') }}" />
-<link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-76x76.png') }}" />
-<link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-152x152.png') }}" />
-<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-196x196.png') }}" sizes="196x196" />
-<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-96x96.png') }}" sizes="96x96" />
+{% for dimension in ['57x57', '72x72', '114x114', '120x120', '144x144', '152x152'] %}
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ url_for('static', filename=['img/favicon/', parent, '/apple-touch-icon-', dimension, '.png'] | join) }}" />
+{% endfor %}
 <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-32x32.png') }}" sizes="32x32" />
 <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-16x16.png') }}" sizes="16x16" />
-<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-128.png') }}" sizes="128x128" />
 <meta name="application-name" content="&nbsp;"/>
 <meta name="msapplication-TileColor" content="#FFFFFF" />
-<meta name="msapplication-TileImage" href="{{ url_for('static', filename='img/favicon/mstile-144x144.png') }}" />
-<meta name="msapplication-square70x70logo" href="{{ url_for('static', filename='img/favicon/mstile-70x70.png') }}" />
-<meta name="msapplication-square150x150logo" href="{{ url_for('static', filename='img/favicon/mstile-150x150.png') }}" />
-<meta name="msapplication-wide310x150logo" href="{{ url_for('static', filename='img/favicon/mstile-310x150.png') }}" />
-<meta name="msapplication-square310x310logo" href="{{ url_for('static', filename='img/favicon/mstile-310x310.png') }}" />
+<meta name="msapplication-TileImage" href="{{ url_for('static', filename=['img/favicon/', parent, '/mstile-144x144.png'] | join) }}" />
