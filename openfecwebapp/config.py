@@ -15,7 +15,7 @@ cache_size = int(env.get_credential('FEC_WEB_CACHE_SIZE', 1000))
 transition_url = env.get_credential('FEC_TRANSITION_URL', 'https://transition.fec.gov')
 classic_url = env.get_credential('FEC_CLASSIC_URL', 'http://classic.fec.gov')
 cms_url = env.get_credential('FEC_CMS_URL', '')
-canonical_base = 'https://beta.fec.gov'
+canonical_base = env.get_credential('CANONICAL_BASE', 'https://beta.fec.gov')
 
 site_orientation_banner = bool(env.get_credential('FEC_SITE_ORIENTATION_BANNER'))
 
