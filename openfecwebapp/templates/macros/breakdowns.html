@@ -44,13 +44,13 @@
   <span class="t-sans js-dates">{{ coverage_start_date|date }} to {{ coverage_end_date|date }}</span>
   <div class="chart-table simple-table--responsive js-top-table" id="top-table" aria-live="polite" role="grid">
     <div role="row" class="simple-table__header">
-      <div row="columnheader" class="simple-table__header-cell cell--40">Name</div>
-      <div row="columnheader" class="simple-table__header-cell cell--20 t-right-aligned">Total {{ action }}</div>
-      <div row="columnheader" class="simple-table__header-cell cell--40"></div>
+      <div role="columnheader" class="simple-table__header-cell cell--40">Name</div>
+      <div role="columnheader" class="simple-table__header-cell cell--20 t-right-aligned">Total {{ action }}</div>
+      <div role="columnheader" class="simple-table__header-cell cell--40"></div>
     </div>
   {% for datum in data %}
     <div role="row" class="js-top-row simple-table__row">
-      <div class="simple-table__cell">{{ loop.index}}.
+      <div role="gridcell" class="simple-table__cell">{{ loop.index}}.
         <a href="{{ url_for(route, c_id=datum[id_field], cycle=cycle, election_full='false') }}" title="{{ datum[name_field] }}">{{ datum[name_field] }}</a>
         {% if datum.party %}
           [{{ datum.party | truncate(1, end='') | upper }}]
