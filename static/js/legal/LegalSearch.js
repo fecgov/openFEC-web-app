@@ -91,7 +91,7 @@ class LegalSearch extends React.Component {
   render() {
     return <section className="main__content--full data-container__wrapper">
       <div id="filters" className="filters is-open">
-        <button className="filters__header js-filter-toggle" type="button">
+        <button className="filters__header filters__toggle js-filter-toggle" type="button">
           <span className="filters__title">Edit filters</span>
         </button>
         <div className="filters__content">

@@ -22,7 +22,8 @@
     START_YEAR = '{{ constants.START_YEAR }}';
     END_YEAR = '{{ constants.END_YEAR }}';
     TRANSITION_URL = '{{ constants.TRANSITION_URL }}';
-    WEBMANAGER_EMAIL = '{{ webmanager_email }}'
+    WEBMANAGER_EMAIL = '{{ webmanager_email }}';
+    CANONICAL_BASE = '{{ canonical_base }}';
 
     function trackMetric(name, imagesSelector) {
       if (imagesSelector) {
@@ -53,7 +54,6 @@
   <header class="site-header">
     <div class="masthead">
       <div class="disclaimer">
-        <span class="disclaimer__left">This site is in beta, visit <a href="http://www.fec.gov">FEC.gov</a></span>
         <span class="disclaimer__right">
           An official website of the United States Government
           <img src="{{ url_for('static', filename='img/us_flag_small.png') }}" alt="US flag signifying that this is a United States Federal Government website">
@@ -76,7 +76,7 @@
               id="query"
               name="query"
               type="text"
-              aria-label="Search betaFEC">
+              aria-label="Search FEC.gov">
             <button type="submit" class="button--standard combo__button button--search">
               <span class="u-visually-hidden">Search</span>
             </button>
@@ -120,9 +120,9 @@
 
         <div class="grid__item">
           <ul>
-{#             <li>
-              <a href="">Privacy policy</a>
-            </li> #}
+            <li>
+              <a href="{{ cms_url }}/about/privacy-and-security-policy">Privacy and security policy</a>
+            </li>
             <li>
               <a href="{{ cms_url }}/about/plain-language/">Plain language</a>
             </li>

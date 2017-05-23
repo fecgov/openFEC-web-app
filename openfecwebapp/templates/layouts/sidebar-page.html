@@ -17,13 +17,14 @@
     </header>
   </div>
   <div id="options" class="container">
-  <div class="sidebar-container sidebar-container--left">
-    {% block sidebar %}{% endblock %}
+    <div class="sidebar-container sidebar-container--left">
+      {% block sidebar %}{% endblock %}
+    </div>
+    <section class="main__content--right">
+      {% block sections %}{% endblock %}
+    </section>
   </div>
-  <section class="main__content--right">
-    {% block sections %}{% endblock %}
-  </section>
-
+</div>
 {% endblock %}
 
 {% block modals %}{% endblock %}
