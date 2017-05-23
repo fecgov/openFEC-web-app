@@ -1,6 +1,8 @@
-{% set description =
-  "Explore federal campaign finance data with betaFEC, a new site where users can see how much money is raised and spent in federal elections. An official U.S. Government site, betaFEC is a Federal Election Commission project, designed in partnership with 18F."
-%}
+{% if parent == 'legal' %}
+  {% set description = "Clarify campaign finance legal requirements on the new fec.gov. Search across advisory opinions, Matters Under Review, statutes, and regulations all at once, with search results designed to help you find what you need quickly." %}
+{% else %}
+  {% set description = "Explore current and historic federal campaign finance data on the new fec.gov. Look at totals and trends, and see how candidates and committees raise and spend money. When you find what you need, export results and save custom links." %}
+{% endif %}
 
 
 <meta charset="utf-8">
