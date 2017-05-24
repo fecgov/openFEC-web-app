@@ -140,7 +140,7 @@ app.jinja_env.globals.update({
     'context': filters.get_context,
     'absolute_url': get_absolute_url,
     'canonical_url': get_canonical_url,
-    'contact_email': 'betafeedback@fec.gov',
+    'contact_email': 'webmanager@fec.gov',
     'default_cycles': _get_default_cycles(),
     'series_has_data': series_has_data,
     'group_has_data': group_has_data,
