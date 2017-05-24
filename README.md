@@ -14,19 +14,19 @@ The Federal Election Commission (FEC) releases information to the public about m
 
 Are you interested in seeing how much money a candidate raised? Or spent? How much debt they took on? Who contributed to their campaign? The FEC is the authoritative source for that information.
 
-betaFEC is a collaboration between [18F](http://18f.gsa.gov) and the FEC. It aims to make campaign finance information more accessible (and understandable) to all users.
+The new FEC.gov is a collaboration between [18F](http://18f.gsa.gov) and the FEC. It aims to make campaign finance information more accessible (and understandable) to all users.
 
 ## FEC repositories
 We welcome you to explore, make suggestions, and contribute to our code.
 
-This repository, [openFEC-web-app](https://github.com/18f/openfec-web-app), houses the betaFEC web app for exploring campaign finance data.
+This repository, [openFEC-web-app](https://github.com/18f/openfec-web-app), houses the new FEC.gov web app for exploring campaign finance data.
 
 ### All repositories
-- [FEC](https://github.com/18F/fec): a general discussion forum. We [compile feedback](https://github.com/18F/fec/issues) from betaFEC’s feedback widget here, and this is the best place to submit general feedback.
-- [openFEC](https://github.com/18F/openfec): betaFEC’s API
-- [openFEC-web-app](https://github.com/18f/openfec-web-app): the betaFEC web app for exploring campaign finance data
+- [FEC](https://github.com/18F/fec): a general discussion forum. We [compile feedback](https://github.com/18F/fec/issues) from the FEC.gov feedback widget here, and this is the best place to submit general feedback.
+- [openFEC](https://github.com/18F/openfec): The first RESTful API for the Federal Election Commission
+- [openFEC-web-app](https://github.com/18f/openfec-web-app): the FEC’s web app for exploring campaign finance data
 - [fec-style](https://github.com/18F/fec-style): shared styles and user interface components
-- [fec-cms](https://github.com/18F/fec-cms): the content management system (CMS) for betaFEC
+- [fec-cms](https://github.com/18F/fec-cms): the content management system (CMS) for the new FEC.gov
 
 ## Get involved
 We’re thrilled you want to get involved!
