@@ -40,7 +40,7 @@ def get_absolute_url():
 
 def get_canonical_url():
     path = furl.furl(request.url).path
-    return '{}/data{}'.format(config.canonical_base, path)
+    return '{}{}'.format(config.canonical_base, path)
 
 
 def _get_default_cycles():
