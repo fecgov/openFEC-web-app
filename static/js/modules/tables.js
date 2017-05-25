@@ -30,10 +30,10 @@ var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
 var MAX_DOWNLOADS = 5;
 var DOWNLOAD_MESSAGES = {
   recordCap:
-    'Exports are limited to ' +
+    'Use <a href="' + window.BASE_PATH + '/advanced?tab=other">' +
+    'bulk data</a> to export more than ' +
     downloadCapFormatted +
-    ' records—add filters to narrow results, or export bigger ' +
-    'data sets with <a href="http://www.fec.gov/finance/disclosure/ftp_download.shtml" target="_blank">FEC bulk data exporter</a>.',
+    ' records.',
   downloadCap: 'Each user is limited to ' +
     MAX_DOWNLOADS +
     ' exports at a time. This helps us keep things running smoothly.',
@@ -307,7 +307,7 @@ function filterSuccessUpdates(changeCount) {
       filterAction = '"' + $elm.find('option:selected').text() + '" applied.';
     }
 
-    $('.is-loading').removeClass('is-loading').addClass('is-successful');
+    $('.is-loading:not(.overlay)').removeClass('is-loading').addClass('is-successful');
 
     // build message with number of results returned
 
@@ -520,8 +520,7 @@ DataTable.prototype.ensureWidgets = function() {
     this.$exportWidget = $(exportWidgetTemplate({title: this.opts.title}));
     this.$widgets.prepend(this.$exportWidget);
     this.$exportButton = $('.js-export');
-    this.$exportTooltipContainer = $('.js-tooltip-container');
-    this.$exportTooltip = this.$exportTooltipContainer.find('.tooltip');
+    this.$exportMessage = $('.js-export-message');
 
     if (!helpers.isLargeScreen() && this.filterPanel) {
       this.$exportWidget.after(this.filterPanel.$body);
@@ -539,39 +538,13 @@ DataTable.prototype.ensureWidgets = function() {
   this.hasWidgets = true;
 };
 
-DataTable.prototype.initTooltip = function(message) {
-  // Adding everything we need for the tooltip
-  this.$exportButton.attr('aria-describedby', 'export-tooltip');
-  var $exportTooltip = this.$exportTooltip;
-  $exportTooltip.html(message);
-
-  function hideTooltip() {
-    $exportTooltip.attr('aria-hidden', 'true');
-  }
-
-  function showTooltip() {
-    $exportTooltip.attr('aria-hidden', 'false');
-  }
-
-  this.$exportTooltipContainer.hover(showTooltip, hideTooltip);
-  this.$exportButton.focus(showTooltip);
-  this.$exportButton.blur(hideTooltip);
-};
-
-DataTable.prototype.removeTooltip = function() {
-  // Remove all tooltip stuff
-  this.$exportTooltip.attr('aria-hidden', 'true');
-  this.$exportButton.removeAttr('aria-describedby');
-  this.$exportTooltipContainer.off('mouseenter mouseleave');
-  this.$exportButton.off('focus blur');
-};
-
 DataTable.prototype.disableExport = function(opts) {
   this.$exportButton.addClass('is-disabled');
   this.$exportButton.off('click');
 
-  if (this.$exportTooltip) {
-    this.initTooltip(opts.message);
+  if (this.$exportMessage) {
+    this.$exportMessage.html(opts.message);
+    this.$exportMessage.attr('aria-hidden', 'false');
   }
 };
 
@@ -579,9 +552,7 @@ DataTable.prototype.enableExport = function() {
   this.$exportButton.off('click');
   this.$exportButton.removeClass('is-disabled');
   this.$exportButton.on('click', this.export.bind(this));
-  if (this.$exportTooltip) {
-    this.removeTooltip();
-  }
+  this.$exportMessage.attr('aria-hidden', 'true');
 };
 
 DataTable.prototype.fetch = function(data, callback) {
