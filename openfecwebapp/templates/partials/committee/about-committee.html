@@ -12,7 +12,7 @@
           <td class="figure__value">{{name}}</td>
         </tr>
         <tr>
-          <td class="figure__label">Party:</td>
+          <td class="figure__label">Political party:</td>
           <td class="figure__value">
             {% if party_full %}
               {{party_full}}
@@ -32,6 +32,10 @@
           </td>
         </tr>
         <tr>
+          <td class="figure__label">Treasurer</td>
+          <td class="figure__value">{{ treasurer_name }}</td>
+        </tr>
+        <tr>
           <td class="figure__label">Committee type:</td>
           <td class="figure__value">{{ committee_type_full }}</td>
         </tr>
@@ -39,16 +43,14 @@
           <td class="figure__label">Committee designation:</td>
           <td class="figure__value">{{ designation_full }}</td>
         </tr>
-        <tr>
-          <td class="figure__label">Organization type:</td>
-          <td class="figure__value">
-            {% if organization %}
-              {{ organization }}
-            {% else %}
-              None
-            {% endif %}
-          </td>
-        </tr>
+        {% if organization %}
+          <tr>
+            <td class="figure__label">Organization type:</td>
+            <td class="figure__value">
+                {{ organization }}
+            </td>
+          </tr>
+        {% endif %}
         {% if candidates %}
           <tr>
             <td class="figure__label">Authorizing candidate:</td>
@@ -58,11 +60,22 @@
               {% endfor %}
             </td>
           </tr>
+          <tr>
+            <td class="figure__label">Candidates's political party:</td>
+            <td class="figure__value">{{ candidates[0].party_full }}</td>
+          </tr>
+          {% if candidates[0].office == 'S' %}
+            <tr>
+              <td class="figure__label">Candidates's state:</td>
+              <td class="figure__value">{{ candidates[0].state|fmt_state_full }}</td>
+            </tr>
+          {% elif candidates[0].office == 'H' %}
+            <tr>
+              <td class="figure__label">Candidates's state and district:</td>
+              <td class="figure__value">{{ candidates[0].state|fmt_state_full }} district {{ candidates[0].district }}</td>
+            </tr>
+          {% endif %}
         {% endif %}
-        <tr>
-          <td class="figure__label">Treasurer</td>
-          <td class="figure__value">{{ treasurer_name }}</td>
-        </tr>
       </table>
     </div>
   </div>
