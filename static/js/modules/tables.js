@@ -531,8 +531,12 @@ DataTable.prototype.ensureWidgets = function() {
     this.disableExport({message: DOWNLOAD_MESSAGES.comingSoon});
   }
 
-  if (this.opts.aggregateExport) {
+  if (this.opts.aggregateExport || this.opts.singleEntityItemizedExport) {
     this.$exportButton = $('[data-export-for="' + this.$body.data('type') + '"]');
+  }
+
+  if (this.opts.singleEntityItemizedExport) {
+    this.$exportMessage = $('[data-export-message-for="' + this.$body.data('type') + '"]');
   }
 
   this.hasWidgets = true;
@@ -552,7 +556,9 @@ DataTable.prototype.enableExport = function() {
   this.$exportButton.off('click');
   this.$exportButton.removeClass('is-disabled');
   this.$exportButton.on('click', this.export.bind(this));
-  this.$exportMessage.attr('aria-hidden', 'true');
+  if (this.$exportMessage) {
+    this.$exportMessage.attr('aria-hidden', 'true');
+  }
 };
 
 DataTable.prototype.fetch = function(data, callback) {
