@@ -413,6 +413,8 @@ $(document).ready(function() {
             columns: individualContributionsColumns,
             callbacks: aggregateCallbacks,
             order: [[2, 'desc']],
+            useExport: true,
+            singleEntityItemizedExport: true,
             hideEmptyOpts: {
               dataType: 'individual contributions',
               name: context.name,
@@ -454,6 +456,8 @@ $(document).ready(function() {
             columns: itemizedDisbursementColumns,
             callbacks: aggregateCallbacks,
             order: [[3, 'desc']],
+            useExport: true,
+            singleEntityItemizedExport: true,
             hideEmptyOpts: {
               dataType: 'disbursements to committees',
               name: context.name,

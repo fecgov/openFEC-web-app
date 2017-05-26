@@ -163,7 +163,7 @@
             <h2>Candidates</h2>
             <div class="post-feed">
               <div class="post">
-                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">All candidates</a></h3>
+                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('candidates', has_raised_funds='true') }}">All candidates</a></h3>
                 <p>Search candidates for president, Senate and House for all years by location, party and more.</p>
               </div>
               <div class="post post--child">
@@ -197,7 +197,7 @@
             <p>The term <span class="term" data-term="political committee">committee</span> encompasses several different political groups that receive and spend money in federal elections.</p>
             <div class="post-feed">
               <div class="post">
-                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('committees', election_year=default_cycles) }}">All committees</a></h3>
+                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('committees') }}">All committees</a></h3>
                 <p>Search for committees by type, years active, political party, location and treasurer.</p>
               </div>
               <div class="post">

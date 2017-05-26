@@ -102,13 +102,6 @@ describe('data table', function() {
       this.table.$exportButton.click();
       expect(DataTable.prototype.export).not.to.have.been.called;
     });
-
-    it('shows and hides the tooltip', function() {
-      this.table.$exportTooltipContainer.trigger('mouseenter');
-      expect(this.table.$exportTooltip.attr('aria-hidden')).to.equal('false');
-      this.table.$exportTooltipContainer.trigger('mouseleave');
-      expect(this.table.$exportTooltip.attr('aria-hidden')).to.equal('true');
-    });
   });
 
   describe('enables exporting', function() {
@@ -125,9 +118,8 @@ describe('data table', function() {
       expect(DataTable.prototype.export).to.have.been.called;
     });
 
-    it('does not show the tooltip', function() {
-      this.table.$exportTooltipContainer.trigger('mouseenter');
-      expect(this.table.$exportTooltip.attr('aria-hidden')).to.equal('true');
+    it('does not show the message', function() {
+      expect(this.table.$exportMessage.attr('aria-hidden')).to.equal('true');
     });
   });
 
