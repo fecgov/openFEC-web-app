@@ -36,7 +36,7 @@
   </figure>
 {% endmacro %}
 
-{% macro summary(data, committee_id) %}
+{% macro summary(data, committee_id, cycle) %}
 <figure>
 <table class="simple-table">
   {% for item in data %}
@@ -50,7 +50,7 @@
       </td>
       <td class="simple-table__cell">
         {% if item[1]['link'] %}
-          <a href="{{ url_for(item[1]['link'], committee_id=committee_id) }}">
+          <a href="{{ url_for(item[1]['link'], committee_id=committee_id, two_year_transaction_period=cycle) }}">
             {{ item[0]|currency }}
           </a>
         {% else %}
