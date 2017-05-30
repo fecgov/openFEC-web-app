@@ -156,7 +156,9 @@ DownloadItem.prototype.handleSuccess = function(response) {
 };
 
 DownloadItem.prototype.handleError = function(xhr, textStatus) {
-  if (textStatus !== 'abort') {
+  if (textStatus === 'error') {
+    this.handleServerError();
+  } else if (textStatus !== 'abort') {
     this.schedule();
   } else if (xhr.status === 403) {
     this.cancel();
@@ -180,6 +182,25 @@ DownloadItem.prototype.close = function() {
   this.container.subtract();
 };
 
+DownloadItem.prototype.handleServerError = function() {
+    // This is how we handle a 500 server error
+    // First, display a message
+    this.$body.html('<div class="message message--alert message--mini">' +
+                      'Sorry, there was a server error. Please try again later.' +
+                    '</div>');
+
+    // Clear all traces of the downloadUrl
+    window.clearTimeout(this.timeout);
+    this.promise && this.promise.abort();
+    this.$body.removeClass('is-pending');
+    this.$body.removeClass('download');
+    window.localStorage.removeItem(this.key);
+
+    // Tell the container to subtract an item, but preserve the DOM itself
+    // so that the message stays visible
+    this.container.subtract(true);
+};
+
 function DownloadContainer(parent) {
   this.$parent = $(parent);
   this.$body = $(templates.container());
@@ -195,12 +216,12 @@ DownloadContainer.prototype.add = function() {
   }
 };
 
-DownloadContainer.prototype.subtract = function() {
+DownloadContainer.prototype.subtract = function(preserve) {
   this.items = this.items - 1;
   if (this.$body) {
     this.$body.trigger({type: 'download:countChanged', count: this.items});
   }
-  if (this.items === 0) {
+  if (this.items === 0 && !preserve) {
     this.destroy();
   }
 };
