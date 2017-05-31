@@ -403,7 +403,6 @@ function initContributionsTables() {
         )
       }],
     callbacks: aggregateCallbacks,
-    aggregateExport: true,
     dom: 't',
     order: [[1, 'desc']],
     paging: false,
@@ -447,7 +446,6 @@ function initContributionsTables() {
     pagingType: 'simple',
     lengthChange: false,
     pageLength: 10,
-    aggregateExport: true,
     hideEmpty: true,
     hideEmptyOpts: {
       dataType: 'individual contributions',
