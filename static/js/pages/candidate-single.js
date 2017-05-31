@@ -15,19 +15,6 @@ var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
 };
 
-var filingsColumns = [
-  columnHelpers.urlColumn('pdf_url', {
-    data: 'document_description',
-    className: 'all',
-    orderable: false
-  }),
-  columns.amendmentIndicatorColumn,
-  columns.dateColumn({
-    data: 'receipt_date',
-    className: 'min-tablet'
-  }),
-];
-
 var expenditureColumns = [
   {
     data: 'total',
@@ -196,19 +183,6 @@ var individualContributionsColumns = [
 //   * Disbursements by transaction
 // - Individual contributions:
 //   * Contributor state, size, all transactions
-
-function initFilingsTable() {
-  var $table = $('table[data-type="filing"]');
-  var candidateId = $table.attr('data-candidate');
-  var path = ['candidate', candidateId, 'filings'];
-  tables.DataTable.defer($table, {
-    path: path,
-    columns: filingsColumns,
-    order: [[2, 'desc']],
-    dom: tables.simpleDOM,
-    pagingType: 'simple',
-  });
-}
 
 function initOtherDocumentsTable() {
   var $table = $('table[data-type="other-documents"]');
@@ -477,7 +451,6 @@ function initContributionsTables() {
 }
 
 $(document).ready(function() {
-  initFilingsTable();
   initOtherDocumentsTable();
   initSpendingTables();
   initDisbursementsTable();

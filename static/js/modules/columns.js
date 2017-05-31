@@ -21,14 +21,6 @@ var supportOpposeColumn = {
   }
 };
 
-var amendmentIndicatorColumn = {
-  data: 'amendment_indicator',
-  className: 'hide-panel hide-efiling column--med min-desktop',
-  render: function(data) {
-    return decoders.amendments[data] || '';
-  }
-};
-
 var versionColumn = {
   data: 'most_recent',
   className: 'hide-panel hide-efiling column--med min-desktop',
@@ -613,7 +605,6 @@ module.exports = {
   currencyColumn: currencyColumn,
   barCurrencyColumn: barCurrencyColumn,
   supportOpposeColumn: supportOpposeColumn,
-  amendmentIndicatorColumn: amendmentIndicatorColumn,
   candidates: candidates,
   candidateOffice: candidateOffice,
   committees: committees,
