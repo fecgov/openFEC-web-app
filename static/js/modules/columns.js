@@ -315,6 +315,15 @@ var filings = {
   pages: pagesColumn,
   version: versionColumn,
   receipt_date: receiptDateColumn,
+  receipt_date_unordable: {
+    data: 'receipt_date',
+    className: 'min-tablet hide-panel column--small',
+    orderable: false,
+    render: function(data, type, row) {
+      var parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
+      return parsed.isValid() ? parsed.format('MM/DD/YYYY') : 'Invalid date';
+    }
+  },
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--med', orderable: false}),
   total_receipts: currencyColumn({data: 'total_receipts', className: 'min-desktop hide-panel column--number'}),
