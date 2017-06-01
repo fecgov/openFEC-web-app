@@ -307,7 +307,7 @@ var filings = {
   pages: pagesColumn,
   version: versionColumn,
   receipt_date: receiptDateColumn,
-  receipt_date_unordable: {
+  receipt_date_unorderable: {
     data: 'receipt_date',
     className: 'min-tablet hide-panel column--small',
     orderable: false,

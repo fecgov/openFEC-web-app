@@ -287,7 +287,7 @@ var filingsColumns = columnHelpers.getColumns(
 
 var filingsReportsColumns = columnHelpers.getColumns(
   columns.filings,
-  ['document_type', 'version', 'receipt_date_unordable', 'pages', 'modal_trigger']
+  ['document_type', 'version', 'receipt_date_unorderable', 'pages', 'modal_trigger']
 );
 
 $(document).ready(function() {
