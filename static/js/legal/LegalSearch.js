@@ -42,8 +42,8 @@ class LegalSearch extends React.Component {
     }
 
     // special logic: pending AOs don't have final opinions, so if they are filtering
-    // by pending, we remove all restrictions. Restrictions can be added afterwards
-    // to filter by other document types.
+    // by pending, we remove all document type restrictions. Document type restrictions
+    // can be added afterwards to filter by other document types.
     if(e.target.name === 'ao_is_pending') {
       newState.ao_category = [];
     }
