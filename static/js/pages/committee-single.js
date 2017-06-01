@@ -287,7 +287,7 @@ var filingsColumns = columnHelpers.getColumns(
 
 var filingsReportsColumns = columnHelpers.getColumns(
   columns.filings,
-  ['document_type', 'version', 'receipt_date', 'pages', 'modal_trigger']
+  ['document_type', 'version', 'receipt_date_unorderable', 'pages', 'modal_trigger']
 );
 
 $(document).ready(function() {
@@ -541,6 +541,7 @@ $(document).ready(function() {
       case 'filings-reports':
         opts = _.extend({
           columns: filingsReportsColumns,
+          order: [],
           path: ['committee', committeeId, 'filings'],
           query: _.extend({
             form_type: ['F3', 'F3X', 'F3P', 'F3L', 'F4', 'F7', 'F13', 'RFAI'],
