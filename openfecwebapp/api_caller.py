@@ -265,7 +265,6 @@ def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, 
         response = _call_api(
             'candidates', 'totals',
             sort_hide_null=True,
-            election_year=cycle,
             cycle=cycle,
             election_full=False,
             office=office,

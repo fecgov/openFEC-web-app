@@ -126,7 +126,12 @@
         <div id="itemized-contributions" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <h3 class="results-info__title">All transactions</h3>
-            <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-receipts">Export</button>
+
+            <div class="u-float-right">
+              <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-receipts" aria-hidden="true">
+              </div>
+              <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-receipts">Export</button>
+            </div>
           </div>
           <table
               class="data-table data-table--heading-borders"

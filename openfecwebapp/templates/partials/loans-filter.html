@@ -7,14 +7,11 @@
 
 
 {% block filters %}
-  <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
-    <button type="button" class="js-accordion-trigger accordion__button">Committee information</button>
-    <div class="accordion__content">
-      {{ typeahead.field('committee_id', 'Committee Name or ID') }}
-      {{ text.field('loaner_name', 'Loaner name') }}
-      {{ date.field('incurred_date', 'Incurred date', dates, id_suffix='_raw') }}
-      {{ range.amount('payment_to_date', 'Payment to date') }}
-      {{ range.amount('amount', 'Original loan amount') }}
-   </div>
+  <div class="filters__inner">
+    {{ typeahead.field('committee_id', 'Committee Name or ID') }}
+    {{ text.field('loaner_name', 'Loaner name') }}
+    {{ date.field('incurred_date', 'Incurred date', dates, id_suffix='_raw') }}
+    {{ range.amount('payment_to_date', 'Payment to date') }}
+    {{ range.amount('amount', 'Original loan amount') }}
  </div>
 {% endblock %}

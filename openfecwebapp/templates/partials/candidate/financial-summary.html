@@ -34,7 +34,7 @@
               </a>
             </div>
         </div>
-        {{ tables.summary(raising_summary, committee_ids) }}
+        {{ tables.summary(raising_summary, committee_ids, cycle) }}
       </div>
       <div class="entity__figure entity__figure--narrow">
         <h3 class="u-no-margin">Spending</h3>
@@ -48,7 +48,7 @@
               </a>
             </div>
         </div>
-        {{ tables.summary(spending_summary, committee_ids) }}
+        {{ tables.summary(spending_summary, committee_ids, cycle) }}
       </div>
       <div class="entity__figure entity__figure--narrow">
         <h3 class="u-no-margin">Cash</h3>

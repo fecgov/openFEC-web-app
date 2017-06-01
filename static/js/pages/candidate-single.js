@@ -15,19 +15,6 @@ var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
 };
 
-var filingsColumns = [
-  columnHelpers.urlColumn('pdf_url', {
-    data: 'document_description',
-    className: 'all',
-    orderable: false
-  }),
-  columns.amendmentIndicatorColumn,
-  columns.dateColumn({
-    data: 'receipt_date',
-    className: 'min-tablet'
-  }),
-];
-
 var expenditureColumns = [
   {
     data: 'total',
@@ -197,19 +184,6 @@ var individualContributionsColumns = [
 // - Individual contributions:
 //   * Contributor state, size, all transactions
 
-function initFilingsTable() {
-  var $table = $('table[data-type="filing"]');
-  var candidateId = $table.attr('data-candidate');
-  var path = ['candidate', candidateId, 'filings'];
-  tables.DataTable.defer($table, {
-    path: path,
-    columns: filingsColumns,
-    order: [[2, 'desc']],
-    dom: tables.simpleDOM,
-    pagingType: 'simple',
-  });
-}
-
 function initOtherDocumentsTable() {
   var $table = $('table[data-type="other-documents"]');
   var candidateId = $table.data('candidate');
@@ -310,11 +284,11 @@ function initDisbursementsTable() {
     columns: itemizedDisbursementColumns,
     order: [[4, 'desc']],
     dom: tables.simpleDOM,
-    aggregateExport: true,
     paginator: tables.SeekPaginator,
     lengthMenu: [10, 50, 100],
     useFilters: true,
     useExport: true,
+    singleEntityItemizedExport: true,
     hideEmpty: true,
     hideEmptyOpts: {
       email: WEBMANAGER_EMAIL,
@@ -354,10 +328,10 @@ function initContributionsTables() {
     columns: individualContributionsColumns,
     order: [[2, 'desc']],
     dom: tables.simpleDOM,
-    aggregateExport: true,
     paginator: tables.SeekPaginator,
     useFilters: true,
     useExport: true,
+    singleEntityItemizedExport: true,
     hideEmpty: true,
     hideEmptyOpts: {
       dataType: 'individual contributions',
@@ -475,7 +449,6 @@ function initContributionsTables() {
 }
 
 $(document).ready(function() {
-  initFilingsTable();
   initOtherDocumentsTable();
   initSpendingTables();
   initDisbursementsTable();
