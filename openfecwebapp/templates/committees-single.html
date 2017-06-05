@@ -1,7 +1,6 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/null.html' as null %}
 {% import 'macros/cycle-select.html' as select %}
-{% import 'macros/tabs.html' as tabs %}
 {% import 'macros/page-header.html' as header %}
 
 {% block title %}
@@ -41,6 +40,28 @@
             aria-selected="true">Financial Summary</a>
         </li>
         {% endif %}
+        {% if committee_type in ['C'] %}
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="communication-cost-committee"
+            tabindex="0"
+            aria-controls="panel1"
+            href="#section-1">Communication costs</a>
+        </li>
+        {% endif %}
+        {% if committee_type in ['E'] %}
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="electioneering-committee"
+            tabindex="0"
+            aria-controls="panel1"
+            href="#section-1">Electioneering communication</a>
+        </li>
+        {% endif %}
         <li class="side-nav__item" role="presentation">
           <a
             class="side-nav__link"
@@ -50,12 +71,6 @@
             aria-controls="panel2"
             href="#section-2">About this committee</a>
         </li>
-        {% if committee_type in ['C'] %}
-          {{ tabs.side_tab('Communication cost', 'communication-cost-committee', 'panel6', '#section-1') }}
-        {% endif %}
-        {% if committee_type in ['E'] %}
-          {{ tabs.side_tab('Electioneering communication', 'electioneering-committee', 'panel6', '#section-1') }}
-        {% endif %}
         {% if committee_type not in ['C'] %}
           <li class="side-nav__item" role="presentation">
             <a
@@ -85,9 +100,25 @@
             </ul>
         </li>
         {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
-          {{ tabs.side_tab('Independent expenditures', 'independent-expenditures-committee', 'panel7', '#section-6') }}
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="independent-expenditures-committee"
+            tabindex="1"
+            aria-controls="panel6"
+            href="#section-6">Independent expenditures</a>
+        </li>
         {% endif %}
-        {{ tabs.side_tab('Filings', 'filings', 'panel5', '#section-5') }}
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="filings"
+            tabindex="1"
+            aria-controls="panel5"
+            href="#section-5">Filings</a>
+        </li>
       </ul>
     </nav>
 
