@@ -20,6 +20,7 @@ from openfecwebapp import config
 from openfecwebapp import api_caller
 from openfecwebapp import utils
 
+
 def render_search_results(results, query):
     return render_template(
         'search-results.html',
@@ -77,6 +78,7 @@ def render_legal_mur(mur):
         mur=mur,
         parent='legal'
     )
+
 
 def render_legal_ao_landing():
     today = datetime.date.today()
@@ -182,6 +184,7 @@ report_types = {
     'I': 'ie-only'
 }
 
+
 def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
@@ -271,6 +274,7 @@ def validate_referer(referer):
     if furl.furl(referer).host != furl.furl(request.url).host:
         raise ValidationError('Invalid referer.')
 
+
 class GithubView(MethodView):
 
     decorators = [cross_origin()]
@@ -307,6 +311,7 @@ class GithubView(MethodView):
         body = render_template('feedback.html', headers=request.headers, **kwargs)
         issue = self.repo.create_issue(title, body=body)
         return jsonify(issue.to_json()), 201
+
 
 def get_legal_category_order(results):
     """ Return categories in pre-defined order, moving categories with empty results
