@@ -12,7 +12,7 @@
 
         <div class="usa-width-one-half">
           <span class="t-big-data u-no-margin">{{ raising_summary[0][0]|currency }}</span>
-          <span class="t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>January 1, {{ cycle - 1 }} to December 31, {{ cycle }}.</strong></span>
+          <span class="t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>{{totals.0.coverage_start_date|date_full}} to {{totals.0.coverage_end_date|date_full}}.</strong></span>
         </div>
 
         <div class="usa-width-one-half">
