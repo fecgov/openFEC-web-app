@@ -254,8 +254,6 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         election_full=False
     )
 
-    print(two_year_totals)
-
     tmpl_vars['two_year_totals'] = two_year_totals
 
     # Get the statements of candidacy
