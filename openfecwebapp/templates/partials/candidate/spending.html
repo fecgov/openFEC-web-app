@@ -3,9 +3,7 @@
 {% import 'macros/cycle-select.html' as select %}
 
 <section id="section-4" role="tabpanel" aria-hidden="true" aria-labelledby="section-4-heading">
-  <div class="heading--section">
-    <h2 id="section-4-heading">Spending</h2>
-  </div>
+  <h2 id="section-4-heading">Spending</h2>
 
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
 
@@ -34,6 +32,21 @@
       <div class="content__section">
         <h3>Total disbursements</h3>
 
+        <div class="usa-width-one-half">
+          <span class="t-big-data u-no-margin">{{ spending_summary[0][0]|currency }}</span>
+          <span class="t-block t-sans">spent in total disbursements by this candidate's authorized committees from <strong>January 1, {{ max_cycle - 1 }} to December 31, {{ max_cycle }}.</strong></span>
+        </div>
+
+        <div class="usa-width-one-half">
+          <a class="button--alt button--browse"
+            href="{{ url_for(
+              'disbursements',
+              two_year_transaction_period=max_cycle,
+              min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
+              max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+            ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all disbursements</a>
+          <span class="t-block t-sans">See the <a href="?tab=summary">financial summary</a> for a breakdown of each type of disbursement.</span>
+        </div>
       </div>
     </div>
 
