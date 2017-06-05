@@ -1,0 +1,175 @@
+{% import 'macros/cycle-select.html' as select %}
+
+<section id="section-3" role="tabpanel" aria-hidden="true" aria-labelledby="section-3-heading">
+  <h2 id="section-3-heading">Raising</h2>
+
+  <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
+
+    {{ select.candidate_cycle_select(cycles, max_cycle, id="cycle-5") }}
+
+    <span class="t-sans t-bold">Data is included from these committees:</span>
+
+    <ul class="list--bulleted">
+      {% for committee in committee_groups['P'] | reverse %}
+      {% if committee.cycle == max_cycle %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+      {% for committee in committee_groups['A'] | reverse %}
+      {% if committee.cycle == max_cycle %}
+      <li>
+        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+
+    <div id="total-receipts" class="entity__figure row">
+      <div class="content__section--narrow">
+        <h3>Total receipts</h3>
+
+        <div class="usa-width-one-half">
+          <span class="t-big-data u-no-margin">{{ two_year_totals['receipts']|currency }}</span>
+          <span class="t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>{{two_year_totals.coverage_start_date|date_full}} to {{two_year_totals.coverage_end_date|date_full}}.</strong></span>
+        </div>
+
+        <div class="usa-width-one-half">
+          <a class="button--alt button--browse"
+            href="{{ url_for(
+              'receipts',
+              two_year_transaction_period=max_cycle,
+              min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
+              max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+            ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all receipts</a>
+          <span class="t-block t-sans">See the <a href="?tab=summary">financial summary</a> for a breakdown of each type of receipt.</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="individual-contribution-transactions" class="entity__figure row">
+      <div class="content__section">
+        <h3>All individual contribution transactions</h3>
+
+        <div class="row">
+          <fieldset class="toggles js-toggles">
+            <legend class="label">View by:</legend>
+
+            <a class="u-float-right button--alt button--browse"
+                href="{{ url_for(
+                  'individual_contributions',
+                  two_year_transaction_period=max_cycle,
+                  min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
+                  max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+                ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
+
+            <label for="toggle-state">
+              <input id="toggle-state" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="contributor-state" checked />
+              <span class="button--alt">State</span>
+            </label>
+            <label for="toggle-size">
+              <input id="toggle-size" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="contribution-size" />
+              <span class="button--alt">Size</span>
+            </label>
+            <label for="toggle-all">
+              <input id="toggle-all" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="all-transactions" />
+              <span class="button--alt">All transactions</span>
+            </label>
+          </fieldset>
+        </div>
+
+        <div id="contributor-state" class="panel-toggle-element">
+
+          <div class="results-info results-info--simple">
+            <ul class="u-float-left">
+              <li class="tag__category">
+                <div class="tag__item">Report year: {{ max_cycle - 1 }} to {{ max_cycle }}</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="map-table">
+            <table
+                class="data-table data-table--heading-borders"
+                data-type="contributor-state"
+                data-cycle="{{ max_cycle }}"
+              >
+              <thead>
+                <th scope="col">State</th>
+                <th scope="col">Total contributed</th>
+              </thead>
+            </table>
+          </div>
+
+          <div class="map-panel">
+            <div class="state-map" data-candidate-id="{{ candidate_id }}" data-cycle="{{ max_cycle }}">
+              <div class="legend-container">
+                <span class="t-sans t-block">By state: total amount received</span>
+                <svg></svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="contribution-size" class="panel-toggle-element" aria-hidden="true">
+          <div class="results-info results-info--simple">
+            <ul class="u-float-left">
+              <li class="tag__category">
+                <div class="tag__item">Report year: {{ max_cycle - 1 }} to {{ max_cycle }}</div>
+              </li>
+            </ul>
+          </div>
+
+          <table
+             class="data-table data-table--heading-borders"
+             data-type="contribution-size"
+             data-cycle="{{ max_cycle }}">
+            <thead>
+              <th scope="col">Contribution size</th>
+              <th scope="col">Total contributed</th>
+            </thead>
+          </table>
+        </div>
+
+        <div id="all-transactions" class="panel-toggle-element" aria-hidden="true">
+          <div class="results-info results-info--simple">
+            <ul class="u-float-left">
+              <li class="tag__category">
+                <div class="tag__item">Report year: {{ max_cycle - 1 }} to {{ max_cycle }}</div>
+              </li>
+            </ul>
+
+            <div class="u-float-right">
+              <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="individual-contributions" aria-hidden="true">
+              </div>
+              <button type="button" class="js-export button button--cta button--export" data-export-for="individual-contributions">Export</button>
+            </div>
+          </div>
+
+          <table
+              class="data-table data-table--heading-borders"
+              data-type="individual-contributions"
+              data-candidate-id="{{ candidate_id }}"
+              data-committee-id="{% for c in committee_groups['P'] | reverse %}{{ c.committee_id }},{% endfor %}{% for c in committee_groups['A'] | reverse %}{{ c.committee_id }},{% endfor %}"
+              data-name="{{ name }}"
+              data-cycle="{{ max_cycle }}"
+              data-duration="2"
+            >
+            <thead>
+              <tr>
+                <th scope="col">Contributor name</th>
+                <th scope="col">Recipient</th>
+                <th scope="col">Receipt date</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

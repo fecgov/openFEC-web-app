@@ -30,9 +30,26 @@
     <nav class="sidebar side-nav-alt">
       <ul class="tablist" role="tablist" data-name="tab">
         {% if committee_type not in ['C', 'E'] %}
-          {{ tabs.side_tab('Financial summary', 'summary', 'panel1', '#section-1') }}
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="summary"
+            tabindex="0"
+            aria-controls="panel1"
+            href="#section-1"
+            aria-selected="true">Financial Summary</a>
+        </li>
         {% endif %}
-        {{ tabs.side_tab('About this committee', 'about', 'panel2', '#section-2') }}
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="about-committee"
+            tabindex="0"
+            aria-controls="panel2"
+            href="#section-2">About this committee</a>
+        </li>
         {% if committee_type in ['C'] %}
           {{ tabs.side_tab('Communication cost', 'communication-cost-committee', 'panel6', '#section-1') }}
         {% endif %}
@@ -40,9 +57,33 @@
           {{ tabs.side_tab('Electioneering communication', 'electioneering-committee', 'panel6', '#section-1') }}
         {% endif %}
         {% if committee_type not in ['C'] %}
-          {{ tabs.side_tab('Individual contributions', 'receipts', 'panel3', '#section-3') }}
+          <li class="side-nav__item" role="presentation">
+            <a
+              class="side-nav__link"
+              role="tab"
+              data-name="raising"
+              tabindex="0"
+              aria-controls="panel3"
+              href="#section-3">Raising</a>
+              <ul>
+                <li><a href="#total-receipts">Total receipts</a></li>
+                <li><a href="#individual-contribution-transactions">Individual contribution transactions</a></li>
+              </ul>
+          </li>
         {% endif %}
-          {{ tabs.side_tab('Disbursements', 'disbursements', 'panel4', '#section-4') }}
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="spending"
+            tabindex="0"
+            aria-controls="panel4"
+            href="#section-4">Spending</a>
+            <ul>
+              <li><a href="#total-disbursements">Total disbursements</a></li>
+              <li><a href="#disbursement-transactions">Disbursement transactions</a></li>
+            </ul>
+        </li>
         {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
           {{ tabs.side_tab('Independent expenditures', 'independent-expenditures-committee', 'panel7', '#section-6') }}
         {% endif %}
@@ -57,9 +98,9 @@
         {% include 'partials/committee/financial-summary.html' %}
       {% endif %}
       {% if committee_type not in ['C'] %}
-        {% include 'partials/committee/receipts.html' %}
+        {% include 'partials/committee/raising.html' %}
       {% endif %}
-      {% include 'partials/committee/disbursements.html' %}
+      {% include 'partials/committee/spending.html' %}
       {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
         {% include 'partials/committee/independent-expenditures.html' %}
       {% endif %}

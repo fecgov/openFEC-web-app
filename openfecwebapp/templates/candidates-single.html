@@ -47,7 +47,7 @@
             class="side-nav__link"
             role="tab"
             data-name="about-candidate"
-            tabindex="1"
+            tabindex="0"
             aria-controls="panel2"
             href="#section-2">About this candidate</a>
         </li>
@@ -55,26 +55,34 @@
           <a
             class="side-nav__link"
             role="tab"
-            data-name="individual-contributions"
-            tabindex="3"
+            data-name="raising"
+            tabindex="0"
             aria-controls="panel3"
-            href="#section-3">Individual contributions</a>
+            href="#section-3">Raising</a>
+            <ul>
+              <li><a href="#total-receipts">Total receipts</a></li>
+              <li><a href="#individual-contribution-transactions">Individual contribution transactions</a></li>
+            </ul>
         </li>
         <li class="side-nav__item" role="presentation">
           <a
             class="side-nav__link"
             role="tab"
-            data-name="itemized-disbursements"
-            tabindex="2"
+            data-name="spending"
+            tabindex="0"
             aria-controls="panel4"
-            href="#section-4">Disbursements</a>
+            href="#section-4">Spending</a>
+            <ul>
+              <li><a href="#total-disbursements">Total disbursements</a></li>
+              <li><a href="#disbursement-transactions">Disbursement transactions</a></li>
+            </ul>
         </li>
         <li class="side-nav__item" role="presentation">
           <a
             class="side-nav__link"
             role="tab"
             data-name="other-spending"
-            tabindex="4"
+            tabindex="0"
             aria-controls="panel5"
             href="#section-5">Spending by others to support or oppose</a>
         </li>
@@ -92,8 +100,8 @@
       {% include 'partials/candidate/financial-summary.html' %}
       {% include 'partials/candidate/about-candidate.html' %}
       {% include 'partials/candidate/other-spending-tab.html' %}
-      {% include 'partials/candidate/itemized-disbursements.html' %}
-      {% include 'partials/candidate/individual-contributions.html' %}
+      {% include 'partials/candidate/raising.html' %}
+      {% include 'partials/candidate/spending.html' %}
     </div>
   </div>
 
