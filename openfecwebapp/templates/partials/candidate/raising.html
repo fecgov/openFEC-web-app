@@ -32,6 +32,21 @@
       <div class="content__section">
         <h3>Total receipts</h3>
 
+        <div class="usa-width-one-half">
+          <span class="t-big-data u-no-margin">{{ raising_summary[0][0]|currency }}</span>
+          <span class="t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>January 1, {{ max_cycle - 1 }} to December 31, {{ max_cycle }}.</strong></span>
+        </div>
+
+        <div class="usa-width-one-half">
+          <a class="button--alt button--browse"
+            href="{{ url_for(
+              'receipts',
+              two_year_transaction_period=max_cycle,
+              min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
+              max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+            ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all receipts</a>
+          <span class="t-block t-sans">See the <a href="?tab=summary">financial summary</a> for a breakdown of each type of receipt.</span>
+        </div>
       </div>
     </div>
 
@@ -71,7 +86,7 @@
           <div class="results-info results-info--simple">
             <ul class="u-float-left">
               <li class="tag__category">
-                <div class="tag__item">Report year: {{max_cycle - 1}} to {{max_cycle}}</div>
+                <div class="tag__item">Report year: {{ max_cycle - 1 }} to {{ max_cycle }}</div>
               </li>
             </ul>
           </div>
@@ -104,7 +119,7 @@
           <div class="results-info results-info--simple">
             <ul class="u-float-left">
               <li class="tag__category">
-                <div class="tag__item">Report year: {{max_cycle - 1}} to {{max_cycle}}</div>
+                <div class="tag__item">Report year: {{ max_cycle - 1 }} to {{ max_cycle }}</div>
               </li>
             </ul>
           </div>
@@ -124,7 +139,7 @@
           <div class="results-info results-info--simple">
             <ul class="u-float-left">
               <li class="tag__category">
-                <div class="tag__item">Report year: {{max_cycle - 1}} to {{max_cycle}}</div>
+                <div class="tag__item">Report year: {{ max_cycle - 1 }} to {{ max_cycle }}</div>
               </li>
             </ul>
 
