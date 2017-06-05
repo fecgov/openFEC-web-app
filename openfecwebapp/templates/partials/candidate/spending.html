@@ -4,7 +4,7 @@
 
 <section id="section-4" role="tabpanel" aria-hidden="true" aria-labelledby="section-4-heading">
   <div class="heading--section">
-    <h2 id="section-4-heading">Itemized disbursements</h2>
+    <h2 id="section-4-heading">Spending</h2>
   </div>
 
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
@@ -30,17 +30,17 @@
       {% endfor %}
     </ul>
 
-    <div class="entity__figure row">
+    <div id="total-disbursements" class="entity__figure row">
       <div class="content__section">
         <h3>Total disbursements</h3>
 
       </div>
     </div>
 
-    <div class="entity__figure row">
+    <div id="disbursement-transactions" class="entity__figure row">
       <div class="content__section">
         <div class="results-info results-info--simple">
-          <h3 class="u-no-margin">Disbursements by transaction</h3>
+          <h3 class="u-no-margin">All disbursement transactions</h3>
 
           <a class="u-float-right button--alt button--browse"
               href="{{ url_for(

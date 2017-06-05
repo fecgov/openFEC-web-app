@@ -55,26 +55,26 @@
           <a
             class="side-nav__link"
             role="tab"
-            data-name="individual-contributions"
+            data-name="raising"
             tabindex="3"
             aria-controls="panel3"
             href="#section-3">Raising</a>
             <ul>
-              <li>Total receipts</li>
-              <li>Individual contribution transactions</li>
+              <li><a href="#total-receipts">Total receipts</a></li>
+              <li><a href="#individual-contribution-transactions">Individual contribution transactions</a></li>
             </ul>
         </li>
         <li class="side-nav__item" role="presentation">
           <a
             class="side-nav__link"
             role="tab"
-            data-name="itemized-disbursements"
+            data-name="spending"
             tabindex="2"
             aria-controls="panel4"
             href="#section-4">Spending</a>
             <ul>
-              <li>Total disbursements</li>
-              <li>Disbursement transactions</li>
+              <li><a href="#total-disbursements">Total disbursements</a></li>
+              <li><a href="#disbursement-transactions">Disbursement transactions</a></li>
             </ul>
         </li>
         <li class="side-nav__item" role="presentation">
@@ -100,8 +100,8 @@
       {% include 'partials/candidate/financial-summary.html' %}
       {% include 'partials/candidate/about-candidate.html' %}
       {% include 'partials/candidate/other-spending-tab.html' %}
-      {% include 'partials/candidate/itemized-disbursements.html' %}
-      {% include 'partials/candidate/individual-contributions.html' %}
+      {% include 'partials/candidate/raising.html' %}
+      {% include 'partials/candidate/spending.html' %}
     </div>
   </div>
 
