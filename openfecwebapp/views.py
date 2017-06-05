@@ -246,6 +246,18 @@ def render_candidate(candidate, committees, cycle, election_full=True):
 
     tmpl_vars['aggregate'] = aggregate
 
+    # Get totals for the last two-year period of a cycle for showing on
+    # raising and spending tabs
+    two_year_totals = api_caller.load_candidate_totals(
+        candidate['candidate_id'],
+        cycle=tmpl_vars['max_cycle'],
+        election_full=False
+    )
+
+    print(two_year_totals)
+
+    tmpl_vars['two_year_totals'] = two_year_totals
+
     # Get the statements of candidacy
     statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
         candidate['candidate_id'],
