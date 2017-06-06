@@ -39,29 +39,6 @@
             href="#section-1"
             aria-selected="true">Financial Summary</a>
         </li>
-        {% endif %}
-        {% if committee_type in ['C'] %}
-        <li class="side-nav__item" role="presentation">
-          <a
-            class="side-nav__link"
-            role="tab"
-            data-name="communication-cost-committee"
-            tabindex="0"
-            aria-controls="panel1"
-            href="#section-1">Communication costs</a>
-        </li>
-        {% endif %}
-        {% if committee_type in ['E'] %}
-        <li class="side-nav__item" role="presentation">
-          <a
-            class="side-nav__link"
-            role="tab"
-            data-name="electioneering-committee"
-            tabindex="0"
-            aria-controls="panel1"
-            href="#section-1">Electioneering communication</a>
-        </li>
-        {% endif %}
         <li class="side-nav__item" role="presentation">
           <a
             class="side-nav__link"
@@ -71,6 +48,17 @@
             aria-controls="panel2"
             href="#section-2">About this committee</a>
         </li>
+        {% else %}
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="about-committee"
+            tabindex="0"
+            aria-controls="panel1"
+            href="#section-2">About this committee</a>
+        </li>
+        {% endif %}
         {% if committee_type not in ['C'] %}
           <li class="side-nav__item" role="presentation">
             <a
@@ -80,10 +68,12 @@
               tabindex="0"
               aria-controls="panel3"
               href="#section-3">Raising</a>
+              {% if committee_type not in ['C', 'E'] %}
               <ul>
                 <li><a href="#total-receipts">Total receipts</a></li>
                 <li><a href="#individual-contribution-transactions">Individual contribution transactions</a></li>
               </ul>
+              {% endif %}
           </li>
         {% endif %}
         <li class="side-nav__item" role="presentation">
@@ -94,28 +84,32 @@
             tabindex="0"
             aria-controls="panel4"
             href="#section-4">Spending</a>
+            {% if committee_type == 'C' %}
             <ul>
-              <li><a href="#total-disbursements">Total disbursements</a></li>
+              <li><a href="#communication-costs">Communication costs</a></li>
               <li><a href="#disbursement-transactions">Disbursement transactions</a></li>
             </ul>
+            {% elif committee_type == 'E' %}
+            <ul>
+              <li><a href="#electioneering-communication">Electioneering communication</a></li>
+              <li><a href="#disbursement-transactions">Disbursement transactions</a></li>
+            </ul>
+            {% else %}
+            <ul>
+              <li><a href="#total-disbursements">Total disbursements</a></li>
+              {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
+              <li><a href="#independent-expenditures">Independent expenditures</a></li>
+              {% endif %}
+              <li><a href="#disbursement-transactions">Disbursement transactions</a></li>
+            </ul>
+            {% endif %}
         </li>
-        {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
-        <li class="side-nav__item" role="presentation">
-          <a
-            class="side-nav__link"
-            role="tab"
-            data-name="independent-expenditures-committee"
-            tabindex="1"
-            aria-controls="panel6"
-            href="#section-6">Independent expenditures</a>
-        </li>
-        {% endif %}
         <li class="side-nav__item" role="presentation">
           <a
             class="side-nav__link"
             role="tab"
             data-name="filings"
-            tabindex="1"
+            tabindex="0"
             aria-controls="panel5"
             href="#section-5">Filings</a>
         </li>
@@ -132,15 +126,6 @@
         {% include 'partials/committee/raising.html' %}
       {% endif %}
       {% include 'partials/committee/spending.html' %}
-      {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
-        {% include 'partials/committee/independent-expenditures.html' %}
-      {% endif %}
-      {% if committee_type in ['C'] %}
-        {% include 'partials/committee/communication-cost.html' %}
-      {% endif %}
-      {% if committee_type in ['E'] %}
-        {% include 'partials/committee/electioneering.html' %}
-      {% endif %}
       {% include 'partials/committee/filings.html' %}
     {% endwith %}
   </div>
