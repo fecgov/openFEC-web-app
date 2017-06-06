@@ -12,12 +12,12 @@
           <h3>Total receipts</h3>
 
           <div class="usa-width-one-half">
-            <span class="t-big-data u-no-margin">{{ raising_summary[0][0]|currency }}</span>
-            <span class="t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>{{totals.0.coverage_start_date|date_full}} to {{totals.0.coverage_end_date|date_full}}.</strong></span>
+            <span class="t-big-data u-margin--bottom">{{ raising_summary[0][0]|currency }}</span>
+            <span class="t-block t-sans">raised in total receipts by this committee from <strong>{{totals.0.coverage_start_date|date_full}} to {{totals.0.coverage_end_date|date_full}}.</strong></span>
           </div>
 
           <div class="usa-width-one-half">
-            <a class="button--alt button--browse"
+            <a class="button--alt button--browse u-margin--bottom"
               href="{{ url_for(
                 'receipts',
                 two_year_transaction_period=max_cycle,
