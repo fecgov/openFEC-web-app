@@ -6,27 +6,29 @@
   <h2 id="section-3-heading">Raising</h2>
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
     {{ select.committee_cycle_select(cycles, cycle, 'receipts')}}
-    <div id="total-receipts" class="entity__figure row">
-      <div class="content__section--narrow">
-        <h3>Total receipts</h3>
+    {% if committee_type not in ['C', 'E'] %}
+      <div id="total-receipts" class="entity__figure row">
+        <div class="content__section--narrow">
+          <h3>Total receipts</h3>
 
-        <div class="usa-width-one-half">
-          <span class="t-big-data u-no-margin">{{ raising_summary[0][0]|currency }}</span>
-          <span class="t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>{{totals.0.coverage_start_date|date_full}} to {{totals.0.coverage_end_date|date_full}}.</strong></span>
-        </div>
+          <div class="usa-width-one-half">
+            <span class="t-big-data u-no-margin">{{ raising_summary[0][0]|currency }}</span>
+            <span class="t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>{{totals.0.coverage_start_date|date_full}} to {{totals.0.coverage_end_date|date_full}}.</strong></span>
+          </div>
 
-        <div class="usa-width-one-half">
-          <a class="button--alt button--browse"
-            href="{{ url_for(
-              'receipts',
-              two_year_transaction_period=max_cycle,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
-            ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all receipts</a>
-          <span class="t-block t-sans">See the <a href="?tab=summary">financial summary</a> for a breakdown of each type of receipt.</span>
+          <div class="usa-width-one-half">
+            <a class="button--alt button--browse"
+              href="{{ url_for(
+                'receipts',
+                two_year_transaction_period=max_cycle,
+                min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+                max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+              ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all receipts</a>
+            <span class="t-block t-sans">See the <a href="?tab=summary">financial summary</a> for a breakdown of each type of receipt.</span>
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
     <div class="entity__figure" id="individual-contribution-transactions">
       <div class="row">
         <fieldset class="toggles js-toggles u-float-left">
