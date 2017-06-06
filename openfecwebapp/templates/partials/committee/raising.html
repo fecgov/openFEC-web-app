@@ -30,31 +30,9 @@
       </div>
     {% endif %}
     <div class="entity__figure" id="individual-contribution-transactions">
-      <div class="row">
-        <fieldset class="toggles js-toggles u-float-left">
-          <legend class="label">Group by:</legend>
-          <label for="toggle-state">
-            <input id="toggle-state" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
-            <span class="button--alt">State</span>
-          </label>
-          <label for="toggle-contribution-size">
-            <input id="toggle-contribution-size" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
-            <span class="button--alt">Size</span>
-          </label>
-          <label for="toggle-employer">
-            <input id="toggle-employer" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-employer">
-            <span class="button--alt">Employer</span>
-          </label>
-          <label for="toggle-occupation">
-            <input id="toggle-occupation" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-occupation">
-            <span class="button--alt">Occupation</span>
-          </label>
-          <label for="toggle-itemized">
-            <input id="toggle-itemized" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="itemized-contributions">
-            <span class="button--alt">All transactions</span>
-          </label>
-        </fieldset>
-        <a class="u-float-right button--alt button--browse"
+      <div class="heading--section heading--with-action">
+        <h3 class="heading__left">Individual contributions</h3>
+        <a class="heading__right button--alt button--browse"
             href="{{ url_for(
               'individual_contributions',
               committee_id=committee_id,
@@ -63,10 +41,32 @@
               max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
             ) }}">Filter this data</a>
       </div>
+      <fieldset class="row toggles js-toggles">
+        <legend class="label">Group by:</legend>
+        <label for="toggle-state">
+          <input id="toggle-state" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-state" checked>
+          <span class="button--alt">State</span>
+        </label>
+        <label for="toggle-contribution-size">
+          <input id="toggle-contribution-size" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-contribution-size">
+          <span class="button--alt">Size</span>
+        </label>
+        <label for="toggle-employer">
+          <input id="toggle-employer" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-employer">
+          <span class="button--alt">Employer</span>
+        </label>
+        <label for="toggle-occupation">
+          <input id="toggle-occupation" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="by-occupation">
+          <span class="button--alt">Occupation</span>
+        </label>
+        <label for="toggle-itemized">
+          <input id="toggle-itemized" type="radio" class="js-panel-toggle-control" name="receipt-aggregate" value="itemized-contributions">
+          <span class="button--alt">All transactions</span>
+        </label>
+      </fieldset>
       <div class="row">
         <div id="by-state" class="panel-toggle-element">
           <div class="results-info results-info--simple">
-            <h3 class="results-info__title">Individual contributions by state</h3>
             <button type="button" class="js-export button button--cta button--export" data-export-for="receipts-by-state">Export</button>
           </div>
           <div class="map-table">
@@ -94,7 +94,6 @@
 
         <div id="by-contribution-size" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
-            <h3 class="results-info__title">Receipts by size</h3>
             <button type="button" class="js-export button button--cta button--export" data-export-for="contribution-size">Export</button>
           </div>
           <table
@@ -110,7 +109,6 @@
         </div>
         <div id="by-employer" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
-            <h3 class="results-info__title">Receipts by individual's employer</h3>
             <button type="button" class="js-export button button--cta button--export" data-export-for="receipts-by-employer">Export</button>
           </div>
           <table
@@ -129,7 +127,6 @@
 
         <div id="by-occupation" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
-            <h3 class="results-info__title">Receipts by individual's occupation</h3>
             <button type="button" class="js-export button button--cta button--export" data-export-for="receipts-by-occupation">Export</button>
           </div>
           <table
@@ -148,12 +145,8 @@
 
         <div id="itemized-contributions" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
-            <h3 class="results-info__title">All transactions</h3>
-
-            <div class="u-float-right">
-              <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-receipts" aria-hidden="true">
-              </div>
-              <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-receipts">Export</button>
+            <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-receipts">Export</button>
+            <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-receipts" aria-hidden="true">
             </div>
           </div>
           <table
