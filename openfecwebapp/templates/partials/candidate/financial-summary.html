@@ -8,6 +8,8 @@
     <div class="content__section">
       {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
     </div>
+
+    {% if committee_groups['P'] or committee_groups['A']%}
     <span class="t-sans t-bold">Data is included from these committees:</span>
     <ul class="list--bulleted">
       {% for committee in committee_groups['P'] | reverse %}
@@ -21,6 +23,8 @@
       </li>
       {% endfor %}
     </ul>
+    {% endif %}
+    
     {% if raising_summary %}
       <div class="entity__figure entity__figure--narrow">
         <h3 class="u-no-margin">Raising</h3>

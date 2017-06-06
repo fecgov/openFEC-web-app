@@ -9,6 +9,7 @@
 
     {{ select.candidate_cycle_select(cycles, max_cycle, id="cycle-4") }}
 
+    {% if committee_groups['P'] or committee_groups['A']%}
     <span class="t-sans t-bold">Data is included from these committees:</span>
 
     <ul class="list--bulleted">
@@ -27,7 +28,9 @@
       {% endif %}
       {% endfor %}
     </ul>
+    {% endif %}
 
+    {% if two_year_totals %}
     <div id="total-disbursements" class="entity__figure row">
       <div class="content__section--narrow">
         <h3>Total disbursements</h3>
@@ -49,6 +52,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
 
     <div id="disbursement-transactions" class="entity__figure row">
       <div class="content__section">

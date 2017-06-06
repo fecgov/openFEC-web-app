@@ -7,25 +7,28 @@
 
     {{ select.candidate_cycle_select(cycles, max_cycle, id="cycle-5") }}
 
-    <span class="t-sans t-bold">Data is included from these committees:</span>
+    {% if committee_groups['P'] or committee_groups['A']%}
+      <span class="t-sans t-bold">Data is included from these committees:</span>
 
-    <ul class="list--bulleted">
-      {% for committee in committee_groups['P'] | reverse %}
-      {% if committee.cycle == max_cycle %}
-      <li>
-        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
-      </li>
-      {% endif %}
-      {% endfor %}
-      {% for committee in committee_groups['A'] | reverse %}
-      {% if committee.cycle == max_cycle %}
-      <li>
-        <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </ul>
+      <ul class="list--bulleted">
+        {% for committee in committee_groups['P'] | reverse %}
+        {% if committee.cycle == max_cycle %}
+        <li>
+          <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% for committee in committee_groups['A'] | reverse %}
+        {% if committee.cycle == max_cycle %}
+        <li>
+          <a class="t-sans" href="{{ url_for('committee_page', c_id=committee.committee_id, cycle=committee.related_cycle) }}">{{ committee.name }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
 
+    {% if two_year_totals %}
     <div id="total-receipts" class="entity__figure row">
       <div class="content__section--narrow">
         <h3>Total receipts</h3>
@@ -47,6 +50,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
 
     <div id="individual-contribution-transactions" class="entity__figure row">
       <div class="content__section">
