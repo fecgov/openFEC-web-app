@@ -9,6 +9,7 @@
 
     {{ select.candidate_cycle_select(cycles, max_cycle, id="cycle-4") }}
 
+    {% if committee_groups['P'] or committee_groups['A']%}
     <span class="t-sans t-bold">Data is included from these committees:</span>
 
     <ul class="list--bulleted">
@@ -27,48 +28,56 @@
       {% endif %}
       {% endfor %}
     </ul>
+    {% endif %}
 
+    {% if two_year_totals %}
     <div id="total-disbursements" class="entity__figure row">
-      <div class="content__section--narrow">
-        <h3>Total disbursements</h3>
-
-        <div class="usa-width-one-half">
-          <span class="t-big-data u-no-margin">{{ two_year_totals['disbursements']|currency }}</span>
-          <span class="t-block t-sans">spent in total disbursements by this candidate's authorized committees from <strong>{{two_year_totals.coverage_start_date|date_full}} to {{two_year_totals.coverage_end_date|date_full}}.</strong></span>
+      <div class="content__section">
+        <div class="heading--section heading--with-action">
+          <h3 class="heading__left">Total disbursements</h3>
+            <a class="heading__right button--alt button--browse"
+              href="{{ url_for(
+                'disbursements',
+                two_year_transaction_period=max_cycle,
+                min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
+                max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+              ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all disbursements</a>
         </div>
 
-        <div class="usa-width-one-half">
-          <a class="button--alt button--browse"
-            href="{{ url_for(
-              'disbursements',
-              two_year_transaction_period=max_cycle,
-              min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
-            ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all disbursements</a>
-          <span class="t-block t-sans">See the <a href="?tab=summary">financial summary</a> for a breakdown of each type of disbursement.</span>
+        <div class="content__section--narrow">
+          <div class="row u-margin-bottom">
+            <div class="usa-width-one-half">
+              <span class="t-big-data">{{ two_year_totals['disbursements']|currency }}</span>
+            </div>
+          </div>
+          <div class="row">
+            <span class="usa-width-one-half t-block t-sans">spent in total disbursements by this candidate's authorized committees from <strong>{{two_year_totals.coverage_start_date|date_full}} to {{two_year_totals.coverage_end_date|date_full}}.</strong></span>
+            <div class="usa-width-one-half">
+              <span class="t-block t-sans">See the <a href="?tab=summary">financial summary</a> for a breakdown of each type of disbursement.</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    {% endif %}
 
     <div id="disbursement-transactions" class="entity__figure row">
       <div class="content__section">
-        <div class="results-info results-info--simple">
-          <h3 class="u-no-margin">All disbursement transactions</h3>
-
-          <a class="u-float-right button--alt button--browse"
+        <div class="heading--section heading--with-action">
+          <h3 class="heading__left">Disbursement transactions</h3>
+          <a class="heading__right button--alt button--browse"
               href="{{ url_for(
                 'disbursements',
                 two_year_transaction_period=max_cycle,
                 min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
                 max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
+        </div>
 
-          <ul>
-            <li class="tag__category">
-              <div class="tag__item">Report year: {{max_cycle - 1}} to {{max_cycle}}</div>
-            </li>
-          </ul>
-
+        <div class="results-info results-info--simple">
+          <div class="u-float-left tag__category">
+            <div class="tag__item">Transaction date: {{cycle_start(max_cycle)|date}} to {{cycle_end(max_cycle)|date}}</div>
+          </div>
           <div class="u-float-right">
             <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-disbursements" aria-hidden="true">
             </div>

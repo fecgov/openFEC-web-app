@@ -254,7 +254,8 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         election_full=False
     )
 
-    tmpl_vars['two_year_totals'] = two_year_totals
+    if two_year_totals:
+        tmpl_vars['two_year_totals'] = two_year_totals
 
     # Get the statements of candidacy
     statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
