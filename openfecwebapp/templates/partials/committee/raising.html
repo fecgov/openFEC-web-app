@@ -11,12 +11,7 @@
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Total receipts</h3>
           <a class="heading__right button--alt button--browse"
-            href="{{ url_for(
-              'receipts',
-              two_year_transaction_period=max_cycle,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
-            ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all receipts</a>
+            href="{{ url_for('receipts', two_year_transaction_period=cycle, committee_id=committee_id) }}">Filter all receipts</a>
         </div>
         <div class="content__section--narrow">
           <div class="row u-margin-bottom">
@@ -37,13 +32,7 @@
       <div class="heading--section heading--with-action">
         <h3 class="heading__left">Individual contributions</h3>
         <a class="heading__right button--alt button--browse"
-            href="{{ url_for(
-              'individual_contributions',
-              committee_id=committee_id,
-              two_year_transaction_period=cycle,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
-            ) }}">Filter this data</a>
+            href="{{ url_for('individual_contributions', committee_id=committee_id, two_year_transaction_period=cycle) }}">Filter this data</a>
       </div>
       <fieldset class="row toggles js-toggles">
         <legend class="label">Group by:</legend>
