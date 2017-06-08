@@ -1,13 +1,16 @@
 {% macro filings_table(title, dataType, cycle, committee_id, showTrigger=False) %}
     <div class="entity__figure">
-      <div class="row heading--with-action">
+      <div class="heading--section heading--with-action">
         <h3 class="heading__left">{{ title }}</h3>
         <a class="heading__right button button--alt button--browse"
            href="{{url_for('filings', committee_id=committee_id, cycle=cycle)}}">
           Filter this data
         </a>
       </div>
-      <table class="data-table data-table--heading-borders data-table--entity" data-type="filings-{{ dataType }}" data-cycle="{{ cycle }}" data-committee="{{ committee_id }}">
+      <div class="tag__category">
+        <div class="tag__item">Report year: {{cycle|fmt_year_range}}</div>
+      </div>
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="filings-{{ dataType }}" data-cycle="{{ cycle }}" data-committee="{{ committee_id }}">
         <thead>
           <th scope="col">Document</th>
           <th scope="col">Version</th>

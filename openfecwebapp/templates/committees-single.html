@@ -68,7 +68,7 @@
               tabindex="0"
               aria-controls="panel3"
               href="#section-3">Raising</a>
-              {% if committee_type not in ['C', 'E'] %}
+              {% if committee_type not in ['C', 'E', 'I'] %}
               <ul>
                 <li><a href="#total-receipts">Total receipts</a></li>
                 <li><a href="#individual-contribution-transactions">Individual contribution transactions</a></li>
@@ -96,7 +96,9 @@
             </ul>
             {% else %}
             <ul>
+              {% if committee_type != 'I' %}
               <li><a href="#total-disbursements">Total disbursements</a></li>
+              {% endif %}
               {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
               <li><a href="#independent-expenditures">Independent expenditures</a></li>
               {% endif %}

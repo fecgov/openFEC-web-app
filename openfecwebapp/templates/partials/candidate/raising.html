@@ -89,12 +89,9 @@
         </div>
 
         <div id="contributor-state" class="panel-toggle-element">
-
-          <div class="results-info results-info--simple"></div>
-
           <div class="map-table">
             <table
-                class="data-table data-table--heading-borders"
+                class="data-table data-table--heading-borders data-table--entity"
                 data-type="contributor-state"
                 data-cycle="{{ max_cycle }}"
               >
@@ -117,9 +114,8 @@
         </div>
 
         <div id="contribution-size" class="panel-toggle-element" aria-hidden="true">
-          <div class="results-info results-info--simple"></div>
           <table
-             class="data-table data-table--heading-borders"
+             class="data-table data-table--heading-borders data-table--entity"
              data-type="contribution-size"
              data-cycle="{{ max_cycle }}">
             <thead>
@@ -130,7 +126,10 @@
         </div>
 
         <div id="all-transactions" class="panel-toggle-element" aria-hidden="true">
-          <div class="results-info results-info--simple">
+          <div class="results-info results-info--simple">]
+            <div class="u-float-left tag__category">
+              <div class="tag__item">Transaction date: {{cycle_start(max_cycle)|date}} to {{cycle_end(max_cycle)|date}}</div>
+            </div>            
             <div class="u-float-right">
               <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="individual-contributions" aria-hidden="true">
               </div>

@@ -6,7 +6,7 @@
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
     {{ select.committee_cycle_select(cycles, cycle, 'disbursements')}}
 
-    {% if committee_type not in ['C', 'E'] %}
+    {% if committee_type not in ['C', 'E', 'I'] %}
     <div id="total-disbursements" class="entity__figure row">
       <div class="content__section">
         <div class="heading--section heading--with-action">
@@ -49,7 +49,10 @@
             ) }}">Filter this data
         </a>
       </div>
-      <table class="data-table data-table--heading-borders" data-type="communication-cost-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <div class="tag__category">
+        <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+      </div>
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="communication-cost-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
           <tr>
             <th scope="col">Amount</th>
@@ -75,7 +78,10 @@
         </a>
       </div>
       <p>Any broadcast, cable or satellite communication that (1) refers to a clearly identified candidate for federal office; (2) is publicly distributed within certain time periods before an election and (3) is targeted to the relevant electorate.</p>
-      <table class="data-table data-table--heading-borders" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <div class="tag__category">
+        <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+      </div>
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
           <th scope="col">Amount</th>
           <th scope="col">Candidate</th>
@@ -88,21 +94,22 @@
     {% endif %}
 
     {% if committee_type not in ['P', 'H', 'S', 'Z', 'C', 'E', 'D'] %}
-    <div class="entity__figure" id="independent-expenditures">
-      <div class="results-info results-info--simple">
-        <div class="heading--section heading--with-action">
-          <h3 class="heading__left">Independent expenditures</h3>
-          <a class="heading__right button--alt button--browse"
-              href="{{ url_for(
-                'independent_expenditures',
-                committee_id=committee_id,
-                min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-                max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
-              ) }}">Filter this data</a>
-        </div>
-        <p>This tab shows spending that this committee has made in support of or opposition to a candidate. None of the funds are directly given to or spent by the candidate.</p>
+    <div class="entity__figure row" id="independent-expenditures">
+      <div class="heading--section heading--with-action">
+        <h3 class="heading__left">Independent expenditures</h3>
+        <a class="heading__right button--alt button--browse"
+            href="{{ url_for(
+              'independent_expenditures',
+              committee_id=committee_id,
+              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
+              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+            ) }}">Filter this data</a>
       </div>
-      <table class="data-table data-table--heading-borders" data-type="independent-expenditure-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <p>This tab shows spending that this committee has made in support of or opposition to a candidate. None of the funds are directly given to or spent by the candidate.</p>
+      <div class="tag__category">
+        <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+      </div>
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="independent-expenditure-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
           <tr>
             <th scope="col">Amount</th>
@@ -111,7 +118,9 @@
           </tr>
         </thead>
       </table>
-      <p class="t-note">These totals are drawn from quarterly, monthly and semi-annual reports. 24- and 48-Hour Reports of independent expenditures aren't included.</p>
+      <div class="datatable__note">
+        <p class="t-note">These totals are drawn from quarterly, monthly and semi-annual reports. 24- and 48-Hour Reports of independent expenditures aren't included.</p>
+      </div>
     </div>
     {% endif %}
 
@@ -147,7 +156,10 @@
 
       <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
         <div class="results-info results-info--simple">
-          <button type="button" class="js-export button button--cta button--export" data-export-for="disbursements-by-recipient">Export</button>
+          <div class="u-float-left tag__category">
+            <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+          </div>
+          <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="disbursements-by-recipient">Export</button>
         </div>
         <table
             class="data-table data-table--heading-borders"
@@ -165,9 +177,14 @@
 
       <div id="itemized-disbursements" class="panel-toggle-element" aria-hidden="true">
         <div class="results-info results-info--simple">
-          <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-disbursements" aria-hidden="true">
+          <div class="u-float-left tag__category">
+            <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
           </div>
-          <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
+          <div class="u-float-right">
+            <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-disbursements" aria-hidden="true">
+            </div>
+            <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-disbursements">Export</button>
+          </div>
         </div>
 
         <table
@@ -191,7 +208,10 @@
 
       <div id="to-committees" class="panel-toggle-element" aria-hidden="true">
         <div class="results-info results-info--simple">
-          <button type="button" class="js-export button button--cta button--export" data-export-for="disbursements-by-recipient-id">Export</button>
+          <div class="u-float-left tag__category">
+            <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+          </div>
+          <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="disbursements-by-recipient-id">Export</button>
         </div>
         <table
             class="data-table data-table--heading-borders"
