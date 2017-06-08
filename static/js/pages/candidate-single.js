@@ -10,6 +10,8 @@ var tables = require('../modules/tables');
 var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
+var events = require('fec-style/js/events');
+var otherSpendingTotals = require('../modules/other-spending-totals');
 
 var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
@@ -188,12 +190,6 @@ function initOtherDocumentsTable() {
   var $table = $('table[data-type="other-documents"]');
   var candidateId = $table.data('candidate');
   var path = ['filings'];
-  var opts = {
-    title: 'other documents filed',
-    name: $table.data('name'),
-    cycle: $table.data('cycle'),
-  };
-
   tables.DataTable.defer($table, {
     path: path,
     query: {
@@ -260,6 +256,12 @@ function initSpendingTables() {
         }
       });
     }
+  });
+
+  events.once('tabs.show.other-spending', function() {
+    new otherSpendingTotals('independentExpenditures');
+    new otherSpendingTotals('electioneering');
+    new otherSpendingTotals('communicationCosts');
   });
 }
 
