@@ -443,8 +443,12 @@ function initContributionsTables() {
     }
   );
 
-  $.getJSON(mapUrl).done(function(data) {
-    maps.stateMap($map, data, 400, 300, null, null, true, true);
+  // Add an event listener that only fires once on showing the raising tab
+  // in order to not make this API call unless its necessary
+  events.once('tabs.show.raising', function() {
+    $.getJSON(mapUrl).done(function(data) {
+      maps.stateMap($map, data, 400, 300, null, null, true, true);
+    });
   });
 
   mapsEvent.init($map, $contributorState);

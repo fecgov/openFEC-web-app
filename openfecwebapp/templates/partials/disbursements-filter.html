@@ -37,7 +37,6 @@ Filter disbursements
   <button type="button" class="js-accordion-trigger accordion__button">Transaction details</button>
   <div class="accordion__content">
     {{ text.field('disbursement_description', 'Description') }}
-    {% include 'partials/filters/disbursement-purpose.html' %}
     {{ range.amount('amount', 'Disbursement amount') }}
     {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
