@@ -160,6 +160,21 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
                 return redirect(
                     url_for('committee_page', c_id=committee['committee_id'], cycle=c)
                 )
+
+    # If it's not a senate committee and we're in the current cycle
+    # check if there's any raw filings in the last two days
+    if committee['committee_type'] != 'S' and cycle == utils.current_cycle():
+        raw_filings = api_caller._call_api(
+            'efile', 'filings',
+            cycle=cycle,
+            committee_id=committee['committee_id'],
+            min_receipt_date=utils.two_days_ago()
+        )
+        if len(raw_filings.get('results')) > 0:
+            tmpl_vars['has_raw_filings'] = True
+    else:
+        tmpl_vars['has_raw_filings'] = False
+
     return render_template('committees-single.html', **tmpl_vars)
 
 
