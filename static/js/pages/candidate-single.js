@@ -18,6 +18,17 @@ var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
 };
 
+// DOM element and URL for building the state map
+var $map = $('.state-map');
+var mapUrl = helpers.buildUrl(
+  ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
+  {
+    candidate_id: $map.data('candidate-id'),
+    cycle: $map.data('cycle'),
+    per_page: 99
+  }
+);
+
 var expenditureColumns = [
   {
     data: 'total',
@@ -258,12 +269,6 @@ function initSpendingTables() {
       });
     }
   });
-
-  events.once('tabs.show.other-spending', function() {
-    new otherSpendingTotals('independentExpenditures');
-    new otherSpendingTotals('electioneering');
-    new otherSpendingTotals('communicationCosts');
-  });
 }
 
 function initDisbursementsTable() {
@@ -434,24 +439,6 @@ function initContributionsTables() {
   });
 
   // Set up state map
-  var $map = $('.state-map');
-  var mapUrl = helpers.buildUrl(
-    ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
-    {
-      candidate_id: $map.data('candidate-id'),
-      cycle: $map.data('cycle'),
-      per_page: 99
-    }
-  );
-
-  // Add an event listener that only fires once on showing the raising tab
-  // in order to not make this API call unless its necessary
-  events.once('tabs.show.raising', function() {
-    $.getJSON(mapUrl).done(function(data) {
-      maps.stateMap($map, data, 400, 300, null, null, true, true);
-    });
-  });
-
   mapsEvent.init($map, $contributorState);
 }
 
@@ -474,6 +461,21 @@ $(document).ready(function() {
       new OtherSpendingTotals('independentExpenditures');
       new OtherSpendingTotals('electioneering');
       new OtherSpendingTotals('communicationCosts');
+    });
+  }
+
+  // If we're on the raising tab, load the state map
+  if (query.tab === 'raising') {
+    $.getJSON(mapUrl).done(function(data) {
+      maps.stateMap($map, data, 400, 300, null, null, true, true);
+    });
+  } else {
+    // Add an event listener that only fires once on showing the raising tab
+    // in order to not make this API call unless its necessary
+    events.once('tabs.show.raising', function() {
+      $.getJSON(mapUrl).done(function(data) {
+        maps.stateMap($map, data, 400, 300, null, null, true, true);
+      });
     });
   }
 });
