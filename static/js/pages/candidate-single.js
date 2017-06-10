@@ -3,6 +3,7 @@
 /* global require, document, context, WEBMANAGER_EMAIL */
 
 var $ = require('jquery');
+var URI = require('urijs');
 
 var maps = require('../modules/maps');
 var mapsEvent = require('../modules/maps-event');
@@ -11,7 +12,7 @@ var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 var events = require('fec-style/js/events');
-var otherSpendingTotals = require('../modules/other-spending-totals');
+var OtherSpendingTotals = require('../modules/other-spending-totals');
 
 var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
@@ -455,8 +456,24 @@ function initContributionsTables() {
 }
 
 $(document).ready(function() {
+  var query = URI.parseQuery(window.location.search);
+
   initOtherDocumentsTable();
   initSpendingTables();
   initDisbursementsTable();
   initContributionsTables();
+
+  // If on the other spending tab, init the totals
+  // Otherwise add an event listener to build them on showing the tab
+  if (query.tab === 'other-spending') {
+    new OtherSpendingTotals('independentExpenditures');
+    new OtherSpendingTotals('electioneering');
+    new OtherSpendingTotals('communicationCosts');
+  } else {
+    events.once('tabs.show.other-spending', function() {
+      new OtherSpendingTotals('independentExpenditures');
+      new OtherSpendingTotals('electioneering');
+      new OtherSpendingTotals('communicationCosts');
+    });
+  }
 });

@@ -3,6 +3,8 @@
 /* global require, context */
 
 var $ = require('jquery');
+var _ = require('underscore');
+
 var helpers = require('../modules/helpers');
 
 var pathMap = {
@@ -11,38 +13,81 @@ var pathMap = {
   'electioneering': '/electioneering/by_candidate/'
 };
 
-function otherSpendingTotals(schedule) {
-  this.url = helpers.buildUrl(
-    pathMap[schedule],
+function OtherSpendingTotals(type) {
+  this.$elm = $('.js-other-spending-totals[data-spending-type='+ type + ']');
+  this.type = type;
+  this.data = [];
+  this.init();
+}
+
+OtherSpendingTotals.prototype.fetchData = function(page) {
+  var self = this;
+  var url = helpers.buildUrl(
+    pathMap[this.type],
     {
       candidate_id: context.candidateID,
       cycle: context.cycle,
       election_full: context.electionFull,
+      page: page,
       per_page: 100
     }
   );
 
-  this.init();
-}
-
-otherSpendingTotals.prototype.fetchData = function() {
-  var self = this;
-  $.getJSON(this.url).done(function(data) {
-    self.data = data;
+  $.getJSON(url).done(function(data) {
+    var currentPage = data.pagination.page;
+    if (data.results.length === 0) {
+      // If no results, remove the component
+      self.$elm.remove();
+    } else {
+      // Add the results to the existing data array
+      self.data = self.data.concat(data.results);
+      if (currentPage === data.pagination.pages) {
+        // If we're on the last page, show the totals
+        self.showTotals(self.data);
+      } else {
+        // Otherwise fetch data for the next page
+        var nextPage = currentPage + 1;
+        self.fetchData(nextPage);
+      }
+    }
   });
 };
 
-otherSpendingTotals.prototype.init = function() {
+OtherSpendingTotals.prototype.init = function() {
   this.fetchData();
 };
 
+OtherSpendingTotals.prototype.showTotals = function(results) {
+  if (this.type === 'electioneering') {
+    // Only get a single total
+    var total = _.reduce(results, function(memo, datum) {
+        return  memo + datum.total;
+      }, 0);
+      this.$elm.find('.js-total-electioneering').html(helpers.currency(total));
+  } else {
+    // Get support and oppose
+    var supportTotal = _.chain(results)
+      .filter(function(value) {
+        return value.support_oppose_indicator === 'S';
+      })
+      .reduce(function(memo, datum) {
+        return  memo + datum.total;
+      }, 0)
+      .value();
 
+    var opposeTotal = _.chain(results)
+      .filter(function(value) {
+        return value.support_oppose_indicator === 'O';
+      })
+      .reduce(function(memo, datum) {
+        return  memo + datum.total;
+      }, 0)
+      .value();
 
-otherSpendingTotals.prototype.sum = function(data) {
-  var sum = 0;
-  for (i = 0; i < data; i++) {
-    sum += data[i];
+    this.$elm.find('.js-support').html(helpers.currency(supportTotal));
+    this.$elm.find('.js-oppose').html(helpers.currency(opposeTotal));
+
   }
 };
 
-module.exports = otherSpendingTotals;
+module.exports = OtherSpendingTotals;
