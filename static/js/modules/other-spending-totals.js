@@ -21,6 +21,9 @@ function OtherSpendingTotals(type) {
 }
 
 OtherSpendingTotals.prototype.fetchData = function(page) {
+  // Fetch the data for a given page
+  // Page is required because if there's more than 100 results we need
+  // to loop through all the pages
   var self = this;
   var url = helpers.buildUrl(
     pathMap[this.type],
@@ -59,13 +62,15 @@ OtherSpendingTotals.prototype.init = function() {
 
 OtherSpendingTotals.prototype.showTotals = function(results) {
   if (this.type === 'electioneering') {
-    // Only get a single total
+    // Electioneering comms aren't marked as support or oppose, so just add
+    // them all together
     var total = _.reduce(results, function(memo, datum) {
         return  memo + datum.total;
       }, 0);
       this.$elm.find('.js-total-electioneering').html(helpers.currency(total));
   } else {
-    // Get support and oppose
+    // Get support and oppose totals by filtering results by the correct indicator
+    // and then running _.reduce to add all the values
     var supportTotal = _.chain(results)
       .filter(function(value) {
         return value.support_oppose_indicator === 'S';
@@ -84,6 +89,7 @@ OtherSpendingTotals.prototype.showTotals = function(results) {
       }, 0)
       .value();
 
+    // Update the DOM with the values
     this.$elm.find('.js-support').html(helpers.currency(supportTotal));
     this.$elm.find('.js-oppose').html(helpers.currency(opposeTotal));
 
