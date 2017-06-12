@@ -38,6 +38,13 @@
             aria-controls="panel1"
             href="#section-1"
             aria-selected="true">Financial Summary</a>
+            {% if committee_type != 'I' %}
+            <ul>
+              <li><a href="#total-raised">Total raised</a></li>
+              <li><a href="#total-spent">Total spent</a></li>
+              <li><a href="#cash-summary">Cash summary</a></li>
+            </ul>
+            {% endif %}
         </li>
         <li class="side-nav__item" role="presentation">
           <a
@@ -114,6 +121,15 @@
             tabindex="0"
             aria-controls="panel5"
             href="#section-5">Filings</a>
+            <ul>
+              {% if has_raw_filings %}
+              <li><a href="#raw-filings">Raw electronic filings</a></li>
+              {% endif %}
+              <li><a href="#reports">Regularly filed reports</a></li>
+              <li><a href="#notices">24- and 48-hour reports</a></li>
+              <li><a href="#statements">Statements of organization</a></li>
+              <li><a href="#other">Other documents</a></li>
+            </ul>
         </li>
       </ul>
     </nav>

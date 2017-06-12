@@ -281,6 +281,10 @@ var aggregateCallbacks = {
 };
 
 // Settings for filings tables
+var rawFilingsColumns = columnHelpers.getColumns(
+  columns.filings,
+  ['document_type', 'receipt_date']
+);
 
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
@@ -539,6 +543,23 @@ $(document).ready(function() {
             timePeriod: context.timePeriod
           },
         });
+        break;
+      case 'raw-filings':
+        var min_date = $table.attr('data-min-date');
+        opts = _.extend({
+          columns: rawFilingsColumns,
+          order: [[1, 'desc']],
+          path: ['efile', 'filings'],
+          query: _.extend({
+            committee_id: committeeId,
+            min_receipt_date: min_date,
+            sort: ['-receipt_date']
+          }, query),
+          callbacks: {
+            afterRender: filings.renderModal
+          }
+        }, filingsOpts);
+        tables.DataTable.defer($table, opts);
         break;
       case 'filings-reports':
         opts = _.extend({
