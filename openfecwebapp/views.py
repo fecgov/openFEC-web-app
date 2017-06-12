@@ -211,9 +211,16 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     )
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
+    tmpl_vars['min_cycle'] = cycle - tmpl_vars['duration'] if election_full else cycle
     tmpl_vars['election_full'] = election_full
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
-    tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
+    tmpl_vars['context_vars'] = {
+        'cycles': candidate['cycles'],
+        'name': candidate['name'],
+        'cycle': cycle,
+        'electionFull': election_full,
+        'candidateID': candidate['candidate_id']
+    }
 
     # In the case of when a presidential or senate candidate has filed
     # for a future year that's beyond the current cycle,

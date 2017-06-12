@@ -3,6 +3,7 @@
 /* global require, document, context, WEBMANAGER_EMAIL */
 
 var $ = require('jquery');
+var URI = require('urijs');
 
 var maps = require('../modules/maps');
 var mapsEvent = require('../modules/maps-event');
@@ -11,10 +12,22 @@ var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 var events = require('fec-style/js/events');
+var OtherSpendingTotals = require('../modules/other-spending-totals');
 
 var aggregateCallbacks = {
   afterRender: tables.barsAfterRender.bind(undefined, undefined),
 };
+
+// DOM element and URL for building the state map
+var $map = $('.state-map');
+var mapUrl = helpers.buildUrl(
+  ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
+  {
+    candidate_id: $map.data('candidate-id'),
+    cycle: $map.data('cycle'),
+    per_page: 99
+  }
+);
 
 var expenditureColumns = [
   {
@@ -189,12 +202,6 @@ function initOtherDocumentsTable() {
   var $table = $('table[data-type="other-documents"]');
   var candidateId = $table.data('candidate');
   var path = ['filings'];
-  var opts = {
-    title: 'other documents filed',
-    name: $table.data('name'),
-    cycle: $table.data('cycle'),
-  };
-
   tables.DataTable.defer($table, {
     path: path,
     query: {
@@ -432,30 +439,43 @@ function initContributionsTables() {
   });
 
   // Set up state map
-  var $map = $('.state-map');
-  var mapUrl = helpers.buildUrl(
-    ['schedules', 'schedule_a', 'by_state', 'by_candidate'],
-    {
-      candidate_id: $map.data('candidate-id'),
-      cycle: $map.data('cycle'),
-      per_page: 99
-    }
-  );
-
-  // Add an event listener that only fires once on showing the raising tab
-  // in order to not make this API call unless its necessary
-  events.once('tabs.show.raising', function() {
-    $.getJSON(mapUrl).done(function(data) {
-      maps.stateMap($map, data, 400, 300, null, null, true, true);
-    });
-  });
-
   mapsEvent.init($map, $contributorState);
 }
 
 $(document).ready(function() {
+  var query = URI.parseQuery(window.location.search);
+
   initOtherDocumentsTable();
   initSpendingTables();
   initDisbursementsTable();
   initContributionsTables();
+
+  // If on the other spending tab, init the totals
+  // Otherwise add an event listener to build them on showing the tab
+  if (query.tab === 'other-spending') {
+    new OtherSpendingTotals('independentExpenditures');
+    new OtherSpendingTotals('electioneering');
+    new OtherSpendingTotals('communicationCosts');
+  } else {
+    events.once('tabs.show.other-spending', function() {
+      new OtherSpendingTotals('independentExpenditures');
+      new OtherSpendingTotals('electioneering');
+      new OtherSpendingTotals('communicationCosts');
+    });
+  }
+
+  // If we're on the raising tab, load the state map
+  if (query.tab === 'raising') {
+    $.getJSON(mapUrl).done(function(data) {
+      maps.stateMap($map, data, 400, 300, null, null, true, true);
+    });
+  } else {
+    // Add an event listener that only fires once on showing the raising tab
+    // in order to not make this API call unless its necessary
+    events.once('tabs.show.raising', function() {
+      $.getJSON(mapUrl).done(function(data) {
+        maps.stateMap($map, data, 400, 300, null, null, true, true);
+      });
+    });
+  }
 });

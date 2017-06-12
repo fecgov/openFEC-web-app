@@ -4,6 +4,7 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
+var URI = require('urijs');
 
 var maps = require('../modules/maps');
 var mapsEvent = require('../modules/maps-event');
@@ -13,6 +14,7 @@ var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 var dropdown = require('fec-style/js/dropdowns');
+var events = require('fec-style/js/events');
 
 var tableOpts = {
   dom: tables.simpleDOM,
@@ -620,9 +622,22 @@ $(document).ready(function() {
     }
   );
 
-  $.getJSON(mapUrl).done(function(data) {
-    maps.stateMap($map, data, 400, 300, null, null, true, true);
-  });
+  var query = URI.parseQuery(window.location.search);
+
+  // If we're on the raising tab, load the state map
+  if (query.tab === 'raising') {
+    $.getJSON(mapUrl).done(function(data) {
+      maps.stateMap($map, data, 400, 300, null, null, true, true);
+    });
+  } else {
+    // Add an event listener that only fires once on showing the raising tab
+    // in order to not make this API call unless its necessary
+    events.once('tabs.show.raising', function() {
+      $.getJSON(mapUrl).done(function(data) {
+        maps.stateMap($map, data, 400, 300, null, null, true, true);
+      });
+    });
+  }
 
   mapsEvent.init($map, $mapTable);
 });
