@@ -46,7 +46,7 @@
         </a>
       </div>
       <div class="tag__category">
-        <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+        <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
       </div>
       <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="communication-cost-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
@@ -75,7 +75,7 @@
       </div>
       <p>Any broadcast, cable or satellite communication that (1) refers to a clearly identified candidate for federal office; (2) is publicly distributed within certain time periods before an election and (3) is targeted to the relevant electorate.</p>
       <div class="tag__category">
-        <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+        <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
       </div>
       <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
@@ -103,7 +103,7 @@
       </div>
       <p>This tab shows spending that this committee has made in support of or opposition to a candidate. None of the funds are directly given to or spent by the candidate.</p>
       <div class="tag__category">
-        <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+        <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
       </div>
       <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="independent-expenditure-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
@@ -146,7 +146,7 @@
       <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
         <div class="results-info results-info--simple">
           <div class="u-float-left tag__category">
-            <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+            <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
           <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="disbursements-by-recipient">Export</button>
         </div>
@@ -167,7 +167,7 @@
       <div id="itemized-disbursements" class="panel-toggle-element" aria-hidden="true">
         <div class="results-info results-info--simple">
           <div class="u-float-left tag__category">
-            <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+            <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
           <div class="u-float-right">
             <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-disbursements" aria-hidden="true">
@@ -198,7 +198,7 @@
       <div id="to-committees" class="panel-toggle-element" aria-hidden="true">
         <div class="results-info results-info--simple">
           <div class="u-float-left tag__category">
-            <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+            <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
           <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="disbursements-by-recipient-id">Export</button>
         </div>

@@ -36,9 +36,7 @@
           <a class="heading__right button--alt button--browse"
               href="{{ url_for(
                 'receipts',
-                two_year_transaction_period=max_cycle,
-                min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
-                max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+                two_year_transaction_period=max_cycle
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all receipts</a>
         </div>
         <div class="content__section--narrow">
@@ -61,13 +59,11 @@
     <div id="individual-contribution-transactions" class="entity__figure row">
       <div class="content__section">
         <div class="heading--section heading--with-action">
-          <h3 class="heading__left">All individual contribution transactions</h3>
+          <h3 class="heading__left">Individual contributions</h3>
           <a class="heading__right button--alt button--browse"
               href="{{ url_for(
                 'individual_contributions',
                 two_year_transaction_period=max_cycle,
-                min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
-                max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
           </div>
         <div class="row">
@@ -89,9 +85,14 @@
         </div>
 
         <div id="contributor-state" class="panel-toggle-element">
+          <div class="results-info results-info--simple">
+            <div class="tag__category">
+              <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
+            </div>
+          </div>
           <div class="map-table">
             <table
-                class="data-table data-table--heading-borders data-table--entity"
+                class="data-table data-table--heading-borders"
                 data-type="contributor-state"
                 data-cycle="{{ max_cycle }}"
               >
@@ -114,6 +115,11 @@
         </div>
 
         <div id="contribution-size" class="panel-toggle-element" aria-hidden="true">
+          <div class="results-info results-info--simple">
+            <div class="tag__category">
+              <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
+            </div>
+          </div>
           <table
              class="data-table data-table--heading-borders data-table--entity"
              data-type="contribution-size"
@@ -126,10 +132,10 @@
         </div>
 
         <div id="all-transactions" class="panel-toggle-element" aria-hidden="true">
-          <div class="results-info results-info--simple">]
+          <div class="results-info results-info--simple">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Transaction date: {{cycle_start(max_cycle)|date}} to {{cycle_end(max_cycle)|date}}</div>
-            </div>            
+              <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
+            </div>
             <div class="u-float-right">
               <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="individual-contributions" aria-hidden="true">
               </div>
