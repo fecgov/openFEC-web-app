@@ -129,21 +129,21 @@
 
       <fieldset class="row toggles js-toggles">
         <legend class="label">Group by:</legend>
+        <label for="toggle-all-disbursements">
+          <input id="toggle-all-disbursements" type="radio" class="js-panel-toggle-control" name="disbursements" value="itemized-disbursements" checked>
+          <span class="button--alt">All transactions</span>
+        </label>
         <label for="toggle-recipient">
-          <input id="toggle-recipient" type="radio" class="js-panel-toggle-control" name="disbursements" value="by-recipient" checked>
+          <input id="toggle-recipient" type="radio" class="js-panel-toggle-control" name="disbursements" value="by-recipient">
           <span class="button--alt">Recipient name</span>
         </label>
         <label for="toggle-to">
           <input id="toggle-to" type="radio" class="js-panel-toggle-control" name="disbursements" value="to-committees">
           <span class="button--alt">Recipient committee ID</span>
         </label>
-        <label for="toggle-all-disbursements">
-          <input id="toggle-all-disbursements" type="radio" class="js-panel-toggle-control" name="disbursements" value="itemized-disbursements">
-          <span class="button--alt">All transactions</span>
-        </label>
       </fieldset>
 
-      <div id="by-recipient" class="panel-toggle-element" aria-hidden="false">
+      <div id="by-recipient" class="panel-toggle-element" aria-hidden="true">
         <div class="results-info results-info--simple">
           <div class="u-float-left tag__category">
             <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
@@ -164,7 +164,7 @@
         {{ disclaimer.disclaimer('disbursements', committee.committee_id, cycle) }}
       </div>
 
-      <div id="itemized-disbursements" class="panel-toggle-element" aria-hidden="true">
+      <div id="itemized-disbursements" class="panel-toggle-element" aria-hidden="false">
         <div class="results-info results-info--simple">
           <div class="u-float-left tag__category">
             <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>

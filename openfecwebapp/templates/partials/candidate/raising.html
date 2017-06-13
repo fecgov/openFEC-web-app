@@ -68,23 +68,23 @@
           </div>
         <div class="row">
           <fieldset class="toggles js-toggles">
-            <legend class="label">View by:</legend>
+            <legend class="label">Group by:</legend>
+            <label for="toggle-all">
+              <input id="toggle-all" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="all-transactions" checked>
+              <span class="button--alt">All transactions</span>
+            </label>
             <label for="toggle-state">
-              <input id="toggle-state" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="contributor-state" checked />
+              <input id="toggle-state" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="contributor-state">
               <span class="button--alt">State</span>
             </label>
             <label for="toggle-size">
-              <input id="toggle-size" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="contribution-size" />
+              <input id="toggle-size" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="contribution-size">
               <span class="button--alt">Size</span>
-            </label>
-            <label for="toggle-all">
-              <input id="toggle-all" type="radio" class="js-panel-toggle-control" name="individual-contributions" value="all-transactions" />
-              <span class="button--alt">All transactions</span>
             </label>
           </fieldset>
         </div>
 
-        <div id="contributor-state" class="panel-toggle-element">
+        <div id="contributor-state" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="tag__category">
               <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
@@ -121,7 +121,7 @@
             </div>
           </div>
           <table
-             class="data-table data-table--heading-borders data-table--entity"
+             class="data-table data-table--heading-borders"
              data-type="contribution-size"
              data-cycle="{{ max_cycle }}">
             <thead>
@@ -131,7 +131,7 @@
           </table>
         </div>
 
-        <div id="all-transactions" class="panel-toggle-element" aria-hidden="true">
+        <div id="all-transactions" class="panel-toggle-element">
           <div class="results-info results-info--simple">
             <div class="u-float-left tag__category">
               <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
