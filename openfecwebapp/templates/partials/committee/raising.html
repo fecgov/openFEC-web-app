@@ -58,10 +58,10 @@
         </label>
       </fieldset>
       <div class="row">
-        <div id="by-state" class="panel-toggle-element">
+        <div id="by-state" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+              <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
             <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="receipts-by-state">Export</button>
           </div>
@@ -91,7 +91,7 @@
         <div id="by-contribution-size" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+              <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
             <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="contribution-size">Export</button>
           </div>
@@ -109,7 +109,7 @@
         <div id="by-employer" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+              <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
             <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="receipts-by-employer">Export</button>
           </div>
@@ -130,7 +130,7 @@
         <div id="by-occupation" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+              <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
             <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="receipts-by-occupation">Export</button>
           </div>
@@ -151,7 +151,7 @@
         <div id="itemized-contributions" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Transaction date: {{cycle_start(cycle)|date}} to {{cycle_end(cycle)|date}}</div>
+              <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
             <div class="u-float-right">
               <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-receipts">Export</button>
