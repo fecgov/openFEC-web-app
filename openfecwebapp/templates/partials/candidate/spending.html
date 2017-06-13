@@ -38,9 +38,7 @@
             <a class="heading__right button--alt button--browse"
               href="{{ url_for(
                 'disbursements',
-                two_year_transaction_period=max_cycle,
-                min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
-                max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+                two_year_transaction_period=max_cycle
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all disbursements</a>
         </div>
 
@@ -68,9 +66,7 @@
           <a class="heading__right button--alt button--browse"
               href="{{ url_for(
                 'disbursements',
-                two_year_transaction_period=max_cycle,
-                min_date=cycle_start(max_cycle) | date(fmt='%m-%d-%Y'),
-                max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+                two_year_transaction_period=max_cycle
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
         </div>
 
