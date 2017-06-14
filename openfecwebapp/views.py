@@ -20,6 +20,7 @@ from openfecwebapp import config
 from openfecwebapp import api_caller
 from openfecwebapp import utils
 
+
 def render_search_results(results, query):
     return render_template(
         'search-results.html',
@@ -77,6 +78,7 @@ def render_legal_mur(mur):
         mur=mur,
         parent='legal'
     )
+
 
 def render_legal_ao_landing():
     today = datetime.date.today()
@@ -158,6 +160,21 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
                 return redirect(
                     url_for('committee_page', c_id=committee['committee_id'], cycle=c)
                 )
+
+    # If it's not a senate committee and we're in the current cycle
+    # check if there's any raw filings in the last two days
+    if committee['committee_type'] != 'S' and cycle == utils.current_cycle():
+        raw_filings = api_caller._call_api(
+            'efile', 'filings',
+            cycle=cycle,
+            committee_id=committee['committee_id'],
+            min_receipt_date=utils.two_days_ago()
+        )
+        if len(raw_filings.get('results')) > 0:
+            tmpl_vars['has_raw_filings'] = True
+    else:
+        tmpl_vars['has_raw_filings'] = False
+
     return render_template('committees-single.html', **tmpl_vars)
 
 
@@ -182,6 +199,7 @@ report_types = {
     'I': 'ie-only'
 }
 
+
 def render_candidate(candidate, committees, cycle, election_full=True):
     # candidate fields will be top-level in the template
     tmpl_vars = candidate
@@ -193,9 +211,16 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     )
     tmpl_vars['result_type'] = 'candidates'
     tmpl_vars['duration'] = election_durations.get(candidate['office'], 2)
+    tmpl_vars['min_cycle'] = cycle - tmpl_vars['duration'] if election_full else cycle
     tmpl_vars['election_full'] = election_full
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
-    tmpl_vars['context_vars'] = {'cycles': candidate['cycles'], 'name': candidate['name']}
+    tmpl_vars['context_vars'] = {
+        'cycles': candidate['cycles'],
+        'name': candidate['name'],
+        'cycle': cycle,
+        'electionFull': election_full,
+        'candidateID': candidate['candidate_id']
+    }
 
     # In the case of when a presidential or senate candidate has filed
     # for a future year that's beyond the current cycle,
@@ -243,6 +268,17 @@ def render_candidate(candidate, committees, cycle, election_full=True):
 
     tmpl_vars['aggregate'] = aggregate
 
+    # Get totals for the last two-year period of a cycle for showing on
+    # raising and spending tabs
+    two_year_totals = api_caller.load_candidate_totals(
+        candidate['candidate_id'],
+        cycle=tmpl_vars['max_cycle'],
+        election_full=False
+    )
+
+    if two_year_totals:
+        tmpl_vars['two_year_totals'] = two_year_totals
+
     # Get the statements of candidacy
     statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
         candidate['candidate_id'],
@@ -270,6 +306,7 @@ def render_candidate(candidate, committees, cycle, election_full=True):
 def validate_referer(referer):
     if furl.furl(referer).host != furl.furl(request.url).host:
         raise ValidationError('Invalid referer.')
+
 
 class GithubView(MethodView):
 
@@ -307,6 +344,7 @@ class GithubView(MethodView):
         body = render_template('feedback.html', headers=request.headers, **kwargs)
         issue = self.repo.create_issue(title, body=body)
         return jsonify(issue.to_json()), 201
+
 
 def get_legal_category_order(results):
     """ Return categories in pre-defined order, moving categories with empty results

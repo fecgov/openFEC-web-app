@@ -2,9 +2,9 @@
 
 <section id="section-5" role="tabpanel" aria-hidden="true" aria-labelledby="section-5-heading">
   <div class="heading--section">
-    <h2 id="section-5-heading">Spending by others to oppose/support</h2>
+    <h2 id="section-5-heading">Spending by others to support or oppose</h2>
   </div>
-  <div class="content__section">
+  <div class="row">
     <p class="usa-width-two-thirds">This tab shows spending that opposes or supports this candidate. None of the funds are directly given to or spent by the candidate.</p>
   </div>
 
@@ -12,9 +12,28 @@
     <div class="content__section">
       {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-3") }}
     </div>
-    <div class="entity__figure row">
-      <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Independent expenditures</h3>
+
+    <div class="entity__figure row" id="independent-expenditures">
+      <div class="heading--section heading--with-action">
+        <h3 class="heading__left">Independent expenditures</h3>
+        <a class="heading__right button--alt button--browse"
+          href="{{ url_for(
+            'independent_expenditures',
+            min_date=cycle_start(min_cycle) | date(fmt='%m-%d-%Y'),
+            max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+          ) }}&candidate_id={{ candidate_id }}">Filter this data</a>
+      </div>
+      <div class="results-info results-info--simple js-other-spending-totals" data-spending-type="independentExpenditures">
+        <div class="usa-width-one-half">
+          <span class="label">Support</span>
+          <span class="t-big-data js-support"><img src="{{ url_for('static', filename='img/loading-ellipsis.gif') }}" alt="Loading indicator"></span>
+          <span class="t-block t-sans">Spent by others to <strong>support</strong> from <strong>{{cycle_start(min_cycle)|date_full}} to {{cycle_end(max_cycle)|date_full}}.</strong></span>
+        </div>
+        <div class="usa-width-one-half">
+          <span class="label">Oppose</span>
+          <span class="t-big-data js-oppose"><img src="{{ url_for('static', filename='img/loading-ellipsis.gif') }}" alt="Loading indicator"></span>
+          <span class="t-block t-sans">Spent by others to <strong>oppose</strong> from <strong>{{cycle_start(min_cycle)|date_full}} to {{cycle_end(max_cycle)|date_full}}.</strong></span>
+        </div>
       </div>
       <table
           class="data-table data-table--heading-borders"
@@ -37,9 +56,27 @@
       </div>
     </div>
 
-    <div class="entity__figure row">
-      <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Communication costs</h3>
+    <div class="entity__figure row" id="communication-costs">
+      <div class="heading--section heading--with-action u-no-margin">
+        <h3 class="heading__left">Communication costs</h3>
+        <a class="heading__right button--alt button--browse"
+          href="{{ url_for(
+            'communication_costs',
+            min_date=cycle_start(min_cycle) | date(fmt='%m-%d-%Y'),
+            max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+          ) }}&candidate_id={{ candidate_id }}">Filter this data</a>
+      </div>
+      <div class="results-info results-info--simple js-other-spending-totals" data-spending-type="communicationCosts">
+        <div class="usa-width-one-half">
+          <span class="label">Support</span>
+          <span class="t-big-data js-support"><img src="{{ url_for('static', filename='img/loading-ellipsis.gif') }}" alt="Loading indicator"></span>
+          <span class="t-block t-sans">Spent by others to <strong>support</strong> from <strong>{{cycle_start(min_cycle)|date_full}} to {{cycle_end(max_cycle)|date_full}}.</strong></span>
+        </div>
+        <div class="usa-width-one-half">
+          <span class="label">Oppose</span>
+          <span class="t-big-data js-oppose"><img src="{{ url_for('static', filename='img/loading-ellipsis.gif') }}" alt="Loading indicator"></span>
+          <span class="t-block t-sans">Spent by others to <strong>oppose</strong> from <strong>{{cycle_start(min_cycle)|date_full}} to {{cycle_end(max_cycle)|date_full}}.</strong></span>
+        </div>
       </div>
       <table
           class="data-table data-table--heading-borders"
@@ -59,10 +96,23 @@
       </table>
     </div>
 
-    <div class="entity__figure row">
-      <div class="results-info results-info--simple">
-        <h3 class="results-info__title">Electioneering communications</h3>
+    <div class="entity__figure row" id="electioneering-communication">
+      <div class="heading--section heading--with-action u-no-margin">
+        <h3 class="heading__left">Electioneering communication</h3>
+        <a class="heading__right button--alt button--browse"
+          href="{{ url_for(
+            'electioneering_communications',
+            min_date=cycle_start(min_cycle) | date(fmt='%m-%d-%Y'),
+            max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
+          ) }}&candidate_id={{ candidate_id }}">Filter this data</a>
       </div>
+      <div class="results-info results-info--simple js-other-spending-totals" data-spending-type="electioneering">
+        <div class="usa-width-one-half">
+          <span class="t-big-data js-total-electioneering u-margin--top"><img src="{{ url_for('static', filename='img/loading-ellipsis.gif') }}" alt="Loading indicator"></span>
+          <span class="t-block t-sans">Spent by others that mentioned this candidate <strong>{{cycle_start(min_cycle)|date_full}} to {{cycle_end(max_cycle)|date_full}}.</strong></span>
+        </div>
+      </div>
+
       <table
           class="data-table data-table--heading-borders"
           data-type="electioneering"

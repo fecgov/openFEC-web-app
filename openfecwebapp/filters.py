@@ -30,6 +30,12 @@ def date_filter(value, fmt='%m/%d/%Y'):
         return None
     return ensure_date(value).strftime(fmt)
 
+@app.template_filter('date_full')
+def date_full_filter(value, fmt='%B %d, %Y'):
+    if value is None:
+        return None
+    return ensure_date(value).strftime(fmt)
+
 @app.template_filter('ao_document_date')
 def ao_document_date(value):
     date = date_filter(value)
