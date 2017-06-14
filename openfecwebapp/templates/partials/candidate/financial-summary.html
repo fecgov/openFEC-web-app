@@ -26,9 +26,9 @@
     {% endif %}
 
     {% if raising_summary %}
-      <div class="entity__figure entity__figure--narrow">
+      <div class="entity__figure entity__figure--narrow" id="total-raised">
         <div class="heading--section heading--with-action">
-          <h3 class="heading__left">Raising</h3>
+          <h3 class="heading__left">Total raised</h3>
           <a class="heading__right button--alt button--browse"
               href="{{ url_for('receipts', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse receipts
           </a>
@@ -38,9 +38,9 @@
         </div>
         {{ tables.summary(raising_summary, committee_ids, cycle) }}
       </div>
-      <div class="entity__figure entity__figure--narrow">
+      <div class="entity__figure entity__figure--narrow" id="total-spent">
         <div class="heading--section heading--with-action">
-          <h3 class="heading__left">Spending</h3>
+          <h3 class="heading__left">Total spent</h3>
           <a class="heading__right button--alt button--browse"
               href="{{ url_for('disbursements', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse disbursements
           </a>
@@ -50,7 +50,7 @@
         </div>
         {{ tables.summary(spending_summary, committee_ids, cycle) }}
       </div>
-      <div class="entity__figure entity__figure--narrow">
+      <div class="entity__figure entity__figure--narrow" id="cash-summary">
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Cash summary</h3>
         </div>

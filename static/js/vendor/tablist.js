@@ -56,7 +56,9 @@ function refreshTabs() {
     if ($target.length) {
       show($target);
     } else {
-      $('[role="tabpanel"]').attr('aria-hidden', null);
+      // If the tab param doesn't match any, just show the first one by default
+      var $firstTab = $($tabs.find('[role="tab"]')[0]);
+      show($firstTab);
     }
   });
 }
