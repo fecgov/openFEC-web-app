@@ -6,7 +6,7 @@
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
     {{ select.committee_cycle_select(cycles, cycle, 'disbursements')}}
 
-    {% if committee_type not in ['C', 'E', 'I'] %}
+    {% if totals and committee_type not in ['C', 'E', 'I'] %}
     <div id="total-disbursements" class="entity__figure row">
       <div class="content__section">
         <div class="heading--section heading--with-action">
@@ -45,9 +45,6 @@
             ) }}">Filter this data
         </a>
       </div>
-      <div class="tag__category">
-        <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
-      </div>
       <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="communication-cost-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
           <tr>
@@ -74,9 +71,6 @@
         </a>
       </div>
       <p>Any broadcast, cable or satellite communication that (1) refers to a clearly identified candidate for federal office; (2) is publicly distributed within certain time periods before an election and (3) is targeted to the relevant electorate.</p>
-      <div class="tag__category">
-        <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
-      </div>
       <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
           <th scope="col">Amount</th>
@@ -102,9 +96,11 @@
             ) }}">Filter this data</a>
       </div>
       <p>This tab shows spending that this committee has made in support of or opposition to a candidate. None of the funds are directly given to or spent by the candidate.</p>
+      {% if totals %}
       <div class="tag__category">
         <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
       </div>
+      {% endif %}
       <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="independent-expenditure-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
         <thead>
           <tr>
@@ -145,9 +141,11 @@
 
       <div id="by-recipient" class="panel-toggle-element" aria-hidden="true">
         <div class="results-info results-info--simple">
+          {% if totals %}
           <div class="u-float-left tag__category">
             <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
+          {% endif %}
           <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="disbursements-by-recipient">Export</button>
         </div>
         <table
@@ -166,9 +164,11 @@
 
       <div id="itemized-disbursements" class="panel-toggle-element" aria-hidden="false">
         <div class="results-info results-info--simple">
+          {% if totals %}
           <div class="u-float-left tag__category">
             <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
+          {% endif %}
           <div class="u-float-right">
             <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-disbursements" aria-hidden="true">
             </div>
@@ -197,9 +197,11 @@
 
       <div id="to-committees" class="panel-toggle-element" aria-hidden="true">
         <div class="results-info results-info--simple">
+          {% if totals %}
           <div class="u-float-left tag__category">
             <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
+          {% endif %}
           <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="disbursements-by-recipient-id">Export</button>
         </div>
         <table
