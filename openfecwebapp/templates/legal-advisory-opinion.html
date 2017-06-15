@@ -54,7 +54,12 @@
               {% for document in advisory_opinion.sorted_documents %}
                 <tr>
                   <td>{{ document.date | ao_document_date }}</td>
-                  <td><a href="{{ document.url }}">{{ document.description }}</a></td>
+                  <td class="u-flex">
+                    <i class="icon icon--inline--right icon--inline--left i-document"></i>
+                    <div>
+                      <a href="{{ document.url }}">{{ document.description }}</a>
+                    </div>
+                  </td>
                   <td>{{ document.category }}</td>
                 </tr>
               {% endfor %}
