@@ -16,30 +16,28 @@ Filter disbursements
 
 {% block efiling_filters %}
 <div class="filters__inner">
-  {{ typeahead.field('committee_id', 'Committee name or ID', id_suffix='_raw') }}
+  {{ typeahead.field('committee_id', 'Spender name or ID', id_suffix='_raw') }}
   {{ text.field('disbursement_description', 'Description', id_suffix='_raw') }}
 </div>
 {% endblock %}
 
 {% block filters %}
-<div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
-  <button type="button" class="js-accordion-trigger accordion__button">Spender information</button>
+<div class="filters__inner">
+  {{ typeahead.field('committee_id', 'Spender name or ID') }}
+  {{ typeahead.field('recipient_name', 'Recipient name or ID', allow_text=True) }}
+  {{ date.partition_field('date', 'Disbursement date', dates ) }}
+</div>
+<div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
+  <button type="button" class="js-accordion-trigger accordion__button">Spender details</button>
   <div class="accordion__content">
-    {{ typeahead.field('committee_id', 'Committee name or ID') }}
-  </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Recipient information</button>
-  <div class="accordion__content">
-    {{ typeahead.field('recipient_name', 'Recipient name or ID', allow_text=True) }}
     {{ text.field('recipient_city', 'City') }}
     {{ states.field('recipient_state')}}
   </div>
 
-  <button type="button" class="js-accordion-trigger accordion__button">Transaction information</button>
+  <button type="button" class="js-accordion-trigger accordion__button">Transaction details</button>
   <div class="accordion__content">
     {{ text.field('disbursement_description', 'Description') }}
-    {% include 'partials/filters/disbursement-purpose.html' %}
     {{ range.amount('amount', 'Disbursement amount') }}
-    {{ date.partition_field('date', 'Disbursement date', dates ) }}
     {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</span>

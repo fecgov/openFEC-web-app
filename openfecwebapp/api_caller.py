@@ -1,3 +1,4 @@
+from operator import itemgetter
 import os
 from urllib import parse
 import re
@@ -114,7 +115,9 @@ def load_legal_advisory_opinion(ao_no):
     if not (results and 'docs' in results and results['docs']):
         abort(404)
 
-    return results['docs'][0]
+    ao = results['docs'][0]
+    ao['sorted_documents'] = _get_sorted_documents(ao)
+    return ao
 
 
 def load_legal_mur(mur_no):
@@ -265,7 +268,6 @@ def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, 
         response = _call_api(
             'candidates', 'totals',
             sort_hide_null=True,
-            election_year=cycle,
             cycle=cycle,
             election_full=False,
             office=office,
@@ -327,3 +329,12 @@ def _get_sorted_participants_by_type(mur):
         participants_by_type[key] = sorted(participants_by_type[key])
 
     return participants_by_type
+
+def _get_sorted_documents(ao):
+    """Sort documents within an AO by date DESC, description and document_id.
+       We do this in 2 passes, making use of the fact that Python's `sorted`
+       function performs a _stable_ sort.
+    """
+    sorted_documents = sorted(ao['documents'], key=itemgetter('description', 'document_id'), reverse=False)
+    sorted_documents = sorted(sorted_documents, key=itemgetter('date'), reverse=True)
+    return sorted_documents
