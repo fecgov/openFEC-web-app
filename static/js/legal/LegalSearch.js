@@ -131,7 +131,7 @@ class LegalSearch extends React.Component {
             <h2 className="results-info__title">Searching advisory opinions</h2>
           </div>
         </div>
-        <Tags query={this.state.lastQuery} handleRemove={this.instantQuery} />
+        <Tags query={this.state.lastQuery} resultCount={this.state.resultCount} handleRemove={this.instantQuery} />
         <SearchResults advisory_opinions={this.state.advisory_opinions} q={this.state.q} loading={this.state.loading} />
         <Pagination from_hit={this.state.from_hit} advisory_opinions={this.state.advisory_opinions}
           resultCount={this.state.resultCount} handleChange={this.instantQuery} />

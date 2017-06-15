@@ -5,10 +5,12 @@ const documentTypes = require('./documentTypes');
 
 
 function Tags(props) {
-  const namedFields = _.extend([] , requestorOptions);
-  _.extend(namedFields, documentTypes);
+  const namedFields = [];
+  Array.prototype.push.apply(namedFields, requestorOptions);
+  Array.prototype.push.apply(namedFields, documentTypes);
   namedFields.push({value: 'ao_is_pending', text: "Pending"});
   var citationRequireAll = props.query.ao_citation_require_all && props.query.ao_citation_require_all !== 'false';
+
   function removeQuery(name, value) {
     function handleRemove(e) {
       var newEvent;
@@ -41,7 +43,7 @@ function Tags(props) {
       tagText = value;
     }
 
-    return <div className="tag__item">{tagText}
+    return <div key={name + '-' + tagText} className="tag__item">{tagText}
         <button className="button tag__remove" onClick={removeQuery(name, value)}><span className="u-visually-hidden">Remove</span></button>
       </div>
   }
@@ -101,9 +103,12 @@ function Tags(props) {
   }
 
   if(getTagCategories()) {
-    return <ul className="tags">
+    return <div><div className="row"><h3 className="tags__title">
+    Viewing <span className="tags__count">{props.resultCount}</span> {(getTagCategories().length > 0) ? " filtered results for:" : " results"}
+    </h3></div>
+    <ul className="tags">
         {getTagCategories()}
-        </ul>
+        </ul></div>
     } else {
       return;
     }
