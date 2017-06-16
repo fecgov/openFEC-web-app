@@ -26,8 +26,8 @@ var versionColumn = {
   className: 'hide-panel hide-efiling column--med min-desktop',
   orderable: false,
   render: function(data, type, row) {
-    // RFAIs don't have version, so show NA
-    if (row.form_type === 'RFAI') {
+    // RFAIs and FRQs should just show N/A because they can't be amended
+    if (['RFAI', 'FRQ'].indexOf(row.form_type) >= 0) {
       return '<i class="icon-blank"></i>Not applicable';
     }
     var version = helpers.amendmentVersion(data);
