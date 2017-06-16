@@ -26,6 +26,10 @@ var versionColumn = {
   className: 'hide-panel hide-efiling column--med min-desktop',
   orderable: false,
   render: function(data, type, row) {
+    // RFAIs don't have version, so show NA
+    if (row.form_type === 'RFAI') {
+      return '<i class="icon-blank"></i>Not applicable';
+    }
     var version = helpers.amendmentVersion(data);
     if (version === 'Version unknown') {
       return '<i class="icon-blank"></i>Version unknown<br>' +
