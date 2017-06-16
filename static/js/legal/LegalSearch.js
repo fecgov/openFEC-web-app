@@ -78,7 +78,9 @@ class LegalSearch extends React.Component {
       'lastResultCount',
       'lastFilter',
       'loading',
-      'lastQuery'].indexOf(queryParam) >=0 || !queryState[queryParam]) {
+      'lastQuery'].indexOf(queryParam) >=0 ||
+        !queryState[queryParam] ||
+        queryState[queryParam].length === 0) {
         delete queryState[queryParam];
       }
     });

@@ -3,12 +3,18 @@ const React = require('react');
 
 function CheckboxList(props) {
   function handleCheckboxListChange(e) {
-    const newEvent = { target: { name: props.name, value: props.value  || []} };
+    const newEvent = { target: { name: props.name, value: props.value} };
 
-    if (newEvent.target.value.indexOf(e.target.value) >= 0) {
-      newEvent.target.value.splice(props.value.indexOf(e.target.value), 1);
+    // value should be set to an array of values. If the array is empty,
+    // it will be removed from query in the LegalSearch compenent.
+    if (newEvent.target.value) {
+      if(newEvent.target.value.indexOf(e.target.value) >= 0) {
+        newEvent.target.value.splice(props.value.indexOf(e.target.value), 1);
+      } else {
+        newEvent.target.value.push(e.target.value);
+      }
     } else {
-      newEvent.target.value.push(e.target.value);
+        newEvent.target.value = [e.target.value];
     }
 
     props.handleChange(newEvent);

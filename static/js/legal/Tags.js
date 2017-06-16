@@ -16,7 +16,7 @@ function Tags(props) {
       var newEvent;
       if(Array.isArray(props.query[name])) {
         let currentValues = _.extend(props.query[name]);
-        currentValues.splice(currentValues.indexOf(value), 1)
+        currentValues.splice(currentValues.indexOf(value), 1);
         if(currentValues.length === 0) {
           newEvent = {target: { name, value: false } };
         } else {
@@ -74,11 +74,9 @@ function Tags(props) {
 
   function getTagCategories() {
     let query = _.extend({}, props.query);
-    delete query['from_hit'];
-    delete query['search'];
-    delete query['type'];
-    delete query['search_type'];
-    delete query['ao_citation_require_all']
+    const excludedFields = ['from_hit', 'search', 'type', 'search_type', 'ao_citation_require_all']
+    excludedFields.forEach(fieldName => delete query[fieldName]);
+
     if(query.ao_min_issue_date || query.ao_max_issue_date) {
       query.issue_date = {min: query.ao_min_issue_date,
                           minName: 'ao_min_issue_date',
@@ -95,7 +93,6 @@ function Tags(props) {
       delete query.ao_min_request_date
       delete query.ao_max_request_date
     }
-    console.log(query);
     return Object.keys(query).map((tagName) => {
         return getTagCategory(query, tagName)
 

@@ -14,4 +14,4 @@ module.exports = [ {'value': '0', 'text': 'Any'},
   {'value': '13', 'text': 'Research/Public Interest/Educational Institution'},
   {'value': '14', 'text': 'Law Firm'},
   {'value': '15', 'text': 'Individual'},
-  {'value': '16', 'text': 'Other'}]
+  {'value': '16', 'text': 'Other'}];
