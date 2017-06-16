@@ -95,7 +95,7 @@
       <h3><a href="{{ url_for('advisory_opinion_page', ao_no=ao.no) }}">AO {{ ao.no }} {{ ao.name }}</a></h3>
       <p class="t-sans">{{ ao.summary }}</p>
       {% for doc in ao.documents %}
-        {% if doc.category == 'Final Opinion' %}
+        {% if doc.category in ['Final Opinion', 'Withdrawal of Request'] %}
           <p class="t-sans post__doc"><a href="{{ doc.url }}">{{ doc.category }} | PDF</a></p>
         {% endif %}
       {% endfor %}
