@@ -73,11 +73,17 @@ var pagesColumn = {
   orderable: false,
   className: 'min-tablet hide-panel column--xs column--number',
   render: function(data, type, row) {
-    // Image numbers begin with YYYYMMDD, which makes for a very big number
+    // Image numbers in 2015 and later begin with YYYYMMDD,
+    // which makes for a very big number.
     // This results in inaccurate subtraction
     // so instead we slice it after the first 8 digits
+    // Earlier image numbers are only 11 digits, so we just leave those as-is
     var shorten = function(number) {
-      return Number(number.toString().slice(8));
+      if (number.toString().length === 18) {
+        return Number(number.toString().slice(8));
+      } else {
+        return number;
+      }
     };
     var pages = shorten(row.ending_image_number) - shorten(row.beginning_image_number) + 1;
     return pages.toLocaleString();
