@@ -22,6 +22,10 @@ Filter independent expenditures
   {{ text.field('candidate_name', 'Candidate mentioned', id_suffix='_raw')}}
   {{ misc.support_oppose('_raw') }}
   {{ date.field('expenditure_date', 'Expenditure date', dates, id_suffix='_raw') }}
+  <div class="message message--small message--alert">
+    <span class="t-block">Data disclosed on monthly and quarterly form 3X and form 5 reports may not reflect the most recently reported information.</span>
+    <span class="t-block u-margin--top"><a href="http://classic.fec.gov/data/IndependentExpenditure.do">Browse 24- and 48-hour reports</a> for the most current data.</span>
+  </div>
 </div>
 {% endblock %}
 
@@ -30,7 +34,10 @@ Filter independent expenditures
   <div class="filters__inner">
     {{ typeahead.field('committee_id', 'Spender name or ID') }}
     {{ years.cycles('cycle', 'Years') }}
-    {{ reports.type()}}
+    <div class="message message--small message--alert">
+      <span class="t-block">Data disclosed on monthly and quarterly form 3X and form 5 reports may not reflect the most recently reported information.</span>
+      <span class="t-block u-margin--top"><a href="http://classic.fec.gov/data/IndependentExpenditure.do">Browse 24- and 48-hour reports</a> for the most current data.</span>
+    </div>
     {{ reports.form()}}
   </div>
   <button type="button" class="js-accordion-trigger accordion__button">Candidate mentioned</button>
