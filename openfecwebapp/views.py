@@ -87,7 +87,7 @@ def render_legal_ao_landing():
         query='',
         query_type='advisory_opinions',
         ao_category=['F', 'W'],
-        ao_min_date=ao_min_date
+        ao_min_issue_date=ao_min_date
     )
     pending_aos = api_caller.load_legal_search_results(
         query='',
