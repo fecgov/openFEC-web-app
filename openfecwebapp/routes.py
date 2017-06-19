@@ -1,6 +1,7 @@
 import http
 
 import datetime
+import re
 
 import furl
 from webargs import fields
@@ -19,9 +20,14 @@ from openfecwebapp.app import app
 @app.route('/')
 def search():
     query = request.args.get('search')
+
     if query:
-        results = api_caller.load_search_results(query)
-        return views.render_search_results(results, query)
+        if re.match('\d{16}', query) or re.match('\d{11}', query):
+            url = 'http://docquery.fec.gov/cgi-bin/fecimg/?' + query
+            return redirect(url)
+        else:
+            results = api_caller.load_search_results(query)
+            return views.render_search_results(results, query)
 
     else:
         top_candidates_raising = api_caller.load_top_candidates('-receipts')
