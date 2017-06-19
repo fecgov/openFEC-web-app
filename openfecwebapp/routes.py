@@ -484,14 +484,6 @@ def advisory_opinions_landing():
     return views.render_legal_ao_landing()
 
 
-@app.route('/legal/enforcement/')
-def enforcement_landing():
-    return render_template('legal-enforcement-landing.html',
-        parent='legal',
-        result_type='murs',
-        display_name='enforcement matters')
-
-
 @app.route('/legal/statutes/')
 def statutes_landing():
     return render_template('legal-statutes-landing.html',
