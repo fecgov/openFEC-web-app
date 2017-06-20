@@ -51,10 +51,8 @@ def load_search_results(query, query_type=None):
             'committees': committees if len(committees) else [],
         }
 
-def load_legal_search_results(query, query_type='all', offset=0, limit=20, **filters):
-    for key in filters.keys():
-        if not filters[key]:
-            del filters[key]
+def load_legal_search_results(query, query_type='all', offset=0, limit=20, **kwargs):
+    filters = dict((key, value) for key, value in kwargs.items() if value)
 
     if query or query_type in ['advisory_opinions', 'murs']:
         filters['hits_returned'] = limit
