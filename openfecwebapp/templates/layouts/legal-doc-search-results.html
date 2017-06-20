@@ -21,8 +21,8 @@
 {% block search %}
 <section class="main__content--full data-container__wrapper">
   <div id="filters" class="filters is-open">
-    <button class="filters__header js-filter-toggle" type="button">
-      <span class="filters__title">Search {{ document_type_display_name }}</span>
+    <button class="filters__header filters__toggle js-filter-toggle" type="button">
+      <span class="filters__title">Edit filters</span>
     </button>
     <div class="filters__content">
       <form id="category-filters" action="{{ url_for(result_type) }}">
@@ -34,10 +34,13 @@
       </form>
     </div>
   </div>
-  <div id="results-{{ result_type }}" class="content__section data-container__body">
-    <div class="results-info results-info--simple">
-      <div class="results-info__left">
-        <h2 class="results-info__title">Searching {{ document_type_display_name }}{% if query %} for &ldquo;{{ query }}&rdquo;{% endif %}</h2>
+  <div id="results-{{ result_type }}" class="content__section">
+    <div class="data-container__widgets">
+      <div class="data-container__head">
+        <h1 class="data-container__title">{{ document_type_display_name }}{% if query %} for &ldquo;{{ query }}&rdquo;{% endif %}</h1>
+      </div>
+      <div class="u-padding--left u-padding--right">
+        {% block message %}{% endblock %}
       </div>
     </div>
     {% if results.total_all %}

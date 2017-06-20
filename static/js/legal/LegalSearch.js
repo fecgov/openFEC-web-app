@@ -127,13 +127,21 @@ class LegalSearch extends React.Component {
                 getResults={this.getResults} instantQuery={this.instantQuery} />
         </div>
       </div>
-      <div id="results-{{ result_type }}" className="content__section data-container__body">
-        <div className="results-info results-info--simple">
-          <div className="results-info__left">
-            <h2 className="results-info__title">Searching advisory opinions</h2>
+      <div id="results-aos" className="content__section data-container">
+        <div className="data-container__widgets">
+          <div className="data-container__head">
+            <h1 className="data-container__title">Advisory opinions</h1>
+          </div>
+          <Tags query={this.state.lastQuery} resultCount={this.state.resultCount} handleRemove={this.instantQuery} />
+          <div className="u-padding--left u-padding--right">
+            <div className="message message--info">
+              <h3>This feature is still in progress</h3>
+              <p>We&#39;re actively building the <strong>advisory opinion search</strong>, and it doesn&#39;t yet include some
+              advanced search functions. If you can&#39;t find what you&#39;re looking for, you can still <a href="http://saos.fec.gov/saos/searchao">search
+              opinions on the old fec.gov</a>.</p>
+            </div>
           </div>
         </div>
-        <Tags query={this.state.lastQuery} resultCount={this.state.resultCount} handleRemove={this.instantQuery} />
         <SearchResults advisory_opinions={this.state.advisory_opinions} q={this.state.q} loading={this.state.loading} />
         <Pagination from_hit={this.state.from_hit} advisory_opinions={this.state.advisory_opinions}
           resultCount={this.state.resultCount} handleChange={this.instantQuery} />
