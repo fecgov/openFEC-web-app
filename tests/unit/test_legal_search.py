@@ -58,18 +58,6 @@ class TestLegalSearch(unittest.TestCase):
             'regulations', offset=0)
 
     @mock.patch.object(api_caller, 'load_legal_search_results')
-    def test_search_advisory_opinions(self, load_legal_search_results):
-        load_legal_search_results.return_value = factory.advisory_opinions_search_results()
-        response = self.app.get('/legal/search/advisory-opinions/',
-                data={
-                    'search': 'in kind donation',
-                    'search_type': 'advisory_opinions'})
-        assert response.status_code == 200
-
-        load_legal_search_results.assert_called_once_with('in kind donation',
-            'advisory_opinions', offset=0)
-
-    @mock.patch.object(api_caller, 'load_legal_search_results')
     def test_search_pagination(self, load_legal_search_results):
         load_legal_search_results.return_value = factory.regulations_search_results()
         response = self.app.get('/legal/search/regulations/',
