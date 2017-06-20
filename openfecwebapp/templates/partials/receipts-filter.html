@@ -33,30 +33,16 @@ Filter receipts
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <button type="button" class="js-accordion-trigger accordion__button">Contributor details</button>
   <div class="accordion__content">
-    <div class="filter">
-      <fieldset class="js-filter js-filter-control" data-filter="checkbox" data-modifies-filter="contributor_name" data-modifies-property="dataset">
-        <legend class="label">Received from</legend>
-        <ul>
-          <li>
-            <input id="contributor-type-individual" name="contributor_type" type="checkbox" value="individual">
-            <label for="contributor-type-individual">Individuals</label>
-          </li>
-          <li>
-            <input id="contributor-type-committee" name="contributor_type" type="checkbox" value="committee">
-            <label for="contributor-type-committee">Committees</label>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
-    {% include 'partials/filters/unique-receipts.html' %}
+
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
     {{ text.field('contributor_employer', 'Employer') }}
     {{ text.field('contributor_occupation', 'Occupation') }}
+    {% include 'partials/filters/unique-receipts.html' %}
   </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Transaction details</button>
+  <button type="button" class="js-accordion-trigger accordion__button">Receipt details</button>
   <div class="accordion__content">
-    {{ range.amount('amount', 'Contribution amount') }}
+    {{ range.amount('amount', 'Receipt amount') }}
     {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Receipts updated according to the filer's schedule. Processing time can vary.</span>
