@@ -485,10 +485,18 @@ def statutes(query, offset):
 @app.route('/legal/search/enforcement/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
+    'mur_no': fields.Str(load_from='mur_no'),
+    'mur_respondents': fields.Str(load_from='mur_respondents'),
+    'mur_election_cycles': fields.Int(load_from='mur_election_cycles'),
     'offset': fields.Int(missing=0),
 })
-def murs(query, offset):
-    return legal_doc_search(query, 'murs', offset=offset)
+def murs(query, offset, mur_no=None, mur_respondents=None, mur_election_cycles=None,
+    **kwargs):
+    return legal_doc_search(query, 'murs',
+        mur_no=mur_no,
+        mur_respondents=mur_respondents,
+        mur_election_cycles=mur_election_cycles,
+        offset=offset)
 
 
 # TODO migrating from /legal/regulations -> /legal/search/regulations,
