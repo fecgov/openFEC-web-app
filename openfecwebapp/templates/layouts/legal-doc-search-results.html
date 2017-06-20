@@ -13,10 +13,10 @@
   {% endif %}
 {% endblock %}
 
+{% block header %}
+{% endblock %}
+
 {% block body %}
-<header class="page-header slab slab--primary">
-  {{ breadcrumb.breadcrumbs(document_type_display_name.capitalize(), breadcrumb_links) }}
-</header>
 
 {% block search %}
 <section class="main__content--full data-container__wrapper">

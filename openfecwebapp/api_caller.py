@@ -57,6 +57,7 @@ def load_legal_search_results(query, query_type='all', offset=0, limit=20, **kwa
         if kwargs[key]:
             filters[key] = kwargs[key]
 
+    if query or query_type in ['advisory_opinions', 'murs']:
         filters['hits_returned'] = limit
         filters['type'] = query_type
         filters['from_hit'] = offset
