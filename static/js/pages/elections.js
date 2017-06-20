@@ -524,11 +524,13 @@ $(document).ready(function() {
       .value();
     });
 
-  var districtMap = new maps.DistrictMap(
-    $('#election-map').get(0),
-    {color: '#36BDBB'}
-  );
-  districtMap.load(context.election);
+  if ($('#election-map').length) {
+    var districtMap = new maps.DistrictMap(
+      $('#election-map').get(0),
+      {color: '#36BDBB'}
+    );
+    districtMap.load(context.election);    
+  }
 
   initSpendingTables();
 });
