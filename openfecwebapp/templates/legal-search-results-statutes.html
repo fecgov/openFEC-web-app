@@ -14,7 +14,9 @@
 
 {% block results %}
 {% with statutes = results.statutes %}
-{% include 'partials/legal-search-results-statute.html' %}
+<div class="data-container__datatable">
+  {% include 'partials/legal-search-results-statute.html' %}
+</div>
 {% endwith %}
 
 {% with results=results %}

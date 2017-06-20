@@ -14,7 +14,9 @@
 
 {% block results %}
 {% with regulations = results.regulations %}
-{% include 'partials/legal-search-results-regulation.html' %}
+<div class="data-container__datatable">
+  {% include 'partials/legal-search-results-regulation.html' %}
+</div>
 {% endwith %}
 
 {% with results=results %}
