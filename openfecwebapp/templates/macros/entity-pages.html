@@ -14,6 +14,10 @@
         <thead>
           <th scope="col">Document</th>
           <th scope="col">Version</th>
+          {% if dataType == 'reports' %}
+          <th scope="col">Coverage start date</th>
+          <th scope="col">Coverage end date</th>
+          {% endif %}
           <th scope="col">Date filed</th>
           <th scope="col">Pages</th>
           {% if showTrigger %}
@@ -39,6 +43,8 @@
       <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="raw-filings" data-min-date="{{ two_days_ago }}" data-cycle="{{ cycle }}" data-committee="{{ committee_id }}">
         <thead>
           <th scope="col">Document</th>
+          <th scope="col">Coverage start date</th>
+          <th scope="col">Coverage end date</th>
           <th scope="col">Date filed</th>
         </thead>
       </table>
