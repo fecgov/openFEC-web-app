@@ -323,6 +323,12 @@ ElectionLookup.prototype.draw = function(results) {
     this.$resultsTitle.text('');
     this.$resultsItems.html(noResultsTemplate(this.serialized));
   }
+
+  if (Number(this.$cycle.val()) < 2012) {
+    this.map.hide();
+  } else {
+    this.map.show();
+  }
 };
 
 ElectionLookup.prototype.drawResult = function(result) {
@@ -437,6 +443,7 @@ function ElectionLookupMap(elm, opts) {
   this.opts = _.extend({}, defaultOpts, opts);
   this.statePalette = getStatePalette(this.opts.colorScale);
   this.districtPalette = getDistrictPalette(this.opts.colorScale);
+  this.mapMessage = document.querySelector('.js-map-message');
   this.init();
 }
 
@@ -565,6 +572,16 @@ ElectionLookupMap.prototype.handleReset = function(e) {
   } else if (!this.districts) {
     this.drawDistricts();
   }
+};
+
+ElectionLookupMap.prototype.hide = function() {
+  this.elm.setAttribute('aria-hidden', 'true');
+  this.mapMessage.setAttribute('aria-hidden', 'false');
+};
+
+ElectionLookupMap.prototype.show = function() {
+  this.elm.setAttribute('aria-hidden', 'false');
+  this.mapMessage.setAttribute('aria-hidden', 'true');
 };
 
 module.exports = {
