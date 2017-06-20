@@ -16,6 +16,7 @@ var analytics = require('fec-style/js/analytics');
 
 var helpers = require('./helpers');
 var utils = require('./election-utils');
+var decoders = require('./decoders');
 
 var states = require('../data/us-states-10m.json');
 var districts = require('../data/stateDistricts.json');
@@ -53,7 +54,7 @@ function formatResult(result, lookup) {
 }
 
 function formatName(result) {
-  var parts = [result.state, officeMap[result.office]];
+  var parts = [decoders.states[result.state], officeMap[result.office]];
   if (result.district && result.district !== '00') {
     parts = parts.concat('District ' + result.district.toString());
   }
@@ -394,7 +395,7 @@ ElectionLookup.prototype.getTitle = function() {
   if (params.zip) {
     title += ' in ZIP code ' + params.zip;
   } else {
-    title += ' in ' + params.state;
+    title += ' in ' + decoders.states[params.state];
     if (params.district && params.district !== '00') {
        title += ', district ' + params.district;
     }
