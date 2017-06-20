@@ -2,6 +2,12 @@
 {% import 'macros/legal.html' as legal %}
 {% set document_type_display_name = 'Matters Under Review' %}
 
+{% block header %}
+<header class="page-header slab slab--primary">
+  {{ breadcrumb.breadcrumbs('Search results', [(cms_url + '/legal-resources', 'Legal resources'), (cms_url + '/legal-resources/enforcement', 'Enforcement')]) }}
+</header>
+{% endblock %}
+
 {% block filters %}
   {{ legal.keyword_search(result_type, query) }}
 {% endblock %}
