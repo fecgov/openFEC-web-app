@@ -440,56 +440,20 @@ def legal_search(query, result_type):
     return views.render_legal_search_results(results, query, result_type)
 
 
-def legal_doc_search(query, result_type, ao_no=None, ao_name=None, ao_min_date=None,
-                     ao_max_date=None, ao_is_pending=None, ao_requestor=None,
-                     ao_requestor_type=None, ao_category=None, **kwargs):
+def legal_doc_search(query, result_type, **kwargs):
     """Legal search for a specific document type."""
     results = {}
 
     # Only hit the API if there's an actual query or if the result_type is AOs
-    if query or result_type == 'advisory_opinions':
-        results = api_caller.load_legal_search_results(query, result_type,
-                    ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
-                    ao_requestor, ao_requestor_type, ao_category, **kwargs)
+    if query or result_type in ['advisory_opinions', 'murs']:
+        results = api_caller.load_legal_search_results(query, result_type, **kwargs)
 
-    if ao_no:
-        if ao_no[0]:
-            ao_no = ao_no[0]
-        else:
-            ao_no = None
-
-    if ao_name:
-        if ao_name[0]:
-            ao_name = ao_name[0]
-        else:
-            ao_name = None
-
-    if not ao_min_date:
-        ao_min_date = '04/01/1975'
-    else:
-        ao_min_date = ao_min_date.strftime('%m/%d/%Y')
-
-    if not ao_max_date:
-        ao_max_date = datetime.date.today().strftime('%m/%d/%Y')
-    else:
-        ao_max_date = ao_max_date.strftime('%m/%d/%Y')
-
-    return views.render_legal_doc_search_results(results, query, result_type,
-                        ao_no, ao_name, ao_min_date, ao_max_date, ao_is_pending,
-                        ao_requestor, ao_requestor_type, ao_category)
+    return views.render_legal_doc_search_results(results, query, result_type)
 
 
 @app.route('/legal/advisory-opinions/')
 def advisory_opinions_landing():
     return views.render_legal_ao_landing()
-
-
-@app.route('/legal/enforcement/')
-def enforcement_landing():
-    return render_template('legal-enforcement-landing.html',
-        parent='legal',
-        result_type='murs',
-        display_name='enforcement matters')
 
 
 @app.route('/legal/statutes/')
@@ -503,26 +467,10 @@ def statutes_landing():
 @app.route('/legal/search/advisory-opinions/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
-    'offset': fields.Int(missing=0),
-    'ao_no': fields.List(fields.Str, missing=None),
-    'ao_name': fields.List(fields.Str, missing=None),
-    'ao_min_date': fields.Date(missing=None),
-    'ao_max_date': fields.Date(missing=None),
-    'ao_is_pending': fields.Bool(missing=None),
-    'ao_requestor': fields.Str(missing=None),
-    'ao_requestor_type': fields.Int(missing=0),
-    'ao_category': fields.List(fields.Str, missing=None)
+    'offset': fields.Int(missing=0)
 })
-def advisory_opinions(query, offset, ao_no=None, ao_name=None, ao_min_date=None, ao_max_date=None,
-                        ao_is_pending=None, ao_requestor=None, ao_requestor_type=None,
-                        ao_category=None):
-    return legal_doc_search(query, 'advisory_opinions', offset=offset,
-                            ao_no=ao_no, ao_name=ao_name,
-                            ao_min_date=ao_min_date, ao_max_date=ao_max_date,
-                            ao_is_pending=ao_is_pending,
-                            ao_requestor=ao_requestor,
-                            ao_requestor_type=ao_requestor_type,
-                            ao_category=ao_category)
+def advisory_opinions(query, offset):
+    return legal_doc_search(query, 'advisory_opinions')
 
 
 @app.route('/legal/search/statutes/')
@@ -537,10 +485,18 @@ def statutes(query, offset):
 @app.route('/legal/search/enforcement/')
 @use_kwargs({
     'query': fields.Str(load_from='search'),
+    'mur_no': fields.Str(load_from='mur_no'),
+    'mur_respondents': fields.Str(load_from='mur_respondents'),
+    'mur_election_cycles': fields.Int(load_from='mur_election_cycles'),
     'offset': fields.Int(missing=0),
 })
-def murs(query, offset):
-    return legal_doc_search(query, 'murs', offset=offset)
+def murs(query, offset, mur_no=None, mur_respondents=None, mur_election_cycles=None,
+    **kwargs):
+    return legal_doc_search(query, 'murs',
+        mur_no=mur_no,
+        mur_respondents=mur_respondents,
+        mur_election_cycles=mur_election_cycles,
+        offset=offset)
 
 
 # TODO migrating from /legal/regulations -> /legal/search/regulations,

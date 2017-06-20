@@ -14,7 +14,7 @@ function Filters(props) {
   const resultCountChange = props.query.resultCount - props.query.lastResultCount;
 
   return <div>
-            <div className="filters accordion__content">
+            <div className="accordion__content">
               <TextFilter key="ao_no" name="ao_no" label="AO number" value={props.query.ao_no}
                   handleChange={props.setQuery} getResults={props.getResults} />
               <TextFilter key="ao_requestor" name="ao_requestor" label="Requestor Name (or AO Name)" value={props.query.ao_requestor}

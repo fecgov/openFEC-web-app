@@ -100,7 +100,7 @@ function Tags(props) {
   }
 
   if(getTagCategories()) {
-    return <div><div className="row"><h3 className="tags__title">
+    return <div className="data-container__tags"><div className="row"><h3 className="tags__title">
     Viewing <span className="tags__count">{props.resultCount}</span> {(getTagCategories().length > 0) ? " filtered results for:" : " results"}
     </h3></div>
     <ul className="tags">
