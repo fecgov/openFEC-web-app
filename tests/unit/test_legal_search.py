@@ -93,22 +93,22 @@ class TestLegalSearch(unittest.TestCase):
         assert results['statutes_returned'] == 4
         assert results['regulations_returned'] == 5
 
-    # @mock.patch.object(api_caller, 'load_legal_search_results')
-    # def test_ao_landing_page(self, load_legal_search_results):
-    #     today = datetime.date.today()
-    #     ao_min_date = today - datetime.timedelta(weeks=26)
-    #     response = self.app.get('legal/advisory-opinions/')
-    #
-    #     assert response.status_code == 200
-    #
-    #     # load_legal_search_results gets called twice in this view,
-    #     # so this mocks the two different calls and then we assert they happend
-    #     # http://stackoverflow.com/questions/7242433/asserting-successive-calls-to-a-mock-method
-    #     calls = [
-    #         mock.call(query='', query_type='advisory_opinions', ao_min_issued_date=ao_min_date, ao_category=['F', 'W']),
-    #         mock.call(query='', query_type='advisory_opinions', ao_is_pending=True, ao_category='R')
-    #     ]
-    #     load_legal_search_results.assert_has_calls(calls, any_order=True)
+    @mock.patch.object(api_caller, 'load_legal_search_results')
+    def test_ao_landing_page(self, load_legal_search_results):
+        today = datetime.date.today()
+        ao_min_date = today - datetime.timedelta(weeks=26)
+        response = self.app.get('legal/advisory-opinions/')
+
+        assert response.status_code == 200
+
+        # load_legal_search_results gets called twice in this view,
+        # so this mocks the two different calls and then we assert they happend
+        # http://stackoverflow.com/questions/7242433/asserting-successive-calls-to-a-mock-method
+        calls = [
+            mock.call(query='', query_type='advisory_opinions', ao_min_issue_date=ao_min_date, ao_category=['F', 'W']),
+            mock.call(query='', query_type='advisory_opinions', ao_is_pending=True, ao_category='R')
+        ]
+        load_legal_search_results.assert_has_calls(calls, any_order=True)
 
 if __name__ == '__main__':
     unittest.main()
