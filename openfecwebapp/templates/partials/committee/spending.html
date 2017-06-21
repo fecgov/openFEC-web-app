@@ -29,6 +29,14 @@
           </div>
         </div>
       </div>
+      {% if has_raw_filings %}
+      <div class="message message--info">
+        <h4 class="message__title">This committee has more recent electronic filings</h4>
+        <p>The data from these reports has not been processed by the FEC and is not included on this page.</p>
+        <a class="button button--alt button--browse" href="{{ url_for('disbursements', committee_id=committee_id, two_year_transaction_period=cycle, data_type=efiling) }}">Browse raw disbursement data</a>
+        <a class="button button--alt button--browse" href="{{ url_for('filings', committee_id=committee_id, data_type=efiling) }}">Browse raw electronic filings</a>
+      </div>
+      {% endif %}
     </div>
     {% endif %}
 
