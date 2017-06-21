@@ -27,33 +27,6 @@ def test_fmt_year_range_not_int():
     assert filters.fmt_year_range(None) is None
 
 
-def test_fmt_chart_ticks_single_key():
-    group = {
-        'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
-        'coverage_end_date': datetime.datetime(2015, 1, 1).isoformat(),
-    }
-    keys = 'coverage_start_date'
-    assert filters.fmt_chart_ticks(group, keys) == '01/01/2015'
-
-
-def test_fmt_chart_ticks_two_keys():
-    group = {
-        'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
-        'coverage_end_date': datetime.datetime(2015, 2, 1).isoformat(),
-    }
-    keys = ('coverage_start_date', 'coverage_end_date')
-    assert filters.fmt_chart_ticks(group, keys) == '01/01/2015 – 02/01/2015'
-
-
-def test_fmt_chart_ticks_two_keys_repeated_value():
-    group = {
-        'coverage_start_date': datetime.datetime(2015, 1, 1).isoformat(),
-        'coverage_end_date': datetime.datetime(2015, 1, 15).isoformat(),
-    }
-    keys = ('coverage_start_date', 'coverage_end_date')
-    assert filters.fmt_chart_ticks(group, keys) == '01/01/2015 – 01/15/2015'
-
-
 def test_fmt_state_full():
     value = 'ny'
     assert filters.fmt_state_full(value) == 'New York'
