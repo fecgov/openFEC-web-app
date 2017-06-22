@@ -325,7 +325,7 @@ ElectionLookup.prototype.draw = function(results) {
     this.$resultsItems.html(noResultsTemplate(this.serialized));
   }
 
-  if (Number(this.$cycle.val()) < 2012) {
+  if (Number(this.$cycle.val()) < window.DISTRICT_MAP_CUTOFF) {
     this.map.hide();
   } else {
     this.map.show();

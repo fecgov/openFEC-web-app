@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      {% if office == 'house' and cycle >= 2012 or office == 'senate'  %}
+      {% if office == 'house' and cycle >= constants.DISTRICT_MAP_CUTOFF or office == 'senate'  %}
       <div id="election-map" class="map" aria-hidden="true"></div>
       {% endif %}
     </div>
