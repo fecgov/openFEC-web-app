@@ -28,6 +28,9 @@
       {{ decodeMeans means_filed}}
     {{/panelRow}}
     {{#panelRow "Download"}}
+      {{#if html_url}}
+        <a target="_blank" href="{{ html_url }}">Web</a> |
+      {{/if}}
       {{#if csv_url}}
       <a target="_blank" href="{{ csv_url }}">CSV</a> |
       {{/if}}
