@@ -51,6 +51,7 @@ Filter receipts
     {% include 'partials/filters/unique-receipts.html' %}
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
+    {{ text.field('contributor_zip', 'ZIP code')}}
     {{ text.field('contributor_employer', 'Employer') }}
     {{ text.field('contributor_occupation', 'Occupation') }}
   </div>
