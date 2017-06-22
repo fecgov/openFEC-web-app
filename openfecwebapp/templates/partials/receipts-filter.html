@@ -44,7 +44,7 @@ Filter receipts
   <div class="accordion__content">
     {{ range.amount('amount', 'Receipt amount') }}
 
-    <div class="receipt-type">
+    <div class="receipt-type u-margin--top">
       <legend class="label">Receipt type</legend>
       {{ checkbox.checkbox_dropdown('line_number', 'Received by House or Senate committees', options=constants.receipts_house_senate_line_numbers, legend=False) }}
       {{ checkbox.checkbox_dropdown('line_number', 'Received by Presidential committees',options=constants.receipts_presidential_line_numbers, legend=False) }}
