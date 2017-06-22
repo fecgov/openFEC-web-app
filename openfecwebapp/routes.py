@@ -19,6 +19,17 @@ from openfecwebapp.app import app
 
 @app.route('/')
 def search():
+    """Renders the top-level /data page.
+
+    If there's a query string, it will
+    load candidate and committee search results.
+
+    If the string is a 16 or 11 digit number then it will redirect to
+    the page-by-page viewer.
+
+    If there's no query, then we'll load the main landing page with all the
+    necessary data.
+    """
     query = request.args.get('search')
 
     if query:
