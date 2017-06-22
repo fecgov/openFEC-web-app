@@ -62,22 +62,6 @@ def _unique(values):
             ret.append(value)
     return ret
 
-def _fmt_chart_tick(value):
-    try:
-        return parse_date(value).strftime('%m/%d/%Y')
-    except (AttributeError, ValueError):
-        return '?'
-
-@app.template_filter('fmt_chart_ticks')
-def fmt_chart_ticks(group, keys):
-    if not group or not keys:
-        return ''
-    if isinstance(keys, (list, tuple)):
-        values = [_fmt_chart_tick(group[key]) for key in keys]
-        values = _unique(values)
-        return ' – '.join(values)
-    return _fmt_chart_tick(group[keys])
-
 @app.template_filter()
 def fmt_year_range(year):
     if type(year) == int:
