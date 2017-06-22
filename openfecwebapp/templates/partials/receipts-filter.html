@@ -6,6 +6,7 @@
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/date.html' as date %}
 {% import 'macros/filters/range.html' as range %}
+{% import 'macros/filters/checkbox.html' as checkbox %}
 
 {% block heading %}
 Filter receipts
@@ -33,7 +34,6 @@ Filter receipts
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <button type="button" class="js-accordion-trigger accordion__button">Contributor details</button>
   <div class="accordion__content">
-
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
     {{ text.field('contributor_employer', 'Employer') }}
@@ -43,6 +43,14 @@ Filter receipts
   <button type="button" class="js-accordion-trigger accordion__button">Receipt details</button>
   <div class="accordion__content">
     {{ range.amount('amount', 'Receipt amount') }}
+
+    <div class="receipt-type">
+      <legend class="label">Receipt type</legend>
+      {{ checkbox.checkbox_dropdown('line_number', 'Received by House or Senate committees', options=constants.receipts_house_senate_line_numbers, legend=False) }}
+      {{ checkbox.checkbox_dropdown('line_number', 'Received by Presidential committees',options=constants.receipts_presidential_line_numbers, legend=False) }}
+      {{ checkbox.checkbox_dropdown('line_number', 'Received by PACs or party committees',options=constants.receipts_pac_party_line_numbers, legend=False) }}
+    </div>
+
     {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Receipts updated according to the filer's schedule. Processing time can vary.</span>
