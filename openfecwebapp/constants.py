@@ -256,7 +256,7 @@ line_numbers = {
     'receipts': {
         'house_senate': OrderedDict([
             ('F3-11AI', 'Contributions from individuals (line 11ai)'),
-            ('F3-11B', 'Contributions from political party committees (line 11b'),
+            ('F3-11B', 'Contributions from political party committees (line 11b)'),
             ('F3-11C', 'Contributions from other political committees (line 11c)'),
             ('F3-11D', 'Contributions from the candidate (line 11d)'),
             ('F3-12', ' Transfers from authorized committees (line 12)'),
