@@ -1,6 +1,8 @@
 {{#if doc_description }}
   <div class="document-description">
-    {{#if pdf_url }}
+    {{#if html_url}}
+    <a href="{{ html_url }}" target="_blank">{{ doc_description }}</a>
+    {{else if pdf_url }}
     <a href="{{ pdf_url }}" target="_blank">{{ doc_description }}</a>
     {{ else }}
     {{ doc_description }}
