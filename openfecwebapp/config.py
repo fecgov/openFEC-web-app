@@ -42,6 +42,10 @@ force_https = bool(env.get_credential('FEC_FORCE_HTTPS', ''))
 # set to a non-empty string in your environment if you want to use Analytics
 use_analytics = bool(env.get_credential('FEC_WEB_GOOGLE_ANALYTICS'))
 
+# used to include ethnio screener script
+# set to a non-empty string in your environment if you want to use Screener
+use_screener = bool(env.get_credential('FEC_ETHNIO_SCREENER'))
+
 github_token = env.get_credential('FEC_GITHUB_TOKEN')
 
 hmac_secret = env.get_credential('HMAC_SECRET')
