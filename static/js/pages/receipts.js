@@ -5,6 +5,7 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var columns = require('../modules/columns');
+var filtersEvent = require('../modules/filters-event');
 
 var donationTemplate = require('../../templates/receipts.hbs');
 
@@ -39,4 +40,6 @@ $(document).ready(function() {
       paginator: tables.SeekPaginator
     }
   }).init();
+
+  filtersEvent.hideLineNumbers();
 });
