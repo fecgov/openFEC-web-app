@@ -326,6 +326,10 @@ var filings = {
       return parsed.isValid() ? parsed.format('MM/DD/YYYY') : 'Invalid date';
     }
   },
+  beginning_image_number: {
+    data: 'beginning_image_number',
+    orderable: false
+  },
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--small', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--small', orderable: false}),
   total_receipts: currencyColumn({data: 'total_receipts', className: 'min-desktop hide-panel column--number'}),
