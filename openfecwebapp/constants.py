@@ -252,91 +252,93 @@ table_columns = OrderedDict([
     ('reports-ie-only', ['Filer', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
 ])
 
-receipts_house_senate_line_numbers = OrderedDict([
-    ('F3-11AI', 'Contributions from individuals (line 11ai)'),
-    ('F3-11B', 'Contributions from political party committees (line 11b'),
-    ('F3-11C', 'Contributions from other political committees (line 11c)'),
-    ('F3-11D', 'Contributions from the candidate (line 11d)'),
-    ('F3-12', ' Transfers from authorized committees (line 12)'),
-    ('F3-13A', 'Loans received from the candidate (line 13a)'),
-    ('F3-13B', 'All other loans (line 13b)'),
-    ('F3-14', ' Offsets to operating expenditures (line 14)'),
-    ('F3-15', ' Other receipts (line 15)'),
-])
+line_numbers = {
+    'receipts': {
+        'house_senate': OrderedDict([
+            ('F3-11AI', 'Contributions from individuals (line 11ai)'),
+            ('F3-11B', 'Contributions from political party committees (line 11b'),
+            ('F3-11C', 'Contributions from other political committees (line 11c)'),
+            ('F3-11D', 'Contributions from the candidate (line 11d)'),
+            ('F3-12', ' Transfers from authorized committees (line 12)'),
+            ('F3-13A', 'Loans received from the candidate (line 13a)'),
+            ('F3-13B', 'All other loans (line 13b)'),
+            ('F3-14', ' Offsets to operating expenditures (line 14)'),
+            ('F3-15', ' Other receipts (line 15)'),
+        ]),
+        'presidential': OrderedDict([
+            ('F3P-16', 'Federal funds (line 16)'),
+            ('F3P-17A', 'Contributions from individuals (line 17a)'),
+            ('F3P-17B', 'Contributions from political party committees (line 17b)'),
+            ('F3P-17C', 'Contributions from other political committees (line 17c)'),
+            ('F3P-17D', 'Contributions from the candidate (line 17d)'),
+            ('F3P-18', 'Transfers from other authorized committees (line 18)'),
+            ('F3P-19A', 'Loans received from candidate (line 19a)'),
+            ('F3P-19B', 'Other loans (line 19b)'),
+            ('F3P-20A', 'Offsets to operating expenditures - operating (line 20a)'),
+            ('F3P-20B', 'Offsets to operating expenditures - fundraising (line 20b)'),
+            ('F3P-20C', 'Offsets to operating expenditures - legal and accounting (line 20c)'),
+            ('F3P-21', 'Other receipts (line 21)'),
+        ]),
+        'pac_party': OrderedDict([
+            ('F3X-11AI', 'Contributions from individuals (line 11ai)'),
+            ('F3X-11B', 'Contributions from political party committees (line 11b)'),
+            ('F3X-11C', 'Contributions from other political committees (line 11c)'),
+            ('F3X-11D', 'Contributions from the candidate (line 11d'),
+            ('F3X-12', 'Transfers from authorized committees (line 12)'),
+            ('F3X-13', 'Loans received (line 13)'),
+            ('F3X-14', 'Loan repayments received (line 14)'),
+            ('F3X-15', 'Offets to operating expenditures (line 15)'),
+            ('F3X-16', 'Refunds of contributions made to federal candidates and other political committees (line 16)'),
+            ('F3X-17', 'Other federal receipts (line 17)'),
+            ('F3X-SL1A', 'Transfers from non-federal account (line 18a)'),
+            ('F3X-SL2', 'Transfers from levin funds (line 18b)'),
+        ])
+    },
+    'disbursements': {
+        'house_senate': OrderedDict([
+            ('F3-17', 'Operating expenditures (line 17)'),
+            ('F3-18', 'Transfers to other authorized committees (line 18)'),
+            ('F3-19', 'Loan repayments (line 19)'),
+            ('F3-19A', 'Loan repayments of loans made or guaranteed by the candidate (line 19a'),
+            ('F3-19B', 'Loan repayments of all other loans (line 19b)'),
+            ('F3-20A', 'Refunds of contributions to individuals (line 20a)'),
+            ('F3-20B', 'Refunds of contributions to political party committees (line 20b)'),
+            ('F3-20C', 'Refunds of contributions to other political committees (line 20c)'),
+            ('F3-21', 'Other disbursements (line 21)'),
+        ]),
+        'presidential': OrderedDict([
+            ('F3P-23', 'Operating expenditures (line 23)'),
+            ('F3P-24', 'Transfers to other authorized committees (line 24)'),
+            ('F3P-25', 'Fundraising disbursements (line 25)'),
+            ('F3P-26', 'Exempt legal and accounting disbursements (line 26)'),
+            ('F3P-27A', 'Repayments of loans made or guaranteed by candidate (line 27a)'),
+            ('F3P-27B', 'Other loan repayments (line 27b)'),
+            ('F3P-28A', 'Refunds of contributions to individuals (line 28a)'),
+            ('F3P-28B', 'Refunds of contributions to political party committees (line 28b)'),
+            ('F3P-28C', 'Refunds of contributions to other political committees (line 28c)'),
+            ('F3P-29', 'Other disbursements (line 29)'),
+        ]),
+        'pac_party': OrderedDict([
+            ('F3X-21', 'Operating expenditures (line 21)'),
+            ('F3X-21B', 'Other federal operating expenditures (line 21b)'),
+            ('F3X-22', 'Transfers to affiliated/other party committees (line 22)'),
+            ('F3X-23', 'Contributions to federal candidates/committees and other political committees (line 23)'),
+            ('F3X-24', 'Independent expenditures (line 24)'),
+            ('F3X-25', 'Coordinated party expenditures (line 25)'),
+            ('F3X-26', 'Loan repayments made (line 26)'),
+            ('F3X-27', 'Loans made (line 27)'),
+            ('F3X-28A', 'Refunds of Contributions Made to Individuals/Persons Other Than Political Committees'),
+            ('F3X-28B', 'Refunds of contributions to political party committees (line 28b)'),
+            ('F3X-28C', 'Refunds of contributions to other political committees (line 28c)'),
+            ('F3X-28D', 'Total contributions refunds (line 28d)'),
+            ('F3X-29', 'Other disbursements (line 29)'),
+            ('F3X-30', 'Federal election activity (line 30)'),
+            ('F3X-30A', 'Allocated federal election activity (line 30a)'),
+            ('F3X-30B', 'Federal election activity paid entirely with federal funds (line 30b)'),
+        ])
+    }
+}
 
-receipts_presidential_line_numbers = OrderedDict([
-    ('F3P-16', 'Federal funds (line 16)'),
-    ('F3P-17A', 'Contributions from individuals (line 17a)'),
-    ('F3P-17B', 'Contributions from political party committees (line 17b)'),
-    ('F3P-17C', 'Contributions from other political committees (line 17c)'),
-    ('F3P-17D', 'Contributions from the candidate (line 17d)'),
-    ('F3P-18', 'Transfers from other authorized committees (line 18)'),
-    ('F3P-19A', 'Loans received from candidate (line 19a)'),
-    ('F3P-19B', 'Other loans (line 19b)'),
-    ('F3P-20A', 'Offsets to operating expenditures - operating (line 20a)'),
-    ('F3P-20B', 'Offsets to operating expenditures - fundraising (line 20b)'),
-    ('F3P-20C', 'Offsets to operating expenditures - legal and accounting (line 20c)'),
-    ('F3P-21', 'Other receipts (line 21)'),
-])
-
-receipts_pac_party_line_numbers = OrderedDict([
-    ('F3X-11AI', 'Contributions from individuals (line 11ai)'),
-    ('F3X-11B', 'Contributions from political party committees (line 11b)'),
-    ('F3X-11C', 'Contributions from other political committees (line 11c)'),
-    ('F3X-11D', 'Contributions from the candidate (line 11d'),
-    ('F3X-12', 'Transfers from authorized committees (line 12)'),
-    ('F3X-13', 'Loans received (line 13)'),
-    ('F3X-14', 'Loan repayments received (line 14)'),
-    ('F3X-15', 'Offets to operating expenditures (line 15)'),
-    ('F3X-16', 'Refunds of contributions made to federal candidates and other political committees (line 16)'),
-    ('F3X-17', 'Other federal receipts (line 17)'),
-    ('F3X-SL1A', 'Transfers from non-federal account (line 18a)'),
-    ('F3X-SL2', 'Transfers from levin funds (line 18b)'),
-])
-
-disbursements_house_senate_line_numbers = OrderedDict([
-    ('F3-17', 'Operating expenditures (line 17)'),
-    ('F3-18', 'Transfers to other authorized committees (line 18)'),
-    ('F3-19', 'Loan repayments (line 19)'),
-    ('F3-19A', 'Loan repayments of loans made or guaranteed by the candidate (line 19a'),
-    ('F3-19B', 'Loan repayments of all other loans (line 19b)'),
-    ('F3-20A', 'Refunds of contributions to individuals (line 20a)'),
-    ('F3-20B', 'Refunds of contributions to political party committees (line 20b)'),
-    ('F3-20C', 'Refunds of contributions to other political committees (line 20c)'),
-    ('F3-21', 'Other disbursements (line 21)'),
-])
-
-disbursements_presidential_line_numbers = OrderedDict([
-    ('F3P-23', 'Operating expenditures (line 23)'),
-    ('F3P-24', 'Transfers to other authorized committees (line 24)'),
-    ('F3P-25', 'Fundraising disbursements (line 25)'),
-    ('F3P-26', 'Exempt legal and accounting disbursements (line 26)'),
-    ('F3P-27A', 'Repayments of loans made or guaranteed by candidate (line 27a)'),
-    ('F3P-27B', 'Other loan repayments (line 27b)'),
-    ('F3P-28A', 'Refunds of contributions to individuals (line 28a)'),
-    ('F3P-28B', 'Refunds of contributions to political party committees (line 28b)'),
-    ('F3P-28C', 'Refunds of contributions to other political committees (line 28c)'),
-    ('F3P-29', 'Other disbursements (line 29)'),
-])
-
-disbursements_pac_party_line_numbers = OrderedDict([
-    ('F3X-21', 'Operating expenditures (line 21)'),
-    ('F3X-21B', 'Other federal operating expenditures (line 21b)'),
-    ('F3X-22', 'Transfers to affiliated/other party committees (line 22)'),
-    ('F3X-23', 'Contributions to federal candidates/committees and other political committees (line 23)'),
-    ('F3X-24', 'Independent expenditures (line 24)'),
-    ('F3X-25', 'Coordinated party expenditures (line 25)'),
-    ('F3X-26', 'Loan repayments made (line 26)'),
-    ('F3X-27', 'Loans made (line 27)'),
-    ('F3X-28A', 'Refunds of Contributions Made to Individuals/Persons Other Than Political Committees'),
-    ('F3X-28B', 'Refunds of contributions to political party committees (line 28b)'),
-    ('F3X-28C', 'Refunds of contributions to other political committees (line 28c)'),
-    ('F3X-28D', 'Total contributions refunds (line 28d)'),
-    ('F3X-29', 'Other disbursements (line 29)'),
-    ('F3X-30', 'Federal election activity (line 30)'),
-    ('F3X-30A', 'Allocated federal election activity (line 30a)'),
-    ('F3X-30B', 'Federal election activity paid entirely with federal funds (line 30b)'),
-])
 
 # RAISING_FORMATTER, SPENDING_FORMATTER, CASH_FORMATTER, IE_FORMATTER
 # These are used to format the display of financial summary data on committee pages

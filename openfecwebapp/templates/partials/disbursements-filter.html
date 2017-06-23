@@ -39,14 +39,12 @@ Filter disbursements
   <div class="accordion__content">
     {{ text.field('disbursement_description', 'Description') }}
     {{ range.amount('amount', 'Disbursement amount') }}
-
-    <div class="disbursement-type u-margin--top">
+    <div class="js-line-number-filters u-margin--top">
       <legend class="label">Disbursement type</legend>
-      {{ checkbox.checkbox_dropdown('line_number', 'Made by House or Senate committees', options=constants.disbursements_house_senate_line_numbers, legend=False) }}
-      {{ checkbox.checkbox_dropdown('line_number', 'Made by Presidential committees',options=constants.disbursements_presidential_line_numbers, legend=False) }}
-      {{ checkbox.checkbox_dropdown('line_number', 'Made by PACs or party committees',options=constants.disbursements_pac_party_line_numbers, legend=False) }}
+      {{ checkbox.checkbox_dropdown('line_number', 'Made by House or Senate committees', options=constants.line_numbers.disbursements.house_senate, legend=False) }}
+      {{ checkbox.checkbox_dropdown('line_number', 'Made by Presidential committees',options=constants.line_numbers.disbursements.presidential, legend=False) }}
+      {{ checkbox.checkbox_dropdown('line_number', 'Made by PACs or party committees',options=constants.line_numbers.disbursements.pac_party, legend=False) }}
     </div>
-
     {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Disbursements are reported periodically, according to the filer's reporting schedule. Disbursements are updated as they’re processed— that time can vary.</span>
