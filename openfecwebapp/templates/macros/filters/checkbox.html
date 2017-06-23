@@ -22,30 +22,30 @@
 </div>
 {% endmacro %}
 
-{% macro checkbox_dropdown(name, label, selected={}, options={}, legend=True, prefix='') %}
+{% macro checkbox_dropdown(name, label, selected={}, options={}) %}
 <div class="filter">
   <fieldset class="js-dropdown js-filter" data-filter="checkbox">
-    {% if legend %}
-    <legend class="label" for="{{ name }}">{{ label }}</legend>
-    {% else %}
     <label for="{{ name }}">{{ label }}</label>
-    {% endif %}
-    {{ checkbox_list(name, selected, prefix, css_class='dropdown__selected') }}
+    {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
     {% if options %}
-    {{ checkbox_options(name, options, prefix) }}
+    {{ checkbox_options(name, options) }}
     {% endif %}
   </fieldset>
 </div>
 {% endmacro %}
 
 <!-- Used when there are multiple dropdowns within a single filter -->
-{% macro checkbox_dropdown_multiple(name, label, selected={}, options={}) %}
+{% macro checkbox_dropdown_multiple(name, label, selected={}, options={}, legend=True, prefix='') %}
 <div class="filter" data-filter="checkbox">
   <div class="js-dropdown">
+    {% if legend %}
     <span class="label" for="{{ name }}">{{ label }}</span>
-    {{ checkbox_list(name, selected, css_class='dropdown__selected') }}
+    {% else %}
+    <label for="{{ name }}">{{ label }}</label>
+    {% endif %}
+    {{ checkbox_list(name, selected, prefix, css_class='dropdown__selected') }}
     {% if options %}
-    {{ checkbox_options(name, options) }}
+    {{ checkbox_options(name, options, prefix) }}
     {% endif %}
   </div>
 </div>
