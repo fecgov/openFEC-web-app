@@ -6,16 +6,16 @@ var _ = require('underscore');
 var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 var URI = require('urijs');
 
-function hideLineNumbers() {
+function lineNumberFilters() {
   this.filterPanel = new FilterPanel();
   this.filterSet = this.filterPanel.filterSet;
 
-  lineNumberFilterCheck();
+  lineNumberFiltersCheck();
 
-  this.filterSet.$body.on('change', 'input,select', _.debounce(lineNumberFilterCheck, 250));
+  this.filterSet.$body.on('change', 'input,select', _.debounce(lineNumberFiltersCheck, 250));
 }
 
-function lineNumberFilterCheck() {
+function lineNumberFiltersCheck() {
   var params = URI.parseQuery(window.location.search);
 
   if (Number(params.two_year_transaction_period) < 2007) {
@@ -29,5 +29,5 @@ function lineNumberFilterCheck() {
 }
 
 module.exports = {
-  hideLineNumbers: hideLineNumbers
+  lineNumberFilters: lineNumberFilters
 };

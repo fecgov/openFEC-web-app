@@ -43,5 +43,5 @@ $(document).ready(function() {
     }
   }).init();
 
-  filtersEvent.hideLineNumbers();
+  filtersEvent.lineNumberFilters();
 });
