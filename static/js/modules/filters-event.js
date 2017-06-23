@@ -3,16 +3,10 @@
 var $ = require('jquery');
 var _ = require('underscore');
 
-var FilterPanel = require('fec-style/js/filter-panel').FilterPanel;
 var URI = require('urijs');
 
 function lineNumberFilters() {
-  this.filterPanel = new FilterPanel();
-  this.filterSet = this.filterPanel.filterSet;
-
-  lineNumberFiltersCheck();
-
-  this.filterSet.$body.on('change', 'input,select', _.debounce(lineNumberFiltersCheck, 250));
+  $('#filters').on('change', 'input,select', _.debounce(lineNumberFiltersCheck, 250));
 }
 
 function lineNumberFiltersCheck() {
