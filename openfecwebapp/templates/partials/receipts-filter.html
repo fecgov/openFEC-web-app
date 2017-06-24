@@ -6,6 +6,7 @@
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/date.html' as date %}
 {% import 'macros/filters/range.html' as range %}
+{% import 'macros/filters/checkbox.html' as checkbox %}
 
 {% block heading %}
 Filter receipts
@@ -33,31 +34,25 @@ Filter receipts
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <button type="button" class="js-accordion-trigger accordion__button">Contributor details</button>
   <div class="accordion__content">
-    <div class="filter">
-      <fieldset class="js-filter js-filter-control" data-filter="checkbox" data-modifies-filter="contributor_name" data-modifies-property="dataset">
-        <legend class="label">Received from</legend>
-        <ul>
-          <li>
-            <input id="contributor-type-individual" name="contributor_type" type="checkbox" value="individual">
-            <label for="contributor-type-individual">Individuals</label>
-          </li>
-          <li>
-            <input id="contributor-type-committee" name="contributor_type" type="checkbox" value="committee">
-            <label for="contributor-type-committee">Committees</label>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
-    {% include 'partials/filters/unique-receipts.html' %}
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
     {{ text.field('contributor_zip', 'ZIP code')}}
     {{ text.field('contributor_employer', 'Employer') }}
     {{ text.field('contributor_occupation', 'Occupation') }}
+    {% include 'partials/filters/unique-receipts.html' %}
   </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Transaction details</button>
+  <button type="button" class="js-accordion-trigger accordion__button">Receipt details</button>
   <div class="accordion__content">
-    {{ range.amount('amount', 'Contribution amount') }}
+    {{ range.amount('amount', 'Receipt amount') }}
+    <legend class="label  u-margin--top">Receipt type</legend>
+    <fieldset class="js-filter js-line-number-filters" data-filter="checkbox">
+      {{ checkbox.checkbox_dropdown_multiple('line_number', 'Received by House or Senate committees', options=constants.line_numbers.receipts.house_senate, legend=False, prefix='House or Senate committees:') }}
+      {{ checkbox.checkbox_dropdown_multiple('line_number', 'Received by Presidential committees', options=constants.line_numbers.receipts.presidential, legend=False, prefix='Presidential committees:') }}
+      {{ checkbox.checkbox_dropdown_multiple('line_number', 'Received by PACs or party committees', options=constants.line_numbers.receipts.pac_party, legend=False, prefix='PACs or party committees:') }}
+    </fieldset>
+    <div class="js-line-number-message message message--info message--small">
+      <span class="t-block">Filters for receipt types are available only for filings from 2007 or later.</span>
+    </div>
     {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Receipts updated according to the filer's schedule. Processing time can vary.</span>
