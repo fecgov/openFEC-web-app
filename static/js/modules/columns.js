@@ -299,6 +299,7 @@ var filings = {
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
+      var html_url = row.html_url ? row.html_url : null;
 
       // If it's a Form 3L we should append that to the doc title
       if (row.form_type == 'F3L') {
@@ -310,7 +311,8 @@ var filings = {
         amendment_version: amendment_version,
         fec_url: fec_url,
         pdf_url: pdf_url,
-        csv_url: csv_url
+        csv_url: csv_url,
+        html_url: html_url
       });
     }
   },
@@ -328,7 +330,8 @@ var filings = {
   },
   beginning_image_number: {
     data: 'beginning_image_number',
-    orderable: false
+    orderable: false,
+    className: 'min-tablet hide-panel'
   },
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--small', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--small', orderable: false}),
@@ -537,13 +540,15 @@ var reports = {
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
+      var html_url = row.html_url ? row.html_url : null;
 
       return reportType({
         doc_description: doc_description,
         amendment_version: amendment_version,
         pdf_url: pdf_url,
         fec_url: fec_url,
-        csv_url: csv_url
+        csv_url: csv_url,
+        html_url: html_url
       });
     }
   },
