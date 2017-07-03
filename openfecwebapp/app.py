@@ -40,7 +40,7 @@ def get_absolute_url():
 
 def get_canonical_url():
     path = furl.furl(request.url).path
-    return '{}/data{}'.format(config.canonical_base, path)
+    return '{}{}'.format(config.canonical_base, path)
 
 
 def _get_default_cycles():
@@ -140,13 +140,14 @@ app.jinja_env.globals.update({
     'context': filters.get_context,
     'absolute_url': get_absolute_url,
     'canonical_url': get_canonical_url,
-    'contact_email': 'betafeedback@fec.gov',
+    'contact_email': 'webmanager@fec.gov',
     'default_cycles': _get_default_cycles(),
     'series_has_data': series_has_data,
     'group_has_data': group_has_data,
     'series_group_has_data': series_group_has_data,
     'cycle_start': cycle_start,
     'cycle_end': cycle_end,
+    'two_days_ago': utils.two_days_ago(),
     'election_url': get_election_url,
     'constants': constants,
     'cycles': utils.get_cycles(),

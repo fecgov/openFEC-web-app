@@ -102,7 +102,7 @@
             <h2>Raising</h2>
             <div class="post-feed">
               <div class="post">
-                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('receipts', is_individual=True) }}">All receipts</a></h3>
+                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('receipts') }}">All receipts</a></h3>
                 <p>Receipts are anything of value, like money, services or property. Search candidate and committee receipt data by contributor, amount and date.</p>
               </div>
               <div class="post post--child">
@@ -152,7 +152,7 @@
             <h2>Loans and debts</h2>
             <div class="post-feed">
               <div class="post">
-                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('loans', is_individual=True) }}">Loans</a></h3>
+                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('loans') }}">Loans</a></h3>
               </div>
               <div class="post">
                 <h3 class="is-disabled"><i class="icon i-all-files icon--inline--left"></i>Debts (coming soon)</h3>
@@ -163,7 +163,7 @@
             <h2>Candidates</h2>
             <div class="post-feed">
               <div class="post">
-                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('candidates', election_year=default_cycles, has_raised_funds='true') }}">All candidates</a></h3>
+                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('candidates', has_raised_funds='true') }}">All candidates</a></h3>
                 <p>Search candidates for president, Senate and House for all years by location, party and more.</p>
               </div>
               <div class="post post--child">
@@ -187,7 +187,7 @@
               <div class="icon-heading grid__item">
                 <i class="icon-heading__image icon-circle--checklist"><span class="u-visually-hidden">Icon of a checklist</span></i>
                 <div class="icon-heading__content">
-                  <a href="{{ cms_url }}/registration-and-reporting/essentials-house-and-senate-candidates-and-committees/">Help for candidates and their committees</a>
+                  <a href="{{ cms_url }}/help-candidates-and-committees#candidates-and-their-authorized-committees">Help for candidates and their committees</a>
                 </div>
               </div>
             </div>
@@ -197,7 +197,7 @@
             <p>The term <span class="term" data-term="political committee">committee</span> encompasses several different political groups that receive and spend money in federal elections.</p>
             <div class="post-feed">
               <div class="post">
-                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('committees', election_year=default_cycles) }}">All committees</a></h3>
+                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('committees') }}">All committees</a></h3>
                 <p>Search for committees by type, years active, political party, location and treasurer.</p>
               </div>
               <div class="post">
@@ -206,13 +206,13 @@
               </div>
               <div class="post">
                 <h3><a href="{{ url_for('filings', form_type='RFAI') }}">Requests for Additional Information sent to committees</a></h3>
-                <p>Requests for Additional Information (RFAIs) are sent to committees when a Campaign Finance Analyst needs additional clarification on a committee’s filing or identifies an error, omission or possible prohibited activity. Search RFAIs by committee or date.</p>
+                <p>Requests for Additional Information (RFAIs) are sent to committees when a Campaign Finance Analyst needs additional clarification on a committee's filing or identifies an error, omission or possible prohibited activity. Search RFAIs by committee or date.</p>
               </div>
             </div>
             <div class="content__section--extra" data-content-prefix="pacronym">
               <h3>PACronyms</h3>
               <p>PACronyms, an alphabetical list of acronyms, abbreviations, initials and common names of federal political action committees (PACs), was prepared to help researchers readily identify committees when their full names are not disclosed on campaign finance reports.</p>
-              <p>The list includes the PACronym, FEC ID number, full committee name, city and state, name of sponsoring, connected, or affiliated organization, committee designation and committee type.  Unless noted otherwise in the full committee name, the acronym “PAC” refers to “political action committee.”  The PACronym is listed in italics if the committee's PACronym is not specifically provided on the committee's Statement of Organization (FEC Form 1).</p>
+              <p>The list includes the PACronym, FEC ID number, full committee name, city and state, name of sponsoring, connected, or affiliated organization, committee designation and committee type.  Unless noted otherwise in the full committee name, the acronym "PAC" refers to "political action committee."  The PACronym is listed in italics if the committee's PACronym is not specifically provided on the committee's Statement of Organization (FEC Form 1).</p>
               <ul class="list--buttons">
                 <li>
                   <a class="button button--standard button--document" href="http://www.fec.gov/pubrec/pacronyms/Pacronyms.pdf">Open PDF</a>
@@ -229,16 +229,16 @@
                   <h4>More information about:</h4>
                   <div class="grid grid--2-wide">
                     <div class="grid__item">
-                      <a href="{{ cms_url }}/registration-and-reporting/essentials-nonconnected-committees/">Candidates and their committees</a>
+                      <a href="{{ cms_url }}/help-candidates-and-committees#candidates-and-their-authorized-committees">Candidates and their committees</a>
                     </div>
                     <div class="grid__item">
-                      <a href="{{ cms_url }}/registration-and-reporting/essentials-nonconnected-committees/">Nonconnected committees</a>
+                      <a href="{{ cms_url }}/help-candidates-and-committees#political-action-committees-pacs">Nonconnected committees</a>
                     </div>
                     <div class="grid__item">
-                      <a href="{{ cms_url }}/registration-and-reporting/essentials-political-party-committees/">Political party committees</a>
+                      <a href="{{ cms_url }}/help-candidates-and-committees#political-party-committees">Political party committees</a>
                     </div>
                     <div class="grid__item">
-                      <a href="{{ cms_url }}/registration-and-reporting/">Corporations and labor organizations</a>
+                      <a href="{{ cms_url }}/help-candidates-and-committees#corporations-and-labor-organizations">Corporations and labor organizations</a>
                     </div>
                   </div>
                 </div>
@@ -250,7 +250,7 @@
             <p>Filings contain all the statements, reports and notices that candidates and committees file. Search by date, type and filing candidate or committee.</p>
             <div class="post-feed">
               <div class="post">
-                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('filings') }}">All filings</span></h3>
+                <h3><i class="icon i-all-files icon--inline--left"></i><a href="{{ url_for('filings') }}">All filings</a></h3>
               </div>
               <div class="post post--child">
                 <h4><a href="{{ url_for('reports', form_type='presidential', is_amended='false') }}">Presidential committee reports</a></h4>
@@ -306,11 +306,11 @@
                 <div class="post">
                   <h4>Presidential campaign matching fund submissions</h4>
                   <p>
-                    <a href="{{ transition_url }}/finance/disclosure/2016MatchingFundSubmissions.shtml">2016</a> |
-                    <a href="{{ transition_url }}/finance/2012matching/2012matching.shtml">2012</a> |
-                    <a href="{{ transition_url }}/finance/2008matching/2008matching.shtml">2008</a> |
-                    <a href="{{ transition_url }}/finance/disclosure/2004MatchingFundSubmissions.shtml">2004</a> |
-                    <a href="{{ transition_url }}/finance/disclosure/submiss.shtml">2000</a>
+                    <a href="{{ classic_url }}/finance/disclosure/2016MatchingFundSubmissions.shtml">2016</a> |
+                    <a href="{{ classic_url }}/finance/2012matching/2012matching.shtml">2012</a> |
+                    <a href="{{ classic_url }}/finance/2008matching/2008matching.shtml">2008</a> |
+                    <a href="{{ classic_url }}/finance/disclosure/2004MatchingFundSubmissions.shtml">2004</a> |
+                    <a href="{{ classic_url }}/finance/disclosure/submiss.shtml">2000</a>
                   </p>
                   <p>You will find here the threshold files for Presidential candidates seeking matching funds.</p>
                   <p>In addition to regular quarterly or monthly disclosure reports, presidential candidates who seek matching funds must submit information about "matchable" contributions to the FEC for review. Contributions from individuals where the aggregate amount contributed by the individual is $250 or less are eligible to be matched on a dollar for dollar basis from the Presidential Election Campaign Fund. This Fund includes proceeds from the voluntary check-off of $3 per person from income tax returns of eligible taxpayers.</p>

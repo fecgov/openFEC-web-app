@@ -51,7 +51,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for document in advisory_opinion.documents %}
+              {% for document in advisory_opinion.sorted_documents %}
                 <tr>
                   <td>{{ document.date | ao_document_date }}</td>
                   <td><a href="{{ document.url }}">{{ document.description }}</a></td>

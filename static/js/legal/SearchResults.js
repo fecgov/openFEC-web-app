@@ -30,13 +30,7 @@ function SearchResults(props) {
           </div>
   } else {
     if(props.advisory_opinions && props.advisory_opinions.length > 0) {
-      return <div>
-        <div className="message message--info">
-          <h3>This feature is still in progress</h3>
-          <p>We&#39;re actively building the <strong>advisory opinion search</strong>, and it doesn&#39;t yet include some
-          advanced search functions. If you can&#39;t find what you&#39;re looking for, you can still <a href="http://saos.fec.gov/saos/searchao">search
-          opinions on the old fec.gov</a>.</p>
-        </div>
+      return <div className="data-container__datatable">
         <table className="simple-table simple-table--display">
           <thead className="simple-table__header">
             <tr>
@@ -46,8 +40,9 @@ function SearchResults(props) {
               <th scope="col" className="simple-table__header-cell">This opinion is cited by these later opinions</th>
             </tr>
           </thead>
+          <tbody>
             { props.advisory_opinions.map((advisory_opinion) => {
-              return <tbody key={"CASE " + advisory_opinion.no} className="simple-table__row"><tr>
+              return <tr key={"CASE " + advisory_opinion.no} className="simple-table__row">
                 <td scope="row" className="simple-table__cell"><div><i className="icon i-folder icon--inline--left"></i><strong>
                 <a href={advisoryOpinionLink(advisory_opinion.no)}>AO {advisory_opinion.no}</a></strong></div>
                     <div><a href={advisoryOpinionLink(advisory_opinion.no)}>{advisory_opinion.name}</a></div>
@@ -64,8 +59,8 @@ function SearchResults(props) {
               {advisory_opinion.highlights.length > 0 && <tr><td scope="row" className="simple-table__cell">Keyword matches in documents</td>
                 <td colSpan="3" className="t-serif legal-search-result__hit u-padding--top simple-table__cell"
                 dangerouslySetInnerHTML={ highlights(advisory_opinion) }></td></tr>}
-              </tbody>
             }) }
+          </tbody>
         </table>
         </div>
     } else {

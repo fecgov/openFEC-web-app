@@ -4,6 +4,7 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
+var URI = require('urijs');
 
 var maps = require('../modules/maps');
 var mapsEvent = require('../modules/maps-event');
@@ -13,6 +14,7 @@ var helpers = require('../modules/helpers');
 var columnHelpers = require('../modules/column-helpers');
 var columns = require('../modules/columns');
 var dropdown = require('fec-style/js/dropdowns');
+var events = require('fec-style/js/events');
 
 var tableOpts = {
   dom: tables.simpleDOM,
@@ -279,6 +281,10 @@ var aggregateCallbacks = {
 };
 
 // Settings for filings tables
+var rawFilingsColumns = columnHelpers.getColumns(
+  columns.filings,
+  ['document_type', 'coverage_start_date', 'coverage_end_date', 'receipt_date']
+);
 
 var filingsColumns = columnHelpers.getColumns(
   columns.filings,
@@ -287,7 +293,7 @@ var filingsColumns = columnHelpers.getColumns(
 
 var filingsReportsColumns = columnHelpers.getColumns(
   columns.filings,
-  ['document_type', 'version', 'receipt_date', 'pages', 'modal_trigger']
+  ['document_type', 'version', 'coverage_start_date', 'coverage_end_date', 'receipt_date_unorderable', 'pages', 'modal_trigger']
 );
 
 $(document).ready(function() {
@@ -413,6 +419,8 @@ $(document).ready(function() {
             columns: individualContributionsColumns,
             callbacks: aggregateCallbacks,
             order: [[2, 'desc']],
+            useExport: true,
+            singleEntityItemizedExport: true,
             hideEmptyOpts: {
               dataType: 'individual contributions',
               name: context.name,
@@ -454,6 +462,8 @@ $(document).ready(function() {
             columns: itemizedDisbursementColumns,
             callbacks: aggregateCallbacks,
             order: [[3, 'desc']],
+            useExport: true,
+            singleEntityItemizedExport: true,
             hideEmptyOpts: {
               dataType: 'disbursements to committees',
               name: context.name,
@@ -534,9 +544,27 @@ $(document).ready(function() {
           },
         });
         break;
+      case 'raw-filings':
+        var min_date = $table.attr('data-min-date');
+        opts = _.extend({
+          columns: rawFilingsColumns,
+          order: [[1, 'desc']],
+          path: ['efile', 'filings'],
+          query: _.extend({
+            committee_id: committeeId,
+            min_receipt_date: min_date,
+            sort: ['-receipt_date']
+          }, query),
+          callbacks: {
+            afterRender: filings.renderModal
+          }
+        }, filingsOpts);
+        tables.DataTable.defer($table, opts);
+        break;
       case 'filings-reports':
         opts = _.extend({
           columns: filingsReportsColumns,
+          order: [],
           path: ['committee', committeeId, 'filings'],
           query: _.extend({
             form_type: ['F3', 'F3X', 'F3P', 'F3L', 'F4', 'F7', 'F13', 'RFAI'],
@@ -594,9 +622,22 @@ $(document).ready(function() {
     }
   );
 
-  $.getJSON(mapUrl).done(function(data) {
-    maps.stateMap($map, data, 400, 300, null, null, true, true);
-  });
+  var query = URI.parseQuery(window.location.search);
+
+  // If we're on the raising tab, load the state map
+  if (query.tab === 'raising') {
+    $.getJSON(mapUrl).done(function(data) {
+      maps.stateMap($map, data, 400, 300, null, null, true, true);
+    });
+  } else {
+    // Add an event listener that only fires once on showing the raising tab
+    // in order to not make this API call unless its necessary
+    events.once('tabs.show.raising', function() {
+      $.getJSON(mapUrl).done(function(data) {
+        maps.stateMap($map, data, 400, 300, null, null, true, true);
+      });
+    });
+  }
 
   mapsEvent.init($map, $mapTable);
 });

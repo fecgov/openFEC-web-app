@@ -16,6 +16,7 @@ var analytics = require('fec-style/js/analytics');
 
 var helpers = require('./helpers');
 var utils = require('./election-utils');
+var decoders = require('./decoders');
 
 var states = require('../data/us-states-10m.json');
 var districts = require('../data/stateDistricts.json');
@@ -53,7 +54,7 @@ function formatResult(result, lookup) {
 }
 
 function formatName(result) {
-  var parts = [result.state, officeMap[result.office]];
+  var parts = [decoders.states[result.state], officeMap[result.office]];
   if (result.district && result.district !== '00') {
     parts = parts.concat('District ' + result.district.toString());
   }
@@ -323,6 +324,12 @@ ElectionLookup.prototype.draw = function(results) {
     this.$resultsTitle.text('');
     this.$resultsItems.html(noResultsTemplate(this.serialized));
   }
+
+  if (Number(this.$cycle.val()) < window.DISTRICT_MAP_CUTOFF) {
+    this.map.hide();
+  } else {
+    this.map.show();
+  }
 };
 
 ElectionLookup.prototype.drawResult = function(result) {
@@ -388,7 +395,7 @@ ElectionLookup.prototype.getTitle = function() {
   if (params.zip) {
     title += ' in ZIP code ' + params.zip;
   } else {
-    title += ' in ' + params.state;
+    title += ' in ' + decoders.states[params.state];
     if (params.district && params.district !== '00') {
        title += ', district ' + params.district;
     }
@@ -437,6 +444,7 @@ function ElectionLookupMap(elm, opts) {
   this.opts = _.extend({}, defaultOpts, opts);
   this.statePalette = getStatePalette(this.opts.colorScale);
   this.districtPalette = getDistrictPalette(this.opts.colorScale);
+  this.mapMessage = document.querySelector('.js-map-message');
   this.init();
 }
 
@@ -565,6 +573,16 @@ ElectionLookupMap.prototype.handleReset = function(e) {
   } else if (!this.districts) {
     this.drawDistricts();
   }
+};
+
+ElectionLookupMap.prototype.hide = function() {
+  this.elm.setAttribute('aria-hidden', 'true');
+  this.mapMessage.setAttribute('aria-hidden', 'false');
+};
+
+ElectionLookupMap.prototype.show = function() {
+  this.elm.setAttribute('aria-hidden', 'false');
+  this.mapMessage.setAttribute('aria-hidden', 'true');
 };
 
 module.exports = {

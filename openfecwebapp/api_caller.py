@@ -1,3 +1,4 @@
+from operator import itemgetter
 import os
 from urllib import parse
 import re
@@ -50,43 +51,16 @@ def load_search_results(query, query_type=None):
             'committees': committees if len(committees) else [],
         }
 
-def load_legal_search_results(query, query_type='all', ao_no=None,
-                              ao_name=None, ao_min_date=None,
-                              ao_max_date=None, ao_is_pending=None,
-                              ao_requestor=None, ao_requestor_type=0,
-                              ao_category=None, offset=0, limit=20):
-    filters = {}
-    if query or query_type == 'advisory_opinions':
+def load_legal_search_results(query, query_type='all', offset=0, limit=20, **kwargs):
+    filters = dict((key, value) for key, value in kwargs.items() if value)
+
+    if query or query_type in ['advisory_opinions', 'murs']:
         filters['hits_returned'] = limit
         filters['type'] = query_type
         filters['from_hit'] = offset
 
         if query:
             filters['q'] = query
-
-        if ao_no and ao_no[0]:
-            filters['ao_no'] = ao_no
-
-        if ao_name and ao_name[0]:
-            filters['ao_name'] = ao_name
-
-        if ao_min_date:
-            filters['ao_min_date'] = ao_min_date
-
-        if ao_max_date:
-            filters['ao_max_date'] = ao_max_date
-
-        if ao_is_pending:
-            filters['ao_is_pending'] = True
-
-        if ao_requestor:
-            filters['ao_requestor'] = ao_requestor
-
-        if ao_category:
-            filters['ao_category'] = ao_category
-
-        if ao_requestor_type and ao_requestor_type > 0:
-            filters['ao_requestor_type'] = ao_requestor_type
 
     results = _call_api('legal', 'search', **filters)
     results['limit'] = limit
@@ -114,7 +88,9 @@ def load_legal_advisory_opinion(ao_no):
     if not (results and 'docs' in results and results['docs']):
         abort(404)
 
-    return results['docs'][0]
+    ao = results['docs'][0]
+    ao['sorted_documents'] = _get_sorted_documents(ao)
+    return ao
 
 
 def load_legal_mur(mur_no):
@@ -265,7 +241,6 @@ def load_top_candidates(sort, office=None, cycle=constants.DEFAULT_TIME_PERIOD, 
         response = _call_api(
             'candidates', 'totals',
             sort_hide_null=True,
-            election_year=cycle,
             cycle=cycle,
             election_full=False,
             office=office,
@@ -327,3 +302,12 @@ def _get_sorted_participants_by_type(mur):
         participants_by_type[key] = sorted(participants_by_type[key])
 
     return participants_by_type
+
+def _get_sorted_documents(ao):
+    """Sort documents within an AO by date DESC, description and document_id.
+       We do this in 2 passes, making use of the fact that Python's `sorted`
+       function performs a _stable_ sort.
+    """
+    sorted_documents = sorted(ao['documents'], key=itemgetter('description', 'document_id'), reverse=False)
+    sorted_documents = sorted(sorted_documents, key=itemgetter('date'), reverse=True)
+    return sorted_documents

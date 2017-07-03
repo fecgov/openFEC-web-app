@@ -8,6 +8,8 @@
     <div class="content__section">
       {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-1") }}
     </div>
+
+    {% if committee_groups['P'] or committee_groups['A']%}
     <span class="t-sans t-bold">Data is included from these committees:</span>
     <ul class="list--bulleted">
       {% for committee in committee_groups['P'] | reverse %}
@@ -21,41 +23,39 @@
       </li>
       {% endfor %}
     </ul>
+    {% endif %}
+
     {% if raising_summary %}
-      <div class="entity__figure entity__figure--narrow">
-        <h3 class="u-no-margin">Raising</h3>
-        <div class="row">
-            <div class="u-float-left tag__category u-no-margin">
-              <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
-            </div>
-            <div class="u-float-right">
-              <a class="heading__right button--alt button--browse"
-                  href="{{ url_for('receipts', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse receipts
-              </a>
-            </div>
+      <div class="entity__figure entity__figure--narrow" id="total-raised">
+        <div class="heading--section heading--with-action">
+          <h3 class="heading__left">Total raised</h3>
+          <a class="heading__right button--alt button--browse"
+              href="{{ url_for('receipts', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse receipts
+          </a>
         </div>
-        {{ tables.summary(raising_summary, committee_ids) }}
-      </div>
-      <div class="entity__figure entity__figure--narrow">
-        <h3 class="u-no-margin">Spending</h3>
-        <div class="row">
-            <div class="u-float-left tag__category u-no-margin">
-              <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
-            </div>
-            <div class="u-float-right">
-              <a class="heading__right button--alt button--browse"
-                  href="{{ url_for('disbursements', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse disbursements
-              </a>
-            </div>
+        <div class="tag__category u-no-margin">
+          <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
         </div>
-        {{ tables.summary(spending_summary, committee_ids) }}
+        {{ tables.summary(raising_summary, committee_ids, cycle) }}
       </div>
-      <div class="entity__figure entity__figure--narrow">
-        <h3 class="u-no-margin">Cash</h3>
-        <div class="row">
-          <div class="u-float-left tag__category u-no-margin">
-            <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
-          </div>
+      <div class="entity__figure entity__figure--narrow" id="total-spent">
+        <div class="heading--section heading--with-action">
+          <h3 class="heading__left">Total spent</h3>
+          <a class="heading__right button--alt button--browse"
+              href="{{ url_for('disbursements', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse disbursements
+          </a>
+        </div>
+        <div class="tag__category u-no-margin">
+          <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
+        </div>
+        {{ tables.summary(spending_summary, committee_ids, cycle) }}
+      </div>
+      <div class="entity__figure entity__figure--narrow" id="cash-summary">
+        <div class="heading--section heading--with-action">
+          <h3 class="heading__left">Cash summary</h3>
+        </div>
+        <div class="tag__category u-no-margin">
+          <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
         </div>
         {{ tables.summary(cash_summary) }}
       </div>

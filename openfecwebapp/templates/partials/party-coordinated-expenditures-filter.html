@@ -10,11 +10,11 @@ Filter party coordinated expenditures
 
 {% block filters %}
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
-  <div class="filters__inner">
+  <div class="accordion__content">
     {{ typeahead.field('committee_id', 'Spender name or ID') }}
     {{ typeahead.field('candidate_id', 'Candidate', dataset='candidates') }}
   </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Transaction information</button>
+  <button type="button" class="js-accordion-trigger accordion__button">Transaction details</button>
   <div class="accordion__content">
     {{ text.field('payee_name', 'Payee') }}
     {{ date.field('date', 'Expenditure date', dates ) }}

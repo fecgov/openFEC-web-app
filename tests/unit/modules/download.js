@@ -120,12 +120,14 @@ describe('DownloadItem', function() {
       sinon.stub($, 'ajax').returns(this.promise);
       sinon.stub(download.DownloadItem.prototype, 'schedule');
       sinon.stub(download.DownloadItem.prototype, 'finish');
+      sinon.stub(download.DownloadItem.prototype, 'handleServerError');
     });
 
     afterEach(function() {
       $.ajax.restore();
       download.DownloadItem.prototype.schedule.restore();
       download.DownloadItem.prototype.finish.restore();
+      download.DownloadItem.prototype.handleServerError.restore();
     });
 
     it('sends an ajax request', function() {
@@ -151,9 +153,15 @@ describe('DownloadItem', function() {
       expect(this.item.finish).to.have.been.calledWith('/download');
     });
 
-    it('handles an error', function() {
+    it('handles a 500 server error', function() {
       this.item.refresh();
       this.promise.reject({}, 'error');
+      expect(this.item.handleServerError).to.have.been.called;
+    });
+
+    it('handles other server errors', function() {
+      this.item.refresh();
+      this.promise.reject({}, 'fake');
       expect(this.item.schedule).to.have.been.called;
     });
 

@@ -1,6 +1,5 @@
 {% extends 'layouts/main.html' %}
 {% import 'macros/cycle-select.html' as select %}
-{% import 'macros/tabs.html' as tabs %}
 {% import 'macros/page-header.html' as header %}
 
 {{ cycle }} Election - US {{ office|title }} {% if state %} - {{ state|fmt_state_full }} {% if district %} - District {{ district }} {% endif %} {% endif %}
@@ -34,7 +33,7 @@
           </div>
         </div>
       </div>
-      {% if state %}
+      {% if office == 'house' and cycle >= constants.DISTRICT_MAP_CUTOFF or office == 'senate'  %}
       <div id="election-map" class="map" aria-hidden="true"></div>
       {% endif %}
     </div>
@@ -50,8 +49,24 @@
       <div class="container">
         <nav class="page-tabs">
           <ul class="page-tabs__list" role="tablist" data-name="tab">
-            {{ tabs.tab('Candidate comparison', 'comparison', 'panel1', '#section-1') }}
-            {{ tabs.tab('Spending by others to support/oppose', 's[emdomg', 'panel2', '#section-2') }}
+            <li class="page-tabs__item" role="presentation">
+              <a
+                role="tab"
+                data-name="comparison"
+                tabindex="0"
+                aria-controls="panel1"
+                href="#section-1"
+                aria-selected="true">Financial Summary</a>
+            </li>
+            <li class="page-tabs__item" role="presentation">
+              <a
+                role="tab"
+                data-name="spending-by-others"
+                tabindex="0"
+                aria-controls="panel2"
+                href="#section-2"
+                aria-selected="true">Spending by others to support/oppose</a>
+            </li>
           </ul>
         </nav>
       </div>

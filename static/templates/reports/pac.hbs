@@ -27,13 +27,18 @@
     {{#panelRow "Filing method"}}
       {{ decodeMeans means_filed}}
     {{/panelRow}}
-    {{#panelRow "Download"}}
-      {{#if csv_url}}
-      <a target="_blank" href="{{ csv_url }}">CSV</a> |
+    {{#panelRow "Read report"}}
+      {{#if html_url}}
+        <a target="_blank" href="{{ html_url }}">Webpage</a> |
       {{/if}}
-      <a target="_blank" href="{{ pdf_url }}">PDF</a>
+      {{#if csv_url}}
+      <a target="_blank" href="{{ csv_url }}">.csv</a> |
+      {{/if}}
+      {{#if pdf_url }}
+      <a target="_blank" href="{{ pdf_url }}">.pdf</a>
+      {{/if}}
       {{#if fec_url}}
-      | <a target="_blank" href="{{ fec_url }}">FEC</a>
+      | <a target="_blank" href="{{ fec_url }}">.fec</a>
       {{/if}}
     {{/panelRow}}
   </table>

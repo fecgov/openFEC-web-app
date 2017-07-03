@@ -3,6 +3,7 @@ from collections import OrderedDict
 START_YEAR = 1979
 END_YEAR = 2018
 DEFAULT_TIME_PERIOD = 2018
+DISTRICT_MAP_CUTOFF = 2018 # The year we show district maps for on election pages
 
 states = OrderedDict([
     ('AK', 'Alaska'),
@@ -213,22 +214,6 @@ candidate_status_extended = OrderedDict([
     ('P', 'Statutory candidate in prior cycle'),
 ])
 
-disbursement_categories = OrderedDict([
-    ('transfers', 'Transfers'),
-    ('contributions', 'Contributions'),
-    ('loan-repayments', 'Loan repayments'),
-    ('refunds', 'Refunds'),
-    ('administrative', 'Administrative'),
-    ('travel', 'Travel'),
-    ('fundraising', 'Fundraising'),
-    ('advertising', 'Advertising'),
-    ('polling', 'Polling'),
-    ('materials', 'Materials'),
-    ('events', 'Events'),
-    ('contributions', 'Contributions'),
-    ('other', 'Other'),
-])
-
 pac_party_types = OrderedDict([
     ('N', 'PAC - nonqualified'),
     ('Q', 'PAC - qualified'),
@@ -256,7 +241,7 @@ table_columns = OrderedDict([
     ('communication-costs', ['Committee', 'Support/Oppose', 'Candidate', 'Amount', 'Date']),
     ('disbursements', ['Spender', 'Recipient', 'State', 'Description', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
-    ('filings', ['Filer name', 'Document', 'Version', 'Receipt date']),
+    ('filings', ['Filer name', 'Document', 'Version', 'Receipt date', 'Beginning image number']),
     ('independent-expenditures', ['Spender', 'Support/Oppose', 'Candidate', 'Description', 'Payee', 'Expenditure date', 'Amount']),
     ('individual-contributions', ['Contributor name', 'Recipient', 'State', 'Employer', 'Receipt date', 'Amount']),
     ('loans', ['Committee Name', 'Loaner name', 'Incurred date', 'Payment to date', 'Original loan amount']),
@@ -267,6 +252,94 @@ table_columns = OrderedDict([
     ('reports-pac-party', ['Committee', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total receipts', 'Total disbursements', 'Total independent expenditures']),
     ('reports-ie-only', ['Filer', 'Report type', 'Version', 'Receipt date', 'Coverage end date', 'Total contributions', 'Total independent expenditures'])
 ])
+
+line_numbers = {
+    'receipts': {
+        'house_senate': OrderedDict([
+            ('F3-11AI', 'Contributions from individuals (Line 11ai)'),
+            ('F3-11B', 'Contributions from political party committees (Line 11b)'),
+            ('F3-11C', 'Contributions from other political committees (Line 11c)'),
+            ('F3-11D', 'Contributions from the candidate (Line 11d)'),
+            ('F3-12', ' Transfers from authorized committees (Line 12)'),
+            ('F3-13A', 'Loans received from the candidate (Line 13a)'),
+            ('F3-13B', 'All other loans (Line 13b)'),
+            ('F3-14', ' Offsets to operating expenditures (Line 14)'),
+            ('F3-15', ' Other receipts (Line 15)'),
+        ]),
+        'presidential': OrderedDict([
+            ('F3P-16', 'Federal funds (Line 16)'),
+            ('F3P-17A', 'Contributions from individuals (Line 17a)'),
+            ('F3P-17B', 'Contributions from political party committees (Line 17b)'),
+            ('F3P-17C', 'Contributions from other political committees (Line 17c)'),
+            ('F3P-17D', 'Contributions from the candidate (Line 17d)'),
+            ('F3P-18', 'Transfers from other authorized committees (Line 18)'),
+            ('F3P-19A', 'Loans received from candidate (Line 19a)'),
+            ('F3P-19B', 'Other loans (Line 19b)'),
+            ('F3P-20A', 'Offsets to operating expenditures - operating (Line 20a)'),
+            ('F3P-20B', 'Offsets to operating expenditures - fundraising (Line 20b)'),
+            ('F3P-20C', 'Offsets to operating expenditures - legal and accounting (Line 20c)'),
+            ('F3P-21', 'Other receipts (Line 21)'),
+        ]),
+        'pac_party': OrderedDict([
+            ('F3X-11AI', 'Contributions from individuals (Line 11ai)'),
+            ('F3X-11B', 'Contributions from political party committees (Line 11b)'),
+            ('F3X-11C', 'Contributions from other political committees (Line 11c)'),
+            ('F3X-11D', 'Contributions from the candidate (Line 11d'),
+            ('F3X-12', 'Transfers from authorized committees (Line 12)'),
+            ('F3X-13', 'Loans received (Line 13)'),
+            ('F3X-14', 'Loan repayments received (Line 14)'),
+            ('F3X-15', 'Offets to operating expenditures (Line 15)'),
+            ('F3X-16', 'Refunds of contributions made to federal candidates and other political committees (Line 16)'),
+            ('F3X-17', 'Other federal receipts (Line 17)'),
+            ('F3X-SL1A', 'Transfers from non-federal account (Line 18a)'),
+            ('F3X-SL2', 'Transfers from levin funds (Line 18b)'),
+        ])
+    },
+    'disbursements': {
+        'house_senate': OrderedDict([
+            ('F3-17', 'Operating expenditures (Line 17)'),
+            ('F3-18', 'Transfers to other authorized committees (Line 18)'),
+            ('F3-19', 'Loan repayments (Line 19)'),
+            ('F3-19A', 'Loan repayments of loans made or guaranteed by the candidate (Line 19a'),
+            ('F3-19B', 'Loan repayments of all other loans (Line 19b)'),
+            ('F3-20A', 'Refunds of contributions to individuals (Line 20a)'),
+            ('F3-20B', 'Refunds of contributions to political party committees (Line 20b)'),
+            ('F3-20C', 'Refunds of contributions to other political committees (Line 20c)'),
+            ('F3-21', 'Other disbursements (Line 21)'),
+        ]),
+        'presidential': OrderedDict([
+            ('F3P-23', 'Operating expenditures (Line 23)'),
+            ('F3P-24', 'Transfers to other authorized committees (Line 24)'),
+            ('F3P-25', 'Fundraising disbursements (Line 25)'),
+            ('F3P-26', 'Exempt legal and accounting disbursements (Line 26)'),
+            ('F3P-27A', 'Repayments of loans made or guaranteed by candidate (Line 27a)'),
+            ('F3P-27B', 'Other loan repayments (Line 27b)'),
+            ('F3P-28A', 'Refunds of contributions to individuals (Line 28a)'),
+            ('F3P-28B', 'Refunds of contributions to political party committees (Line 28b)'),
+            ('F3P-28C', 'Refunds of contributions to other political committees (Line 28c)'),
+            ('F3P-29', 'Other disbursements (Line 29)'),
+        ]),
+        'pac_party': OrderedDict([
+            ('F3X-21', 'Operating expenditures (Line 21)'),
+            ('F3X-21B', 'Other federal operating expenditures (Line 21b)'),
+            ('F3X-22', 'Transfers to affiliated/other party committees (Line 22)'),
+            ('F3X-23', 'Contributions to federal candidates/committees and other political committees (Line 23)'),
+            ('F3X-24', 'Independent expenditures (Line 24)'),
+            ('F3X-25', 'Coordinated party expenditures (Line 25)'),
+            ('F3X-26', 'Loan repayments made (Line 26)'),
+            ('F3X-27', 'Loans made (Line 27)'),
+            ('F3X-28A', 'Refunds of Contributions Made to Individuals/Persons Other Than Political Committees (Line 28a)'),
+            ('F3X-28B', 'Refunds of contributions to political party committees (Line 28b)'),
+            ('F3X-28C', 'Refunds of contributions to other political committees (Line 28c)'),
+            ('F3X-28D', 'Total contributions refunds (Line 28d)'),
+            ('F3X-29', 'Other disbursements (Line 29)'),
+            ('F3X-30', 'Federal election activity (Line 30)'),
+            ('F3X-30A', 'Allocated federal election activity (Line 30a)'),
+            ('F3X-30B', 'Federal election activity paid entirely with federal funds (Line 30b)'),
+        ])
+    }
+}
+
 
 # RAISING_FORMATTER, SPENDING_FORMATTER, CASH_FORMATTER, IE_FORMATTER
 # These are used to format the display of financial summary data on committee pages
@@ -345,15 +418,16 @@ SPENDING_FORMATTER = OrderedDict([
 CASH_FORMATTER = OrderedDict([
     ('cash_on_hand_beginning_period', {'label': 'Beginning cash on hand', 'level': '2'}), #F3, F3P, #F3X
     ('last_cash_on_hand_end_period', {'label': 'Ending cash on hand', 'term': 'ending cash on hand', 'level': '2'}), #F3, F3P, #F3X
-    ('net_contributions', {'label': 'Net contributions', 'level': '2'}), #F3, F3X
-    ('contributions', {'label': 'Total contributions', 'level': '3'}), #F3, #F3P, F3X
-    ('contribution_refunds', {'label': '(Total contribution refunds)', 'level': '3'}), #F3, F3P, F3X
-    ('net_operating_expenditures', {'label': 'Net operating expenditures', 'level': '2'}), #F3, F3X
-    ('operating_expenditures', {'label': 'Operating expenditures', 'level': '3'}), #F3, F3P, F3X
-    ('offsets_to_operating_expenditures', {'label': '(Offsets to operating expenditures)', 'level': '3'}), #F3, F3P, F3X
-    ('subtotal_offsets_to_operating_expenditures', {'label': 'Offsets to operating expenditures', 'level': '3'}), #F3P
     ('last_debts_owed_to_committee', {'label': 'Debts/loans owed to committee', 'level': '2'}), #F3, F3P, F3X
     ('last_debts_owed_by_committee', {'label': 'Debts/loans owed by committee', 'level': '2'}), #F3, F3P, F3X
+    # Commenting out net numbers because the underlying logic is incorrect
+    # ('net_contributions', {'label': 'Net contributions', 'level': '2'}), #F3, F3X
+    # ('contributions', {'label': 'Total contributions', 'level': '3'}), #F3, #F3P, F3X
+    # ('contribution_refunds', {'label': '(Total contribution refunds)', 'level': '3'}), #F3, F3P, F3X
+    # ('net_operating_expenditures', {'label': 'Net operating expenditures', 'level': '2'}), #F3, F3X
+    # ('operating_expenditures', {'label': 'Operating expenditures', 'level': '3'}), #F3, F3P, F3X
+    # ('offsets_to_operating_expenditures', {'label': '(Offsets to operating expenditures)', 'level': '3'}), #F3, F3P, F3X
+    # ('subtotal_offsets_to_operating_expenditures', {'label': 'Offsets to operating expenditures', 'level': '3'}), #F3P
 ])
 
 IE_FORMATTER = OrderedDict([

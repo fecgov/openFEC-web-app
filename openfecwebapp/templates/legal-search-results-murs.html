@@ -2,12 +2,28 @@
 {% import 'macros/legal.html' as legal %}
 {% set document_type_display_name = 'Matters Under Review' %}
 
-{% block filters %}
-  {{ legal.keyword_search(result_type, query) }}
+{% block header %}
+<header class="page-header slab slab--primary">
+  {{ breadcrumb.breadcrumbs('Search results', [(cms_url + '/legal-resources', 'Legal resources'), (cms_url + '/legal-resources/enforcement', 'Enforcement')]) }}
+</header>
 {% endblock %}
 
-{% block results %}
-{% with murs = results.murs %}
+{% block filters %}
+  {{ legal.keyword_search(result_type, query) }}
+  <div class="filter">
+    <label class="label" for="mur_no">MUR number</label>
+    <input id="mur_no" name="mur_no" type="text" value="{{request.args.mur_no}}">
+  </div>
+  <div class="filter">
+    <label class="label" for="mur_respondents">MUR respondents</label>
+    <input id="mur_respondents" name="mur_respondents" type="text" value="{{request.args.mur_respondents}}">
+  </div>
+  <div class="filter">
+    <button type="submit" class="button button--cta">Apply filters</button>
+  </div>
+{% endblock %}
+
+{% block message %}
 <div class="message message--info">
   <h3>This feature is still in progress.</h3>
   <p>We&#39;re actively building the <strong>MUR search</strong>, and it doesn&#39;t yet include some
@@ -15,6 +31,11 @@
   you can still <a href="http://eqs.fec.gov/eqs/searcheqs">search MURS on the old fec.gov</a>.</p>
   <p>Additionally, use the <a href="{{ classic_url }}/MUR/">MUR archive</a> to search for cases closed between 1975 and 1998.</p>
 </div>
+{% endblock %}
+
+{% block results %}
+{% with murs = results.murs %}
+
 {% include 'partials/legal-search-results-mur.html' %}
 {% endwith %}
 

@@ -68,6 +68,6 @@ it('filters non-query data from state', () => {
   expect($.getJSON.mock.calls.length).toBe(1);
   expect($.getJSON.mock.calls[0][0])
     .toBe('https://fake.fec.api/v1/legal/search?' +
-      'api_key=123&type=advisory_opinions&type=advisory_opinion' +
+      'api_key=123&type=advisory_opinions&type=advisory_opinion&ao_category=F' +
       '&doc_no=1999-01&doc_name=test+doc');
 });

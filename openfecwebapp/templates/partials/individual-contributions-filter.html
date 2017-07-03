@@ -12,23 +12,23 @@ Filter individual contributions
 {% endblock %}
 
 {% block filters %}
-<div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="true">
-  <button type="button" class="js-accordion-trigger accordion__button">Recipient information</button>
+<div class="filters__inner">
+  {{ typeahead.field('committee_id', 'Recipient name or ID') }}
+  {{ text.field('contributor_name', 'Contributor name') }}
+  {{ date.partition_field('date', 'Receipt date', dates ) }}
+</div>
+<div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
+  <button type="button" class="js-accordion-trigger accordion__button">Contributor details</button>
   <div class="accordion__content">
-    {{ typeahead.field('committee_id', 'Committee name or ID') }}
-  </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Contributor information</button>
-  <div class="accordion__content">
-    {{ text.field('contributor_name', 'Contributor name') }}
     {{ text.field('contributor_city', 'City') }}
     {{ states.field('contributor_state') }}
+    {{ text.field('contributor_zip', 'ZIP code')}}
     {{ text.field('contributor_employer', 'Employer') }}
     {{ text.field('contributor_occupation', 'Occupation') }}
   </div>
-  <button type="button" class="js-accordion-trigger accordion__button">Transaction information</button>
+  <button type="button" class="js-accordion-trigger accordion__button">Transaction details</button>
   <div class="accordion__content">
     {{ range.amount('amount', 'Contribution amount') }}
-    {{ date.partition_field('date', 'Receipt date', dates ) }}
     {{ text.field('image_number', 'Image number') }}
     <div class="message message--info message--small">
       <span class="t-block">Receipts are reported periodically, according to the filer's reporting schedule. Receipts are updated as they’re processed— that time can vary.</span>
