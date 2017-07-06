@@ -14,7 +14,6 @@ $(document).ready(function() {
     autoWidth: false,
     title: 'Independent expenditures',
     path: ['schedules', 'schedule_e'],
-    query: {is_notice: 'false'},
     columns: columns.independentExpenditures,
     paginator: tables.SeekPaginator,
     rowCallback: tables.modalRenderRow,

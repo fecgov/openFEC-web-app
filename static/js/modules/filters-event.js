@@ -6,6 +6,8 @@ var _ = require('underscore');
 var URI = require('urijs');
 
 function lineNumberFilters() {
+  lineNumberFiltersCheck();
+
   $('#filters').on('change', 'input,select', _.debounce(lineNumberFiltersCheck, 250));
 }
 
