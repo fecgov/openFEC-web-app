@@ -284,7 +284,7 @@ line_numbers = {
             ('F3X-11AI', 'Contributions from individuals (Line 11ai)'),
             ('F3X-11B', 'Contributions from political party committees (Line 11b)'),
             ('F3X-11C', 'Contributions from other political committees (Line 11c)'),
-            ('F3X-12', 'Transfers from authorized committees (Line 12)'),
+            ('F3X-12', 'Transfers from affiliated committees (Line 12)'),
             ('F3X-13', 'Loans received (Line 13)'),
             ('F3X-14', 'Loan repayments received (Line 14)'),
             ('F3X-15', 'Offets to operating expenditures (Line 15)'),
@@ -381,13 +381,13 @@ RAISING_FORMATTER = OrderedDict([
         {'label': 'Transfers from affiliated committees', 'level': '2',
             'type': {'link': 'receipts', 'O': 'F3X-12'}}),
     ('transfers_from_affiliated_committee',  # F3P
-        {'label': 'Transfer from affiliated committees', 'level': '2',
+        {'label': 'Transfers from other authorized committees', 'level': '2',
             'type': {'link': 'receipts', 'P': 'F3P-18'}}),
     ('transfers_from_other_authorized_committee',  # F3
-        {'label': 'Transfer from authorized committees', 'level': '2',
+        {'label': 'Transfers from other authorized committees', 'level': '2',
             'type': {'link': 'receipts', 'H': 'F3-12', 'S': 'F3-12'}}),
     ('all_loans_received',  # F3X
-        {'label': 'Loans received', 'level': '2', 'type': {
+        {'label': 'All loans received', 'level': '2', 'type': {
             'link': 'receipts', 'O': 'F3X-13'
         }}),
     ('loan_repayments_received',  # F3X
@@ -415,7 +415,7 @@ RAISING_FORMATTER = OrderedDict([
             'link': 'receipts', 'H': 'F3-13B', 'S': 'F3-13B'
         }}),
     ('total_offsets_to_operating_expenditures',  # F3P
-        {'label': 'Total offsets', 'level': '2'}),
+        {'label': 'Total offsets to expenditures', 'level': '2'}),
     ('subtotal_offsets_to_operating_expenditures',  # F3P
         {'label': 'Offsets to operating expenditures', 'level': '3'}),
     ('offsets_to_operating_expenditures',  # F3, F3X
