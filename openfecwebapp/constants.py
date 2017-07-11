@@ -417,7 +417,9 @@ RAISING_FORMATTER = OrderedDict([
     ('total_offsets_to_operating_expenditures',  # F3P
         {'label': 'Total offsets to expenditures', 'level': '2'}),
     ('subtotal_offsets_to_operating_expenditures',  # F3P
-        {'label': 'Offsets to operating expenditures', 'level': '3'}),
+        {'label': 'Offsets to operating expenditures', 'level': '3', 'type': {
+            'link': 'receipts', 'P': 'F3P-20A'
+        }}),
     ('offsets_to_operating_expenditures',  # F3, F3X
         {'label': 'Offsets to operating expenditures', 'level': '2', 'type': {
             'link': 'receipts', 'H': 'F3-14', 'S': 'F3-14', 'O': 'F3X-15'
