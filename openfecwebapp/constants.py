@@ -290,8 +290,6 @@ line_numbers = {
             ('F3X-15', 'Offets to operating expenditures (Line 15)'),
             ('F3X-16', 'Refunds of contributions made to federal candidates and other political committees (Line 16)'),
             ('F3X-17', 'Other federal receipts (Line 17)'),
-            ('F3X-SL1A', 'Transfers from non-federal account (Line 18a)'),
-            ('F3X-SL2', 'Transfers from levin funds (Line 18b)'),
         ])
     },
     'disbursements': {
@@ -330,9 +328,6 @@ line_numbers = {
             ('F3X-28C', 'Refunds of contributions to other political committees (Line 28c)'),
             ('F3X-28D', 'Total contributions refunds (Line 28d)'),
             ('F3X-29', 'Other disbursements (Line 29)'),
-            ('F3X-30', 'Federal election activity (Line 30)'),
-            ('F3X-30A', 'Allocated federal election activity (Line 30a)'),
-            ('F3X-30B', 'Federal election activity paid entirely with federal funds (Line 30b)'),
         ])
     }
 }
@@ -445,13 +440,9 @@ RAISING_FORMATTER = OrderedDict([
     ('total_transfers',  # F3X
         {'label': 'Total transfers', 'level': '2'}),
     ('transfers_from_nonfed_account',  # F3X
-        {'label': 'Non-federal transfers', 'level': '3', 'type': {
-            'link': 'receipts', 'O': 'F3X-SL1A'
-        }}),
+        {'label': 'Non-federal transfers', 'level': '3'}),
     ('transfers_from_nonfed_levin',  # F3X
-        {'label': 'Levin funds', 'level': '3', 'type': {
-            'link': 'receipts', 'O': 'F3X-SL2'
-        }}),
+        {'label': 'Levin funds', 'level': '3'}),
     ('fed_receipts',  # F3X
         {'label': 'Total federal receipts', 'level': '2'}),
 ])
@@ -544,18 +535,15 @@ SPENDING_FORMATTER = OrderedDict([
             'link': 'disbursements', 'P': 'F3P-29', 'H': 'F3-21', 'S': 'F3-21', 'O': 'F3X-29'
         }}),
     ('fed_election_activity',  # F3X
-        {'label': 'Total federal election activity', 'level': '2', 'type': {
-            'link': 'disbursements', 'O': 'F3X-30'
-        }}),
+        {'label': 'Total federal election activity', 'level': '2'}),
     ('shared_fed_activity',  # F3X
         {'label': 'Allocated federal election activity - federal share',
-            'level': '3', 'type': {'link': 'disbursements', 'O': 'F3X-30A'}}),
+            'level': '3'}),
     ('allocated_federal_election_levin_share',  # F3X
         {'label': 'Allocated federal election activity - Levin share',
             'level': '3'}),
     ('non_allocated_fed_election_activity',  # F3X
-        {'label': 'Federal election activity - federal only', 'level': '3',
-            'type': {'link': 'disbursements', 'O': 'F3X-30B'}}),
+        {'label': 'Federal election activity - federal only', 'level': '3'}),
     ('fed_disbursements',  # F3X
         {'label': 'Total federal disbursements', 'level': '2'}),
 ])
