@@ -284,7 +284,6 @@ line_numbers = {
             ('F3X-11AI', 'Contributions from individuals (Line 11ai)'),
             ('F3X-11B', 'Contributions from political party committees (Line 11b)'),
             ('F3X-11C', 'Contributions from other political committees (Line 11c)'),
-            ('F3X-11D', 'Contributions from the candidate (Line 11d'),
             ('F3X-12', 'Transfers from authorized committees (Line 12)'),
             ('F3X-13', 'Loans received (Line 13)'),
             ('F3X-14', 'Loan repayments received (Line 14)'),
@@ -376,7 +375,7 @@ RAISING_FORMATTER = OrderedDict([
     ('candidate_contribution',  # F3, F3P
         {'label': 'Candidate contributions', 'level': '3', 'type': {
             'link': 'receipts',
-                  'P': 'F3P-17D', 'H': 'F3-11D', 'S': 'F3-11D', 'O': 'F3X-11D'
+                  'P': 'F3P-17D', 'H': 'F3-11D', 'S': 'F3-11D'
         }}),
     ('transfers_from_affiliated_party',  # F3X
         {'label': 'Transfers from affiliated committees', 'level': '2',
