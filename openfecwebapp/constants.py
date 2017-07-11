@@ -319,7 +319,6 @@ line_numbers = {
             ('F3P-29', 'Other disbursements (Line 29)'),
         ]),
         'pac_party': OrderedDict([
-            ('F3X-21', 'Operating expenditures (Line 21)'),
             ('F3X-21B', 'Other federal operating expenditures (Line 21b)'),
             ('F3X-22', 'Transfers to affiliated/other party committees (Line 22)'),
             ('F3X-23', 'Contributions to federal candidates/committees and other political committees (Line 23)'),
