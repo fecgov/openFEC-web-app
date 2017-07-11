@@ -474,7 +474,7 @@ SPENDING_FORMATTER = OrderedDict([
         {'label': 'Other federal operating expenditures', 'level': '3',
             'type': {'link': 'disbursements', 'O': 'F3X-21B'}}),
     ('transfers_to_other_authorized_committee',  # F3, F3P
-        {'label': 'Transfers to authorized committees', 'level': '2', 'type': {
+        {'label': 'Transfers to other authorized committees', 'level': '2', 'type': {
             'link': 'disbursements', 'H': 'F3-18', 'S': 'F3-18', 'P': 'F3P-24'
         }}),
     ('fundraising_disbursements',  # F3P
