@@ -323,7 +323,6 @@ line_numbers = {
             ('F3X-22', 'Transfers to affiliated/other party committees (Line 22)'),
             ('F3X-23', 'Contributions to federal candidates/committees and other political committees (Line 23)'),
             ('F3X-24', 'Independent expenditures (Line 24)'),
-            ('F3X-25', 'Coordinated party expenditures (Line 25)'),
             ('F3X-26', 'Loan repayments made (Line 26)'),
             ('F3X-27', 'Loans made (Line 27)'),
             ('F3X-28A', 'Refunds of Contributions Made to Individuals/Persons Other Than Political Committees (Line 28a)'),
@@ -498,7 +497,7 @@ SPENDING_FORMATTER = OrderedDict([
             'link': 'independent_expenditures'}),
     ('coordinated_expenditures_by_party_committee',  # F3X
         {'label': 'Coordinated party expenditures', 'level': '2', 'type': {
-            'link': 'disbursements', 'O': 'F3X-25'
+            'link': 'party_coordinated_expenditures',
         }}),
     ('loans_made',  # F3X
         {'label': 'Loans made', 'level': '2', 'type': {
