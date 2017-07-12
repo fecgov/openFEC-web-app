@@ -284,15 +284,12 @@ line_numbers = {
             ('F3X-11AI', 'Contributions from individuals (Line 11ai)'),
             ('F3X-11B', 'Contributions from political party committees (Line 11b)'),
             ('F3X-11C', 'Contributions from other political committees (Line 11c)'),
-            ('F3X-11D', 'Contributions from the candidate (Line 11d'),
-            ('F3X-12', 'Transfers from authorized committees (Line 12)'),
+            ('F3X-12', 'Transfers from affiliated committees (Line 12)'),
             ('F3X-13', 'Loans received (Line 13)'),
             ('F3X-14', 'Loan repayments received (Line 14)'),
             ('F3X-15', 'Offets to operating expenditures (Line 15)'),
             ('F3X-16', 'Refunds of contributions made to federal candidates and other political committees (Line 16)'),
             ('F3X-17', 'Other federal receipts (Line 17)'),
-            ('F3X-SL1A', 'Transfers from non-federal account (Line 18a)'),
-            ('F3X-SL2', 'Transfers from levin funds (Line 18b)'),
         ])
     },
     'disbursements': {
@@ -320,12 +317,10 @@ line_numbers = {
             ('F3P-29', 'Other disbursements (Line 29)'),
         ]),
         'pac_party': OrderedDict([
-            ('F3X-21', 'Operating expenditures (Line 21)'),
             ('F3X-21B', 'Other federal operating expenditures (Line 21b)'),
             ('F3X-22', 'Transfers to affiliated/other party committees (Line 22)'),
             ('F3X-23', 'Contributions to federal candidates/committees and other political committees (Line 23)'),
             ('F3X-24', 'Independent expenditures (Line 24)'),
-            ('F3X-25', 'Coordinated party expenditures (Line 25)'),
             ('F3X-26', 'Loan repayments made (Line 26)'),
             ('F3X-27', 'Loans made (Line 27)'),
             ('F3X-28A', 'Refunds of Contributions Made to Individuals/Persons Other Than Political Committees (Line 28a)'),
@@ -333,9 +328,6 @@ line_numbers = {
             ('F3X-28C', 'Refunds of contributions to other political committees (Line 28c)'),
             ('F3X-28D', 'Total contributions refunds (Line 28d)'),
             ('F3X-29', 'Other disbursements (Line 29)'),
-            ('F3X-30', 'Federal election activity (Line 30)'),
-            ('F3X-30A', 'Allocated federal election activity (Line 30a)'),
-            ('F3X-30B', 'Federal election activity paid entirely with federal funds (Line 30b)'),
         ])
     }
 }
@@ -345,74 +337,217 @@ line_numbers = {
 # These are used to format the display of financial summary data on committee pages
 # They map key values from a response to a tuple which contains a label and a level of hierarchy
 # Levels: 1 = Top-level total; 2 = sub-total, 3 = sub-sub-total; 4 = sub-sub-sub-total
+# Type: used to piece together a link to line number filtered view
 # The comments next to each refer to the type of report / committee that they show up on
 # F3 = house and senate; F3P = presidential; F3X = pac and party
 
 RAISING_FORMATTER = OrderedDict([
-    ('receipts', {'label': 'Total receipts', 'level': '1', 'term': 'total receipts'}), #F3, F3P, #F3X
-    ('contributions', {'label': 'Total contributions', 'level': '2'}), #F3, F3P, F3X
-    ('individual_contributions', {'label': 'Total individual contributions', 'level': '3'}), #F3, F3P, F3X
-    ('individual_itemized_contributions', {'label': 'Itemized individual contributions', 'level': '4', 'link': 'individual_contributions'}), #F3, F3P, F3X
-    ('individual_unitemized_contributions', {'label': 'Unitemized individual contributions', 'level': '4'}), #F3, F3P, F3X
-    ('political_party_committee_contributions', {'label': 'Party committee contributions', 'level': '3'}), #F3, F3P, F3X
-    ('other_political_committee_contributions', {'label': 'Other committee contributions', 'level': '3'}), #F3, F3P, F3X
-    ('federal_funds', {'label': 'Presidential public funds', 'level': '3'}), #F3, F3P
-    ('candidate_contribution', {'label': 'Candidate contributions', 'level': '3'}), #F3, F3P
-    ('transfers_from_affiliated_party', {'label': 'Transfers from affiliated committees', 'level': '2'}), #F3X
-    ('transfers_from_affiliated_committee', {'label': 'Transfer from affiliated committees', 'level': '2'}), #F3P
-    ('transfers_from_other_authorized_committee', {'label': 'Transfer from authorized committees', 'level': '2'}), #F3
-    ('all_loans_received', {'label': 'Loans received', 'level': '2'}), #F3X
-    ('loan_repayments_received', {'label': 'Loan repayments received', 'level': '2'}), #F3X
-    ('loans', {'label': 'Total loans received', 'level': '2'}), # F3
-    ('loans_received', {'label': 'Total loans received', 'level': '2'}), #F3P
-    ('loans_received_from_candidate', {'label': 'Loans made by candidate', 'level': '3'}), #F3P
-    ('loans_made_by_candidate', {'label': 'Loans made by candidate', 'level': '3'}), #F3
-    ('other_loans_received', {'label': 'Other loans', 'level': '3'}), #F3P
-    ('all_other_loans', {'label': 'Other loans', 'level': '3'}), #F3
-    ('total_offsets_to_operating_expenditures', {'label': 'Total offsets', 'level': '2'}), #F3P
-    ('subtotal_offsets_to_operating_expenditures', {'label': 'Offsets to operating expenditures', 'level': '3'}), #F3P
-    ('offsets_to_operating_expenditures', {'label': 'Offsets to operating expenditures', 'level': '2'}), #F3, F3X
-    ('offsets_to_fundraising_expenditures', {'label': 'Fundraising offsets', 'level': '3'}), #F3P
-    ('offsets_to_legal_accounting', {'label': 'Legal and accounting offsets', 'level': '3'}), #F3P
-    ('other_receipts', {'label': 'Other receipts', 'level': '2'}), #F3, F3P
-    ('fed_candidate_contribution_refunds', {'label': 'Candidate refunds', 'level': '2'}), #F3X
-    ('other_fed_receipts', {'label': 'Other Receipts', 'level': '2'}), #F3X
-    ('total_transfers', {'label': 'Total transfers', 'level': '2'}), #F3X
-    ('transfers_from_nonfed_account', {'label': 'Non-federal transfers', 'level': '3'}), #F3X
-    ('transfers_from_nonfed_levin', {'label': 'Levin funds', 'level': '3'}), #F3X
-    ('fed_receipts', {'label': 'Total federal receipts', 'level': '2'}), #F3X
+    ('receipts',  # F3, F3P, F3X
+        {'label': 'Total receipts', 'level': '1', 'term': 'total receipts'}),
+    ('contributions',  # F3, F3P, F3X
+        {'label': 'Total contributions', 'level': '2'}),
+    ('individual_contributions',  # F3, F3P, F3X
+        {'label': 'Total individual contributions', 'level': '3'}),
+    ('individual_itemized_contributions',  # F3, F3P, F3X
+        {'label': 'Itemized individual contributions', 'level': '4',
+            'link': 'individual_contributions'}),
+    ('individual_unitemized_contributions',  # F3, F3P, F3X
+        {'label': 'Unitemized individual contributions', 'level': '4'}),
+    ('political_party_committee_contributions',
+        {'label': 'Party committee contributions', 'level': '3', 'type': {
+            'link': 'receipts',
+                  'P': 'F3P-17B', 'H': 'F3-11B', 'S': 'F3-11B', 'O': 'F3X-11B'
+        }}),
+    ('other_political_committee_contributions',  # F3, F3P, F3X
+        {'label': 'Other committee contributions', 'level': '3', 'type': {
+            'link': 'receipts',
+                  'P': 'F3P-17C', 'H': 'F3-11C', 'S': 'F3-11C', 'O': 'F3X-11C'
+        }}),
+    ('federal_funds',  # F3, F3P
+        {'label': 'Presidential public funds', 'level': '3'}),
+    ('candidate_contribution',  # F3, F3P
+        {'label': 'Candidate contributions', 'level': '3', 'type': {
+            'link': 'receipts',
+                  'P': 'F3P-17D', 'H': 'F3-11D', 'S': 'F3-11D'
+        }}),
+    ('transfers_from_affiliated_party',  # F3X
+        {'label': 'Transfers from affiliated committees', 'level': '2',
+            'type': {'link': 'receipts', 'O': 'F3X-12'}}),
+    ('transfers_from_affiliated_committee',  # F3P
+        {'label': 'Transfers from other authorized committees', 'level': '2',
+            'type': {'link': 'receipts', 'P': 'F3P-18'}}),
+    ('transfers_from_other_authorized_committee',  # F3
+        {'label': 'Transfers from other authorized committees', 'level': '2',
+            'type': {'link': 'receipts', 'H': 'F3-12', 'S': 'F3-12'}}),
+    ('all_loans_received',  # F3X
+        {'label': 'All loans received', 'level': '2', 'type': {
+            'link': 'receipts', 'O': 'F3X-13'
+        }}),
+    ('loan_repayments_received',  # F3X
+        {'label': 'Loan repayments received', 'level': '2', 'type': {
+            'link': 'receipts', 'O': 'F3X-14'
+        }}),
+    ('loans',  # F3
+        {'label': 'Total loans received', 'level': '2'}),
+    ('loans_received',  # F3P
+        {'label': 'Total loans received', 'level': '2'}),
+    ('loans_received_from_candidate',  # F3P
+        {'label': 'Loans made by candidate', 'level': '3', 'type': {
+            'link': 'receipts', 'P': 'F3P-19A'
+        }}),
+    ('loans_made_by_candidate',  # F3
+        {'label': 'Loans made by candidate', 'level': '3', 'type': {
+            'link': 'receipts', 'H': 'F3-13A', 'S': 'F3-13A'
+        }}),
+    ('other_loans_received',  # F3P
+        {'label': 'Other loans', 'level': '3', 'type': {
+            'link': 'receipts', 'P': 'F3P-19B'
+        }}),
+    ('all_other_loans',  # F3
+        {'label': 'Other loans', 'level': '3', 'type': {
+            'link': 'receipts', 'H': 'F3-13B', 'S': 'F3-13B'
+        }}),
+    ('total_offsets_to_operating_expenditures',  # F3P
+        {'label': 'Total offsets to expenditures', 'level': '2'}),
+    ('subtotal_offsets_to_operating_expenditures',  # F3P
+        {'label': 'Offsets to operating expenditures', 'level': '3', 'type': {
+            'link': 'receipts', 'P': 'F3P-20A'
+        }}),
+    ('offsets_to_operating_expenditures',  # F3, F3X
+        {'label': 'Offsets to operating expenditures', 'level': '2', 'type': {
+            'link': 'receipts', 'H': 'F3-14', 'S': 'F3-14', 'O': 'F3X-15'
+        }}),
+    ('offsets_to_fundraising_expenditures',  # F3P
+        {'label': 'Fundraising offsets', 'level': '3', 'type': {
+            'link': 'receipts', 'P': 'F3P-20B'
+        }}),
+    ('offsets_to_legal_accounting',  # F3P
+        {'label': 'Legal and accounting offsets', 'level': '3', 'type': {
+            'link': 'receipts', 'P': 'F3P-20C'
+        }}),
+    ('other_receipts',  # F3, F3P
+        {'label': 'Other receipts', 'level': '2', 'type': {
+            'link': 'receipts', 'P': 'F3P-21', 'H': 'F3-15', 'S': 'F3-15'
+        }}),
+    ('fed_candidate_contribution_refunds',  # F3X
+        {'label': 'Candidate refunds', 'level': '2', 'type': {
+            'link': 'receipts', 'O': 'F3X-16'
+        }}),
+    ('other_fed_receipts',  # F3X
+        {'label': 'Other Receipts', 'level': '2', 'type': {
+            'link': 'receipts', 'O': 'F3X-17'
+        }}),
+    ('total_transfers',  # F3X
+        {'label': 'Total transfers', 'level': '2'}),
+    ('transfers_from_nonfed_account',  # F3X
+        {'label': 'Non-federal transfers', 'level': '3'}),
+    ('transfers_from_nonfed_levin',  # F3X
+        {'label': 'Levin funds', 'level': '3'}),
+    ('fed_receipts',  # F3X
+        {'label': 'Total federal receipts', 'level': '2'}),
 ])
 
 SPENDING_FORMATTER = OrderedDict([
-    ('disbursements', {'label': 'Total disbursements', 'level': '1', 'term': 'total disbursements'}), #F3, F3P, F3X
-    ('operating_expenditures', {'label': 'Operating expenditures', 'term': 'operating expenditures', 'level': '2'}), #F3, F3P, F3X
-    ('shared_fed_operating_expenditures', {'label': 'Allocated operating expenditures - federal', 'level': '3'}), #F3X
-    ('shared_nonfed_operating_expenditures', {'label': 'Allocated operating expenditures - non-federal', 'level': '3'}), #F3X
-    ('other_fed_operating_expenditures', {'label': 'Other federal operating expenditures', 'level': '3'}), #F3X
-    ('transfers_to_other_authorized_committee', {'label': 'Transfers to authorized committees', 'level': '2'}), #F3, F3P
-    ('fundraising_disbursements', {'label': 'Fundraising', 'level': '2'}), #F3P
-    ('exempt_legal_accounting_disbursement', {'label': 'Exempt legal and accounting', 'level': '2'}), #F3P
-    ('transfers_to_affiliated_committee', {'label': 'Transfers to affiliated committees', 'level': '2'}), #F3X
-    ('fed_candidate_committee_contributions', {'label': 'Contributions to other committees', 'level': '2'}), #F3X
-    ('independent_expenditures', {'label': 'Independent expenditures', 'level': '2', 'link': 'independent_expenditures'}), #F3X
-    ('coordinated_expenditures_by_party_committee', {'label': 'Coordinated party expenditures', 'level': '2'}), #F3X
-    ('loans_made', {'label': 'Loans made', 'level': '2'}), #F3X
-    ('loan_repayments_made', {'label': 'Total loan repayments made', 'level': '2'}), #F3P, #F3X
-    ('repayments_loans_made_by_candidate', {'label': 'Candidate loan repayments', 'level': '3'}), #F3P
-    ('repayments_other_loans', {'label': 'Other loan repayments', 'level': '3'}), #F3P
-    ('contribution_refunds', {'label': 'Total contribution refunds', 'level': '2'}), #F3, F3P, F3X
-    ('refunded_individual_contributions', {'label': 'Individual refunds', 'level': '3'}), #F3, F3P, F3X
-    ('refunded_political_party_committee_contributions', {'label': 'Political party refunds', 'level': '3'}), #F3, F3P, F3X
-    ('refunded_other_political_committee_contributions', {'label': 'Other committee refunds', 'level': '3'}), #F3, F3P, F3X
-    ('loan_repayments', {'label': 'Total loan repayments', 'level': '2'}), #F3
-    ('loan_repayments_candidate_loans', {'label': 'Candidate loan repayments', 'level': '3'}), #F3
-    ('loan_repayments_other_loans', {'label': 'Other loan repayments', 'level': '3'}), #F3
-    ('other_disbursements', {'label': 'Other disbursements', 'level': '2'}), #F3, F3P, F3X
-    ('fed_election_activity', {'label': 'Total federal election activity', 'level': '2'}), #F3X
-    ('shared_fed_activity', {'label': 'Allocated federal election activity - federal share', 'level': '3'}), #F3X
-    ('allocated_federal_election_levin_share', {'label': 'Allocated federal election activity - Levin share', 'level': '3'}), #F3X
-    ('non_allocated_fed_election_activity', {'label': 'Federal election activity - federal only', 'level': '3'}), #F3X
-    ('fed_disbursements', {'label': 'Total federal disbursements', 'level': '2'}), #F3X
+    ('disbursements',  # F3, F3P, F3X
+        {'label': 'Total disbursements', 'level': '1',
+            'term': 'total disbursements'}),
+    ('operating_expenditures',  # F3, F3P, F3X
+        {'label': 'Operating expenditures', 'term': 'operating expenditures',
+            'level': '2', 'type': {'link': 'disbursements',
+                'P': 'F3P-23', 'H': 'F3-17', 'S': 'F3-17'}}),
+    ('shared_fed_operating_expenditures',  # F3X
+        {'label': 'Allocated operating expenditures - federal', 'level': '3'}),
+    ('shared_nonfed_operating_expenditures',  # F3X
+        {'label': 'Allocated operating expenditures - non-federal',
+            'level': '3'}),
+    ('other_fed_operating_expenditures',  # F3X
+        {'label': 'Other federal operating expenditures', 'level': '3',
+            'type': {'link': 'disbursements', 'O': 'F3X-21B'}}),
+    ('transfers_to_other_authorized_committee',  # F3, F3P
+        {'label': 'Transfers to other authorized committees', 'level': '2', 'type': {
+            'link': 'disbursements', 'H': 'F3-18', 'S': 'F3-18', 'P': 'F3P-24'
+        }}),
+    ('fundraising_disbursements',  # F3P
+        {'label': 'Fundraising', 'level': '2', 'type': {
+            'link': 'disbursements', 'P': 'F3P-25'
+        }}),
+    ('exempt_legal_accounting_disbursement',  # F3P
+        {'label': 'Exempt legal and accounting', 'level': '2', 'type': {
+            'link': 'disbursements', 'P': 'F3P-26'
+        }}),
+    ('transfers_to_affiliated_committee',  # F3X
+        {'label': 'Transfers to affiliated committees', 'level': '2', 'type': {
+            'link': 'disbursements', 'O': 'F3X-22'
+        }}),
+    ('fed_candidate_committee_contributions',  # F3X
+        {'label': 'Contributions to other committees', 'level': '2', 'type': {
+            'link': 'disbursements', 'O': 'F3X-23'
+        }}),
+    ('independent_expenditures',  # F3X
+        {'label': 'Independent expenditures', 'level': '2',
+            'link': 'independent_expenditures'}),
+    ('coordinated_expenditures_by_party_committee',  # F3X
+        {'label': 'Coordinated party expenditures', 'level': '2', 'type': {
+            'link': 'party_coordinated_expenditures',
+        }}),
+    ('loans_made',  # F3X
+        {'label': 'Loans made', 'level': '2', 'type': {
+            'link': 'disbursements', 'O': 'F3X-27'
+        }}),
+    ('loan_repayments_made',  # F3X
+        {'label': 'Loan repayments made', 'level': '2', 'type': {
+            'link': 'disbursements', 'O': 'F3X-26'
+        }}),
+    ('total_loan_repayments_made',  # F3P, F3X
+        {'label': 'Total loan repayments made', 'level': '2'}),
+    ('repayments_loans_made_by_candidate',  # F3P
+        {'label': 'Candidate loan repayments', 'level': '3', 'type': {
+            'link': 'disbursements', 'O': 'F3P-27A'
+        }}),
+    ('repayments_other_loans',  # F3P
+        {'label': 'Other loan repayments', 'level': '3', 'type': {
+            'link': 'disbursements', 'P': 'F3P-27B'
+        }}),
+    ('contribution_refunds',  # F3, F3P, F3X
+        {'label': 'Total contribution refunds', 'level': '2'}),
+    ('refunded_individual_contributions',  # F3, F3P, F3X
+        {'label': 'Individual refunds', 'level': '3', 'type': {
+            'link': 'disbursements', 'P': 'F3P-28A', 'H': 'F3-20A', 'S': 'F3-20A', 'O': 'F3X-28A'
+        }}),
+    ('refunded_political_party_committee_contributions',  # F3, F3P, F3X
+        {'label': 'Political party refunds', 'level': '3', 'type': {
+            'link': 'disbursements', 'P': 'F3P-28B', 'H': 'F3-20B', 'S': 'F3-20B', 'O': 'F3X-28B'
+        }}),
+    ('refunded_other_political_committee_contributions',  # F3, F3P, F3X
+        {'label': 'Other committee refunds', 'level': '3', 'type': {
+            'link': 'disbursements', 'P': 'F3P-28C', 'H': 'F3-20C', 'S': 'F3-20C', 'O': 'F3X-28C'
+        }}),
+    ('loan_repayments',  # F3
+        {'label': 'Total loan repayments', 'level': '2'}),
+    ('loan_repayments_candidate_loans',  # F3
+        {'label': 'Candidate loan repayments', 'level': '3', 'type': {
+            'link': 'disbursements', 'H': 'F3-19A', 'S': 'F3-19A'
+        }}),
+    ('loan_repayments_other_loans',  # F3
+        {'label': 'Other loan repayments', 'level': '3', 'type': {
+            'link': 'disbursements', 'H': 'F3-19B', 'S': 'F3-19B'
+        }}),
+    ('other_disbursements',  # F3, F3P, F3X
+        {'label': 'Other disbursements', 'level': '2', 'type': {
+            'link': 'disbursements', 'P': 'F3P-29', 'H': 'F3-21', 'S': 'F3-21', 'O': 'F3X-29'
+        }}),
+    ('fed_election_activity',  # F3X
+        {'label': 'Total federal election activity', 'level': '2'}),
+    ('shared_fed_activity',  # F3X
+        {'label': 'Allocated federal election activity - federal share',
+            'level': '3'}),
+    ('allocated_federal_election_levin_share',  # F3X
+        {'label': 'Allocated federal election activity - Levin share',
+            'level': '3'}),
+    ('non_allocated_fed_election_activity',  # F3X
+        {'label': 'Federal election activity - federal only', 'level': '3'}),
+    ('fed_disbursements',  # F3X
+        {'label': 'Total federal disbursements', 'level': '2'}),
 ])
 
 CASH_FORMATTER = OrderedDict([

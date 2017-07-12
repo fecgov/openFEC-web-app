@@ -145,12 +145,20 @@ def process_raising_data(totals):
     """
     Presidential committees show total offsets AND offsets to operating expenditures
     We want to nest the latter under the former as a third-level item,
-    but because other committees useoffsets_to_operating expenditures at the second level,
+    but because other committees use offsets_to_operating expenditures at the second level,
     we store that as a new value and remove the old one
     """
     if 'total_offsets_to_operating_expenditures' in totals:
         totals['subtotal_offsets_to_operating_expenditures'] = totals['offsets_to_operating_expenditures']
         del totals['offsets_to_operating_expenditures']
+
+    # If there's repayments_loans_made_by_candidate, it's an F3P .
+    # In this case, loan_repayments_made is a subtotal and shouldn't be linked to
+    # For F3, loan_repayments_made is just a single line and should be a link
+    # So this renames it for proper formatting of F3P
+    if 'loan_repayments_made' in totals and 'repayments_loans_made_by_candidate' in totals:
+        totals['total_loan_repayments_made'] = totals['loan_repayments_made']
+        del totals['loan_repayments_made']
 
     return financial_summary_processor(totals, constants.RAISING_FORMATTER)
 

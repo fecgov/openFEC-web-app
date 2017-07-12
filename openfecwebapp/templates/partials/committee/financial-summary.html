@@ -27,7 +27,7 @@
           <div class="tag__category">
             <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
-          {{ tables.summary(raising_summary, committee_id, cycle) }}
+          {{ tables.summary(raising_summary, committee_id, cycle, committee_type) }}
         </div>
         <div class="entity__figure entity__figure--narrow" id="total-spent">
           <div class="heading--section heading--with-action">
@@ -39,7 +39,7 @@
           <div class="tag__category u-no-margin">
             <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
           </div>
-          {{ tables.summary(spending_summary, committee_id, cycle) }}
+          {{ tables.summary(spending_summary, committee_id, cycle, committee_type) }}
         </div>
         <div class="entity__figure entity__figure--narrow" id="cash-summary">
           <div class="heading--section heading--with-action">
