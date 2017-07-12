@@ -268,7 +268,7 @@ line_numbers = {
         ]),
         'presidential': OrderedDict([
             ('F3P-16', 'Federal funds (Line 16)'),
-            ('F3P-17A', 'Contributions from individuals (Line 17a)'),
+            ('F3P-17A', 'Contributions from individuals (Line 17ai)'),
             ('F3P-17B', 'Contributions from political party committees (Line 17b)'),
             ('F3P-17C', 'Contributions from other political committees (Line 17c)'),
             ('F3P-17D', 'Contributions from the candidate (Line 17d)'),
