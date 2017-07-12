@@ -90,6 +90,7 @@ def load_legal_advisory_opinion(ao_no):
 
     ao = results['docs'][0]
     ao['sorted_documents'] = _get_sorted_documents(ao)
+    ao['entities'] = sorted(ao['entities'], key=itemgetter('role'), reverse=True)
     return ao
 
 

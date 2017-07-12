@@ -68,25 +68,15 @@
               <tr>
                 <th scope="col">Role</th>
                 <th scope="col">Name</th>
+                <th scope="col">Type</th>
               </tr>
             </thead>
             <tbody>
-              {% for entity in advisory_opinion.requestor_names %}
+              {% for entity in advisory_opinion.entities %}
                 <tr>
-                  <td>Requestor</td>
-                  <td>{{ entity }}</td>
-                </tr>
-              {% endfor %}
-              {% for entity in advisory_opinion.representative_names %}
-                <tr>
-                  <td>Counsel/representative</td>
-                  <td>{{ entity }}</td>
-                </tr>
-              {% endfor %}
-              {% for entity in advisory_opinion.commenter_names %}
-                <tr>
-                  <td>Commenter</td>
-                  <td>{{ entity }}</td>
+                  <td>{{ entity.role }}</td>
+                  <td>{{ entity.name }}</td>
+                  <td>{{ entity.type }}</td>
                 </tr>
               {% endfor %}
             </tbody>
