@@ -7,8 +7,10 @@
 
   {% include 'partials/meta-tags.html' %}
 
-  <link rel="stylesheet" href="{{ asset_for('dist/styles/styles.css') }}" />
-  <link rel="stylesheet" href="{{ asset_for('dist/styles/fec.css') }}" />
+  <link rel="stylesheet" href="{{ asset_for('dist/styles/global.css') }}" />
+
+  {% block extra_css %}
+  {% endblock %}
 
   {% if api_location %}
   <script>

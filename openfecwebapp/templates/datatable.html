@@ -8,6 +8,10 @@
   Browse {{ title }}
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/datatables.css') }}" />
+{% endblock %}
+
 {% block body %}
 
 {{ header.header(breadcrumbs_title | title, breadcrumbs) }}
@@ -18,7 +22,7 @@
       <div class="data-container__widgets js-data-widgets">
         <noscript>
           <h1>{{ title }}</h1>
-        </noscript>        
+        </noscript>
         <div class="js-filter-tags data-container__tags">
         </div>
       </div>

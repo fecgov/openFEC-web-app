@@ -8,6 +8,10 @@
   {{ title }}
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/elections.css') }}" />
+{% endblock %}
+
 {% block body %}
 <div class="tab-interface">
   {{ header.header(title) }}

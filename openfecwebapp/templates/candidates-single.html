@@ -6,6 +6,10 @@
     {{ name }} - Candidate overview
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/entity.css') }}" />
+{% endblock %}
+
 {% set breadcrumbs=[('', 'Candidate profiles')] %}
 
 {% block body %}

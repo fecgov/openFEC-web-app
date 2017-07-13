@@ -5,6 +5,10 @@
   {{ title }}
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/common.css') }}" />
+{% endblock %}
+
 {% block body %}
   {{ header.header(title, '') }}
   <div class="tab-interface">

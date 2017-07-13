@@ -10,6 +10,11 @@
   {{ breadcrumb.breadcrumbs('AO %s' % (advisory_opinion.no,), breadcrumb_links) }}
 </header>
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/legal.css') }}" />
+<link rel="stylesheet" href="{{ asset_for('dist/styles/common.css') }}" />
+{% endblock %}
+
 <div class="main">
 <div class="container">
   <div class="row">

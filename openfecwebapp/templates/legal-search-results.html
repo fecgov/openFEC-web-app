@@ -12,6 +12,10 @@
   {% endif %}
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/legal.css') }}" />
+{% endblock %}
+
 {% block body %}
 <header class="page-header slab slab--primary">
   {{ breadcrumb.breadcrumbs('Search results', breadcrumb_links) }}

@@ -6,6 +6,10 @@
   Find candidates and elections by location
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/elections.css') }}" />
+{% endblock %}
+
 {% block body %}
   {{ header.header(title) }}
 <section class="main" id="election-lookup" >
