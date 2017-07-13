@@ -67,7 +67,6 @@ var fs = require('fs');
 var path = require('path');
 var file = require('gulp-file');
 var concat = require('concat-stream');
-var factor = require('factor-bundle');
 
 var del = require('del');
 var extend = require('gulp-extend');
