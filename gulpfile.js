@@ -34,12 +34,17 @@ gulp.task('copy-images', function() {
     .pipe(gulp.dest('./dist/img'));
 });
 
+gulp.task('copy-fonts', function() {
+  return gulp.src(['./static/fonts/**/*', './node_modules/fec-style/fonts/**/*'])
+    .pipe(gulp.dest('./dist/fonts'));
+});
+
 gulp.task('copy-maps', function() {
   return gulp.src('./node_modules/congressional-districts/**/*')
     .pipe(gulp.dest('./dist/json/districts'));
 });
 
-gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-maps'], function() {
+gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-fonts', 'copy-maps'], function() {
   return gulp.src('./static/styles/*.scss')
     .pipe(rename(function(path) {
       path.dirname = './dist/styles';
