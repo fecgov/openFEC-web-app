@@ -9,73 +9,62 @@
 {% endblock %}
 
 {% block body %}
-<div class="tab-interface">
-  {{ header.header(title) }}
-  <header class="entity__header {% if office != 'president' %}entity__header--map{% endif %} entity__header--primary">
-    <div class="container">
-      <div class="entity__header--info">
-        <div class="entity__header__top row">
-          {% if office == 'president' %}
-            <h1 class="entity__name">US President</h1>
-            <span class="t-data">{{ cycle }} Presidential election</span>
-          {% else %}
-            <h1 class="entity__name">{{ state|fmt_state_full }}
-            {% if district %}
-              District {{ district }}
-            {% endif %}
-            </h1>
-            <span class="t-data">{{ cycle }} {{ office|title }} Election</span>
-          {% endif %}
-        </div>
-        <div class="entity__header__bottom row">
-          <div class="entity__info">
-            {{ select.cycle_select(cycles, cycle, location='path', class='select--alt-primary', range=True) }}
-          </div>
-        </div>
-      </div>
-      {% if office == 'house' and cycle >= constants.DISTRICT_MAP_CUTOFF or office == 'senate'  %}
-      <div id="election-map" class="map" aria-hidden="true"></div>
+{{ header.header(title) }}
+<div class="u-padding--left u-padding--right tab-interface">
+  <header class="main">
+    {% if office == 'president' %}
+      <h1 class="heading--section">{{ cycle }} US President election</h1>
+    {% else %}
+      <h1 class="heading--section">{{ cycle }} {{ state|fmt_state_full }}
+      {% if district %}
+        District {{ district }} election
       {% endif %}
-    </div>
+      </h1>
+    {% endif %}
   </header>
 
-  <div class="page-controls page-controls--primary sticky-bar with-transition js-sticky-bar" data-trigger-offset="100">
-    <div class="page-controls__top">
-      <div class="container">
-        <span class="page-controls__title">{{ title }}</span>
-      </div>
-    </div>
-    <div class="page-controls__bottom">
-      <div class="container">
-        <nav class="page-tabs">
-          <ul class="page-tabs__list" role="tablist" data-name="tab">
-            <li class="page-tabs__item" role="presentation">
-              <a
-                role="tab"
-                data-name="comparison"
-                tabindex="0"
-                aria-controls="panel1"
-                href="#section-1"
-                aria-selected="true">Financial Summary</a>
-            </li>
-            <li class="page-tabs__item" role="presentation">
-              <a
-                role="tab"
-                data-name="spending-by-others"
-                tabindex="0"
-                aria-controls="panel2"
-                href="#section-2"
-                aria-selected="true">Spending by others to support/oppose</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </div>
+  <div class="data-container__wrapper">
+    <nav class="sidebar side-nav-alt">
+      <ul class="tablist" role="tablist" data-name="tab">
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="comparison"
+            tabindex="0"
+            aria-controls="panel1"
+            href="#section-1"
+            aria-selected="true">Financial comparison</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="comparison"
+            tabindex="0"
+            aria-controls="panel3"
+            href="#section-3"
+            >Raising comparison</a>
+        </li>
+        <li class="side-nav__item" role="presentation">
+          <a
+            class="side-nav__link"
+            role="tab"
+            data-name="spending-by-others"
+            tabindex="0"
+            aria-controls="panel2"
+            href="#section-2"
+            >Spending by others to support/oppose</a>
+        </li>
+      </ul>
+    </nav>
 
-  {% include 'partials/loading-tab.html' %}
-  {% include 'partials/elections/candidate-comparison-tab.html' %}
-  {% include 'partials/elections/other-spending-tab.html' %}
+    <div class="main__content--right-full">
+      {% include 'partials/loading-tab.html' %}
+      {% include 'partials/elections/candidate-comparison-tab.html' %}
+      {% include 'partials/elections/detailed-comparison-tab.html' %}
+      {% include 'partials/elections/other-spending-tab.html' %}
+    </div>
 </div>
 {% endblock %}
 
