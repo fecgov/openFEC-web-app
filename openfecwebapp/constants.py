@@ -349,8 +349,9 @@ RAISING_FORMATTER = OrderedDict([
     ('individual_contributions',  # F3, F3P, F3X
         {'label': 'Total individual contributions', 'level': '3'}),
     ('individual_itemized_contributions',  # F3, F3P, F3X
-        {'label': 'Itemized individual contributions', 'level': '4',
-            'link': 'individual_contributions'}),
+        {'label': 'Itemized individual contributions', 'level': '4', 'type': {
+            'link': 'receipts', 'P': 'F3P-17A', 'H': 'F3-11AI', 'S': 'F3-11AI', 'O': 'F3X-11AI'
+        }}),
     ('individual_unitemized_contributions',  # F3, F3P, F3X
         {'label': 'Unitemized individual contributions', 'level': '4'}),
     ('political_party_committee_contributions',
