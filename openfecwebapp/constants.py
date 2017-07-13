@@ -364,7 +364,7 @@ RAISING_FORMATTER = OrderedDict([
             'link': 'receipts',
                   'P': 'F3P-17C', 'H': 'F3-11C', 'S': 'F3-11C', 'O': 'F3X-11C'
         }}),
-    ('federal_funds',  # F3, F3P
+    ('federal_funds',  # F3P
         {'label': 'Presidential public funds', 'level': '3'}),
     ('candidate_contribution',  # F3, F3P
         {'label': 'Candidate contributions', 'level': '3', 'type': {

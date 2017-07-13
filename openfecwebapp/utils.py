@@ -169,6 +169,7 @@ def process_raising_data(totals):
         del totals['offsets_to_legal_accounting']
         del totals['offsets_to_fundraising_expenditures']
         del totals['total_offsets_to_operating_expenditures']
+        del totals['federal_funds']
 
     # Presidential committees show total offsets AND offsets to operating expenditures
     # We want to nest the latter under the former as a third-level item,
@@ -181,6 +182,11 @@ def process_raising_data(totals):
     return financial_summary_processor(totals, constants.RAISING_FORMATTER)
 
 def process_spending_data(totals):
+    # Remove items from combined candidate disbursements for F3
+    if 'fundraising_disbursements' in totals and 'loan_repayments' in totals:
+        del totals['fundraising_disbursements']
+        del totals['exempt_legal_accounting_disbursement']
+
     return financial_summary_processor(totals, constants.SPENDING_FORMATTER)
 
 def process_cash_data(totals):
