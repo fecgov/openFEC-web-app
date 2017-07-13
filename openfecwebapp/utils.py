@@ -160,6 +160,13 @@ def process_raising_data(totals):
         totals['total_loan_repayments_made'] = totals['loan_repayments_made']
         del totals['loan_repayments_made']
 
+    # If there's shared_fed_operating_expenditures, it's an F3X filer.
+    # In this case, operating_expenditures is a subtotal and shouldn't be linked
+    # So this renames it and deletes the original reference for F3X
+    if 'operating_expenditures' in totals and 'shared_fed_operating_expenditures' in totals:
+        totals['total_operating_expenditures'] = totals['operating_expenditures']
+        del totals['operating_expenditures']
+
     return financial_summary_processor(totals, constants.RAISING_FORMATTER)
 
 def process_spending_data(totals):
