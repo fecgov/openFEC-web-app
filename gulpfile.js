@@ -17,9 +17,6 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
-var appEnv = require('cfenv').getAppEnv();
-
-
 var debug = !!process.env.FEC_WEB_DEBUG;
 var analytics = !!process.env.FEC_WEB_GOOGLE_ANALYTICS;
 var production = ['stage', 'prod'].indexOf(process.env.FEC_WEB_ENVIRONMENT) !== -1;
