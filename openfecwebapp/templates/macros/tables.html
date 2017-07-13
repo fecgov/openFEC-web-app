@@ -1,4 +1,13 @@
 {% macro summary(data, committee_id, cycle, office_or_committee) %}
+
+{% if office_or_committee not in ['P', 'H', 'S'] %}
+  {#
+  Form 3 line numbers are currently coded as type=O, but since more committees
+  use this form, we need to force those all to look for the O value.
+  #}
+  {% set office_or_committee = 'O' %}
+{% endif %}
+
 <figure>
 <table class="simple-table">
   {% for item in data %}
