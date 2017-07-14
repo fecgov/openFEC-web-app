@@ -34,9 +34,9 @@
           </a>
         </div>
         <div class="tag__category u-no-margin">
-          <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
+          <div class="tag__item">Coverage dates: {{ aggregate.coverage_start_date|date }} to {{ aggregate.coverage_end_date|date }}</div>
         </div>
-        {{ tables.summary(raising_summary, committee_ids, cycle) }}
+        {{ tables.summary(raising_summary, committee_ids, cycle, office) }}
       </div>
       <div class="entity__figure entity__figure--narrow" id="total-spent">
         <div class="heading--section heading--with-action">
@@ -46,16 +46,16 @@
           </a>
         </div>
         <div class="tag__category u-no-margin">
-          <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
+          <div class="tag__item">Coverage dates: {{ aggregate.coverage_start_date|date }} to {{ aggregate.coverage_end_date|date }}</div>
         </div>
-        {{ tables.summary(spending_summary, committee_ids, cycle) }}
+        {{ tables.summary(spending_summary, committee_ids, cycle, office) }}
       </div>
       <div class="entity__figure entity__figure--narrow" id="cash-summary">
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Cash summary</h3>
         </div>
         <div class="tag__category u-no-margin">
-          <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
+          <div class="tag__item">Coverage dates: {{ aggregate.coverage_start_date|date }} to {{ aggregate.coverage_end_date|date }}</div>
         </div>
         {{ tables.summary(cash_summary) }}
       </div>
