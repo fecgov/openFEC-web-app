@@ -506,7 +506,7 @@ SPENDING_FORMATTER = OrderedDict([
         {'label': 'Total loan repayments made', 'level': '2'}),
     ('repayments_loans_made_by_candidate',  # F3P
         {'label': 'Candidate loan repayments', 'level': '3', 'type': {
-            'link': 'disbursements', 'O': 'F3P-27A'
+            'link': 'disbursements', 'P': 'F3P-27A'
         }}),
     ('repayments_other_loans',  # F3P
         {'label': 'Other loan repayments', 'level': '3', 'type': {
