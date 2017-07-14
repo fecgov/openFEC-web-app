@@ -6,7 +6,7 @@
   <h2 id="section-3-heading">Raising</h2>
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
     {{ select.committee_cycle_select(cycles, cycle, 'receipts')}}
-    {% if committee_type not in ['C', 'E', 'I'] %}
+    {% if totals and committee_type not in ['C', 'E', 'I'] %}
       <div id="total-receipts" class="entity__figure row">
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Total receipts</h3>
@@ -16,7 +16,7 @@
         <div class="content__section--narrow">
           <div class="row u-margin-bottom">
             <div class="usa-width-one-half">
-              <span class="t-big-data">{{ raising_summary[0][0]|currency }}</span>
+              <span class="t-big-data">{{ totals.0.receipts|currency }}</span>
             </div>
           </div>
           <div class="row">
@@ -60,9 +60,11 @@
       <div class="row">
         <div id="by-state" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
+            {% if totals %}
             <div class="u-float-left tag__category">
               <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
+            {% endif %}
             <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="receipts-by-state">Export</button>
           </div>
           <div class="map-table">
@@ -90,9 +92,11 @@
 
         <div id="by-contribution-size" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
+            {% if totals %}
             <div class="u-float-left tag__category">
               <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
+            {% endif %}
             <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="contribution-size">Export</button>
           </div>
           <table
@@ -108,9 +112,11 @@
         </div>
         <div id="by-employer" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
+            {% if totals %}
             <div class="u-float-left tag__category">
               <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
+            {% endif %}
             <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="receipts-by-employer">Export</button>
           </div>
           <table
@@ -129,9 +135,11 @@
 
         <div id="by-occupation" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
+            {% if totals %}
             <div class="u-float-left tag__category">
               <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
+            {% endif %}
             <button type="button" class="u-float-right js-export button button--cta button--export" data-export-for="receipts-by-occupation">Export</button>
           </div>
           <table
@@ -150,9 +158,11 @@
 
         <div id="itemized-contributions" class="panel-toggle-element">
           <div class="results-info results-info--simple">
+            {% if totals %}
             <div class="u-float-left tag__category">
               <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
             </div>
+            {% endif %}
             <div class="u-float-right">
               <button type="button" class="js-export button button--cta button--export" data-export-for="itemized-receipts">Export</button>
               <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="itemized-receipts" aria-hidden="true"></div>

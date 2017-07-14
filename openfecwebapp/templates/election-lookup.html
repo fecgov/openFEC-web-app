@@ -74,7 +74,12 @@
           <div class="js-results-items"></div>
         </div>
       </div>
-      <div class="election-map usa-width-one-half"></div>
+      <div class="usa-width-one-half">
+        <div class="election-map"></div>
+        <div class="message message--info js-map-message" aria-hidden="true">
+          District maps are only available for elections in {{ constants.DISTRICT_MAP_CUTOFF | fmt_year_range }} and later.
+        </div>
+      </div>
     </div>
 </section>
 

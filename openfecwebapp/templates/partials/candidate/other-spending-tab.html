@@ -20,8 +20,9 @@
           href="{{ url_for(
             'independent_expenditures',
             min_date=cycle_start(min_cycle) | date(fmt='%m-%d-%Y'),
-            max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y')
-          ) }}&candidate_id={{ candidate_id }}">Filter this data</a>
+            max_date=cycle_end(max_cycle) | date(fmt='%m-%d-%Y'),
+            candidate_id=candidate_id,
+            candidate_name=name) }}">Filter this data</a>
       </div>
       <div class="results-info results-info--simple js-other-spending-totals" data-spending-type="independentExpenditures">
         <div class="usa-width-one-half">

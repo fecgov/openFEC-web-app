@@ -26,6 +26,10 @@ var versionColumn = {
   className: 'hide-panel hide-efiling column--med min-desktop',
   orderable: false,
   render: function(data, type, row) {
+    // RFAIs and FRQs should just show N/A because they can't be amended
+    if (['RFAI', 'FRQ'].indexOf(row.form_type) >= 0) {
+      return '<i class="icon-blank"></i>Not applicable';
+    }
     var version = helpers.amendmentVersion(data);
     if (version === 'Version unknown') {
       return '<i class="icon-blank"></i>Version unknown<br>' +
@@ -69,11 +73,17 @@ var pagesColumn = {
   orderable: false,
   className: 'min-tablet hide-panel column--xs column--number',
   render: function(data, type, row) {
-    // Image numbers begin with YYYYMMDD, which makes for a very big number
+    // Image numbers in 2015 and later begin with YYYYMMDD,
+    // which makes for a very big number.
     // This results in inaccurate subtraction
     // so instead we slice it after the first 8 digits
+    // Earlier image numbers are only 11 digits, so we just leave those as-is
     var shorten = function(number) {
-      return Number(number.toString().slice(8));
+      if (number.toString().length === 18) {
+        return Number(number.toString().slice(8));
+      } else {
+        return number;
+      }
     };
     var pages = shorten(row.ending_image_number) - shorten(row.beginning_image_number) + 1;
     return pages.toLocaleString();
@@ -315,6 +325,10 @@ var filings = {
       var parsed = moment(row.receipt_date, 'YYYY-MM-DDTHH:mm:ss');
       return parsed.isValid() ? parsed.format('MM/DD/YYYY') : 'Invalid date';
     }
+  },
+  beginning_image_number: {
+    data: 'beginning_image_number',
+    orderable: false
   },
   coverage_start_date: dateColumn({data: 'coverage_start_date', className: 'min-tablet hide-panel column--small', orderable: false}),
   coverage_end_date: dateColumn({data: 'coverage_end_date', className: 'min-tablet hide-panel column--small', orderable: false}),

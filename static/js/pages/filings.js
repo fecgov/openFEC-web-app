@@ -14,7 +14,7 @@ var dropdown = require('fec-style/js/dropdowns');
 var columns = columnHelpers.getColumns(
   columns.filings,
   [
-    'filer_name', 'document_type', 'version', 'receipt_date', 'modal_trigger'
+    'filer_name', 'document_type', 'version', 'receipt_date', 'beginning_image_number', 'modal_trigger'
   ]
 );
 

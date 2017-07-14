@@ -49,6 +49,7 @@ describe('election lookup', function() {
           '<div class="js-results-items"></div>' +
         '</div>' +
         '<div class="election-map"></div>' +
+        '<div class="js-map-message"></div>' +
       '</div>'
     );
     window.history.pushState({}, null, '/');

@@ -7,6 +7,7 @@ var $ = require('jquery');
 var tables = require('../modules/tables');
 var TableSwitcher = require('../modules/table-switcher').TableSwitcher;
 var columns = require('../modules/columns');
+var filtersEvent = require('../modules/filters-event');
 
 var disbursementTemplate = require('../../templates/disbursements.hbs');
 
@@ -41,4 +42,6 @@ $(document).ready(function() {
       paginator: tables.SeekPaginator
     }
   }).init();
+
+  filtersEvent.lineNumberFilters();
 });

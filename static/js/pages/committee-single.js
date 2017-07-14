@@ -283,7 +283,7 @@ var aggregateCallbacks = {
 // Settings for filings tables
 var rawFilingsColumns = columnHelpers.getColumns(
   columns.filings,
-  ['document_type', 'receipt_date']
+  ['document_type', 'coverage_start_date', 'coverage_end_date', 'receipt_date']
 );
 
 var filingsColumns = columnHelpers.getColumns(
@@ -293,7 +293,7 @@ var filingsColumns = columnHelpers.getColumns(
 
 var filingsReportsColumns = columnHelpers.getColumns(
   columns.filings,
-  ['document_type', 'version', 'receipt_date_unorderable', 'pages', 'modal_trigger']
+  ['document_type', 'version', 'coverage_start_date', 'coverage_end_date', 'receipt_date_unorderable', 'pages', 'modal_trigger']
 );
 
 $(document).ready(function() {
