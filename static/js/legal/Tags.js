@@ -52,13 +52,13 @@ function Tags(props) {
     if(Array.isArray(query[tagName])) {
       function getArrayTagClasses() {
         var classes = "tag__category";
-        if(tagName.includes('citation') && citationRequireAll) {
+        if(tagName.indexOf('citation') >= 0 && citationRequireAll) {
           classes += " tag__category--and";
         }
         return classes;
       }
       return <li key={tagName} className={getArrayTagClasses()}>{query[tagName].map(val => getTag(tagName, val))}</li>
-    } else if(tagName.includes("date")) {
+    } else if(tagName.indexOf("date") >= 0) {
       if(query[tagName].min && query[tagName].max) {
         return <li key={tagName} className="tag__category tag__category__range--date">
         {[getTag(query[tagName].minName, query[tagName].min), getTag(query[tagName].maxName, query[tagName].max)]}</li>
