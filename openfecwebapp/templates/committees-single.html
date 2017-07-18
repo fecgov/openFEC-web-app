@@ -7,6 +7,10 @@
     {{ name }} - committee overview
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/entity.css') }}" />
+{% endblock %}
+
 {% set breadcrumbs=[('', 'Committee profiles')] %}
 
 {% block body %}
