@@ -12,7 +12,7 @@
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Total disbursements</h3>
           <a class="heading__right button--alt button--browse"
-              href="{{ url_for('disbursements', committee_id=committee_id, two_year_transaction_period=cycle) }}">Filter all disbursements
+              href="{{ url_for('disbursements', committee_id=committee_id, min_date=totals.0.coverage_start_date|date, max_date=totals.0.coverage_end_date|date) }}">Filter all disbursements
           </a>
         </div>
         <div class="content__section--narrow">
@@ -40,8 +40,8 @@
             href="{{ url_for(
               'communication_costs',
               committee_id=committee_id,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y'),
+              min_date=totals.0.coverage_start_date|date,
+              max_date=totals.0.coverage_end_date|date
             ) }}">Filter this data
         </a>
       </div>
@@ -65,8 +65,8 @@
             href="{{ url_for(
               'electioneering_communications',
               committee_id=committee_id,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y'),
+              min_date=totals.0.coverage_start_date|date,
+              max_date=totals.0.coverage_end_date|date
             ) }}">Filter this data
         </a>
       </div>
@@ -91,8 +91,8 @@
             href="{{ url_for(
               'independent_expenditures',
               committee_id=committee_id,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+              min_date=totals.0.coverage_start_date|date,
+              max_date=totals.0.coverage_end_date|date
             ) }}">Filter this data</a>
       </div>
       <p>This tab shows spending that this committee has made in support of or opposition to a candidate. None of the funds are directly given to or spent by the candidate.</p>
@@ -120,7 +120,7 @@
       <div class="heading--section heading--with-action">
         <h3 class="heading__left">Disbursements</h3>
         <a class="heading__right button--alt button--browse"
-            href="{{ url_for('disbursements', committee_id=committee_id, two_year_transaction_period=cycle) }}">Filter this data</a>
+            href="{{ url_for('disbursements', committee_id=committee_id, min_date=totals.0.coverage_start_date|date, max_date=totals.0.coverage_end_date|date) }}">Filter this data</a>
       </div>
 
       <fieldset class="row toggles js-toggles">

@@ -11,7 +11,11 @@
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Total receipts</h3>
           <a class="heading__right button--alt button--browse"
-            href="{{ url_for('receipts', two_year_transaction_period=cycle, committee_id=committee_id) }}">Filter all receipts</a>
+            href="{{ url_for(
+              'receipts',
+              min_date=totals.0.coverage_start_date|date,
+              max_date=totals.0.coverage_end_date|date
+              committee_id=committee_id) }}">Filter all receipts</a>
         </div>
         <div class="content__section--narrow">
           <div class="row u-margin-bottom">
@@ -32,7 +36,12 @@
       <div class="heading--section heading--with-action">
         <h3 class="heading__left">Individual contributions</h3>
         <a class="heading__right button--alt button--browse"
-            href="{{ url_for('individual_contributions', committee_id=committee_id, two_year_transaction_period=cycle) }}">Filter this data</a>
+            href="{{ url_for(
+                'individual_contributions',
+                committee_id=committee_id,
+                min_date=totals.0.coverage_start_date|date,
+                max_date=totals.0.coverage_end_date|date
+               }}">Filter this data</a>
       </div>
       <fieldset class="row toggles js-toggles">
         <legend class="label">Group by:</legend>
