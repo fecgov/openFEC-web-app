@@ -29,7 +29,7 @@ Filter receipts
 <div class="filters__inner">
   {{ typeahead.field('committee_id', 'Recipient name or ID') }}
   {{ typeahead.field('contributor_name', 'Contributor name or ID', dataset='committees', allow_text=True) }}
-  {{ date.partition_field('date', 'Receipt date', dates ) }}
+  {{ date.field('date', 'Receipt date', dates ) }}
 </div>
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <button type="button" class="js-accordion-trigger accordion__button">Contributor details</button>

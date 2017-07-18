@@ -26,7 +26,7 @@ Filter disbursements
 <div class="filters__inner">
   {{ typeahead.field('committee_id', 'Spender name or ID') }}
   {{ typeahead.field('recipient_name', 'Recipient name or ID', allow_text=True) }}
-  {{ date.partition_field('date', 'Disbursement date', dates ) }}
+  {{ date.field('date', 'Disbursement date', dates ) }}
 </div>
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <button type="button" class="js-accordion-trigger accordion__button">Spender details</button>
