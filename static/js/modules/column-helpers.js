@@ -88,20 +88,6 @@ function buildEntityLink(data, url, category, opts) {
   return anchor.outerHTML;
 }
 
-function buildAggregateUrl(cycle, includeTransactionPeriod) {
-  var dates = helpers.cycleDates(cycle);
-  if (includeTransactionPeriod) {
-    return {
-      two_year_transaction_period: cycle
-    };
-  } else {
-    return {
-      min_date: dates.min,
-      max_date: dates.max
-    };
-  }
-}
-
 function buildTotalLink(path, getParams) {
   return function(data, type, row, meta) {
     data = data || 0;
@@ -117,9 +103,13 @@ function buildTotalLink(path, getParams) {
       if (path.indexOf('receipts') > -1 || path.indexOf('disbursements') > -1) {
         includeTransactionPeriod = true;
       }
+      var dates = helpers.cycleDates(_.extend({}, row, params).cycle);
       var uri = helpers.buildAppUrl(path, _.extend(
-        {committee_id: row.committee_id},
-        buildAggregateUrl(_.extend({}, row, params).cycle, includeTransactionPeriod),
+        {
+          committee_id: row.committee_id,
+          min_date: dates.min,
+          max_date: dates.max
+        },
         params
       ));
       link.setAttribute('href', uri);
@@ -133,7 +123,6 @@ function buildTotalLink(path, getParams) {
 
 module.exports = {
   barColumn: barColumn,
-  buildAggregateUrl: buildAggregateUrl,
   buildEntityLink: buildEntityLink,
   buildTotalLink: buildTotalLink,
   formattedColumn: formattedColumn,
