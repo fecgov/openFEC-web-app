@@ -257,7 +257,7 @@ function amendmentVersionDescription(row) {
     return description;
   }
 
-  if (row.amendment_indicator === API.amendment_indicator_new) {
+  if (row.amendment_indicator === API.amendment_indicator_new || row.amendment_version === 0) {
     description = ' Original';
   }
   else {
