@@ -11,8 +11,6 @@ from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
 from collections import OrderedDict
 
-import datetime
-
 import github3
 from werkzeug.utils import cached_property
 
@@ -205,13 +203,6 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     tmpl_vars['min_cycle'] = cycle - tmpl_vars['duration'] if election_full else cycle
     tmpl_vars['election_full'] = election_full
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
-    tmpl_vars['context_vars'] = {
-        'cycles': candidate['cycles'],
-        'name': candidate['name'],
-        'cycle': cycle,
-        'electionFull': election_full,
-        'candidateID': candidate['candidate_id']
-    }
 
     # In the case of when a presidential or senate candidate has filed
     # for a future year that's beyond the current cycle,
@@ -291,6 +282,16 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         reverse=True,
     )
 
+    # Pass certain variables to the template to set Javascript context
+    tmpl_vars['context_vars'] = {
+        'candidateID': candidate['id'],
+        'coverageStartDate': aggregate['coverage_start_date'],
+        'coverageEndDate': aggregate['coverage_end_date'],
+        'cycle': cycle,
+        'cycles': candidate['cycles'],
+        'electionFull': election_full,
+        'name': candidate['name']
+    }
     return render_template('candidates-single.html', **tmpl_vars)
 
 

@@ -287,7 +287,8 @@ function initDisbursementsTable() {
     path: path,
     query: {
       committee_id: opts.committee_id,
-      two_year_transaction_period: opts.cycle
+      min_date: helpers.datetime(window.context.coverageStartDate, {}),
+      max_date: helpers.datetime(window.context.coverageEndDate, {})
     },
     columns: itemizedDisbursementColumns,
     order: [[4, 'desc']],
@@ -331,7 +332,8 @@ function initContributionsTables() {
     query: {
       committee_id: opts.committee_id,
       is_individual: true,
-      two_year_transaction_period: opts.cycle
+      min_date: helpers.datetime(window.context.coverageStartDate, {}),
+      max_date: helpers.datetime(window.context.coverageEndDate, {})
     },
     columns: individualContributionsColumns,
     order: [[2, 'desc']],
