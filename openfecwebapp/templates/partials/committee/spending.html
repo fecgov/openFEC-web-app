@@ -45,7 +45,7 @@
             ) }}">Filter this data
         </a>
       </div>
-      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="communication-cost-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="communication-cost-committee">
         <thead>
           <tr>
             <th scope="col">Amount</th>
@@ -71,7 +71,7 @@
         </a>
       </div>
       <p>Any broadcast, cable or satellite communication that (1) refers to a clearly identified candidate for federal office; (2) is publicly distributed within certain time periods before an election and (3) is targeted to the relevant electorate.</p>
-      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="electioneering-committee">
         <thead>
           <th scope="col">Amount</th>
           <th scope="col">Candidate</th>
@@ -101,7 +101,7 @@
         <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
       </div>
       {% endif %}
-      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="independent-expenditure-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="independent-expenditure-committee">
         <thead>
           <tr>
             <th scope="col">Amount</th>
@@ -151,8 +151,6 @@
         <table
             class="data-table data-table--heading-borders"
             data-type="disbursements-by-recipient"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
           >
           <thead>
             <th scope="col">Recipient</th>
@@ -179,10 +177,6 @@
         <table
             class="data-table data-table--heading-borders"
             data-type="itemized-disbursements"
-            data-committee="{{ committee.committee_id }}"
-            data-name="{{ name }}"
-            data-min-date="{{totals.0.coverage_start_date|date}}"
-            data-max-date="{{totals.0.coverage_end_date|date}}"
           >
           <thead>
             <tr>
@@ -208,8 +202,6 @@
         <table
             class="data-table data-table--heading-borders"
             data-type="disbursements-by-recipient-id"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
           >
           <thead>
             <th scope="col">Committee</th>

@@ -302,10 +302,10 @@ $(document).ready(function() {
   // Set up data tables
   $('.data-table').each(function(index, table) {
     var $table = $(table);
-    var committeeId = $table.attr('data-committee');
-    var cycle = $table.attr('data-cycle');
-    var minDate = $table.attr('data-min-date');
-    var maxDate = $table.attr('data-max-date');
+    var committeeId = window.context.committeeID;
+    var cycle = window.context.cycle;
+    var minDate = window.context.coverageStartDate;
+    var maxDate = window.context.coverageEndDate;
     var query = {
       cycle: cycle
     };
@@ -619,9 +619,9 @@ $(document).ready(function() {
   // Set up state map
   var $map = $('.state-map');
   var mapUrl = helpers.buildUrl(
-    ['committee', $map.data('committee-id'), 'schedules', 'schedule_a', 'by_state'],
+    ['committee', window.context.committeeID, 'schedules', 'schedule_a', 'by_state'],
     {
-      cycle: $map.data('cycle'),
+      cycle: window.context.cycle,
       per_page: 99
     }
   );

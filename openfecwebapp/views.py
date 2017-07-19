@@ -125,9 +125,12 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
     tmpl_vars['totals'] = financials['totals']
 
     tmpl_vars['context_vars'] = {
+        'committeeID': committee['committee_id'],
+        'coverageStartDate': financials['totals'][0]['coverage_start_date'],
+        'coverageEndDate': financials['totals'][0]['coverage_end_date'],
         'cycle': cycle,
         'timePeriod': str(cycle - 1) + '–' + str(cycle),
-        'name': committee['name'],
+        'name': committee['name']
     }
 
     if financials['reports'] and financials['totals']:
