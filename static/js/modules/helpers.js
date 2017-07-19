@@ -21,6 +21,7 @@ var isMediumScreen = helpers.isMediumScreen;
 // set parameters from the API
 var API = {
   amendment_indicator_new: 'N',
+  amendment_indicator_terminated: 'T',
   means_filed_e_file: 'e-file'
 };
 
@@ -249,6 +250,9 @@ function amendmentVersion(most_recent) {
 }
 
 function amendmentVersionDescription(row) {
+  // Helper function for labeling filings as either an "original" or
+  // a numbered amendment (e.g. "amendment 1" or "amendment 2")
+  // Different filings are coded slightly differently, which makes for some tricky logic
   var description = '';
   var amendment_num = 1;
 
@@ -257,9 +261,26 @@ function amendmentVersionDescription(row) {
     return description;
   }
 
+  // Filings with amendment_indicator = N are the originals
   if (row.amendment_indicator === API.amendment_indicator_new) {
     description = ' Original';
   }
+
+  // Original termination reports always start with their own filing ID
+  // in the amendment chain, which caused original reports to show up as an amendment
+  // This checks for terminatino reports and if the amendment number is greater
+  // than 0 or the amendment chain is longer than 1, it is an amendment
+  else if (row.amendment_indicator === API.amendment_indicator_terminated) {
+    if (row.amendment_chain.length > 1) {
+      amendment_num = row.amendment_chain.length - 1;
+      description = ' Amendment ' + amendment_num;
+    } else {
+      description = ' Original';
+    }
+  }
+
+  // All other filings: look at the length of the amendment_chain to create
+  // a label like "amendment 1" or "amendment 2"
   else {
     if (row.amendment_chain) {
       amendment_num = row.amendment_chain.length - 1;
