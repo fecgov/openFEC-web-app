@@ -14,7 +14,7 @@
             href="{{ url_for(
               'receipts',
               min_date=totals.0.coverage_start_date|date,
-              max_date=totals.0.coverage_end_date|date
+              max_date=totals.0.coverage_end_date|date,
               committee_id=committee_id) }}">Filter all receipts</a>
         </div>
         <div class="content__section--narrow">
@@ -41,7 +41,7 @@
                 committee_id=committee_id,
                 min_date=totals.0.coverage_start_date|date,
                 max_date=totals.0.coverage_end_date|date
-               }}">Filter this data</a>
+               )}}">Filter this data</a>
       </div>
       <fieldset class="row toggles js-toggles">
         <legend class="label">Group by:</legend>
@@ -181,7 +181,8 @@
               class="data-table data-table--heading-borders"
               data-type="itemized-receipts"
               data-committee="{{ committee.committee_id }}"
-              data-cycle="{{ cycle }}"
+              data-min-date="{{totals.0.coverage_start_date|date}}"
+              data-max-date="{{totals.0.coverage_end_date|date}}"              
             >
             <thead>
               <th scope="col">Contributor name</th>

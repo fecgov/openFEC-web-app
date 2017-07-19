@@ -181,7 +181,8 @@
             data-type="itemized-disbursements"
             data-committee="{{ committee.committee_id }}"
             data-name="{{ name }}"
-            data-cycle="{{ cycle }}"
+            data-min-date="{{totals.0.coverage_start_date|date}}"
+            data-max-date="{{totals.0.coverage_end_date|date}}"
           >
           <thead>
             <tr>

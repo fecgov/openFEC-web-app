@@ -304,6 +304,8 @@ $(document).ready(function() {
     var $table = $(table);
     var committeeId = $table.attr('data-committee');
     var cycle = $table.attr('data-cycle');
+    var minDate = $table.attr('data-min-date');
+    var maxDate = $table.attr('data-max-date');
     var query = {
       cycle: cycle
     };
@@ -413,7 +415,8 @@ $(document).ready(function() {
             path: path,
             query: {
               committee_id: committeeId,
-              two_year_transaction_period: cycle,
+              min_date: minDate,
+              max_date: maxDate,
               is_individual: true,
             },
             columns: individualContributionsColumns,
@@ -457,7 +460,8 @@ $(document).ready(function() {
             path: path,
             query: {
               committee_id: committeeId,
-              two_year_transaction_period: cycle
+              min_date: minDate,
+              max_date: maxDate,
             },
             columns: itemizedDisbursementColumns,
             callbacks: aggregateCallbacks,
@@ -545,14 +549,14 @@ $(document).ready(function() {
         });
         break;
       case 'raw-filings':
-        var min_date = $table.attr('data-min-date');
+        var minFilingDate = $table.attr('data-min-date');
         opts = _.extend({
           columns: rawFilingsColumns,
           order: [[1, 'desc']],
           path: ['efile', 'filings'],
           query: _.extend({
             committee_id: committeeId,
-            min_receipt_date: min_date,
+            min_receipt_date: minFilingDate,
             sort: ['-receipt_date']
           }, query),
           callbacks: {
