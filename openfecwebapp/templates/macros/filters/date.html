@@ -35,7 +35,7 @@
     <select id="two-year-transaction-period" name="two_year_transaction_period">
         <option value="">Select a value</option>
       {% for year in range(constants.END_YEAR, constants.START_YEAR, -2) %}
-        <option value="{{year}}">{{ year | fmt_year_range }}</option>
+        <option value="{{year}}">{{ year }}</option>
       {% endfor %}
     </select>
   </div>
@@ -55,11 +55,12 @@
       </button>
     </div>
     <div class="date-range__grid js-date-grid">
+      {% for year in range(constants.DEFAULT_TIME_PERIOD|int - 5, constants.DEFAULT_TIME_PERIOD|int + 1, 1) %}
       <div class="date-range__row">
         <div class="date-range__year">
-        {{ constants.DEFAULT_TIME_PERIOD|int - 1 }}
+        {{ year }}
         </div>
-        <ul data-year="{{ constants.DEFAULT_TIME_PERIOD|int - 1 }}" class="date-range__months">
+        <ul data-year="{{ year }}" class="date-range__months">
           <li data-month="01"><div>Jan</div></li>
           <li data-month="02"><div>Feb</div></li>
           <li data-month="03"><div>Mar</div></li>
@@ -74,25 +75,7 @@
           <li data-month="12"><div>Dec</div></li>
         </ul>
       </div>
-      <div class="date-range__row">
-        <div class="date-range__year">
-          {{ constants.DEFAULT_TIME_PERIOD }}
-        </div>
-        <ul data-year="{{ constants.DEFAULT_TIME_PERIOD }}" class="date-range__months">
-          <li data-month="01"><div>Jan</div></li>
-          <li data-month="02"><div>Feb</div></li>
-          <li data-month="03"><div>Mar</div></li>
-          <li data-month="04"><div>Apr</div></li>
-          <li data-month="05"><div>May</div></li>
-          <li data-month="06"><div>Jun</div></li>
-          <li data-month="07"><div>Jul</div></li>
-          <li data-month="08"><div>Aug</div></li>
-          <li data-month="09"><div>Sep</div></li>
-          <li data-month="10"><div>Oct</div></li>
-          <li data-month="11"><div>Nov</div></li>
-          <li data-month="12"><div>Dec</div></li>
-        </ul>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
