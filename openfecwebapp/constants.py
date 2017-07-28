@@ -233,11 +233,11 @@ house_senate_types = OrderedDict([
 ])
 
 table_columns = OrderedDict([
-    ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District']),
+    ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District', 'First filing date']),
     ('candidates-office-president', ['Name', 'Party', 'Receipts', 'Disbursements']),
     ('candidates-office-senate', ['Name', 'Party', 'State', 'Receipts', 'Disbursements']),
     ('candidates-office-house', ['Name', 'Party', 'State', 'District', 'Receipts', 'Disbursements']),
-    ('committees', ['Name', 'Treasurer', 'Type', 'Designation']),
+    ('committees', ['Name', 'Treasurer', 'Type', 'Designation', 'First filing date']),
     ('communication-costs', ['Committee', 'Support/Oppose', 'Candidate', 'Amount', 'Date']),
     ('disbursements', ['Spender', 'Recipient', 'State', 'Description', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),
