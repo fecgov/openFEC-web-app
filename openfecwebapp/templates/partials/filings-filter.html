@@ -28,6 +28,9 @@ Filter reports
   <div class="accordion__content">
     {{ typeahead.field('committee_id', 'Committee name or ID', '') }}
     {{ typeahead.field('candidate_id', 'Candidate name or ID', '', dataset='candidates') }}
+    {{ states.field('state') }}
+    {% include 'partials/filters/office-sought.html' %}
+    {% include 'partials/filters/parties.html' %}
   </div>
 
   <button type="button" class="js-accordion-trigger accordion__button">Filing date</button>
