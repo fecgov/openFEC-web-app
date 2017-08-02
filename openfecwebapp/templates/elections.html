@@ -17,6 +17,11 @@
   <header class="main">
     {% if office == 'president' %}
       <h1 class="entity__name">US President</h1>
+      <div class="heading--section">
+        <span class="t-data t-bold">
+          Compare candidates for president
+        </span>
+      </div>
     {% else %}
       <h1 class="entity__name">{{ state|fmt_state_full }} -
       {% if district %}
