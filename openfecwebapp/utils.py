@@ -143,14 +143,10 @@ def financial_summary_processor(totals, formatter):
 
 def process_raising_data(totals):
     """
-    Presidential committees show total offsets AND offsets to operating expenditures
-    We want to nest the latter under the former as a third-level item,
-    but because other committees use offsets_to_operating expenditures at the second level,
-    we store that as a new value and remove the old one
+    Processes raising totals by mapping to the RAISING_FORMATTER constant
+    Occassionally, the API schema is slightly out of sync with what we want to display,
+    so there's logic here to remove or rename items depending on the form we're showing
     """
-    if 'total_offsets_to_operating_expenditures' in totals:
-        totals['subtotal_offsets_to_operating_expenditures'] = totals['offsets_to_operating_expenditures']
-        del totals['offsets_to_operating_expenditures']
 
     # If there's repayments_loans_made_by_candidate, it's an F3P .
     # In this case, loan_repayments_made is a subtotal and shouldn't be linked to
@@ -160,9 +156,37 @@ def process_raising_data(totals):
         totals['total_loan_repayments_made'] = totals['loan_repayments_made']
         del totals['loan_repayments_made']
 
+    # If there's shared_fed_operating_expenditures, it's an F3X filer.
+    # In this case, operating_expenditures is a subtotal and shouldn't be linked
+    # So this renames it and deletes the original reference for F3X
+    if 'operating_expenditures' in totals and 'shared_fed_operating_expenditures' in totals:
+        totals['total_operating_expenditures'] = totals['operating_expenditures']
+        del totals['operating_expenditures']
+
+    # There's some fields only available on F3P but that are included in the responses for F3.
+    # So this checks for them and then deletes
+    if 'offsets_to_legal_accounting' in totals and 'all_other_loans' in totals:
+        del totals['offsets_to_legal_accounting']
+        del totals['offsets_to_fundraising_expenditures']
+        del totals['total_offsets_to_operating_expenditures']
+        del totals['federal_funds']
+
+    # Presidential committees show total offsets AND offsets to operating expenditures
+    # We want to nest the latter under the former as a third-level item,
+    # but because other committees use offsets_to_operating expenditures at the second level,
+    # we store that as a new value and remove the old one
+    if 'total_offsets_to_operating_expenditures' in totals and 'offsets_to_legal_accounting' in totals:
+        totals['subtotal_offsets_to_operating_expenditures'] = totals['offsets_to_operating_expenditures']
+        del totals['offsets_to_operating_expenditures']
+
     return financial_summary_processor(totals, constants.RAISING_FORMATTER)
 
 def process_spending_data(totals):
+    # Remove items from combined candidate disbursements for F3
+    if 'fundraising_disbursements' in totals and 'loan_repayments' in totals:
+        del totals['fundraising_disbursements']
+        del totals['exempt_legal_accounting_disbursement']
+
     return financial_summary_processor(totals, constants.SPENDING_FORMATTER)
 
 def process_cash_data(totals):

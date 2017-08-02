@@ -6,6 +6,10 @@
   {{ title }}
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/data-landing.css') }}" />
+{% endblock %}
+
 {% block body %}
 <section class="hero hero--primary hero--data" aria-labelledby="hero-heading">
   <div class="hero__image"></div>

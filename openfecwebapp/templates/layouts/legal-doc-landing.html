@@ -6,6 +6,10 @@
 
 {% block title %}{{ display_name | capitalize }}{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/legal.css') }}" />
+{% endblock %}
+
 {% block body %}
 <header class="page-header slab slab--primary">
   {{ breadcrumb.breadcrumbs(display_name.capitalize(), breadcrumb_links) }}

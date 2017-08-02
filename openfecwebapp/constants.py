@@ -3,6 +3,7 @@ from collections import OrderedDict
 START_YEAR = 1979
 END_YEAR = 2018
 DEFAULT_TIME_PERIOD = 2018
+DEFAULT_PRESIDENTIAL_YEAR = 2016
 DISTRICT_MAP_CUTOFF = 2018 # The year we show district maps for on election pages
 
 states = OrderedDict([
@@ -349,8 +350,9 @@ RAISING_FORMATTER = OrderedDict([
     ('individual_contributions',  # F3, F3P, F3X
         {'label': 'Total individual contributions', 'level': '3'}),
     ('individual_itemized_contributions',  # F3, F3P, F3X
-        {'label': 'Itemized individual contributions', 'level': '4',
-            'link': 'individual_contributions'}),
+        {'label': 'Itemized individual contributions', 'level': '4', 'type': {
+            'link': 'receipts', 'P': 'F3P-17A', 'H': 'F3-11AI', 'S': 'F3-11AI', 'O': 'F3X-11AI'
+        }}),
     ('individual_unitemized_contributions',  # F3, F3P, F3X
         {'label': 'Unitemized individual contributions', 'level': '4'}),
     ('political_party_committee_contributions',
@@ -363,7 +365,7 @@ RAISING_FORMATTER = OrderedDict([
             'link': 'receipts',
                   'P': 'F3P-17C', 'H': 'F3-11C', 'S': 'F3-11C', 'O': 'F3X-11C'
         }}),
-    ('federal_funds',  # F3, F3P
+    ('federal_funds',  # F3P
         {'label': 'Presidential public funds', 'level': '3'}),
     ('candidate_contribution',  # F3, F3P
         {'label': 'Candidate contributions', 'level': '3', 'type': {
@@ -451,10 +453,13 @@ SPENDING_FORMATTER = OrderedDict([
     ('disbursements',  # F3, F3P, F3X
         {'label': 'Total disbursements', 'level': '1',
             'term': 'total disbursements'}),
-    ('operating_expenditures',  # F3, F3P, F3X
+    ('operating_expenditures',  # F3, F3P
         {'label': 'Operating expenditures', 'term': 'operating expenditures',
             'level': '2', 'type': {'link': 'disbursements',
                 'P': 'F3P-23', 'H': 'F3-17', 'S': 'F3-17'}}),
+    ('total_operating_expenditures',  # F3X - renamed app-side
+        {'label': 'Operating expenditures', 'term': 'operating expenditures',
+            'level': '2'}),
     ('shared_fed_operating_expenditures',  # F3X
         {'label': 'Allocated operating expenditures - federal', 'level': '3'}),
     ('shared_nonfed_operating_expenditures',  # F3X
@@ -502,7 +507,7 @@ SPENDING_FORMATTER = OrderedDict([
         {'label': 'Total loan repayments made', 'level': '2'}),
     ('repayments_loans_made_by_candidate',  # F3P
         {'label': 'Candidate loan repayments', 'level': '3', 'type': {
-            'link': 'disbursements', 'O': 'F3P-27A'
+            'link': 'disbursements', 'P': 'F3P-27A'
         }}),
     ('repayments_other_loans',  # F3P
         {'label': 'Other loan repayments', 'level': '3', 'type': {

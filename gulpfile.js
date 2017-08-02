@@ -17,9 +17,6 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
-var appEnv = require('cfenv').getAppEnv();
-
-
 var debug = !!process.env.FEC_WEB_DEBUG;
 var analytics = !!process.env.FEC_WEB_GOOGLE_ANALYTICS;
 var production = ['stage', 'prod'].indexOf(process.env.FEC_WEB_ENVIRONMENT) !== -1;
@@ -34,12 +31,12 @@ gulp.task('copy-images', function() {
     .pipe(gulp.dest('./dist/img'));
 });
 
-gulp.task('copy-maps', function() {
-  return gulp.src('./node_modules/congressional-districts/**/*')
-    .pipe(gulp.dest('./dist/json/districts'));
+gulp.task('copy-fonts', function() {
+  return gulp.src(['./static/fonts/**/*', './node_modules/fec-style/fonts/**/*'])
+    .pipe(gulp.dest('./dist/fonts'));
 });
 
-gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-maps'], function() {
+gulp.task('build-sass', ['copy-vendor-images', 'copy-images', 'copy-fonts'], function() {
   return gulp.src('./static/styles/*.scss')
     .pipe(rename(function(path) {
       path.dirname = './dist/styles';
@@ -67,7 +64,6 @@ var fs = require('fs');
 var path = require('path');
 var file = require('gulp-file');
 var concat = require('concat-stream');
-var factor = require('factor-bundle');
 
 var del = require('del');
 var extend = require('gulp-extend');

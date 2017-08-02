@@ -7,6 +7,10 @@
   {{ title }}
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/elections.css') }}" />
+{% endblock %}
+
 {% block body %}
 {{ header.header(title) }}
 <div class="u-padding--left u-padding--right tab-interface">
