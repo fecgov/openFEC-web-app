@@ -315,27 +315,33 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 
 ElectionLookup.prototype.draw = function(results) {
   var self = this;
-  if (results.length && this.showResults) {
-    this.$resultsItems.empty();
-    results.forEach(function(result) {
-      self.drawResult(result);
-    });
-    if (this.serialized.zip) {
-      this.drawZipWarning();
-    }
-    this.updateLocations();
-    this.$resultsTitle.text(this.getTitle());
-  } else if (results.length && !this.showResults) {
-    this.updateLocations();
-  } else {
-    this.$resultsTitle.text('');
-    this.$resultsItems.html(noResultsTemplate(this.serialized));
-  }
 
-  if (Number(this.$cycle.val()) < window.DISTRICT_MAP_CUTOFF) {
-    this.map.hide();
+  if (!this.showResults) {
+    if (results.length) {
+      this.updateLocations();
+    }
   } else {
-    this.map.show();
+    if (results.length) {
+      this.$resultsItems.empty();
+      results.forEach(function(result) {
+        self.drawResult(result);
+      });
+      if (this.serialized.zip) {
+        this.drawZipWarning();
+      }
+      this.updateLocations();
+      this.$resultsTitle.text(this.getTitle());
+    } else {
+      this.$resultsTitle.text('');
+      this.$resultsItems.html(noResultsTemplate(this.serialized));
+    }
+
+    if (Number(this.$cycle.val()) < window.DISTRICT_MAP_CUTOFF) {
+      this.map.hide();
+    } else {
+      this.map.show();
+    }
+
   }
 };
 
@@ -379,7 +385,10 @@ ElectionLookup.prototype.updateLocations = function() {
     self.$svg = $(document.querySelector('svg'));
     return self.$svg;
   });
-  $.when(svg).done(self.drawLocations.bind(self));
+
+  if (this.showResults) {
+    $.when(svg).done(self.drawLocations.bind(self));
+  }
 };
 
 /**
