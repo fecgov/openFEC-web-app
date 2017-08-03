@@ -49,6 +49,10 @@ $topLists.each(function() {
   $(this).height(maxHeight);
 });
 
+$(document).ready(function() {
+  new lookup.ElectionLookup('#election-lookup', false);
+});
+
 $('.js-ga-event').each(function() {
   var eventName = $(this).data('ga-event');
   $(this).on('click', function() {
@@ -61,6 +65,4 @@ $('.js-ga-event').each(function() {
       ga('nonDAP.send', 'event', gaEventData);
     }
   });
-$(document).ready(function() {
-  new lookup.ElectionLookup('#election-lookup', false);
 });
