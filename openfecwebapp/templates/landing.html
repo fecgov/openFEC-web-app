@@ -109,23 +109,7 @@
   </section>
 
   </section>
-  <div class="content__section--extra">
-    <h2 class="t-ruled--bottom">Get started with campaign finance data</h2>
-    <section class="content__section" id="raising">
-      <h3 class="u-no-margin">Raising
-        <div class="tour__point tour__point--left" data-intro="<h5>Spot trends with data visualizations</h5>Compare raising and spending trends over time. Dig deeper for a detailed analysis. Check back regularly: More visualizations are coming soon!"></div>
-      </h3>
-      <p>This graph shows how much <span class="term" data-term="candidate">candidates</span>, <span class="term" data-term="party committee">party committees</span> and <span class="term" data-term="political action committee (PAC)">political action committees</span> (PACs) have reported raising, up to specific points in time. Although the graph displays these numbers month-by-month, different committee types have different reporting schedules.</p>
-      <div class="content__section">
-        <div class="heading--section heading--with-action">
-          <h4 class="heading__left t-upper">Cumulative amount raised by committees</h4>
-          <div class="heading__right">
-            <ul class="list--buttons">
-              <li><a class="button button--standard button--table" href="{{ url_for('receipts') }}">Explore data</a></li>
-              <li><button class="button button--standard js-ga-event"  data-a11y-dialog-show="raised-modal" data-ga-event="Raised methodology modal clicked" aria-controls="raised-modal">
-              Methodology</button></li>
-            </ul>
-          </div>
+
   <section class="content__section content__section--ruled">
     <h2>Browse full advanced data sets</h2>
     <ul class="grid grid--4-wide">
@@ -133,65 +117,6 @@
         <div class="card__image__container">
           <span class="card__icon i-receipt"><span class="u-visually-hidden">Icon of a piggy bank</span></span>
         </div>
-        {{ overviews.overview('raised', 'landing')}}
-         <a class="breakdown-link" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
-         <ul class="grid grid--4-wide t-sans">
-           <li class="grid__item">
-             <a href="{{ url_for('raising_breakdown') }}#top-raisers" class="icon-heading--graph-circle">
-               <div class="icon-heading__text"><span>Who's raising the most</span></div>
-             </a>
-           </li>
-           <li class="grid__item is-disabled">
-             <div class="icon-heading--map-circle" title="Coming soon">
-               <div class="icon-heading__text"><span>Where contributions come from</span></div>
-             </div>
-           </li>
-           <li class="grid__item is-disabled">
-             <div class="icon-heading--graph-unordered-circle" title="Coming soon">
-               <div class="icon-heading__text"><span>The size of contributions</span></div>
-             </div>
-           </li>
-         </ul>
-      </div>
-    </section>
-    <section class="content__section content__section--ruled" id="spending">
-      <h3 class="u-no-margin">Spending</h3>
-      <p>This graph shows how much <span class="term" data-term="candidate">candidates</span>, <span class="term" data-term="party committee">party committees</span> and <span class="term" data-term="political action committee (PAC)">political action committees</span> (PACs) have reported spending, up to specific points in time. Although the graph displays these numbers month-by-month, different committee types have different reporting schedules.</p>
-      <div class="content__section">
-        <div class="heading--section heading--with-action">
-          <h4 class="heading__left t-upper">Cumulative amount spent by committees</h4>
-          <div class="heading__right">
-            <ul class="list--buttons">
-              <li><a class="button button--standard button--table" href="{{ url_for('disbursements') }}">Explore data</a></li>
-              <li><button class="button button--standard js-ga-event"  data-a11y-dialog-show="spending-modal" data-ga-event="Spending methodology modal clicked" aria-controls="spending-modal">Methodology</button></li>
-            </ul>
-          </div>
-        <div class="card__content">
-          <a href="{{ url_for('advanced', tab='raising') }}">Raising</a>
-        </div>
-        {{ overviews.overview('spent', 'landing') }}
-        <a class="breakdown-link" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
-        <ul class="grid grid--4-wide t-sans">
-          <li class="grid__item">
-            <a href="{{ url_for('spending_breakdown') }}#top-spenders" class="icon-heading--graph-circle">
-              <div class="icon-heading__text"><span>Who's spending the most</span></div>
-            </a>
-          </li>
-          <li class="grid__item is-disabled">
-            <div class="icon-heading--graph-unordered-circle" title="Coming soon">
-              <div class="icon-heading__text"><span>What's spent on day-to-day activities</span></div>
-            </div>
-          </li>
-          <li class="grid__item is-disabled">
-            <div class="icon-heading--map-circle" title="Coming soon">
-              <div class="icon-heading__text"><span>Where money is spent to support and oppose candidates</span></div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-  </div>
-</div>
       </li>
       <li class="grid__item card card--horizontal card--primary">
         <div class="card__image__container">
@@ -253,6 +178,83 @@
       </li>
     </ul>
   </section>
+
+  <div class="content__section--extra">
+    <h2 class="t-ruled--bottom">Get started with campaign finance data</h2>
+    <section class="content__section" id="raising">
+      <h3 class="u-no-margin">Raising
+        <div class="tour__point tour__point--left" data-intro="<h5>Spot trends with data visualizations</h5>Compare raising and spending trends over time. Dig deeper for a detailed analysis. Check back regularly: More visualizations are coming soon!"></div>
+      </h3>
+      <p>This graph shows how much <span class="term" data-term="candidate">candidates</span>, <span class="term" data-term="party committee">party committees</span> and <span class="term" data-term="political action committee (PAC)">political action committees</span> (PACs) have reported raising, up to specific points in time. Although the graph displays these numbers month-by-month, different committee types have different reporting schedules.</p>
+      <div class="content__section">
+        <div class="heading--section heading--with-action">
+          <h4 class="heading__left t-upper">Cumulative amount raised by committees</h4>
+          <div class="heading__right">
+            <ul class="list--buttons">
+              <li><a class="button button--standard button--table" href="{{ url_for('receipts') }}">Explore data</a></li>
+              <li><button class="button button--standard js-ga-event"  data-a11y-dialog-show="raised-modal" data-ga-event="Raised methodology modal clicked" aria-controls="raised-modal">
+              Methodology</button></li>
+            </ul>
+          </div>
+        {{ overviews.overview('raised', 'landing')}}
+         <a class="breakdown-link" href="{{ url_for('raising_breakdown') }}">Raising breakdown &raquo;</a>
+         <ul class="grid grid--4-wide t-sans">
+           <li class="grid__item">
+             <a href="{{ url_for('raising_breakdown') }}#top-raisers" class="icon-heading--graph-circle">
+               <div class="icon-heading__text"><span>Who's raising the most</span></div>
+             </a>
+           </li>
+           <li class="grid__item is-disabled">
+             <div class="icon-heading--map-circle" title="Coming soon">
+               <div class="icon-heading__text"><span>Where contributions come from</span></div>
+             </div>
+           </li>
+           <li class="grid__item is-disabled">
+             <div class="icon-heading--graph-unordered-circle" title="Coming soon">
+               <div class="icon-heading__text"><span>The size of contributions</span></div>
+             </div>
+           </li>
+         </ul>
+      </div>
+    </section>
+    <section class="content__section content__section--ruled" id="spending">
+      <h3 class="u-no-margin">Spending</h3>
+      <p>This graph shows how much <span class="term" data-term="candidate">candidates</span>, <span class="term" data-term="party committee">party committees</span> and <span class="term" data-term="political action committee (PAC)">political action committees</span> (PACs) have reported spending, up to specific points in time. Although the graph displays these numbers month-by-month, different committee types have different reporting schedules.</p>
+      <div class="content__section">
+        <div class="heading--section heading--with-action">
+          <h4 class="heading__left t-upper">Cumulative amount spent by committees</h4>
+          <div class="heading__right">
+            <ul class="list--buttons">
+              <li><a class="button button--standard button--table" href="{{ url_for('disbursements') }}">Explore data</a></li>
+              <li><button class="button button--standard js-ga-event"  data-a11y-dialog-show="spending-modal" data-ga-event="Spending methodology modal clicked" aria-controls="spending-modal">Methodology</button></li>
+            </ul>
+          </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='raising') }}">Raising</a>
+        </div>
+        {{ overviews.overview('spent', 'landing') }}
+        <a class="breakdown-link" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
+        <ul class="grid grid--4-wide t-sans">
+          <li class="grid__item">
+            <a href="{{ url_for('spending_breakdown') }}#top-spenders" class="icon-heading--graph-circle">
+              <div class="icon-heading__text"><span>Who's spending the most</span></div>
+            </a>
+          </li>
+          <li class="grid__item is-disabled">
+            <div class="icon-heading--graph-unordered-circle" title="Coming soon">
+              <div class="icon-heading__text"><span>What's spent on day-to-day activities</span></div>
+            </div>
+          </li>
+          <li class="grid__item is-disabled">
+            <div class="icon-heading--map-circle" title="Coming soon">
+              <div class="icon-heading__text"><span>Where money is spent to support and oppose candidates</span></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</div>
 {% endblock %}
 
 {% block modals %}
@@ -317,6 +319,7 @@
   </div>
 </div>
 {% endblock %}
+
 {% block scripts %}
 <script src="{{ asset_for('dist/js/pages/landing.js') }}"></script>
 
