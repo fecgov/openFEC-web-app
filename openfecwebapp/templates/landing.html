@@ -31,7 +31,7 @@
         <div class="example--primary">
           <h4 class="example__title">Top raising candidates in {{ constants.DEFAULT_TIME_PERIOD | fmt_year_range }}:</h4>
           <ul class="t-sans">
-            {% for candidate in top_candidates_raising['results'] %}
+            {% for candidate in top_candidates_raising %}
               <li><a href="{{ url_for('candidate_page', c_id=candidate.candidate_id) }}">{{ candidate.name }}</a></li>
             {% endfor %}
           </ul>
@@ -189,12 +189,6 @@
           </li>
         </ul>
       </div>
-    </section>
-    <section class="content__section--extra">
-      <div class="tour__point tour__point--left tour__point--top-padding-lg" data-intro="<h5>Quick views</h5>Find the highest raising and spending candidates, PACs and committees for the 2017–2018 election cycle."></div>
-      {{ overviews.top('candidates', 'Candidates', 'candidates', top_candidates_raising, top_candidates_spending)}}
-      {{ overviews.top('pacs', 'PACs', 'PACs', top_pacs_raising, top_pacs_spending)}}
-      {{ overviews.top('parties', 'Party committees', 'party committees', top_parties_raising, top_parties_spending)}}
     </section>
   </div>
 </div>
