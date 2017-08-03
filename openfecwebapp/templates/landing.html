@@ -46,31 +46,36 @@
 
   <section class="content__section">
     <h2>Compare candidates in an election</h2>
-    <div class="grid grid--2-wide">
+    <div class="grid grid--2-wide" id="election-lookup">
       <div class="grid__item">
-        <form action="{{ url_for('election_lookup')}}">
-          <div class="u-padding--bottom">
-            <label for="state" class="label">State</label>
-            <select id="state" name="state" class="u-full-width">
-              <option value="">Select state</option>
-              {% for value, label in constants.states.items() %}
-              <option value="{{ value }}">{{ label }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="u-padding--bottom">
-            <label for="district" class="label">District <span class="label__optional">(optional)</span></label>
-            <select id="district" name="district" aria-label="Select a district" class="select--alt u-full-width">
-              <option value="">Select district</option>
-              {% for value in range(1, 100) %}
-              {% with formatted = '{0:02d}'.format(value) %}
-              <option value="{{ formatted }}">{{ formatted }}</option>
-              {% endwith %}
-              {% endfor %}
-            </select>
-          </div>
-          <button class="button button--cta">View results</button>
-        </form>
+        <div class="usa-width-one-half">
+          <div class="election-map election-map--small"></div>
+        </div>
+        <div class="usa-width-one-half">
+          <form action="{{ url_for('election_lookup')}}">
+            <div class="u-padding--bottom">
+              <label for="state" class="label">State</label>
+              <select id="state" name="state" class="u-full-width">
+                <option value="">Select state</option>
+                {% for value, label in constants.states.items() %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="u-padding--bottom">
+              <label for="district" class="label">District <span class="label__optional">(optional)</span></label>
+              <select id="district" name="district" aria-label="Select a district" class="select--alt u-full-width">
+                <option value="">Select district</option>
+                {% for value in range(1, 100) %}
+                {% with formatted = '{0:02d}'.format(value) %}
+                <option value="{{ formatted }}">{{ formatted }}</option>
+                {% endwith %}
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="button button--cta">View results</button>
+          </form>
+        </div>
       </div>
       <div class="grid__item">
         <h3>Trending elections</h3>
@@ -81,6 +86,7 @@
         </ul>
       </div>
     </div>
+  </section>
 
   </section>
   <div class="content__section--extra">

@@ -156,9 +156,10 @@ var ElectionFormMixin = {
   }
 };
 
-function ElectionLookup(selector) {
+function ElectionLookup(selector, showResults) {
   this.$elm = $(selector);
   this.init();
+  this.showResults = showResults;
 }
 
 _.extend(ElectionLookup.prototype, ElectionFormMixin);
@@ -175,8 +176,12 @@ ElectionLookup.prototype.init = function() {
   this.$state = this.$form.find('[name="state"]');
   this.$district = this.$form.find('[name="district"]').prop('disabled', true);
   this.$cycle = this.$form.find('[name="cycle"]');
-  this.$resultsItems = this.$elm.find('.js-results-items');
-  this.$resultsTitle = this.$elm.find('.js-results-title');
+
+  // Only get these elements if we're showing the results on the page
+  if (this.showResults) {
+    this.$resultsItems = this.$elm.find('.js-results-items');
+    this.$resultsTitle = this.$elm.find('.js-results-title');
+  }
 
   this.$zip.on('change', this.handleZipChange.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
@@ -310,7 +315,7 @@ ElectionLookup.prototype.shouldSearch = function(serialized) {
 
 ElectionLookup.prototype.draw = function(results) {
   var self = this;
-  if (results.length) {
+  if (results.length && this.showResults) {
     this.$resultsItems.empty();
     results.forEach(function(result) {
       self.drawResult(result);
@@ -318,7 +323,9 @@ ElectionLookup.prototype.draw = function(results) {
     if (this.serialized.zip) {
       this.drawZipWarning();
     }
+    this.updateLocations();
     this.$resultsTitle.text(this.getTitle());
+  } else if (results.length && !this.showResults) {
     this.updateLocations();
   } else {
     this.$resultsTitle.text('');
