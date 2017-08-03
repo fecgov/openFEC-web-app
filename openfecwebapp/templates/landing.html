@@ -21,15 +21,25 @@
 
 <div class="main container js-accordion accordion--neutral" data-content-prefix="about">
   <section class="content__section">
-    <div class="container grid--2-wide">
+    <div class="container grid--2-wide grid--flex">
       <div class="grid__item card t-left-aligned">
-        <h2>Look up candidate and committee profiles</h2>
-        {{ search.search('hero', button_color="button--standard") }}
-        <span class="t-note t-sans search__example">Examples: Obama for America; C00431445; Bush, George W.; P00003335; or enter an image number for a filing.</span>
+        <h2>Look up candidate and <br> committee profiles</h2>
+        <div class="content__section">
+          {{ search.search('hero', button_color="button--standard") }}
+          <span class="t-note t-sans search__example">Examples: Obama for America; C00431445; Bush, George W.; P00003335; or enter an image number for a filing.</span>
+        </div>
+        <div class="example--primary">
+          <h4 class="example__title">Top raising candidates in {{ constants.DEFAULT_TIME_PERIOD | fmt_year_range }}:</h4>
+          <ul class="t-sans">
+            {% for candidate in top_candidates_raising['results'] %}
+              <li><a href="{{ url_for('candidate_page', c_id=candidate.candidate_id) }}">{{ candidate.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
       <div class="grid__item card t-left-aligned">
-        <h2>Find contributions from specific individuals</h2>
-        <form action="{{ url_for('individual_contributions') }}" autocomplete="off" class="search__container">
+        <h2>Find contributions from <br> specific individuals</h2>
+        <form action="{{ url_for('individual_contributions') }}" autocomplete="off" class="search__container content__section">
           <div class="combo combo--search combo--search--medium">
             <label for="contributor-search" class="label">Individual contributor name</label>
             <input id="contributor-search" class="combo__input" type="text" name="contributor_name"
@@ -40,6 +50,14 @@
           </div>
           <span class="t-note t-sans search__example">Examples: your name, a celebrity, someone running for office.</span>
         </form>
+        <div class="example--primary">
+          <h4 class="example__title">Possible uses of this data:</h4>
+          <ul class="t-sans">
+            <li><a href="{{ url_for('individual_contributions', min_amount=2000) }}">All contributions over $2,000</a></li>
+            <li><a href="{{ url_for('individual_contributions', min_amount=2000) }}">All contributions in the last month</a></li>
+            <li><a href="{{ url_for('individual_contributions') }}">Browse all and apply custom filters</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -77,13 +95,15 @@
           </form>
         </div>
       </div>
-      <div class="grid__item">
-        <h3>Trending elections</h3>
-        <ul class="t-sans">
-          <li><a href="">Georgia, congressional district 6 special election</a></li>
-          <li><a href="">Alabama senate special election</a></li>
-          <li><a href="">2016 US presidential election</a></li>
-        </ul>
+      <div class="grid__item card card--empty t-left-aligned">
+        <div class="example--primary">
+          <h4 class="example__title">Trending elections</h4>
+          <ul class="t-sans">
+            <li><a href="">Georgia, congressional district 6 special election</a></li>
+            <li><a href="">Alabama senate special election</a></li>
+            <li><a href="">2016 US presidential election</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
