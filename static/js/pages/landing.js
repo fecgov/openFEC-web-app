@@ -3,6 +3,7 @@
 /* global require, ga */
 
 var $ = require('jquery');
+var lookup = require('../modules/election-lookup');
 
 var LineChart = require('../modules/line-chart').LineChart;
 var TopList = require('../modules/top-list').TopList;
@@ -60,4 +61,6 @@ $('.js-ga-event').each(function() {
       ga('nonDAP.send', 'event', gaEventData);
     }
   });
+$(document).ready(function() {
+  new lookup.ElectionLookup('#election-lookup', false);
 });
