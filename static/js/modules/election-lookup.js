@@ -467,7 +467,11 @@ function ElectionLookupMap(elm, opts) {
 ElectionLookupMap.prototype.init = function() {
   this.overlay = null;
   this.districts = null;
-  this.map = L.map(this.elm);
+  this.map = L.map(this.elm, {
+    scrollWheelZoom: false,
+    draggable: false,
+    touchZoom: false
+  });
   this.map.on('viewreset', this.handleReset.bind(this));
   this.tileLayer = L.tileLayer.provider('Stamen.TonerLite');
   this.tileLayer.on('tileload', this.handleTileLoad.bind(this));
