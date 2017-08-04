@@ -13,6 +13,7 @@ $(document).ready(function() {
     title: 'Candidate',
     path: ['candidates'],
     columns: columns.candidates,
+    order: [[6, 'desc']],
     useFilters: true,
     useExport: true,
     rowCallback: tables.modalRenderRow,
