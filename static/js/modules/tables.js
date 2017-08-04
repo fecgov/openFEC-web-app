@@ -25,7 +25,7 @@ var simpleDOM = 't<"results-info"lpi>';
 var browseDOM = '<"panel__main"t>' +
                 '<"results-info"lp>';
 
-var DOWNLOAD_CAP = 100000;
+var DOWNLOAD_CAP = 500000;
 var downloadCapFormatted = helpers.formatNumber(DOWNLOAD_CAP);
 var MAX_DOWNLOADS = 5;
 var DOWNLOAD_MESSAGES = {
