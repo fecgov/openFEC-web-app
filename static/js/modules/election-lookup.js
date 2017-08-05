@@ -34,6 +34,20 @@ var officeMap = {
   H: 'House'
 };
 
+var FEATURE_TYPES = {
+  STATES: 1,
+  DISTRICTS: 2
+};
+var STATE_ZOOM_THRESHOLD = 4;
+
+var defaultOpts = {
+  colorScale: colorbrewer.Set1
+};
+
+var boundsOverrides = {
+  200: {coords: [64.06, -152.23], zoom: 3}
+};
+
 function serializeObject($form) {
   return _.chain($form.serializeArray())
     .map(function(obj) {
@@ -153,13 +167,40 @@ var ElectionFormMixin = {
       .html(districtTemplate(_.range(1, this.districts + 1)))
       .val('')
       .prop('disabled', !(state && this.districts));
+  },
+
+  getUrl: function(query) {
+    return helpers.buildUrl(['elections', 'search'], query);
+  },
+
+  serialize: function() {
+    var params = serializeObject(this.$form);
+    return _.extend(helpers.filterNull(params));
+  },
+
+  encodeDistricts: function(results) {
+    // Takes a JSON results object and returns a list of encoded districts
+    var encoded = _.chain(results)
+      .filter(function(result) {
+        return result.office === 'H';
+      })
+      .map(function(result) {
+        return utils.encodeDistrict(result.state, result.district);
+      })
+      .value();
+    var state = this.$state.val();
+    var district = this.$district.val();
+    if (state) {
+      encoded.push(utils.encodeDistrict(state, district));
+    }
+    return _.unique(encoded);
   }
 };
 
-function ElectionLookup(selector, showResults) {
+/* ElectionLookup */
+function ElectionLookup(selector) {
   this.$elm = $(selector);
   this.init();
-  this.showResults = showResults;
 }
 
 _.extend(ElectionLookup.prototype, ElectionFormMixin);
@@ -177,11 +218,8 @@ ElectionLookup.prototype.init = function() {
   this.$district = this.$form.find('[name="district"]').prop('disabled', true);
   this.$cycle = this.$form.find('[name="cycle"]');
 
-  // Only get these elements if we're showing the results on the page
-  if (this.showResults) {
-    this.$resultsItems = this.$elm.find('.js-results-items');
-    this.$resultsTitle = this.$elm.find('.js-results-title');
-  }
+  this.$resultsItems = this.$elm.find('.js-results-items');
+  this.$resultsTitle = this.$elm.find('.js-results-title');
 
   this.$zip.on('change', this.handleZipChange.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
@@ -228,15 +266,6 @@ ElectionLookup.prototype.handleSelectMap = function(state, district) {
   this.search();
 };
 
-ElectionLookup.prototype.getUrl = function(query) {
-  return helpers.buildUrl(['elections', 'search'], query);
-};
-
-ElectionLookup.prototype.serialize = function() {
-  var params = serializeObject(this.$form);
-  return _.extend(helpers.filterNull(params));
-};
-
 ElectionLookup.prototype.removeWrongPresidentialElections = function(results, cycle) {
   // Hack to remove the presidential result in non-presidential years
   // Eventually this will be handled by the API
@@ -261,7 +290,8 @@ ElectionLookup.prototype.search = function(e, opts) {
       self.xhr = $.getJSON(self.getUrl(serialized)).done(function(response) {
         self.results = self.removeWrongPresidentialElections(response.results, serialized.cycle);
         // Note: Update district color map before rendering results
-        self.drawDistricts(self.results);
+        var encodedDistricts = self.encodeDistricts(self.results);
+        self.map.drawDistricts(encodedDistricts);
         self.draw(self.results);
       });
       self.serialized = serialized;
@@ -274,7 +304,8 @@ ElectionLookup.prototype.search = function(e, opts) {
       // ensures that clicking on a state or district will highlight it when
       // the search options don't match the state of the map, e.g. after the
       // user has run a search, then zoomed out and triggered a map redraw.
-      self.drawDistricts(self.results);
+      var encodedDistricts = self.encodeDistricts(self.results);
+      self.map.drawDistricts(encodedDistricts);
     }
   }
 };
@@ -289,60 +320,32 @@ ElectionLookup.prototype.handlePopState = function() {
   this.search(null, {pushState: false});
 };
 
-ElectionLookup.prototype.drawDistricts = function(results) {
-  var encoded = _.chain(results)
-    .filter(function(result) {
-      return result.office === 'H';
-    })
-    .map(function(result) {
-      return utils.encodeDistrict(result.state, result.district);
-    })
-    .value();
-  var state = this.$state.val();
-  var district = this.$district.val();
-  if (state) {
-    encoded.push(utils.encodeDistrict(state, district));
-  }
-  encoded = _.unique(encoded);
-  if (encoded.length) {
-    this.map.drawDistricts(encoded);
-  }
-};
-
 ElectionLookup.prototype.shouldSearch = function(serialized) {
   return serialized.zip || serialized.state;
 };
 
 ElectionLookup.prototype.draw = function(results) {
   var self = this;
-
-  if (!this.showResults) {
-    if (results.length) {
-      this.updateLocations();
+  if (results.length) {
+    this.$resultsItems.empty();
+    results.forEach(function(result) {
+      self.drawResult(result);
+    });
+    if (this.serialized.zip) {
+      this.drawZipWarning();
     }
+    this.updateLocations();
+    this.$resultsTitle.text(this.getTitle());
   } else {
-    if (results.length) {
-      this.$resultsItems.empty();
-      results.forEach(function(result) {
-        self.drawResult(result);
-      });
-      if (this.serialized.zip) {
-        this.drawZipWarning();
-      }
-      this.updateLocations();
-      this.$resultsTitle.text(this.getTitle());
-    } else {
-      this.$resultsTitle.text('');
-      this.$resultsItems.html(noResultsTemplate(this.serialized));
-    }
-
-    if (Number(this.$cycle.val()) < window.DISTRICT_MAP_CUTOFF) {
-      this.map.hide();
-    } else {
-      this.map.show();
-    }
-
+    this.$resultsTitle.text('');
+    this.$resultsItems.html(noResultsTemplate(this.serialized));
   }
+
+  if (Number(this.$cycle.val()) < window.DISTRICT_MAP_CUTOFF) {
+    this.map.hide();
+  } else {
+    this.map.show();
+    }
 };
 
 ElectionLookup.prototype.drawResult = function(result) {
@@ -381,14 +384,13 @@ ElectionLookup.prototype.drawZipWarning = function() {
  */
 ElectionLookup.prototype.updateLocations = function() {
   var self = this;
-  var svg = self.$svg || $.get('/static/img/i-map--primary.svg', '', null, 'xml').then(function(document) {
-    self.$svg = $(document.querySelector('svg'));
-    return self.$svg;
-  });
+  var svg = self.$svg || $.get('/static/img/i-map--primary.svg', '', null, 'xml')
+    .then(function(document) {
+      self.$svg = $(document.querySelector('svg'));
+      return self.$svg;
+    });
 
-  if (this.showResults) {
-    $.when(svg).done(self.drawLocations.bind(self));
-  }
+  $.when(svg).done(self.drawLocations.bind(self));
 };
 
 /**
@@ -419,6 +421,7 @@ ElectionLookup.prototype.getTitle = function() {
   return title;
 };
 
+/* ElectionLookupPreview */
 function ElectionLookupPreview(selector) {
   this.$elm = $(selector);
   this.init();
@@ -430,29 +433,44 @@ ElectionLookupPreview.prototype.init = function() {
   this.districts = 0;
 
   this.$form = this.$elm.find('form');
-  this.$zip = this.$form.find('[name="zip"]');
   this.$state = this.$form.find('[name="state"]');
   this.$district = this.$form.find('[name="district"]').prop('disabled', true);
   this.$cycle = this.$form.find('[name="cycle"]');
 
-  this.$zip.on('change', this.handleZipChange.bind(this));
   this.$state.on('change', this.handleStateChange.bind(this));
+  this.$state.on('change', this.handleDistrictChange.bind(this));
 
   this.handleStateChange();
+
+  this.$map = $('.election-map');
+  this.map = new ElectionLookupMap(this.$map.get(0), {
+    drawStates: true,
+    handleSelect: this.handleSelectMap.bind(this)
+  });
 };
 
-var FEATURE_TYPES = {
-  STATES: 1,
-  DISTRICTS: 2
+ElectionLookupPreview.prototype.handleSelectMap = function(state, district) {
+  this.$state.val(state);
+  this.updateDistricts(state);
+  if (district && hasOption(this.$district, district)) {
+    this.$district.val(district);
+  }
+  this.search();
 };
-var STATE_ZOOM_THRESHOLD = 4;
 
-var defaultOpts = {
-  colorScale: colorbrewer.Set1
+ElectionLookupPreview.prototype.handleDistrictChange = function(e) {
+
 };
 
-var boundsOverrides = {
-  200: {coords: [64.06, -152.23], zoom: 3}
+ElectionLookupPreview.prototype.search = function(e, opts) {
+  e && e.preventDefault();
+  opts = _.extend({pushState: true}, opts || {});
+  var self = this;
+  this.xhr = $.getJSON(self.getUrl(this.serialize())).done(function(response) {
+    // Note: Update district color map before rendering results
+    var encodedDistricts = self.encodeDistricts(response.results);
+    self.map.drawDistricts(encodedDistricts);
+  });
 };
 
 function ElectionLookupMap(elm, opts) {

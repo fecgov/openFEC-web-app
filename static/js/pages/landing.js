@@ -50,7 +50,7 @@ $topLists.each(function() {
 });
 
 $(document).ready(function() {
-  new lookup.ElectionLookup('#election-lookup', false);
+  new lookup.ElectionLookupPreview('#election-lookup', false);
 });
 
 $('.js-ga-event').each(function() {
