@@ -6,28 +6,17 @@ var helpers = require('./helpers');
 var utils = require('./election-utils');
 
 var districts = require('../data/stateDistricts.json');
-
 var districtTemplate = require('../../templates/districts.hbs');
 
-function serializeObject($form) {
-  return _.chain($form.serializeArray())
-    .map(function(obj) {
-      return [obj.name, obj.value];
-    })
-    .object()
-    .value();
-}
-
-function ElectionForm() {
-}
+/* ElectionForm
+ * Base class for constructing election lookup tools
+ * Both the ElectionSearch and ElectionLookup inherit from this class
+ * It handles all logic around showing districts for the district select
+ */
+function ElectionForm() { }
 
 ElectionForm.prototype.hasOption = function($select, value) {
   return $select.find('option[value="' + value + '"]').length > 0;
-};
-
-ElectionForm.prototype.handleZipChange = function() {
-  this.$state.val('').change();
-  this.$district.val('');
 };
 
 ElectionForm.prototype.handleStateChange = function() {
@@ -75,7 +64,12 @@ ElectionForm.prototype.getUrl = function(query) {
 };
 
 ElectionForm.prototype.serialize = function() {
-  var params = serializeObject(this.$form);
+  var params = _.chain(this.$form.serializeArray())
+    .map(function(obj) {
+      return [obj.name, obj.value];
+    })
+    .object()
+    .value();
   return _.extend(helpers.filterNull(params));
 };
 

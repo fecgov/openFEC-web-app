@@ -115,7 +115,7 @@ function ElectionSearch(selector) {
 
   this.getUpcomingElections();
   this.handleStateChange();
-  this.handlePopState();  
+  this.handlePopState();
 }
 
 ElectionSearch.prototype = Object.create(ElectionForm.prototype);
@@ -137,6 +137,11 @@ ElectionSearch.prototype.getUpcomingElections = function() {
         self.upcomingElections = response.results;
     });
   }
+};
+
+ElectionSearch.prototype.handleZipChange = function() {
+  this.$state.val('').change();
+  this.$district.val('');
 };
 
 ElectionSearch.prototype.handleSelectMap = function(state, district) {
