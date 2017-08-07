@@ -365,6 +365,35 @@ def elections(office, cycle, state=None, district=None):
     )
 
 
+@app.route('/election-page/')
+@use_kwargs({
+    'state': fields.Str(),
+    'district': fields.Str(),
+})
+def election_page(state=None, district=None):
+    """This route is used to redirect users to a specific senate or house district page
+    """
+    if state and district:
+        # If district is S, redirect to a senate page
+        if district == 'S':
+            # Find the state's senate cycles given the classes and then choose the first one
+            cycles = utils.get_state_senate_cycles(state)
+            cycle = cycles[0]
+            redirect_url = url_for('elections',
+                office='senate',
+                state=state,
+                cycle=cycle)
+        else:
+            redirect_url = url_for('elections',
+                office='house',
+                district=district,
+                state=state,
+                cycle=constants.DEFAULT_TIME_PERIOD)
+        return redirect(redirect_url)
+    else:
+        return redirect(url_for('election_lookup', state=state, district=district))
+
+
 @app.route('/raising/')
 @use_kwargs({
     'top_category': fields.Str(load_from='top_category', missing='P'),
