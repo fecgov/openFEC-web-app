@@ -42,14 +42,32 @@ ElectionForm.prototype.handleStateChange = function() {
 
 ElectionForm.prototype.updateDistricts = function(state) {
   state = state || this.$state.val();
-  this.districts = districts[state] ? districts[state].districts : 1;
-  this.$district
-    .html(districtTemplate({
-      districts: _.range(1, this.districts + 1),
-      senate: this.showSenateOption
-    }))
-    .val('')
-    .prop('disabled', !(state && this.districts));
+  this.districts = districts[state] ? districts[state].districts : 0;
+  if (this.districts) {
+    this.$district
+      .html(districtTemplate({
+        districts: _.range(1, this.districts + 1),
+        senate: this.showSenateOption
+      }))
+      .val('')
+      .prop('disabled', false);
+  } else if (this.showSenateOption) {
+    // When a state only has one house district, like Alaska, districts will be empty
+    // This is a problem for the ElectionLookup where you need to have an option to
+    // navigate to the house page.
+    // If showSenateOption is true, we also want to show an at-large house district
+    this.$district
+      .html(districtTemplate({
+        districts: null,
+        atLargeHouse: true,
+        senate: this.showSenateOption
+      }))
+      .val('')
+      .prop('disabled', false);
+  } else {
+    this.$district.prop('disabled', true);
+  }
+
 };
 
 ElectionForm.prototype.getUrl = function(query) {
