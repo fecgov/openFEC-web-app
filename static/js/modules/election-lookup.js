@@ -3,6 +3,7 @@
 /* window */
 
 var $ = require('jquery');
+var helpers = require('./helpers');
 var ElectionForm = require('./election-form').ElectionForm;
 var ElectionMap = require('./election-map').ElectionMap;
 
@@ -22,7 +23,18 @@ function ElectionLookup(selector) {
   this.$submit = this.$form.find('[type="submit"]');
 
   this.districts = 0;
+  if (helpers.isInViewport(this.$elm)) {
+    this.init();
+  } else {
+    $(window).on('scroll', this.init.bind(this));
+  }
+}
 
+ElectionLookup.prototype = Object.create(ElectionForm.prototype);
+ElectionLookup.constructor = ElectionLookup;
+
+ElectionLookup.prototype.init = function() {
+  if (this.initialized) { return; }
   this.$state.on('change', this.handleStateChange.bind(this));
   this.$district.on('change', this.handleDistrictChange.bind(this));
 
@@ -34,10 +46,8 @@ function ElectionLookup(selector) {
     drawStates: true,
     handleSelect: this.handleSelectMap.bind(this)
   });
-}
-
-ElectionLookup.prototype = Object.create(ElectionForm.prototype);
-ElectionLookup.constructor = ElectionLookup;
+  this.initialized = true;
+};
 
 /**
  * Handles a click event on the map
