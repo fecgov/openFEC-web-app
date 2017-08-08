@@ -54,11 +54,11 @@ function getDistrictPalette(scale) {
  * Generates a clickable, zoomable map of states and districts
  * Sub-component referenced by ElectionSearch and ElectionLookup
  * @class
- * @param {jQuery} $elm - jQuery selector for the div to put the map in
+ * @param {string} elm - selector for the div to put the map in
  * @param {object} opts - Configuration options
  */
-function ElectionMap($elm, opts) {
-  this.$elm = $elm;
+function ElectionMap(elm, opts) {
+  this.elm = elm;
   this.opts = _.extend({}, defaultOpts, opts);
   this.statePalette = getStatePalette(this.opts.colorScale);
   this.districtPalette = getDistrictPalette(this.opts.colorScale);
@@ -72,7 +72,7 @@ function ElectionMap($elm, opts) {
 ElectionMap.prototype.init = function() {
   this.overlay = null;
   this.districts = null;
-  this.map = L.map(this.$elm, {
+  this.map = L.map(this.elm, {
     scrollWheelZoom: false,
     draggable: false,
     touchZoom: false
@@ -215,7 +215,7 @@ ElectionMap.prototype.handleReset = function(e) {
  * Hide the map
  */
 ElectionMap.prototype.hide = function() {
-  this.$elm.setAttribute('aria-hidden', 'true');
+  this.elm.setAttribute('aria-hidden', 'true');
   this.mapMessage.setAttribute('aria-hidden', 'false');
 };
 
@@ -223,7 +223,7 @@ ElectionMap.prototype.hide = function() {
  * Show the map
  */
 ElectionMap.prototype.show = function() {
-  this.$elm.setAttribute('aria-hidden', 'false');
+  this.elm.setAttribute('aria-hidden', 'false');
   this.mapMessage.setAttribute('aria-hidden', 'true');
 };
 
