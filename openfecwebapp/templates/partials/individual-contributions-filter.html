@@ -15,7 +15,7 @@ Filter individual contributions
 <div class="filters__inner">
   {{ typeahead.field('committee_id', 'Recipient name or ID') }}
   {{ text.field('contributor_name', 'Contributor name') }}
-  {{ date.field('date', 'Receipt date', dates ) }}
+  {{ date.partition_field('date', 'Receipt date', dates ) }}
 </div>
 <div class="js-accordion accordion--neutral" data-content-prefix="filter" data-open-first="false">
   <button type="button" class="js-accordion-trigger accordion__button">Contributor details</button>
