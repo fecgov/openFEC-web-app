@@ -25,7 +25,7 @@
     {% else %}
       <h1 class="entity__name">{{ state|fmt_state_full }} -
       {% if district %}
-        House district {{ district | strip_zero_pad }}
+        House District {{ district | strip_zero_pad }}
       {% else %}
         Senate
       {% endif %}
@@ -57,8 +57,8 @@
             role="tab"
             data-name="contributions"
             tabindex="0"
-            aria-controls="panel3"
-            href="#section-3"
+            aria-controls="panel2"
+            href="#section-2"
             >Individual contributions</a>
         </li>
         <li class="side-nav__item" role="presentation">
@@ -67,8 +67,8 @@
             role="tab"
             data-name="spending-by-others"
             tabindex="0"
-            aria-controls="panel2"
-            href="#section-2"
+            aria-controls="panel3"
+            href="#section-3"
             >Spending by others to support/oppose</a>
         </li>
         <li class="side-nav__item">
