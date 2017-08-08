@@ -93,7 +93,6 @@ var electionColumns = [
   columns.barCurrencyColumn({data: 'cash_on_hand_end_period', className: 'column--number'}),
   {
     render: function(data, type, row, meta) {
-      var dates = helpers.cycleDates(context.election.cycle);
       var urlBase;
       if (context.election.office === 'president') {
         urlBase = ['reports', 'presidential'];
@@ -126,9 +125,11 @@ function makeCommitteeColumn(opts, factory) {
     render: columnHelpers.buildTotalLink(['receipts', 'individual-contributions'], function(data, type, row, meta) {
       row.cycle = context.election.cycle;
       var column = meta.settings.aoColumns[meta.col].data;
+      var dates = helpers.cycleDates(row.cycle);
       return _.extend({
         committee_id: (context.candidates[row.candidate_id] || {}).committee_ids,
-        two_year_transaction_period: row.cycle,
+        min_date: dates.min,
+        max_date: dates.max
       }, factory(data, type, row, meta, column));
     })
   }, opts);
@@ -529,7 +530,7 @@ $(document).ready(function() {
       $('#election-map').get(0),
       {color: '#36BDBB'}
     );
-    districtMap.load(context.election);    
+    districtMap.load(context.election);
   }
 
   initSpendingTables();

@@ -1,4 +1,4 @@
-{% macro summary(data, committee_id, cycle, office_or_committee) %}
+{% macro summary(data, committee_id, cycle, office_or_committee, min_date, max_date) %}
 
 {% if office_or_committee not in ['P', 'H', 'S'] %}
   {#
@@ -21,11 +21,11 @@
       </td>
       <td class="simple-table__cell">
         {% if item[1]['link'] %}
-          <a href="{{ url_for(item[1]['link'], committee_id=committee_id, two_year_transaction_period=cycle, cycle=cycle) }}">
+          <a href="{{ url_for(item[1]['link'], committee_id=committee_id, min_date=min_date|date, max_date=max_date|date) }}">
             {{ item[0]|currency }}
           </a>
         {% elif item[1]['type'] and cycle > 2006 %}
-          <a href="{{ url_for(item[1]['type']['link'], committee_id=committee_id, two_year_transaction_period=cycle, cycle=cycle, line_number=item[1]['type'][office_or_committee]) }}">
+          <a href="{{ url_for(item[1]['type']['link'], committee_id=committee_id, min_date=min_date|date, max_date=max_date|date, line_number=item[1]['type'][office_or_committee]) }}">
             {{ item[0]|currency }}
           </a>
         {% else %}
