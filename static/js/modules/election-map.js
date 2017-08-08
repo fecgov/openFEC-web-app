@@ -49,8 +49,16 @@ function getDistrictPalette(scale) {
     .value();
 }
 
-function ElectionMap(elm, opts) {
-  this.elm = elm;
+/**
+ * ElectionMap
+ * Generates a clickable, zoomable map of states and districts
+ * Sub-component referenced by ElectionSearch and ElectionLookup
+ * @class
+ * @param {jQuery} $elm - jQuery selector for the div to put the map in
+ * @param {object} opts - Configuration options
+ */
+function ElectionMap($elm, opts) {
+  this.$elm = $elm;
   this.opts = _.extend({}, defaultOpts, opts);
   this.statePalette = getStatePalette(this.opts.colorScale);
   this.districtPalette = getDistrictPalette(this.opts.colorScale);
@@ -58,10 +66,13 @@ function ElectionMap(elm, opts) {
   this.init();
 }
 
+/**
+ * Initialize the map
+ */
 ElectionMap.prototype.init = function() {
   this.overlay = null;
   this.districts = null;
-  this.map = L.map(this.elm, {
+  this.map = L.map(this.$elm, {
     scrollWheelZoom: false,
     draggable: false,
     touchZoom: false
@@ -75,6 +86,9 @@ ElectionMap.prototype.init = function() {
   }
 };
 
+/**
+ * Draw state overlays
+ */
 ElectionMap.prototype.drawStates = function() {
   if (this.featureType === FEATURE_TYPES.STATES) { return; }
   this.featureType = FEATURE_TYPES.STATES;
@@ -87,6 +101,10 @@ ElectionMap.prototype.drawStates = function() {
   }).addTo(this.map);
 };
 
+/**
+ * Draw district overlays
+ * @param {array} districts - array of unique district identifiers
+ */
 ElectionMap.prototype.drawDistricts = function(districts) {
   if (this.featureType === FEATURE_TYPES.DISTRICTS && !districts) { return; }
   this.featureType = FEATURE_TYPES.DISTRICTS;
@@ -104,6 +122,10 @@ ElectionMap.prototype.drawDistricts = function(districts) {
   this.drawBackgroundDistricts(districts);
 };
 
+/**
+ * Update the boundaries of the map
+ * @param {array} districts - array of unique district identifiers
+ */
 ElectionMap.prototype.updateBounds = function(districts) {
   var rule = districts && _.find(boundsOverrides, function(rule, district) {
     return districts.indexOf(parseInt(district)) !== -1;
@@ -189,13 +211,19 @@ ElectionMap.prototype.handleReset = function(e) {
   }
 };
 
+/**
+ * Hide the map
+ */
 ElectionMap.prototype.hide = function() {
-  this.elm.setAttribute('aria-hidden', 'true');
+  this.$elm.setAttribute('aria-hidden', 'true');
   this.mapMessage.setAttribute('aria-hidden', 'false');
 };
 
+/**
+ * Show the map
+ */
 ElectionMap.prototype.show = function() {
-  this.elm.setAttribute('aria-hidden', 'false');
+  this.$elm.setAttribute('aria-hidden', 'false');
   this.mapMessage.setAttribute('aria-hidden', 'true');
 };
 

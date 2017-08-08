@@ -6,9 +6,12 @@ var $ = require('jquery');
 var ElectionForm = require('./election-form').ElectionForm;
 var ElectionMap = require('./election-map').ElectionMap;
 
-/* ElectionLookupPreview
- * The simpler form of the full ElectionLookup tool, used on the data landing page
+/**
+ * ElectionLookupPreview
+ * @class
+ * The simpler form of the full ElectionSearch tool, used on the data landing page
  * This component has a map and the state and district selects
+ * Inherits from the ElectionForm class
 */
 
 function ElectionLookup(selector) {
@@ -36,6 +39,12 @@ function ElectionLookup(selector) {
 ElectionLookup.prototype = Object.create(ElectionForm.prototype);
 ElectionLookup.constructor = ElectionLookup;
 
+/**
+ * Handles a click event on the map
+ * Updates the values in the district <select> and executes a search
+ * @param {string} state - two-letter state abbreviation
+ * @param {integer} distrit - district number
+ */
 ElectionLookup.prototype.handleSelectMap = function(state, district) {
   this.$state.val(state);
   this.updateDistricts(state);
@@ -45,6 +54,13 @@ ElectionLookup.prototype.handleSelectMap = function(state, district) {
   this.search();
 };
 
+/**
+ * Handles a change event of the district <select>
+ * Calls the search method
+ * If there's a value, change the text of the button to signify that it takes you to a page
+ * If there's no value, revert to "search"
+ * @param {event} - event object
+ */
 ElectionLookup.prototype.handleDistrictChange = function(e) {
   this.search(e);
   if (e.target.value) {
@@ -56,6 +72,11 @@ ElectionLookup.prototype.handleDistrictChange = function(e) {
   }
 };
 
+/**
+ * Calls the API with the value of the form fields
+ * Passes the values of the districts returned by the API call to the map
+ * @param {event} e event object
+ */
 ElectionLookup.prototype.search = function(e) {
   e && e.preventDefault();
   var self = this;
