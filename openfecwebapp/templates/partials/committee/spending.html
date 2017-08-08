@@ -12,7 +12,7 @@
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Total disbursements</h3>
           <a class="heading__right button--alt button--browse"
-              href="{{ url_for('disbursements', committee_id=committee_id, two_year_transaction_period=cycle) }}">Filter all disbursements
+              href="{{ url_for('disbursements', committee_id=committee_id, min_date=totals.0.coverage_start_date|date, max_date=totals.0.coverage_end_date|date) }}">Filter all disbursements
           </a>
         </div>
         <div class="content__section--narrow">
@@ -40,12 +40,12 @@
             href="{{ url_for(
               'communication_costs',
               committee_id=committee_id,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y'),
+              min_date=totals.0.coverage_start_date|date,
+              max_date=totals.0.coverage_end_date|date
             ) }}">Filter this data
         </a>
       </div>
-      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="communication-cost-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="communication-cost-committee">
         <thead>
           <tr>
             <th scope="col">Amount</th>
@@ -65,13 +65,13 @@
             href="{{ url_for(
               'electioneering_communications',
               committee_id=committee_id,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y'),
+              min_date=totals.0.coverage_start_date|date,
+              max_date=totals.0.coverage_end_date|date
             ) }}">Filter this data
         </a>
       </div>
       <p>Any broadcast, cable or satellite communication that (1) refers to a clearly identified candidate for federal office; (2) is publicly distributed within certain time periods before an election and (3) is targeted to the relevant electorate.</p>
-      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="electioneering-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="electioneering-committee">
         <thead>
           <th scope="col">Amount</th>
           <th scope="col">Candidate</th>
@@ -91,8 +91,8 @@
             href="{{ url_for(
               'independent_expenditures',
               committee_id=committee_id,
-              min_date=cycle_start(cycle) | date(fmt='%m-%d-%Y'),
-              max_date=cycle_end(cycle) | date(fmt='%m-%d-%Y')
+              min_date=totals.0.coverage_start_date|date,
+              max_date=totals.0.coverage_end_date|date
             ) }}">Filter this data</a>
       </div>
       <p>This tab shows spending that this committee has made in support of or opposition to a candidate. None of the funds are directly given to or spent by the candidate.</p>
@@ -101,7 +101,7 @@
         <div class="tag__item">Coverage dates: {{totals.0.coverage_start_date|date}} to {{totals.0.coverage_end_date|date}}</div>
       </div>
       {% endif %}
-      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="independent-expenditure-committee" data-committee="{{ committee_id }}" data-cycle="{{ cycle }}">
+      <table class="data-table data-table--heading-borders data-table--entity u-margin--top" data-type="independent-expenditure-committee">
         <thead>
           <tr>
             <th scope="col">Amount</th>
@@ -120,7 +120,7 @@
       <div class="heading--section heading--with-action">
         <h3 class="heading__left">Disbursements</h3>
         <a class="heading__right button--alt button--browse"
-            href="{{ url_for('disbursements', committee_id=committee_id, two_year_transaction_period=cycle) }}">Filter this data</a>
+            href="{{ url_for('disbursements', committee_id=committee_id, min_date=totals.0.coverage_start_date|date, max_date=totals.0.coverage_end_date|date) }}">Filter this data</a>
       </div>
 
       <fieldset class="row toggles js-toggles">
@@ -151,8 +151,6 @@
         <table
             class="data-table data-table--heading-borders"
             data-type="disbursements-by-recipient"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
           >
           <thead>
             <th scope="col">Recipient</th>
@@ -179,9 +177,6 @@
         <table
             class="data-table data-table--heading-borders"
             data-type="itemized-disbursements"
-            data-committee="{{ committee.committee_id }}"
-            data-name="{{ name }}"
-            data-cycle="{{ cycle }}"
           >
           <thead>
             <tr>
@@ -207,8 +202,6 @@
         <table
             class="data-table data-table--heading-borders"
             data-type="disbursements-by-recipient-id"
-            data-committee="{{ committee.committee_id }}"
-            data-cycle="{{ cycle }}"
           >
           <thead>
             <th scope="col">Committee</th>

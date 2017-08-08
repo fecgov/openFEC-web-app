@@ -153,8 +153,8 @@ function formatCycleRange(year, duration) {
 
 function cycleDates(year) {
   return {
-    min: '01-01-' + (year - 1),
-    max: '12-31-' + year
+    min: '01/01/' + (year - 1),
+    max: '12/31/' + year
   };
 }
 
