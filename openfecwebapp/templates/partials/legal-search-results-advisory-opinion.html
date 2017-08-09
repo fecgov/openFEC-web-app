@@ -6,7 +6,7 @@
 </div>
 
 {% for advisory_opinion in advisory_opinions %}
-  <h3 class="cal-list__title">
+  <h3 class="ao-result__title">
     <a title="{{ advisory_opinion.description }}"
       href="{{ url_for('advisory_opinion_page', ao_no=advisory_opinion.no) }}">
       <span class="font-bolt">AO {{ advisory_opinion.no }}: </span></a>
