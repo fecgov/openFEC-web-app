@@ -21,7 +21,7 @@ Filter independent expenditures
   {{ typeahead.field('committee_id', 'Spender name or ID', id_suffix='_raw') }}
   {{ text.field('candidate_name', 'Candidate mentioned', id_suffix='_raw')}}
   {{ misc.support_oppose('_raw') }}
-  {{ date.field('expenditure_date', 'Expenditure date', dates, id_suffix='_raw') }}
+  {{ date.field('expenditure_date', 'Expenditure date', id_suffix='_raw') }}
 </div>
 {% endblock %}
 
