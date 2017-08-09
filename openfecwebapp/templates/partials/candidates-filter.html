@@ -3,6 +3,7 @@
 {% import 'macros/filters/states.html' as states %}
 {% import 'macros/filters/typeahead-filter.html' as typeahead %}
 {% import 'macros/filters/years.html' as years %}
+{% import 'macros/filters/date.html' as date %}
 
 {% block filters %}
 <div class="filters__inner">
@@ -12,6 +13,8 @@
   {% include 'partials/filters/parties.html' %}
   {{ states.field('state') }}
   {% include 'partials/filters/districts.html' %}
+  {% import 'macros/filters/date.html' as date %}
+  {{ date.field('first_filing_date', 'Date first filed statement of candidacy', '') }}
   <div class="filter">
     <fieldset class="js-filter" data-filter="checkbox">
       <legend class="label">Candidate fundraising</legend>

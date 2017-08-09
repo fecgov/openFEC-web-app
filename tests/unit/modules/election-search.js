@@ -23,17 +23,18 @@ _.extend(window, {
   }
 });
 
-var lookup = require('../../../static/js/modules/election-lookup');
+var search = require('../../../static/js/modules/election-search');
+var map = require('../../../static/js/modules/election-map');
 
-describe('election lookup', function() {
+describe('election search', function() {
   before(function() {
     this.$fixture = $('<div id="fixtures"></div>');
     $('body').append(this.$fixture);
   });
 
   before(function() {
-    sinon.stub(lookup.ElectionLookupMap.prototype, 'init');
-    sinon.stub(lookup.ElectionLookupMap.prototype, 'drawDistricts');
+    sinon.stub(map.ElectionMap.prototype, 'init');
+    sinon.stub(map.ElectionMap.prototype, 'drawDistricts');
   });
 
   beforeEach(function() {
@@ -53,7 +54,7 @@ describe('election lookup', function() {
       '</div>'
     );
     window.history.pushState({}, null, '/');
-    this.el = new lookup.ElectionLookup('#election-lookup');
+    this.el = new search.ElectionSearch('#election-lookup');
   });
 
   it('should memorize its selector', function() {
@@ -100,7 +101,7 @@ describe('election lookup', function() {
 
   describe('drawing search results', function() {
     beforeEach(function() {
-      this.drawItem = sinon.spy(lookup.ElectionLookup.prototype, 'drawResult');
+      this.drawItem = sinon.spy(search.ElectionSearch.prototype, 'drawResult');
       this.results = [
         {cycle: 2016, office: 'P', state: 'US'},
         {cycle: 2016, office: 'S', state: 'NJ'},

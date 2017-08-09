@@ -19,40 +19,173 @@
   </div>
 </section>
 
-<section class="slab slab--neutral slab--spacious">
-  <div class="container">
-    {{ search.search('hero', button_color="button--standard") }}
-    <span class="t-note t-sans search__example">Examples: Obama for America; C00431445; Bush, George W.; P00003335; or enter an image number for a filing.</span>
-  </div>
-</section>
-
 <div class="main container js-accordion accordion--neutral" data-content-prefix="about">
   <section class="content__section">
-    <div class="tour__point tour__point--left" data-intro="<h5>Better data browsing</h5>Look up individual contributions, campaign spending and original filings. Refine results as you go, using more precise controls— no need to enter all search criteria upfront. When you’re ready, export results and save links to custom searches."></div>
-    <div class="grid grid--2-wide">
-      <div class="grid__item grid__item--no-margin card card--wide">
-        <div class="card__image__container">
-          <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-table--neutral.svg') }}" alt="Icon representing committees">
-          <h2 class="card__title"><a href="{{ url_for('advanced') }}">Advanced data &raquo;</a></h2>
+    <div class="container grid--2-wide grid--flex">
+      <div class="grid__item card t-left-aligned">
+        <h2>Look up candidate and <br> committee profiles</h2>
+        <div class="content__section">
+          {{ search.search('hero', button_color="button--standard") }}
+          <span class="t-note t-sans search__example">Examples: Obama for America; C00431445; Bush, George W.; P00003335; or enter an image number for a filing.</span>
         </div>
-        <div class="card__content">
-          <h2 class="card__title"><a href="{{ url_for('advanced') }}">Advanced data &raquo;</a></h2>
-          <span>Search, filter and download data</span>
+        <div class="example--primary">
+          <h4 class="example__title">Top raising candidates in {{ constants.DEFAULT_TIME_PERIOD | fmt_year_range }}:</h4>
+          <ul class="t-sans">
+            {% for candidate in top_candidates_raising %}
+              <li><a href="{{ url_for('candidate_page', c_id=candidate.candidate_id) }}">{{ candidate.name }}</a></li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
-      <div class="grid__item grid__item--no-margin card card--wide">
-        <div class="tour__point tour__point--left" data-intro="<h5>Find election data that matters to you</h5>New election pages show all candidates running for a particular office. Compare what they’re raising and spending. Search by state and district or by ZIP code."></div>
-        <div class="card__image__container">
-          <img class="card__image icon--complex" src="{{ url_for('static', filename='img/i-elections--neutral.svg') }}"  alt="Icon representing elections">
-          <h2 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h2>
-        </div>
-        <div class="card__content">
-          <h2 class="card__title"><a href="{{ url_for('election_lookup') }}">Elections by location &raquo;</a></h2>
-          <span>Find elections near you&mdash; search by state or ZIP code</span>
+      <div class="grid__item card t-left-aligned">
+        <h2>Find contributions from <br> specific individuals</h2>
+        <form action="{{ url_for('individual_contributions') }}" autocomplete="off" class="search__container content__section">
+          <div class="combo combo--search combo--search--medium">
+            <div class="tour__point tour__point--left" data-intro="<h5>Find individual contributions</h5>See who's contributing to candidates and committees. Filter results, download and share the results."></div>
+            <label for="contributor-search" class="label">Individual contributor name</label>
+            <input id="contributor-search" class="combo__input" type="text" name="contributor_name"
+            autocorrect="off" autocapitalize="off" spellcheck="false">
+            <button type="submit" class="combo__button button--search button--standard">
+              <span class="u-visually-hidden">Search</span>
+            </button>
+          </div>
+          <span class="t-note t-sans search__example">Examples: your name, a celebrity, someone running for office.</span>
+        </form>
+        <div class="example--primary">
+          <h4 class="example__title">Possible uses of this data:</h4>
+          <ul class="t-sans">
+            <li><a href="{{ url_for('individual_contributions', min_amount=2000) }}">All contributions over $2,000</a></li>
+            <li><a href="{{ url_for('individual_contributions', min_amount=2000) }}">All contributions in the last month</a></li>
+            <li><a href="{{ url_for('individual_contributions') }}">Browse all and apply custom filters</a></li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
+
+  <section class="content__section">
+    <div class="tour__point tour__point--left" data-intro="<h5>Find election data that matters to you</h5>New election pages show all candidates running for a particular office. Compare what they’re raising and spending. Search by state and district."></div>
+    <h2>Compare candidates in an election</h2>
+    <div class="grid grid--2-wide" id="election-lookup">
+      <div class="grid__item">
+        <div class="election-map election-map--small"></div>
+      </div>
+      <div class="grid__item">
+        <form action="{{ url_for('election_page')}}" class="content__section">
+          <div class="search-controls__state">
+            <label for="state" class="label">State</label>
+            <select id="state" name="state" aria-label="Select a state">
+              <option value="">Select state</option>
+              {% for value, label in constants.election_states.items() %}
+              <option value="{{ value }}">{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="search-controls__district">
+            <label for="District" class="label">District <span class="label__optional">(optional)</span></label>
+            <select id="district" name="district" aria-label="Select a district" class="select--alt">
+              <option value="">Select district</option>
+              <option value="S">Senate</option>
+              <optgroup label="House">
+                {% for value in range(1, 100) %}
+                {% with formatted = '{0:02d}'.format(value) %}
+                <option value="{{ formatted }}">{{ formatted }}</option>
+                {% endwith %}
+                {% endfor %}
+              </optgroup>
+            </select>
+          </div>
+          <div class="search-controls__submit search-controls__no-label">
+            <button type="submit" class="button--search--text button--standard">Search</button>
+          </div>
+        </form>
+        <div class="example--primary">
+          <h4 class="example__title">Trending elections</h4>
+          <ul class="t-sans">
+            <li><a href="">Georgia, congressional district 6 special election</a></li>
+            <li><a href="">Alabama senate special election</a></li>
+            <li><a href="">2016 US presidential election</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </section>
+
+  <section class="content__section content__section--ruled">
+    <div class="tour__point tour__point--left" data-intro="<h5>Better data browsing</h5>Look up individual contributions, campaign spending and original filings. Refine results as you go, using more precise controls— no need to enter all search criteria upfront. When you’re ready, export results and save links to custom searches."></div>
+    <h2>Browse full advanced data sets</h2>
+    <ul class="grid grid--4-wide">
+      <li class="grid__item card card--horizontal card--primary">
+        <div class="card__image__container">
+          <span class="card__icon i-receipt"><span class="u-visually-hidden">Icon of a piggy bank</span></span>
+        </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='raising') }}">Raising</a>
+        </div>
+      </li>
+      <li class="grid__item card card--horizontal card--primary">
+        <div class="card__image__container">
+          <span class="card__icon i-disbursement"><span class="u-visually-hidden">Icon of representing spending</span></span>
+        </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='spending') }}">Spending</a>
+        </div>
+      </li>
+      <li class="grid__item card card--horizontal card--primary">
+        <div class="card__image__container">
+          <span class="card__icon i-candidate"><span class="u-visually-hidden">Icon of a candidate</span></span>
+        </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='candidates') }}">Candidates</a>
+        </div>
+      </li>
+      <li class="grid__item card card--horizontal card--primary">
+        <div class="card__image__container">
+          <span class="card__icon i-committee"><span class="u-visually-hidden">Icon representing a committeek</span></span>
+        </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='committees') }}">Committees</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="grid grid--4-wide">
+      <li class="grid__item card card--horizontal card--primary">
+        <div class="card__image__container">
+          <span class="card__icon i-filings"><span class="u-visually-hidden">Icon representing filings</span></span>
+        </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='filings') }}">Filings and reports</a>
+        </div>
+      </li>
+      <li class="grid__item card card--horizontal card--primary">
+        <div class="card__image__container">
+          <span class="card__icon i-loans"><span class="u-visually-hidden">Icon representing loans and debts</span></span>
+        </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='loans-debts') }}">Loans and debts</a>
+        </div>
+      </li>
+      <li class="grid__item card card--horizontal card--primary">
+        <div class="card__image__container">
+          <span class="card__icon i-bulk"><span class="u-visually-hidden">Icon representing bulk data</span></span>
+        </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='other') }}">Bulk data and other sources</a>
+        </div>
+      </li>
+      <li class="grid__item card card--horizontal card--primary">
+        <div class="card__image__container">
+          <span class="card__icon i-external"><span class="u-visually-hidden">Icon representing external pages</span></span>
+        </div>
+        <div class="card__content">
+          <a href="{{ url_for('advanced', tab='external') }}">External data sources</a>
+        </div>
+      </li>
+    </ul>
+  </section>
+
   <div class="content__section--extra">
     <h2 class="t-ruled--bottom">Get started with campaign finance data</h2>
     <section class="content__section" id="raising">
@@ -105,7 +238,7 @@
             </ul>
           </div>
         </div>
-        {{ overviews.overview('spent', 'landing')}}
+        {{ overviews.overview('spent', 'landing') }}
         <a class="breakdown-link" href="{{ url_for('spending_breakdown') }}">Spending breakdown &raquo;</a>
         <ul class="grid grid--4-wide t-sans">
           <li class="grid__item">
@@ -125,12 +258,6 @@
           </li>
         </ul>
       </div>
-    </section>
-    <section class="content__section--extra">
-      <div class="tour__point tour__point--left tour__point--top-padding-lg" data-intro="<h5>Quick views</h5>Find the highest raising and spending candidates, PACs and committees for the 2017–2018 election cycle."></div>
-      {{ overviews.top('candidates', 'Candidates', 'candidates', top_candidates_raising, top_candidates_spending)}}
-      {{ overviews.top('pacs', 'PACs', 'PACs', top_pacs_raising, top_pacs_spending)}}
-      {{ overviews.top('parties', 'Party committees', 'party committees', top_parties_raising, top_parties_spending)}}
     </section>
   </div>
 </div>
@@ -198,6 +325,7 @@
   </div>
 </div>
 {% endblock %}
+
 {% block scripts %}
 <script src="{{ asset_for('dist/js/pages/landing.js') }}"></script>
 

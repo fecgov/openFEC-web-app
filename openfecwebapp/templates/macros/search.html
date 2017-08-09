@@ -1,6 +1,6 @@
 {% macro search(location, result_type, query, button_color="button--standard") %}
 {% if location == 'hero' %}
-  {% set size = 'combo--search--large' %}
+  {% set size = 'combo--search--medium' %}
 {% endif %}
 <form id="{{ location }}-search" action="{{ url_for('search') }}" autocomplete="off" class="search__container">
   <div class="combo combo--search {{ size }}">
@@ -8,7 +8,7 @@
       {% if location == 'hero' %}
         <div class="tour__point tour__point--left" data-intro="<h5>Find candidates and committees</h5>Track raising, spending, debts and loans, filings and summary information for candidates and committees on redesigned profile pages."></div>
       {% endif %}
-      Search candidate and committee profiles</label>
+      Candidate or committee name or ID</label>
     <input id="search" class="js-search-input combo__input" type="text" name="search"
     autocorrect="off" autocapitalize="off" spellcheck="false"
     value="{{ query or '' }}">

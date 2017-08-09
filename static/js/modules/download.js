@@ -84,7 +84,7 @@ function DownloadItem(url, container, opts) {
   this.timestamp = payload.timestamp || moment().format(DATE_FORMAT);
   this.downloadUrl = payload.downloadUrl;
   this.isPending = !_.isEmpty(payload);
-  this.filename = this.resource + '-' + this.timestamp + '.zip';
+  this.filename = this.resource + '-' + this.timestamp + '.csv';
 }
 
 DownloadItem.prototype.init = function() {
