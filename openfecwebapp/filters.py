@@ -85,3 +85,7 @@ def get_max(list):
 @app.template_filter()
 def get_min(list):
     return min(list)
+
+@app.template_filter()
+def strip_zero_pad(number):
+    return number.strip("0")

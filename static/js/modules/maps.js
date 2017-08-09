@@ -31,7 +31,7 @@ var compactRules = [
 ];
 
 var colorZero = '#ffffff';
-var colorScale = ['#c1eded', '#278887'];
+var colorScale = ['#e2ffff', '#278887'];
 
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g

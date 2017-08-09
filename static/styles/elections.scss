@@ -1,6 +1,7 @@
 @import "leaflet/dist/leaflet";
 
-@import "fec-style/scss/base";
+@import 'fec-style/scss/base';
+@import 'fec-style/scss/common';
 @import "fec-style/scss/components/entity-header";
 @import "fec-style/scss/components/datatables";
 @import "fec-style/scss/components/results-info";

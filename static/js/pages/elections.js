@@ -226,7 +226,7 @@ function mapSize(response, primary) {
   });
 }
 
-function mapState(response, primary) {
+function mapState(response) {
   var groups = {};
   _.each(response.results, function(result) {
     groups[result.state] = groups[result.state] || {};
@@ -454,16 +454,19 @@ var tableOpts = {
     path: ['schedules', 'schedule_e', 'by_candidate'],
     columns: independentExpenditureColumns,
     title: 'independent expenditures',
+    order: [[3, 'desc']],
   },
   'communication-costs': {
     path: ['communication_costs', 'by_candidate'],
     columns: communicationCostColumns,
     title: 'communication costs',
+    order: [[3, 'desc']]
   },
   'electioneering': {
     path: ['electioneering', 'by_candidate'],
     columns: electioneeringColumns,
-    title: 'electioneering communications'
+    title: 'electioneering communications',
+    order: [[2, 'desc']]
   },
 };
 
@@ -478,7 +481,7 @@ function initSpendingTables() {
         path: opts.path,
         query: helpers.filterNull(context.election),
         columns: opts.columns,
-        order: [[3, 'desc']],
+        order: opts.order,
         dom: tables.simpleDOM,
         pagingType: 'simple',
         lengthChange: true,
@@ -529,7 +532,7 @@ $(document).ready(function() {
       $('#election-map').get(0),
       {color: '#36BDBB'}
     );
-    districtMap.load(context.election);    
+    districtMap.load(context.election);
   }
 
   initSpendingTables();
