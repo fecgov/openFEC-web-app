@@ -89,7 +89,7 @@
         <div id="contributor-state" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="tag__category">
-              <div class="tag__item">Coverage dates: {{two_year_totals.coverage_start_date|date}} to {{two_year_totals.coverage_end_date|date}}</div>
+              <div class="tag__item">Coverage dates: {{ cycle|fmt_year_range}}</div>
             </div>
           </div>
           <div class="map-table">
@@ -119,7 +119,7 @@
         <div id="contribution-size" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="tag__category">
-              <div class="tag__item">Coverage dates: {{two_year_totals.coverage_start_date|date}} to {{two_year_totals.coverage_end_date|date}}</div>
+              <div class="tag__item">Coverage dates: {{cycle|fmt_year_range}}</div>
             </div>
           </div>
           <table
