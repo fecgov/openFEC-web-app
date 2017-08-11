@@ -141,6 +141,7 @@ var candidates = [
   {data: 'party_full', className: 'min-tablet hide-panel'},
   {data: 'state', className: 'min-desktop hide-panel column--state'},
   {data: 'district', className: 'min-desktop hide-panel column--small'},
+  {data: 'first_filing_date', orderable: true, className: 'min-desktop hide-panel column--small'},
   modalTriggerColumn
 ];
 
@@ -172,6 +173,7 @@ var committees = [
   {data: 'treasurer_name', className: 'min-desktop hide-panel'},
   {data: 'committee_type_full', className: 'min-tablet hide-panel'},
   {data: 'designation_full', className: 'min-tablet hide-panel'},
+  {data: 'first_filing_date', orderable: true, className: 'min-desktop hide-panel column--small'},
   modalTriggerColumn
 ];
 
@@ -299,6 +301,7 @@ var filings = {
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
+      var html_url = row.html_url ? row.html_url : null;
 
       // If it's a Form 3L we should append that to the doc title
       if (row.form_type == 'F3L') {
@@ -310,7 +313,8 @@ var filings = {
         amendment_version: amendment_version,
         fec_url: fec_url,
         pdf_url: pdf_url,
-        csv_url: csv_url
+        csv_url: csv_url,
+        html_url: html_url
       });
     }
   },
@@ -537,13 +541,15 @@ var reports = {
       var pdf_url = row.pdf_url ? row.pdf_url : null;
       var csv_url = row.csv_url ? row.csv_url : null;
       var fec_url = row.fec_url ? row.fec_url : null;
+      var html_url = row.html_url ? row.html_url : null;
 
       return reportType({
         doc_description: doc_description,
         amendment_version: amendment_version,
         pdf_url: pdf_url,
         fec_url: fec_url,
-        csv_url: csv_url
+        csv_url: csv_url,
+        html_url: html_url
       });
     }
   },

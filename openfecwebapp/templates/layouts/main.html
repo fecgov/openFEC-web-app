@@ -18,7 +18,7 @@
     CMS_URL = '{{ cms_url }}',
     API_LOCATION = '{{ api_location }}';
     API_VERSION = '{{ api_version }}';
-    API_KEY = '{{ api_key }}';
+    API_KEY = '{{ api_key_public }}';
     DEFAULT_TIME_PERIOD = '{{ constants.DEFAULT_TIME_PERIOD }}';
     START_YEAR = '{{ constants.START_YEAR }}';
     END_YEAR = '{{ constants.END_YEAR }}';
@@ -101,24 +101,26 @@
 
       <div class="grid grid--6-wide">
 
-        <div class="grid__item"></div>
-
         <div class="grid__item">
           <ul>
             <li>
-              <a href="{{ cms_url }}/about/">About the FEC</a>
+              <a href="{{ cms_url }}/about/">About</a>
             </li>
             <li>
               <a href="{{ cms_url }}/about/careers/">Careers</a>
             </li>
             <li>
-              <a href="{{ cms_url }}/contact-us/">Contact</a>
+              <a href="{{ cms_url }}/press/">Press</a>
             </li>
             <li>
-              <a href="{{ cms_url }}/press/">Press</a>
+              <a href="{{ cms_url }}/contact-us/">Contact</a>
             </li>
           </ul>
         </div>
+
+        <div class="grid__item"></div>
+
+        <div class="grid__item"></div>
 
         <div class="grid__item">
           <ul>
@@ -133,20 +135,6 @@
             </li>
             <li>
               <a href="{{ cms_url }}/about/reports-about-fec/strategy-budget-and-performance/">Strategy, budget and performance</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="grid__item">
-          <ul>
-            <li>
-              <a href="https://api.open.fec.gov/">OpenFEC API</a>
-            </li>
-            <li>
-              <a href="https://github.com/18F/fec">GitHub repository</a>
-            </li>
-            <li>
-              <a href="https://github.com/18F/FEC/blob/master/release_notes/release_notes.md">Release notes</a>
             </li>
           </ul>
         </div>
@@ -171,7 +159,13 @@
         <div class="grid__item">
           <ul>
             <li>
-              <a href="{{ cms_url }}/updates/">Latest updates</a>
+              <a href="https://api.open.fec.gov/">OpenFEC API</a>
+            </li>
+            <li>
+              <a href="https://github.com/18F/fec">GitHub repository</a>
+            </li>
+            <li>
+              <a href="https://github.com/18F/FEC/blob/master/release_notes/release_notes.md">Release notes</a>
             </li>
           </ul>
         </div>

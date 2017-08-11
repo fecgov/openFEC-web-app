@@ -317,6 +317,21 @@ function missingDataReason(dataType) {
 
   return reasons[dataType] || false;
 }
+
+/**
+ * Takes a jQuery element and returns whether or not it's in the viewport
+ * @param {jQuery} $elm - the element to check
+ * @return {bool} - If the element is in the viewport
+ */
+function isInViewport($elm) {
+  var top = $elm.offset().top;
+  if (window.innerHeight + window.scrollY >= top) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 module.exports = {
   buildAppUrl: buildAppUrl,
   buildUrl: buildUrl,
@@ -331,6 +346,7 @@ module.exports = {
   globals: globals,
   isLargeScreen: isLargeScreen,
   isMediumScreen: isMediumScreen,
+  isInViewport: isInViewport,
   LOADING_DELAY: helpers.LOADING_DELAY,
   SUCCESS_DELAY: helpers.SUCCESS_DELAY,
   zeroPad: zeroPad,

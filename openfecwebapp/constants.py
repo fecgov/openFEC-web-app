@@ -3,6 +3,7 @@ from collections import OrderedDict
 START_YEAR = 1979
 END_YEAR = 2018
 DEFAULT_TIME_PERIOD = 2018
+DEFAULT_PRESIDENTIAL_YEAR = 2016
 DISTRICT_MAP_CUTOFF = 2018 # The year we show district maps for on election pages
 
 states = OrderedDict([
@@ -57,6 +58,60 @@ states = OrderedDict([
     ('UT', 'Utah'),
     ('VA', 'Virginia'),
     ('VI', 'Virgin Islands'),
+    ('VT', 'Vermont'),
+    ('WA', 'Washington'),
+    ('WI', 'Wisconsin'),
+    ('WV', 'West Virginia'),
+    ('WY', 'Wyoming'),
+])
+
+election_states = OrderedDict([
+    ('AK', 'Alaska'),
+    ('AL', 'Alabama'),
+    ('AR', 'Arkansas'),
+    ('AZ', 'Arizona'),
+    ('CA', 'California'),
+    ('CO', 'Colorado'),
+    ('CT', 'Connecticut'),
+    ('DC', 'District of Columbia'),
+    ('DE', 'Delaware'),
+    ('FL', 'Florida'),
+    ('GA', 'Georgia'),
+    ('HI', 'Hawaii'),
+    ('IA', 'Iowa'),
+    ('ID', 'Idaho'),
+    ('IL', 'Illinois'),
+    ('IN', 'Indiana'),
+    ('KS', 'Kansas'),
+    ('KY', 'Kentucky'),
+    ('LA', 'Louisiana'),
+    ('MA', 'Massachusetts'),
+    ('MD', 'Maryland'),
+    ('ME', 'Maine'),
+    ('MI', 'Michigan'),
+    ('MN', 'Minnesota'),
+    ('MO', 'Missouri'),
+    ('MS', 'Mississippi'),
+    ('MT', 'Montana'),
+    ('NC', 'North Carolina'),
+    ('ND', 'North Dakota'),
+    ('NE', 'Nebraska'),
+    ('NH', 'New Hampshire'),
+    ('NJ', 'New Jersey'),
+    ('NM', 'New Mexico'),
+    ('NV', 'Nevada'),
+    ('NY', 'New York'),
+    ('OH', 'Ohio'),
+    ('OK', 'Oklahoma'),
+    ('OR', 'Oregon'),
+    ('PA', 'Pennsylvania'),
+    ('RI', 'Rhode Island'),
+    ('SC', 'South Carolina'),
+    ('SD', 'South Dakota'),
+    ('TN', 'Tennessee'),
+    ('TX', 'Texas'),
+    ('UT', 'Utah'),
+    ('VA', 'Virginia'),
     ('VT', 'Vermont'),
     ('WA', 'Washington'),
     ('WI', 'Wisconsin'),
@@ -233,11 +288,11 @@ house_senate_types = OrderedDict([
 ])
 
 table_columns = OrderedDict([
-    ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District']),
+    ('candidates', ['Name', 'Office', 'Election years', 'Party', 'State', 'District', 'First filing date']),
     ('candidates-office-president', ['Name', 'Party', 'Receipts', 'Disbursements']),
     ('candidates-office-senate', ['Name', 'Party', 'State', 'Receipts', 'Disbursements']),
     ('candidates-office-house', ['Name', 'Party', 'State', 'District', 'Receipts', 'Disbursements']),
-    ('committees', ['Name', 'Treasurer', 'Type', 'Designation']),
+    ('committees', ['Name', 'Treasurer', 'Type', 'Designation', 'First filing date']),
     ('communication-costs', ['Committee', 'Support/Oppose', 'Candidate', 'Amount', 'Date']),
     ('disbursements', ['Spender', 'Recipient', 'State', 'Description', 'Disbursement date', 'Amount']),
     ('electioneering-communications', ['Spender', 'Candidate mentioned','Number of candidates', 'Amount per candidate', 'Date', 'Disbursement amount' ]),

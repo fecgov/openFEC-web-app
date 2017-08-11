@@ -424,6 +424,7 @@ $(document).ready(function() {
             order: [[2, 'desc']],
             useExport: true,
             singleEntityItemizedExport: true,
+            paginator: tables.SeekPaginator,
             hideEmptyOpts: {
               dataType: 'individual contributions',
               name: context.name,
@@ -468,6 +469,7 @@ $(document).ready(function() {
             order: [[3, 'desc']],
             useExport: true,
             singleEntityItemizedExport: true,
+            paginator: tables.SeekPaginator,
             hideEmptyOpts: {
               dataType: 'disbursements to committees',
               name: context.name,

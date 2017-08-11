@@ -166,6 +166,7 @@ var individualContributionsColumns = [
     data: 'committee',
     className: 'all',
     orderable: false,
+    paginator: tables.SeekPaginator,
     render: function(data, type, row) {
       return columnHelpers.buildEntityLink(
         row.committee.name,
