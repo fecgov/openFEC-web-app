@@ -207,7 +207,7 @@ def get_state_senate_cycles(state):
             senate_cycles += get_senate_cycles(senate_class)
     return senate_cycles
 
-def two_days_ago():
-    """Find the date two days ago"""
-    two_days_ago = datetime.datetime.today() - datetime.timedelta(days=2)
-    return two_days_ago.strftime('%m/%d/%y')
+def n_days_ago(n):
+    """Find the date n days ago"""
+    n_days_ago = datetime.datetime.today() - datetime.timedelta(days=n)
+    return n_days_ago.strftime('%m/%d/%y')

@@ -147,7 +147,7 @@ app.jinja_env.globals.update({
     'series_group_has_data': series_group_has_data,
     'cycle_start': cycle_start,
     'cycle_end': cycle_end,
-    'two_days_ago': utils.two_days_ago(),
+    'efiling_window': utils.n_days_ago(constants.EFILING_WINDOW),
     'election_url': get_election_url,
     'constants': constants,
     'cycles': utils.get_cycles(),
