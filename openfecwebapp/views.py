@@ -19,6 +19,7 @@ from werkzeug.utils import cached_property
 from openfecwebapp import config
 from openfecwebapp import api_caller
 from openfecwebapp import utils
+from openfecwebapp import constants
 
 
 def render_search_results(results, query):
