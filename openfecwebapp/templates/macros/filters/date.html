@@ -20,19 +20,19 @@
 </div>
 {% endmacro %}
 
-{% macro validate_field(name, label, dates, id_suffix='') %}
-  <div class="filter js-filter" id="{{ name }}{{id_suffix}}" data-duration="6" data-name="{{ name }}" data-filter="date">
+{% macro validate_field(name, label, duration, id_suffix='') %}
+  <div class="filter js-filter" id="{{ name }}{{id_suffix}}" data-duration="{{ duration }}" data-name="{{ name }}" data-filter="validate-date">
   <fieldset>
-    <legend class="label">{{ label }} (up to 6 years)</legend>
+    <legend class="label">{{ label }} (up to {{ duration }} years)</legend>
     <div class="range range--date js-date-range">
       <div class="range__input range__input--min" data-filter="range">
         <label for="min_{{ name }}{{id_suffix}}">Beginning</label>
-        <input type="text" id="min_{{ name }}{{id_suffix}}" name="min_{{ name }}" data-range="min" data-removable="true" class="js-min-date" data-prefix="Beginning">
+        <input type="text" id="min_{{ name }}{{id_suffix}}" name="min_{{ name }}" data-range="min" class="js-min-date" data-prefix="Beginning">
       </div>
       <div class="range__hyphen">-</div>
       <div class="range__input range__input--max" data-filter="range">
         <label for="max_{{ name }}{{id_suffix}}">Ending</label>
-        <input type="text" id="max_{{ name }}{{id_suffix}}" name="max_{{ name }}" data-range="max" data-removable="true" class="js-max-date" data-prefix="Ending">
+        <input type="text" id="max_{{ name }}{{id_suffix}}" name="max_{{ name }}" data-range="max" class="js-max-date" data-prefix="Ending">
       </div>
       <button class="button--go button--standard" type="button">
         <span class="u-visually-hidden">Search</span>
