@@ -257,7 +257,7 @@ function filterSuccessUpdates(changeCount) {
     var message = '';
     var filterAction = '';
     var filterResult = '';
-    var $filterMessage = $('.filter__message');
+    var $filterMessage = $('.js-filter-message');
 
     $('.is-successful').removeClass('is-successful');
     $('.is-unsuccessful').removeClass('is-unsuccessful');
@@ -334,14 +334,14 @@ function filterSuccessUpdates(changeCount) {
     // so we check to make sure the message isn't shown inside the dropdown panel.
     if ($label.closest('.dropdown__list').length < 1) {
       // append filter change count message after input
-      $label.after($('<div class="filter__message filter__message--success">' + message + '</div>')
+      $label.after($('<div class="js-filter-message filter__message filter__message--success">' + message + '</div>')
         .hide().fadeIn());
     }
 
     messageTimer = setTimeout(function() {
       $('.is-successful').removeClass('is-successful');
 
-      $('.filter__message').fadeOut(function () {
+      $('.js-filter-message').fadeOut(function () {
         $(this).remove();
       });
 
@@ -642,12 +642,12 @@ DataTable.prototype.fetchSuccess = function(resp) {
 
 DataTable.prototype.fetchError = function() {
   var self = this;
-  var errorMessage = '<div class="filter__message filter__message--error">' +
+  var errorMessage = '<div class="js-filter-message filter__message filter__message--error">' +
       '<strong>We had trouble processing your request</strong><br>' +
       'Please try again. If you still have trouble, ' +
       '<button class="js-filter-feedback">let us know</button></div>';
 
-  $('.filter__message').remove();
+  $('.js-filter-message').remove();
 
   if ($(updateChangedEl).parent().hasClass('range__input')) {
     $(updateChangedEl).closest('.range').after($(errorMessage));
