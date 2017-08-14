@@ -66,7 +66,7 @@
               <img class="icon--complex" src="/static/img/i-elections--primary.svg" alt="Icon representing elections">
             </div>
             <div class="card__content">
-              View all candidates in the {{ election_year }} {{ constants.states[state] }} {% if office == 'P' %}Presidential{% else %}{{ office_full }}{% endif %}{% if office_full == 'House' %} district {{ district }}{% endif %} election
+              View all candidates in the {{ election_year }} {{ constants.states[state] }} {% if office == 'P' %}Presidential{% else %}{{ office_full }}{% endif %}{% if office_full == 'House' %} District {{ district|strip_zero_pad }}{% endif %} election
             </div>
           </a>
           {% endif %}
