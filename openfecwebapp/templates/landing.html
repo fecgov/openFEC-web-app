@@ -102,9 +102,9 @@
         <div class="example--primary">
           <h4 class="example__title">Trending elections</h4>
           <ul class="t-sans">
-            <li><a href="">Georgia, congressional district 6 special election</a></li>
-            <li><a href="">Alabama senate special election</a></li>
-            <li><a href="">2016 US presidential election</a></li>
+            <li><a href="{{ url_for('elections', office="house", state="GA", district="6", cycle="2018") }}">Georgia, congressional district 6 special election</a></li>
+            <li><a href="{{ url_for('elections', office="senate", state="AL", cycle="2018") }}">Alabama senate special election</a></li>
+            <li><a href="{{ url_for('elections', office="president", cycle="2016") }}">2016 US presidential election</a></li>
           </ul>
         </div>
       </div>
