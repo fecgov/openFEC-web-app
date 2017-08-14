@@ -55,7 +55,7 @@
           <h4 class="example__title">Possible uses of this data:</h4>
           <ul class="t-sans">
             <li><a href="{{ url_for('individual_contributions', min_amount=2000) }}">All contributions over $2,000</a></li>
-            <li><a href="{{ url_for('individual_contributions', min_amount=2000) }}">All contributions in the last month</a></li>
+            <li><a href="{{ url_for('individual_contributions', min_date=first_of_year, max_date=last_of_year) }}">All contributions this year</a></li>
             <li><a href="{{ url_for('individual_contributions') }}">Browse all and apply custom filters</a></li>
           </ul>
         </div>
