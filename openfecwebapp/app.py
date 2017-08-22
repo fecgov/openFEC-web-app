@@ -69,8 +69,13 @@ def series_group_has_data(groups, keys):
     )
 
 
-def cycle_start(value):
-    return datetime.datetime(value - 1, 1, 1)
+def cycle_start(value, duration=2):
+    """Get Jan. 1 of the first year of a cycle.
+    If no duration param is passed, default to a 2-year period
+    If a 4 or 6-year duration is include, find the year 3 or 5 years before
+    """
+    delta = duration - 1
+    return datetime.datetime(value - delta, 1, 1)
 
 
 def cycle_end(value):

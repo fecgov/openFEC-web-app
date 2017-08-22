@@ -94,6 +94,7 @@ function buildTotalLink(path, getParams) {
     var params = getParams(data, type, row, meta);
     var span = document.createElement('div');
     var includeTransactionPeriod = false;
+    var duration = meta.settings.nTable.dataset.duration ? Number(meta.settings.nTable.dataset.duration) : 2;
     span.setAttribute('data-value', data);
     span.setAttribute('data-row', meta.row);
     if (params) {
@@ -103,7 +104,7 @@ function buildTotalLink(path, getParams) {
       if (path.indexOf('receipts') > -1 || path.indexOf('disbursements') > -1) {
         includeTransactionPeriod = true;
       }
-      var dates = helpers.cycleDates(_.extend({}, row, params).cycle);
+      var dates = helpers.cycleDates(_.extend({}, row, params).cycle, duration);
       var uri = helpers.buildAppUrl(path, _.extend(
         {
           committee_id: row.committee_id,

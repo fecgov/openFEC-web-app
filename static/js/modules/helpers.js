@@ -151,9 +151,10 @@ function formatCycleRange(year, duration) {
   return firstYear.toString() + '–' + year.toString();
 }
 
-function cycleDates(year) {
+function cycleDates(year, duration) {
+  var delta = duration ? duration - 1 : 1;
   return {
-    min: '01/01/' + (year - 1),
+    min: '01/01/' + (year - delta),
     max: '12/31/' + year
   };
 }
