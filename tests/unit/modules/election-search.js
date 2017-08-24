@@ -23,17 +23,18 @@ _.extend(window, {
   }
 });
 
-var lookup = require('../../../static/js/modules/election-lookup');
+var search = require('../../../static/js/modules/election-search');
+var map = require('../../../static/js/modules/election-map');
 
-describe('election lookup', function() {
+describe('election search', function() {
   before(function() {
     this.$fixture = $('<div id="fixtures"></div>');
     $('body').append(this.$fixture);
   });
 
   before(function() {
-    sinon.stub(lookup.ElectionLookupMap.prototype, 'init');
-    sinon.stub(lookup.ElectionLookupMap.prototype, 'drawDistricts');
+    sinon.stub(map.ElectionMap.prototype, 'init');
+    sinon.stub(map.ElectionMap.prototype, 'drawDistricts');
   });
 
   beforeEach(function() {
@@ -53,7 +54,7 @@ describe('election lookup', function() {
       '</div>'
     );
     window.history.pushState({}, null, '/');
-    this.el = new lookup.ElectionLookup('#election-lookup');
+    this.el = new search.ElectionSearch('#election-lookup');
   });
 
   it('should memorize its selector', function() {
@@ -100,7 +101,7 @@ describe('election lookup', function() {
 
   describe('drawing search results', function() {
     beforeEach(function() {
-      this.drawItem = sinon.spy(lookup.ElectionLookup.prototype, 'drawResult');
+      this.drawItem = sinon.spy(search.ElectionSearch.prototype, 'drawResult');
       this.results = [
         {cycle: 2016, office: 'P', state: 'US'},
         {cycle: 2016, office: 'S', state: 'NJ'},
@@ -159,7 +160,7 @@ describe('election lookup', function() {
       var call = $.ajax.getCall(0);
       var uri = URI(call.args[0].url);
       expect(uri.path()).to.equal('/v1/elections/search/');
-      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', cycle: '2016', zip: '19041'});
+      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', per_page: '100', cycle: '2016', zip: '19041'});
       expect(URI.parseQuery(window.location.search)).to.deep.equal({cycle: '2016', zip: '19041'});
       expect(this.el.draw).to.have.been.calledWith(this.response.results);
     });
@@ -173,7 +174,7 @@ describe('election lookup', function() {
       var call = $.ajax.getCall(0);
       var uri = URI(call.args[0].url);
       expect(uri.path()).to.equal('/v1/elections/search/');
-      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', cycle: '2016', zip: '19041'});
+      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', per_page: '100', cycle: '2016', zip: '19041'});
     });
 
     it('should skip search if missing params', function() {

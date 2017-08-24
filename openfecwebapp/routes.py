@@ -41,22 +41,14 @@ def search():
             return views.render_search_results(results, query)
 
     else:
-        top_candidates_raising = api_caller.load_top_candidates('-receipts')
-        top_candidates_spending = api_caller.load_top_candidates('-disbursements')
-        top_pacs_raising = api_caller.load_top_pacs('-receipts')
-        top_pacs_spending = api_caller.load_top_pacs('-disbursements')
-        top_parties_raising = api_caller.load_top_parties('-receipts')
-        top_parties_spending = api_caller.load_top_parties('-disbursements')
+        top_candidates_raising = api_caller.load_top_candidates('-receipts', per_page=3)
         return render_template('landing.html',
             page='home',
             parent='data',
             dates=utils.date_ranges(),
-            top_candidates_raising = top_candidates_raising['results'] if top_candidates_raising else None,
-            top_candidates_spending = top_candidates_spending['results'] if top_candidates_spending else None,
-            top_pacs_raising = top_pacs_raising['results'] if top_pacs_raising else None,
-            top_pacs_spending = top_pacs_spending['results'] if top_pacs_spending else None,
-            top_parties_raising = top_parties_raising['results'] if top_parties_raising else None,
-            top_parties_spending = top_parties_spending['results'] if top_parties_spending else None,
+            top_candidates_raising=top_candidates_raising['results'] if top_candidates_raising else None,
+            first_of_year=datetime.date(datetime.date.today().year, 1, 1).strftime('%m/%d/%Y'),
+            last_of_year=datetime.date(datetime.date.today().year, 12, 31).strftime('%m/%d/%Y'),
             title='Campaign finance data')
 
 
@@ -373,6 +365,35 @@ def elections(office, cycle, state=None, district=None):
         district=district,
         title=utils.election_title(cycle, office, state, district),
     )
+
+
+@app.route('/election-page/')
+@use_kwargs({
+    'state': fields.Str(),
+    'district': fields.Str(),
+})
+def election_page(state=None, district=None):
+    """This route is used to redirect users to a specific senate or house district page
+    """
+    if state and district:
+        # If district is S, redirect to a senate page
+        if district == 'S':
+            # Find the state's senate cycles given the classes and then choose the first one
+            cycles = utils.get_state_senate_cycles(state)
+            cycle = cycles[0]
+            redirect_url = url_for('elections',
+                office='senate',
+                state=state,
+                cycle=cycle)
+        else:
+            redirect_url = url_for('elections',
+                office='house',
+                district=district,
+                state=state,
+                cycle=constants.DEFAULT_TIME_PERIOD)
+        return redirect(redirect_url)
+    else:
+        return redirect(url_for('election_lookup', state=state, district=district))
 
 
 @app.route('/raising/')

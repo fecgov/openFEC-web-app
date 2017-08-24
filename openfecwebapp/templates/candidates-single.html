@@ -6,6 +6,10 @@
     {{ name }} - Candidate overview
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/entity.css') }}" />
+{% endblock %}
+
 {% set breadcrumbs=[('', 'Candidate profiles')] %}
 
 {% block body %}
@@ -101,6 +105,10 @@
               <li><a href="#communication-costs">Communication costs</a></li>
               <li><a href="#electioneering-communication">Electioneering communication</a></li>
             </ul>
+        </li>
+        <li class="side-nav__item">
+          <a class="button button--cta u-margin--top t-left-aligned button--two-candidates u-full-width"
+             href="{{ election_url(context(), cycle)}}">Compare to<br>opposing candidates</a>
         </li>
       </ul>
     </nav>

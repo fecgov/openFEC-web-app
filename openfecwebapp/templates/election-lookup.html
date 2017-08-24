@@ -6,6 +6,10 @@
   Find candidates and elections by location
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ asset_for('dist/styles/elections.css') }}" />
+{% endblock %}
+
 {% block body %}
   {{ header.header(title) }}
 <section class="main" id="election-lookup" >
@@ -38,7 +42,7 @@
               <div class="search-controls__state">
                 <select id="state" name="state" aria-label="Select a state">
                   <option value="">Select state</option>
-                  {% for value, label in constants.states.items() %}
+                  {% for value, label in constants.election_states.items() %}
                   <option value="{{ value }}">{{ label }}</option>
                   {% endfor %}
                 </select>
