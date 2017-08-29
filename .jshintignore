@@ -1,4 +1,4 @@
-tests/react
-static/js/legal
-node_modules
-dist
+tests/react/**
+static/js/legal/**
+node_modules/**
+dist/**

@@ -3,6 +3,7 @@
 var _ = require('underscore');
 
 var browserify = require('browserify');
+var babelify = require('babelify');
 
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
@@ -124,4 +125,16 @@ gulp.task('build-js', function() {
   .transform({global: true}, hbsfy)
   .bundle()
   .pipe(callback('static/js/common.js'));
+});
+
+gulp.task('build-legal', function() {
+  browserify('./static/js/legal/LegalApp.js',
+    {
+      debug: debug
+    })
+    .transform('babelify', {
+      presets: ['latest', 'react']
+    })
+    .bundle()
+    .pipe(fs.createWriteStream('./dist/js/legalApp.js'));
 });
