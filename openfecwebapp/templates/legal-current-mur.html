@@ -4,6 +4,10 @@
 
 {% block title %}MUR #{{ mur.no }}{% endblock %}
 
+{% block css %}
+<link rel=“stylesheet” href=“{{ asset_for(‘dist/styles/legal-common.css’) }}” />
+{% endblock %}
+
 {% block body %}
 <header class="page-header slab slab--primary">
   {{ breadcrumb.breadcrumbs('MUR #%s' % (mur.no,), breadcrumb_links) }}
