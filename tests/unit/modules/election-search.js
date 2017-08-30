@@ -160,7 +160,7 @@ describe('election search', function() {
       var call = $.ajax.getCall(0);
       var uri = URI(call.args[0].url);
       expect(uri.path()).to.equal('/v1/elections/search/');
-      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', cycle: '2016', zip: '19041'});
+      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', per_page: '100', cycle: '2016', zip: '19041'});
       expect(URI.parseQuery(window.location.search)).to.deep.equal({cycle: '2016', zip: '19041'});
       expect(this.el.draw).to.have.been.calledWith(this.response.results);
     });
@@ -174,7 +174,7 @@ describe('election search', function() {
       var call = $.ajax.getCall(0);
       var uri = URI(call.args[0].url);
       expect(uri.path()).to.equal('/v1/elections/search/');
-      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', cycle: '2016', zip: '19041'});
+      expect(URI.parseQuery(uri.search())).to.deep.equal({api_key: '12345', per_page: '100', cycle: '2016', zip: '19041'});
     });
 
     it('should skip search if missing params', function() {
