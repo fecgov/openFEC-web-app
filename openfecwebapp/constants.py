@@ -5,6 +5,7 @@ END_YEAR = 2018
 DEFAULT_TIME_PERIOD = 2018
 DEFAULT_PRESIDENTIAL_YEAR = 2016
 DISTRICT_MAP_CUTOFF = 2018 # The year we show district maps for on election pages
+EFILING_WINDOW = 3 # The number of days to show raw efilings on a committee page
 
 states = OrderedDict([
     ('AK', 'Alaska'),

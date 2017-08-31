@@ -19,6 +19,7 @@ from werkzeug.utils import cached_property
 from openfecwebapp import config
 from openfecwebapp import api_caller
 from openfecwebapp import utils
+from openfecwebapp import constants
 
 
 def render_search_results(results, query):
@@ -153,13 +154,13 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
                 )
 
     # If it's not a senate committee and we're in the current cycle
-    # check if there's any raw filings in the last two days
+    # check if there's any raw filings in the last few days, whatever EFILING_WINDOW is set to
     if committee['committee_type'] != 'S' and cycle == utils.current_cycle():
         raw_filings = api_caller._call_api(
             'efile', 'filings',
             cycle=cycle,
             committee_id=committee['committee_id'],
-            min_receipt_date=utils.two_days_ago()
+            min_receipt_date=utils.n_days_ago(constants.EFILING_WINDOW)
         )
         if len(raw_filings.get('results')) > 0:
             tmpl_vars['has_raw_filings'] = True
