@@ -11,8 +11,6 @@ from webargs.flaskparser import use_kwargs
 from marshmallow import ValidationError
 from collections import OrderedDict
 
-import datetime
-
 import github3
 from werkzeug.utils import cached_property
 
@@ -127,9 +125,12 @@ def render_committee(committee, candidates, cycle, redirect_to_previous):
     tmpl_vars['totals'] = financials['totals']
 
     tmpl_vars['context_vars'] = {
+        'committeeID': committee['committee_id'],
+        'coverageStartDate': financials['totals'][0]['coverage_start_date'],
+        'coverageEndDate': financials['totals'][0]['coverage_end_date'],
         'cycle': cycle,
         'timePeriod': str(cycle - 1) + '–' + str(cycle),
-        'name': committee['name'],
+        'name': committee['name']
     }
 
     if financials['reports'] and financials['totals']:
@@ -205,13 +206,6 @@ def render_candidate(candidate, committees, cycle, election_full=True):
     tmpl_vars['min_cycle'] = cycle - tmpl_vars['duration'] if election_full else cycle
     tmpl_vars['election_full'] = election_full
     tmpl_vars['report_type'] = report_types.get(candidate['office'])
-    tmpl_vars['context_vars'] = {
-        'cycles': candidate['cycles'],
-        'name': candidate['name'],
-        'cycle': cycle,
-        'electionFull': election_full,
-        'candidateID': candidate['candidate_id']
-    }
 
     # In the case of when a presidential or senate candidate has filed
     # for a future year that's beyond the current cycle,
@@ -259,17 +253,6 @@ def render_candidate(candidate, committees, cycle, election_full=True):
 
     tmpl_vars['aggregate'] = aggregate
 
-    # Get totals for the last two-year period of a cycle for showing on
-    # raising and spending tabs
-    two_year_totals = api_caller.load_candidate_totals(
-        candidate['candidate_id'],
-        cycle=tmpl_vars['max_cycle'],
-        election_full=False
-    )
-
-    if two_year_totals:
-        tmpl_vars['two_year_totals'] = two_year_totals
-
     # Get the statements of candidacy
     statement_of_candidacy = api_caller.load_candidate_statement_of_candidacy(
         candidate['candidate_id'],
@@ -291,6 +274,16 @@ def render_candidate(candidate, committees, cycle, election_full=True):
         reverse=True,
     )
 
+    # Pass certain variables to the template to set Javascript context
+    tmpl_vars['context_vars'] = {
+        'candidateID': candidate['candidate_id'],
+        'coverageStartDate': aggregate['coverage_start_date'],
+        'coverageEndDate': aggregate['coverage_end_date'],
+        'cycle': cycle,
+        'cycles': candidate['cycles'],
+        'electionFull': election_full,
+        'name': candidate['name']
+    }
     return render_template('candidates-single.html', **tmpl_vars)
 
 

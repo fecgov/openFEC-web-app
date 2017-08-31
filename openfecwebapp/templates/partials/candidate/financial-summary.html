@@ -30,25 +30,25 @@
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Total raised</h3>
           <a class="heading__right button--alt button--browse"
-              href="{{ url_for('receipts', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse receipts
+              href="{{ url_for('receipts', committee_id=committee_ids, min_date=aggregate.coverage_start_date|date, max_date=aggregate.coverage_end_date|date) }}">Browse receipts
           </a>
         </div>
         <div class="tag__category u-no-margin">
           <div class="tag__item">Coverage dates: {{ aggregate.coverage_start_date|date }} to {{ aggregate.coverage_end_date|date }}</div>
         </div>
-        {{ tables.summary(raising_summary, committee_ids, cycle, office) }}
+        {{ tables.summary(raising_summary, committee_ids, cycle, office, aggregate.coverage_start_date, aggregate.coverage_end_date) }}
       </div>
       <div class="entity__figure entity__figure--narrow" id="total-spent">
         <div class="heading--section heading--with-action">
           <h3 class="heading__left">Total spent</h3>
           <a class="heading__right button--alt button--browse"
-              href="{{ url_for('disbursements', committee_id=committee_ids, two_year_transaction_period=max_cycle) }}">Browse disbursements
+              href="{{ url_for('disbursements', committee_id=committee_ids, min_date=aggregate.coverage_start_date|date, max_date=aggregate.coverage_end_date|date) }}">Browse disbursements
           </a>
         </div>
         <div class="tag__category u-no-margin">
           <div class="tag__item">Coverage dates: {{ aggregate.coverage_start_date|date }} to {{ aggregate.coverage_end_date|date }}</div>
         </div>
-        {{ tables.summary(spending_summary, committee_ids, cycle, office) }}
+        {{ tables.summary(spending_summary, committee_ids, cycle, office, aggregate.coverage_start_date, aggregate.coverage_end_date) }}
       </div>
       <div class="entity__figure entity__figure--narrow" id="cash-summary">
         <div class="heading--section heading--with-action">
@@ -57,7 +57,7 @@
         <div class="tag__category u-no-margin">
           <div class="tag__item">Coverage dates: {{ aggregate.coverage_start_date|date }} to {{ aggregate.coverage_end_date|date }}</div>
         </div>
-        {{ tables.summary(cash_summary) }}
+        {{ tables.summary(cash_summary, min_date=aggregate.coverage_start_date, max_date=aggregate.coverage_end_date) }}
       </div>
     {% else %}
     <div class="entity__figure entity__figure--narrow">

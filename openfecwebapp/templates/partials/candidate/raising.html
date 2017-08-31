@@ -4,9 +4,9 @@
   <h2 id="section-3-heading">Raising</h2>
 
   <div class="slab slab--inline slab--neutral u-padding--left u-padding--right">
-
-    {{ select.candidate_cycle_select(cycles, max_cycle, id="cycle-5") }}
-
+    <div class="content__section">
+      {{ select.cycle_select(election_years, cycle, duration=duration, id="cycle-5") }}
+    </div>
     {% if committee_groups['P'] or committee_groups['A']%}
       <span class="t-sans t-bold">Data is included from these committees:</span>
 
@@ -28,7 +28,7 @@
       </ul>
     {% endif %}
 
-    {% if two_year_totals %}
+    {% if raising_summary %}
     <div id="total-receipts" class="entity__figure row">
       <div class="content__section">
         <div class="heading--section heading--with-action">
@@ -36,17 +36,18 @@
           <a class="heading__right button--alt button--browse"
               href="{{ url_for(
                 'receipts',
-                two_year_transaction_period=max_cycle
+                min_date=aggregate.coverage_start_date|date,
+                max_date=aggregate.coverage_end_date|date
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter all receipts</a>
         </div>
         <div class="content__section--narrow">
           <div class="row u-margin-bottom">
             <div class="usa-width-one-half">
-              <span class="t-big-data">{{ two_year_totals['receipts']|currency }}</span>
+              <span class="t-big-data">{{ aggregate['receipts']|currency }}</span>
             </div>
           </div>
           <div class="row">
-            <span class="usa-width-one-half t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>{{two_year_totals.coverage_start_date|date_full}} to {{two_year_totals.coverage_end_date|date_full}}.</strong></span>
+            <span class="usa-width-one-half t-block t-sans">raised in total receipts by this candidate's authorized committees from <strong>{{aggregate.coverage_start_date|date_full}} to {{aggregate.coverage_end_date|date_full}}.</strong></span>
             <div class="usa-width-one-half">
               <span class="t-block t-sans">See the <a href="?tab=summary">financial summary</a> for a breakdown of each type of receipt.</span>
             </div>
@@ -63,7 +64,8 @@
           <a class="heading__right button--alt button--browse"
               href="{{ url_for(
                 'individual_contributions',
-                two_year_transaction_period=max_cycle,
+                min_date=aggregate.coverage_start_date|date,
+                max_date=aggregate.coverage_end_date|date
               ) }}{% for id in committee_ids %}&committee_id={{ id }}{% endfor %}">Filter this data</a>
           </div>
         <div class="row">
@@ -87,7 +89,7 @@
         <div id="contributor-state" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="tag__category">
-              <div class="tag__item">Coverage dates: {{two_year_totals.coverage_start_date|date}} to {{two_year_totals.coverage_end_date|date}}</div>
+              <div class="tag__item">Coverage dates: {{ cycle|fmt_year_range}}</div>
             </div>
           </div>
           <div class="map-table">
@@ -117,7 +119,7 @@
         <div id="contribution-size" class="panel-toggle-element" aria-hidden="true">
           <div class="results-info results-info--simple">
             <div class="tag__category">
-              <div class="tag__item">Coverage dates: {{two_year_totals.coverage_start_date|date}} to {{two_year_totals.coverage_end_date|date}}</div>
+              <div class="tag__item">Coverage dates: {{cycle|fmt_year_range}}</div>
             </div>
           </div>
           <table
@@ -134,7 +136,7 @@
         <div id="all-transactions" class="panel-toggle-element">
           <div class="results-info results-info--simple">
             <div class="u-float-left tag__category">
-              <div class="tag__item">Coverage dates: {{two_year_totals.coverage_start_date|date}} to {{two_year_totals.coverage_end_date|date}}</div>
+              <div class="tag__item">Coverage dates: {{aggregate.coverage_start_date|date}} to {{aggregate.coverage_end_date|date}}</div>
             </div>
             <div class="u-float-right">
               <div class="message message--info message--mini t-left-aligned data-container__message" data-export-message-for="individual-contributions" aria-hidden="true">
