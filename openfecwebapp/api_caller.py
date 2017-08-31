@@ -1,3 +1,4 @@
+import logging
 from operator import itemgetter
 import os
 from urllib import parse
@@ -15,6 +16,8 @@ from collections import OrderedDict
 
 MAX_FINANCIALS_COUNT = 4
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 session = requests.Session()
 http_adapter = requests.adapters.HTTPAdapter(max_retries=2)
@@ -34,7 +37,11 @@ def _call_api(*path_parts, **filters):
 
     results = session.get(url, params=filters)
 
-    return results.json() if results.ok else {}
+    if results.ok:
+        return results.json()
+    else:
+        logger.error('API ERROR with status {0} for {1} with filters: {2}'.format(results.status_code, url, filters))
+        return {'results': []}
 
 
 def load_search_results(query, query_type=None):
