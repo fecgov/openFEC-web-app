@@ -54,13 +54,46 @@ $(document).ready(function() {
   new skipNav.Skipnav('.skip-nav', 'main');
 
   // Initialize stick side elements
-  $('.js-sticky-side').each(function() {
-    var container = $(this).data('sticky-container');
-    var opts = {
-      within: document.getElementById(container)
-    };
-    new Sticky(this, opts);
-  });
+  (function () {
+    var stickies = [];
+    var enabled = helpers.isMediumScreen();
+
+    $('.js-sticky-side').each(function() {
+      var container = $(this).data('sticky-container');
+      var opts = {
+        within: document.getElementById(container)
+      };
+
+      var sticky = new Sticky(this, opts);
+      stickies.push(sticky);
+
+      // Initialize sticky as disabled
+      if (!enabled) {
+        sticky.disable();
+      }
+    });
+
+    $(window).on('resize', function onResize () {
+      // If enabled already and on a medium+ screen, noop
+      if (enabled && helpers.isMediumScreen()) {
+        return;
+      }
+
+      // If disabled already and on a small screen, noop
+      if (!enabled && !helpers.isMediumScreen()) {
+        return;
+      }
+
+      enabled = helpers.isMediumScreen();
+      stickies.forEach(function (sticky) {
+        if (enabled) {
+          sticky.enable();
+        } else {
+          sticky.disable();
+        }
+      });
+    });
+  })();
 
   // Initialize sticky bar elements
   $('.js-sticky-bar').each(function() {
